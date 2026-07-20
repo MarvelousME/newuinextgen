@@ -41,11 +41,18 @@ class NGC_UI_Company_Data_Provider extends NGC_UI_Data_Provider {
 		return [
 			[
 				'name'          => $opts['company_name'] ?? get_bloginfo( 'name' ),
+				'legal_name'    => $opts['legal_name'] ?? '',
 				'tagline'       => $opts['tagline'] ?? get_bloginfo( 'description' ),
 				'phone'         => $opts['phone'] ?? '',
 				'whatsapp'      => $opts['whatsapp'] ?? '',
 				'email'         => $opts['email'] ?? get_option( 'admin_email' ),
+				'admin_email'   => $opts['admin_email'] ?? get_option( 'admin_email' ),
+				'notification_email' => $opts['notification_email'] ?? '',
 				'address'       => $opts['address'] ?? '',
+				'website'       => $opts['website'] ?? home_url( '/' ),
+				'powered_by'    => $opts['powered_by'] ?? 'GET ONLINE NOW',
+				'currency'      => $opts['currency'] ?? 'ZAR',
+				'timezone'      => $opts['timezone'] ?? 'Africa/Johannesburg',
 				'response_time' => $opts['response_time'] ?? '',
 				'logo_id'       => (int) ( $opts['logo_id'] ?? 0 ),
 			],

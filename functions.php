@@ -10,7 +10,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'BI_VERSION', '1.9.10' );
 define( 'BI_DIR', get_stylesheet_directory() );
 define( 'BI_URI', get_stylesheet_directory_uri() );
+if ( ! defined( 'NGT_URI' ) ) {
+    define( 'NGT_URI', BI_URI );
+}
+if ( ! defined( 'NGT_DIR' ) ) {
+    define( 'NGT_DIR', BI_DIR );
+}
 
+require_once BI_DIR . '/inc/helpers.php';
 require_once BI_DIR . '/inc/companion.php';
 require_once BI_DIR . '/inc/security.php';
 require_once BI_DIR . '/inc/shortcodes-fallback.php';

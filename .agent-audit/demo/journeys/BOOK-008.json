@@ -1,0 +1,40 @@
+﻿{
+    "id":  "BOOK-008",
+    "name":  "Concurrent Booking Conflict",
+    "persona":  "demo-parent",
+    "scenario":  "all",
+    "family":  "booking",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "attempt-double-book"
+                  },
+                  {
+                      "action":  "detect-conflict"
+                  },
+                  {
+                      "action":  "reject-second"
+                  }
+              ],
+    "expected_events":  [
+                            "booking.created"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "booking-sync"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=BOOK-008",
+                         "seed_graph_keys":  [
+                                                 "BOOK-008"
+                                             ]
+                     }
+}

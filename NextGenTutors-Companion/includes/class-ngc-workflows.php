@@ -59,6 +59,13 @@ class NGC_Workflows {
 	 * @param array<string, mixed> $vars  Template variables.
 	 */
 	public static function dispatch( $event, $vars = [] ) {
+		static $stack = [];
+		$guard_key    = (string) $event;
+		if ( isset( $stack[ $guard_key ] ) ) {
+			return;
+		}
+		$stack[ $guard_key ] = true;
+
 		$full = self::$event_map[ $event ] ?? $event;
 		if ( 0 !== strpos( $full, 'ngt.' ) && 0 !== strpos( $full, 'woocommerce.' ) && 0 !== strpos( $full, 'amelia.' ) && 0 !== strpos( $full, 'wp.' ) ) {
 			$full = 'ngt.' . ltrim( $full, '.' );
@@ -78,6 +85,8 @@ class NGC_Workflows {
 		 */
 		do_action( 'ngc_workflow_dispatched', $full, $vars );
 		do_action( 'ngc_' . str_replace( '.', '_', $event ), $vars );
+
+		unset( $stack[ $guard_key ] );
 	}
 
 	/**

@@ -1,0 +1,41 @@
+﻿{
+    "id":  "MATCH-008",
+    "name":  "Tutor Rejection",
+    "persona":  "demo-tutor-approved",
+    "scenario":  "all",
+    "family":  "matching",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "receive-proposal"
+                  },
+                  {
+                      "action":  "reject-match"
+                  },
+                  {
+                      "action":  "process-next-candidate"
+                  }
+              ],
+    "expected_events":  [
+                            "match.rejected",
+                            "match.proposed"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "crm-parent-sync"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=MATCH-008",
+                         "seed_graph_keys":  [
+                                                 "MATCH-008"
+                                             ]
+                     }
+}

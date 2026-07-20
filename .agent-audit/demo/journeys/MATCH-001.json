@@ -1,0 +1,42 @@
+﻿{
+    "id":  "MATCH-001",
+    "name":  "Strong Match",
+    "persona":  "demo-parent",
+    "scenario":  "all",
+    "family":  "matching",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "request-match"
+                  },
+                  {
+                      "action":  "rank-candidates"
+                  },
+                  {
+                      "action":  "accept-match"
+                  }
+              ],
+    "expected_events":  [
+                            "match.proposed",
+                            "match.accepted"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "crm-parent-sync",
+                                  "booking-sync"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=MATCH-001",
+                         "seed_graph_keys":  [
+                                                 "MATCH-001"
+                                             ]
+                     }
+}

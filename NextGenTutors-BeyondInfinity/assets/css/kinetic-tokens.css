@@ -1,0 +1,45 @@
+/**
+ * Kinetic design tokens — shared across homepage and inner pages.
+ */
+:root {
+  --ngi-navy: #07172f;
+  --ngi-midnight: #031126;
+  --ngi-blue: #123c7c;
+  --ngi-cyan: #28c7f7;
+  --ngi-gold: #ffb703;
+  --ngi-green: #27ae60;
+  --ngi-orange: #ff7a1a;
+  --ngi-soft: #f5f8ff;
+  --ngi-white: #fff;
+  --ngi-text: #10213f;
+  --ngi-muted: #687386;
+  --ngi-line: #e6edf7;
+  --ngi-shadow: 0 24px 70px rgba(18, 60, 124, 0.12);
+  --ngi-radius: 28px;
+  --ngi-ease: cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+body.bi-kinetic-home,
+body.bi-kinetic-surface {
+  --ngt-primary: var(--ngi-navy);
+  --ngt-primary-dark: var(--ngi-midnight);
+  --ngt-primary-light: #e8f4ff;
+  --ngt-secondary: var(--ngi-cyan);
+  --ngt-secondary-dark: #1aa8d4;
+  --ngt-secondary-light: #d6f4ff;
+  --ngt-accent: var(--ngi-gold);
+  --ngt-accent-dark: #e6a502;
+  --ngt-accent-light: #fff3d6;
+  --ngt-bg: var(--ngi-soft);
+  --ngt-text: var(--ngi-text);
+  --ngt-text-2: var(--ngi-muted);
+  --ng-color-primary: var(--ngi-blue);
+  --ng-color-secondary: var(--ngi-cyan);
+  --ng-color-accent: var(--ngi-gold);
+  --ng-color-bg: var(--ngi-soft);
+  --ng-color-ink: var(--ngi-text);
+  --ng-color-muted: var(--ngi-muted);
+  --ng-color-border: var(--ngi-line);
+  --ng-shadow-card: var(--ngi-shadow);
+  --ng-radius-xl: var(--ngi-radius);
+}

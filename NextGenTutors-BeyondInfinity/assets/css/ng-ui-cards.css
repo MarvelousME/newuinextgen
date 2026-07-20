@@ -1,0 +1,28 @@
+.ng-ui-tutor-card { display: flex; flex-direction: column; height: 100%; }
+.ng-ui-tutor-card__top {
+  display: flex;
+  gap: var(--ng-space-4);
+  align-items: flex-start;
+  margin-bottom: var(--ng-space-4);
+}
+.ng-ui-tutor-card__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--ng-radius-md);
+  object-fit: cover;
+}
+.ng-ui-tutor-card__name {
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-text-lg);
+  font-weight: var(--ng-weight-bold);
+  margin: 0;
+}
+.ng-ui-tutor-card__meta { font-size: var(--ng-text-sm); color: var(--ng-color-muted); }
+.ng-ui-tutor-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: var(--ng-space-4);
+  border-top: 1px solid var(--ng-color-border);
+}

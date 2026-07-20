@@ -1,0 +1,35 @@
+﻿{
+    "captured_at":  "2026-07-17T12:54:29.4866280+02:00",
+    "wordpress":  "7.0.1",
+    "php":  "8.2.32",
+    "pages":  [
+                  {
+                      "url":  "/",
+                      "status":  200,
+                      "length":  200407,
+                      "has_fatal":  false,
+                      "theme_hint":  "nextgentutors-beyondinfinity"
+                  },
+                  {
+                      "url":  "/find-a-tutor/",
+                      "status":  200,
+                      "length":  163343,
+                      "has_fatal":  false,
+                      "theme_hint":  "nextgentutors-beyondinfinity"
+                  },
+                  {
+                      "url":  "/student-dashboard/",
+                      "status":  200,
+                      "length":  159129,
+                      "has_fatal":  false,
+                      "theme_hint":  "nextgentutors-beyondinfinity"
+                  },
+                  {
+                      "url":  "/login/",
+                      "status":  200,
+                      "length":  158998,
+                      "has_fatal":  false,
+                      "theme_hint":  "nextgentutors-beyondinfinity"
+                  }
+              ]
+}

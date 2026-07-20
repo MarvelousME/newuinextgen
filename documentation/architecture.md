@@ -3,6 +3,8 @@
 **Status:** VERIFIED (2026-07-20)  
 **Historical Stage 1 inventory:** see git history of this file; detailed scans remain in `audit-reports/`.
 
+For the full living architecture reference (domain, demo, privacy, metrics), see **[platform-architecture.md](./platform-architecture.md)**.
+
 For day-to-day status, use **[master-directive-status.md](./master-directive-status.md)** as the live source of truth.
 
 ## Stack overview

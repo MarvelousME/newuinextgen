@@ -1,0 +1,24 @@
+/* ===== DISABLE HEAVY ANIMS ON MOBILE ===== */
+@media (max-width: 768px) {
+  .no-mobile-anim {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  
+  /* Reduce parallax intensity */
+  .parallax-bg {
+    background-attachment: scroll !important;
+  }
+}
+
+/* ===== TOUCH-FRIENDLY HOVER FALLBACKS ===== */
+@media (hover: none) {
+  .hover-lift:hover,
+  .hover-glow:hover,
+  .hover-spin:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}

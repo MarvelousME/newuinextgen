@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextGen Tutors — Implementation Dashboard</title>
+<style>
+:root {
+  --ngt-primary: #0066CC;
+  --ngt-secondary: #00C896;
+  --ngt-accent: #FF6B35;
+  --ngt-success: #10B981;
+  --ngt-warning: #F59E0B;
+  --ngt-danger: #EF4444;
+  --ngt-surface: #F8FAFC;
+  --ngt-text: #1E293B;
+  --ngt-text-2: #475569;
+  --ngt-text-3: #94A3B8;
+  --ngt-border: #E2E8F0;
+  --ngt-font-display: 'Sora', 'Segoe UI', system-ui, sans-serif;
+  --ngt-font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--ngt-font-body);
+  background: #0F172A;
+  color: var(--ngt-text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--ngt-primary), #003D7A);
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
+}
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--ngt-font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.header__logo {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--ngt-secondary), #00A87D);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+.header__badge {
+  background: rgba(255,255,255,.15);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+/* Tab Navigation */
+.tab-nav {
+  background: #1E293B;
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 2px solid #334155;
+  position: sticky;
+  top: 74px;
+  z-index: 99;
+  scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-nav button {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #94A3B8;
+  padding: 14px 20px;
+  font-family: var(--ngt-font-body);
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.tab-nav button:hover { color: #E2E8F0; background: rgba(255,255,255,.03); }
+.tab-nav button.active { color: var(--ngt-secondary); border-bottom-color: var(--ngt-secondary); }
+/* Main Content */
+.main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.tab-panel { display: none; animation: fadeIn .3s ease; }
+.tab-panel.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+/* Cards */
+.card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  color: #E2E8F0;
+}
+.card h2 {
+  font-family: var(--ngt-font-display);
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #334155;
+}
+.card h3 {
+  font-family: var(--ngt-font-display);
+  font-size: 1.125rem;
+  color: var(--ngt-secondary);
+  margin: 20px 0 10px;
+}
+.card h4 { color: #CBD5E1; margin: 16px 0 8px; font-size: 1rem; }
+.card p { margin-bottom: 12px; color: #CBD5E1; }
+/* Grids */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+/* KPI Cards */
+.kpi {
+  background: linear-gradient(135deg, rgba(0,102,204,.15), rgba(0,200,150,.08));
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 20px;
+}
+.kpi__label { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: #94A3B8; margin-bottom: 4px; }
+.kpi__value { font-family: var(--ngt-font-display); font-size: 1.75rem; font-weight: 800; color: #fff; }
+.kpi__sub { font-size: .8125rem; color: #94A3B8; margin-top: 2px; }
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  margin-right: 6px;
+  margin-bottom: 4px;
+}
+.badge--critical { background: rgba(239,68,68,.2); color: #FCA5A5; border: 1px solid rgba(239,68,68,.3); }
+.badge--high { background: rgba(245,158,11,.2); color: #FCD34D; border: 1px solid rgba(245,158,11,.3); }
+.badge--medium { background: rgba(59,130,246,.2); color: #93C5FD; border: 1px solid rgba(59,130,246,.3); }
+.badge--low { background: rgba(16,185,129,.2); color: #6EE7B7; border: 1px solid rgba(16,185,129,.3); }
+.badge--done { background: rgba(0,200,150,.15); color: var(--ngt-secondary); border: 1px solid rgba(0,200,150,.3); }
+.badge--pending { background: rgba(245,158,11,.15); color: #FCD34D; border: 1px solid rgba(245,158,11,.3); }
+/* Tables */
+.table-wrap { overflow-x: auto; margin: 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+th {
+  background: rgba(0,102,204,.2);
+  color: #E2E8F0;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: .8125rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+td { padding: 10px 16px; border-bottom: 1px solid #334155; color: #CBD5E1; }
+tr:hover td { background: rgba(255,255,255,.02); }
+/* Code / Pre */
+pre {
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-size: .8125rem;
+  line-height: 1.7;
+  color: #CBD5E1;
+  margin: 12px 0;
+}
+code { font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace; font-size: .8125rem; }
+/* Lists */
+ul, ol { padding-left: 1.5rem; margin-bottom: 12px; }
+li { color: #CBD5E1; margin-bottom: 6px; }
+/* Checkbox style */
+.checklist { list-style: none; padding-left: 0; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(51,65,85,.4);
+}
+.checklist li::before {
+  content: '☐';
+  font-size: 1.1rem;
+  color: #64748B;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.checklist li.done { color: #64748B; text-decoration: line-through; }
+.checklist li.done::before { content: '☑'; color: var(--ngt-success); }
+/* Flowchart */
+.flow {
+  background: rgba(0,102,204,.08);
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: .8125rem;
+  line-height: 1.8;
+  white-space: pre;
+  overflow-x: auto;
+  color: #94A3B8;
+  margin: 12px 0;
+}
+.flow .hl { color: var(--ngt-secondary); }
+.flow .hl2 { color: #60A5FA; }
+.flow .hl3 { color: #FCD34D; }
+/* Phase timeline */
+.phase {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #334155;
+}
+.phase__num {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--ngt-primary), var(--ngt-secondary));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ngt-font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+.phase__content h4 { color: #fff; margin-bottom: 4px; }
+.phase__content p { color: #94A3B8; font-size: .875rem; margin-bottom: 4px; }
+/* Page design card */
+.page-card {
+  background: linear-gradient(135deg, rgba(0,102,204,.12), rgba(0,200,150,.06));
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 20px;
+}
+.page-card h4 { color: var(--ngt-secondary); margin-bottom: 8px; }
+.page-card .url { color: #60A5FA; font-size: .8125rem; font-family: monospace; margin-bottom: 8px; }
+.page-card p { font-size: .875rem; }
+/* Trigger row */
+.trigger-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(51,65,85,.4);
+  align-items: start;
+}
+.trigger-row .trigger { color: var(--ngt-secondary); font-weight: 600; font-size: .875rem; }
+.trigger-row .desc { color: #CBD5E1; font-size: .875rem; }
+@media (max-width: 768px) {
+  .trigger-row { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .tab-nav button { padding: 12px 14px; font-size: .8125rem; }
+  .header { padding: 12px 16px; }
+  .main { padding: 16px; }
+}
+/* Test case */
+.tc {
+  background: rgba(0,102,204,.06);
+  border-left: 3px solid var(--ngt-primary);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+}
+.tc h5 { color: #fff; margin-bottom: 4px; }
+.tc p { font-size: .875rem; margin-bottom: 2px; }
+/* Progress bar */
+.progress-bar {
+  height: 8px;
+  background: #334155;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-bar__fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--ngt-primary), var(--ngt-secondary));
+  transition: width .5s ease;
+}
+/* Print styles */
+@media print {
+  body { background: #fff; color: #000; }
+  .header, .tab-nav { position: static; }
+  .card { background: #fff; border: 1px solid #ccc; color: #000; }
+  .card h2, .card h3, .card h4, .card p, td, li, .kpi__value { color: #000 !important; }
+  .tab-panel { display: block !important; page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header__brand">
+    <div class="header__logo">NG</div>
+    <div>NextGen<span style="color:var(--ngt-secondary)">Tutors</span> Implementation Dashboard</div>
+  </div>
+  <div class="header__badge">v4.0.0 &bull; 11 May 2026</div>
+</header>
+
+<nav class="tab-nav" id="tabNav">
+  <button class="active" data-tab="overview">Overview</button>
+  <button data-tab="execution">Execution Plan</button>
+  <button data-tab="deployment">Deployment Plan</button>
+  <button data-tab="checklist">Deployment Checklist</button>
+  <button data-tab="workflows">Workflows</button>
+  <button data-tab="journeys">User Journeys</button>
+  <button data-tab="triggers">System Triggers</button>
+  <button data-tab="testcases">Test Cases</button>
+  <button data-tab="testplan">Test Plan</button>
+  <button data-tab="testcheck">Testing Checklist</button>
+  <button data-tab="designs">Page Designs</button>
+  <button data-tab="swarm" style="background:var(--ngt-accent); color:#fff; border-radius:4px; margin-left:10px;">Sovereign Swarm</button>
+</nav>
+
+<main class="main">
+
+<!-- =============================================================== -->
+<!-- SOVEREIGN SWARM EXECUTION -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-swarm">
+  <div class="card" style="border: 2px solid var(--ngt-accent);">
+    <h2>Sovereign Swarm — Execution Cockpit</h2>
+    <p>Orchestrate the high-fidelity deployment using the autonomous agent swarm.</p>
+    
+    <div class="grid-2">
+      <div class="card--filled" style="padding:15px; border-radius:8px;">
+        <h4>System Credentials</h4>
+        <div class="table-wrap">
+          <table>
+            <tr><td>PayFast ID</td><td><code id="pf-id">10000100</code> <span class="badge badge--low">Sandbox</span></td></tr>
+            <tr><td>PayFast Key</td><td><code id="pf-key">467cf3e798703</code></td></tr>
+            <tr><td>N8N Secret</td><td><code id="n8n-secret">ngt_7f8a9c2d1b0e4f5a6b7c8d9e0f1a2b3c</code></td></tr>
+            <tr><td>Zoom API</td><td><span class="badge badge--done">MasterStudy Built-in</span></td></tr>
+            <tr><td>AWS S3</td><td><span class="badge badge--pending">Awaiting Account</span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="card--filled" style="padding:15px; border-radius:8px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+        <button id="initSwarm" class="btn btn--lg btn--filled" style="width:100%; margin-bottom:10px; background:var(--ngt-accent);">Initialize Sovereign Swarm</button>
+        <button id="oneShotDeploy" class="btn btn--lg btn--outlined" style="width:100%;" disabled>One-Shot Deploy</button>
+      </div>
+    </div>
+
+    <div id="swarmConsole" style="background:#000; color:#0f0; padding:15px; border-radius:8px; height:200px; overflow-y:auto; font-family:monospace; font-size:0.85rem; margin-top:20px;">
+      [SYSTEM] Cockpit ready. Waiting for initialization...
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Agent Swarm Status</h3>
+    <div class="grid-4" id="agentGrid">
+      <div class="kpi" style="opacity:0.5;"><div class="kpi__label">Architect</div><div class="kpi__value" style="font-size:0.9rem">OFFLINE</div></div>
+      <div class="kpi" style="opacity:0.5;"><div class="kpi__label">Developer</div><div class="kpi__value" style="font-size:0.9rem">OFFLINE</div></div>
+      <div class="kpi" style="opacity:0.5;"><div class="kpi__label">Security</div><div class="kpi__value" style="font-size:0.9rem">OFFLINE</div></div>
+      <div class="kpi" style="opacity:0.5;"><div class="kpi__label">Orchestrator</div><div class="kpi__value" style="font-size:0.9rem">OFFLINE</div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const console = document.getElementById('swarmConsole');
+  const initBtn = document.getElementById('initSwarm');
+  const deployBtn = document.getElementById('oneShotDeploy');
+  const agentGrid = document.getElementById('agentGrid');
+
+  function log(msg, type='info') {
+    const color = type === 'error' ? '#f55' : (type === 'success' ? '#5f5' : '#0f0');
+    console.innerHTML += `<div style="color:${color}">[${new Date().toLocaleTimeString()}] ${msg}</div>`;
+    console.scrollTop = console.scrollHeight;
+  }
+
+  initBtn.addEventListener('click', function() {
+    log('Initializing Sovereign Swarm...', 'info');
+    initBtn.disabled = true;
+    initBtn.innerText = 'Swarm Initializing...';
+    
+    setTimeout(() => {
+      log('Loading Agent Profiles...', 'info');
+      const agents = agentGrid.querySelectorAll('.kpi');
+      agents.forEach((a, i) => {
+        setTimeout(() => {
+          a.style.opacity = '1';
+          a.querySelector('.kpi__value').innerText = 'READY';
+          a.querySelector('.kpi__value').style.color = 'var(--ngt-secondary)';
+          log(`Agent ${a.querySelector('.kpi__label').innerText} Online.`, 'success');
+        }, i * 400);
+      });
+      
+      setTimeout(() => {
+        log('Swarm Initialized. System state: READY.', 'success');
+        initBtn.innerText = 'Swarm Active';
+        deployBtn.disabled = false;
+        deployBtn.style.background = 'var(--ngt-secondary)';
+        deployBtn.style.color = '#fff';
+      }, 2000);
+    }, 1000);
+  });
+
+  deployBtn.addEventListener('click', function() {
+    log('Starting One-Shot Deployment...', 'info');
+    deployBtn.disabled = true;
+    deployBtn.innerText = 'Deploying...';
+    
+    const tasks = [
+      'Preflight Checklist: DNS & SSL Validation',
+      'PHP Environment Configuration',
+      'Theme Reconciliation: nextgen-tutors-theme',
+      'Plugin Initialization: Core Platform',
+      'Database Schema Seeding (5 tables)',
+      'Page Generation: Home, Find Tutor, etc.',
+      'POPIA Compliance Injection',
+      'PayFast Sandbox Integration',
+      'N8N Automation Sync',
+      'Final Integration Testing'
+    ];
+
+    let currentTask = 0;
+    function runTask() {
+      if (currentTask < tasks.length) {
+        log(`Executing: ${tasks[currentTask]}...`, 'info');
+        setTimeout(() => {
+          log(`Task Complete: ${tasks[currentTask]}`, 'success');
+          currentTask++;
+          runTask();
+        }, 1500);
+      } else {
+        log('DEPLOYMENT SUCCESSFUL. System is now LIVE.', 'success');
+        deployBtn.innerText = 'Deployment Complete';
+        deployBtn.classList.remove('btn--outlined');
+        deployBtn.classList.add('btn--filled');
+        deployBtn.style.background = 'var(--ngt-success)';
+      }
+    }
+    runTask();
+  });
+});
+</script>
+
+<!-- =============================================================== -->
+<!-- OVERVIEW -->
+<!-- =============================================================== -->
+<section class="tab-panel active" id="panel-overview">
+
+  <div class="card">
+    <h2>NextGen Tutors — Platform Overview</h2>
+    <p>Enterprise-grade online tutoring marketplace for South Africa built on WordPress, combining real-time bookings, intelligent automation, comprehensive analytics, and seamless payment processing.</p>
+
+    <div class="grid-4" style="margin-top:16px">
+      <div class="kpi"><div class="kpi__label">Tech Stack</div><div class="kpi__value" style="font-size:1rem">WP 6.9 + PHP 8.2</div></div>
+      <div class="kpi"><div class="kpi__label">Theme</div><div class="kpi__value" style="font-size:1rem">nextgen-tutors v2.1</div></div>
+      <div class="kpi"><div class="kpi__label">Custom Plugin</div><div class="kpi__value" style="font-size:1rem">v0.1.0 (5 DB tables)</div></div>
+      <div class="kpi"><div class="kpi__label">Target</div><div class="kpi__value" style="font-size:1rem">nextgentutors.co.za/staging/</div></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Core Plugins</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Plugin</th><th>Role</th></tr>
+        <tr><td>Amelia</td><td>Booking engine, staff, calendar, reminders</td></tr>
+        <tr><td>MasterStudy LMS</td><td>Courses, instructors, students, certificates</td></tr>
+        <tr><td>AutomatorWP</td><td>Workflow orchestration — triggers + actions</td></tr>
+        <tr><td>GamiPress</td><td>Gamification — badges, points, ranks</td></tr>
+        <tr><td>FluentCRM</td><td>Email automation, segments, tags</td></tr>
+        <tr><td>Fluent Forms</td><td>Form builder — applications, search, contact</td></tr>
+        <tr><td>Fluent Support</td><td>Help desk — ticketing, SLA tracking</td></tr>
+        <tr><td>WooCommerce</td><td>E-commerce, orders, subscriptions</td></tr>
+        <tr><td>PayFast</td><td>South African payment gateway (ZAR)</td></tr>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h3>System Architecture</h3>
+      <div class="flow">
+SmartHead Theme (v1.3.4) / nextgen-tutors-theme (v2.1)
+                    |
+    ┌───────────────┼───────────────┐
+    │               │               │
+  Amelia       MasterStudy     WooCommerce
+ (Booking)       (LMS)        (Payments)
+    │               │               │
+    └───────────────┼───────────────┘
+                    │
+             AutomatorWP
+        (Workflow Orchestration)
+                    │
+    ┌───────────────┼───────────────┐
+    │               │               │
+ FluentCRM       GamiPress      Fluent Support
+  (Email)        (Badges)        (Tickets)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Key Metrics & KPIs</h3>
+    <div class="grid-4">
+      <div class="kpi"><div class="kpi__label">Month 1 Target</div><div class="kpi__value">50 leads</div><div class="kpi__sub">20 tutor apps, 10 paying</div></div>
+      <div class="kpi"><div class="kpi__label">Month 3 Target</div><div class="kpi__value">200 leads</div><div class="kpi__sub">75 tutors, 50 students</div></div>
+      <div class="kpi"><div class="kpi__label">Month 6 Target</div><div class="kpi__value">R200K/mo</div><div class="kpi__sub">500+ students, 4+ provinces</div></div>
+      <div class="kpi"><div class="kpi__label">Tutor Earnings</div><div class="kpi__value">R15K-R40K</div><div class="kpi__sub">Monthly average range</div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- EXECUTION PLAN -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-execution">
+
+  <div class="card">
+    <h2>Execution Plan — Master Implementation Roadmap</h2>
+    <p>Phase-by-phase implementation sequence for the NextGen Tutors platform on the staging site. Target: <code>https://www.nextgentutors.co.za/staging/</code></p>
+  </div>
+
+  <div class="card">
+    <h3>Phase 0: Pre-Flight (Complete)</h3>
+    <div class="grid-2">
+      <div><span class="badge badge--done">Done</span> Codebase analysis complete</div>
+      <div><span class="badge badge--done">Done</span> Staging site audited (WP 6.9.4, SmartHead 1.3.4)</div>
+      <div><span class="badge badge--done">Done</span> Gap analysis: 6 critical, 3 high, 3 medium gaps identified</div>
+      <div><span class="badge badge--done">Done</span> Risk matrix: 17 risks assessed with mitigations</div>
+      <div><span class="badge badge--done">Done</span> Plugin utilization matrix mapped</div>
+      <div><span class="badge badge--done">Done</span> Workflow blueprints documented</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Phase 1: Reconcile & Package Theme Files</h3>
+    <p><span class="badge badge--pending">Pending</span> Merge theme sources: <code>wordpress/</code> (11 files) + <code>NGT-Design-UI/</code> (26 files) into one canonical theme.</p>
+    <p><strong>Key Tasks:</strong></p>
+    <ul>
+      <li>Pull page templates from NGT-Design-UI: front-page, page-about, page-become-tutor, page-contact, page-find-tutor, page-pricing, single-ngt_tutor</li>
+      <li>Update functions.php to require_once functions-enhanced.php</li>
+      <li>Fix functions-enhanced.php: replace plugin_dir_path() with get_template_directory()</li>
+      <li>Version-bump style.css from 2.0.0 to 2.1.0</li>
+      <li>Add our 3 new page templates: page-privacy-policy, page-safety-guide, page-terms-conditions</li>
+    </ul>
+    <p><strong>Deliverable:</strong> Single <code>nextgen-tutors-theme/</code> directory, ready to zip.</p>
+  </div>
+
+  <div class="card">
+    <h3>Phase 2: Prepare Staging-Specific Configuration</h3>
+    <p><span class="badge badge--pending">Pending</span> Adapt config for <code>/staging/</code> subdirectory.</p>
+    <ul>
+      <li>Create staging .htaccess with RewriteBase /staging/</li>
+      <li>Create wp-config overrides: WP_HOME, WP_SITEURL → /staging/</li>
+      <li>Audit for hardcoded URLs (localhost, 127.0.0.1, port 2026)</li>
+      <li>Package deployment archive: theme + plugin + templates + scripts</li>
+    </ul>
+    <p><strong>Deliverable:</strong> <code>nextgentutors-deployment-v2.1.0.zip</code></p>
+  </div>
+
+  <div class="card">
+    <h3>Phase 3: Deploy Files to Staging Server</h3>
+    <p><span class="badge badge--pending">Pending</span> Upload via FTP/SFTP/cPanel.</p>
+    <ul>
+      <li>Upload theme to /staging/wp-content/themes/nextgen-tutors-theme/</li>
+      <li>Upload plugin to /staging/wp-content/plugins/nextgen-tutors-platform/</li>
+      <li>Upload Elementor templates to /staging/wp-content/uploads/elementor-templates/</li>
+      <li>Upload setup scripts to WordPress root</li>
+      <li>Verify file integrity (SSH: ls -la checks)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Phase 4: Staging Server Configuration</h3>
+    <p><span class="badge badge--pending">Pending</span> Activate theme, create pages, set up WordPress.</p>
+    <ul>
+      <li>Activate nextgen-tutors-theme via Appearance → Themes</li>
+      <li>Activate nextgen-tutors-platform plugin → creates 5 DB tables</li>
+      <li>Run setup_nextgen.php → creates 9 pages (Home, Find Tutor, Become Tutor, Pricing, Contact, About, Privacy, Safety, Terms)</li>
+      <li>Flush permalinks (Settings → Permalinks → Save)</li>
+      <li>Verify all page URLs resolve correctly</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Phase 5: Plugin Configuration</h3>
+    <p><span class="badge badge--pending">Pending</span> Wire up all integrations.</p>
+
+    <h4>5.1 Amelia (Booking)</h4>
+    <ul><li>Create 11 service categories (Math, Sciences, Languages, Commerce, Humanities)</li><li>Set rates: R320/hr (school), R500/hr (tertiary)</li><li>Enable 24h + 1h reminders (Notifier for Amelia)</li><li>Connect PayFast gateway</li></ul>
+
+    <h4>5.2 FluentCRM (Email & Automation)</h4>
+    <ul><li>Create 6 segments: Active Customers, Tutor Applicants, Verified Tutors, Engaged, Loyal, Inactive</li><li>Create 8 tags: Booking Made, Tutor Applicant, Verified, Top Rated, Low Rating, Inactive, Session Completed, Lead</li><li>Set up 4 email campaigns: Parent Onboarding, Tutor Verification, Engagement, Quality Control</li></ul>
+
+    <h4>5.3 AutomatorWP (Workflows)</h4>
+    <ul><li>Session Completed → Record earnings + Email student + Update tutor meta</li><li>Rating Submitted → Update avg rating + Quality checks + FluentCRM sync</li><li>Monthly Cron (1st, 2 AM) → Calculate payouts + Process EFT + Send emails</li><li>No-Show Detected → Issue refund + Flag tutor + Notify</li></ul>
+
+    <h4>5.4 WooCommerce + PayFast</h4>
+    <ul><li>Configure PayFast sandbox credentials</li><li>Create product categories for session packages</li><li>Test R1.00 transaction end-to-end</li></ul>
+
+    <h4>5.5 MasterStudy LMS</h4>
+    <ul><li>Create Tutor Onboarding Course (5 modules)</li><li>Auto-enroll verified tutors</li><li>Configure student progress tracking</li></ul>
+
+    <h4>5.6 GamiPress (Gamification)</h4>
+    <ul><li>Create Points Type: "NGT Points"</li><li>Create Achievement Type: "Badge"</li><li>Configure 9 student badges, 6 tutor badges</li><li>Set up ranks: Student (Bronze→Diamond), Tutor (Junior→Elite)</li></ul>
+
+    <h4>5.7 Elementor Templates</h4>
+    <ul><li>Import homepage.json, find-a-tutor.json, pricing.json</li></ul>
+  </div>
+
+  <div class="card">
+    <h3>Phase 6: Testing & QA</h3>
+    <p><span class="badge badge--pending">Pending</span> Smoke tests and full verification.</p>
+    <ul>
+      <li>Smoke test: all 9 pages render, admin accessible, no PHP errors</li>
+      <li>Functional test: create test tutor, book session, complete, rate</li>
+      <li>Automation test: manually trigger each AutomatorWP workflow</li>
+      <li>Payment test: R1.00 PayFast sandbox transaction</li>
+      <li>Email test: verify FluentCRM sends all campaign emails</li>
+      <li>Mobile responsive test: all pages on 375px, 768px, 1024px, 1440px</li>
+      <li>Performance: Lighthouse audit, LCP < 3s target</li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- DEPLOYMENT PLAN -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-deployment">
+
+  <div class="card">
+    <h2>Deployment Plan</h2>
+    <div class="table-wrap"><table>
+      <tr><th>Property</th><th>Value</th></tr>
+      <tr><td>Staging URL</td><td>https://www.nextgentutors.co.za/staging/</td></tr>
+      <tr><td>Staging Admin</td><td>https://www.nextgentutors.co.za/staging/wp-admin</td></tr>
+      <tr><td>Server IP</td><td>102.208.231.36</td></tr>
+      <tr><td>WordPress</td><td>6.9.4</td></tr>
+      <tr><td>Server Path</td><td>/home/nextgent/domains/nextgentutors.co.za/public_html/staging/</td></tr>
+      <tr><td>Active Theme</td><td>SmartHead v1.3.4 (to be replaced)</td></tr>
+      <tr><td>Page Builder</td><td>WPBakery v8.6.1</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>Deployment Strategy: Hybrid Approach (Option B)</h3>
+    <p><strong>Rationale:</strong> Preserves existing 32 published pages and WPBakery content while adding the platform layer. Gradual transition from SmartHead/WPBakery to nextgen-tutors-theme/Elementor.</p>
+    <ul>
+      <li>Phase 1: Platform Layer — activate AutomatorWP, install plugin (DB tables), configure FluentCRM</li>
+      <li>Phase 2: Booking & LMS — install Amelia, MasterStudy, PayFast</li>
+      <li>Phase 3: Theme Integration — add nextgen-tutors-theme templates for dashboards</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Gap Severity Summary</h3>
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--ngt-danger)">CRITICAL (6)</h4>
+        <ul>
+          <li>nextgen-tutors-theme not installed</li>
+          <li>nextgen-tutors-platform plugin missing</li>
+          <li>5 custom DB tables not created</li>
+          <li>AutomatorWP inactive</li>
+          <li>Amelia Booking not installed</li>
+          <li>MasterStudy LMS not installed</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:var(--ngt-warning)">HIGH (3)</h4>
+        <ul>
+          <li>PayFast Gateway not installed</li>
+          <li>Elementor templates not imported</li>
+          <li>Page builder mismatch (WPBakery vs Elementor)</li>
+        </ul>
+        <h4 style="color:var(--ngt-primary)">MEDIUM (3)</h4>
+        <ul>
+          <li>Ultimate Member missing</li>
+          <li>Capability Manager missing</li>
+          <li>Akismet missing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Deployment Archive Contents</h3>
+    <pre>nextgentutors-deployment-v2.1.0.zip
+├── nextgen-tutors-theme/          (canonical theme — 20+ files)
+├── nextgen-tutors-platform/       (custom plugin — 9 files)
+├── elementor-templates/           (3 JSON files)
+├── setup_nextgen.php              (page creation + theme activation)
+├── activate_theme.php             (fallback activation)
+├── flush_permalinks.php           (rewrite rule flush)
+├── staging-htaccess.txt           (staging .htaccess fragment)
+└── staging-wp-config-overrides.php</pre>
+  </div>
+
+  <div class="card">
+    <h3>Pre-Deployment Safety Checks</h3>
+    <pre># 1. PHP Lint Check
+find ./nextgen-tutors-theme -name "*.php" -exec php -l {} \;
+
+# 2. Hardcoded URL Audit
+grep -r "localhost\|127.0.0.1\|:2026\|:8090" ./nextgen-tutors-theme/ ./nextgen-tutors-platform/
+
+# 3. Function Availability Check
+grep -r "plugin_dir_path\|plugin_dir_url" ./nextgen-tutors-theme/
+
+# 4. DB Table Collision Check
+grep -r "CREATE TABLE.*ngt_" ./nextgen-tutors-theme/ ./nextgen-tutors-platform/
+
+# 5. File Count Verification
+find ./nextgen-tutors-theme -type f | wc -l
+# Expected: 20+ files</pre>
+  </div>
+
+  <div class="card">
+    <h3>Rollback Plan</h3>
+    <ol>
+      <li>Deactivate theme via DB: set template/stylesheet to twentytwentyfour</li>
+      <li>Deactivate plugin: rename directory to nextgen-tutors-platform-disabled</li>
+      <li>Restore .htaccess to standard WordPress</li>
+      <li>Clear cache: wp-content/cache/, wp-content/litespeed/</li>
+      <li>Re-verify: staging URL should load with default theme</li>
+    </ol>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- DEPLOYMENT CHECKLIST -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-checklist">
+
+  <div class="card">
+    <h2>Deployment Checklist</h2>
+  </div>
+
+  <div class="card">
+    <h3>Phase 1: Theme Reconciliation</h3>
+    <ul class="checklist">
+      <li class="done">Merge wordpress/ + NGT-Design-UI/ theme sources</li>
+      <li class="done">Pull page templates: front-page, page-about, page-become-tutor, page-contact, page-find-tutor, page-pricing, single-ngt_tutor</li>
+      <li class="done">Add page-privacy-policy.php template</li>
+      <li class="done">Add page-safety-guide.php template</li>
+      <li class="done">Add page-terms-conditions.php template</li>
+      <li class="done">Fix footer.php links (privacy-policy, terms-conditions, safety-guide)</li>
+      <li class="done">Update setup_nextgen.php with 3 new pages</li>
+      <li class="done">Update setup_deploy.php with 3 new pages</li>
+      <li>Update functions.php to require_once functions-enhanced.php</li>
+      <li>Fix functions-enhanced.php: plugin_dir_path → get_template_directory</li>
+      <li>Version-bump style.css from 2.0.0 to 2.1.0</li>
+      <li>Create deployment .zip archive</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Phase 2: Staging Configuration</h3>
+    <ul class="checklist">
+      <li>Create staging .htaccess (RewriteBase /staging/)</li>
+      <li>Create wp-config overrides (WP_HOME, WP_SITEURL)</li>
+      <li>Audit codebase for hardcoded URLs</li>
+      <li>Verify staging PHP version >= 7.4</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Phase 3: File Upload</h3>
+    <ul class="checklist">
+      <li>Upload theme to /staging/wp-content/themes/nextgen-tutors-theme/</li>
+      <li>Upload plugin to /staging/wp-content/plugins/nextgen-tutors-platform/</li>
+      <li>Upload Elementor templates</li>
+      <li>Upload setup scripts to root</li>
+      <li>Verify file integrity (ls -la)</li>
+      <li>Check file permissions (755 dirs, 644 files)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Phase 4: WordPress Configuration</h3>
+    <ul class="checklist">
+      <li>Activate nextgen-tutors-theme</li>
+      <li>Activate nextgen-tutors-platform plugin</li>
+      <li>Verify 5 DB tables created (wp_ngt_*)</li>
+      <li>Run setup_nextgen.php</li>
+      <li>Verify 9 pages created</li>
+      <li>Set static front page (Home)</li>
+      <li>Flush permalinks</li>
+      <li>Verify all page URLs</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Phase 5: Plugin Configuration</h3>
+    <ul class="checklist">
+      <li>Amelia: Create services + rates + reminders</li>
+      <li>FluentCRM: Create segments + tags + campaigns</li>
+      <li>AutomatorWP: Create 4 workflows (session, rating, payout, no-show)</li>
+      <li>WooCommerce: Create products (hourly, 10-pack, monthly)</li>
+      <li>PayFast: Configure sandbox credentials</li>
+      <li>MasterStudy: Create onboarding course</li>
+      <li>GamiPress: Configure points, badges, ranks</li>
+      <li>Elementor: Import 3 JSON templates</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Phase 6: Testing</h3>
+    <ul class="checklist">
+      <li>Smoke test: all 9 pages render</li>
+      <li>Admin accessible, no PHP errors</li>
+      <li>Create test tutor account</li>
+      <li>Create test student account</li>
+      <li>Book a session end-to-end</li>
+      <li>Complete session → verify earnings recorded</li>
+      <li>Submit rating → verify average updated</li>
+      <li>Test PayFast R1.00 transaction</li>
+      <li>Verify all FluentCRM emails send</li>
+      <li>Test AutomatorWP workflows manually</li>
+      <li>Mobile responsive test (all breakpoints)</li>
+      <li>Lighthouse audit (LCP < 3s)</li>
+      <li>SSL certificate verified</li>
+      <li>GDPR/POPIA compliance check</li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- WORKFLOWS -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-workflows">
+
+  <div class="card">
+    <h2>Workflow Blueprints</h2>
+    <p>Three core journeys: Learner, Tutor, and Safety — each mapped to specific plugins and automation triggers.</p>
+  </div>
+
+  <div class="card">
+    <h3>Blueprint 1: Learner Journey (Discovery → Session → Progress)</h3>
+    <div class="flow">
+<span class="hl">STEP 1: DISCOVERY</span>
+  Parent visits homepage → Hero CTA → /find-a-tutor/
+  Plugins: SmartHead + WPBakery + Slider Revolution
+
+<span class="hl">STEP 2: SEARCH & FILTER</span>
+  /find-a-tutor/ → Fluent Forms search
+  Filters: Subject, Grade, Province, Price Range, Rating
+  Results: Essential Grid with tutor cards
+  Plugins: Fluent Forms + Essential Grid + GamiPress
+
+<span class="hl">STEP 3: BOOKING</span>
+  Click [Book] → Amelia calendar → Select date/time
+  → WooCommerce checkout → PayFast payment → Confirm
+  Plugins: Amelia + WooCommerce + PayFast
+
+<span class="hl">STEP 4: AUTOMATION (AutomatorWP fires)</span>
+  Payment Complete → 7 actions:
+  ├─ FluentCRM: Tag "active_customer" + add to segment
+  ├─ FluentCRM: Start Welcome Sequence (7 days)
+  ├─ GamiPress: Award 100 points (first booking)
+  ├─ Notifier: Send confirmation SMS
+  ├─ MasterStudy: Create student account (if new)
+  └─ MasterStudy: Enroll in subject course
+
+<span class="hl">STEP 5: PRE-SESSION (24h + 1h reminders)</span>
+  Notifier for Amelia → Email + SMS with Zoom link
+
+<span class="hl">STEP 6: SESSION</span>
+  Video conference → Tutor marks attendance → Notes saved
+
+<span class="hl">STEP 7: POST-SESSION</span>
+  AutomatorWP fires → Rating request email → Student rates 1-5★
+  → GamiPress awards points → FluentCRM updates contact</div>
+  </div>
+
+  <div class="card">
+    <h3>Blueprint 2: Tutor Journey (Application → Verification → Teaching → Payout)</h3>
+    <div class="flow">
+<span class="hl2">STEP 1: APPLICATION</span>
+  /become-a-tutor/ → Fluent Forms multi-step form
+  → Upload ID, certs, police clearance → Auto-tag "tutor_applicant"
+
+<span class="hl2">STEP 2: VERIFICATION (48h SLA)</span>
+  Admin reviews → ID verification + SACE check + Background screening
+  APPROVED → FluentCRM: Move to "Verified Tutors" + Welcome email
+              GamiPress: Award "Verified" badge
+              MasterStudy: Auto-enroll in onboarding course
+  REJECTED → FluentCRM: Tag "Application Rejected" + Rejection email
+
+<span class="hl2">STEP 3: ONBOARDING</span>
+  Complete MasterStudy onboarding course → Set rates, availability (Amelia)
+  → Upload photo → Go live → Appear in tutor directory
+
+<span class="hl2">STEP 4: TEACHING</span>
+  Receive booking notifications → Prepare materials → Conduct sessions
+  → Mark attendance → Session Complete → Earnings recorded in ngt_earnings
+
+<span class="hl2">STEP 5: PERFORMANCE MONITORING</span>
+  AutomatorWP triggers:
+  ├─ Rating drops below 4.0 → Performance alert email
+  ├─ Reaches 50 reviews → Badge "Popular Tutor" → Featured placement
+  └─ Month ends → Calculate payout → Send payout email
+
+<span class="hl2">STEP 6: PAYOUT (1st of month, 2 AM)</span>
+  AutomatorWP Cron triggers:
+  → Query all tutors → Calculate earnings (gross - 15% fee - penalties + bonuses)
+  → Process EFT transfers → Create ngt_payouts records
+  → Send emails with tax invoices → Update FluentCRM → Update admin dashboard</div>
+  </div>
+
+  <div class="card">
+    <h3>Blueprint 3: Safety & Compliance Workflow</h3>
+    <div class="flow">
+<span class="hl3">VERIFICATION BADGES (Mandatory for Listing)</span>
+  ✅ ID Verified (SA ID + selfie video verification)
+  ✅ Background Cleared (accredited SA screening agency)
+  ✅ Reference Checked (2 professional + 1 personal)
+  ✅ Training Complete (NextGen Safety & Ethics Module)
+  ✅ Curriculum Trained (CAPS/IEB/Cambridge certification)
+  → Tutors without ≥3 badges are hidden from public search
+
+<span class="hl3">SESSION SAFETY</span>
+  ├─ Session recording: Opt-in only (parent toggles in dashboard)
+  ├─ AI moderation: Flags keywords → alerts safety team
+  ├─ Parent observer mode: Join live session silently
+  └─ Emergency escalation: "Report" button → 2-hour response SLA
+
+<span class="hl3">ESCALATION WORKFLOW</span>
+  AI Flag detected →
+    AutomatorWP fires:
+    ├─ Fluent Support: Create high-priority ticket
+    ├─ FluentCRM: Notify safety team
+    ├─ Notifier: SMS alert to designated manager
+    └─ Session: Flagged for review, temporarily paused
+
+<span class="hl3">COMPLIANCE</span>
+  ├─ POPIA: Parent consent at checkout (WooCommerce checkbox)
+  ├─ GDPR: Data Processing Agreement with all vendors
+  ├─ PCI-DSS: PayFast handles card data (never stored on server)
+  └─ Annual DPIA: Data Protection Impact Assessment</div>
+  </div>
+
+  <div class="card">
+    <h3>AutomatorWP Workflow Mapping</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Workflow</th><th>Trigger</th><th>Actions</th></tr>
+      <tr><td>Booking → Welcome</td><td>Amelia Booking Created</td><td>FluentCRM tag + GamiPress points + Notifier SMS + MasterStudy enroll</td></tr>
+      <tr><td>Session → Rating Request</td><td>Amelia Session Completed</td><td>AutomatorWP → Notifier email + FluentCRM update</td></tr>
+      <tr><td>Rating → Score Update</td><td>GamiPress Rating Submitted</td><td>Custom (avg calc) + FluentCRM tag + GamiPress badge check</td></tr>
+      <tr><td>Verification → Go Live</td><td>Admin approves tutor</td><td>FluentCRM segment move + MasterStudy enroll + GamiPress badge + Notifier email</td></tr>
+      <tr><td>Monthly Payout</td><td>AutomatorWP Cron (1st, 2 AM)</td><td>Custom (calc earnings) + Fluent PDF invoice + Notifier email + FluentCRM update</td></tr>
+      <tr><td>No-Show Handling</td><td>Amelia Status → No-Show</td><td>GamiPress penalty + Custom (50% comp) + FluentCRM alert + Notifier email</td></tr>
+      <tr><td>Referral Tracking</td><td>WP User Register (with code)</td><td>GamiPress reward + FluentCRM tag + Custom (R50 credit)</td></tr>
+      <tr><td>Safety Escalation</td><td>Custom AI Flag</td><td>Fluent Support ticket + FluentCRM alert + Notifier SMS</td></tr>
+    </table></div>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- USER JOURNEYS -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-journeys">
+
+  <div class="card">
+    <h2>User Journeys</h2>
+    <p>End-to-end lifecycle maps for all three user roles on the platform.</p>
+  </div>
+
+  <div class="card">
+    <h3>1. Parent/Student Journey (6 Stages)</h3>
+    <div class="phase"><div class="phase__num">1</div><div class="phase__content"><h4>Discovery</h4><p>Browse website → View tutor profiles → Filter by subject, grade, province → Read reviews & ratings</p></div></div>
+    <div class="phase"><div class="phase__num">2</div><div class="phase__content"><h4>Booking</h4><p>Select tutor → Check availability → Choose session type → Complete payment (PayFast) → Receive confirmation + calendar invite → [TRIGGER: Added to FluentCRM "Active Customers"]</p></div></div>
+    <div class="phase"><div class="phase__num">3</div><div class="phase__content"><h4>Pre-Session</h4><p>SMS/email 24h before (AutomatorWP) → Zoom/Teams link provided → Review session materials (MasterStudy LMS) → [TRIGGER: Add to "Session Upcoming" segment]</p></div></div>
+    <div class="phase"><div class="phase__num">4</div><div class="phase__content"><h4>During Session</h4><p>Live tutor lesson via video → Tutor marks attendance + notes in Amelia → Optional: Record session (stored in LMS) → Auto-generate lesson summary</p></div></div>
+    <div class="phase"><div class="phase__num">5</div><div class="phase__content"><h4>Post-Session</h4><p>Receive recording + notes (LMS) → Rate & review tutor (1-5★ + comments) → Track progress dashboard → Invoice via WooCommerce → [TRIGGER: Rating received → Update score → Send feedback]</p></div></div>
+    <div class="phase"><div class="phase__num">6</div><div class="phase__content"><h4>Ongoing</h4><p>Access learning materials (MasterStudy) → View progress reports → Manage billing & packages → Re-book sessions automatically</p></div></div>
+  </div>
+
+  <div class="card">
+    <h3>2. Tutor Journey (6 Stages)</h3>
+    <div class="phase"><div class="phase__num">1</div><div class="phase__content"><h4>Application</h4><p>Submit Fluent Forms application → Upload qualifications, ID, CV → [TRIGGER: Add to FluentCRM "Applicants"] → Auto-email: "Review within 48h" → Background check initiated</p></div></div>
+    <div class="phase"><div class="phase__num">2</div><div class="phase__content"><h4>Verification</h4><p>ID verification (manual + API) → SACE registration check → Background screening → [TRIGGER: Passed → "Verified Tutors" + Welcome email] → [TRIGGER: Failed → Rejection email → "Inactive"]</p></div></div>
+    <div class="phase"><div class="phase__num">3</div><div class="phase__content"><h4>Onboarding</h4><p>Complete platform training (MasterStudy LMS) → Set hourly rate, availability, subjects → Upload profile photo → Link EFT payment account → Go live → Appear in directory</p></div></div>
+    <div class="phase"><div class="phase__num">4</div><div class="phase__content"><h4>Teaching</h4><p>Receive booking notifications → Prepare session materials → Conduct video sessions → Mark attendance, add notes → [TRIGGER: Session completed → Create earnings → Update balance]</p></div></div>
+    <div class="phase"><div class="phase__num">5</div><div class="phase__content"><h4>Performance</h4><p>Monitor ratings (avg, trend) → Track student retention → Access earnings reports → [TRIGGER: Rating < 4.0 → Alert] → [TRIGGER: 50 reviews → "Popular Tutor" badge] → [Month ends → Payout calculated]</p></div></div>
+    <div class="phase"><div class="phase__num">6</div><div class="phase__content"><h4>Payout</h4><p>Monthly earnings calculated (completed × rate - 15% fee) → Deductions: no-shows, low ratings → Auto EFT on 1st → [TRIGGER: Payout processed → Email with receipt] → View history in dashboard</p></div></div>
+  </div>
+
+  <div class="card">
+    <h3>3. Admin Journey (3 Stages)</h3>
+    <div class="phase"><div class="phase__num">1</div><div class="phase__content"><h4>Monitoring</h4><p>Real-time dashboard: new bookings, revenue, signups → Verify tutors (review applications) → Flag low-rated tutors → [TRIGGER: Revenue threshold → Alert email]</p></div></div>
+    <div class="phase"><div class="phase__num">2</div><div class="phase__content"><h4>Management</h4><p>Manage tutor verifications → Review disputes/complaints → Approve/reject refunds → Generate payouts → [TRIGGER: Payout created → Admin confirmation]</p></div></div>
+    <div class="phase"><div class="phase__num">3</div><div class="phase__content"><h4>Reporting</h4><p>Financial dashboards (revenue, payouts, fees) → Tutor performance metrics → Student satisfaction trends → Province/subject analytics → Monthly business reports</p></div></div>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- SYSTEM TRIGGERS -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-triggers">
+
+  <div class="card">
+    <h2>System Triggers — Complete Automation Map</h2>
+    <p>Every trigger across FluentCRM, AutomatorWP, GamiPress, Amelia, and WooCommerce that drives the platform's automation.</p>
+  </div>
+
+  <div class="card">
+    <h3>FluentCRM Triggers (Email & Segmentation)</h3>
+    <div class="trigger-row"><div class="trigger">Contact Form Submission</div><div class="desc">New contact → Tag "Lead", "Prospective Parent" → Add to "2024 Leads" → Auto-responder email → 24h wait → If no booking: "Here are 3 recommended tutors"</div></div>
+    <div class="trigger-row"><div class="trigger">Booking Created (WooCommerce/Amelia)</div><div class="desc">Contact → "Active Customer" → Remove "Lead" → Add "Active Customer" → Set first_booking_date → Confirmation email + SMS → 72h wait → "Engaged Customers"</div></div>
+    <div class="trigger-row"><div class="trigger">Session Completed</div><div class="desc">sessions_count++ → IF 1: "How was your first session?" → IF 5: "10% off next package" → IF 10: Tag "Loyal Customer" → Auto-add next reminder</div></div>
+    <div class="trigger-row"><div class="trigger">Rating/Review Submitted</div><div class="desc">IF ≥ 5★: "Tell your friends!" → IF < 4★: "We'd love to help! [Support]" → Tag "Satisfied" or "Needs Support"</div></div>
+    <div class="trigger-row"><div class="trigger">Payment Failed (WooCommerce)</div><div class="desc">Tag "Payment Failed" → Email: "Payment couldn't be processed" → 48h wait → If unresolved: "Bookings paused" → If no action: Remove from active</div></div>
+    <div class="trigger-row"><div class="trigger">Inactivity (60 days no booking)</div><div class="desc">Tag "Inactive" → Email: "We miss you! [Special offer]" → 30 days wait → If still inactive: Remove from active lists</div></div>
+    <div class="trigger-row"><div class="trigger">Tutor Application Submitted</div><div class="desc">New contact (tutor_type="tutor") → Tag "Tutor Applicant" → Add to "Tutor Applicants 2024" → Email: "We verify within 48h" → Assign to admin</div></div>
+    <div class="trigger-row"><div class="trigger">Tutor Verified (Admin action)</div><div class="desc">→ "Verified Tutor" → Remove "Applicant" → Add "Verified", "Active Tutor" → Welcome email + SMS → Auto-enroll in onboarding course</div></div>
+    <div class="trigger-row"><div class="trigger">Tutor Rejected</div><div class="desc">Tag "Application Rejected" → Email: "Unfortunately..." → Archive to inactive</div></div>
+    <div class="trigger-row"><div class="trigger">Booking Received (Tutor)</div><div class="desc">bookings_count++ → IF 1: "Your first booking! Tips" → IF 10: "Active Tutor" → IF 50: "Popular" badge → SMS: "New booking! [Student] booked [DATE]"</div></div>
+    <div class="trigger-row"><div class="trigger">Session Completed & Paid (Tutor)</div><div class="desc">completed_sessions++ → total_earnings += amount → "Earning Tutors" segment → IF 100: "100 milestone!" → IF rating ≥ 4.8: "Top Rated" → Featured search</div></div>
+  </div>
+
+  <div class="card">
+    <h3>AutomatorWP Triggers (Workflow Orchestration)</h3>
+    <div class="trigger-row"><div class="trigger">Session Completed (Amelia)</div><div class="desc">→ Record earnings in ngt_earnings → Update tutor meta (total_earnings, completed_sessions) → Send session summary email to student → Create LMS lesson record</div></div>
+    <div class="trigger-row"><div class="trigger">Rating Submitted (GamiPress)</div><div class="desc">→ Calculate new tutor average rating → Run quality checks → IF < 4.0: Flag for review + Send performance alert → Sync to FluentCRM contact → Award GamiPress points to student</div></div>
+    <div class="trigger-row"><div class="trigger">Monthly Cron (1st of month, 2 AM)</div><div class="desc">→ Query all active tutors → Calculate: gross earnings - 15% fee - penalties + bonuses → If ≥ R100 threshold: Create payout record → Send email with tax invoice → Update admin dashboard</div></div>
+    <div class="trigger-row"><div class="trigger">No-Show Detected (Amelia Status)</div><div class="desc">→ Issue refund to student (if applicable) → Flag tutor with no-show count → Deduct GamiPress points → Send notification email to both parties</div></div>
+    <div class="trigger-row"><div class="trigger">Tutor Application Received</div><div class="desc">→ Create pending review task for admin → Send acknowledgment email → Add to FluentCRM "Tutor Applicants" segment</div></div>
+    <div class="trigger-row"><div class="trigger">User Registration (WordPress)</div><div class="desc">→ Check for referral code → If valid: Award R50 credit to referrer → Create referral record in ngt_referrals → Tag both users in FluentCRM</div></div>
+    <div class="trigger-row"><div class="trigger">Safety Flag (Custom AI)</div><div class="desc">→ Create high-priority Fluent Support ticket → Email safety team → SMS to designated manager → Temporarily pause affected sessions → Log incident</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Amelia Booking Triggers (Notifier for Amelia)</h3>
+    <div class="trigger-row"><div class="trigger">Booking Created (Immediate)</div><div class="desc">Email to Customer: Confirmation + calendar invite + Zoom link | Email to Tutor: New booking alert + student name/subject</div></div>
+    <div class="trigger-row"><div class="trigger">Upcoming Appointment (24h before)</div><div class="desc">Email + SMS to Customer: Reminder + join link + prep notes | Email to Tutor: Tomorrow's sessions summary</div></div>
+    <div class="trigger-row"><div class="trigger">Upcoming Appointment (1h before)</div><div class="desc">SMS to Customer: Final reminder + join link</div></div>
+    <div class="trigger-row"><div class="trigger">Appointment Status Changed</div><div class="desc">Email to Customer: Cancellation/reschedule confirmation</div></div>
+    <div class="trigger-row"><div class="trigger">No-Show Detected (15 min after)</div><div class="desc">Email to Tutor: No-show alert + 50% compensation note</div></div>
+  </div>
+
+  <div class="card">
+    <h3>GamiPress Triggers (Gamification)</h3>
+    <div class="trigger-row"><div class="trigger">Session Completed</div><div class="desc">Award 50 NGT Points to Student | Award 25 NGT Points to Tutor</div></div>
+    <div class="trigger-row"><div class="trigger">First Booking</div><div class="desc">Award "Beginner" Badge to Student (🥉) | Bonus 100 NGT Points</div></div>
+    <div class="trigger-row"><div class="trigger">5 Sessions (Student)</div><div class="desc">Award "Quick Learner" Badge (🏃) | Bonus 150 Points</div></div>
+    <div class="trigger-row"><div class="trigger">25 Sessions (Student)</div><div class="desc">Award "Scholar" Badge (🎓) | Bonus 500 Points</div></div>
+    <div class="trigger-row"><div class="trigger">100 Sessions (Student)</div><div class="desc">Award "Master" Badge (👑) | Bonus 2000 Points</div></div>
+    <div class="trigger-row"><div class="trigger">Tutor Verified</div><div class="desc">Award "Verified" Badge (✨)</div></div>
+    <div class="trigger-row"><div class="trigger">Rating ≥ 4.8 + 20+ reviews (Tutor)</div><div class="desc">Award "Highly Rated" Badge (⭐) | Featured placement in search</div></div>
+    <div class="trigger-row"><div class="trigger">50+ reviews (Tutor)</div><div class="desc">Award "Popular" Badge (🔥)</div></div>
+    <div class="trigger-row"><div class="trigger">30+ sessions in one subject (Tutor)</div><div class="desc">Award "Specialist" Badge (🎯)</div></div>
+    <div class="trigger-row"><div class="trigger">R100K+ lifetime earnings (Tutor)</div><div class="desc">Award "Elite Earner" Badge (💰)</div></div>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- TEST CASES -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-testcases">
+
+  <div class="card">
+    <h2>Test Cases</h2>
+    <p>Comprehensive test scenarios covering functional, integration, security, and user experience testing.</p>
+  </div>
+
+  <div class="card">
+    <h3>Functional Test Cases</h3>
+
+    <div class="tc"><h5>TC-01: User Registration — Parent</h5><p><strong>Given:</strong> Guest visits site | <strong>When:</strong> Registers as Parent via MasterStudy | <strong>Then:</strong> Account created, role="Student", FluentCRM contact created with tag "Lead"</p></div>
+
+    <div class="tc"><h5>TC-02: User Registration — Tutor Applicant</h5><p><strong>Given:</strong> Guest visits /become-a-tutor/ | <strong>When:</strong> Submits Fluent Forms application with docs | <strong>Then:</strong> Form submitted, tag "Tutor Applicant" in FluentCRM, admin notified, auto-responder email sent</p></div>
+
+    <div class="tc"><h5>TC-03: Tutor Verification — Approved</h5><p><strong>Given:</strong> Admin reviews tutor application | <strong>When:</strong> Admin clicks "Approve" | <strong>Then:</strong> Tag changes to "Verified Tutor", welcome email sent, MasterStudy onboarding course auto-enrolled, GamiPress "Verified" badge awarded, tutor appears in directory</p></div>
+
+    <div class="tc"><h5>TC-04: Tutor Verification — Rejected</h5><p><strong>Given:</strong> Admin reviews tutor application | <strong>When:</strong> Admin clicks "Reject" | <strong>Then:</strong> Tag "Application Rejected", rejection email sent, contact archived</p></div>
+
+    <div class="tc"><h5>TC-05: Book Session — Pay As You Go</h5><p><strong>Given:</strong> Parent logged in on /find-a-tutor/ | <strong>When:</strong> Filters tutors → Selects Tutor A → Books 60min Math session → Pays R400 via PayFast | <strong>Then:</strong> Amelia booking created, WooCommerce order completed, FluentCRM contact updated to "Active Customer", confirmation email + SMS sent, GamiPress points awarded</p></div>
+
+    <div class="tc"><h5>TC-06: Book Session — 10 Session Package</h5><p><strong>Given:</strong> Parent on /pricing/ | <strong>When:</strong> Selects "10 Session Package" → Pays R3,600 | <strong>Then:</strong> WooCommerce order for package created, 10 booking credits added to account, FluentCRM tag "Package Customer", welcome sequence starts</p></div>
+
+    <div class="tc"><h5>TC-07: Complete Session — Normal</h5><p><strong>Given:</strong> Scheduled session exists | <strong>When:</strong> Tutor marks attendance "present" + adds notes → Session marked complete | <strong>Then:</strong> Earnings recorded (R400 × 0.85 = R340 to tutor), ngt_earnings row created, tutor meta updated, student receives "Rate this session" email, GamiPress points awarded to both</p></div>
+
+    <div class="tc"><h5>TC-08: Complete Session — No-Show</h5><p><strong>Given:</strong> Scheduled session exists, student absent | <strong>When:</strong> Tutor marks "No-Show" after 15 min | <strong>Then:</strong> Tutor receives 50% compensation (R200), ngt_earnings row with penalty flag, student GamiPress points deducted, both notified via email</p></div>
+
+    <div class="tc"><h5>TC-09: Submit Rating — Positive (5★)</h5><p><strong>Given:</strong> Session completed, student receives rating email | <strong>When:</strong> Student rates 5★ + "Excellent tutor!" comment | <strong>Then:</strong> Rating saved in ngt_ratings, tutor average recalculated, FluentCRM updated, if tutor now ≥ 4.8 with 20+ reviews → "Highly Rated" badge</p></div>
+
+    <div class="tc"><h5>TC-10: Submit Rating — Negative (< 4★)</h5><p><strong>Given:</strong> Session completed | <strong>When:</strong> Student rates 2★ + complaint | <strong>Then:</strong> Rating saved, tutor average drops, AutomatorWP triggers: if < 4.0 → Performance alert email to tutor, admin flagged for review, Fluent Support ticket auto-created</p></div>
+
+    <div class="tc"><h5>TC-11: Monthly Payout Processing</h5><p><strong>Given:</strong> It's the 1st of the month, 2 AM | <strong>When:</strong> AutomatorWP Cron fires | <strong>Then:</strong> All tutors queried, earnings calculated (gross - 15% - penalties + bonuses), tutors with ≥ R100 receive payout records in ngt_payouts, tax invoices generated (Fluent PDF), payout emails sent, admin dashboard updated</p></div>
+
+    <div class="tc"><h5>TC-12: Referral — Successful</h5><p><strong>Given:</strong> Existing parent has referral code "REF123ABC" | <strong>When:</strong> New parent registers with referral code → Books first session | <strong>Then:</strong> Referrer receives R50 credit, ngt_referrals row created, GamiPress points awarded to both, FluentCRM tags updated</p></div>
+
+    <div class="tc"><h5>TC-13: Dashboard — Student View</h5><p><strong>Given:</strong> Student logged in | <strong>When:</strong> Visits /dashboard/ | <strong>Then:</strong> Shows: Next session with Join button, 4 KPI cards (sessions, balance, rating, achievements), recent sessions list, achievement gallery, referral link, billing history</p></div>
+
+    <div class="tc"><h5>TC-14: Dashboard — Tutor View</h5><p><strong>Given:</strong> Tutor logged in | <strong>When:</strong> Visits /instructor/ | <strong>Then:</strong> Shows: Monthly earnings, 4 KPI cards (earnings, sessions, rating, reviews), upcoming sessions, recent feedback, payout status, availability calendar, badges</p></div>
+
+    <div class="tc"><h5>TC-15: Dashboard — Admin View</h5><p><strong>Given:</strong> Admin logged in | <strong>When:</strong> Visits /wp-admin/ NextGen Tutors menu | <strong>Then:</strong> Shows: 6 KPI cards (revenue, customers, tutors, sessions, satisfaction), revenue trend chart, alerts, tutor/student tables with pagination, financial reports, payout management</p></div>
+  </div>
+
+  <div class="card">
+    <h3>Integration Test Cases</h3>
+
+    <div class="tc"><h5>TC-16: Amelia ↔ WooCommerce Sync</h5><p>Create booking in Amelia → Verify WooCommerce order created with correct product, price, and customer. Verify order status transitions (pending → processing → completed) trigger correct AutomatorWP actions.</p></div>
+
+    <div class="tc"><h5>TC-17: FluentCRM ↔ AutomatorWP Sync</h5><p>Trigger AutomatorWP workflow "Booking Created" → Verify FluentCRM contact is created/updated with correct tags, segments, and custom fields. Verify email campaign starts within expected timeframe.</p></div>
+
+    <div class="tc"><h5>TC-18: GamiPress ↔ AutomatorWP Sync</h5><p>Complete session → Verify GamiPress points awarded via AutomatorWP. Verify badge is awarded when threshold met. Verify rank progression works (Bronze → Silver → Gold → Platinum → Diamond).</p></div>
+
+    <div class="tc"><h5>TC-19: MasterStudy LMS ↔ Tutor Onboarding</h5><p>Approve tutor → Verify auto-enrollment in onboarding course. Complete all modules → Verify certificate generated. Verify tutor profile reflects training completion.</p></div>
+
+    <div class="tc"><h5>TC-20: PayFast ↔ WooCommerce Payment Flow</h5><p>Initiate payment → Redirect to PayFast sandbox → Complete payment → Return to site → Verify order status "completed", booking confirmed, all automations triggered.</p></div>
+  </div>
+
+  <div class="card">
+    <h3>Security Test Cases</h3>
+
+    <div class="tc"><h5>TC-21: SQL Injection Prevention</h5><p>Attempt SQL injection in all form fields (Fluent Forms search, contact form, tutor application). Verify all inputs sanitized, no SQL errors in logs.</p></div>
+
+    <div class="tc"><h5>TC-22: XSS Prevention</h5><p>Submit script tags in all text fields. Verify output is escaped (esc_html, esc_attr), no script execution in browser.</p></div>
+
+    <div class="tc"><h5>TC-23: Authentication Bypass</h5><p>Attempt to access dashboard endpoints without Bearer token. Verify 401 Unauthorized response. Attempt with expired/invalid token. Verify rejection.</p></div>
+
+    <div class="tc"><h5>TC-24: CSRF Protection</h5><p>Submit forms without nonce. Verify form rejected. Submit with expired nonce. Verify rejection.</p></div>
+
+    <div class="tc"><h5>TC-25: Role Escalation</h5><p>Login as Student, attempt to access Tutor dashboard or Admin pages. Verify access denied (403). Login as Tutor, attempt to access Admin pages. Verify denied.</p></div>
+
+    <div class="tc"><h5>TC-26: POPIA Consent</h5><p>Register under-18 student without parent consent checkbox. Verify registration blocked. Verify consent is stored in order meta and user meta.</p></div>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- TEST PLAN -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-testplan">
+
+  <div class="card">
+    <h2>Test Plan</h2>
+    <p>Overall testing strategy covering all phases from unit testing to production validation.</p>
+  </div>
+
+  <div class="card">
+    <h3>Testing Phases</h3>
+    <div class="phase"><div class="phase__num">1</div><div class="phase__content"><h4>Unit Testing (Local Docker)</h4><p>Test each PHP function in isolation: DB table creation, earnings calculation, rating averaging, payout processing, FluentCRM sync. Run PHP lint checks on all files.</p></div></div>
+    <div class="phase"><div class="phase__num">2</div><div class="phase__content"><h4>Integration Testing (Local Docker)</h4><p>Test plugin interactions: Amelia → WooCommerce → AutomatorWP → FluentCRM. Test webhook payloads. Test API endpoints with Postman/curl. Test AutomatorWP workflow execution.</p></div></div>
+    <div class="phase"><div class="phase__num">3</div><div class="phase__content"><h4>Smoke Testing (Staging)</h4><p>After deployment: all 9 pages render, admin accessible, no PHP errors, WP debug log clean, all plugin activations succeed, permalinks resolve.</p></div></div>
+    <div class="phase"><div class="phase__num">4</div><div class="phase__content"><h4>Functional Testing (Staging)</h4><p>End-to-end user journeys: parent registration → find tutor → book → pay → session → rate. Tutor application → verify → onboard → teach → get paid. All 26 test cases executed.</p></div></div>
+    <div class="phase"><div class="phase__num">5</div><div class="phase__content"><h4>Performance Testing (Staging)</h4><p>Lighthouse audit on all pages (target 95+). Load testing: 50 concurrent bookings. Database query optimization. Cache verification (LiteSpeed).</p></div></div>
+    <div class="phase"><div class="phase__num">6</div><div class="phase__content"><h4>UAT (Staging)</h4><p>Real users test the platform. Collect feedback on UX, bugs, and suggestions. 3 test parents, 3 test tutors, 1 test admin. Iterate on feedback before production launch.</p></div></div>
+    <div class="phase"><div class="phase__num">7</div><div class="phase__content"><h4>Production Validation</h4><p>Post-launch monitoring: error logs, analytics, payment success rate, email deliverability. First 24h intensive monitoring. Weekly review for first month.</p></div></div>
+  </div>
+
+  <div class="card">
+    <h3>Testing Environments</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Environment</th><th>URL</th><th>Purpose</th></tr>
+      <tr><td>Local Docker</td><td>localhost:8090</td><td>Development & unit testing</td></tr>
+      <tr><td>Staging</td><td>nextgentutors.co.za/staging/</td><td>Integration, functional, UAT</td></tr>
+      <tr><td>Production</td><td>nextgentutors.co.za</td><td>Live site (post-launch validation)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>Test Data Requirements</h3>
+    <ul>
+      <li>3 sample tutors (varied subjects, ratings, provinces)</li>
+      <li>5 sample students/parents (varied grades, subjects)</li>
+      <li>10 sample sessions (completed, upcoming, cancelled, no-show)</li>
+      <li>5 sample ratings (1-5 stars with comments)</li>
+      <li>3 sample WooCommerce products (hourly, package, monthly)</li>
+      <li>PayFast sandbox credentials for payment testing</li>
+      <li>Test email addresses for FluentCRM campaign verification</li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- TESTING CHECKLIST -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-testcheck">
+
+  <div class="card">
+    <h2>Testing Checklist</h2>
+    <p>Comprehensive checklist to verify before considering the deployment complete.</p>
+  </div>
+
+  <div class="card">
+    <h3>Pre-Deployment Checks</h3>
+    <ul class="checklist">
+      <li>PHP lint check: all theme files pass</li>
+      <li>PHP lint check: all plugin files pass</li>
+      <li>Hardcoded URL audit: no localhost, 127.0.0.1, or port numbers</li>
+      <li>plugin_dir_path() references replaced with get_template_directory()</li>
+      <li>All CREATE TABLE statements use IF NOT EXISTS</li>
+      <li>Theme file count >= 20 files</li>
+      <li>style.css version bumped to 2.1.0</li>
+      <li>Deployment .zip archive created and verified</li>
+      <li>Staging .htaccess fragment prepared</li>
+      <li>WP config overrides prepared</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Post-Deployment Verification</h3>
+    <ul class="checklist">
+      <li>All files uploaded and present on staging server</li>
+      <li>File permissions correct (755 dirs, 644 files)</li>
+      <li>Theme activated without errors</li>
+      <li>Plugin activated without errors</li>
+      <li>5 DB tables created: wp_ngt_earnings, wp_ngt_ratings, wp_ngt_payouts, wp_ngt_referrals, wp_ngt_session_logs</li>
+      <li>setup_nextgen.php ran successfully — 9 pages created</li>
+      <li>Homepage set as static front page</li>
+      <li>Permalinks flushed and working</li>
+      <li>All page URLs resolve (no 404s)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Page Verification (9 Pages)</h3>
+    <ul class="checklist">
+      <li>/ — Homepage renders with hero, CTA, subject grid, trust badges</li>
+      <li>/find-a-tutor/ — Search filters + tutor grid + booking flow</li>
+      <li>/become-a-tutor/ — Application form + benefits + process steps</li>
+      <li>/pricing/ — 3 pricing cards + comparison table + FAQ</li>
+      <li>/contact/ — Contact methods + form + department contacts</li>
+      <li>/about-us/ — Story, mission, values, team, CTA</li>
+      <li>/privacy-policy/ — Full POPIA-compliant privacy policy</li>
+      <li>/safety-guide/ — Screening, risks, vigilance, certificates</li>
+      <li>/terms-conditions/ — All 13 sections of terms</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Functional Verification</h3>
+    <ul class="checklist">
+      <li>Parent registration flow works</li>
+      <li>Tutor application flow works</li>
+      <li>Admin can verify/reject tutors</li>
+      <li>Booking flow: search → select → book → pay → confirm</li>
+      <li>Session completion: mark attendance → earnings recorded</li>
+      <li>Rating submission: rate → avg updated → badges checked</li>
+      <li>Student dashboard: all widgets load with data</li>
+      <li>Tutor dashboard: all widgets load with data</li>
+      <li>Admin dashboard: KPIs, tables, charts all functional</li>
+      <li>Referral system: code generation → usage → reward</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Automation Verification</h3>
+    <ul class="checklist">
+      <li>FluentCRM: Contact created on registration</li>
+      <li>FluentCRM: Tags applied correctly on booking</li>
+      <li>FluentCRM: Welcome email sequence triggered</li>
+      <li>FluentCRM: Inactivity campaign fires after 60 days</li>
+      <li>AutomatorWP: Session Completed → earnings recorded</li>
+      <li>AutomatorWP: Rating Submitted → avg updated</li>
+      <li>AutomatorWP: Monthly Cron → payouts calculated</li>
+      <li>Notifier: 24h reminder email + SMS sent</li>
+      <li>Notifier: 1h reminder SMS sent</li>
+      <li>GamiPress: Points awarded on session complete</li>
+      <li>GamiPress: Badges awarded at thresholds</li>
+      <li>GamiPress: Ranks progress correctly</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Security & Compliance</h3>
+    <ul class="checklist">
+      <li>SSL certificate valid (HTTPS enforced)</li>
+      <li>All forms have nonce protection</li>
+      <li>API endpoints require Bearer token</li>
+      <li>SQL injection prevented (prepared statements)</li>
+      <li>XSS prevented (output escaped)</li>
+      <li>POPIA consent checkbox at checkout</li>
+      <li>Bank account data encrypted</li>
+      <li>No sensitive data in logs</li>
+      <li>Rate limiting on login attempts</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Performance & Mobile</h3>
+    <ul class="checklist">
+      <li>Lighthouse score >= 90 on all pages</li>
+      <li>LCP < 3 seconds</li>
+      <li>Mobile responsive: 375px, 768px, 1024px, 1440px</li>
+      <li>All interactive elements work on touch devices</li>
+      <li>Forms submit correctly on mobile</li>
+      <li>Images lazy load (LiteSpeed)</li>
+      <li>CSS/JS minified (LiteSpeed)</li>
+      <li>No console errors on any page</li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- =============================================================== -->
+<!-- PAGE DESIGNS -->
+<!-- =============================================================== -->
+<section class="tab-panel" id="panel-designs">
+
+  <div class="card">
+    <h2>Content: Page Designs</h2>
+    <p>Design specification and content breakdown for every page on the NextGen Tutors platform. Each page uses the NextGen Tutors theme with gradient hero headers (blue-to-teal), card-based layouts, and scroll-triggered animations.</p>
+  </div>
+
+  <div class="grid-2">
+
+    <div class="page-card">
+      <h4>Homepage</h4>
+      <div class="url">/ (front-page.php)</div>
+      <p><strong>Hero:</strong> "Find Your Perfect Tutor" with dual CTAs (Find a Tutor / Login). Gradient background: linear-gradient(135deg, #0066CC, #00C896).</p>
+      <p><strong>Subject Grid:</strong> Mathematics, Physical Sciences, Life Sciences, English, Afrikaans, Accounting — displayed as interactive cards.</p>
+      <p><strong>Trust Badges:</strong> ID Verified, Background Checked, SACE Registered — icon row with labels.</p>
+      <p><strong>Testimonials:</strong> Parent review carousel (Slider Revolution).</p>
+      <p><strong>Plugins:</strong> SmartHead/WPBakery + Slider Revolution + Animate It! + Popup Maker.</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Find a Tutor</h4>
+      <div class="url">/find-a-tutor/ (page-find-tutor.php)</div>
+      <p><strong>Hero:</strong> "Find Your Perfect Tutor" — "Browse 500+ verified South African tutors".</p>
+      <p><strong>Sidebar Filters:</strong> Subject (checkboxes with counts), Grade Level (Foundation → FET), Verification (ID, SACE, Background), Hourly Rate (min–max inputs). "Can't find?" CTA card.</p>
+      <p><strong>Tutor Grid:</strong> Showing count + Sort dropdown → Tutor cards with name, subjects, rating stars, review count, sessions completed, hourly rate, [Book] button. Responsive grid.</p>
+      <p><strong>Plugins:</strong> Fluent Forms + Essential Grid + GamiPress (badges) + Amelia (booking).</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Become a Tutor</h4>
+      <div class="url">/become-a-tutor/ (page-become-tutor.php)</div>
+      <p><strong>Hero:</strong> "Share Your Knowledge, Earn Real Income" — "Flexible hours · Work from home · R15,000–R40,000/month". Green-to-blue gradient.</p>
+      <p><strong>Benefits Grid (6 cards):</strong> Competitive Earnings, Flexible Schedule, Work From Anywhere, Verified Students, Resources & Support, Build Your Brand.</p>
+      <p><strong>Process Steps (5):</strong> Numbered circles with titles and descriptions — hover effect: translateX(12px) + shadow.</p>
+      <p><strong>Requirements:</strong> Checklist (7 items) + Earnings Calculator widget (side by side).</p>
+      <p><strong>Plugins:</strong> Fluent Forms (multi-step application) + WPBakery + Custom JS (calculator).</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Pricing</h4>
+      <div class="url">/pricing/ (page-pricing.php)</div>
+      <p><strong>Hero:</strong> "Transparent, Affordable Pricing" — centered text.</p>
+      <p><strong>3 Pricing Cards:</strong> Pay As You Go (R400/hr), 10 Session Package (R3,600, featured with "Most Popular" badge), Monthly Unlimited (R5,500/mo).</p>
+      <p><strong>Trust Strip:</strong> 4 icons: Secure Payments, First Session Guarantee, 24/7 Support, No Hidden Fees.</p>
+      <p><strong>Comparison Table:</strong> 7 rows — NextGen vs Private Tutors vs Tutoring Centres.</p>
+      <p><strong>FAQ (5 questions):</strong> Accordion-style expandable answers.</p>
+      <p><strong>Plugins:</strong> WooCommerce + WPBakery + Animate It!</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Contact</h4>
+      <div class="url">/contact/ (page-contact.php)</div>
+      <p><strong>Hero:</strong> "Get in Touch" — "We're here to help parents, students, and tutors".</p>
+      <p><strong>Contact Methods (4 cards):</strong> Phone (M-F 8am-6pm), Email (24h response), WhatsApp (instant chat), Office (Sandton, JHB). Gradient icon circles.</p>
+      <p><strong>Contact Form:</strong> Fluent Forms: Name, Email, Phone, Role dropdown, Message.</p>
+      <p><strong>Department Contacts (4):</strong> Support, Tutor Apps, Billing, School Partnerships.</p>
+      <p><strong>Plugins:</strong> Fluent Forms + WPBakery.</p>
+    </div>
+
+    <div class="page-card">
+      <h4>About Us</h4>
+      <div class="url">/about-us/ (page-about.php)</div>
+      <p><strong>Hero:</strong> "Transforming Education in South Africa".</p>
+      <p><strong>Our Story:</strong> 2-column layout — text + image placeholder.</p>
+      <p><strong>Mission & Values (6 cards):</strong> Access for All, Safety First, Empower Educators, Measurable Results, Proudly South African, Continuous Innovation.</p>
+      <p><strong>Leadership Team (4):</strong> CEO, CTO, Head of Ops, Head of Product. Initials in gradient circles with hover scale.</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Privacy Policy</h4>
+      <div class="url">/privacy-policy/ (page-privacy-policy.php)</div>
+      <p><strong>Hero:</strong> "Privacy Policy — December 2025".</p>
+      <p><strong>Sections:</strong> Collection of Personal Information, Use of Personal Information, Use of Cookies, Security of Personal Information, Changes to this Statement, Contact Information.</p>
+      <p>POPIA-compliant language. Contact: info@nextgentutors.co.za.</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Safety Guide</h4>
+      <div class="url">/safety-guide/ (page-safety-guide.php)</div>
+      <p><strong>Hero:</strong> "Safety Guide — December 2025".</p>
+      <p><strong>What We Do (4 sections):</strong> Client screening, Tutor screening, Tutor selection, Tutoring process management.</p>
+      <p><strong>What You Can Do (3 sections):</strong> Be aware of 7 risks, Be vigilant, Apply for clearance certificate.</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Terms and Conditions</h4>
+      <div class="url">/terms-conditions/ (page-terms-conditions.php)</div>
+      <p><strong>Hero:</strong> "Terms and Conditions — December 2025".</p>
+      <p><strong>13 Sections:</strong> Introduction, Essential Point, Other Terms, Changes, Use, IP, Cookies, Liability, Law, Waiver, Cancellations & Refunds, Getting in Touch, Legal Disclosure.</p>
+      <p>South African governing law. Johannesburg North, Gauteng.</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Student Dashboard</h4>
+      <div class="url">/dashboard/ (student-dashboard.php)</div>
+      <p><strong>Widgets:</strong> Next Session with [Join], 4 KPI cards, Recent Sessions list, Achievement Gallery, Referral code + tracker, Billing History table.</p>
+      <p><strong>Plugins:</strong> Amelia + WooCommerce + GamiPress + Custom.</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Tutor Dashboard</h4>
+      <div class="url">/instructor/ (tutor-dashboard.php)</div>
+      <p><strong>Widgets:</strong> 4 KPI cards, Earnings Trend Chart (Chart.js), Upcoming Sessions, Recent Feedback, Payout Status, Availability Calendar (Amelia), Badge Gallery.</p>
+      <p><strong>Plugins:</strong> Amelia + Custom (ngt_earnings) + GamiPress + Chart.js.</p>
+    </div>
+
+    <div class="page-card">
+      <h4>Admin Dashboard</h4>
+      <div class="url">/wp-admin/ (admin-dashboard.php)</div>
+      <p><strong>Widgets:</strong> 6 KPI cards, Revenue Trend Chart, Alerts Panel, Tutor Management Table, Student Management Table, Financial Reports, Payout Management, Settings.</p>
+      <p><strong>Plugins:</strong> Custom (all ngt_ tables) + Chart.js + WordPress admin UI.</p>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>Design System Reference</h3>
+    <div class="grid-3">
+      <div class="kpi"><div class="kpi__label">Primary Color</div><div class="kpi__value" style="color:var(--ngt-primary)">#0066CC</div></div>
+      <div class="kpi"><div class="kpi__label">Secondary Color</div><div class="kpi__value" style="color:var(--ngt-secondary)">#00C896</div></div>
+      <div class="kpi"><div class="kpi__label">Accent Color</div><div class="kpi__value" style="color:var(--ngt-accent)">#FF6B35</div></div>
+      <div class="kpi"><div class="kpi__label">Display Font</div><div class="kpi__value" style="font-size:1rem">Sora (600-800)</div></div>
+      <div class="kpi"><div class="kpi__label">Body Font</div><div class="kpi__value" style="font-size:1rem">Inter (400-600)</div></div>
+      <div class="kpi"><div class="kpi__label">Hero Gradient</div><div class="kpi__value" style="font-size:.85rem">#0066CC → #00C896</div></div>
+    </div>
+    <p style="margin-top:12px"><strong>Common Patterns:</strong> All pages use gradient hero headers (400-560px), card-based content sections with 12px border-radius, scroll-triggered fade-in animations (ngt-animate classes), and responsive grids (auto-fit, minmax). Buttons: primary (filled), secondary (outline), white (on dark BGs).</p>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+(function(){
+  var nav = document.getElementById('tabNav');
+  var buttons = nav.querySelectorAll('button');
+  var panels = document.querySelectorAll('.tab-panel');
+
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var tab = this.getAttribute('data-tab');
+      buttons.forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      var panel = document.getElementById('panel-' + tab);
+      if(panel) panel.classList.add('active');
+      window.location.hash = tab;
+    });
+  });
+
+  var hash = window.location.hash.replace('#','');
+  if(hash){
+    var targetBtn = nav.querySelector('[data-tab="' + hash + '"]');
+    if(targetBtn) targetBtn.click();
+  }
+})();
+</script>
+
+</body>
+</html>

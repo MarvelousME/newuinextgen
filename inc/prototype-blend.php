@@ -166,9 +166,17 @@ function bi_render_blended_companion_blocks( $slug ) {
 		echo '<section class="section bi-prototype-marketplace" id="live-tutor-marketplace"><div class="wrap">';
 		echo do_shortcode( '[ngc_tutor_marketplace per_page="12"]' );
 		echo '</div></section>';
-	}
 
-	if ( 'find-a-tutor' === $slug && shortcode_exists( 'ngc_tutor_marketplace' ) ) {
+		// Marketplace used to early-return and skip the intake form — keep both.
+		if ( shortcode_exists( 'ngc_find_tutor_form' ) ) {
+			echo '<section class="section bi-prototype-intake" id="request-a-match"><div class="wrap bi-narrow">';
+			if ( function_exists( 'bi_shortcode_block' ) ) {
+				bi_shortcode_block( '[ngc_find_tutor_form]', __( 'Request Academic Support', 'beyondinfinity' ) );
+			} else {
+				echo do_shortcode( '[ngc_find_tutor_form]' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+			echo '</div></section>';
+		}
 		return;
 	}
 

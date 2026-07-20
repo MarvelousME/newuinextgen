@@ -1,0 +1,39 @@
+/**
+ * Skin: Beyond Infinity (default) — semantic tokens only.
+ */
+html[data-bi-skin="beyond-infinity"] {
+  --ngt-primary: #07172f;
+  --ngt-primary-dark: #031126;
+  --ngt-primary-light: #e8f4ff;
+  --ngt-secondary: #28c7f7;
+  --ngt-secondary-dark: #1aa8d4;
+  --ngt-secondary-light: #d6f4ff;
+  --ngt-accent: #ffb703;
+  --ngt-accent-dark: #e6a502;
+  --ngt-accent-light: #fff3d6;
+  --ngt-bg: #f5f8ff;
+  --ngt-white: #ffffff;
+  --ngt-surface: #ffffff;
+  --ngt-border: #e6edf7;
+  --ngt-border-light: #e6edf7;
+  --ngt-text: #10213f;
+  --ngt-text-2: #687386;
+  --ngt-text-3: #94a3b8;
+  --ngt-success: #10b981;
+  --ngt-success-bg: #d1fae5;
+  --ngt-warning: #f59e0b;
+  --ngt-error: #ef4444;
+  --ngt-font-display: "Sora", system-ui, sans-serif;
+  --ngt-font-body: "Inter", system-ui, sans-serif;
+
+  --ng-color-primary: var(--ngt-primary);
+  --ng-color-secondary: var(--ngt-secondary);
+  --ng-color-accent: var(--ngt-accent);
+  --ng-color-bg: var(--ngt-bg);
+  --ng-color-surface: var(--ngt-surface);
+  --ng-color-ink: var(--ngt-text);
+  --ng-color-muted: var(--ngt-text-2);
+  --ng-color-border: var(--ngt-border);
+  --ng-font-heading: var(--ngt-font-display);
+  --ng-font-body: var(--ngt-font-body);
+}

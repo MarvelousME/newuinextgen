@@ -82,10 +82,10 @@ function bi_login_redirect( $redirect_to, $requested, $user ) {
     if ( in_array( 'tutor', $user->roles, true ) ) {
         return home_url( '/tutor-dashboard' );
     }
-    if ( array_intersect( [ 'parent', 'parent_guardian' ], $user->roles, true ) ) {
+    if ( array_intersect( [ 'parent', 'parent_guardian' ], (array) $user->roles ) ) {
         return home_url( '/parent-dashboard' );
     }
-    if ( array_intersect( [ 'student', 'subscriber' ], $user->roles, true ) ) {
+    if ( array_intersect( [ 'student', 'subscriber' ], (array) $user->roles ) ) {
         return home_url( '/student-dashboard' );
     }
 

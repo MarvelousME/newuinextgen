@@ -44,6 +44,7 @@ class NGC_Rest {
 		NGC_Rest_Marketplace::register();
 		NGC_Rest_Page_Forms_Registry::register();
 		NGC_Rest_System_Log::register();
+		NGC_Rest_Metrics::register();
 		NGC_Rest_Legacy_Alias::register_alias_routes();
 	}
 

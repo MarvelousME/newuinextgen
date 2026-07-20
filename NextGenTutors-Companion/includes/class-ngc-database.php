@@ -121,7 +121,7 @@ class NGC_Database {
 			amount decimal(12,2) NOT NULL DEFAULT 0.00,
 			currency varchar(8) NOT NULL DEFAULT 'ZAR',
 			order_id bigint(20) unsigned NOT NULL DEFAULT 0,
-			amelia_booking_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			amelia_booking_id bigint(20) unsigned NULL DEFAULT NULL,
 			notes longtext NULL,
 			meta longtext NULL,
 			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -860,6 +860,35 @@ class NGC_Database {
 		}
 
 		self::ensure_uuid_columns();
+		self::ensure_amelia_booking_id_nullable();
+	}
+
+	/**
+	 * Allow multiple non-Amelia bookings: UNIQUE(amelia_booking_id) must use NULL, not 0.
+	 */
+	public static function ensure_amelia_booking_id_nullable() {
+		global $wpdb;
+		$table = self::table( 'bookings' );
+		if ( ! $table ) {
+			return;
+		}
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$exists = $wpdb->get_var( "SHOW TABLES LIKE '{$table}'" );
+		if ( ! $exists ) {
+			return;
+		}
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$col = $wpdb->get_row( "SHOW COLUMNS FROM {$table} LIKE 'amelia_booking_id'" );
+		if ( ! $col ) {
+			return;
+		}
+		$null_ok = isset( $col->Null ) && 'YES' === strtoupper( (string) $col->Null );
+		if ( ! $null_ok ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->query( "ALTER TABLE {$table} MODIFY amelia_booking_id bigint(20) unsigned NULL DEFAULT NULL" );
+		}
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( "UPDATE {$table} SET amelia_booking_id = NULL WHERE amelia_booking_id = 0" );
 	}
 
 	/**

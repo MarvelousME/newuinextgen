@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-07-17",
+  "status": "PARTIAL",
+  "note": "Derived from inventory classifications; not a proof of zero runtime reference. Elementor/WPBakery meta scan still BLOCKED.",
+  "unused_candidates_policy": "Mark UNUSED only after enqueue + URL + meta scans. Sourcemaps and to-discard trees listed separately.",
+  "see_also": [
+    "file-inventory.json",
+    "removal-candidates.json",
+    "duplicate-files.json"
+  ],
+  "high_confidence_review_queues": [
+    {
+      "queue": "to-discard-mirror",
+      "reason": "Explicit discard tree; high duplicate overlap with live theme",
+      "status": "REDUNDANT",
+      "action": "Quarantine after baseline"
+    },
+    {
+      "queue": "sourcemaps",
+      "reason": "Build artifacts",
+      "status": "UNUSED",
+      "action": "Review per bundle"
+    }
+  ]
+}

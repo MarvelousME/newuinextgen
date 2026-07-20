@@ -71,6 +71,44 @@ class NGC_Roles {
 				'ngc_review_tutors'      => true,
 				'ngc_view_audit'         => true,
 			],
+			'ngc_compliance' => [
+				'read'               => true,
+				'ngc_view_dashboard' => true,
+				'ngc_view_audit'     => true,
+				'ngc_manage_privacy' => true,
+			],
+			'ngc_safeguarding' => [
+				'read'                    => true,
+				'ngc_view_dashboard'      => true,
+				'ngc_manage_safeguarding' => true,
+				'ngc_view_audit'          => true,
+			],
+			'ngc_operations' => [
+				'read'                => true,
+				'ngc_view_dashboard'  => true,
+				'ngc_manage_matches'  => true,
+				'ngc_manage_bookings' => true,
+				'ngc_admin_operations'=> true,
+			],
+			'ngc_content' => [
+				'read'               => true,
+				'ngc_view_dashboard' => true,
+				'edit_posts'         => true,
+				'edit_pages'         => true,
+				'upload_files'       => true,
+			],
+			'ngc_auditor' => [
+				'read'               => true,
+				'ngc_view_dashboard' => true,
+				'ngc_view_audit'     => true,
+				'ngc_view_finance'   => true,
+			],
+			'ngc_ai_ops' => [
+				'read'               => true,
+				'ngc_view_dashboard' => true,
+				'ngc_admin_operations' => true,
+				'ngc_view_audit'     => true,
+			],
 		];
 	}
 
@@ -112,13 +150,20 @@ class NGC_Roles {
 	 */
 	public static function role_label( $slug ) {
 		$labels = [
-			'parent'          => __( 'Parent', 'nextgencompanion' ),
-			'parent_guardian' => __( 'Parent / Guardian', 'nextgencompanion' ),
-			'student'         => __( 'Student', 'nextgencompanion' ),
-			'tutor'           => __( 'Tutor', 'nextgencompanion' ),
-			'tutor_applicant' => __( 'Tutor Applicant', 'nextgencompanion' ),
-			'ngc_finance'     => __( 'NGC Finance', 'nextgencompanion' ),
-			'ngc_support'     => __( 'NGC Support', 'nextgencompanion' ),
+			'parent'            => __( 'Parent', 'nextgencompanion' ),
+			'parent_guardian'   => __( 'Parent / Guardian', 'nextgencompanion' ),
+			'student'           => __( 'Student', 'nextgencompanion' ),
+			'child_learner'     => __( 'Child Learner', 'nextgencompanion' ),
+			'tutor'             => __( 'Tutor', 'nextgencompanion' ),
+			'tutor_applicant'   => __( 'Tutor Applicant', 'nextgencompanion' ),
+			'ngc_finance'       => __( 'NGC Finance', 'nextgencompanion' ),
+			'ngc_support'       => __( 'NGC Support', 'nextgencompanion' ),
+			'ngc_compliance'    => __( 'NGC Compliance', 'nextgencompanion' ),
+			'ngc_safeguarding'  => __( 'NGC Safeguarding', 'nextgencompanion' ),
+			'ngc_operations'    => __( 'NGC Operations', 'nextgencompanion' ),
+			'ngc_content'       => __( 'NGC Content', 'nextgencompanion' ),
+			'ngc_auditor'       => __( 'NGC Auditor', 'nextgencompanion' ),
+			'ngc_ai_ops'        => __( 'NGC AI Operations', 'nextgencompanion' ),
 		];
 		return $labels[ $slug ] ?? ucfirst( str_replace( '_', ' ', $slug ) );
 	}

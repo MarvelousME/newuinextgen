@@ -1,0 +1,36 @@
+---
+description: Canonical autonomous coding-agent master directive (incl. Phase 14 demo)
+alwaysApply: true
+---
+
+# Autonomous coding-agent master directive
+
+The authoritative master prompt for this repository is:
+
+```text
+.agent-audit/AUTONOMOUS-CODING-AGENT-MASTER-DIRECTIVE.md
+```
+
+Treat it as mandatory operating policy for audit, remediation, agent autonomy, and demonstration work.
+
+## Phase 14 (mandatory demo evidence)
+
+Relational demo seeding, real trigger execution, role-based login verification, and end-to-end evidence are **mandatory** before claiming evaluator-ready demo completeness.
+
+Do **not**:
+
+- Seed unrelated random records or static JSON pretending to be live data
+- Hard-code dashboard values or mock API responses
+- Fabricate trigger / notification / payment / audit history
+- Bypass domain services when creating demo entities
+- Expose demo login selectors or sandbox side-effects in production
+
+Do:
+
+- Create demo entities through domain services, APIs, workflows, and sandbox adapters
+- Label demo records (`is_demo`, `demo_scenario_id`, `demo_seed_version`)
+- Execute real events, handlers, notifications (sandbox), and integrations
+- Produce journey catalogues, evidence packs, and the live demonstration runbook under `.agent-audit/demo/` and `.agent-audit/evidence/demo/`
+- Keep seed idempotent, resettable, and blocked outside demo mode
+
+Phase status for Phase 14 must be exactly one of: `COMPLETE` | `COMPLETE WITH LIMITATIONS` | `BLOCKED` | `FAILED`.

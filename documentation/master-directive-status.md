@@ -2,6 +2,7 @@
 
 **Solution root:** `c:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen`  
 **Updated:** 2026-07-20  
+**Master prompt (canonical):** `.agent-audit/AUTONOMOUS-CODING-AGENT-MASTER-DIRECTIVE.md`  
 **Destructive sanitisation:** NOT STARTED (quarantine-only until Stage 8 gate)
 
 ## Exact paths
@@ -108,6 +109,7 @@
 | 8 Sanitisation | PARTIAL | Stage 8 pilot scripts + quarantine folder; no mass deletion |
 | 9 Optimisation | PARTIAL | conditional enqueue; kind CSS + lazy vendor loader (integration verified) |
 | 10 Final verification | PARTIAL | CI: php-unit + integration + full Playwright + Docker smoke |
+| **14 Full relational demo** | **COMPLETE WITH LIMITATIONS** | Seeder + Control Centre + CLI + journeys; report `.agent-audit/reports/demo-implementation-report.md` |
 
 ## Acceptance gaps (high priority)
 

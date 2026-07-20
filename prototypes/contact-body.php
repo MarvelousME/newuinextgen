@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
     </div>
 
     <div class="form-card" data-reveal-x style="--rx:50px">
-      <img src="<?php echo esc_url( NGT_URI ); ?>/assets/img/logo.svg" alt="NextGen Tutors" style="height:72px;width:auto;display:block;margin:0 auto 18px" />
+      <img src="<?php echo esc_url( ( defined( 'BI_URI' ) ? BI_URI : ( defined( 'NGT_URI' ) ? NGT_URI : get_stylesheet_directory_uri() ) ) ); ?>/assets/img/logo.svg" alt="NextGen Tutors" style="height:72px;width:auto;display:block;margin:0 auto 18px" />
       <h2 class="h-serif" style="font-size:24px;color:var(--navy);margin-bottom:6px;text-align:center">Send a Message</h2>
       <p style="font-size:13.5px;color:var(--slate-500);font-weight:500;margin-bottom:24px;text-align:center">Tell us about your child's grade, subject and goals.</p>
       <form id="contact-form">

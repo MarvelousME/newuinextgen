@@ -26,6 +26,7 @@ class NGC_Bookings {
 		$table = NGC_Database::table( 'bookings' );
 
 		$row = [
+			'uuid'             => class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4(),
 			'match_id'         => (int) ( $data['match_id'] ?? 0 ),
 			'student_user_id'  => (int) ( $data['student_user_id'] ?? 0 ),
 			'tutor_user_id'    => (int) ( $data['tutor_user_id'] ?? 0 ),
@@ -155,12 +156,7 @@ class NGC_Bookings {
 					'booking_id'      => (string) $booking_id,
 				]
 			);
-			do_action( 'ngc_lesson_completed', [
-				'student_user_id' => (string) $booking->student_user_id,
-				'tutor_user_id'   => (string) $booking->tutor_user_id,
-				'progress_note'   => $booking->notes,
-				'booking_id'      => (string) $booking_id,
-			] );
+			// NGC_Workflows::dispatch already fires ngc_lesson_completed — do not duplicate.
 			self::log_session( $booking_id, 'attended' );
 			NGC_Reviews::record_earning( $booking );
 		}
@@ -270,6 +266,7 @@ class NGC_Bookings {
 		$wpdb->insert(
 			$table,
 			[
+				'uuid'              => class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4(),
 				'student_user_id'   => $student ? (int) $student->ID : 0,
 				'tutor_user_id'     => $tutor_id,
 				'subject'           => sanitize_text_field( (string) ( $data['serviceName'] ?? $data['service'] ?? 'Amelia session' ) ),
@@ -280,8 +277,7 @@ class NGC_Bookings {
 				'meta'              => wp_json_encode( [ 'source' => 'amelia', 'amelia' => $data ] ),
 				'created_at'        => current_time( 'mysql', true ),
 				'updated_at'        => current_time( 'mysql', true ),
-			],
-			[ '%d', '%d', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s' ]
+			]
 		);
 		return (int) $wpdb->insert_id;
 	}

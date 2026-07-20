@@ -1,0 +1,75 @@
+/**
+ * Scoped styles for imported static HTML content classes.
+ * Loaded only on pages with _revamp_source_html_file meta.
+ * Does not override global theme styles.
+ */
+.rhi-imported-content .pagehead,
+.entry-content .pagehead {
+  position: relative;
+  padding: 48px 0 32px;
+}
+
+.entry-content .section {
+  padding: 48px 0;
+}
+
+.entry-content .stat-grid,
+.entry-content .values-grid,
+.entry-content .about-grid,
+.entry-content .contact-grid,
+.entry-content .kpi-grid,
+.entry-content .dash-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.entry-content .stat-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.entry-content .values-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.entry-content .stat-card,
+.entry-content .value-card,
+.entry-content .kpi-card,
+.entry-content .panel {
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.entry-content .cta-band {
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.entry-content .timeline .tl-item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.entry-content .rhi-review-note {
+  padding: 12px 16px;
+  background: #fff8e5;
+  border-left: 4px solid #dba617;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .entry-content .about-grid,
+  .entry-content .contact-grid,
+  .entry-content .directory {
+    grid-template-columns: 1fr;
+  }
+
+  .entry-content .cta-band {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

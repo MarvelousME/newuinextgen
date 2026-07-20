@@ -1,0 +1,1832 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\marvi\\AppData\\Local\\Volta\\tools\\image\\node\\24.18.0\\node.exe",
+      "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--headed",
+      "--workers=1"
+    ],
+    "configFile": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\playwright.config.ts",
+    "rootDir": "C:/Users/marvi/Downloads/wetransfer_newuinextgen_2026-07-07_1929/newuinextgen/e2e/workflows",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/marvi/Downloads/wetransfer_newuinextgen_2026-07-07_1929/newuinextgen/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chrome",
+        "name": "chrome",
+        "testDir": "C:/Users/marvi/Downloads/wetransfer_newuinextgen_2026-07-07_1929/newuinextgen/e2e/workflows",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "reports/html",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "become-a-tutor-calculator.spec.ts",
+      "file": "become-a-tutor-calculator.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Become a Tutor — income calculator",
+          "file": "become-a-tutor-calculator.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders shortcode calculator and recalculates on input",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 23305,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:02:06.341Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9497377b850c962dfb4c-7db3e73fd695a7c17231",
+              "file": "become-a-tutor-calculator.spec.ts",
+              "line": 5,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blueprint-wf-gaps-smoke.spec.ts",
+      "file": "blueprint-wf-gaps-smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Blueprint WF gaps — public + ops smoke",
+          "file": "blueprint-wf-gaps-smoke.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "WF-04/05/06 tutor journey pages render",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19260,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:02:29.997Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e49593f2145a58d7003e-d51d9c8a2856aa05ea84",
+              "file": "blueprint-wf-gaps-smoke.spec.ts",
+              "line": 10,
+              "column": 7
+            },
+            {
+              "title": "WF-09/13/15 package and about surfaces",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 41597,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:02:49.281Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e49593f2145a58d7003e-9b7d8ae0b57c95a68de8",
+              "file": "blueprint-wf-gaps-smoke.spec.ts",
+              "line": 17,
+              "column": 7
+            },
+            {
+              "title": "WF-20/21 safeguarding + privacy pages",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7642,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:03:30.910Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e49593f2145a58d7003e-77eb3cb4e231b66d2acd",
+              "file": "blueprint-wf-gaps-smoke.spec.ts",
+              "line": 29,
+              "column": 7
+            },
+            {
+              "title": "WF-22/23 admin platform reachable when logged in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 29371,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:03:38.590Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e49593f2145a58d7003e-46bdc2f520e7ec7b4844",
+              "file": "blueprint-wf-gaps-smoke.spec.ts",
+              "line": 45,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blueprint-wf01-wf02-wf19-registration.spec.ts",
+      "file": "blueprint-wf01-wf02-wf19-registration.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Blueprint WF-01 Parent Registration",
+          "file": "blueprint-wf01-wf02-wf19-registration.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "parent register child form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31312,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:04:08.048Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "50082406f01766e573de-f360ff9abbe752e7a4e3",
+              "file": "blueprint-wf01-wf02-wf19-registration.spec.ts",
+              "line": 5,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Blueprint WF-02 Student Registration",
+          "file": "blueprint-wf01-wf02-wf19-registration.spec.ts",
+          "line": 25,
+          "column": 6,
+          "specs": [
+            {
+              "title": "student self-registration form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 29363,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:04:39.392Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "50082406f01766e573de-7ffbfb7fa91349f77fed",
+              "file": "blueprint-wf01-wf02-wf19-registration.spec.ts",
+              "line": 26,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Blueprint WF-19 Support",
+          "file": "blueprint-wf01-wf02-wf19-registration.spec.ts",
+          "line": 45,
+          "column": 6,
+          "specs": [
+            {
+              "title": "contact support form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22560,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:05:08.786Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "50082406f01766e573de-371912aba33bb8984e58",
+              "file": "blueprint-wf01-wf02-wf19-registration.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "login page renders sign-in form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9146,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:05:31.380Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "50082406f01766e573de-da202a37fb00197bf7d7",
+              "file": "blueprint-wf01-wf02-wf19-registration.spec.ts",
+              "line": 65,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blueprint-wf03-tutor-registration.spec.ts",
+      "file": "blueprint-wf03-tutor-registration.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Blueprint WF-03 Tutor Registration",
+          "file": "blueprint-wf03-tutor-registration.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "become-a-tutor form — fill all fields and submit",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24357,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:05:40.594Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0c42bdf0d9a6af4cb23-f3d588f7a0541416b9dd",
+              "file": "blueprint-wf03-tutor-registration.spec.ts",
+              "line": 5,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blueprint-wf07-wf10-booking-payment.spec.ts",
+      "file": "blueprint-wf07-wf10-booking-payment.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Blueprint WF-07 Tutor Matching",
+          "file": "blueprint-wf07-wf10-booking-payment.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "find-a-tutor form — parent assessment request",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22261,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:06:04.990Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "559a6cb26b2795b53e40-0dc2f91d05c79fb0b956",
+              "file": "blueprint-wf07-wf10-booking-payment.spec.ts",
+              "line": 13,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Blueprint WF-10 Booking",
+          "file": "blueprint-wf07-wf10-booking-payment.spec.ts",
+          "line": 35,
+          "column": 6,
+          "specs": [
+            {
+              "title": "homepage booking modal — open assessment CTA",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24528,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:06:27.300Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "559a6cb26b2795b53e40-af1d1abce122903fa21d",
+              "file": "blueprint-wf07-wf10-booking-payment.spec.ts",
+              "line": 36,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+      "file": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Blueprint WF-08 Manual Matching",
+          "file": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "REST matches list requires authentication",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3405,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:06:51.861Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9159d978cd2365f296-2503e73e995c68e5c75f",
+              "file": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "REST match assign route is registered",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2791,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:06:55.281Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9159d978cd2365f296-c1646d6382efc07763e7",
+              "file": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+              "line": 9,
+              "column": 7
+            },
+            {
+              "title": "smart match endpoint responds",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3126,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:06:58.081Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9159d978cd2365f296-a64e3b810fef63b03507",
+              "file": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+              "line": 16,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Blueprint WF-12 Invoices & WF-14 Cancellation",
+          "file": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+          "line": 22,
+          "column": 6,
+          "specs": [
+            {
+              "title": "REST invoices list requires authentication",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3446,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:01.217Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9159d978cd2365f296-f6b1852b4569d94e1a0e",
+              "file": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+              "line": 23,
+              "column": 7
+            },
+            {
+              "title": "REST bookings status transition requires authentication",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2664,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:04.670Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9159d978cd2365f296-d5e19181d1e4ea547081",
+              "file": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "UI library verify endpoint requires admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2479,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:07.345Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9159d978cd2365f296-8ba607f7f7e4786f1156",
+              "file": "blueprint-wf08-wf12-wf14-ops.spec.ts",
+              "line": 35,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blueprint-wf11-payment.spec.ts",
+      "file": "blueprint-wf11-payment.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Blueprint WF-11 Payment Workflow",
+          "file": "blueprint-wf11-payment.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "REST wallet requires authentication",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2746,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:09.838Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "74229dcbfebcf8fbada8-d4210bf36bb7521c0548",
+              "file": "blueprint-wf11-payment.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "REST invoices list requires authentication",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3168,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:12.594Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "74229dcbfebcf8fbada8-c5cb766b924d2f7b010a",
+              "file": "blueprint-wf11-payment.spec.ts",
+              "line": 9,
+              "column": 7
+            },
+            {
+              "title": "WooCommerce storefront responds or returns expected fallback",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3488,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:15.771Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "74229dcbfebcf8fbada8-d3d63c70b7bccac0e8ac",
+              "file": "blueprint-wf11-payment.spec.ts",
+              "line": 14,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts",
+      "file": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Blueprint WF-17 Parent Review & WF-18 Social Proof",
+          "file": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "success stories / testimonials section renders",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7209,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:19.272Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7acefbd670c7a6115dc2-55d559351e94ae3de079",
+              "file": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "trust / proof section interactive slider",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7403,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:26.494Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7acefbd670c7a6115dc2-029b2594a6e98b39cd6a",
+              "file": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts",
+              "line": 15,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Blueprint WF-16 Payouts & Pricing Surface",
+          "file": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts",
+          "line": 31,
+          "column": 6,
+          "specs": [
+            {
+              "title": "pricing page loads plan information",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7947,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:33.915Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7acefbd670c7a6115dc2-8f56efc419b997a4f456",
+              "file": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts",
+              "line": 32,
+              "column": 7
+            },
+            {
+              "title": "REST ngt/v1 sections alias returns homepage CMS",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3324,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:41.882Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7acefbd670c7a6115dc2-6bec91bf43d9aa64d68b",
+              "file": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts",
+              "line": 37,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blueprint-wf24-reminders-homepage.spec.ts",
+      "file": "blueprint-wf24-reminders-homepage.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Blueprint WF-24 Notification & Homepage Touchpoints",
+          "file": "blueprint-wf24-reminders-homepage.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "homepage renders branded hero or CMS headline",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7272,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:45.225Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "de94d8712cacc5118077-8ecadf2b3a133e7af7f4",
+              "file": "blueprint-wf24-reminders-homepage.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "FAQ accordion — click expands answer when present",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "FAQ markup not on Elementor home",
+                      "location": {
+                        "file": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\workflows\\blueprint-wf24-reminders-homepage.spec.ts",
+                        "line": 19,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 7571,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:07:52.512Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "FAQ markup not on Elementor home",
+                          "location": {
+                            "file": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\workflows\\blueprint-wf24-reminders-homepage.spec.ts",
+                            "line": 19,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "de94d8712cacc5118077-738408b8c88497ff4ea8",
+              "file": "blueprint-wf24-reminders-homepage.spec.ts",
+              "line": 15,
+              "column": 7
+            },
+            {
+              "title": "subject explorer tabs — switch tab updates panel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Need at least 2 subject tabs",
+                      "location": {
+                        "file": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\workflows\\blueprint-wf24-reminders-homepage.spec.ts",
+                        "line": 31,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 8140,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:08:00.102Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Need at least 2 subject tabs",
+                          "location": {
+                            "file": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\workflows\\blueprint-wf24-reminders-homepage.spec.ts",
+                            "line": 31,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "de94d8712cacc5118077-54f5b41290d60731d52d",
+              "file": "blueprint-wf24-reminders-homepage.spec.ts",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "pricing section or pricing page visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9315,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:08:08.261Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "de94d8712cacc5118077-75709cfaeca1ea07f1ef",
+              "file": "blueprint-wf24-reminders-homepage.spec.ts",
+              "line": 38,
+              "column": 7
+            },
+            {
+              "title": "booking CTA or home brand surface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14483,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:08:17.615Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "de94d8712cacc5118077-c4798f3fec180433ec3d",
+              "file": "blueprint-wf24-reminders-homepage.spec.ts",
+              "line": 43,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blueprint-wf25-dashboards.spec.ts",
+      "file": "blueprint-wf25-dashboards.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Blueprint WF-25 Dashboard Workflow",
+          "file": "blueprint-wf25-dashboards.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "login page exposes dashboard entry route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15587,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:08:32.133Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9eb053faf1e3a6b31e24-acf9666c10e49668f3fd",
+              "file": "blueprint-wf25-dashboards.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "REST student dashboard requires authentication",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2982,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:08:47.737Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9eb053faf1e3a6b31e24-d73f04e0f8b730cfb139",
+              "file": "blueprint-wf25-dashboards.spec.ts",
+              "line": 12,
+              "column": 7
+            },
+            {
+              "title": "REST parent dashboard requires authentication",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2368,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:08:50.736Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9eb053faf1e3a6b31e24-1929fef650177a3f4d13",
+              "file": "blueprint-wf25-dashboards.spec.ts",
+              "line": 17,
+              "column": 7
+            },
+            {
+              "title": "REST tutor dashboard requires authentication",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2432,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:08:53.111Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9eb053faf1e3a6b31e24-8667205053ccb078f0e1",
+              "file": "blueprint-wf25-dashboards.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "REST admin dashboard requires admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1895,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:08:55.551Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9eb053faf1e3a6b31e24-17b9f1a26da1f6710f81",
+              "file": "blueprint-wf25-dashboards.spec.ts",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "parent-dashboard route is reachable (auth gate or shell)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18128,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:08:57.453Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9eb053faf1e3a6b31e24-41ebbb9fcdd3b1f3b9b6",
+              "file": "blueprint-wf25-dashboards.spec.ts",
+              "line": 32,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ngt-ui-demo-smoke.spec.ts",
+      "file": "ngt-ui-demo-smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "NGT UI Demo page",
+          "file": "ngt-ui-demo-smoke.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders catalog components with data-ngt-ui markers",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14089,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:09:15.600Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3b9c97e5b60c749a27ae-34736b049b7a4b330a3e",
+              "file": "ngt-ui-demo-smoke.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "interactive globe canvas is present",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16905,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:09:29.724Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3b9c97e5b60c749a27ae-79cf00731a670611addd",
+              "file": "ngt-ui-demo-smoke.spec.ts",
+              "line": 18,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "phase14-demo-walkthrough.spec.ts",
+      "file": "phase14-demo-walkthrough.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 14 Relational Demo Walkthrough",
+          "file": "phase14-demo-walkthrough.spec.ts",
+          "line": 81,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Section 0–2: admin enables demo mode, seeds, and verifies",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 63891,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:09:47.783Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "15724f4555663a995ed1-ef6060e129eb327b00a6",
+              "file": "phase14-demo-walkthrough.spec.ts",
+              "line": 89,
+              "column": 7
+            },
+            {
+              "title": "Section 3: parent persona real login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 35246,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:10:52.022Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "15724f4555663a995ed1-88dc1ee1b4c5ace3c298",
+              "file": "phase14-demo-walkthrough.spec.ts",
+              "line": 133,
+              "column": 7
+            },
+            {
+              "title": "Section 3b: tutor persona real login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16857,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:11:27.316Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "15724f4555663a995ed1-c8023fa390aaa9bfac50",
+              "file": "phase14-demo-walkthrough.spec.ts",
+              "line": 162,
+              "column": 7
+            },
+            {
+              "title": "Sections 4–6: booking graph, ops cases, journeys + evidence",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 83968,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:11:44.225Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "15724f4555663a995ed1-4fcc6b4929ce8edaa25a",
+              "file": "phase14-demo-walkthrough.spec.ts",
+              "line": 183,
+              "column": 7
+            },
+            {
+              "title": "Section 7: reset + reseed still verifies",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 139440,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-20T21:13:08.232Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "15724f4555663a995ed1-95805ce9979e1dffa1d0",
+              "file": "phase14-demo-walkthrough.spec.ts",
+              "line": 209,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-20T21:02:05.693Z",
+    "duration": 802552.373,
+    "expected": 41,
+    "skipped": 2,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

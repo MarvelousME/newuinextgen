@@ -73,7 +73,19 @@ class NGC_System_Log {
 			[ '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%s' ]
 		);
 
-		return (int) $wpdb->insert_id;
+		$id = (int) $wpdb->insert_id;
+		/**
+		 * Fires after a system log row is written.
+		 *
+		 * @param string               $level   Level.
+		 * @param string               $source  Source.
+		 * @param string               $channel Channel.
+		 * @param string               $message Message.
+		 * @param array<string, mixed> $context Context.
+		 */
+		do_action( 'ngc_system_log_written', $level, $source, $channel, $message, is_array( $context ) ? $context : [] );
+
+		return $id;
 	}
 
 	/**

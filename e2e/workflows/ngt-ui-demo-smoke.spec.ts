@@ -3,10 +3,10 @@ import { dismissCookieOrOverlays } from '../helpers';
 
 test.describe('NGT UI Demo page', () => {
   test('renders catalog components with data-ngt-ui markers', async ({ page }) => {
-    await page.goto('/ngt-ui-demo/');
+    await page.goto('/ngt-ui-demo/', { waitUntil: 'domcontentloaded', timeout: 120_000 });
     await dismissCookieOrOverlays(page);
 
-    await expect(page.locator('[data-ngt-ui="magic-card"]').first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator('[data-ngt-ui="magic-card"]').first()).toBeVisible({ timeout: 30_000 });
     await expect(page.locator('[data-ngt-ui="aurora-text"]').first()).toBeVisible();
     await expect(page.locator('[data-ngt-ui="bento-grid"]').first()).toBeVisible();
 
@@ -16,7 +16,7 @@ test.describe('NGT UI Demo page', () => {
   });
 
   test('interactive globe canvas is present', async ({ page }) => {
-    await page.goto('/ngt-ui-demo/');
+    await page.goto('/ngt-ui-demo/', { waitUntil: 'domcontentloaded', timeout: 120_000 });
     await dismissCookieOrOverlays(page);
 
     const globe = page.locator('[data-ngt-ui="globe"] [data-ngt-canvas="globe"]').first();

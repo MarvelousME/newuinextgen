@@ -1,0 +1,3068 @@
+﻿{
+    "generated_at":  "2026-07-17T12:51:27.7268699+02:00",
+    "groups":  [
+                   {
+                       "sha256":  "F85FA74EA8C7DBC70417C54B52318BA90923458178A6C61B2DB6BB7381F85263",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/privacy-policy.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/privacy-policy.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5844E2C12CB7C4A0321748787AEBC38A97436C180439182927068E594E9F71C7",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/videos/story-online-class.mp4",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/videos/story-online-class.mp4",
+                                     "to-discard/online-tutoring-videos/mixkit-little-girl-doing-online-classes-during-covid-lockdown-48860-hd-ready.mp4"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "77E3703328009E44190238E7C2B01AF5E4CC1E5C5095EECB5C7FB767FDDEA3B4",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/parent-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/parent-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "02B09B29AC436D7BCF78761A56712EA90E96E350E18625B087B3DBE69237DCE1",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/tutor-profile-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/tutor-profile-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/tutor-profile-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/tutor-profile-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/tutor-profile-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "EA33D4514C6011F110B047E2D0140453E0F973F51F71117B3A5B268A85D696D2",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/content-md-drafts/find-a-tutor.md",
+                                     "to-discard/NextGenTutors-BeyondInfinity/content/find-a-tutor.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4099E014B645D436BAA91732CBDAE90C0CC30AA05D34604D770E2AC1749A0C9A",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/support-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/support-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/support-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/support-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/support-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7522C74AA1EEBCA9BBD3185AD8D38566D0E6AD2AE783B7E472ABBC2D24B9DCF3",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/home.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/home.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CFA5BCA93870EAA5E7F92D34087F5BA7449B565FA8CD5D22E8C997C651B6F630",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/legacy-inc/enqueue.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/enqueue.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "17AFB389D5E2693082B520BF8AA70BFE833145DBE3CB7884F34D2E58E921C141",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/ui-icons.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/ui-icons.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "524FDD2FE8A966C6BB27124D7E4CFDD46AEBC65AF3B4540F1FF163BDD7B393DF",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/review-card.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/review-card.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D4FBF1B069F57A1642BFF99B4464BCCC3A79E3036C134A70101771F148CCAA31",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/dashboard.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/dashboard.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "97314ECC737E2B536686F09F74C3283AA5DF7B50C69EB44F3009F4F75D8865F5",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/become-a-tutor.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/become-a-tutor.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F1A8C892287E8F4B1DF11A76DAD656D13075B4443EEFFAF8347F49B9FADDAF4C",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/config/override-metabox.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/config/override-metabox.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2A36E2A76155F30ADA1225DFE077CC5AAEF286FB370FFC2D2F64B56ADB7E4872",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/parent-checkout.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/parent-checkout.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "07475BA36ABF00317A2E6B71FD12E725EE695C13536B80B22DFE2583A39F2F4E",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/content-md-drafts/login.md",
+                                     "to-discard/NextGenTutors-BeyondInfinity/content/login.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B8A2D097E41B675976F551E399BB37B2CE9FF36EAB5DD98E76A49404E9637164",
+                       "count":  2,
+                       "paths":  [
+                                     "page-find-tutor.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-find-tutor.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "558C46D4515CDC91925BDB660106446A090782603BC20192159A11660571CC2F",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/css/motion/05-parallax.css",
+                                     "to-discard/css-styling/Parallax-Effects.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/motion/05-parallax.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "09F4AE49F9A5129923A25953C41EE2DCF509235A38C69C9B8FEE477AF438993B",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/template-tags.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/template-tags.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "6565BC2A4654534E4671BF5A1E767CF4DBE52B44F3B84B4AA3EAB64A82F538A8",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/contact-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/contact-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/contact-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/contact-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/contact-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C6164DC9066C2F58EF19997361E3ED96C601FE06AE2B3486283369E5F2D2AD97",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/content-md-drafts/become-a-tutor.md",
+                                     "to-discard/NextGenTutors-BeyondInfinity/content/become-a-tutor.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CF9DA4E9BF21B5A8AC9C5FE28A846055E3D9CA942AFCBB77C62E3169B723AE5B",
+                       "count":  2,
+                       "paths":  [
+                                     "archive-tutors.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/archive-tutors.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2CD8440167CBC0471EAC3EA40636ABCFB2BFFC2910AC642A7E2338FDCD04FADF",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/layout-manager.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/layout-manager.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8CF6C36101D181CF08DAA24AA0CAEA890752737DBF9897CDEF2E2E674FE4F6A6",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/calendar-grid.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/calendar-grid.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "498DB2F81E2DE63DA303FF0903956C053516906DA86F48DAD3BA60DF2503F648",
+                       "count":  2,
+                       "paths":  [
+                                     "NextGenTutors-Companion/assets/studio/studio.bundle.js",
+                                     "NextGenTutors-Companion/build-src/dist/studio.bundle.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AF0F847E92C7CA31120C7DC53104DFCD0C4C530690BFC8346BD10926C0078B9E",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/css/content.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/css/content.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5463B59F05474CE508D56BCF5F7312F53512A147591262F39202CD7CA5986F8D",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/css/tokens.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/css/tokens.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "FD84F5E61983D94395E54AB7CEF2045F97A91708F1592E5BC5318E8430453804",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/chat.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/chat.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "1BA9EE1A7A0D7DA3E8EF688F1AD83EDD1DA8452FEB19016792B0BB713ED510E7",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/security.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/security.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F87D244C0A494D74E42C9650D8EC382765B9ADBA99D6979307F26F2CC1EA56CB",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/ui-library/elementor-widget.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/ui-library/elementor-widget.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8C43239A510AEFE66E1A497E2E430F3C10360DE124513D55433A1A66680E5C68",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/8b3f6b59b80c3b16cf246be6395d48cf6ba6311d.md",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf01-wf02-wf19-r-52e0e-dent-self-registration-form-chrome/error-context.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "90E7B561CA9292F6B4493D9E39806A88B239EC131A3FBBD89173465AA869B1A7",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/videos/find-tutor-session.mp4",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/videos/find-tutor-session.mp4",
+                                     "to-discard/online-tutoring-videos/4487969-hd_1920_1080_25fps.mp4"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "50780A233C0157A811E5D0262D620D1F28295A2BF733F2E08BCE14DEC4FB3874",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/shortcodes-fallback.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/shortcodes-fallback.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CF1AF73005F4BE8F18122BB497A05602C9DD52B6B083C9622148B0B76175A33B",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/010-parent-review-submitted.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/010-parent-review-submitted.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "3F385D0782463F776D1485931123C8A3508B7546F67CF86CC0DAC55ECD625230",
+                       "count":  2,
+                       "paths":  [
+                                     "archive.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/archive.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "FC577BD9A7B7FCA770321FDE0BDB4F3F041D30D928AE5C8297A1B3C6A3484FD1",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/content-page.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/content-page.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7579A8CA550F423C5C9CB92CDB5475A14BB1CAA7EBDDC223392830CA2490FE9E",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/kinetic-image-hover.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/kinetic-image-hover.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C425B3523CF0611644A927A369800CFA8FB6722E12EC6D3AF22D3A8FFC9CB06C",
+                       "count":  2,
+                       "paths":  [
+                                     "home.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/home.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7E35EE8862D2920A758AA2E295CD0A18F9C60FC6E4BC84433D48C89826011664",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/pages-registry.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/pages-registry.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "1FF2FF720237D0154081F43B788F5354A41094F17BF4AADFFDE4BD948D0A5458",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/nbi-infinity.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/nbi-infinity.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "48123D21D405EF807BC6CFC05761C3CCA870397A8AE1989C606FAA4EC851C743",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/css/motion/02-entrance.css",
+                                     "to-discard/css-styling/Entrance-Animations.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/motion/02-entrance.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "1BC91B995427BB153B4B2F4A8EB04E2EE75D9619A8A9D082898F5483685433A4",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/tutoring-imagery.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/tutoring-imagery.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "BC67FAA530D829EB1F037BAD3B8D70564BF59EE55A9715BD288F99DAB38B32A9",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/ui-library/bootstrap.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/ui-library/bootstrap.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "3AAA811B3D15F7283F232CDE1250C2AB7299B8BFAB0F18E83FFCA0D5D18CDEC3",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/data.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/data.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B19FE50AAF46C6406A4464B8FEEA17C13AABA928FE4219A0888607C32A80D7FE",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/sections/impact.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/sections/impact.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "0907683ED12220C569F919E6D7BB1A0EBAB4DDD97A4AD87C60D0B7D947D45599",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/terms-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/terms-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/terms-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/terms-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/terms-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "05F498A0E080F2E890FA54053E4F9ACE91C5C2D8F896410E7A324EEF707AF64A",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-completion-suite/workflows/014-tutor-payout-ready.json",
+                                     "NextGenTutors-Companion/integrate/catalog/completion/014-tutor-payout-ready.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B226AFBB2D078698499125EE9E74497516274170AD29EA2F8F0E44FC86B2E35F",
+                       "count":  2,
+                       "paths":  [
+                                     "reference-style-extraction/inventory/magicui-main/apps/www/app/not-found.tsx",
+                                     "reference-style-extraction/inventory/magicui-main/apps/www/app/(docs)/docs/not-found.tsx"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AAC4BA84F32F7022DCD0DD7C20B01B4296F92B82D91FCCA8C7C3414394D16F54",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/003-tutor-approved.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/003-tutor-approved.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "87FADFF76A1E17894894EA80FEACD64F12D9E02564C28F9EBD1827E592F8A2E6",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/tutor-vetting-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/tutor-vetting-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/tutor-vetting-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/tutor-vetting-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/tutor-vetting-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A2EA13B99D9242FADDB5F245E20155FA30ABFC5537434E545CEF37301BDACE97",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/blog.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/blog.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "DBEB03ED45478C265ECA53F423342E8FC7D54B2F895C818B6BA2B582D0804BB4",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/tutor-dash.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/tutor-dash.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7F2E274A747E2842FB5E8942894E89C1E3CD0EBDA10A2B492181881887FA05DA",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/contact.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/contact.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C536F8349F7E959FB53DE9C0B05C1D5177B6A986E415D78FAA436C3849DCDC9E",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/README.md",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/README.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "55974E76B4167A1E7880613116C14B0023FB38084301B832690EFE2DBF459962",
+                       "count":  2,
+                       "paths":  [
+                                     "ftech-wp-package/doc/doc/img/img-large.jpg",
+                                     "ftech-wp-package/doc/doc/img/img-pointer1.jpg"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7A7CF6E18119A2812808F88726CC43DF421849116ABD1A3E44FD467730C5A842",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/terms.html",
+                                     "to-discard/previews/pages/terms.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "0B791ABDD46AAFCE3715641AAD9A3C7D8A22E6418A8C01F1E783482CB8296C98",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/student-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/student-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "78185315E3FC8AA5F8363A4709EFC4508B23E598D6CDC48EB4E216D29566B43F",
+                       "count":  3,
+                       "paths":  [
+                                     "NextGenTutors-Companion/assets/css/nextgen-beyond-infinity-admin.css",
+                                     "NextGenTutors-Plugin-Manager/assets/css/nextgen-beyond-infinity-admin.css",
+                                     "NextGenTutors-Html-Importer/assets/nextgen-beyond-infinity-admin.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "3BE310ABB8DEC2F5FF43D79D3E31798FFB5A0C432A8DFE40474291C94F2CF5A1",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/components.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/components.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "210B2A761FB1860EFE743F10CCB3BF377922834BAA3DD9F502C9B46DD52A7163",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/scripts/build-home-kinetic.py",
+                                     "to-discard/previews/scripts/build-home-kinetic.py"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B62134B18C975AB119D1902FCE1E022AE324E3A0BCC130B3A9C4AC78457D5BB5",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/sections/final-cta.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/sections/final-cta.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "34ECD0E6D0041AA6A9CDC2B00BDF56BF4782C76D43574CCAACAA33157B895ABF",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/layout-debug.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/layout-debug.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "E68568E781FAB2513927BDF26D3E413219D8508D8C8F01D3AABA6B3201003A13",
+                       "count":  2,
+                       "paths":  [
+                                     "front-page.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/front-page.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "0A3CCCB373F208E18D67242CD166D783DE016B9C90F2B9F3E72E5F6CBBBB2730",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/sections/wp-banner.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/sections/wp-banner.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "88896BCFDE49B89F51DBB298BC73341E142FFD2DBE73FBA3139789E3BAD5B83C",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/admin-dashboard-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/admin-dashboard-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/admin-dashboard-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/admin-dashboard-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/admin-dashboard-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "BFA6DAB4E2F1824A8A0286B33A5783836F1C9F401E0BA88020B781B04D4C7D60",
+                       "count":  2,
+                       "paths":  [
+                                     "page-terms.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-terms.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AD0802F1928A35B9B61BD149F429084FCF7402F8B4215717288D84AE3DBA7A8D",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/onboarding.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/onboarding.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "35ACC28F9683F2E7B1CF5C4474F5C2A223502FBAA08554AE8646CF89A412BD17",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/booking-list.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/booking-list.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "6C3E691EE923330EBC7E14F0E574112CC9231D81501A6EA6EA97DE0B606A1B4E",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/1c770cd8cf3bd45dfc82974de269652331459ab8.md",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf01-wf02-wf19-r-b5c9e-upport-contact-support-form-chrome/error-context.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "1AE64D615E996A469159F1A4E3D53A0AAB4FD487407592D9B4DBDC6093E5E812",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/find-a-tutor.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/find-a-tutor.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "38447DB4198D48469A268A514B59A9278510675A4A0F507A58F2C26C86492CF2",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/stats-band.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/stats-band.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "E4602D5E37585CBFFB0F64ACD7EC1972789CC745EB9047A0946D74FE3CBE7060",
+                       "count":  3,
+                       "paths":  [
+                                     "reference-style-extraction/inventory/magicui-main/apps/www/app/apple-icon.png",
+                                     "reference-style-extraction/inventory/magicui-main/apps/www/app/favicon.ico",
+                                     "reference-style-extraction/inventory/magicui-main/apps/www/app/icon.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "EF4D704A2065B8B4A054DE41CFBAE7DB7059CA1F2E87390B7F2E5F2EB9CBA5F3",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/index.html",
+                                     "to-discard/previews/index.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A9496A5A26D2095E151575AA2C69111869F3F2F2EDDA9B25584833518B72FB76",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/contact.html",
+                                     "to-discard/previews/pages/contact.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CB36C1AD3024C271F38DCAC23220648B25663EEEC1B1F43B8D467FAEA5004964",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/login.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/login.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "153E1F4425DE7631B11CE0E2DEDEABED89C91085AEC887CCEFCFB77C85686205",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/empty-state.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/empty-state.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "685ED986BF226E0B3692CE0A0E80C58EB0692E3C14D8C7800B4675E08581C97D",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/sections/how-it-works.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/sections/how-it-works.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5FED261CA98DCC4C1D7C4437671CA33DC9F4036A7E7CB1E8A671D110C9E687DB",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/privacy-policy.html",
+                                     "to-discard/previews/pages/privacy-policy.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "67829AAFFCCB335D98CDDAB89FBE2AE9AD6E38DFDE27E1500971898DC36481A5",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/sections/trust-strip.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/sections/trust-strip.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "877C588C7BEBF6152C09813C6409807B66090ED68E4B2CEE092D186B38AAD600",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/guarantee-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/guarantee-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/guarantee-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/guarantee-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/guarantee-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2AAD918DC6B1EEBC0326C7C68B1A4771F81420C9B78BC4DB5BEA864F687A7A0F",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/001-parent-request-tutor.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/001-parent-request-tutor.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "ADE7F6AE6BF12122A97961E56970794F532AB49D2AD0209AA8AD1EDD277D325F",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/css/motion/08-subtle.css",
+                                     "to-discard/css-styling/Subtle-Motion.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/motion/08-subtle.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "ACBDCD2774FEF4E5F64A0D7B6336F904261A03E5C3A117CBA4818AD708744FC3",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/wordpress-setup.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/wordpress-setup.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2CCBFD9B08D2FDB2EE6AD8296D6216F10C3A09C34B3E4BD6596F3621174365CF",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/theme.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/theme.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8286EDB0B4F7E4849BB7F55E2572D4B24CBF94A7980791E404CDEEED6348C5E6",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/b19cce07fef9dc8fd87b156ae115a2b48413cd42.md",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf07-wf10-bookin-b079b-—-parent-assessment-request-chrome/error-context.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "13879A348A8016D1B9CB83FC4CA2DB0F6883C41DB24FF21C9AE1EE8817432E5D",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/pricing.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/pricing.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "56C5366F791DB3F7F4E96777F126B3EBE09EE4E9A4694A3DACDFE06CC809D9FE",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/legacy-inc/setup.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/setup.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "6FF4EEF9B8EAD0488AB1F92A8C4E8B7265ED4D01FDC940B19070BB3304FCBD20",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/home.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/home.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2A2169E77EFE49F0AB4F0617982193BE54A68F6193C10AF4DBFF1732D3437038",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/css/ngc-validation.css",
+                                     "NextGenTutors-Companion/assets/css/ngc-validation.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/ngc-validation.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C0A706CFAFB3F0BD578199CD66EFE5E8D0E4164426E468596DC80957FDD1627E",
+                       "count":  2,
+                       "paths":  [
+                                     "page-templates/template-home.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-templates/template-home.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "957945DC93DC1DE434ABE4EF5F47052C76C8F9CE67EA6C777DE561B51175E838",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-completion-suite/workflows/011-progress-report-submitted.json",
+                                     "NextGenTutors-Companion/integrate/catalog/completion/011-progress-report-submitted.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "0189BB0C03F4B79E8D159158267B2E69DA693C5ACBA6FAAF2DD0470A37ACA095",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/build.py",
+                                     "to-discard/previews/build.py"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5A022B26A0150A43128AC58A712473A115751AC33984CA5DD783F3ED4F0411C6",
+                       "count":  2,
+                       "paths":  [
+                                     "page-thank-you.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-thank-you.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F382E1BF00ADB6FE34DB5A141ABD6817CF0F9179D6E229135913FE2B31D29E18",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/openwa.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/openwa.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "FEB44566E6569D691F7DA468D249AA7AC3554126EB22D1BE2EB3C2B8D7CB95E8",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/parent-checkout.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/parent-checkout.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C0ADE50E52871F69951C92723B23EF654F635A90A4512BC170D37D1AF931AA8E",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/dashboard-mission.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/dashboard-mission.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "E49A654F31ADB310B29CCE411D33916050DF9ED4438B2136E501C28BCAFD367A",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/terms.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/terms.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "959AFAF705335DC62DB2197CA77FC704E5EA10C94377D41CDCB845E5E3F6CDCB",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/bi-3d.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/bi-3d.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5AEA2883CBB18623C969AD5F5579D288B5E226407226A3D237469825B09DE76A",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/images/pricing-bg.jpg",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/images/pricing-bg.jpg"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "17C88BF5DC7F561781E19EFFF8F12B22F20D1B44FB22A9C838E6E75D657294A2",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/ui-library/component-loader.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/ui-library/component-loader.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A977B9CCD4C35AEC02CAD4B72B2A25298533A1BE7F0D25CECFF75070D4E3FE13",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/floating.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/floating.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7EFE28A14C2EB486D276F24DC2A9151D945BD9FF77721EB74090857E8872E287",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/components/tutor-card.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/components/tutor-card.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "603520D0141DFAE6382DC2113CCB9DAC9A8A0F7156339E64E63153EA9A58E6F4",
+                       "count":  2,
+                       "paths":  [
+                                     "NextGenTutors-Companion/assets/studio/studio.bundle.css",
+                                     "NextGenTutors-Companion/build-src/dist/studio.bundle.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "1C80907C6324D7C3A54A6F1EBA1B021AA0778358E63806B0217F547F609F43AA",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/thank-you.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/thank-you.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "92EFBDBE161CA8A2DB463D5E46B2A0C25AA0FE5C2734C8DDD5541604B5CE3C74",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/student-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/student-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "971F3BEB259BC16F5CBECD490073E488E3933AE2151C97B47278F2933199A6B7",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/sections/hero.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/sections/hero.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "59E2568ACD74E9B833972059C88662E29EA470584CD8249409DB8CD1657F90FB",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/videos/about-learning.mp4",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/videos/about-learning.mp4",
+                                     "to-discard/online-tutoring-videos/101330-video-720.mp4"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7F66EADE79D87E092E319C64A4611B301CA0000321945AA7F94511E4D23C2D7C",
+                       "count":  2,
+                       "paths":  [
+                                     "page-child-safety.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-child-safety.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2018D44DED328EAD6336C511A1B30E6F4FD4E0F6536087833EA353083484B852",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/guarantee.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/guarantee.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D3A3708991D556A968EB9B903A92EBE3BD80B041A35F202E890C8483423E1CD4",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/012-payout-approved.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/012-payout-approved.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2CBA98D6635215C16621CC2E05A14571CB390EDCEEA3EF31307097AE1D1DAE97",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/css/motion/06-responsive.css",
+                                     "to-discard/css-styling/Responsive\u0026Mobile-Optimizations.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/motion/06-responsive.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7ACCE3DE092C76DB00CA66D6D6CC94BD0E634BE5486CA127C04E21ECE357708D",
+                       "count":  10,
+                       "paths":  [
+                                     "prototypes/dashboard-body.php",
+                                     "to-discard/duplicates/reports-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/dashboard-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/reports-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/dashboard-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/reports-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/dashboard-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/reports-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/dashboard-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/reports-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "334D5EDDEA7D0ADA3FB7CB0FE2D324A47E28C5E97EC7AA3F30461E47147F13EE",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/onboarding.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/onboarding.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "32497EEABD07CC5DF70B0FFFA0814CD20523D736F57E8BE2C20C6A8F573D279C",
+                       "count":  2,
+                       "paths":  [
+                                     "templates/footer/default.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/templates/footer/default.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "E20687872AB25413D406493286DAEFE4F3E91A529F99A0D68F3995CBFB3C052D",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/child-safety.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/child-safety.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F29EEF66EB3AD0E3574D8EDB4B9E72A04692A0B2B92D99EB7C4B977611DDD4FE",
+                       "count":  2,
+                       "paths":  [
+                                     "ftech-wp-package/doc/doc/assets/font-awesome/webfonts/fa-solid-900.eot",
+                                     "ftech-wp-package/doc/doc/assets/font-awesome/webfonts/fa-solid-900d41d.eot"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "05FCDAC569C9413C938461EFD9CFDE204438077D9BBC2BA3246662C2BFB3F403",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/css/motion/04-hover.css",
+                                     "to-discard/css-styling/Hover\u0026Micro-Interactions.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/motion/04-hover.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2F2C3819705F575C10FFF4FBAE98BB94F8876E586059FFE9F1E76AFB1535C42D",
+                       "count":  2,
+                       "paths":  [
+                                     "page-parent-checkout.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-parent-checkout.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4D5AAB0DA942CEAF9695D9D03905D68C824C71F0E67F60100F8B9953A1615ADC",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/ea386a0a7a0da87d5584675a68c84e183d157d5f.png",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf01-wf02-wf19-r-52e0e-dent-self-registration-form-chrome/test-failed-1.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2F380F4A3D05A8D90C2106F50DA75064E9CE57A598599DC5404F8F69A0223AA9",
+                       "count":  2,
+                       "paths":  [
+                                     "ftech-wp-package/doc/__MACOSX/doc/._.DS_Store",
+                                     "ftech-wp-package/doc/__MACOSX/doc/img/._.DS_Store"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "6C1B50779A97CEE668E2E61CD14821051353E75A5BDA98AAC94A50A82CE3E328",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/register.html",
+                                     "to-discard/previews/pages/register.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "26E6D30E8CF0016170254D4F81238A378664506E3DB18CD61B49F88C5C411DDD",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/009-progress-report-submitted.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/009-progress-report-submitted.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "074B5CEC6C4E00D1D86848409DF40C41E0937022640FB530D36E708268DBACD4",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/guarantee.html",
+                                     "to-discard/previews/pages/guarantee.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "DF76B3C960AAA5F04F818A543198F2F6788E92AF361459B79895DA8C7ED23C25",
+                       "count":  2,
+                       "paths":  [
+                                     "build-src/vite.config.ts",
+                                     "to-discard/NextGenTutors-BeyondInfinity/build-src/vite.config.ts"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4DE9B62BA00078508855ED44758BEFAC40B28F4F1D223B7E45F0306F18EF4AD2",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/config/registry-defaults.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/config/registry-defaults.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "06D80CF01250132FD1068701108453FEEE68854B750D22C344FFC0DE395E1DCB",
+                       "count":  2,
+                       "paths":  [
+                                     "ftech-wp-package/doc/doc/assets/slick/fonts/slick.eot",
+                                     "ftech-wp-package/doc/doc/assets/slick/fonts/slickd41d.eot"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8913763633EDD50FA52A0CD5B62E2178C8268798CD3A98FE2678F81D24BAF4E2",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/become-a-tutor.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/become-a-tutor.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7A167A46A854B4CB804B44817DD30A716C68457781DDE8672F73E4B2651310B3",
+                       "count":  2,
+                       "paths":  [
+                                     "page-contact.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-contact.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "29B4DC2053A77F718C16609A91C998CB7CF89176C67922CF263D0640B0A0F4E1",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/tutor-vetting.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/tutor-vetting.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "E9FDF947C39F06F1B5E63C58EEA2F2F74850421B4E32047DACB9C7B75DD42A16",
+                       "count":  2,
+                       "paths":  [
+                                     "ftech-wp-package/doc/doc/assets/font-awesome/webfonts/fa-brands-400.eot",
+                                     "ftech-wp-package/doc/doc/assets/font-awesome/webfonts/fa-brands-400d41d.eot"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D9C9C035752C25D266FD5F990DE813BB904F69FE4E29B699EEE7D8EB02E7674C",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/achievement-badge.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/achievement-badge.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "57851B86D24A02718019D5B7632ED1754601F5C4338C523B2D0C0AC35F03E4D3",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/motion.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/motion.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C8970306523FEBA95460C2D05102D754D3605F947275CD2E41FA78A509AE53C1",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/support.html",
+                                     "to-discard/previews/pages/support.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "00F36145129D1D2F0615F687FE1C641858F63B9C665F46A462411911ED0C3AEE",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/e17b7110d69ce78bfceb4104d5292f4461f5fd11.png",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf01-wf02-wf19-r-e8846--parent-register-child-form-chrome/test-failed-1.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "DBEC23F3AE0040908AE88F2A5C814DC9301F985D1E1677E913C0C05FBB22A80D",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/content-post.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/content-post.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A44BBF92B5B9FF46AEFF72238B5F6BC6321DD18CECD4721D3B0569404FB6794F",
+                       "count":  3,
+                       "paths":  [
+                                     "reference-style-extraction/inventory/magicui-main/apps/www/registry.json",
+                                     "reference-style-extraction/inventory/magicui-main/apps/www/public/registry.json",
+                                     "reference-style-extraction/inventory/magicui-main/apps/www/public/r/registry.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2A0E45A9DC19987A702F7A85A6C5FE5B5B83ABCA36458DB8429DE0634EAC0FF3",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/guarantee.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/guarantee.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A6B61903DC1FCF8E54C76C1323362B67D89FBBB965A3F65581CD22FA51E39E52",
+                       "count":  2,
+                       "paths":  [
+                                     "page-safety-guide.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-safety-guide.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "67A996103035A865DFD2ABA3A13498C972DB1E22613CDE526AE04DABD94F29AF",
+                       "count":  2,
+                       "paths":  [
+                                     "page-templates/template-full-width.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-templates/template-full-width.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D2A7902BF84DC777DC7E324627AFF8B9897594CB318B476CC3792D1B160AE8C4",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/parent-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/parent-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "1E0B44F7EDBDF3B54E2042035F1ECD84B4FB7DCEA709FDC333048CE08EE30E4B",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/safety-guide.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/safety-guide.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F261AEA105502F3F419A7D7472FEE45E30D13B0FA7B0EC5D0E49A0AACBBE52E7",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/images/cta-bg.jpg",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/images/cta-bg.jpg"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "EEB88E7A1258EA188DBEAFAFFBF228BCBF400FFEFFB83506CC702479731B099B",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/find-a-tutor.html",
+                                     "to-discard/previews/pages/find-a-tutor.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "39AE5913F078C2ED52BE41807AF5C3BBC322EC48E4AA028984DDECE4416EB59E",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/preview-config.js",
+                                     "to-discard/previews/preview-config.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7868F5055F3C3743B19DEFB9A27AA199A03ECFF046EA42D1AE987CA00CD0CA45",
+                       "count":  2,
+                       "paths":  [
+                                     "page-privacy-policy.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-privacy-policy.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "BBDBD6564B1710080DB58159AC38376528953E858C59C66933374D277E1E6401",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/ng-ui-booking.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/ng-ui-booking.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "3E4499E132CD9418950BE7A73C625ADF5194370A6704F0DB7AA1FED3B6C66F25",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/ngt-wp-bridge.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/ngt-wp-bridge.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "26511B16697807E3A947A63A527988E3D99DF145B1F5B51176794D0B95845978",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/ngc-validation.js",
+                                     "NextGenTutors-Companion/assets/js/ngc-validation.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "91F108C8FE7F2F760D2F93F8E223BAAFE21D2FF0FDBA53C7FA8E8560D5FD0E75",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/page-composer.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/page-composer.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B26CF2D48BA6C612865F15CD49E945DFA24D2BFB87B356572A8659CEF01ED154",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/fonts/README.md",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/fonts/README.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "16FFE0741E5DBB619546775DA6C5757EAB77DE10ED8CBFC5FA6917FD77BA4C22",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/006-booking-cancelled.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/006-booking-cancelled.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "6A2BF9475047AB9E53BE6ADC67BC803B619C54CC0CB65700F0ACC0311628ABB6",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/266a350c1c296dc23c26814ee9f7f25ba9ea1842.md",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf01-wf02-wf19-r-e8846--parent-register-child-form-chrome/error-context.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4A3DC5FD47AE8BBEF1E35264A93C078FD0F5A4A18FC4B3688D43E4BB085264D8",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/privacy-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/privacy-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/privacy-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/privacy-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/privacy-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "71ED9A0043207BF4518D097F655E1D407827D4EA887293595B7DAA3D88CF4B4E",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/pricing.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/pricing.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "08C4100DC07AC840F65792C76B9CF184A5AD7BBC8988874512C3BBF6C5D358BE",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/child-safety.html",
+                                     "to-discard/previews/pages/child-safety.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8546E59921C3949722293B8ED13A6EB9D25EAED0704E2FF2AA32D37B213054E5",
+                       "count":  2,
+                       "paths":  [
+                                     "page-onboarding.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-onboarding.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4A578C0CCCEB221B4F9AE1F5F156450D71DD8DC80C869A0A7C0BF3D1AC31FF75",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/ngt-toast.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/ngt-toast.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "465158946ED2CE99B3EC637EC6BF683AAD2331E15BE1BDE98DC6D905BD1B0DC2",
+                       "count":  2,
+                       "paths":  [
+                                     "searchform.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/searchform.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AFE530F72400BE00E03547410DA8EBD1A8B5CA7449DA67D97F570C946766C2DC",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/terms.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/terms.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A1A5D1CDA37519F2D75F9E275E51EE417B895C9539EDD94087BE8017CDE0F768",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/static.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/static.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "BED0E0FF495E6BA739F18A40E01CC65497FCE1097DEC841701C280C59F428586",
+                       "count":  2,
+                       "paths":  [
+                                     "index.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/index.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "49F3C2BD0FD776FD7B23BB113545C782A0566A1EA63B856B2A0E7B9D69E3DD11",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/helpers.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/helpers.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B374A760659AC00A3DF0ED00E4CE89F0FC64A7D71B8D9B558ED0650A8CDD1142",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/about.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/about.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "BBA722E382BAEE8CB52677B565181A9D38351EA1378524565B617BA1C3DAB624",
+                       "count":  2,
+                       "paths":  [
+                                     "page-templates/template-app.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-templates/template-app.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "095C7ADC5AB294761821AF976B8141160A275BD89128AAFC297EA78D3A9F3644",
+                       "count":  5,
+                       "paths":  [
+                                     "assets/js/nextgen-beyond-infinity-ui.js",
+                                     "NextGenTutors-Companion/assets/js/nextgen-beyond-infinity-admin.js",
+                                     "NextGenTutors-Plugin-Manager/assets/js/nextgen-beyond-infinity-admin.js",
+                                     "NextGenTutors-Html-Importer/assets/nextgen-beyond-infinity-admin.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/nextgen-beyond-infinity-ui.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AEC7BF3848BD2912D7729529B2FE9C15471D9A739047A70415C64DAEB2A81FE0",
+                       "count":  2,
+                       "paths":  [
+                                     "templates/tutor/calendar.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/templates/tutor/calendar.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "E8B709DEE9687DA8709BC625FCC9E7CAF21E5C27DBB140E58053AAEA0F2CDC91",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/ngt-toast.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/ngt-toast.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "29864D93BE03442306176BE71E0823B3D0CB90674750461EBF02FA1DB02E83F8",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/nbi-infinity.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/nbi-infinity.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C0F9429E536F1803EAFB96E84A1FBAF8607A9A53DEEBA1B0769CEFC1ED53FE2A",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/bi-options-admin.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/bi-options-admin.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CFB810127629D9FEE403EBF0435FCB43171DCA5A53ED066A618A75F1CCBB91B9",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/css/components.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/css/components.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F74034ACB100F06819634DF117553FB97512EB0D207405A6FD58080E081EF204",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/1f8b6d5d1e1189409289cf187dfed43e6e4dffb5.png",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf07-wf10-bookin-b079b-—-parent-assessment-request-chrome/test-failed-1.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "0DACAD1BDE8A0575BCDF65239F6B78E48C4574A12BCFF6B962178C66D918A52C",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/become-a-tutor-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/become-a-tutor-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/become-a-tutor-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/become-a-tutor-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/become-a-tutor-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CEDC3A42DB32D20C86F249973EE2E769A3FF5418A7EEFEA5AC2F6AEEC68DB142",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/safety-guide.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/safety-guide.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "043A714166E78AEA53F3DD617F7D06FD93268BD3FE2219AC4A7ACF18DF75F70C",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/ng-ui.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/ng-ui.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A91B21EE699A0BF987D8E8F6F2E7A8C16A255862CEB619739BBCA68BAC9B687D",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/seo.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/seo.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "84C0CE3A633744AB5A86DF0568BB7EE2D6D878C760124C82446104FBA0E73BA8",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/images/guarantee-bg.jpg",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/images/guarantee-bg.jpg"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "EF249A5F807B817653598238E867A81511B9A8D0BBC9EAD757CB9582BC2B5992",
+                       "count":  2,
+                       "paths":  [
+                                     "templates/header/minimal.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/templates/header/minimal.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "84E234E72A1BAC7B4E582B0B20D9E0A251234468F976BBDF8819C767D6A9B583",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/tutor-vetting.html",
+                                     "to-discard/previews/pages/tutor-vetting.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "726C4428A28E87215B3F232BB538BC4ACB09952C2954C9F7070639E14EB6087A",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/subject-card.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/subject-card.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "0C693F51A9946FAF94303538CED3C823304D79214EFA70C54F937E63C0031E22",
+                       "count":  2,
+                       "paths":  [
+                                     "404.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/404.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B27995BD8281D97520B080AF264EFB275FCB940511BE60EED57828B3AACB9430",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/thank-you.html",
+                                     "to-discard/previews/pages/thank-you.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4C8FE2A4E657D9C5ED3266158C1D9322CC488488F1CBCD91FCBDECC17ECE1C62",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/roles.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/roles.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CD782F2A2BA3161EE2ADA63E35410DD0DD1D5899821861FCFC2507B8EA658234",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/images/become-tutor.jpg",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/images/become-tutor.jpg"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8E9057050892E6D5A6EF57CF9AF7AA72B26F369DCB84D2E116CD5DCEC5240989",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/dashboard-rest.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/dashboard-rest.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "FBA8751C256DB01E1A9337364429ECC67D158317D897F9C0C6C3F7B6CB0D9645",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/css/motion/03-sections.css",
+                                     "to-discard/css-styling/Framer-Style-Sections.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/motion/03-sections.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AB2FBEAD18337E41283EE8BDB4082BE2971B02C9DD549C0000AB258028FBF0A7",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/options-admin.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/options-admin.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5C0762E05702AC79415B948E7A4813899A42519FEBE2394F8196205B580E0BB1",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/images/home-video.jpg",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/images/home-video.jpg"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4E307632F3A5DAAEDDF679506EB95BD78ACF07B2FD0AE3B47299EE88DF876B18",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/ui-library/elementor-widget-base.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/ui-library/elementor-widget-base.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "649B533658C26D4AF1A8E27DB9F03CA6D0059C4CFDCD682F47ED12AD92B83102",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/admin-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/admin-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "371A3444EBC39A5DF8B6E17A6C186BEF718BB672CEC4A77F1779E48EADF2A670",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/setup.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/setup.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2A75C5FF93F508BBFF246C5B6BDE73E24D693A29699D5DEEC94A124D92826AA8",
+                       "count":  2,
+                       "paths":  [
+                                     "screenshot.png",
+                                     "to-discard/NextGenTutors-BeyondInfinity/screenshot.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D9328C77349A040B2784ACD75E5A6EDCF391003F7F68234EF538A15627F28709",
+                       "count":  2,
+                       "paths":  [
+                                     "README.md",
+                                     "to-discard/NextGenTutors-BeyondInfinity/README.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "80E6F2694237CE8D1B0072066102FB94888D20961E87BC43C77766711A0734EA",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/tutor-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/tutor-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "30EAAECC40D2C26190B3DF6130DB31F4752163558FECEAD880B879DB4A16D901",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/chrome.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/chrome.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "1890898E7397668030EA8EAC05C17DC937C4D630FF3ED3FDA0C08B36D8115D82",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/motion/09-theme-bridge.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/motion/09-theme-bridge.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F0080F7CA1B4D33400C98F2C6B0D6190BD8A1C63451999B1B2AA9F71AF866A6B",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/register.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/register.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AA9774B300299CC3FEDCBB814BA659EF50216F3C77BD87C3299284B381A1088A",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/wordpress-setup.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/wordpress-setup.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "92ADC1D2DB5871CFAB5DD5D545EBFAE99954C00920AA05EC5AABD8CF309F3DD0",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/export.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/export.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "6F3F41D43C7536E5555543191E55F3CB3412EAD73111C269D56496535D49FE19",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/img/logo-200.png",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/img/logo-200.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4D95D23992FA188E4DEDFC0466A5E3132958325944E3B84534BEAF5C913C855F",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/911a04d11749bc75ce1e7cb1c6dd1e417d963a81.png",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf03-tutor-regis-4ccff--fill-all-fields-and-submit-chrome/test-failed-1.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "81B057B5EB9BF2C3661D073E1EDB675F38A6E5F238E16A243FDAD99CDC44D4DB",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/companion.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/companion.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "E8101ECE3F5229A6BF72634068C735DB79D16562752C8368E0576C292B4F76B2",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/004-student-created.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/004-student-created.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A47A7B081AF947388EA9B3FFA5F3B46B640B74D7767F0D2BE0FB5FCDB0D6EC91",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/pricing.html",
+                                     "to-discard/previews/pages/pricing.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4798AF365E3C6EC1C82BB51DD060D86946DABCF97B21377606153EE6B3700A8B",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/images/README.md",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/images/README.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7D849AD0D0F6C6AA542C66F572E0A1A7472C52215C46F6FD0FE62B58B17FCDDA",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/home.html",
+                                     "to-discard/previews/pages/home.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "6D92EA56A7B220D31E5FA2CF13DE38C6801F37EB70E0456DD9257E45F134C3D8",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/student-dashboard.html",
+                                     "to-discard/previews/pages/student-dashboard.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D52DDD16727109CA61DF0EBA6EC82C740769C50C879199E3B7907418561A9D03",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/blog.html",
+                                     "to-discard/previews/pages/blog.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "40C49A1C3597BAE40413E382654E35C587F9BE13DC2EBC838D88788EF10410C3",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/customizer.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/customizer.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C8BE7F4723A12BE0A170C83A94EB0747EF7D91AFAB1A4826A041BF665ED0DA82",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/child-safety.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/child-safety.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C04C0576FA9C79D7B7CC9E00FDE1404A223DF89A10D6FD988078CA9AFE2A7851",
+                       "count":  2,
+                       "paths":  [
+                                     "page-register.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-register.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CDC42A89D3E1B775CB2E3978A1C268C2BD3CA25688B8325CEA3FFBFC4F374D05",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/tutors-carousel.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/tutors-carousel.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "FFE7F4B7C85947D1C9244E6C5B91DB5B8D51C7580578C737EBEBDB4FE27B91A5",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/preview-extra.css",
+                                     "to-discard/previews/preview-extra.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AFD073AA3A9A0C3371F2B926CFEB8C5FA11246CA0CBF5961ED90E60B3329C932",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/legacy-inc/customizer-preview.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/customizer-preview.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "054D6F3C508544C097AEDA8EFDD1F3DCE4AE1C06475D9B4FD284D1B3B5018D98",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/page-wrapper.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/page-wrapper.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "537E7362358EEA910D769DC10EFD6334C57CA596C74268D657F0D2A96502CC5C",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/kinetic-home.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/kinetic-home.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "25D9676F27262DC21067327AB9B5991B902C8589AD8432C300BCE736513E673C",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/onboarding.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/onboarding.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "1615289DBCD48962EBAC60E05E2BACA159A72AD79E101E7D448E297620BF1A4A",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/admin-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/admin-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C7ECF7E22D71966067AAB6F8A64AC916B8B52B798E61A7AA62DAA3DC4F2C3209",
+                       "count":  2,
+                       "paths":  [
+                                     "content/page-map.json",
+                                     "to-discard/NextGenTutors-BeyondInfinity/content/page-map.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2A7B95A3C415492619865B43D59F584048D6BF6DFD9ADBF596900F9859476DCA",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/blog.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/blog.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "93E1BD43ED143FD9C14D93A881CF658FD62269238C73A11328C8F267DE409238",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/sections/tutors.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/sections/tutors.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "51013598D41525515FCE3E2208AD51E7DCE61136AD3412A69449C4BA12F020E1",
+                       "count":  2,
+                       "paths":  [
+                                     "page-pricing.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-pricing.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "692E29270AC0AFE798D48A111FE86432CA2EE80F723FA025DCF1D1391A85F1E6",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/002-tutor-application.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/002-tutor-application.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F9898E908A36518E286396F8F1D5EB053B066309CD434568FC8ACA6D98325EDD",
+                       "count":  2,
+                       "paths":  [
+                                     "comments.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/comments.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "6B5FA67C7665F5D3A7E4B2B18C8D94496184DB129397565218C659B24651CFC6",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/parent-dashboard.html",
+                                     "to-discard/previews/pages/parent-dashboard.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "11F58D4E39267A6BEA457466DC1785F8F91A0CE6E714489A26C3C442B8459350",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/thank-you.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/thank-you.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B04547A78471B48A9FC5EF6AC07BEF8FA44ECAE9A64194296536B4792CE17052",
+                       "count":  2,
+                       "paths":  [
+                                     "page-wordpress-setup.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-wordpress-setup.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5B56A32AC176EF75D9EB4C6A3178230952E70AC6B3C26D7A6749D20427CA06A3",
+                       "count":  2,
+                       "paths":  [
+                                     "page.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "BCDC3BAA6C8186CDDC2EDCC52EDD643341DC651DDF5934C8427E39FF777D667F",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-completion-suite/workflows/015-parent-review-created.json",
+                                     "NextGenTutors-Companion/integrate/catalog/completion/015-parent-review-created.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2A28DC305BD12822EE991F0FFEEF9A1B66CADA42908581DD17A83C483A944227",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/find-a-tutor-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/find-a-tutor-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/find-a-tutor-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/find-a-tutor-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/find-a-tutor-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D00495D3F0D859499D4C0E74D11BC339DE9776EB3AB9FEC22FEE14383AC6239E",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/ng-ui-cards.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/ng-ui-cards.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "347DFAE2DF75841D562C492FF05FB675F2A7DD0CA6FB63D47B5224B974FFF263",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/reports.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/reports.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AA86B1C044FB622CE7BF2FC241790334F92C4AD22FC86B4ADE9FBC7BEAEE81F0",
+                       "count":  2,
+                       "paths":  [
+                                     "build-src/copy-to-theme.mjs",
+                                     "to-discard/NextGenTutors-BeyondInfinity/build-src/copy-to-theme.mjs"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F1601CBD40DBE0DAC9C94FC48CDCC1BDA5FCCDA215DFD3462755DFD1B28989C1",
+                       "count":  2,
+                       "paths":  [
+                                     "page-blog.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-blog.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7DD7C30A19E9AA3B6355D155654451836DB1A62E03FFFA9E5D5A838544FF58B5",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/sections/services.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/sections/services.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "89C54181D8E38D0A82D7A435F0B06CC825862F9C85A7A06406366A9FF72A3C7D",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/pricing.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/pricing.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8B0081F8755B62C2E3E08F3217C0199FD05918B8165DA89DFC942607C806FDAA",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/login.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/login.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "E9FC55F9C6432141269B3A28BF09B8A8752B019869F580AEF9F88D2F2F35D38B",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/onboarding-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/onboarding-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/onboarding-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/onboarding-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/onboarding-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "BC84B6427EFF48F20A556002DB2DE06F9CF89013462A09A55891DFAD42419861",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/008-lesson-completed.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/008-lesson-completed.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C7F2CE19F78BF5CE52A3189B40FB1E6D4213429A07F0C87B6EB66C88E2E64BAA",
+                       "count":  2,
+                       "paths":  [
+                                     "page-tutor-vetting.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-tutor-vetting.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B9D501488BF11716A29D2F48494185D836E2EBD25592F7BF5A736BFA2390C636",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/f9ad01ba4180b0b6b689ece198bddba0fd3b41e8.md",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf03-tutor-regis-4ccff--fill-all-fields-and-submit-chrome/error-context.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C1465A6B8743622F759B08A6D5336E57EB6EABDBA1B6393FBA6D30D45382F3D2",
+                       "count":  2,
+                       "paths":  [
+                                     "ftech-wp-package/doc/doc/assets/font-awesome/webfonts/fa-regular-400.eot",
+                                     "ftech-wp-package/doc/doc/assets/font-awesome/webfonts/fa-regular-400d41d.eot"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7E6853DA90CAD3F47F29FCF8A376670E5D1A9C95BE511F04903237460E43515F",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/support.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/support.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "C8FF1165A0B6020D40A1CDAE8CB84CC10C3CF91B5D5A7BE3AFC0638ED304D6E9",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/content-md-drafts/contact.md",
+                                     "to-discard/NextGenTutors-BeyondInfinity/content/contact.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "84744F14FEC261A2E381E401A15986EB9B87B40FD9D0F084D1067D6E71A09F0A",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/find-a-tutor.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/find-a-tutor.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "FE1CA01B4B3B169661BE99AAF716D2402732E174326EFD4B5196C5BD46575398",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/bi-3d.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/bi-3d.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "6ECF428AF891917526C6AEF8FBF49C986BE46094766E0C0459B250E726FE4870",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/page-composer.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/page-composer.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F95C7FCC538FA0485C8DEBFCF543E186304C4504021A50B184970CF4F14CD392",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-completion-suite/workflows/016-resource-recommended.json",
+                                     "NextGenTutors-Companion/integrate/catalog/completion/016-resource-recommended.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "9078E38CB717092671F6893E9B84B9170438C855A27646746FC6FF0C8C4908F4",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/images/style-add-ons-reference.png",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/images/style-add-ons-reference.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "267A1B163E1E456A06E43C056DA164AC87F21A172699D8C4BDF81250894F12E4",
+                       "count":  2,
+                       "paths":  [
+                                     "page-become-a-tutor.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-become-a-tutor.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B7C81F3CADB4B3D8A803DF0E164590509FE04B1689EB2F176DDA7F8C338866AA",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/about.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/about.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8CBBB1264B4EE660183A21C86B26F1EEA2A1713B23B3BFC4B548DAA8770B90F2",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/about.html",
+                                     "to-discard/previews/pages/about.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "459D8CFDD364328F3339E303888D2EAF377B33CFEDA1EB7B774D56C5BC48FA24",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-completion-suite/workflows/012-tutor-lesson-note-created.json",
+                                     "NextGenTutors-Companion/integrate/catalog/completion/012-tutor-lesson-note-created.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "AF002A8BD7AA367A44F6371AD074D5F19878A5BCAC4A33ABA3640185C16B0C77",
+                       "count":  2,
+                       "paths":  [
+                                     "page-support.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-support.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "22CA2B5A623FBDD2B3DBA5BDB1E15D123EE5C75348F1AA782D0E7D57E83F80B6",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/img/logo.png",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/img/logo.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4374AA7921030DD6B3246C205FEB2B074DD5FD80AC6EDA771CA4E4DC64C7E70C",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/ngc-forms.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/ngc-forms.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "83E87BCF7CEA1306B08861F29F6BB7187D446BAAD0171BFA0CB865F32D2E1057",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/tutor-dashboard.html",
+                                     "to-discard/previews/pages/tutor-dashboard.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B32B3CD6CE28479F298987A8CD98166FA43031D4F3DD380CEC8677BFFA3955E3",
+                       "count":  2,
+                       "paths":  [
+                                     "page-tutor-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-tutor-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "27543EC0B41B10163E15EC1818F4B35B134B5C808A207A478EB369034D832A9C",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/videos/become-tutor-classroom.mp4",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/videos/become-tutor-classroom.mp4",
+                                     "to-discard/online-tutoring-videos/mixkit-a-couple-of-young-students-in-the-classroom-22963-hd-ready.mp4"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "599CD72A0E29842FABC166888F901F9F293E2821B511B038B21E971993B7445D",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/layout-system.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/layout-system.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A4F8D62F908A6591030DD6E4CD7CD3D2308335B2E7DE54C664049EB2C544F6B6",
+                       "count":  2,
+                       "paths":  [
+                                     "page-student-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-student-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D1917B15B93A8C7A2B392BA98F47E7086208AA979CF5ED8EECC1388D51BAD97B",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/kinetic-image-hover.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/kinetic-image-hover.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B7E5A9974CA9584B6B7CA6A2F3C57518801D1447774E394C7F729747BE0813D6",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/hero.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/hero.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5515FA559C6C4B3F9C30440AF9A25E010E0789F319D4B5084AA0847442D1583D",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/css/admin.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/css/admin.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5DC1AE0B875DC0D78DBC5532226F5F31B762B4D1229984F605D27BF895AB6807",
+                       "count":  2,
+                       "paths":  [
+                                     "ftech-wp-package/doc/doc/assets/mcustomscrollbar/mCSB_buttons.html",
+                                     "ftech-wp-package/doc/doc/assets/video/font/VideoJSd41d.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CD388A87F051233965D4791D1E6F76DB5C89033C2A5A152DB68D430B6C617389",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/tutor-dashboard-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/tutor-dashboard-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/tutor-dashboard-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/tutor-dashboard-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/tutor-dashboard-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A9ED6EA4DDDB34F01FBD83DDD10A5F4696D2B515DFDC20EEB30C055DA82B726A",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/images/about-feature.jpg",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/images/about-feature.jpg"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D037E158496F1123B69763D70B846824CD4ECADF46677159DD7ACA43B3BD9304",
+                       "count":  4,
+                       "paths":  [
+                                     "assets/media/videos/hero-loop.mp4",
+                                     "assets/videos/hero-mother-daughter-online.mp4",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/videos/hero-mother-daughter-online.mp4",
+                                     "to-discard/online-tutoring-videos/mixkit-a-mother-and-her-daughter-doing-an-online-lesson-on-48671-hd-ready.mp4"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "84C99881B115E68FF79B75BC9A3186F1924AA523B865934CDC92684FD51E8D8D",
+                       "count":  2,
+                       "paths":  [
+                                     "admin-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/admin-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5DD1409ED44DDFB03DDDDA8EDF66B77C51F34E8885E3EDEF8072B5799147E3FF",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/login.html",
+                                     "to-discard/previews/pages/login.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D45093106C3CFD0AB57216076B217D7D9FEBFB2CC29E9C4B923A183AF930134A",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/css/motion/01-base.css",
+                                     "to-discard/css-styling/Base-Utilities\u0026Performance-Optimizations.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/motion/01-base.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F5FD2033C1E0B877E5BFCDAA43686A6FC7E0348868255DF3B7A85004F73ABDC3",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/preloader.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/preloader.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "711C2F77093191E83529A27093A3B9FFD3CC87823E2BF23D537F0E50F39AA03B",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/dashboard-kpi.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/dashboard-kpi.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "9CBE7A22C4A3D5B495E15F69B8B03905ED9DC44BCCA88235F456D02DF83E8428",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/content-md-drafts/register.md",
+                                     "to-discard/NextGenTutors-BeyondInfinity/content/register.md"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7CC361E982EE1A96E7C4689BABF0F60D40E0C971698C2DC23F474D9D991384E3",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/widgets.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/widgets.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "727E975D00DBA50E98A3709D17E26AFB3C641ED5A88CF7A08F86EC352CC1C6AA",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/011-support-escalated.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/011-support-escalated.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "1747984A9D48EC64C3E0A1ED9E0C249F7A027694278CB54566542CD39EAB23C6",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/profile.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/profile.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "79D44E8FDB7D26F4CE5A301A4EC7B6FAFA889C22137AB0C5CDEC81A63191DC35",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/become-a-tutor.html",
+                                     "to-discard/previews/pages/become-a-tutor.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "B5F12461E6BE00B94C4428F7D88609D41646E2C1C6D50FE6A1F330540CDE1FFC",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/privacy-policy.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/privacy-policy.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "EDCED5BCDE26EEE0D38D26FD207A560A8D41799C9B9803DB8ABB4262E8E4E1BF",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/css/pages.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/css/pages.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A75EE7949BD94126D2DF6225B5250626F184C0D76CDEA3400FD4BB5F71955725",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/components/section-heading.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/components/section-heading.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4986390E05868B0014151AD8AC4D294D6FF68F195B0230A768185E6A39F5DE15",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/ng-ui-components.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/ng-ui-components.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "3A5E4186252D3E71457EBF7CC0152CA4637E4B0926223C2B7BA0DEBA00C75213",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/admin-beyondinfinity.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/admin-beyondinfinity.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "BC27CDC809BA6035441C1CD8449E2BA6DF77F533847E4B708A46CD11E2FAA8E7",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults/support.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults/support.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A583840D86B28D243224898476018E3A64C5756016283927DE1C3937998E76D7",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/safety-guide-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/safety-guide-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/safety-guide-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/safety-guide-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/safety-guide-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "539DAE96A1BE6E9643D71F5FC596DDA74E368963DBE4BAF41F3242C87F4C7FB3",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/tutor-card.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/tutor-card.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "E28CE9F96CED1D258E211F5B5A226EC62D1A6945EBA0B025931673E7832B7DEC",
+                       "count":  2,
+                       "paths":  [
+                                     "templates/footer/minimal.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/templates/footer/minimal.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4341ACC95A183866E724F98172B4B82776A76E0259A21B580DDD90576954D135",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-completion-suite/workflows/013-support-escalated.json",
+                                     "NextGenTutors-Companion/integrate/catalog/completion/013-support-escalated.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "212F868444838D7A4943F1D12C19A7A1AAB9F14CB2D917B56BE2269F80D46DBB",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/blog-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/blog-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/blog-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/blog-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/blog-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "0954E55BE6F87C3947518E5E6B7462FBCD6D3569CC436FB2B673AD13BB4C37D0",
+                       "count":  2,
+                       "paths":  [
+                                     "footer.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/footer.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A25604C0E0B7C78E1C1FDE978944107BF0577BD75C23DC220096EF90CA95733B",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/kinetic-home.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/kinetic-home.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "00785217C29948C090AA0E825DCF2C654099012ED5C299097EF85C0ADEFF2EBC",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/generated-artifacts/reports/html/data/d110e3ca8ecb5489ef9eea41c25cefbc311b9946.png",
+                                     "to-discard/generated-artifacts/test-results/blueprint-wf01-wf02-wf19-r-b5c9e-upport-contact-support-form-chrome/test-failed-1.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "9E475CEB8C1D6229C17A5DEAE8213B9E03731C417BD152866EAABA9AA90AAA96",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/007-payment-received.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/007-payment-received.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D56908DFAC02610CDCFADE298AA4A4E6A5FEE6B698245CCEAA6681E9CB1F1E9C",
+                       "count":  2,
+                       "paths":  [
+                                     "page-login.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-login.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "481F62A8FC0A6500FA8B69E4686E160A30E83C8D1812CDA9377B0359BF0D74D0",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/ui-library/pricing-card.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/ui-library/pricing-card.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A966357F75335AD9E811D42CF51C44287E4BE7FCEE45233CC4431B0E99BE4C0D",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/page-builders.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/page-builders.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "3F3E31BA5FBC903E9B2FB1F16D022BAE10D6F398566CCCF98C26FA057D05776C",
+                       "count":  2,
+                       "paths":  [
+                                     "page-about.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-about.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D2CF54D4434EA506085C8831420D746FC55C30FD465C803ED2F8A39BA8F88E63",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/tutor-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/tutor-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "911EBFF763202C21FA7BB4934588CB8ED5F43A0351F849539E9DA3BF364864E1",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/tutors.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/tutors.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "37E027B36246B2E9A3C4206AB360C0BC8D500A488DD0C78938AC272AD0474AE7",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/bi-3d.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/bi-3d.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "701F8FDFBCA435AD567F68912BBA0D9BEDD95CF69E6E69E1146AD6ADDE2BB443",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/setup-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/setup-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/setup-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/setup-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/setup-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "206227038239AAB91923F30DB7D659493964855952F0B0C4111F7D1E7AAD2015",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/page-builders.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/page-builders.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "51007C08A8D9C884683B0F53330C82E9E60F07F9053F2B34F8A72DE229E4AF9F",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/img/logo-dark.png",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/img/logo-dark.png"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F1516E00C339EBAD3255FABAAB5BA579F9C4069C9C96F9978D6938BF2F7C54E1",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/onboarding.html",
+                                     "to-discard/previews/pages/onboarding.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2EE57BDF5EF7CBA74039B65582FDBEAD0E6169C3ED60228374D943C30C58EB47",
+                       "count":  2,
+                       "paths":  [
+                                     "page-parent-dashboard.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-parent-dashboard.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8BA19DC666713C319D9A715C1EC4471EA9ED63882639ED273D2BA987E64ECD4F",
+                       "count":  2,
+                       "paths":  [
+                                     "build-src/package.json",
+                                     "to-discard/NextGenTutors-BeyondInfinity/build-src/package.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F67E4C1C41B32C6F917195F00751626DAC6FA75530710DE86962D21E58CC1926",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/contact.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/contact.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "4F9515195470591A0798FE5FED8A77DA31CB6164A20CA9992E54D8D627E23CE6",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/ngt/js/admin-dash.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/ngt/js/admin-dash.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5B3472B998EA22A666735AECADD6B36282A62572F527D3213E768D7CF3932257",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/config/options-loader.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/config/options-loader.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F3F6BFA5C6D93174280297DDB4E41DAA86CC3A9EA084E566475504513162D911",
+                       "count":  2,
+                       "paths":  [
+                                     "template-parts/sections/mission.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/template-parts/sections/mission.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "2A45693CA375AFF327534530B277A678230A6F8AA10CAAA1C0E11A6ED868F478",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/register.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/register.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5306DA27E8249B39086AD33FD90980EAB3FE0ED00A543F6FECC0FECB6A3F0BBB",
+                       "count":  2,
+                       "paths":  [
+                                     "page-guarantee.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/page-guarantee.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "912B4FCC232E1F45D329E2A127BCA4BDF3195D965A2ABCE223B068E3C3C7DB6A",
+                       "count":  2,
+                       "paths":  [
+                                     "ftech-wp-package/doc/doc/assets/elagent-icon/fonts/ElegantIcons.eot",
+                                     "ftech-wp-package/doc/doc/assets/elagent-icon/fonts/ElegantIconsd41d.eot"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "3260AA1B6ACFF1DCB165437E861136FA10446FEFF5090BEC973DD70EC528E67B",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/defaults-production/tutor-vetting.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/defaults-production/tutor-vetting.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "59BB7E8938A8660D50D60F9B2F0326D55A0B8A387611BC82D542BC42C9BA7C58",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/wordpress-setup.html",
+                                     "to-discard/previews/pages/wordpress-setup.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F5133598D241313FDC18A970880F6754425D13FF85A739BDA2AF6BA020A4F4F1",
+                       "count":  2,
+                       "paths":  [
+                                     "single-tutors.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/single-tutors.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "5EC3D94B15FC2EF550AED6EFEBD27328DC033DB5B8A4CDD68837B675DFC2D345",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/config/post-meta.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/config/post-meta.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "91C95C35F6C87DAF2022F28F7C733AC0E9FD9F76AF31EA3DFA9EBAFC87E796B9",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/pricing-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/pricing-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/pricing-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/pricing-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/pricing-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "D0B51090365EB217F1AEB2EC69BF8EF48C4048850C479678BC1A6C976062E52D",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/images/hero-bg.jpg",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/images/hero-bg.jpg"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "541F9E6F18792F03445C5A4185865419A28B42A8201B9D2CB5E030BCEB367F3C",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/ui-library/builders.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/ui-library/builders.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A30BF8D44DB7991BA142FA51114C8703A9B3631BDC3A120C3FB69E67EBD0C979",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/about-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/about-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/about-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/about-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/about-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "628675A80C5927E7E2801622FD327F66767E3BC022109105A1B7DAE265F6D7DC",
+                       "count":  5,
+                       "paths":  [
+                                     "prototypes/index-body.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/prototypes/index-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Companion-prototypes/index-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Html-Importer-prototypes/index-body.php",
+                                     "to-discard/plugin-prototype-copies/NextGenTutors-Plugin-Manager-prototypes/index-body.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "7EB1382983972A31F2F19FF06C88B493CE16DD67C61E96DD3E13DF9C29A85A8E",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/ng-ui-dashboard.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/ng-ui-dashboard.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "BF1001AE420457A847F27C2787A81BB1732CC4A09C06392C4D3D2B07D9CE7907",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/config/storage.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/config/storage.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F22AF0C3F0C2D0ACB7CE19CC41732B35BFFE71E2938E78E0CCBE28AA1B6A11A6",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/safety-guide.html",
+                                     "to-discard/previews/pages/safety-guide.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "A24605F8FB9430219C3868C9B5083423C86C4C23479EC5051E7A55931A01A640",
+                       "count":  2,
+                       "paths":  [
+                                     "templates/full-width.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/templates/full-width.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "737E2CB33C2253BD5575D40D64DF0A6AD44471EA35E9CB2194ED509EDE9DF7E8",
+                       "count":  2,
+                       "paths":  [
+                                     "content/_extracted/nextgen-command-center-v1.0/workflows-v2/005-booking-created.json",
+                                     "NextGenTutors-Companion/integrate/catalog/v2/005-booking-created.json"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "CDE3CBA92A603DB453A47AFE4747C442255E139ACE726CBA5892302937BB1310",
+                       "count":  2,
+                       "paths":  [
+                                     "inc/config/home-sections.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/inc/config/home-sections.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F82002B3C771A59398B4A348E64E846FE123C22A826B916523F452AFF2B0BF30",
+                       "count":  3,
+                       "paths":  [
+                                     "assets/css/motion/07-stagger.css",
+                                     "to-discard/css-styling/Staggered-Animation-Helpers.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/motion/07-stagger.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "8512712E4B0A5018B124E17B68F3ABC07C858B968185219DE36B33993D571B31",
+                       "count":  2,
+                       "paths":  [
+                                     "single.php",
+                                     "to-discard/NextGenTutors-BeyondInfinity/single.php"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "9A5B5BD0326051E2D44CD05B407D72E77880EFDEDCDBA2BC69D2051AAB45AD9A",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/css/ng-ui-hero.css",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/css/ng-ui-hero.css"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "39E6F92AD88262212B2E3D77D2DC8A32454948AB4A9DE3F766DADF05EF14CA88",
+                       "count":  2,
+                       "paths":  [
+                                     "to-discard/NextGenTutors-BeyondInfinity/previews/pages/admin-dashboard.html",
+                                     "to-discard/previews/pages/admin-dashboard.html"
+                                 ],
+                       "status":  "DUPLICATE"
+                   },
+                   {
+                       "sha256":  "F975B062D9E55385A380A8DEB84E0D30A8A6D8DA3AB07249817E614EBF197C7E",
+                       "count":  2,
+                       "paths":  [
+                                     "assets/js/page-composer.js",
+                                     "to-discard/NextGenTutors-BeyondInfinity/assets/js/page-composer.js"
+                                 ],
+                       "status":  "DUPLICATE"
+                   }
+               ],
+    "duplicate_groups":  331
+}

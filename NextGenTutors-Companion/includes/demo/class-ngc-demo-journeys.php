@@ -1,0 +1,152 @@
+<?php
+/**
+ * Demo journey catalogue loader (Phase 14 §14.20).
+ *
+ * @package NextGenCompanion
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Loads YAML/JSON journey definitions and runs seed+verify steps.
+ */
+final class NGC_Demo_Journeys {
+
+	/**
+	 * @return string
+	 */
+	public static function catalogue_dir() {
+		return dirname( NGC_PLUGIN_DIR ) . '/.agent-audit/demo/journeys';
+	}
+
+	/**
+	 * @return array<int, array<string, mixed>>
+	 */
+	public static function list_journeys() {
+		$dir  = self::catalogue_dir();
+		$rows = [];
+		if ( ! is_dir( $dir ) ) {
+			return $rows;
+		}
+		$files = glob( $dir . '/*.json' ) ?: [];
+		$yml   = glob( $dir . '/*.yml' ) ?: [];
+		$yaml  = glob( $dir . '/*.yaml' ) ?: [];
+		foreach ( array_merge( $files, $yml, $yaml ) as $file ) {
+			$raw = file_get_contents( $file );
+			if ( false === $raw ) {
+				continue;
+			}
+			// Strip UTF-8 BOM from Windows-generated JSON.
+			if ( strncmp( $raw, "\xEF\xBB\xBF", 3 ) === 0 ) {
+				$raw = substr( $raw, 3 );
+			}
+			$data = json_decode( $raw, true );
+			if ( ! is_array( $data ) ) {
+				// Minimal YAML: key: value lines (enough for our catalogue files).
+				$data = self::parse_simple_yaml( $raw );
+			}
+			if ( is_array( $data ) && ! empty( $data['id'] ) ) {
+				$data['_file'] = basename( $file );
+				$rows[]        = $data;
+			}
+		}
+		return $rows;
+	}
+
+	/**
+	 * Extremely small YAML subset parser for journey stubs.
+	 *
+	 * @param string $raw Raw.
+	 * @return array<string, mixed>
+	 */
+	private static function parse_simple_yaml( $raw ) {
+		$data = [];
+		$list_key = null;
+		foreach ( preg_split( '/\r\n|\n|\r/', $raw ) as $line ) {
+			if ( preg_match( '/^(\w[\w\-]*):\s*(.*)$/', $line, $m ) ) {
+				$list_key = null;
+				$key      = $m[1];
+				$val      = trim( $m[2] );
+				if ( '' === $val ) {
+					$data[ $key ] = [];
+					$list_key     = $key;
+				} elseif ( preg_match( '/^\[(.*)\]$/', $val, $mm ) ) {
+					$data[ $key ] = array_map( 'trim', explode( ',', $mm[1] ) );
+				} else {
+					$data[ $key ] = trim( $val, "\"'" );
+				}
+			} elseif ( $list_key && preg_match( '/^\s+-\s+(.+)$/', $line, $m ) ) {
+				$data[ $list_key ][] = trim( $m[1], "\"'" );
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * Run a journey: ensure seed, verify expected keys, write evidence.
+	 *
+	 * @param string $journey_id Journey id.
+	 * @return array<string, mixed>|WP_Error
+	 */
+	public static function run( $journey_id ) {
+		$journey_id = sanitize_text_field( $journey_id );
+		$found      = null;
+		foreach ( self::list_journeys() as $j ) {
+			if ( ( $j['id'] ?? '' ) === $journey_id ) {
+				$found = $j;
+				break;
+			}
+		}
+		if ( ! $found ) {
+			return new WP_Error( 'ngc_journey_missing', 'Journey not found: ' . $journey_id );
+		}
+
+		$start = gmdate( 'c' );
+		$seed  = NGC_Demo_Seeder::seed( (string) ( $found['scenario'] ?? 'all' ) );
+		if ( is_wp_error( $seed ) ) {
+			return $seed;
+		}
+		$verify = NGC_Demo_Verifier::verify();
+		$path   = NGC_Demo_Evidence::export_journey(
+			sanitize_key( $journey_id ),
+			[
+				'demo_user'       => $found['persona'] ?? '',
+				'start'           => $start,
+				'journey'         => $found,
+				'steps_executed'  => $found['steps'] ?? [],
+				'test_result'     => ! empty( $verify['ok'] ) ? 'PASS' : 'FAIL',
+				'failure_details' => $verify['failures'] ?? [],
+			]
+		);
+
+		return [
+			'journey'  => $found,
+			'seed'     => [ 'ok' => ! is_wp_error( $seed ), 'errors' => is_array( $seed ) ? ( $seed['errors'] ?? [] ) : [] ],
+			'verify'   => $verify,
+			'evidence' => is_wp_error( $path ) ? $path->get_error_message() : $path,
+		];
+	}
+
+	/**
+	 * @return array<int, array<string, mixed>>
+	 */
+	public static function run_all() {
+		$out = [];
+		foreach ( self::list_journeys() as $j ) {
+			$out[] = self::run( (string) $j['id'] );
+		}
+		if ( empty( $out ) ) {
+			// Fallback: seed+verify+evidence without catalogue files.
+			$seed = NGC_Demo_Seeder::seed( 'all' );
+			$out[] = [
+				'journey'  => [ 'id' => 'JOURNEY-CORE-SEED' ],
+				'seed'     => $seed,
+				'verify'   => NGC_Demo_Verifier::verify(),
+				'evidence' => NGC_Demo_Evidence::export_all(),
+			];
+		}
+		return $out;
+	}
+}

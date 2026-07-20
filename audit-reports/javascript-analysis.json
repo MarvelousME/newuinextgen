@@ -1,0 +1,697 @@
+﻿{
+    "generated_at":  "2026-07-17T12:53:10.8064204+02:00",
+    "files":  [
+                  {
+                      "file":  "assets/js/bi-3d.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/bi-customizer-preview.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/bi-options-admin.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/content-hubs.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/dashboard-rest.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/kinetic-home.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/kinetic-page.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/layout-debug.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/main.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/motion.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/nav-menu.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/nbi-infinity.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/nextgen-beyond-infinity-ui.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/ng-ui.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/ngc-validation.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/ngt-toast.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/ngt-wp-bridge.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/page-composer.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/theme-switcher.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/theme.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/js/tutors-carousel.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/admin-dash.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/chat.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/chrome.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/dashboard.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/data.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/export.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/floating.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/home.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/onboarding.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/preloader.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/pricing.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/profile.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/reports.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/setup.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/static.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/tutor-dash.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/js/tutors.js",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  true,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/dashboard-rest.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/nextgen-beyond-infinity-admin.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/ngc-ai.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/ngc-button-processing.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/ngc-marketplace.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/ngc-match-widget.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/ngc-matching.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/ngc-platform-analytics.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/ngc-system-log.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/js/ngc-validation.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/studio/studio-fallback.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/studio/studio.bundle.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+                                      "@xyflow/${n}/dist/style.css"
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/build-src/copy-to-assets.mjs",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+                                      "fs",
+                                      "path",
+                                      "url"
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/build-src/dist/studio.bundle.js",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+                                      "@xyflow/${n}/dist/style.css"
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/admin-ui.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/nextgen-beyond-infinity-admin.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-actions.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-command.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-core.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-diagnostics.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-interactions.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-modal.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-navigation.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-notifications.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-queue.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-repair.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-tour.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/js/modules/ngcpm-ui-feedback.js",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Html-Importer/assets/admin.js",
+                      "project":  "NextGenTutors-Html-Importer",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Html-Importer/assets/nextgen-beyond-infinity-admin.js",
+                      "project":  "NextGenTutors-Html-Importer",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "agntix/agntix-child/assets/js/ngt-alive-nav.js",
+                      "project":  "agntix-child",
+                      "imports":  [
+
+                                  ],
+                      "uses_gsap":  false,
+                      "uses_three":  false,
+                      "status":  "VERIFIED"
+                  }
+              ]
+}

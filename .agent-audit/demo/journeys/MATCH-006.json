@@ -1,0 +1,40 @@
+﻿{
+    "id":  "MATCH-006",
+    "name":  "Suspended Tutor Excluded",
+    "persona":  "demo-parent",
+    "scenario":  "all",
+    "family":  "matching",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "request-match"
+                  },
+                  {
+                      "action":  "exclude-suspended"
+                  },
+                  {
+                      "action":  "propose-eligible"
+                  }
+              ],
+    "expected_events":  [
+                            "match.proposed"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "crm-parent-sync"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=MATCH-006",
+                         "seed_graph_keys":  [
+                                                 "MATCH-006"
+                                             ]
+                     }
+}

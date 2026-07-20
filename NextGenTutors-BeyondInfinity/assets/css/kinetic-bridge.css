@@ -1,0 +1,258 @@
+/**
+ * Kinetic bridge — applies homepage look to inner marketing pages.
+ * Scoped to body.bi-kinetic-surface (dashboards excluded).
+ */
+
+body.bi-kinetic-surface {
+  background: var(--ngi-soft);
+  color: var(--ngi-text);
+}
+
+body.bi-kinetic-surface .ng-page {
+  background: var(--ngi-soft);
+  color: var(--ngi-text);
+}
+
+body.bi-kinetic-surface .ng-page__canvas {
+  background:
+    radial-gradient(ellipse 70% 45% at 8% -5%, rgba(40, 199, 247, 0.16), transparent 55%),
+    radial-gradient(ellipse 55% 40% at 92% 2%, rgba(255, 183, 3, 0.12), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(18, 60, 124, 0.08), transparent 60%);
+}
+
+/* Hero — kinetic mesh + grid overlay */
+body.bi-kinetic-surface .ng-page-hero {
+  min-height: clamp(340px, 44vh, 540px);
+}
+
+body.bi-kinetic-surface .ng-page-hero__mesh {
+  background:
+    radial-gradient(circle at 74% 18%, rgba(40, 199, 247, 0.34), transparent 23%),
+    radial-gradient(circle at 12% 78%, rgba(255, 183, 3, 0.2), transparent 26%),
+    linear-gradient(135deg, var(--ngi-midnight), var(--ngi-blue));
+}
+
+body.bi-kinetic-surface .ng-page-hero__mesh::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, #000, transparent 88%);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+body.bi-kinetic-surface .ng-page-hero__mesh::after {
+  background:
+    radial-gradient(circle at var(--mx, 70%) var(--my, 20%), rgba(40, 199, 247, 0.32), transparent 20%),
+    radial-gradient(circle at 20% 72%, rgba(255, 183, 3, 0.18), transparent 28%);
+  mix-blend-mode: screen;
+  transition: background 0.25s ease;
+}
+
+body.bi-kinetic-surface .ng-page-hero__title {
+  font-family: var(--ngt-font-display, "Sora", system-ui, sans-serif);
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+body.bi-kinetic-surface .ng-page-hero__stat strong {
+  color: var(--ngi-cyan);
+}
+
+body.bi-kinetic-surface .ng-page-hero__stat {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.16);
+  transition: transform 0.25s var(--ngi-ease), background 0.25s ease;
+}
+
+body.bi-kinetic-surface .ng-page-hero__stat:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* Section headings */
+body.bi-kinetic-surface .ng-page-heading__eyebrow {
+  color: var(--ngi-blue);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+body.bi-kinetic-surface .ng-page-heading__title {
+  font-family: var(--ngt-font-display, "Sora", system-ui, sans-serif);
+  letter-spacing: -0.02em;
+  color: var(--ngi-text);
+}
+
+body.bi-kinetic-surface .ng-page-heading__subtitle {
+  color: var(--ngi-muted);
+}
+
+/* Cards — kinetic glass panels */
+body.bi-kinetic-surface .ngt-card,
+body.bi-kinetic-surface .ng-page-grid .ngt-card,
+body.bi-kinetic-surface .ng-page-section--glass .ngt-card,
+body.bi-kinetic-surface .bi-stat-card {
+  background: var(--ngi-white);
+  border: 1px solid var(--ngi-line);
+  border-radius: var(--ngi-radius);
+  box-shadow: var(--ngi-shadow);
+  transition:
+    transform 0.25s var(--ngi-ease),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+body.bi-kinetic-surface .ngt-card:hover,
+body.bi-kinetic-surface .ng-page-grid .ngt-card:hover,
+body.bi-kinetic-surface .bi-stat-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--ngi-cyan);
+  box-shadow: 0 32px 80px rgba(18, 60, 124, 0.18);
+}
+
+body.bi-kinetic-surface .ngt-section--alt,
+body.bi-kinetic-surface .ng-page-section--muted {
+  background: #f6f9ff;
+}
+
+/* Buttons */
+body.bi-kinetic-surface .ngt-btn--primary,
+body.bi-kinetic-surface .ng-btn--primary {
+  background: var(--ngi-cyan);
+  color: #041326;
+  border-color: transparent;
+  border-radius: 18px;
+  font-weight: 800;
+  box-shadow: 0 12px 32px rgba(40, 199, 247, 0.28);
+  transition: transform 0.25s var(--ngi-ease), box-shadow 0.25s ease;
+}
+
+body.bi-kinetic-surface .ngt-btn--primary:hover,
+body.bi-kinetic-surface .ng-btn--primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(40, 199, 247, 0.35);
+  filter: none;
+}
+
+body.bi-kinetic-surface .ngt-btn--outline,
+body.bi-kinetic-surface .ng-btn--secondary {
+  border-radius: 18px;
+  border-color: rgba(18, 60, 124, 0.2);
+  color: var(--ngi-blue);
+  font-weight: 800;
+  transition: transform 0.25s var(--ngi-ease), border-color 0.2s ease, background 0.2s ease;
+}
+
+body.bi-kinetic-surface .ngt-btn--outline:hover,
+body.bi-kinetic-surface .ng-btn--secondary:hover {
+  border-color: var(--ngi-cyan);
+  background: rgba(40, 199, 247, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Steps / stats */
+body.bi-kinetic-surface .ng-page .bi-steps li,
+body.bi-kinetic-surface .ng-page .bi-stat-grid > * {
+  border-radius: 24px;
+  border-color: var(--ngi-line);
+}
+
+body.bi-kinetic-surface .ng-page .bi-steps li:hover {
+  border-color: var(--ngi-gold);
+  box-shadow: 0 20px 45px rgba(255, 183, 3, 0.14);
+}
+
+/* Footer CTA band */
+body.bi-kinetic-surface .ng-page-footer-band {
+  background: linear-gradient(135deg, var(--ngi-midnight), var(--ngi-blue));
+  border-radius: var(--ngi-radius);
+  box-shadow: 0 35px 90px rgba(7, 23, 47, 0.28);
+  color: #fff;
+  margin-inline: clamp(1rem, 3vw, 2rem);
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+body.bi-kinetic-surface .ng-page-footer-band__title {
+  font-family: var(--ngt-font-display, "Sora", system-ui, sans-serif);
+  letter-spacing: -0.02em;
+}
+
+body.bi-kinetic-surface .ng-page-footer-band__text {
+  color: rgba(217, 238, 255, 0.9);
+}
+
+/* Nav — crisp sticky bar on inner pages (defer to NGT marketing chrome when active) */
+body.bi-kinetic-surface:not(.bi-ngt-skin) .ngt-nav {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: var(--ngi-line);
+}
+
+body.bi-kinetic-surface:not(.bi-ngt-skin) .ngt-nav__logo-text span {
+  background: linear-gradient(135deg, var(--ngi-blue), var(--ngi-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.bi-kinetic-surface:not(.bi-ngt-skin) .ngt-nav__menu .menu-item > a::after,
+body.bi-kinetic-surface:not(.bi-ngt-skin) .ngt-nav__link::after {
+  background: var(--ngi-cyan);
+}
+
+/* Forms on auth / checkout pages */
+body.bi-kinetic-surface .ngc-form-card,
+body.bi-kinetic-surface .bi-shortcode-block {
+  border-radius: var(--ngi-radius);
+  border-color: var(--ngi-line);
+  box-shadow: var(--ngi-shadow);
+}
+
+body.bi-kinetic-surface input[type="text"],
+body.bi-kinetic-surface input[type="email"],
+body.bi-kinetic-surface input[type="password"],
+body.bi-kinetic-surface input[type="tel"],
+body.bi-kinetic-surface input[type="search"],
+body.bi-kinetic-surface select,
+body.bi-kinetic-surface textarea {
+  border-radius: 14px;
+  border-color: #dce7f5;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.bi-kinetic-surface input:focus-visible,
+body.bi-kinetic-surface select:focus-visible,
+body.bi-kinetic-surface textarea:focus-visible {
+  border-color: var(--ngi-cyan);
+  box-shadow: 0 0 0 3px rgba(40, 199, 247, 0.2);
+  outline: none;
+}
+
+/* Reveal timing aligned with kinetic home */
+body.bi-kinetic-surface .ng-reveal {
+  transition-duration: 0.55s;
+  transition-timing-function: var(--ngi-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.bi-kinetic-surface .ngt-card:hover,
+  body.bi-kinetic-surface .ng-page-grid .ngt-card:hover,
+  body.bi-kinetic-surface .ngt-btn--primary:hover,
+  body.bi-kinetic-surface .ng-page-hero__stat:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  body.bi-kinetic-surface .ng-page-footer-band {
+    border-radius: 20px;
+    margin-inline: 1rem;
+  }
+}

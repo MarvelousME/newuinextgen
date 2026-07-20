@@ -1,0 +1,91 @@
+{
+  "generated": "2026-07-20",
+  "source_root": "content-enhancement",
+  "inventory_rows": 117,
+  "packages": [
+    {
+      "id": "nextgen-tutors-core-ready",
+      "type": "wordpress-plugin",
+      "version": "2.0.0",
+      "decision": "REJECT",
+      "canonical_owner": "NextGenTutors-Companion",
+      "rationale": "ngt/v1 + ngt_* tables collide with Companion ngc_* and legacy ngt/v1 alias"
+    },
+    {
+      "id": "nextgen-tutors-core",
+      "type": "wordpress-plugin-plus-resources",
+      "version": "2.0.0",
+      "decision": "REJECT_ACTIVATE_EXTEND_ASSETS",
+      "canonical_owner": "NextGenTutors-Companion",
+      "rationale": "Do not activate; email HTML and import samples reused as reference assets only"
+    },
+    {
+      "id": "nextgen-tutors-plugin",
+      "type": "wordpress-plugin",
+      "version": "1.0.0",
+      "decision": "REJECT",
+      "canonical_owner": "NextGenTutors-Companion + NextGenTutors-Plugin-Manager",
+      "rationale": "Mission Control + plugin install superseded; schema clash with Core"
+    },
+    {
+      "id": "nextgen-tutors-importer",
+      "type": "wordpress-plugin-single-file",
+      "decision": "REJECT",
+      "canonical_owner": "NextGenTutors-Companion integrate/seeder + Html-Importer",
+      "rationale": "Platform seed prototype; distinct from HTML importer; overlapping seed goals"
+    },
+    {
+      "id": "nextgen-tutors-schema.sql.deprecated",
+      "type": "sql",
+      "decision": "REJECT",
+      "canonical_owner": "NGC_Database",
+      "rationale": "Deprecated; wrong table family vs ngc_*"
+    },
+    {
+      "id": "nextgentutors-implementation-dashboard.html",
+      "type": "documentation",
+      "decision": "KEEP",
+      "canonical_owner": "content-enhancement (docs only)",
+      "rationale": "Ops checklist; not loaded by WordPress"
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "CE-REST-001",
+      "type": "REST namespace",
+      "a": "Core/Plugin ngt/v1",
+      "b": "Companion NGC_Rest_Legacy_Alias ngt/v1",
+      "risk": "CRITICAL",
+      "resolution": "REJECT Core/Plugin activation"
+    },
+    {
+      "id": "CE-DB-001",
+      "type": "database tables",
+      "a": "Core ngt_logs/ngt_earnings/…",
+      "b": "Plugin ngt_logs/ngt_earnings different schema; Companion ngc_*",
+      "risk": "CRITICAL",
+      "resolution": "REJECT activation; keep NGC_Database"
+    },
+    {
+      "id": "CE-INSTALL-001",
+      "type": "plugin installer",
+      "a": "Plugin REST /plugins/install",
+      "b": "NextGenTutors-Plugin-Manager",
+      "risk": "HIGH",
+      "resolution": "KEEP Plugin-Manager"
+    }
+  ],
+  "actions_taken": [
+    "Generated file-inventory.json/csv",
+    "Extracted zips to content-enhancement/_extracted for analysis only",
+    "Copied 6 email HTML layouts to Companion assets/email-layouts/content-enhancement-reference",
+    "Quarantined chat-export-full-next-gen.json (PII risk)",
+    "Added content-enhancement/README.md DO-NOT-ACTIVATE"
+  ],
+  "not_done": [
+    "Did not activate any content-enhancement plugin",
+    "Did not merge Core PHP classes into Companion",
+    "Did not replace NGC_Workflow_Email_Templates defaults",
+    "Did not run full PHPUnit suite (not claimed)"
+  ]
+}

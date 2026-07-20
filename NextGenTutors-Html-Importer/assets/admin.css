@@ -1,0 +1,48 @@
+.rhi-wrap .rhi-panel {
+  background: #fff;
+  border: 1px solid #c3c4c7;
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+
+.rhi-status {
+  display: none;
+  margin: 12px 0;
+}
+
+.rhi-mapping-table code {
+  font-size: 12px;
+}
+
+.rhi-confidence {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.rhi-confidence--high {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.rhi-confidence--medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.rhi-confidence--low {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.rhi-report {
+  max-height: 400px;
+  overflow: auto;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 12px;
+  font-size: 12px;
+}

@@ -1,0 +1,40 @@
+﻿{
+    "id":  "BOOK-003",
+    "name":  "Rescheduling",
+    "persona":  "demo-parent",
+    "scenario":  "all",
+    "family":  "booking",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "open-booking"
+                  },
+                  {
+                      "action":  "reschedule"
+                  },
+                  {
+                      "action":  "notify"
+                  }
+              ],
+    "expected_events":  [
+                            "booking.rescheduled"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "booking-sync"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=BOOK-003",
+                         "seed_graph_keys":  [
+                                                 "BOOK-003"
+                                             ]
+                     }
+}

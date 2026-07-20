@@ -23,8 +23,9 @@
 
 | ID | Issue | Status |
 |----|-------|--------|
-| OBS-001 | External APM / metrics export | OPEN |
+| OBS-001 | External APM / metrics export | **FIXED** — Prometheus `/ngc/v1/metrics` + JSON + webhook push + admin UI |
 | UI-001 | Agent Ops Centre UX polish | PARTIAL |
 | DOC-001 | Remaining `.agent-audit` phase files depth | PARTIAL |
-| PRIV-001 | Retention / export / deletion for minor PII | OPEN |
+| PRIV-001 | Retention / export / deletion for minor PII | **FIXED** — WP exporters/erasers + retention cron + Platform privacy UI |
 | A11Y-001 | Accessibility audit | OPEN |
+| DEMO-001 | Phase 14 full relational demo environment | **COMPLETE WITH LIMITATIONS** — seeder/control centre/CLI/journeys/evidence; see demo-implementation-report.md |

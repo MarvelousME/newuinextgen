@@ -1,0 +1,13 @@
+﻿{
+    "created":  "2026-07-20T07:46:57.4167213+02:00",
+    "files":  [
+                  {
+                      "quarantine_path":  "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\audit-reports\\quarantine\\content-enhancement-20260720\\chat-export-full-next-gen.json",
+                      "original_path":  "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\content-enhancement\\_extracted\\nextgen-tutors-core\\nextgen-tutors-core\\assets\\imports\\chat-export-full-next-gen.json",
+                      "reason":  "Possible personal/conversation data in import artifact",
+                      "restoration":  "Copy quarantine_path back to original_path",
+                      "sha256":  "F83428BA317F0A7A92DE129F418554138AC510D0CC65FDBC14452F4CF348F9B7"
+                  }
+              ],
+    "reason":  "PII risk in chat export from content-enhancement Core package"
+}

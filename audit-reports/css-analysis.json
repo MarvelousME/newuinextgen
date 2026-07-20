@@ -1,0 +1,2009 @@
+﻿{
+    "generated_at":  "2026-07-17T12:53:10.8064204+02:00",
+    "files":  [
+                  {
+                      "file":  "assets/css/bi-3d.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--3d",
+                                               "----",
+                                               "--bi-glare-x",
+                                               "--bi-glare-y",
+                                               "--decorative",
+                                               "--ngt-primary",
+                                               "--tutors-3d",
+                                               "--wide",
+                                               "--kinetic",
+                                               "--ngi-accent"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/components.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-secondary",
+                                               "--ngt-primary-dark",
+                                               "--ngt-radius-lg",
+                                               "--ngt-border",
+                                               "--ngt-shadow-md",
+                                               "--ngt-primary",
+                                               "--ngt-text-3",
+                                               "--ngt-radius-xl",
+                                               "--tutors-3d",
+                                               "--ngt-shadow-lg",
+                                               "--ngt-primary-light",
+                                               "--online",
+                                               "--home",
+                                               "--ngt-accent",
+                                               "--ngt-text",
+                                               "--ngt-text-2",
+                                               "--ngt-secondary-light",
+                                               "--ngt-secondary-dark",
+                                               "--yes",
+                                               "--no",
+                                               "--ngt-surface-alt",
+                                               "--lime",
+                                               "--light",
+                                               "--alert",
+                                               "--ok",
+                                               "--required",
+                                               "--optional"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/content-hubs.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngi-line",
+                                               "--ngi-blue",
+                                               "--ngi-cyan",
+                                               "--values",
+                                               "--verification",
+                                               "--faq",
+                                               "--proof",
+                                               "--process",
+                                               "--ngi-radius",
+                                               "--inline",
+                                               "--ngi-gold",
+                                               "--ngt-font-display",
+                                               "--ngi-muted",
+                                               "--ngi-soft",
+                                               "--ngi-text"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/dashboard-mission.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-navy",
+                                               "--ngt-lime",
+                                               "--ngt-mission-gold",
+                                               "--ngt-mission-surface",
+                                               "--image"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/kinetic-bridge.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngi-soft",
+                                               "--ngi-text",
+                                               "--ngi-midnight",
+                                               "--ngi-blue",
+                                               "--mx",
+                                               "--my",
+                                               "--ngt-font-display",
+                                               "--ngi-cyan",
+                                               "--ngi-ease",
+                                               "--ngi-muted",
+                                               "--glass",
+                                               "--ngi-white",
+                                               "--ngi-line",
+                                               "--ngi-radius",
+                                               "--ngi-shadow",
+                                               "--alt",
+                                               "--muted",
+                                               "--primary",
+                                               "--outline",
+                                               "--secondary",
+                                               "--ngi-gold"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/kinetic-home.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngi-navy",
+                                               "--ngi-midnight",
+                                               "--ngi-blue",
+                                               "--ngi-cyan",
+                                               "--ngi-gold",
+                                               "--ngi-green",
+                                               "--ngi-orange",
+                                               "--ngi-soft",
+                                               "--ngi-white",
+                                               "--ngi-text",
+                                               "--ngi-muted",
+                                               "--ngi-line",
+                                               "--ngi-shadow",
+                                               "--ngi-radius",
+                                               "--mx",
+                                               "--my",
+                                               "--magx",
+                                               "--magy",
+                                               "--rx",
+                                               "--ry",
+                                               "--theme",
+                                               "--star",
+                                               "--testimonials",
+                                               "--search",
+                                               "--ngi-layout-max",
+                                               "--top",
+                                               "--bottom"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/kinetic-image-hover.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngi-line",
+                                               "--ngi-blue",
+                                               "--ngi-img",
+                                               "--ngi-gold",
+                                               "--has-video",
+                                               "--ngi-muted"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/kinetic-tokens.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngi-navy",
+                                               "--ngi-midnight",
+                                               "--ngi-blue",
+                                               "--ngi-cyan",
+                                               "--ngi-gold",
+                                               "--ngi-green",
+                                               "--ngi-orange",
+                                               "--ngi-soft",
+                                               "--ngi-white",
+                                               "--ngi-text",
+                                               "--ngi-muted",
+                                               "--ngi-line",
+                                               "--ngi-shadow",
+                                               "--ngi-radius",
+                                               "--ngi-ease",
+                                               "--ngt-primary",
+                                               "--ngt-primary-dark",
+                                               "--ngt-primary-light",
+                                               "--ngt-secondary",
+                                               "--ngt-secondary-dark",
+                                               "--ngt-secondary-light",
+                                               "--ngt-accent",
+                                               "--ngt-accent-dark",
+                                               "--ngt-accent-light",
+                                               "--ngt-bg",
+                                               "--ngt-text",
+                                               "--ngt-text-2",
+                                               "--ng-color-primary",
+                                               "--ng-color-secondary",
+                                               "--ng-color-accent",
+                                               "--ng-color-bg",
+                                               "--ng-color-ink",
+                                               "--ng-color-muted",
+                                               "--ng-color-border",
+                                               "--ng-shadow-card",
+                                               "--ng-radius-xl"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/layout-system.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ng-layout-max-boxed",
+                                               "--ng-layout-max-wide",
+                                               "--ng-layout-gutter",
+                                               "--ng-sticky-offset",
+                                               "--ng-z-dropdown",
+                                               "--ng-z-sticky",
+                                               "--ng-z-modal",
+                                               "--ng-z-toast",
+                                               "--boxed",
+                                               "--full",
+                                               "--wide",
+                                               "--transparent",
+                                               "--minimal"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/nav-menu.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-text",
+                                               "--ngt-accent",
+                                               "--ngt-primary",
+                                               "--ngt-border-light",
+                                               "--ngt-navy"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/nbi-infinity.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--nbi-canvas",
+                                               "--nbi-indigo",
+                                               "--nbi-violet",
+                                               "--nbi-teal",
+                                               "--nbi-cyan",
+                                               "--nbi-glass-border",
+                                               "--nbi-glass-bg",
+                                               "--nbi-glass-blur",
+                                               "--nbi-neon-shadow",
+                                               "--nbi-font-mono",
+                                               "--nbi-aurora",
+                                               "--ng-font-heading",
+                                               "--magnetic",
+                                               "--nbi-mag-x",
+                                               "--nbi-mag-y",
+                                               "--wallet",
+                                               "--rings",
+                                               "--timeline",
+                                               "--ng-color-muted",
+                                               "--ng-color-primary"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/nextgen-beyond-infinity-ui.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngbi-ink",
+                                               "--ngbi-muted",
+                                               "--ngbi-line",
+                                               "--ngbi-paper",
+                                               "--ngbi-ivory",
+                                               "--ngbi-navy",
+                                               "--ngbi-deep",
+                                               "--ngbi-blue",
+                                               "--ngbi-cyan",
+                                               "--ngbi-violet",
+                                               "--ngbi-gold",
+                                               "--ngbi-emerald",
+                                               "--ngbi-radius-sm",
+                                               "--ngbi-radius",
+                                               "--ngbi-radius-xl",
+                                               "--ngbi-radius-2xl",
+                                               "--ngbi-shadow",
+                                               "--ngbi-shadow-deep",
+                                               "--ngbi-glass",
+                                               "--ngbi-glass-dark",
+                                               "--ngbi-blur",
+                                               "--ngbi-gradient",
+                                               "--ngbi-aurora",
+                                               "--ngbi-font",
+                                               "--ngbi-display",
+                                               "--ngbi-elevation-low",
+                                               "--ngbi-elevation-high"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ng-ui-booking.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ng-space-3",
+                                               "--ng-space-4",
+                                               "--ng-color-border",
+                                               "--ng-radius-md",
+                                               "--ng-color-surface",
+                                               "--ng-radius-sm",
+                                               "--ng-text-sm",
+                                               "--ng-color-muted",
+                                               "--ng-color-accent",
+                                               "--ng-text-xs",
+                                               "--ng-weight-bold",
+                                               "--ng-space-2",
+                                               "--ng-radius-pill",
+                                               "--ng-color-surface-elevated",
+                                               "--ng-color-warning"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ng-ui-cards.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ng-space-4",
+                                               "--ng-radius-md",
+                                               "--ng-font-heading",
+                                               "--ng-text-lg",
+                                               "--ng-weight-bold",
+                                               "--ng-text-sm",
+                                               "--ng-color-muted",
+                                               "--ng-color-border"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ng-ui-components.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ng-font-body",
+                                               "--ng-color-ink",
+                                               "--ng-space-8",
+                                               "--ng-color-muted",
+                                               "--ng-color-surface-elevated",
+                                               "--ng-radius-md",
+                                               "--ng-color-border",
+                                               "--ng-space-2",
+                                               "--ng-radius-pill",
+                                               "--ng-weight-bold",
+                                               "--ng-text-sm",
+                                               "--ng-duration-fast",
+                                               "--ng-ease-smooth",
+                                               "--ng-color-accent",
+                                               "--primary",
+                                               "--ng-color-accent-bright",
+                                               "--ng-color-primary",
+                                               "--ng-shadow-sm",
+                                               "--ng-shadow-card",
+                                               "--secondary",
+                                               "--ng-color-surface",
+                                               "--ng-radius-lg",
+                                               "--ng-space-6",
+                                               "--ng-text-xs",
+                                               "--ng-weight-semibold",
+                                               "--ng-radius-sm",
+                                               "--ng-space-4",
+                                               "--ng-space-5",
+                                               "--ng-container"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ng-ui-dashboard.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ng-space-4",
+                                               "--ng-space-5",
+                                               "--ng-radius-md",
+                                               "--ng-color-surface",
+                                               "--ng-color-border",
+                                               "--ng-font-heading",
+                                               "--ng-text-2xl",
+                                               "--ng-weight-bold",
+                                               "--ng-color-primary",
+                                               "--ng-text-sm",
+                                               "--ng-color-muted"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ng-ui-hero.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ng-color-primary",
+                                               "--ng-color-secondary",
+                                               "--ng-space-8",
+                                               "--ng-font-heading",
+                                               "--ng-text-4xl",
+                                               "--ng-leading-tight",
+                                               "--ng-weight-extrabold",
+                                               "--ng-space-4",
+                                               "--ng-text-lg",
+                                               "--ng-space-6",
+                                               "--ng-text-2xl",
+                                               "--ng-weight-bold",
+                                               "--ng-text-sm"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ng-ui-tokens.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ng-",
+                                               "--ng-color-primary",
+                                               "--ng-color-primary-dark",
+                                               "--ng-color-primary-light",
+                                               "--ng-color-secondary",
+                                               "--ng-color-secondary-dark",
+                                               "--ng-color-secondary-light",
+                                               "--ng-color-accent",
+                                               "--ng-color-accent-dark",
+                                               "--ng-color-accent-light",
+                                               "--navy",
+                                               "--blue",
+                                               "--lime",
+                                               "--lime-bright",
+                                               "--amber",
+                                               "--ink",
+                                               "--slate-500",
+                                               "--slate-200",
+                                               "--cream",
+                                               "--white",
+                                               "--slate-50",
+                                               "--ng-color-success",
+                                               "--ng-color-success-bg",
+                                               "--ng-color-warning",
+                                               "--ng-color-error",
+                                               "--ng-color-ink",
+                                               "--ng-color-muted",
+                                               "--ng-color-border",
+                                               "--ng-color-bg",
+                                               "--ng-color-surface",
+                                               "--ng-color-surface-elevated",
+                                               "--ng-color-text-2",
+                                               "--ng-color-text-3",
+                                               "--ng-font-heading",
+                                               "--ng-font-body",
+                                               "--ng-font-serif",
+                                               "--ng-text-xs",
+                                               "--ng-text-sm",
+                                               "--ng-text-base",
+                                               "--ng-text-lg",
+                                               "--ng-text-xl",
+                                               "--ng-text-2xl",
+                                               "--ng-text-3xl",
+                                               "--ng-text-4xl",
+                                               "--ng-leading-tight",
+                                               "--ng-leading-normal",
+                                               "--ng-weight-medium",
+                                               "--ng-weight-semibold",
+                                               "--ng-weight-bold",
+                                               "--ng-weight-extrabold",
+                                               "--ng-space-1",
+                                               "--ng-space-2",
+                                               "--ng-space-3",
+                                               "--ng-space-4",
+                                               "--ng-space-5",
+                                               "--ng-space-6",
+                                               "--ng-space-8",
+                                               "--ng-space-10",
+                                               "--ng-space-12",
+                                               "--ng-space-16",
+                                               "--ng-radius-sm",
+                                               "--ng-radius-md",
+                                               "--ng-radius-lg",
+                                               "--ng-radius-xl",
+                                               "--ng-radius-pill",
+                                               "--ng-shadow-sm",
+                                               "--ng-shadow-card",
+                                               "--ng-shadow-lg",
+                                               "--ng-shadow-xl",
+                                               "--ng-duration-fast",
+                                               "--ng-duration-normal",
+                                               "--ng-duration-slow",
+                                               "--ng-ease-spring",
+                                               "--ng-ease-smooth",
+                                               "--ng-container",
+                                               "--ng-breakpoint-sm",
+                                               "--ng-breakpoint-md",
+                                               "--ng-breakpoint-lg",
+                                               "--ng-breakpoint-xl",
+                                               "--nbi-canvas"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ngc-forms.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-surface-alt",
+                                               "--ngt-border"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ngc-validation.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ngt-toast.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--success",
+                                               "--error"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/ngt-wp-bridge.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--cream",
+                                               "--slate-800",
+                                               "--font-sans",
+                                               "--nav-h",
+                                               "--ease-smooth",
+                                               "--solid",
+                                               "--lime",
+                                               "--primary",
+                                               "--lime-bright",
+                                               "--navy",
+                                               "--r-pill",
+                                               "--outline",
+                                               "--ghost",
+                                               "--maxw",
+                                               "--theme",
+                                               "--rx"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/options-admin.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--inherit",
+                                               "--custom"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/page-builders.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-shadow-sm",
+                                               "--ngt-font-display",
+                                               "--ngt-font-body",
+                                               "--ngt-text-2"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/page-composer.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ng-color-bg",
+                                               "--cream",
+                                               "--ng-color-ink",
+                                               "--has-video",
+                                               "--ng-space-8",
+                                               "--ng-font-heading",
+                                               "--ng-text-4xl",
+                                               "--ng-text-lg",
+                                               "--ng-radius-md",
+                                               "--ng-color-accent",
+                                               "--narrow",
+                                               "--glass",
+                                               "--ng-shadow-card",
+                                               "--ng-color-secondary",
+                                               "--ng-color-muted",
+                                               "--ng-ease-spring",
+                                               "--ng-shadow-lg",
+                                               "--ng-radius-lg",
+                                               "--ng-color-surface",
+                                               "--ng-color-border",
+                                               "--ng-shadow-sm",
+                                               "--ng-ease-smooth",
+                                               "--dashboard",
+                                               "--stats-band",
+                                               "--ng-color-surface-elevated"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/prototype-blend.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--lime",
+                                               "--ngi-cyan",
+                                               "--lime-bright",
+                                               "--lime-soft",
+                                               "--lime-deep",
+                                               "--navy",
+                                               "--ngi-navy",
+                                               "--blue",
+                                               "--ngi-blue",
+                                               "--amber",
+                                               "--ngi-gold",
+                                               "--cream",
+                                               "--ngi-soft",
+                                               "--ngi-text",
+                                               "--ngi-midnight",
+                                               "--mx",
+                                               "--my",
+                                               "--ngi-radius",
+                                               "--ngi-line",
+                                               "--ngi-shadow",
+                                               "--primary"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/sections.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-primary",
+                                               "--ngt-secondary",
+                                               "--ngt-accent",
+                                               "--ngt-ease-out",
+                                               "--ngt-radius-full",
+                                               "--ngt-secondary-dark",
+                                               "--ngt-radius-md",
+                                               "--ngt-radius-lg",
+                                               "--ngt-white",
+                                               "--ngt-border-light",
+                                               "--ngt-text-3",
+                                               "--ngt-text",
+                                               "--ngt-bg",
+                                               "--ngt-ease",
+                                               "--ngt-shadow-lg",
+                                               "--ngt-font-display",
+                                               "--ngt-text-2",
+                                               "--ngt-success-bg",
+                                               "--ngt-success",
+                                               "--security",
+                                               "--verified",
+                                               "--ngt-primary-light",
+                                               "--gold"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/theme-switcher.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--bi-sw-bg",
+                                               "--ngt-surface",
+                                               "--bi-sw-border",
+                                               "--ngt-border",
+                                               "--bi-sw-text",
+                                               "--ngt-text",
+                                               "--bi-sw-muted",
+                                               "--ngt-text-2",
+                                               "--bi-sw-accent",
+                                               "--ngt-secondary",
+                                               "--bi-sw-radius",
+                                               "--ngt-radius-lg",
+                                               "--ngt-font-body",
+                                               "--floating",
+                                               "--ngt-shadow-md",
+                                               "--ngt-shadow-lg",
+                                               "--ngt-radius-md",
+                                               "--ngt-duration-fast"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/theme.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-primary",
+                                               "--ngt-primary-700",
+                                               "--ngt-accent",
+                                               "--ngt-accent-600",
+                                               "--ngt-dark",
+                                               "--ngt-grad-from",
+                                               "--ngt-grad-to",
+                                               "--ngt-slate-50",
+                                               "--ngt-slate-100",
+                                               "--ngt-slate-200",
+                                               "--ngt-slate-400",
+                                               "--ngt-slate-500",
+                                               "--ngt-slate-600",
+                                               "--ngt-slate-900",
+                                               "--ngt-indigo-50",
+                                               "--ngt-emerald-50",
+                                               "--ngt-rose-500",
+                                               "--ngt-sans",
+                                               "--ngt-display",
+                                               "--ngt-mono",
+                                               "--ngt-radius",
+                                               "--ngt-radius-lg",
+                                               "--ngt-shadow-sm",
+                                               "--ngt-shadow",
+                                               "--ngt-shadow-xl",
+                                               "----------",
+                                               "--compact"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/motion/01-base.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ease-spring",
+                                               "--ease-smooth",
+                                               "--ease-bounce",
+                                               "--ease-elastic"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/motion/02-entrance.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ease-smooth",
+                                               "--ease-spring",
+                                               "--ease-elastic"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/motion/03-sections.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ease-smooth"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/motion/04-hover.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ease-smooth",
+                                               "--ease-elastic"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/motion/05-parallax.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/motion/06-responsive.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/motion/07-stagger.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ease-smooth",
+                                               "--stagger-offset"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/motion/08-subtle.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/motion/09-theme-bridge.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--bi-motion-glow-1",
+                                               "--ngt-primary",
+                                               "--bi-motion-glow-2",
+                                               "--ngt-secondary",
+                                               "--bi-motion-glow-3",
+                                               "--ngt-accent",
+                                               "--ease-smooth",
+                                               "--primary",
+                                               "--image",
+                                               "--guarantee",
+                                               "--ease-spring",
+                                               "--ngt-radius-lg"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/skins/beyond-infinity.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-primary",
+                                               "--ngt-primary-dark",
+                                               "--ngt-primary-light",
+                                               "--ngt-secondary",
+                                               "--ngt-secondary-dark",
+                                               "--ngt-secondary-light",
+                                               "--ngt-accent",
+                                               "--ngt-accent-dark",
+                                               "--ngt-accent-light",
+                                               "--ngt-bg",
+                                               "--ngt-white",
+                                               "--ngt-surface",
+                                               "--ngt-border",
+                                               "--ngt-border-light",
+                                               "--ngt-text",
+                                               "--ngt-text-2",
+                                               "--ngt-text-3",
+                                               "--ngt-success",
+                                               "--ngt-success-bg",
+                                               "--ngt-warning",
+                                               "--ngt-error",
+                                               "--ngt-font-display",
+                                               "--ngt-font-body",
+                                               "--ng-color-primary",
+                                               "--ng-color-secondary",
+                                               "--ng-color-accent",
+                                               "--ng-color-bg",
+                                               "--ng-color-surface",
+                                               "--ng-color-ink",
+                                               "--ng-color-muted",
+                                               "--ng-color-border",
+                                               "--ng-font-heading",
+                                               "--ng-font-body"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/skins/classic-indigo.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-primary",
+                                               "--ngt-primary-dark",
+                                               "--ngt-primary-light",
+                                               "--ngt-secondary",
+                                               "--ngt-secondary-dark",
+                                               "--ngt-secondary-light",
+                                               "--ngt-accent",
+                                               "--ngt-accent-dark",
+                                               "--ngt-accent-light",
+                                               "--ngt-bg",
+                                               "--ngt-white",
+                                               "--ngt-surface",
+                                               "--ngt-border",
+                                               "--ngt-border-light",
+                                               "--ngt-text",
+                                               "--ngt-text-2",
+                                               "--ngt-text-3",
+                                               "--ngt-success",
+                                               "--ngt-success-bg",
+                                               "--ngt-warning",
+                                               "--ngt-error",
+                                               "--ngt-font-display",
+                                               "--ngt-font-body",
+                                               "--ngt-grad-from",
+                                               "--ngt-grad-to",
+                                               "--ng-color-primary",
+                                               "--ng-color-secondary",
+                                               "--ng-color-accent",
+                                               "--ng-color-bg",
+                                               "--ng-font-heading",
+                                               "--ng-font-body"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/skins/ngt-marketing.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-primary",
+                                               "--ngt-primary-dark",
+                                               "--ngt-primary-light",
+                                               "--ngt-secondary",
+                                               "--ngt-secondary-dark",
+                                               "--ngt-secondary-light",
+                                               "--ngt-accent",
+                                               "--ngt-accent-dark",
+                                               "--ngt-accent-light",
+                                               "--ngt-bg",
+                                               "--ngt-white",
+                                               "--ngt-surface",
+                                               "--ngt-border",
+                                               "--ngt-border-light",
+                                               "--ngt-text",
+                                               "--ngt-text-2",
+                                               "--ngt-text-3",
+                                               "--ngt-success",
+                                               "--ngt-success-bg",
+                                               "--ngt-warning",
+                                               "--ngt-error",
+                                               "--ngt-font-display",
+                                               "--ngt-font-body",
+                                               "--navy",
+                                               "--blue",
+                                               "--lime",
+                                               "--lime-bright",
+                                               "--amber",
+                                               "--ink",
+                                               "--cream",
+                                               "--font-display",
+                                               "--font-sans",
+                                               "--ng-color-primary",
+                                               "--ng-color-secondary",
+                                               "--ng-color-accent",
+                                               "--ng-color-bg",
+                                               "--ng-font-heading",
+                                               "--ng-font-body"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/css/tokens/base.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-space-xs",
+                                               "--ngt-space-sm",
+                                               "--ngt-space-md",
+                                               "--ngt-space-lg",
+                                               "--ngt-space-xl",
+                                               "--ngt-space-2xl",
+                                               "--ngt-space-3xl",
+                                               "--ngt-radius-sm",
+                                               "--ngt-radius-md",
+                                               "--ngt-radius-lg",
+                                               "--ngt-radius-xl",
+                                               "--ngt-radius-full",
+                                               "--ngt-shadow-sm",
+                                               "--ngt-shadow-md",
+                                               "--ngt-shadow-lg",
+                                               "--ngt-shadow-xl",
+                                               "--ngt-ease",
+                                               "--ngt-ease-out",
+                                               "--ngt-duration-fast",
+                                               "--ngt-duration",
+                                               "--ngt-duration-slow",
+                                               "--ngt-layout-max",
+                                               "--ngt-content-pad"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/css/admin.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--blue",
+                                               "--navy",
+                                               "--nav-h",
+                                               "--r-pill",
+                                               "--active",
+                                               "--lime",
+                                               "--pending",
+                                               "--amber",
+                                               "--alert",
+                                               "--lime-deep",
+                                               "--ease-expo",
+                                               "--slate-400",
+                                               "--amber-deep",
+                                               "--slate-200",
+                                               "--lime-soft",
+                                               "--slate-50",
+                                               "--slate-300",
+                                               "--font-serif",
+                                               "--slate-500",
+                                               "--slate-100",
+                                               "--r-lg",
+                                               "--3",
+                                               "--r-md",
+                                               "--have",
+                                               "--missing",
+                                               "--r-sm",
+                                               "--lime-bright",
+                                               "--slate-600",
+                                               "--slate-900",
+                                               "--ease-spring",
+                                               "--req",
+                                               "--rec",
+                                               "--sh-md",
+                                               "--tutor",
+                                               "--staff",
+                                               "--support",
+                                               "--slate-700",
+                                               "--font-sans",
+                                               "--done",
+                                               "--wait"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/css/components.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--nav-h",
+                                               "--ease-smooth",
+                                               "--lime",
+                                               "--ease-spring",
+                                               "--transparent",
+                                               "--white",
+                                               "--sh-sm",
+                                               "--font-serif",
+                                               "--navy",
+                                               "--lime-deep",
+                                               "--r-sm",
+                                               "--slate-600",
+                                               "--ease-expo",
+                                               "--slate-100",
+                                               "--r-pill",
+                                               "--r-lg",
+                                               "--sh-float",
+                                               "--font-sans",
+                                               "--slate-900",
+                                               "--r-xl",
+                                               "--main",
+                                               "--r-md",
+                                               "--sh-xl",
+                                               "--live",
+                                               "--rating",
+                                               "--slate-500",
+                                               "--amber",
+                                               "--slate-200",
+                                               "--slate-50",
+                                               "--slate-700",
+                                               "--lime-soft",
+                                               "--center",
+                                               "--sh-lg",
+                                               "--slate-400",
+                                               "--sh-md",
+                                               "--r-2xl",
+                                               "--online",
+                                               "--home",
+                                               "--amber-deep",
+                                               "--blue",
+                                               "--slate-300",
+                                               "--feature",
+                                               "--ink"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/css/content.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--lime",
+                                               "--r-pill",
+                                               "--light",
+                                               "--lime-soft",
+                                               "--navy",
+                                               "--lime-deep",
+                                               "--nav-h",
+                                               "--r-xl",
+                                               "--sh-lg",
+                                               "--font-serif",
+                                               "--amber",
+                                               "--font-sans",
+                                               "--slate-50",
+                                               "--slate-200",
+                                               "--r-lg",
+                                               "--slate-500",
+                                               "--r-md",
+                                               "--ease-spring",
+                                               "--sh-md",
+                                               "--blue",
+                                               "--sh-sm",
+                                               "--slate-400",
+                                               "--slate-300",
+                                               "--sh-2xl",
+                                               "--slate-100",
+                                               "--r-sm",
+                                               "--slate-800",
+                                               "--slate-600",
+                                               "--yes",
+                                               "--no",
+                                               "--r-2xl"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/css/floating.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ease-spring",
+                                               "--top",
+                                               "--navy",
+                                               "--wa",
+                                               "--livechat",
+                                               "--blue",
+                                               "--support",
+                                               "--lime",
+                                               "--match",
+                                               "--ink",
+                                               "--r-sm",
+                                               "--slate-200",
+                                               "--r-xl",
+                                               "--sh-xl",
+                                               "--font-serif",
+                                               "--call",
+                                               "--video",
+                                               "--close",
+                                               "--slate-100",
+                                               "--slate-400",
+                                               "--slate-50",
+                                               "--lime-soft",
+                                               "--amber",
+                                               "--slate-500",
+                                               "--in",
+                                               "--slate-700",
+                                               "--out",
+                                               "--font-sans",
+                                               "--slate-800",
+                                               "--end",
+                                               "--mute",
+                                               "--screen",
+                                               "--done",
+                                               "--active",
+                                               "--locked",
+                                               "--lime-bright",
+                                               "--ease-expo",
+                                               "--r-md",
+                                               "--slate-300",
+                                               "--slate-600",
+                                               "--sh-sm",
+                                               "--pdf",
+                                               "--csv",
+                                               "--r-lg"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/css/pages.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--font-sans",
+                                               "--r-pill",
+                                               "--lime",
+                                               "--navy",
+                                               "--blue",
+                                               "--nav-h",
+                                               "--font-serif",
+                                               "--white",
+                                               "--slate-200",
+                                               "--r-xl",
+                                               "--lime-deep",
+                                               "--slate-100",
+                                               "--slate-400",
+                                               "--slate-50",
+                                               "--slate-600",
+                                               "--slate-500",
+                                               "--r-2xl",
+                                               "--sh-xl",
+                                               "--ease-spring",
+                                               "--sh-lg",
+                                               "--r-md",
+                                               "--r-sm",
+                                               "--slate-800",
+                                               "--lime-soft",
+                                               "--r-lg",
+                                               "--sh-md",
+                                               "--ease-expo",
+                                               "--3",
+                                               "--2",
+                                               "--done",
+                                               "--rated",
+                                               "--font-mono",
+                                               "--slate-700",
+                                               "--paid",
+                                               "--pending"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "assets/ngt/css/tokens.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--navy",
+                                               "--navy-800",
+                                               "--navy-700",
+                                               "--blue",
+                                               "--blue-600",
+                                               "--lime",
+                                               "--lime-bright",
+                                               "--lime-soft",
+                                               "--lime-deep",
+                                               "--amber",
+                                               "--amber-deep",
+                                               "--ink",
+                                               "--slate-900",
+                                               "--slate-800",
+                                               "--slate-700",
+                                               "--slate-600",
+                                               "--slate-500",
+                                               "--slate-400",
+                                               "--slate-300",
+                                               "--slate-200",
+                                               "--slate-100",
+                                               "--slate-50",
+                                               "--cream",
+                                               "--white",
+                                               "--font-display",
+                                               "--font-serif",
+                                               "--font-sans",
+                                               "--r-sm",
+                                               "--r-md",
+                                               "--r-lg",
+                                               "--r-xl",
+                                               "--r-2xl",
+                                               "--r-pill",
+                                               "--sh-sm",
+                                               "--sh-md",
+                                               "--sh-lg",
+                                               "--sh-xl",
+                                               "--sh-float",
+                                               "--ease-spring",
+                                               "--ease-expo",
+                                               "--ease-smooth",
+                                               "--maxw",
+                                               "--nav-h",
+                                               "----------",
+                                               "--tight",
+                                               "--primary",
+                                               "--ghost",
+                                               "--block",
+                                               "--shine",
+                                               "--rx"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "style.css",
+                      "project":  "NextGenTutors-BeyondInfinity",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "----",
+                                               "--ngt-primary",
+                                               "--ngt-primary-dark",
+                                               "--ngt-primary-light",
+                                               "--ngt-secondary",
+                                               "--ngt-secondary-dark",
+                                               "--ngt-secondary-light",
+                                               "--ngt-accent",
+                                               "--ngt-accent-dark",
+                                               "--ngt-accent-light",
+                                               "--ngt-bg",
+                                               "--ngt-white",
+                                               "--ngt-surface",
+                                               "--ngt-border",
+                                               "--ngt-border-light",
+                                               "--ngt-text",
+                                               "--ngt-text-2",
+                                               "--ngt-text-3",
+                                               "--ngt-success",
+                                               "--ngt-success-bg",
+                                               "--ngt-warning",
+                                               "--ngt-error",
+                                               "--ngt-font-display",
+                                               "--ngt-font-body",
+                                               "--ngt-space-xs",
+                                               "--ngt-space-sm",
+                                               "--ngt-space-md",
+                                               "--ngt-space-lg",
+                                               "--ngt-space-xl",
+                                               "--ngt-space-2xl",
+                                               "--ngt-space-3xl",
+                                               "--ngt-radius-sm",
+                                               "--ngt-radius-md",
+                                               "--ngt-radius-lg",
+                                               "--ngt-radius-xl",
+                                               "--ngt-radius-full",
+                                               "--ngt-shadow-sm",
+                                               "--ngt-shadow-md",
+                                               "--ngt-shadow-lg",
+                                               "--ngt-shadow-xl",
+                                               "--ngt-ease",
+                                               "--ngt-ease-out",
+                                               "--alt",
+                                               "--primary",
+                                               "--secondary",
+                                               "--outline",
+                                               "--white",
+                                               "--lg",
+                                               "--sm",
+                                               "--block",
+                                               "--success",
+                                               "--delay-1",
+                                               "--delay-2",
+                                               "--delay-3",
+                                               "--delay-4",
+                                               "--delay-5",
+                                               "--featured",
+                                               "--content",
+                                               "--home",
+                                               "--scrolled",
+                                               "--transparent",
+                                               "--minimal",
+                                               "--light"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/css/nextgen-beyond-infinity-admin.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngbi-admin-bg",
+                                               "--ngbi-admin-surface",
+                                               "--ngbi-admin-line",
+                                               "--ngbi-admin-blue",
+                                               "--ngbi-admin-cyan",
+                                               "--ngbi-admin-violet",
+                                               "--ngbi-admin-gold",
+                                               "--ngbi-admin-ink",
+                                               "--ngbi-admin-muted",
+                                               "--ngbi-admin-radius",
+                                               "--ngbi-admin-shadow"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/css/ngc-ai.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/css/ngc-button-processing.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/css/ngc-marketplace.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngc-mkt-gap",
+                                               "--ngc-mkt-surface",
+                                               "--ng-color-border",
+                                               "--ng-color-surface",
+                                               "--ng-color-muted",
+                                               "--placeholder",
+                                               "--province",
+                                               "--primary",
+                                               "--outline",
+                                               "--book",
+                                               "--nbi-mag-x",
+                                               "--nbi-mag-y",
+                                               "--ng-color-surface-elevated"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/css/ngc-match-widget.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--reduced-motion",
+                                               "--match"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/css/ngc-matching.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ph",
+                                               "--high",
+                                               "--medium",
+                                               "--fair"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/css/ngc-platform-analytics.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngc-pa-ink",
+                                               "--ngc-pa-muted",
+                                               "--ngc-pa-line",
+                                               "--ngc-pa-surface",
+                                               "--ngc-pa-soft",
+                                               "--ngc-pa-accent",
+                                               "--wide",
+                                               "--full"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/css/ngc-system-log.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/css/ngc-validation.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/studio/studio-shell.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/assets/studio/studio.bundle.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--xy-edge-stroke-default",
+                                               "--xy-edge-stroke-width-default",
+                                               "--xy-edge-stroke-selected-default",
+                                               "--xy-connectionline-stroke-default",
+                                               "--xy-connectionline-stroke-width-default",
+                                               "--xy-attribution-background-color-default",
+                                               "--xy-minimap-background-color-default",
+                                               "--xy-minimap-mask-background-color-default",
+                                               "--xy-minimap-mask-stroke-color-default",
+                                               "--xy-minimap-mask-stroke-width-default",
+                                               "--xy-minimap-node-background-color-default",
+                                               "--xy-minimap-node-stroke-color-default",
+                                               "--xy-minimap-node-stroke-width-default",
+                                               "--xy-background-color-default",
+                                               "--xy-background-pattern-dots-color-default",
+                                               "--xy-background-pattern-lines-color-default",
+                                               "--xy-background-pattern-cross-color-default",
+                                               "--xy-background-color",
+                                               "--xy-node-color-default",
+                                               "--xy-node-border-default",
+                                               "--xy-node-background-color-default",
+                                               "--xy-node-group-background-color-default",
+                                               "--xy-node-boxshadow-hover-default",
+                                               "--xy-node-boxshadow-selected-default",
+                                               "--xy-node-border-radius-default",
+                                               "--xy-handle-background-color-default",
+                                               "--xy-handle-border-color-default",
+                                               "--xy-selection-background-color-default",
+                                               "--xy-selection-border-default",
+                                               "--xy-controls-button-background-color-default",
+                                               "--xy-controls-button-background-color-hover-default",
+                                               "--xy-controls-button-color-default",
+                                               "--xy-controls-button-color-hover-default",
+                                               "--xy-controls-button-border-color-default",
+                                               "--xy-controls-box-shadow-default",
+                                               "--xy-edge-label-background-color-default",
+                                               "--xy-edge-label-color-default",
+                                               "--xy-resize-background-color-default",
+                                               "--xy-background-color-props",
+                                               "--xy-edge-stroke",
+                                               "--xy-edge-stroke-width",
+                                               "--xy-connectionline-stroke",
+                                               "--xy-connectionline-stroke-width",
+                                               "--xy-edge-stroke-selected",
+                                               "--xy-handle-background-color",
+                                               "--xy-handle-border-color",
+                                               "--xy-attribution-background-color",
+                                               "--xy-minimap-background-color-props",
+                                               "--xy-minimap-background-color",
+                                               "--xy-minimap-mask-background-color-props",
+                                               "--xy-minimap-mask-background-color",
+                                               "--xy-minimap-mask-stroke-color-props",
+                                               "--xy-minimap-mask-stroke-color",
+                                               "--xy-minimap-mask-stroke-width-props",
+                                               "--xy-minimap-mask-stroke-width",
+                                               "--xy-minimap-node-background-color-props",
+                                               "--xy-minimap-node-background-color",
+                                               "--xy-minimap-node-stroke-color-props",
+                                               "--xy-minimap-node-stroke-color",
+                                               "--xy-minimap-node-stroke-width-props",
+                                               "--xy-minimap-node-stroke-width",
+                                               "--xy-background-pattern-color-props",
+                                               "--xy-background-pattern-color",
+                                               "--xy-controls-box-shadow",
+                                               "--xy-controls-button-background-color",
+                                               "--xy-controls-button-border-color-props",
+                                               "--xy-controls-button-border-color",
+                                               "--xy-controls-button-color-props",
+                                               "--xy-controls-button-color",
+                                               "--xy-node-border-radius",
+                                               "--xy-node-color",
+                                               "--xy-node-border",
+                                               "--xy-node-background-color",
+                                               "--xy-node-boxshadow-hover",
+                                               "--xy-node-boxshadow-selected",
+                                               "--xy-node-group-background-color",
+                                               "--xy-selection-background-color",
+                                               "--xy-selection-border",
+                                               "--xy-controls-button-background-color-hover-props",
+                                               "--xy-controls-button-background-color-hover"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/build-src/dist/studio.bundle.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--xy-edge-stroke-default",
+                                               "--xy-edge-stroke-width-default",
+                                               "--xy-edge-stroke-selected-default",
+                                               "--xy-connectionline-stroke-default",
+                                               "--xy-connectionline-stroke-width-default",
+                                               "--xy-attribution-background-color-default",
+                                               "--xy-minimap-background-color-default",
+                                               "--xy-minimap-mask-background-color-default",
+                                               "--xy-minimap-mask-stroke-color-default",
+                                               "--xy-minimap-mask-stroke-width-default",
+                                               "--xy-minimap-node-background-color-default",
+                                               "--xy-minimap-node-stroke-color-default",
+                                               "--xy-minimap-node-stroke-width-default",
+                                               "--xy-background-color-default",
+                                               "--xy-background-pattern-dots-color-default",
+                                               "--xy-background-pattern-lines-color-default",
+                                               "--xy-background-pattern-cross-color-default",
+                                               "--xy-background-color",
+                                               "--xy-node-color-default",
+                                               "--xy-node-border-default",
+                                               "--xy-node-background-color-default",
+                                               "--xy-node-group-background-color-default",
+                                               "--xy-node-boxshadow-hover-default",
+                                               "--xy-node-boxshadow-selected-default",
+                                               "--xy-node-border-radius-default",
+                                               "--xy-handle-background-color-default",
+                                               "--xy-handle-border-color-default",
+                                               "--xy-selection-background-color-default",
+                                               "--xy-selection-border-default",
+                                               "--xy-controls-button-background-color-default",
+                                               "--xy-controls-button-background-color-hover-default",
+                                               "--xy-controls-button-color-default",
+                                               "--xy-controls-button-color-hover-default",
+                                               "--xy-controls-button-border-color-default",
+                                               "--xy-controls-box-shadow-default",
+                                               "--xy-edge-label-background-color-default",
+                                               "--xy-edge-label-color-default",
+                                               "--xy-resize-background-color-default",
+                                               "--xy-background-color-props",
+                                               "--xy-edge-stroke",
+                                               "--xy-edge-stroke-width",
+                                               "--xy-connectionline-stroke",
+                                               "--xy-connectionline-stroke-width",
+                                               "--xy-edge-stroke-selected",
+                                               "--xy-handle-background-color",
+                                               "--xy-handle-border-color",
+                                               "--xy-attribution-background-color",
+                                               "--xy-minimap-background-color-props",
+                                               "--xy-minimap-background-color",
+                                               "--xy-minimap-mask-background-color-props",
+                                               "--xy-minimap-mask-background-color",
+                                               "--xy-minimap-mask-stroke-color-props",
+                                               "--xy-minimap-mask-stroke-color",
+                                               "--xy-minimap-mask-stroke-width-props",
+                                               "--xy-minimap-mask-stroke-width",
+                                               "--xy-minimap-node-background-color-props",
+                                               "--xy-minimap-node-background-color",
+                                               "--xy-minimap-node-stroke-color-props",
+                                               "--xy-minimap-node-stroke-color",
+                                               "--xy-minimap-node-stroke-width-props",
+                                               "--xy-minimap-node-stroke-width",
+                                               "--xy-background-pattern-color-props",
+                                               "--xy-background-pattern-color",
+                                               "--xy-controls-box-shadow",
+                                               "--xy-controls-button-background-color",
+                                               "--xy-controls-button-border-color-props",
+                                               "--xy-controls-button-border-color",
+                                               "--xy-controls-button-color-props",
+                                               "--xy-controls-button-color",
+                                               "--xy-node-border-radius",
+                                               "--xy-node-color",
+                                               "--xy-node-border",
+                                               "--xy-node-background-color",
+                                               "--xy-node-boxshadow-hover",
+                                               "--xy-node-boxshadow-selected",
+                                               "--xy-node-group-background-color",
+                                               "--xy-selection-background-color",
+                                               "--xy-selection-border",
+                                               "--xy-controls-button-background-color-hover-props",
+                                               "--xy-controls-button-background-color-hover"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Companion/build-src/src/studio.css",
+                      "project":  "NextGenTutors-Companion",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--published",
+                                               "--start",
+                                               "--end",
+                                               "--active",
+                                               "--skipped",
+                                               "--inactive",
+                                               "--branch",
+                                               "--decision",
+                                               "--condition",
+                                               "--loop",
+                                               "--true",
+                                               "--false",
+                                               "--exit",
+                                               "--wide",
+                                               "--mobile"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/css/admin-ui.css",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--color-primary-50",
+                                               "--color-primary-100",
+                                               "--color-primary-500",
+                                               "--color-primary-600",
+                                               "--color-primary-700",
+                                               "--color-secondary-500",
+                                               "--color-accent-500",
+                                               "--color-success-500",
+                                               "--color-success-50",
+                                               "--color-success-700",
+                                               "--color-warning-500",
+                                               "--color-warning-50",
+                                               "--color-warning-700",
+                                               "--color-danger-500",
+                                               "--color-danger-50",
+                                               "--color-danger-700",
+                                               "--color-info-500",
+                                               "--color-info-50",
+                                               "--color-info-700",
+                                               "--color-neutral-0",
+                                               "--color-neutral-50",
+                                               "--color-neutral-100",
+                                               "--color-neutral-200",
+                                               "--color-neutral-400",
+                                               "--color-neutral-600",
+                                               "--color-neutral-900",
+                                               "--ngcpm-font-sans",
+                                               "--ngcpm-font-mono",
+                                               "--space-1",
+                                               "--space-2",
+                                               "--space-3",
+                                               "--space-4",
+                                               "--space-5",
+                                               "--space-6",
+                                               "--space-8",
+                                               "--space-10",
+                                               "--radius-sm",
+                                               "--radius-md",
+                                               "--radius-lg",
+                                               "--shadow-sm",
+                                               "--shadow-md",
+                                               "--shadow-lg",
+                                               "--shadow-xl",
+                                               "--shadow-hover",
+                                               "--ngcpm-touch",
+                                               "--ngcpm-sidebar-w",
+                                               "--ngcpm-z-sticky",
+                                               "--ngcpm-z-queue",
+                                               "--ngcpm-z-command",
+                                               "--ngcpm-z-toast",
+                                               "--ngcpm-duration-fast",
+                                               "--ngcpm-duration-normal",
+                                               "--ngcpm-duration-slow",
+                                               "--ngcpm-hero-gradient",
+                                               "--hero",
+                                               "--readiness",
+                                               "--primary",
+                                               "--secondary",
+                                               "--ghost",
+                                               "--on-dark",
+                                               "--sm",
+                                               "--xs",
+                                               "--icon",
+                                               "--ready",
+                                               "--pass",
+                                               "--active",
+                                               "--missing",
+                                               "--fail",
+                                               "--failed",
+                                               "--inactive",
+                                               "--warning",
+                                               "--version_outdated",
+                                               "--manual_required",
+                                               "--not_ready",
+                                               "--not_configured",
+                                               "--info",
+                                               "--installed",
+                                               "--plugins",
+                                               "--color-border",
+                                               "--color-surface"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Plugin-Manager/assets/css/nextgen-beyond-infinity-admin.css",
+                      "project":  "NextGenTutors-Plugin-Manager",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngbi-admin-bg",
+                                               "--ngbi-admin-surface",
+                                               "--ngbi-admin-line",
+                                               "--ngbi-admin-blue",
+                                               "--ngbi-admin-cyan",
+                                               "--ngbi-admin-violet",
+                                               "--ngbi-admin-gold",
+                                               "--ngbi-admin-ink",
+                                               "--ngbi-admin-muted",
+                                               "--ngbi-admin-radius",
+                                               "--ngbi-admin-shadow"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Html-Importer/assets/admin.css",
+                      "project":  "NextGenTutors-Html-Importer",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--high",
+                                               "--medium",
+                                               "--low"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Html-Importer/assets/importer-content.css",
+                      "project":  "NextGenTutors-Html-Importer",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "NextGenTutors-Html-Importer/assets/nextgen-beyond-infinity-admin.css",
+                      "project":  "NextGenTutors-Html-Importer",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+                                               "--ngbi-admin-bg",
+                                               "--ngbi-admin-surface",
+                                               "--ngbi-admin-line",
+                                               "--ngbi-admin-blue",
+                                               "--ngbi-admin-cyan",
+                                               "--ngbi-admin-violet",
+                                               "--ngbi-admin-gold",
+                                               "--ngbi-admin-ink",
+                                               "--ngbi-admin-muted",
+                                               "--ngbi-admin-radius",
+                                               "--ngbi-admin-shadow"
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "agntix/agntix-child/style.css",
+                      "project":  "agntix-child",
+                      "imports":  [
+
+                                  ],
+                      "token_candidates":  [
+
+                                           ],
+                      "status":  "VERIFIED"
+                  },
+                  {
+                      "file":  "agntix/agntix-child/assets/css/ngt-alive.css",
+                      "project":  "agntix-child",
+                      "imports":  [
+                                      "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500"
+                                  ],
+                      "token_candidates":  [
+                                               "--ngt-ink",
+                                               "--ngt-ink-soft",
+                                               "--ngt-paper",
+                                               "--ngt-paper-2",
+                                               "--ngt-accent",
+                                               "--ngt-accent-deep",
+                                               "--ngt-gold",
+                                               "--ngt-line",
+                                               "--ngt-bar-h",
+                                               "--ngt-radius",
+                                               "--ngt-font-display",
+                                               "--ngt-font-body",
+                                               "--sm",
+                                               "--primary",
+                                               "--outline",
+                                               "--ngt-hero-photo",
+                                               "--alt",
+                                               "--image",
+                                               "--featured",
+                                               "--delay-1",
+                                               "--delay-2",
+                                               "--delay-3"
+                                           ],
+                      "status":  "VERIFIED"
+                  }
+              ]
+}

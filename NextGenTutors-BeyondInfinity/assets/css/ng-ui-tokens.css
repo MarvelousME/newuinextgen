@@ -1,0 +1,122 @@
+/**
+ * NextGen UI Library — normalized design tokens (--ng-*)
+ * Updated for BeyondInfinity v1.9.3 Redesign
+ * Maps new design system to legacy NGT tokens.
+ */
+:root {
+  /* Brand — aligned with new design system */
+  --ng-color-primary: #0F1A2F;
+  --ng-color-primary-dark: #0B1524;
+  --ng-color-primary-light: #E6F0FA;
+  --ng-color-secondary: #059669;
+  --ng-color-secondary-dark: #047857;
+  --ng-color-secondary-light: #D1FAE5;
+  --ng-color-accent: #FF9F0A;
+  --ng-color-accent-dark: #E68900;
+  --ng-color-accent-light: #FFEBCC;
+
+  /* Legacy aliases for backward compatibility */
+  --navy: #0F1A2F;
+  --blue: #1d4ed8;
+  --lime: #059669;
+  --lime-bright: #10B981;
+  --amber: #FF9F0A;
+  --ink: #1E293B;
+  --slate-500: #64748B;
+  --slate-200: #E2E8F0;
+  --cream: #F8FAFC;
+  --white: #FFFFFF;
+  --slate-50: #F1F5F9;
+
+  /* Status */
+  --ng-color-success: #10B981;
+  --ng-color-success-bg: #D1FAE5;
+  --ng-color-warning: #F59E0B;
+  --ng-color-error: #EF4444;
+
+  /* Neutrals */
+  --ng-color-ink: #1E293B;
+  --ng-color-muted: #64748B;
+  --ng-color-border: #E2E8F0;
+  --ng-color-bg: #F8FAFC;
+  --ng-color-surface: #FFFFFF;
+  --ng-color-surface-elevated: #F1F5F9;
+  --ng-color-text-2: #64748B;
+  --ng-color-text-3: #94A3B8;
+
+  /* Typography */
+  --ng-font-heading: "Sora", system-ui, -apple-system, sans-serif;
+  --ng-font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --ng-font-serif: "Georgia", serif;
+
+  --ng-text-xs: 0.75rem;
+  --ng-text-sm: 0.875rem;
+  --ng-text-base: 1rem;
+  --ng-text-lg: 1.125rem;
+  --ng-text-xl: 1.25rem;
+  --ng-text-2xl: 1.5rem;
+  --ng-text-3xl: 2rem;
+  --ng-text-4xl: clamp(2rem, 4vw, 3rem);
+
+  --ng-leading-tight: 1.15;
+  --ng-leading-normal: 1.6;
+  --ng-weight-medium: 500;
+  --ng-weight-semibold: 600;
+  --ng-weight-bold: 700;
+  --ng-weight-extrabold: 800;
+
+  /* Spacing — 8px baseline */
+  --ng-space-1: 4px;
+  --ng-space-2: 8px;
+  --ng-space-3: 12px;
+  --ng-space-4: 16px;
+  --ng-space-5: 20px;
+  --ng-space-6: 24px;
+  --ng-space-8: 32px;
+  --ng-space-10: 40px;
+  --ng-space-12: 48px;
+  --ng-space-16: 64px;
+
+  /* Radius */
+  --ng-radius-sm: 6px;
+  --ng-radius-md: 10px;
+  --ng-radius-lg: 16px;
+  --ng-radius-xl: 24px;
+  --ng-radius-pill: 999px;
+
+  /* Shadows */
+  --ng-shadow-sm: 0 2px 8px rgba(15, 26, 47, 0.06);
+  --ng-shadow-card: 0 8px 24px rgba(15, 26, 47, 0.08);
+  --ng-shadow-lg: 0 20px 40px rgba(15, 26, 47, 0.12);
+  --ng-shadow-xl: 0 24px 48px rgba(15, 26, 47, 0.16);
+
+  /* Motion */
+  --ng-duration-fast: 150ms;
+  --ng-duration-normal: 280ms;
+  --ng-duration-slow: 480ms;
+  --ng-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ng-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --ng-container: 1280px;
+  --ng-breakpoint-sm: 640px;
+  --ng-breakpoint-md: 768px;
+  --ng-breakpoint-lg: 1024px;
+  --ng-breakpoint-xl: 1280px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ng-duration-fast: 0ms;
+    --ng-duration-normal: 0ms;
+    --ng-duration-slow: 0ms;
+  }
+}
+
+/* Beyond-Infinity extensions */
+:root {
+  --nbi-canvas: #0F1A2F;
+  --nbi-aurora-stop-indigo: #1e1b4b;
+  --nbi-aurora-stop-violet: #7c3aed;
+  --nbi-aurora-stop-teal: #06b6d4;
+}

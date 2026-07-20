@@ -1,0 +1,5 @@
+{
+  "created_at": null,
+  "policy": "NO DELETIONS without manifest entry + dependency evidence. Restore via scripts/restore-quarantined-files.php",
+  "items": []
+}

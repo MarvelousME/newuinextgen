@@ -501,6 +501,197 @@ class NGC_CLI {
 			'message'  => is_scalar( $value ) ? (string) $value : wp_json_encode( $value ),
 		];
 	}
+
+	/**
+	 * Validate demo environment.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc demo_validate
+	 */
+	public function demo_validate( $args, $assoc_args ) {
+		unset( $args, $assoc_args );
+		$ok = class_exists( 'NGC_Demo_Env' );
+		WP_CLI::line( wp_json_encode(
+			[
+				'demo_mode' => NGC_Demo_Env::is_demo_mode(),
+				'seed_version' => NGC_Demo_Env::SEED_VERSION,
+				'gate' => NGC_Demo_Env::assert_demo_ops_allowed(),
+			],
+			JSON_PRETTY_PRINT
+		) );
+		if ( ! $ok ) {
+			WP_CLI::halt( 1 );
+		}
+	}
+
+	/**
+	 * Seed relational demo data.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--scenario=<scenario>]
+	 * : Scenario key (default: all).
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc demo_seed
+	 *     wp ngc demo_seed --scenario=all
+	 *
+	 * @param array<int, string>   $args Args.
+	 * @param array<string, mixed> $assoc_args Flags.
+	 */
+	public function demo_seed( $args, $assoc_args ) {
+		unset( $args );
+		$scenario = isset( $assoc_args['scenario'] ) ? (string) $assoc_args['scenario'] : 'all';
+		NGC_Demo_Env::set_demo_mode( true );
+		$result = NGC_Demo_Seeder::seed( $scenario );
+		if ( is_wp_error( $result ) ) {
+			WP_CLI::error( $result->get_error_message() );
+		}
+		WP_CLI::success( 'Demo seeded version ' . NGC_Demo_Env::SEED_VERSION );
+		WP_CLI::line( wp_json_encode( [ 'users' => count( $result['users'] ?? [] ), 'bookings' => $result['bookings'] ?? [], 'errors' => $result['errors'] ?? [] ], JSON_PRETTY_PRINT ) );
+	}
+
+	/**
+	 * Verify demo relational integrity.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc demo_verify
+	 */
+	public function demo_verify( $args, $assoc_args ) {
+		unset( $args, $assoc_args );
+		$result = NGC_Demo_Verifier::verify();
+		WP_CLI::line( wp_json_encode( $result, JSON_PRETTY_PRINT ) );
+		if ( empty( $result['ok'] ) ) {
+			WP_CLI::halt( 1 );
+		}
+		WP_CLI::success( 'Demo verify PASS' );
+	}
+
+	/**
+	 * Run a demo journey.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--id=<id>]
+	 * : Journey id.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc demo_run_journey --id=JOURNEY-PARENT-001
+	 *
+	 * @param array<int, string>   $args Args.
+	 * @param array<string, mixed> $assoc_args Flags.
+	 */
+	public function demo_run_journey( $args, $assoc_args ) {
+		unset( $args );
+		$id = isset( $assoc_args['id'] ) ? (string) $assoc_args['id'] : 'JOURNEY-PARENT-001';
+		$result = NGC_Demo_Journeys::run( $id );
+		if ( is_wp_error( $result ) ) {
+			WP_CLI::error( $result->get_error_message() );
+		}
+		WP_CLI::line( wp_json_encode( $result, JSON_PRETTY_PRINT ) );
+	}
+
+	/**
+	 * Run all demo journeys.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc demo_run_all_journeys
+	 */
+	public function demo_run_all_journeys( $args, $assoc_args ) {
+		unset( $args, $assoc_args );
+		$result = NGC_Demo_Journeys::run_all();
+		WP_CLI::line( wp_json_encode( $result, JSON_PRETTY_PRINT ) );
+		WP_CLI::success( 'Journeys complete' );
+	}
+
+	/**
+	 * Advance demo clock.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--seconds=<seconds>]
+	 * : Seconds to advance (default 86400).
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc demo_advance_time --seconds=86400
+	 *
+	 * @param array<int, string>   $args Args.
+	 * @param array<string, mixed> $assoc_args Flags.
+	 */
+	public function demo_advance_time( $args, $assoc_args ) {
+		unset( $args );
+		$seconds = isset( $assoc_args['seconds'] ) ? (int) $assoc_args['seconds'] : DAY_IN_SECONDS;
+		$now = NGC_Demo_Clock::advance( $seconds );
+		WP_CLI::success( 'Clock now ' . gmdate( 'c', $now ) );
+	}
+
+	/**
+	 * Process demo schedulers / queues.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc demo_process_queues
+	 */
+	public function demo_process_queues( $args, $assoc_args ) {
+		unset( $args, $assoc_args );
+		NGC_Demo_Clock::run_scheduled_hooks();
+		WP_CLI::success( 'Schedulers processed' );
+	}
+
+	/**
+	 * Reset demo data.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--scenario=<scenario>]
+	 * : Scenario (default all).
+	 *
+	 * [--yes]
+	 * : Confirm.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc demo_reset --yes
+	 *
+	 * @param array<int, string>   $args Args.
+	 * @param array<string, mixed> $assoc_args Flags.
+	 */
+	public function demo_reset( $args, $assoc_args ) {
+		unset( $args );
+		if ( empty( $assoc_args['yes'] ) ) {
+			WP_CLI::error( 'Pass --yes to confirm demo reset' );
+		}
+		$scenario = isset( $assoc_args['scenario'] ) ? (string) $assoc_args['scenario'] : 'all';
+		NGC_Demo_Env::set_demo_mode( true );
+		$result = NGC_Demo_Reset::reset( $scenario );
+		if ( is_wp_error( $result ) ) {
+			WP_CLI::error( $result->get_error_message() );
+		}
+		WP_CLI::success( 'Demo reset complete' );
+		WP_CLI::line( wp_json_encode( $result, JSON_PRETTY_PRINT ) );
+	}
+
+	/**
+	 * Export demo evidence pack.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc demo_export_evidence
+	 */
+	public function demo_export_evidence( $args, $assoc_args ) {
+		unset( $args, $assoc_args );
+		$path = NGC_Demo_Evidence::export_all();
+		if ( is_wp_error( $path ) ) {
+			WP_CLI::error( $path->get_error_message() );
+		}
+		WP_CLI::success( 'Evidence written to ' . $path );
+	}
 }
 
 WP_CLI::add_command( 'ngc', 'NGC_CLI' );

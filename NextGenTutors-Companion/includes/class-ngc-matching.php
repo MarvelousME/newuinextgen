@@ -36,6 +36,7 @@ class NGC_Matching {
 		$inserted = $wpdb->insert(
 			$table,
 			[
+				'uuid'            => class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4(),
 				'student_user_id' => $student_id,
 				'parent_user_id'  => $parent_id,
 				'tutor_user_id'   => $tutor_id,
@@ -48,8 +49,7 @@ class NGC_Matching {
 				'meta'            => wp_json_encode( [ 'candidates' => array_slice( $best, 0, 5 ) ] ),
 				'created_at'      => current_time( 'mysql', true ),
 				'updated_at'      => current_time( 'mysql', true ),
-			],
-			[ '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%s' ]
+			]
 		);
 
 		if ( ! $inserted ) {

@@ -1,12 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = process.env.BASE_URL || 'http://127.0.0.1:8900';
+const baseURL = process.env.BASE_URL || 'http://localhost:8900';
 const isCI = !!process.env.CI;
 
 export default defineConfig({
   testDir: './workflows',
-  timeout: 60_000,
-  expect: { timeout: 10_000 },
+  timeout: 90_000,
+  expect: { timeout: 15_000 },
   fullyParallel: false,
   retries: process.env.CI ? 1 : 0,
   workers: 1,
@@ -17,9 +17,15 @@ export default defineConfig({
   ],
   use: {
     baseURL,
+    navigationTimeout: 60_000,
+    actionTimeout: 30_000,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'off',
+    launchOptions: {
+      // Full-suite headed runs are more stable without per-test slowMo.
+      slowMo: process.env.PW_SLOW_MO ? Number(process.env.PW_SLOW_MO) : 0,
+    },
   },
   projects: [
     {

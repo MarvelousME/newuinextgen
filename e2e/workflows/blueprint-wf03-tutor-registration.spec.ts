@@ -3,7 +3,7 @@ import { testEmail, fillNgForm, submitNgForm, expectFormSubmitted, primaryNgForm
 
 test.describe('Blueprint WF-03 Tutor Registration', () => {
   test('become-a-tutor form — fill all fields and submit', async ({ page }) => {
-    await page.goto('/become-a-tutor/');
+    await page.goto('/become-a-tutor/', { waitUntil: 'domcontentloaded' });
     const form = primaryNgForm(page, 'become_tutor');
     await expect(form).toBeVisible();
 
@@ -20,7 +20,7 @@ test.describe('Blueprint WF-03 Tutor Registration', () => {
       { form }
     );
 
-    await submitNgForm(page, form);
-    await expectFormSubmitted(page, 'become_tutor');
+    const res = await submitNgForm(page, form);
+    await expectFormSubmitted(page, 'become_tutor', res);
   });
 });

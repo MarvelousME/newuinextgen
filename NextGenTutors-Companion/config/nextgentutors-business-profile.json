@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "theme_package": "NextGenTutors-BeyondInfinity",
+  "business": {
+    "legal_name": "Next Gen Tutors",
+    "trading_name": "NextGenTutors",
+    "platform_name": "NextGenTutors",
+    "powered_by": "GET ONLINE NOW",
+    "country": "South Africa",
+    "timezone": "Africa/Johannesburg",
+    "currency": "ZAR",
+    "primary_location": "Johannesburg",
+    "operating_regions": [
+      "Gauteng",
+      "Western Cape",
+      "KwaZulu-Natal",
+      "Eastern Cape",
+      "Free State",
+      "Limpopo",
+      "Mpumalanga",
+      "North West",
+      "Northern Cape"
+    ],
+    "phone": "0813340625",
+    "whatsapp_e164": "27813340625",
+    "primary_email": "support@nextgentutors.co.za",
+    "admin_email": "admin@nextgentutors.co.za",
+    "notification_email": "marvin.saunders@gmail.com",
+    "website": "https://www.nextgentutors.co.za",
+    "learning_modes": ["Online", "In Person", "Hybrid"],
+    "student_levels": [
+      "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6",
+      "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12",
+      "Tertiary"
+    ],
+    "tagline": "Accessible tutoring marketplace across South Africa"
+  },
+  "role_map": {
+    "ngt_parent": "parent_guardian",
+    "ngt_student": "student",
+    "ngt_tutor_applicant": "tutor_applicant",
+    "ngt_tutor": "tutor",
+    "ngt_support_agent": "ngc_support",
+    "ngt_finance_officer": "ngc_finance",
+    "ngt_compliance_officer": "ngc_compliance",
+    "ngt_safeguarding_officer": "ngc_safeguarding",
+    "ngt_operations_manager": "ngc_operations",
+    "ngt_content_manager": "ngc_content",
+    "ngt_auditor": "ngc_auditor",
+    "ngt_ai_operations_admin": "ngc_ai_ops"
+  },
+  "id_prefixes": {
+    "tutor": "NGT-T",
+    "student": "NGT-S",
+    "parent": "NGT-P"
+  }
+}

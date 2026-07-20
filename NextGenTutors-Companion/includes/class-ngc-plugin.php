@@ -92,6 +92,9 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Domain_Event_Bridge',
 		'NGC_Agent_Ops_Admin',
 		'NGC_Safeguarding_Admin',
+		'NGC_Privacy',
+		'NGC_Metrics',
+		'NGC_Demo',
 	];
 
 	/**

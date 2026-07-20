@@ -100,6 +100,7 @@ class NGC_Platform_Admin {
 			[ 'ngc-platform-affiliates', __( 'Affiliate Tracking Dashboard', 'nextgencompanion' ), 'render_affiliate_tracking_dashboard' ],
 			[ 'ngc-platform-cookies', __( 'Cookie Tracking Settings', 'nextgencompanion' ), 'render_cookie_tracking_settings' ],
 			[ 'ngc-platform-privacy', __( 'Privacy/Consent Settings', 'nextgencompanion' ), 'render_privacy_consent_settings' ],
+			[ 'ngc-platform-observability', __( 'Observability / Metrics', 'nextgencompanion' ), 'render_observability_settings' ],
 			[ 'ngc-platform-health', __( 'Data Health Checks', 'nextgencompanion' ), 'render_data_health_checks' ],
 			[ 'ngc-platform-repair', __( 'Self-Healing Repair Tools', 'nextgencompanion' ), 'render_self_healing_tools' ],
 		];
@@ -130,6 +131,51 @@ class NGC_Platform_Admin {
 		}
 		if ( isset( $_POST['ngc_reset_cookies'] ) && check_admin_referer( 'ngc_platform_settings' ) ) {
 			NGC_Platform_Tracking::clear_tracking_cookies();
+		}
+		if ( isset( $_POST['ngc_save_privacy_retention'] ) && check_admin_referer( 'ngc_platform_settings' ) && class_exists( 'NGC_Privacy' ) ) {
+			NGC_Privacy::save_settings(
+				[
+					'minor_days'     => (int) ( $_POST['ngc_minor_pii_retention_days'] ?? NGC_Privacy::DEFAULT_MINOR_DAYS ),
+					'analytics_days' => (int) ( $_POST['ngc_analytics_retention_days'] ?? 365 ),
+					'log_days'       => (int) ( $_POST['ngc_system_log_retention_days'] ?? 90 ),
+					'auto_purge'     => ! empty( $_POST['ngc_privacy_auto_purge'] ),
+				]
+			);
+		}
+		if ( isset( $_POST['ngc_privacy_run_sweep'] ) && check_admin_referer( 'ngc_platform_settings' ) && class_exists( 'NGC_Privacy' ) ) {
+			$GLOBALS['ngc_privacy_last_sweep'] = NGC_Privacy::run_retention_sweep();
+		}
+		if ( isset( $_POST['ngc_privacy_export_user'] ) && check_admin_referer( 'ngc_platform_settings' ) && class_exists( 'NGC_Privacy' ) ) {
+			$user_id = (int) ( $_POST['ngc_privacy_user_id'] ?? 0 );
+			$pkg     = NGC_Privacy::export_package( $user_id );
+			if ( ! is_wp_error( $pkg ) ) {
+				nocache_headers();
+				header( 'Content-Type: application/json; charset=utf-8' );
+				header( 'Content-Disposition: attachment; filename=ngc-privacy-export-' . $user_id . '-' . gmdate( 'YmdHis' ) . '.json' );
+				echo wp_json_encode( $pkg, JSON_PRETTY_PRINT );
+				exit;
+			}
+			$GLOBALS['ngc_privacy_export_error'] = $pkg->get_error_message();
+		}
+		if ( isset( $_POST['ngc_privacy_erase_user'] ) && check_admin_referer( 'ngc_platform_settings' ) && class_exists( 'NGC_Privacy' ) ) {
+			$user_id = (int) ( $_POST['ngc_privacy_user_id'] ?? 0 );
+			$user    = get_userdata( $user_id );
+			if ( $user ) {
+				$GLOBALS['ngc_privacy_erase_result'] = NGC_Privacy::erase_personal_data( $user->user_email, 1 );
+			}
+		}
+		if ( isset( $_POST['ngc_save_metrics'] ) && check_admin_referer( 'ngc_platform_settings' ) && class_exists( 'NGC_Metrics' ) ) {
+			NGC_Metrics::save_settings(
+				[
+					'enabled'               => ! empty( $_POST['ngc_metrics_enabled'] ),
+					'push_url'              => sanitize_text_field( wp_unslash( $_POST['ngc_metrics_push_url'] ?? '' ) ),
+					'alert_error_threshold' => (int) ( $_POST['ngc_metrics_alert_error_threshold'] ?? 25 ),
+					'rotate_token'          => ! empty( $_POST['ngc_metrics_rotate_token'] ),
+				]
+			);
+		}
+		if ( isset( $_POST['ngc_metrics_push_now'] ) && check_admin_referer( 'ngc_platform_settings' ) && class_exists( 'NGC_Metrics' ) ) {
+			$GLOBALS['ngc_metrics_push_result'] = NGC_Metrics::push_to_webhook();
 		}
 	}
 
@@ -330,13 +376,126 @@ class NGC_Platform_Admin {
 	}
 
 	/**
-	 * Screen: Privacy/Consent Settings.
+	 * Screen: Privacy/Consent Settings (PRIV-001).
 	 */
 	public static function render_privacy_consent_settings() {
-		self::wrap_start( __( 'Privacy/Consent Settings', 'nextgencompanion' ) );
+		self::wrap_start( __( 'Privacy / Consent / Minor PII', 'nextgencompanion' ) );
 		$consents = NGC_Platform_Repository::list( 'consent', [ 'limit' => 50, 'order_by' => 'id' ] );
-		echo '<p>' . esc_html__( 'User data export/erasure is supported through native WordPress personal data tools. IPs are anonymized in consent context.', 'nextgencompanion' ) . '</p>';
-		echo '<pre>' . esc_html( wp_json_encode( $consents, JSON_PRETTY_PRINT ) ) . '</pre>';
+		$settings = class_exists( 'NGC_Privacy' ) ? NGC_Privacy::settings() : [];
+		?>
+		<p><?php esc_html_e( 'Child learner PII export/erasure is wired into Tools → Export/Erase Personal Data. Retention anonymizes archived minors and purges aged analytics/logs.', 'nextgencompanion' ); ?></p>
+
+		<?php if ( ! empty( $GLOBALS['ngc_privacy_last_sweep'] ) ) : ?>
+			<div class="notice notice-success"><p><?php echo esc_html( wp_json_encode( $GLOBALS['ngc_privacy_last_sweep'] ) ); ?></p></div>
+		<?php endif; ?>
+		<?php if ( ! empty( $GLOBALS['ngc_privacy_export_error'] ) ) : ?>
+			<div class="notice notice-error"><p><?php echo esc_html( (string) $GLOBALS['ngc_privacy_export_error'] ); ?></p></div>
+		<?php endif; ?>
+		<?php if ( ! empty( $GLOBALS['ngc_privacy_erase_result'] ) ) : ?>
+			<div class="notice notice-info"><p><?php echo esc_html( wp_json_encode( $GLOBALS['ngc_privacy_erase_result'] ) ); ?></p></div>
+		<?php endif; ?>
+
+		<form method="post" style="margin-bottom:24px">
+			<?php wp_nonce_field( 'ngc_platform_settings' ); ?>
+			<h2><?php esc_html_e( 'Retention policy', 'nextgencompanion' ); ?></h2>
+			<table class="form-table">
+				<tr>
+					<th><?php esc_html_e( 'Minor PII retention (days)', 'nextgencompanion' ); ?></th>
+					<td><input type="number" min="30" name="ngc_minor_pii_retention_days" value="<?php echo esc_attr( (string) ( $settings['minor_days'] ?? 2555 ) ); ?>" /></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Analytics / consent retention (days)', 'nextgencompanion' ); ?></th>
+					<td><input type="number" min="7" name="ngc_analytics_retention_days" value="<?php echo esc_attr( (string) ( $settings['analytics_days'] ?? 365 ) ); ?>" /></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'System log retention (days)', 'nextgencompanion' ); ?></th>
+					<td><input type="number" min="7" name="ngc_system_log_retention_days" value="<?php echo esc_attr( (string) ( $settings['log_days'] ?? 90 ) ); ?>" /></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Enable daily auto-purge', 'nextgencompanion' ); ?></th>
+					<td><input type="checkbox" name="ngc_privacy_auto_purge" value="1" <?php checked( ! empty( $settings['auto_purge'] ) ); ?> /></td>
+				</tr>
+			</table>
+			<p>
+				<button class="button button-primary" name="ngc_save_privacy_retention" type="submit"><?php esc_html_e( 'Save retention settings', 'nextgencompanion' ); ?></button>
+				<button class="button" name="ngc_privacy_run_sweep" type="submit"><?php esc_html_e( 'Run retention sweep now', 'nextgencompanion' ); ?></button>
+			</p>
+		</form>
+
+		<form method="post" style="margin-bottom:24px">
+			<?php wp_nonce_field( 'ngc_platform_settings' ); ?>
+			<h2><?php esc_html_e( 'Subject access / erasure (admin)', 'nextgencompanion' ); ?></h2>
+			<p>
+				<label><?php esc_html_e( 'User ID', 'nextgencompanion' ); ?>
+					<input type="number" min="1" name="ngc_privacy_user_id" required />
+				</label>
+				<button class="button button-primary" name="ngc_privacy_export_user" type="submit"><?php esc_html_e( 'Download JSON export', 'nextgencompanion' ); ?></button>
+				<button class="button" name="ngc_privacy_erase_user" type="submit" onclick="return confirm('Anonymize all child learner PII for this user?');"><?php esc_html_e( 'Anonymize minor PII', 'nextgencompanion' ); ?></button>
+			</p>
+		</form>
+
+		<h2><?php esc_html_e( 'Recent consent log', 'nextgencompanion' ); ?></h2>
+		<pre><?php echo esc_html( wp_json_encode( $consents, JSON_PRETTY_PRINT ) ); ?></pre>
+		<?php
+		self::wrap_end();
+	}
+
+	/**
+	 * Screen: Observability / Metrics (OBS-001).
+	 */
+	public static function render_observability_settings() {
+		self::wrap_start( __( 'Observability / Metrics', 'nextgencompanion' ) );
+		if ( ! class_exists( 'NGC_Metrics' ) ) {
+			echo '<p>' . esc_html__( 'Metrics module unavailable.', 'nextgencompanion' ) . '</p>';
+			self::wrap_end();
+			return;
+		}
+		$settings = NGC_Metrics::settings();
+		$snap     = NGC_Metrics::snapshot();
+		$scrape   = rest_url( 'ngc/v1/metrics' );
+		?>
+		<?php if ( ! empty( $GLOBALS['ngc_metrics_push_result'] ) ) : ?>
+			<div class="notice notice-info"><p><?php echo esc_html( wp_json_encode( $GLOBALS['ngc_metrics_push_result'] ) ); ?></p></div>
+		<?php endif; ?>
+
+		<p><?php esc_html_e( 'Prometheus scrape endpoint and optional webhook push for external APM (Datadog, Grafana Agent, custom collectors).', 'nextgencompanion' ); ?></p>
+
+		<form method="post" style="margin-bottom:24px">
+			<?php wp_nonce_field( 'ngc_platform_settings' ); ?>
+			<table class="form-table">
+				<tr>
+					<th><?php esc_html_e( 'Enable metrics export', 'nextgencompanion' ); ?></th>
+					<td><input type="checkbox" name="ngc_metrics_enabled" value="1" <?php checked( ! empty( $settings['enabled'] ) ); ?> /></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Scrape URL', 'nextgencompanion' ); ?></th>
+					<td><code><?php echo esc_html( $scrape ); ?></code><br><span class="description"><?php esc_html_e( 'Authorize with Bearer token or admin cookie. JSON twin: /ngc/v1/metrics/json', 'nextgencompanion' ); ?></span></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Bearer token', 'nextgencompanion' ); ?></th>
+					<td>
+						<code style="word-break:break-all"><?php echo esc_html( $settings['token'] ); ?></code><br>
+						<label><input type="checkbox" name="ngc_metrics_rotate_token" value="1" /> <?php esc_html_e( 'Rotate token on save', 'nextgencompanion' ); ?></label>
+					</td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Push webhook URL', 'nextgencompanion' ); ?></th>
+					<td><input type="url" class="regular-text" name="ngc_metrics_push_url" value="<?php echo esc_attr( $settings['push_url'] ); ?>" placeholder="https://apm.example/ingest" /></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Alert when errors/hour ≥', 'nextgencompanion' ); ?></th>
+					<td><input type="number" min="1" name="ngc_metrics_alert_error_threshold" value="<?php echo esc_attr( (string) $settings['alert_error_threshold'] ); ?>" /></td>
+				</tr>
+			</table>
+			<p>
+				<button class="button button-primary" name="ngc_save_metrics" type="submit"><?php esc_html_e( 'Save metrics settings', 'nextgencompanion' ); ?></button>
+				<button class="button" name="ngc_metrics_push_now" type="submit"><?php esc_html_e( 'Push now', 'nextgencompanion' ); ?></button>
+			</p>
+		</form>
+
+		<h2><?php esc_html_e( 'Live snapshot', 'nextgencompanion' ); ?></h2>
+		<pre><?php echo esc_html( wp_json_encode( $snap, JSON_PRETTY_PRINT ) ); ?></pre>
+		<?php
 		self::wrap_end();
 	}
 
@@ -349,6 +508,8 @@ class NGC_Platform_Admin {
 			'tables'          => NGC_Platform_Repository::verify_schema(),
 			'demo_payloads'   => NGC_Platform_Demo::verify_payloads(),
 			'metrics'         => [ 'ok' => ! empty( NGC_Platform_Analytics::snapshot() ) ],
+			'privacy_module'  => class_exists( 'NGC_Privacy' ),
+			'obs_metrics'     => class_exists( 'NGC_Metrics' ) && isset( rest_get_server()->get_routes()['/ngc/v1/metrics'] ),
 			'roles'           => NGC_Verification::check_pass( NGC_Verification::run_checks(), 'roles' ),
 			'rest_routes'     => isset( rest_get_server()->get_routes()['/ngc/v1/platform/analytics'] ),
 			'tutor_calendar_service' => class_exists( 'NGC_Tutor_Calendar_Service', false ),

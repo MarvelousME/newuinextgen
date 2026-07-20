@@ -16,3 +16,6 @@ Created for master-directive compliance. Depth increases in subsequent phases; d
 | 13-accessibility-findings.md | NOT VERIFIED this run |
 | 18-migration-register.md | Agent/fraud/safeguarding dbDelta v1.0.0 |
 | 19-risk-register.md | See 15-remediation-backlog + 20-production-readiness |
+| AUTONOMOUS-CODING-AGENT-MASTER-DIRECTIVE.md | Canonical master prompt (Phases 0–14) |
+| demo/README.md | Phase 14 stub — journeys/runbook/evidence NOT STARTED |
+| reports/demo-implementation-report.md | COMPLETE WITH LIMITATIONS — Phase 14 |

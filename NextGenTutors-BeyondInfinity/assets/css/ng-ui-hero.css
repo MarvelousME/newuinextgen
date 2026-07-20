@@ -1,0 +1,43 @@
+.ng-ui-hero {
+  position: relative;
+  padding: clamp(3rem, 8vw, 6rem) 0;
+  background: linear-gradient(160deg, var(--ng-color-primary) 0%, var(--ng-color-secondary) 55%, #0e3a66 100%);
+  color: #fff;
+  overflow: hidden;
+}
+.ng-ui-hero__inner {
+  display: grid;
+  gap: var(--ng-space-8);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .ng-ui-hero__inner { grid-template-columns: 1.1fr 0.9fr; }
+}
+.ng-ui-hero__title {
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-text-4xl);
+  line-height: var(--ng-leading-tight);
+  font-weight: var(--ng-weight-extrabold);
+  margin-bottom: var(--ng-space-4);
+}
+.ng-ui-hero__subtitle {
+  font-size: var(--ng-text-lg);
+  opacity: 0.9;
+  max-width: 42ch;
+  margin-bottom: var(--ng-space-6);
+}
+.ng-ui-hero__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ng-space-6);
+  margin-top: var(--ng-space-8);
+}
+.ng-ui-hero__stat-value {
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-text-2xl);
+  font-weight: var(--ng-weight-bold);
+}
+.ng-ui-hero__stat-label {
+  font-size: var(--ng-text-sm);
+  opacity: 0.8;
+}

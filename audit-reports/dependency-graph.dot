@@ -1,0 +1,1144 @@
+﻿digraph NGT {
+  rankdir=LR;
+  node [shape=box,fontsize=9];
+  "inc/openwa.php" -> "d'          => true,
+                    'sanitize_callback' => 'sanitize_text_field',
+                ],
+                'message' => [
+                    'required'          => true,
+                    'sanitize_callback' => 'sanitize_textarea_field',
+                ],
+            ],
+        ]";
+  "inc/page-wrapper.php" -> "$default_callback";
+  "inc/production-content.php" -> "_prototype_body' ) ) {
+			bi_include_prototype_body( $prototype_file";
+  "inc/production-content.php" -> "$path";
+  "inc/prototype-blend.php" -> "_prototype_body' ) ) {
+		bi_include_prototype_body( $prototype_file, [ 'slug' => $slug ]";
+  "inc/prototype-bodies.php" -> "s.
+ *
+ * @package BeyondInfinity
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit";
+  "inc/prototype-bodies.php" -> "_prototype_body( $file, $context = [] ) {
+	$slug = isset( $context['slug'] ) ? sanitize_key( (string) $context['slug'] ) : ''";
+  "inc/prototype-bodies.php" -> "$path";
+  "inc/seo.php" -> "d plugins, launch page sync, companion activation and database tables.',
+        'parent-dashboard'  => 'Parent dashboard â€” manage children, tutors, lessons and billing on NextGen Tutors.',
+        'student-dashboard' => 'Student dashboard â€” track sessions, progress, achievements and study goals.',
+        'tutor-dashboard'   => 'Tutor dashboard â€” earnings, sessions, ratings and account standing.',
+        'admin-dashboard'   => 'Admin mission control â€” platform health, registrations and demo readiness.',
+    ]";
+  "inc/shortcodes-fallback.php" -> "s (must match companion registry).
+ *
+ * @return string[]
+ */
+function bi_required_ngc_shortcodes() {
+    return [
+        'ngc_find_tutor_form',
+        'ngc_become_tutor_form',
+        'ngc_contact_support_form',
+        'ngc_parent_register_child_form',
+        'ngc_student_register_form',
+        'ngc_login_form',
+        'ngc_forgot_password_form',
+        'ngc_parent_dashboard',
+        'ngc_student_dashboard',
+        'ngc_tutor_dashboard',
+        'ngc_admin_dashboard',
+    ]";
+  "inc/shortcodes-fallback.php" -> "d'] ) ) {
+		$rules[] = 'required'";
+  "inc/shortcodes-fallback.php" -> "d'] ) ) {
+		$rules[] = 'min-length:10'";
+  "inc/shortcodes-fallback.php" -> "d'] ) && 'select' !== $type ) {
+		$rules[] = 'min-length:2'";
+  "inc/shortcodes-fallback.php" -> "d'] ) ? 'required aria-required=true' : ''";
+  "inc/shortcodes-fallback.php" -> "d'] ) ? 'required aria-required=true' : ''";
+  "inc/shortcodes-fallback.php" -> "d'] ) ? 'required aria-required=true' : ''";
+  "inc/shortcodes-fallback.php" -> "d' => true ],
+        [ 'id' => 'bi-ngc-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'Phone', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-grade', 'name' => 'grade', 'type' => 'select', 'label' => __( 'Learner grade', 'beyondinfinity' ), 'options' => [ '' => __( 'Selectâ€¦', 'beyondinfinity' ), 'primary' => __( 'Primary', 'beyondinfinity' ), 'high' => __( 'High school', 'beyondinfinity' ), 'matric' => __( 'Matric', 'beyondinfinity' ) ], 'required' => true ],
+        [ 'id' => 'bi-ngc-subject', 'name' => 'subject', 'label' => __( 'Subject needed', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-notes', 'name' => 'notes', 'type' => 'textarea', 'label' => __( 'Additional details', 'beyondinfinity' ) ],
+    ], $values";
+  "inc/shortcodes-fallback.php" -> "d' => true ],
+        [ 'id' => 'bi-ngc-t-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-t-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'Phone', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-t-subjects', 'name' => 'subjects', 'label' => __( 'Subjects you teach', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-t-exp', 'name' => 'experience', 'type' => 'textarea', 'label' => __( 'Teaching experience', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-t-province', 'name' => 'province', 'label' => __( 'Province', 'beyondinfinity' ), 'required' => true ],
+    ]";
+  "inc/shortcodes-fallback.php" -> "d' => true ],
+        [ 'id' => 'bi-ngc-s-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-s-topic', 'name' => 'topic', 'type' => 'select', 'label' => __( 'Topic', 'beyondinfinity' ), 'options' => [ 'general' => __( 'General', 'beyondinfinity' ), 'billing' => __( 'Billing', 'beyondinfinity' ), 'safety' => __( 'Safety', 'beyondinfinity' ) ], 'required' => true ],
+        [ 'id' => 'bi-ngc-s-message', 'name' => 'message', 'type' => 'textarea', 'label' => __( 'Message', 'beyondinfinity' ), 'required' => true ],
+    ]";
+  "inc/shortcodes-fallback.php" -> "d' => true ],
+        [ 'id' => 'bi-ngc-p-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-p-child', 'name' => 'child_name', 'label' => __( 'Learner name', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-p-grade', 'name' => 'grade', 'label' => __( 'Grade', 'beyondinfinity' ), 'required' => true ],
+    ]";
+  "inc/shortcodes-fallback.php" -> "d' => true ],
+        [ 'id' => 'bi-ngc-st-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-st-grade', 'name' => 'grade', 'label' => __( 'Grade / year', 'beyondinfinity' ), 'required' => true ],
+    ]";
+  "inc/shortcodes-fallback.php" -> "d_ngc_shortcodes() as $tag ) {
+			if ( ! shortcode_exists( $tag ) ) {
+				$missing[] = $tag";
+  "inc/template-tags.php" -> "$calendar_template";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/storage.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/lists.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/color-schemes.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/visual-presets.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/options-schema.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/options-loader.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/registry-defaults.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/options-get.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/home-sections.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/theme-styles.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/customizer-bridge.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/override-metabox.php'";
+  "inc/config/bootstrap.php" -> "BI_DIR . '/inc/config/post-meta.php'";
+  "inc/defaults-production/child-safety.php" -> "a guardian present for minors.', 'beyondinfinity' ),
+    __( 'Online sessions should occur in an appropriate shared space where possible.', 'beyondinfinity' ),
+    __( 'Platform messaging should be used for scheduling and academic communication.', 'beyondinfinity' ),
+    __( 'No tutor should request unnecessary personal information from a learner.', 'beyondinfinity' ),
+  ]";
+  "inc/defaults-production/home.php" -> "d autocomplete=name />
+          <label for=ngi_parent_email><?php esc_html_e( 'Email address', 'beyondinfinity'";
+  "inc/defaults-production/home.php" -> "d autocomplete=email />
+          <label for=ngi_subject><?php esc_html_e( 'Subject', 'beyondinfinity'";
+  "inc/defaults-production/pricing.php" -> "24 hours notice to reschedule or cancel. Cancellations under 4 hours apply partial payout, tracked in the platform payout ledger and finance dashboard.', 'beyondinfinity' ),
+      ],
+      [
+        'q' => __( 'Is the first lesson really guaranteed?', 'beyondinfinity' ),
+        'a' => __( 'Yes â€” our NextGen100 guarantee means if you are not satisfied with your first lesson, we will match you with another tutor or refund you completely.', 'beyondinfinity' ),
+      ],
+    ]";
+  "inc/defaults-production/privacy-policy.php" -> "d by NextGen Tutors.', 'beyondinfinity'";
+  "inc/defaults-production/privacy-policy.php" -> "it. NextGen Tutors will not sell or distribute any information obtained or provided by a client to a third party for marketing or other purposes.', 'beyondinfinity'";
+  "inc/defaults-production/safety-guide.php" -> "s trust. NextGen Tutors has built safety systems to give South African families peace of mind.', 'beyondinfinity'";
+  "inc/defaults-production/safety-guide.php" -> "South African ID documents, verified through official channels. Every tutor passes a comprehensive criminal background check via accredited SA screening agencies.', 'beyondinfinity' ),
+      ],
+      [
+        'q' => __( 'Can I monitor my child\'s sessions?', 'beyondinfinity' ),
+        'a' => __( 'Yes. Parents can join any session as a silent observer, view session recordings, and receive detailed session notes after each meeting.', 'beyondinfinity' ),
+      ],
+      [
+        'q' => __( 'What happens if I have a safety concern?', 'beyondinfinity' ),
+        'a' => __( 'Our dedicated safety team responds to all reports within two hours. Use the in-app report button, email safety@nextgentutors.co.za, or call our 24/7 hotline.', 'beyondinfinity' ),
+      ],
+      [
+        'q' => __( 'Are sessions recorded?', 'beyondinfinity' ),
+        'a' => __( 'Session recording is optional and disabled by default. Parents can enable it in their dashboard. All recordings are encrypted and stored securely.', 'beyondinfinity' ),
+      ],
+      [
+        'q' => __( 'How do you protect my child\'s data?', 'beyondinfinity' ),
+        'a' => __( 'We are fully POPIA compliant. Your data is encrypted, access-controlled and never shared with third parties without consent.', 'beyondinfinity' ),
+      ],
+    ]";
+  "inc/defaults-production/terms.php" -> "s one month\'s notice to terminate.', 'beyondinfinity'";
+  "inc/defaults-production/wordpress-setup.php" -> "d' ],
+        [ 'ðŸ“…', __( 'Amelia Booking', 'beyondinfinity' ), __( 'Scheduling', 'beyondinfinity' ), __( 'Session scheduling and tutor calendars when integrated.', 'beyondinfinity' ), 'optional' ],
+        [ 'ðŸ›’', __( 'WooCommerce', 'beyondinfinity' ), __( 'Payments', 'beyondinfinity' ), __( 'Checkout, orders and PayFast gateway for ZAR lesson payments.', 'beyondinfinity' ), 'optional' ],
+        [ 'ðŸ“‹', __( 'Fluent Forms', 'beyondinfinity' ), __( 'Forms', 'beyondinfinity' ), __( 'Can replace theme form fallbacks for advanced workflows.', 'beyondinfinity' ), 'optional' ],
+        [ 'ðŸ“Š', __( 'FluentCRM', 'beyondinfinity' ), __( 'CRM', 'beyondinfinity' ), __( 'Parent, student and tutor email automation.', 'beyondinfinity' ), 'optional' ],
+        [ 'ðŸ†', __( 'GamiPress', 'beyondinfinity' ), __( 'Badges', 'beyondinfinity' ), __( 'Student and tutor achievement badges on dashboards.', 'beyondinfinity' ), 'optional' ],
+    ]";
+  "inc/ui-library/bootstrap.php" -> "BI_DIR . '/inc/ui-library/component-loader.php'";
+  "inc/ui-library/bootstrap.php" -> "BI_DIR . '/inc/ui-library/builders.php'";
+  "inc/ui-library/bootstrap.php" -> "$partial";
+  "inc/ui-library/builders.php" -> "BI_DIR . '/inc/ui-library/elementor-widget.php'";
+  "inc/ui-library/builders.php" -> "BI_DIR . '/inc/ui-library/elementor-widget-base.php'";
+  "functions.php" -> "BI_DIR . '/inc/companion.php'";
+  "functions.php" -> "BI_DIR . '/inc/security.php'";
+  "functions.php" -> "BI_DIR . '/inc/shortcodes-fallback.php'";
+  "functions.php" -> "BI_DIR . '/inc/tutor-data.php'";
+  "functions.php" -> "BI_DIR . '/inc/config/bootstrap.php'";
+  "functions.php" -> "BI_DIR . '/inc/theme-switcher.php'";
+  "functions.php" -> "BI_DIR . '/inc/motion.php'";
+  "functions.php" -> "BI_DIR . '/inc/bi-3d.php'";
+  "functions.php" -> "BI_DIR . '/inc/openwa.php'";
+  "functions.php" -> "BI_DIR . '/inc/ui-icons.php'";
+  "functions.php" -> "BI_DIR . '/inc/template-tags.php'";
+  "functions.php" -> "BI_DIR . '/inc/nav-menu.php'";
+  "functions.php" -> "BI_DIR . '/inc/tutoring-imagery.php'";
+  "functions.php" -> "BI_DIR . '/inc/page-builders.php'";
+  "functions.php" -> "BI_DIR . '/inc/page-wrapper.php'";
+  "functions.php" -> "BI_DIR . '/inc/page-composer.php'";
+  "functions.php" -> "BI_DIR . '/inc/layout-manager.php'";
+  "functions.php" -> "BI_DIR . '/inc/customizer.php'";
+  "functions.php" -> "BI_DIR . '/inc/seo.php'";
+  "functions.php" -> "BI_DIR . '/inc/roles.php'";
+  "functions.php" -> "BI_DIR . '/inc/pages-registry.php'";
+  "functions.php" -> "BI_DIR . '/inc/prototype-bodies.php'";
+  "functions.php" -> "BI_DIR . '/inc/prototype-blend.php'";
+  "functions.php" -> "BI_DIR . '/inc/content-groups.php'";
+  "functions.php" -> "BI_DIR . '/inc/production-content.php'";
+  "functions.php" -> "BI_DIR . '/inc/admin.php'";
+  "functions.php" -> "BI_DIR . '/inc/admin-beyondinfinity.php'";
+  "functions.php" -> "BI_DIR . '/inc/kinetic-home.php'";
+  "functions.php" -> "BI_DIR . '/inc/kinetic-surface.php'";
+  "functions.php" -> "BI_DIR . '/inc/kinetic-image-hover.php'";
+  "functions.php" -> "BI_DIR . '/inc/nbi-infinity.php'";
+  "functions.php" -> "BI_DIR . '/inc/workflows.php'";
+  "functions.php" -> "BI_DIR . '/inc/widgets.php'";
+  "functions.php" -> "BI_DIR . '/inc/ngt-assets.php'";
+  "functions.php" -> "BI_DIR . '/inc/ui-library/bootstrap.php'";
+  "NextGenTutors-Companion/nextgencompanion.php" -> "s/.
+ *
+ * @param string $class Class name.
+ */
+function ngc_autoload( $class ) {
+	$relative = 'class-' . strtolower( str_replace( '_', '-', $class ) ) . '.php'";
+  "NextGenTutors-Companion/nextgencompanion.php" -> "s/ai/' . $relative";
+  "NextGenTutors-Companion/nextgencompanion.php" -> "$bia";
+  "NextGenTutors-Companion/nextgencompanion.php" -> "s/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/ai/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/adapters/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/workflows/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/rest/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/integrations/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/studio/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/shortcodes/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/admin/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/gamification/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/export/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/audit/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/diagnostics/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/matching/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/cli/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/ui-library/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/ui-library/providers/' . $relative,
+	]";
+  "NextGenTutors-Companion/nextgencompanion.php" -> "$path";
+  "NextGenTutors-Companion/nextgencompanion.php" -> "NGC_PLUGIN_DIR . 'includes/class-ngc-loader.php'";
+  "NextGenTutors-Companion/nextgencompanion.php" -> "NGC_PLUGIN_DIR . 'includes/cli/class-ngc-cli.php'";
+  "NextGenTutors-Companion/uninstall.php" -> "$plugin_dir . '/includes/class-ngc-database.php'";
+  "NextGenTutors-Companion/includes/class-ngc-child-learners.php" -> "d.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/class-ngc-database.php" -> "ABSPATH . 'wp-admin/includes/upgrade.php'";
+  "NextGenTutors-Companion/includes/class-ngc-loader.php" -> "d plugin files and reports incomplete installs safely.
+ */
+class NGC_Loader {
+
+	/**
+	 * Files that must exist before the plugin can boot.
+	 *
+	 * @var string[]
+	 */
+	private static $required_files = [
+		'includes/adapters/interface-ngc-integration-adapter.php',
+		'includes/class-ngc-plugin.php',
+	]";
+  "NextGenTutors-Companion/includes/class-ngc-loader.php" -> "d_files as $relative ) {
+			$absolute = NGC_PLUGIN_DIR . $relative";
+  "NextGenTutors-Companion/includes/class-ngc-loader.php" -> "NGC_PLUGIN_DIR . 'includes/adapters/interface-ngc-integration-adapter.php'";
+  "NextGenTutors-Companion/includes/class-ngc-loader.php" -> "NGC_PLUGIN_DIR . 'includes/class-ngc-plugin.php'";
+  "NextGenTutors-Companion/includes/class-ngc-loader.php" -> "d file: ' . $missing_path";
+  "NextGenTutors-Companion/includes/class-ngc-marketplace.php" -> "s the BeyondInfinity theme.', 'nextgencompanion' ) . '</p>'";
+  "NextGenTutors-Companion/includes/class-ngc-matching.php" -> "d for auto-accept.
+	 *
+	 * @return float
+	 */
+	public static function min_auto_score() {
+		return (float) apply_filters( 'ngc_auto_assign_min_score', 50.0";
+  "NextGenTutors-Companion/includes/class-ngc-page-forms-registry.php" -> "d ngc_* shortcodes.
+ */
+class NGC_Page_Forms_Registry {
+
+	const OPTION_REPORT = 'ngc_page_forms_registry_report'";
+  "NextGenTutors-Companion/includes/class-ngc-payments.php" -> "WooCommerce.', 'nextgencompanion'";
+  "NextGenTutors-Companion/includes/class-ngc-platform-demo.php" -> "d_payloads() {
+		return [
+			'demo_parent',
+			'demo_student',
+			'demo_tutor_applicant',
+			'demo_approved_tutor',
+			'demo_admin',
+			'demo_finance',
+			'demo_support',
+			'demo_analytics',
+			'demo_acquisition',
+			'demo_tutor_calendar',
+		]";
+  "NextGenTutors-Companion/includes/class-ngc-platform-demo.php" -> "d_payloads() as $name ) {
+			if ( empty( self::get_payload( $name ) ) ) {
+				$missing[] = $name";
+  "NextGenTutors-Companion/includes/class-ngc-platform-demo.php" -> "ABSPATH . 'wp-admin/includes/user.php'";
+  "NextGenTutors-Companion/includes/class-ngc-platform-tracking.php" -> "s_consent = '1' === (string) get_option( 'ngc_require_cookie_consent', '1'";
+  "NextGenTutors-Companion/includes/class-ngc-platform-tracking.php" -> "s_consent ) {
+			return true";
+  "NextGenTutors-Companion/includes/class-ngc-platform-tracking.php" -> "s consent.
+	 *
+	 * @return bool
+	 */
+	public static function marketing_capture_allowed() {
+		return self::consent_granted(";
+  "NextGenTutors-Companion/includes/class-ngc-platform-tracking.php" -> "_cookie_consent', '1' ) ) {
+			return";
+  "NextGenTutors-Companion/includes/class-ngc-registration.php" -> "d.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/class-ngc-registration.php" -> "d.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/class-ngc-reviews.php" -> "d.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/class-ngc-tutor-seeder.php" -> "ABSPATH . 'wp-admin/includes/media.php'";
+  "NextGenTutors-Companion/includes/class-ngc-tutor-seeder.php" -> "ABSPATH . 'wp-admin/includes/file.php'";
+  "NextGenTutors-Companion/includes/class-ngc-tutor-seeder.php" -> "ABSPATH . 'wp-admin/includes/image.php'";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d = ! isset( $check['required'] ) || $check['required']";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d && self::STATUS_FAIL === ( $check['status'] ?? '' ) ) {
+					return false";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d Required for aggregate ok.
+	 * @return array{status:string,message:string,required:bool,pass:bool}
+	 */
+	private static function result( $status, $message, $required = true ) {
+		return [
+			'status'   => $status,
+			'message'  => $message,
+			'required' => $required,
+			'pass'     => self::STATUS_PASS === $status,
+		]";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_tables() {
+		$ok = NGC_Database::tables_exist(";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_platform_schema() {
+		$schema = NGC_Platform_Repository::verify_schema(";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_roles() {
+		foreach ( array_keys( NGC_Roles::role_definitions() ) as $role ) {
+			if ( ! get_role( $role ) ) {
+				return self::result( self::STATUS_FAIL, sprintf( __( 'Missing role: %s', 'nextgencompanion' ), $role )";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_shortcodes() {
+		$required = [
+			'ngc_find_tutor_form', 'ngc_become_tutor_form', 'ngc_contact_support_form',
+			'ngc_parent_register_child_form', 'ngc_student_register_form', 'ngc_login_form',
+			'ngc_forgot_password_form', 'ngc_parent_dashboard', 'ngc_student_dashboard',
+			'ngc_tutor_dashboard', 'ngc_admin_dashboard',
+		]";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d as $tag ) {
+			if ( ! shortcode_exists( $tag ) ) {
+				return self::result( self::STATUS_FAIL, sprintf( __( 'Missing shortcode: %s', 'nextgencompanion' ), $tag )";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_rest_routes() {
+		$routes = rest_get_server()->get_routes(";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_demo_json() {
+		$payloads = NGC_Platform_Demo::verify_payloads(";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_calendar_service() {
+		$exists = class_exists( 'NGC_Tutor_Calendar_Service', false";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_calendar_shortcode() {
+		$exists = shortcode_exists( 'nextgen_tutor_calendar'";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_calendar_endpoint() {
+		$routes = rest_get_server()->get_routes(";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_cookies() {
+		global $wpdb";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_attribution() {
+		global $wpdb";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_tracking_consent() {
+		if ( ! class_exists( 'NGC_Platform_Tracking' ) ) {
+			return self::result( self::STATUS_NOT_CONFIGURED, __( 'Platform tracking module not loaded.', 'nextgencompanion' ), false";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d Required for ok.
+	 * @return array{status:string,message:string,required:bool,pass:bool}
+	 */
+	private static function check_class_presence( $class, $required = true ) {
+		if ( ! class_exists( $class, false ) ) {
+			class_exists( $class";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_smart_matching() {
+		if ( ! class_exists( 'NGC_Smart_Matching', false ) ) {
+			return self::result( self::STATUS_FAIL, __( 'NGC_Smart_Matching not loaded.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_form_validation() {
+		$js = file_exists( NGC_PLUGIN_DIR . 'assets/js/ngc-validation.js'";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_tutors_cpt() {
+		if ( ! post_type_exists( 'tutors' ) ) {
+			return self::result( self::STATUS_FAIL, __( 'Tutors CPT not registered.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_page_forms_registry() {
+		if ( ! class_exists( 'NGC_Page_Forms_Registry', false ) ) {
+			return self::result( self::STATUS_FAIL, __( 'PageFormsRegistry class not loaded.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_marketplace() {
+		if ( ! class_exists( 'NGC_Marketplace', false ) ) {
+			return self::result( self::STATUS_FAIL, __( 'NGC_Marketplace not loaded.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_matching_source() {
+		if ( ! class_exists( 'NGC_Tutor_Cpt_Source', false ) ) {
+			return self::result( self::STATUS_FAIL, __( 'Canonical Tutor CPT source missing.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_bookings_engine() {
+		global $wpdb";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_payments_engine() {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return self::result( self::STATUS_NOT_CONFIGURED, __( 'WooCommerce not active â€” payments not configured.', 'nextgencompanion' ), false";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_integration_adapter( $class, $slug ) {
+		if ( ! class_exists( $class ) ) {
+			return self::result( self::STATUS_NOT_CONFIGURED, sprintf( __( '%s adapter class not loaded.', 'nextgencompanion' ), $slug ), false";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_gamipress() {
+		if ( ! class_exists( 'GamiPress' ) ) {
+			return self::result( self::STATUS_NOT_CONFIGURED, __( 'GamiPress not active â€” internal gamification only.', 'nextgencompanion' ), false";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_popia_config() {
+		$requires_consent = '1' === (string) get_option( 'ngc_require_cookie_consent', '1'";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "s_consent && $privacy_page > 0 ) {
+			return self::result(
+				self::STATUS_WARNING,
+				__( 'Consent gate + privacy policy page set";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "s legal review (SECURITY_REVIEW_REQUIRED).', 'nextgencompanion' ),
+				false";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "s_consent ) {
+			return self::result( self::STATUS_WARNING, __( 'Consent required but no WP privacy policy page assigned.', 'nextgencompanion' ), false";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "_cookie_consent.', 'nextgencompanion' ), false";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_rate_limiter() {
+		if ( ! class_exists( 'NGC_Rate_Limiter', false ) ) {
+			class_exists( 'NGC_Rate_Limiter'";
+  "NextGenTutors-Companion/includes/class-ngc-verification.php" -> "d:bool,pass:bool}
+	 */
+	private static function check_integrate_pack() {
+		if ( ! class_exists( 'NGC_Workflow_Spec_Registry', false ) || ! class_exists( 'NGC_Integrate_Runtime', false ) ) {
+			return self::result( self::STATUS_FAIL, __( 'Integrate runtime classes missing.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/adapters/class-ngc-amelia-adapter.php" -> "d for Amelia employee.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/adapters/class-ngc-amelia-adapter.php" -> "AMELIA_PATH . '/src/Infrastructure/ContainerConfig/container.php'";
+  "NextGenTutors-Companion/includes/adapters/class-ngc-audit-adapter.php" -> "d.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/adapters/class-ngc-email-adapter.php" -> "template_key, to, context.
+	 * @return array<string, mixed>
+	 */
+	public function create_or_update( $action, $payload ) {
+		if ( 'send_template' !== $action ) {
+			return $this->handle_error( 'email_invalid_action', __( 'Unsupported email action.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/adapters/class-ngc-email-adapter.php" -> "d.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/adapters/class-ngc-masterstudy-adapter.php" -> "d for LMS profile.', 'nextgencompanion' )";
+  "NextGenTutors-Companion/includes/adapters/class-ngc-verification-adapter.php" -> "d.'";
+  "NextGenTutors-Companion/includes/admin/class-ngc-ai-admin.php" -> "human approval â€” autonomous tool loops are not executed.', 'nextgencompanion'";
+  "NextGenTutors-Companion/includes/admin/class-ngc-page-forms-registry-admin.php" -> "d shortcodes, and safe auto-repair for missing mappings.', 'nextgencompanion'";
+  "NextGenTutors-Companion/includes/admin/class-ngc-platform-admin.php" -> "_cookie_consent', ! empty( $_POST['ngc_require_cookie_consent'] ) ? '1' : '0', false";
+  "NextGenTutors-Companion/includes/admin/class-ngc-platform-admin.php" -> "_cookie_consent value=1 <?php checked( get_option( 'ngc_require_cookie_consent', '1' ), '1'";
+  "NextGenTutors-Companion/includes/admin/class-ngc-system-log-admin.php" -> "d />
+					<?php submit_button( __( 'Import CSV', 'nextgencompanion' ), 'secondary', '', false";
+  "NextGenTutors-Companion/includes/admin/class-ngc-tutor-demo-admin.php" -> "d in marketplace counts.', 'nextgencompanion' ), $demo_count )";
+  "NextGenTutors-Companion/includes/ai/class-bia-policy.php" -> "d' => [ 'db.write', 'db.destructive', 'ai.tool.invoke', 'terminal.raw' ],
+		]";
+  "NextGenTutors-Companion/includes/ai/class-bia-policy.php" -> "d' => [ 'db.write', 'db.destructive', 'ai.tool.invoke', 'terminal.raw' ],
+			],
+			$stored";
+  "NextGenTutors-Companion/includes/ai/class-bia-policy.php" -> "s a super administrator.', 'nextgencompanion' ), [ 'status' => 403 ]";
+  "NextGenTutors-Companion/includes/ai/class-bia-policy.php" -> "s_approval( $operation ) {
+		$config = self::config(";
+  "NextGenTutors-Companion/includes/ai/class-bia-policy.php" -> "d'], true";
+  "NextGenTutors-Companion/includes/ai/class-ngc-ai-agents.php" -> "d)', 'cap' => 'bia_db_ops', 'mutating' => true ],
+				'terminal.run'     => [ 'label' => 'Run allowlisted CLI (approval required)', 'cap' => 'bia_terminal', 'mutating' => true ],
+			]";
+  "NextGenTutors-Companion/includes/ai/class-ngc-ai-agents.php" -> "d.', 'nextgencompanion' ), [ 'status' => 400 ]";
+  "NextGenTutors-Companion/includes/ai/class-ngc-ai-models.php" -> "d.', 'nextgencompanion' ), [ 'status' => 400 ]";
+  "NextGenTutors-Companion/includes/cli/class-ngc-cli.php" -> "d', 'message' ]";
+  "NextGenTutors-Companion/includes/cli/class-ngc-cli.php" -> "d.'";
+  "NextGenTutors-Companion/includes/cli/class-ngc-cli.php" -> "d.'";
+  "NextGenTutors-Companion/includes/cli/class-ngc-cli.php" -> "d.'";
+  "NextGenTutors-Companion/includes/cli/class-ngc-cli.php" -> "d:string,message:string}
+	 */
+	private static function format_row( $key, $value ) {
+		if ( is_array( $value ) && isset( $value['status'] ) ) {
+			return [
+				'check'    => $key,
+				'status'   => $value['status'],
+				'required' => ! empty( $value['required'] ) ? 'yes' : 'no',
+				'message'  => $value['message'] ?? '',
+			]";
+  "NextGenTutors-Companion/includes/cli/class-ngc-cli.php" -> "d' => 'no',
+				'message'  => sprintf( 'real=%d demo=%d total=%d', (int) ( $value['real'] ?? 0 ), (int) ( $value['demo'] ?? 0 ), (int) ( $value['total'] ?? 0 ) ),
+			]";
+  "NextGenTutors-Companion/includes/cli/class-ngc-cli.php" -> "d' => 'yes',
+			'message'  => is_scalar( $value ) ? (string) $value : wp_json_encode( $value ),
+		]";
+  "NextGenTutors-Companion/includes/diagnostics/class-ngc-ai-diagnostics.php" -> "_ai Whether to call LLM provider.
+	 * @return array<string, mixed>
+	 */
+	public static function diagnose( $include_ai = true ) {
+		$scan     = NGC_Health_Scanner::full_scan(";
+  "NextGenTutors-Companion/includes/diagnostics/class-ngc-ai-diagnostics.php" -> "_ai ) {
+			$ai = self::ai_analyze( $scan, $drift";
+  "NextGenTutors-Companion/includes/diagnostics/class-ngc-health-scanner.php" -> "d = [
+			'/ngc/v1/dashboard/student',
+			'/ngc/v1/platform/gamification/scorecard',
+			'/ngc/v1/platform/export',
+			'/ngc/v1/platform/audit',
+			'/ngc/v1/platform/diagnostics/scan',
+		]";
+  "NextGenTutors-Companion/includes/diagnostics/class-ngc-health-scanner.php" -> "d as $route ) {
+			if ( ! isset( $routes[ $route ] ) ) {
+				$missing[] = $route";
+  "NextGenTutors-Companion/includes/diagnostics/class-ngc-health-scanner.php" -> "d = [ 'find-a-tutor', 'student-dashboard', 'tutor-dashboard', 'parent-dashboard', 'login' ]";
+  "NextGenTutors-Companion/includes/diagnostics/class-ngc-health-scanner.php" -> "d as $slug ) {
+			if ( ! get_page_by_path( $slug ) ) {
+				$missing[] = $slug";
+  "NextGenTutors-Companion/includes/integrations/class-ngc-amelia-bootstrap.php" -> "ABSPATH . 'wp-admin/includes/plugin.php'";
+  "NextGenTutors-Companion/includes/integrations/class-ngc-amelia-bootstrap.php" -> "$main";
+  "NextGenTutors-Companion/includes/integrations/class-ngc-automatorwp-integration.php" -> "d signature).
+	 *
+	 * @param string               $full Event.
+	 * @param array<string, mixed> $vars Vars.
+	 */
+	public static function listener( $full, $vars ) {
+		self::on_workflow_dispatched( $full, is_array( $vars ) ? $vars : []";
+  "NextGenTutors-Companion/includes/integrations/class-ngc-payfast-gateway.php" -> "d for ITN signature validation in production.', 'nextgencompanion' ),
+			],
+			'sandbox'      => [
+				'title'   => __( 'Sandbox', 'nextgencompanion' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Use PayFast sandbox', 'nextgencompanion' ),
+				'default' => 'yes',
+			],
+		]";
+  "NextGenTutors-Companion/includes/integrations/class-ngc-payfast.php" -> "NGC_PLUGIN_DIR . 'includes/integrations/class-ngc-payfast-gateway.php'";
+  "NextGenTutors-Companion/includes/integrations/class-ngc-payfast.php" -> "NGC_PLUGIN_DIR . 'includes/integrations/class-ngc-payfast-gateway.php'";
+  "NextGenTutors-Companion/includes/integrations/class-ngc-plugin-manager-bridge.php" -> "_cookie_consent', '1'";
+  "NextGenTutors-Companion/includes/integrations/class-ngc-workflow-spec-registry.php" -> "d.', 'nextgencompanion' ) ]";
+  "NextGenTutors-Companion/includes/matching/class-ngc-smart-matching.php" -> "d data-validate=required aria-required=true>
+								<option value=><?php esc_html_e( 'Select subjectâ€¦', 'nextgencompanion'";
+  "NextGenTutors-Companion/includes/matching/class-ngc-smart-matching.php" -> "d data-validate=required aria-required=true>
+								<option value=><?php esc_html_e( 'Select gradeâ€¦', 'nextgencompanion'";
+  "NextGenTutors-Companion/includes/matching/class-ngc-smart-matching.php" -> "d data-validate=required|min-length:2 aria-required=true />
+							<span class=ngc-field-error aria-live=polite></span>
+						</div>
+					</div>
+					<div class=ngc-field-group>
+						<label for=<?php echo esc_attr( $id_prefix";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-admin.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-admin.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-admin.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-admin.php" -> "d.', 'nextgencompanion' ) )";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-ai.php" -> "d.', 'nextgencompanion' ), [ 'status' => 400 ] )";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-bookings.php" -> "_login' ],
+				],
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ __CLASS__, 'create' ],
+					'permission_callback' => [ __CLASS__, 'can_manage' ],
+				],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-bookings.php" -> "_support' ],
+				],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-dashboard.php" -> "_login' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-dashboard.php" -> "_login' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-dashboard.php" -> "_login' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-dashboard.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-matching.php" -> "_login' ],
+				],
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ __CLASS__, 'create' ],
+					'permission_callback' => [ __CLASS__, 'can_create' ],
+				],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-matching.php" -> "_login' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-matching.php" -> "_login' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-matching.php" -> "_support' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-matching.php" -> "d.', 'nextgencompanion' ) )";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-page-forms-registry.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-page-forms-registry.php" -> "_admin' ],
+				'args'                => [
+					'slug'  => [ 'type' => 'string', 'required' => false ],
+					'force' => [ 'type' => 'boolean', 'default' => false ],
+				],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-page-forms-registry.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "_login' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "_login' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "_admin' ],
+			],
+			[
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => [ __CLASS__, 'ai_settings_save' ],
+				'permission_callback' => [ 'NGC_Rest', 'require_admin' ],
+			],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> "= ! isset( $request['include_ai'] ) || $request['include_ai']";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform-services.php" -> ") ], 200";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "_login' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "_login' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "d_routes = [
+			'/ngc/v1/platform/entity/(?P<entity>[a-z_]+)',
+			'/ngc/v1/platform/analytics',
+			'/ngc/v1/platform/profile/(?P<user_id>\d+)',
+			'/ngc/v1/platform/demo/(?P<journey>[a-z_]+)',
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-platform.php" -> "d_routes as $route ) {
+			if ( ! isset( $rest[ $route ] ) ) {
+				$route_ok = false";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-section-cms.php" -> "_admin' ],
+				],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+				],
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ __CLASS__, 'create_workflow' ],
+					'permission_callback' => [ 'NGC_Rest', 'require_admin' ],
+				],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+				],
+				[
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => [ __CLASS__, 'update_workflow' ],
+					'permission_callback' => [ 'NGC_Rest', 'require_admin' ],
+				],
+				[
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => [ __CLASS__, 'delete_workflow' ],
+					'permission_callback' => [ 'NGC_Rest', 'require_admin' ],
+				],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+			]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ] ],
+			[ 'methods' => WP_REST_Server::CREATABLE, 'callback' => [ __CLASS__, 'create_form' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ] ],
+			[ 'methods' => WP_REST_Server::EDITABLE, 'callback' => [ __CLASS__, 'update_form' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+			[ 'methods' => WP_REST_Server::DELETABLE, 'callback' => [ __CLASS__, 'delete_form' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ] ],
+			[ 'methods' => WP_REST_Server::CREATABLE, 'callback' => [ __CLASS__, 'create_email' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ] ],
+			[ 'methods' => WP_REST_Server::EDITABLE, 'callback' => [ __CLASS__, 'update_email' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+			[ 'methods' => WP_REST_Server::DELETABLE, 'callback' => [ __CLASS__, 'delete_email' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ] ],
+			[ 'methods' => WP_REST_Server::CREATABLE, 'callback' => [ __CLASS__, 'create_notification' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ] ],
+			[ 'methods' => WP_REST_Server::EDITABLE, 'callback' => [ __CLASS__, 'update_notification' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+			[ 'methods' => WP_REST_Server::DELETABLE, 'callback' => [ __CLASS__, 'delete_notification' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ] ],
+			[ 'methods' => WP_REST_Server::CREATABLE, 'callback' => [ __CLASS__, 'create_dashboard' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ] ],
+			[ 'methods' => WP_REST_Server::EDITABLE, 'callback' => [ __CLASS__, 'update_dashboard' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+			[ 'methods' => WP_REST_Server::DELETABLE, 'callback' => [ __CLASS__, 'delete_dashboard' ], 'permission_callback' => [ 'NGC_Rest', 'require_admin' ] ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest-studio.php" -> "_admin' ],
+		]";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest.php" -> "_login() {
+		return is_user_logged_in(";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest.php" -> "_admin() {
+		return current_user_can( 'manage_options' ) || current_user_can( 'ngc_admin_operations'";
+  "NextGenTutors-Companion/includes/rest/class-ngc-rest.php" -> "_support() {
+		return current_user_can( 'ngc_manage_matches' ) || self::require_admin(";
+  "NextGenTutors-Companion/includes/shortcodes/class-ngc-shortcodes.php" -> "d_tags() {
+		return [
+			'ngc_find_tutor_form',
+			'ngc_become_tutor_form',
+			'ngc_contact_support_form',
+			'ngc_parent_register_child_form',
+			'ngc_student_register_form',
+			'ngc_login_form',
+			'ngc_forgot_password_form',
+			'ngc_parent_dashboard',
+			'ngc_student_dashboard',
+			'ngc_tutor_dashboard',
+			'ngc_admin_dashboard',
+			'nextgen_tutor_calendar',
+		]";
+  "NextGenTutors-Companion/includes/shortcodes/class-ngc-shortcodes.php" -> "d' => true ],
+				[ 'id' => 'ngc-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'Phone', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-grade', 'name' => 'grade', 'label' => __( 'Learner grade', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-subject', 'name' => 'subject', 'label' => __( 'Subject needed', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-notes', 'name' => 'notes', 'type' => 'textarea', 'label' => __( 'Additional details', 'nextgencompanion' ) ],
+			]";
+  "NextGenTutors-Companion/includes/shortcodes/class-ngc-shortcodes.php" -> "d' => true ],
+				[ 'id' => 'ngc-t-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-t-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'Phone', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-t-subjects', 'name' => 'subjects', 'label' => __( 'Subjects you teach', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-t-exp', 'name' => 'experience', 'type' => 'textarea', 'label' => __( 'Teaching experience', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-t-province', 'name' => 'province', 'label' => __( 'Province', 'nextgencompanion' ), 'required' => true ],
+			]";
+  "NextGenTutors-Companion/includes/shortcodes/class-ngc-shortcodes.php" -> "d' => true ],
+				[ 'id' => 'ngc-s-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-s-message', 'name' => 'message', 'type' => 'textarea', 'label' => __( 'Message', 'nextgencompanion' ), 'required' => true ],
+			]";
+  "NextGenTutors-Companion/includes/shortcodes/class-ngc-shortcodes.php" -> "d' => true ],
+				[ 'id' => 'ngc-p-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-p-child', 'name' => 'child_name', 'label' => __( 'Learner name', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-p-grade', 'name' => 'grade', 'label' => __( 'Grade', 'nextgencompanion' ), 'required' => true ],
+			]";
+  "NextGenTutors-Companion/includes/shortcodes/class-ngc-shortcodes.php" -> "d' => true ],
+				[ 'id' => 'ngc-st-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-st-grade', 'name' => 'grade', 'label' => __( 'Grade / year', 'nextgencompanion' ), 'required' => true ],
+			]";
+  "NextGenTutors-Companion/includes/shortcodes/class-ngc-shortcodes.php" -> "d'] ) ? 'required' : ''";
+  "NextGenTutors-Companion/includes/shortcodes/class-ngc-shortcodes.php" -> "d'] ) ? 'required' : ''";
+  "NextGenTutors-Companion/includes/shortcodes/class-ngc-shortcodes.php" -> "d_tags() as $tag ) {
+			if ( ! shortcode_exists( $tag ) ) {
+				$missing[] = $tag";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-compiler.php" -> "s a START node.', 'nextgencompanion'";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-compiler.php" -> "s an END node.', 'nextgencompanion'";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-engine.php" -> "d for ROLE step' ]";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-forms.php" -> "d'] ) ? ' required' : ''";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-forms.php" -> "d'] ) ) {
+				continue";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-forms.php" -> "d.', 'nextgencompanion' ), (string) ( $field['label'] ?? $name )";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-forms.php" -> "d' => true ],
+						[ 'type' => 'email', 'name' => 'email', 'label' => 'Email', 'required' => true ],
+						[ 'type' => 'phone', 'name' => 'phone', 'label' => 'Phone', 'required' => true ],
+						[ 'type' => 'grade_selector', 'name' => 'grade', 'label' => 'Grade', 'options' => [ 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12' ], 'required' => true ],
+						[ 'type' => 'subject_selector', 'name' => 'subject', 'label' => 'Subject', 'options' => [ 'Maths', 'Science', 'English' ], 'required' => true ],
+					],
+				],
+			]";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-runtime.php" -> "d on save.
+ *
+ * @package NextGenCompanion
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-verification.php" -> "d = [ 'studio_workflows', 'studio_executions', 'studio_triggers', 'studio_forms', 'studio_emails', 'studio_notifications', 'studio_dashboards' ]";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio-verification.php" -> "d as $key ) {
+			$table = NGC_Database::table( $key";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio.php" -> "d = [ 'studio_workflows', 'studio_dashboards' ]";
+  "NextGenTutors-Companion/includes/studio/class-ngc-studio.php" -> "d as $key ) {
+			$table = NGC_Database::table( $key";
+  "NextGenTutors-Companion/integrate/nextgentutors-workflows.php" -> "s/integrations/*.
+ *
+ * @deprecated 1.4.0 Use NextGenTutors-Companion plugin bootstrap instead.
+ * @see integrate/README.md
+ * @package NextGenCompanion
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit";
+  "NextGenTutors-Companion/scripts/amelia-e2e-docker.php" -> "dirname( __DIR__ ) . '/scripts/ngc-e2e-guard.php'";
+  "NextGenTutors-Companion/scripts/amelia-e2e-docker.php" -> "_demo_stack( 'NextGen Amelia E2E'";
+  "NextGenTutors-Companion/scripts/amelia-safe-activate.php" -> "ABSPATH . 'wp-admin/includes/plugin.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "d).
+ *
+ * Usage: php scripts/integrate-test.php
+ *
+ * @package NextGenCompanion
+ */
+
+$root   = dirname( __DIR__";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "d_classes = [
+	'includes/integrations/class-ngc-workflow-spec-registry.php' => 'NGC_Workflow_Spec_Registry',
+	'includes/integrations/class-ngc-integrate-runtime.php'    => 'NGC_Integrate_Runtime',
+	'includes/workflows/class-ngc-workflow-integrate-executor.php' => 'NGC_Workflow_Integrate_Executor',
+	'includes/integrations/class-ngc-session-reminders.php'    => 'NGC_Session_Reminders',
+	'includes/integrations/class-ngc-referrals.php'            => 'NGC_Referrals',
+	'includes/integrations/class-ngc-payout-scheduler.php'       => 'NGC_Payout_Scheduler',
+	'includes/integrations/class-ngc-payout-export.php'        => 'NGC_Payout_Export',
+	'includes/integrations/class-ngc-woocommerce-catalog.php'  => 'NGC_WooCommerce_Catalog',
+	'includes/class-ngc-uuid.php'                              => 'NGC_Uuid',
+	'includes/class-ngc-child-learners.php'                    => 'NGC_Child_Learners',
+	'includes/class-ngc-section-cms.php'                       => 'NGC_Section_CMS',
+	'includes/rest/class-ngc-rest-section-cms.php'             => 'NGC_Rest_Section_Cms',
+	'includes/rest/class-ngc-rest-legacy-alias.php'          => 'NGC_Rest_Legacy_Alias',
+]";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "d_classes as $rel => $class ) {
+	$path = $root . '/' . str_replace( '/', DIRECTORY_SEPARATOR, $rel";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-plugin.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/integrations/class-ngc-workflow-spec-registry.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/workflows/class-ngc-workflow-orchestrator.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-workflows.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/workflows/class-ngc-workflow-email-templates.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/cli/class-ngc-cli.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-reviews.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-bookings.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/integrations/class-ngc-amelia.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-platform-tracking.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/integrations/class-ngc-integrate-runtime.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/rest/class-ngc-rest-finance.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/rest/class-ngc-rest-matching.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/integrations/class-ngc-session-reminders.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/integrations/class-ngc-woocommerce-catalog.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/integrations/class-ngc-payout-export.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-database.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/integrations/class-ngc-payout-scheduler.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-roles.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-registration.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/rest/class-ngc-rest.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-plugin.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-section-cms.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/gamification/class-ngc-gamipress-adapter.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-payments.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-page-forms-registry.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/integrations/class-ngc-parent-checkout.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/rest/class-ngc-rest-legacy-alias.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/rest/class-ngc-rest.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-child-learners.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/class-ngc-section-cms.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/integrations/class-ngc-amelia-bootstrap.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/adapters/class-ngc-amelia-adapter.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "s/workflows/class-ngc-workflow-orchestrator.php'";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "_demo_stack' ) ) {
+	echo FAIL: Amelia E2E must use demo stack guard\n";
+  "NextGenTutors-Companion/scripts/integrate-test.php" -> "_demo_stack' ) ) {
+	echo FAIL: PayFast E2E must use demo stack guard\n";
+  "NextGenTutors-Companion/scripts/ngc-e2e-guard.php" -> "_demo_stack' ) ) {
+	/**
+	 * Exit unless demo seed is enabled or WP_DEBUG is on.
+	 *
+	 * @param string $script_label Script name for stderr message.
+	 */
+	function ngc_e2e_require_demo_stack( $script_label = 'E2E' ) {
+		if ( ( defined( 'NGC_ALLOW_DEMO_SEED' ) && NGC_ALLOW_DEMO_SEED )
+			|| ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
+			return";
+  "NextGenTutors-Companion/scripts/payfast-e2e-docker.php" -> "dirname( __DIR__ ) . '/scripts/ngc-e2e-guard.php'";
+  "NextGenTutors-Companion/scripts/payfast-e2e-docker.php" -> "_demo_stack( 'NextGen PayFast E2E'";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "d).
+ *
+ * Usage: php scripts/smoke-verification.php
+ *
+ * @package NextGenCompanion
+ */
+
+$root = dirname( __DIR__";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "d = ! isset( $check['required'] ) || $check['required']";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "d && 'FAIL' === ( $check['status'] ?? '' ) ) {
+				return false";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "d checks => ok true.
+$all_pass = [
+	'tables' => [ 'status' => 'PASS', 'required' => true ],
+	'cookies' => [ 'status' => 'NOT_VERIFIED', 'required' => false ],
+]";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "d => ok false.
+$one_fail = [
+	'tables' => [ 'status' => 'PASS', 'required' => true ],
+	'roles'  => [ 'status' => 'FAIL', 'required' => true ],
+]";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "d check should produce ok=false\n";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "d' => false ],
+]";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "d' => true ] ]";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "s/class-ngc-verification.php'";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "s/class-ngc-marketplace.php'";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "s/class-ngc-plugin.php'";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "s/rest/class-ngc-rest.php'";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "s/rest/class-ngc-rest-dashboard.php'";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "NGC_Dashboard_Analytics charts\n";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "s/matching/class-ngc-smart-matching.php'";
+  "NextGenTutors-Companion/scripts/smoke-verification.php" -> "s/ai/class-ngc-ai-models.php',
+	'includes/ai/class-ngc-ai-agents.php',
+	'includes/rest/class-ngc-rest-ai.php',
+	'assets/js/ngc-ai.js',
+]";
+  "NextGenTutors-Companion/scripts/validate.php" -> "d).
+ *
+ * Usage: php scripts/validate.php
+ *
+ * @package NextGenCompanion
+ */
+
+$root = dirname( __DIR__";
+  "NextGenTutors-Companion/scripts/validate.php" -> "d = [
+	'nextgencompanion.php',
+	'includes/class-ngc-loader.php',
+	'includes/gamification/class-ngc-gamification.php',
+	'includes/export/class-ngc-export-engine.php',
+	'includes/audit/class-ngc-audit-service.php',
+	'includes/diagnostics/class-ngc-ai-diagnostics.php',
+	'includes/ai/class-ngc-crypto.php',
+	'includes/ai/class-bia-policy.php',
+	'includes/ai/class-ngc-ai-models.php',
+	'includes/ai/class-ngc-ai-agents.php',
+	'includes/ai/class-ngc-ai-chat.php',
+	'includes/rest/class-ngc-rest-ai.php',
+	'includes/admin/class-ngc-ai-admin.php',
+	'assets/js/ngc-ai.js',
+	'assets/css/ngc-ai.css',
+	'includes/diagnostics/class-ngc-exception-log.php',
+	'includes/matching/class-ngc-smart-matching.php',
+	'includes/class-ngc-forms.php',
+	'includes/class-ngc-tutor-seeder.php',
+	'includes/rest/class-ngc-rest-platform-services.php',
+	'includes/class-ngc-database.php',
+	'includes/class-ngc-verification.php',
+	'includes/class-ngc-rate-limiter.php',
+	'includes/class-ngc-marketplace.php',
+	'includes/class-ngc-page-forms-registry.php',
+	'includes/class-ngc-dashboard-analytics.php',
+	'includes/admin/class-ngc-page-forms-registry-admin.php',
+	'includes/rest/class-ngc-rest-marketplace.php',
+	'includes/rest/class-ngc-rest-page-forms-registry.php',
+	'assets/js/ngc-marketplace.js',
+	'assets/css/ngc-marketplace.css',
+	'assets/js/dashboard-rest.js',
+	'includes/matching/class-ngc-tutor-cpt-source.php',
+	'includes/admin/class-ngc-tutor-demo-admin.php',
+	'includes/cli/class-ngc-cli.php',
+	'includes/class-ngc-plugin.php',
+	'includes/class-ngc-registration.php',
+	'includes/class-ngc-workflows.php',
+	'includes/workflows/class-ngc-workflow-orchestrator.php',
+	'includes/adapters/class-ngc-fluentcrm-adapter.php',
+	'includes/adapters/interface-ngc-integration-adapter.php',
+	'includes/workflows/class-ngc-workflow-email-templates.php',
+	'includes/admin/class-ngc-workflow-admin.php',
+	'includes/admin/class-ngc-platform-admin.php',
+	'includes/rest/class-ngc-rest-dashboard.php',
+	'includes/rest/class-ngc-rest-platform.php',
+	'includes/class-ngc-platform-repository.php',
+	'includes/class-ngc-platform-tracking.php',
+	'includes/class-ngc-platform-analytics.php',
+	'includes/class-ngc-platform-demo.php',
+	'includes/class-ngc-tutor-availability-repository.php',
+	'includes/class-ngc-tutor-calendar-service.php',
+	'includes/adapters/class-ngc-amelia-availability-adapter.php',
+	'includes/integrations/class-ngc-amelia-bootstrap.php',
+	'scripts/amelia-e2e-docker.php',
+	'scripts/ngc-e2e-guard.php',
+	'includes/adapters/class-ngc-internal-booking-adapter.php',
+	'includes/rest/class-ngc-rest-tutor-calendar.php',
+	'includes/rest/class-ngc-rest-reviews.php',
+	'includes/integrations/class-ngc-workflow-spec-registry.php',
+	'includes/integrations/class-ngc-integrate-runtime.php',
+	'includes/integrations/class-ngc-session-reminders.php',
+	'includes/integrations/class-ngc-referrals.php',
+	'includes/integrations/class-ngc-payout-scheduler.php',
+	'includes/integrations/class-ngc-payout-export.php',
+	'includes/class-ngc-uuid.php',
+	'includes/class-ngc-child-learners.php',
+	'includes/class-ngc-section-cms.php',
+	'includes/rest/class-ngc-rest-section-cms.php',
+	'scripts/uat-integrations.php',
+	'includes/rest/class-ngc-rest-legacy-alias.php',
+	'scripts/phase2-e2e-docker.php',
+	'scripts/phase3-e2e-docker.php',
+	'includes/integrations/class-ngc-woocommerce-catalog.php',
+	'includes/workflows/class-ngc-workflow-integrate-executor.php',
+	'includes/studio/class-ngc-studio.php',
+	'includes/studio/class-ngc-studio-repository.php',
+	'includes/studio/class-ngc-studio-compiler.php',
+	'includes/studio/class-ngc-studio-runtime.php',
+	'includes/studio/class-ngc-studio-engine.php',
+	'includes/studio/class-ngc-studio-event-bus.php',
+	'includes/studio/class-ngc-studio-triggers.php',
+	'includes/studio/class-ngc-studio-templates.php',
+	'includes/studio/class-ngc-studio-simulator.php',
+	'includes/studio/class-ngc-studio-verification.php',
+	'includes/studio/class-ngc-studio-forms.php',
+	'includes/studio/class-ngc-studio-email.php',
+	'includes/studio/class-ngc-studio-notifications.php',
+	'includes/studio/class-ngc-studio-dashboards.php',
+	'includes/studio/class-ngc-studio-stream.php',
+	'includes/rest/class-ngc-rest-studio.php',
+	'includes/rest/class-ngc-rest-finance.php',
+	'includes/admin/class-ngc-studio-admin.php',
+	'integrate/workflow-01-tutor-onboarding.json',
+	'integrate/workflow-02-booking-payment.json',
+	'integrate/workflow-03-reminder-notification.json',
+	'integrate/workflow-04-review-rating.json',
+	'integrate/workflow-05-tutor-payout.json',
+	'integrate/nextgen-tutors-woocommerce-products.csv',
+	'uninstall.php',
+]";
+  "NextGenTutors-Companion/scripts/validate.php" -> "d as $rel ) {
+	$full = $root . DIRECTORY_SEPARATOR . str_replace( '/', DIRECTORY_SEPARATOR, $rel";
+  "NextGenTutors-Companion/scripts/validate.php" -> "s/class-ngc-database.php'";
+  "NextGenTutors-Companion/scripts/verify-ui-library.php" -> "s/ui-library'";
+  "NextGenTutors-Companion/scripts/verify-ui-library.php" -> "d_providers = [
+	'class-ngc-ui-company-data-provider.php',
+	'class-ngc-ui-tutor-data-provider.php',
+	'class-ngc-ui-page-content-provider.php',
+	'class-ngc-ui-pricing-data-provider.php',
+	'class-ngc-ui-review-data-provider.php',
+	'class-ngc-ui-booking-data-provider.php',
+	'class-ngc-ui-calendar-data-provider.php',
+]";
+  "NextGenTutors-Companion/scripts/verify-ui-library.php" -> "d_providers as $provider_file ) {
+	if ( ! is_readable( $companion_ui . '/providers/' . $provider_file ) ) {
+		$issues[] = [
+			'file'  => 'providers/' . $provider_file,
+			'label' => 'missing required provider',
+		]";
+  "NextGenTutors-Companion/scripts/verify-ui-library.php" -> "s/class-ngc-section-cms.php',
+		'label'    => 'ngc_get_pricing_tiers() not loaded (run inside WP bootstrap)',
+		'severity' => 'info',
+	]";
+  "NextGenTutors-Companion/tests/run.php" -> "$root . '/includes/class-ngc-uuid.php'";
+  "NextGenTutors-Companion/tests/run.php" -> "$root . '/includes/integrations/class-ngc-woocommerce-catalog.php'";
+  "NextGenTutors-Companion/tests/run.php" -> "$root . '/includes/integrations/class-ngc-payout-export.php'";
+  "NextGenTutors-Companion/tests/run.php" -> "$root . '/includes/integrations/class-ngc-amelia-bootstrap.php'";
+  "NextGenTutors-Companion/tests/phpunit/bootstrap.php" -> "$root . '/includes/integrations/class-ngc-woocommerce-catalog.php'";
+  "NextGenTutors-Companion/tests/phpunit/bootstrap.php" -> "$root . '/includes/integrations/class-ngc-payout-export.php'";
+  "NextGenTutors-Companion/tests/phpunit/PayoutExportTest.php" -> "s_header_and_row() {
+		$csv = NGC_Payout_Export::to_csv(
+			[
+				[
+					'recipient_email' => 'tutor@example.com',
+					'recipient_name'  => 'Tutor',
+					'amount'          => '99.50',
+					'currency'        => 'ZAR',
+					'reference'       => 'NGC-PAYOUT-7',
+					'payout_id'       => 7,
+				],
+			]";
+  "NextGenTutors-Companion/assets/studio/studio.bundle.js" -> "@xyflow/${n}/dist/style.css";
+  "NextGenTutors-Companion/build-src/copy-to-assets.mjs" -> "fs";
+  "NextGenTutors-Companion/build-src/copy-to-assets.mjs" -> "path";
+  "NextGenTutors-Companion/build-src/copy-to-assets.mjs" -> "url";
+  "NextGenTutors-Companion/build-src/dist/studio.bundle.js" -> "@xyflow/${n}/dist/style.css";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "d core plugins, reports dependency health, and provides secure one-click install/activate workflows.
+ * Version:           1.3.0
+ * Requires at least: 6.0
+ * Requires PHP:      7.4
+ * Author:            NextGen Tutors
+ * Text Domain:       nextgentutors-plugin-manager
+ * License:           GPL-2.0-or-later
+ *
+ * @package NextGenCorePluginManager
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-ui.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-assets.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-logger.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-registry.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-scanner.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-installer.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-activator.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-errors.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-lifecycle.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-discovery.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-health.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-rate-limiter.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-queue.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-diagnostics.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-cookies.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-notifications.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-buttons.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-repair.php'";
+  "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" -> "NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-view-model.php'";
+}

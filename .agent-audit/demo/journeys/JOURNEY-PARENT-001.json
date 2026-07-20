@@ -1,0 +1,74 @@
+﻿{
+    "id":  "JOURNEY-PARENT-001",
+    "name":  "Parent registers child and books tutor",
+    "persona":  "demo-parent-new",
+    "scenario":  "all",
+    "family":  "umbrella",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "register-parent"
+                  },
+                  {
+                      "action":  "verify-email"
+                  },
+                  {
+                      "action":  "capture-consent"
+                  },
+                  {
+                      "action":  "create-child"
+                  },
+                  {
+                      "action":  "request-match"
+                  },
+                  {
+                      "action":  "accept-match"
+                  },
+                  {
+                      "action":  "create-booking"
+                  },
+                  {
+                      "action":  "complete-sandbox-payment"
+                  }
+              ],
+    "expected_events":  [
+                            "ParentRegistered",
+                            "child_learner.created",
+                            "match.proposed",
+                            "match.accepted",
+                            "booking.confirmed",
+                            "PaymentSucceeded"
+                        ],
+    "expected_notifications":  [
+                                   "child-profile-created",
+                                   "match-proposed",
+                                   "match-accepted",
+                                   "booking-confirmed",
+                                   "payment-receipt"
+                               ],
+    "expected_integrations":  [
+                                  "crm-parent-sync",
+                                  "lms-student-sync",
+                                  "booking-sync",
+                                  "commerce-order"
+                              ],
+    "expected_audit_events":  [
+                                  "consent-recorded",
+                                  "match_manual_assign",
+                                  "booking_confirmed",
+                                  "demo_seed_completed"
+                              ],
+    "covers":  [
+                   "MATCH-001",
+                   "BOOK-001",
+                   "FIN-001",
+                   "FIN-006"
+               ],
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=JOURNEY-PARENT-001"
+                     }
+}

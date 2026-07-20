@@ -31,7 +31,9 @@ class NGC_Lms {
 	 * @param array<string, mixed> $context Context.
 	 */
 	public static function on_lesson_completed( $context ) {
-		NGC_Workflows::dispatch( 'lesson.completed', $context );
+		// Already handling ngc_lesson_completed — do not re-dispatch lesson.completed
+		// (that would recurse via NGC_Workflows → ngc_lesson_completed).
+		unset( $context );
 	}
 
 	/**

@@ -1,0 +1,27 @@
+.bi-override-options {
+  display: grid;
+  gap: 16px;
+}
+
+.bi-override-item {
+  border: 1px solid #c3c4c7;
+  border-radius: 4px;
+  padding: 12px 14px;
+  background: #fff;
+}
+
+.bi-override-item__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.bi-override--inherit .bi-override-field {
+  display: none;
+}
+
+.bi-override--custom {
+  border-color: #2271b1;
+}

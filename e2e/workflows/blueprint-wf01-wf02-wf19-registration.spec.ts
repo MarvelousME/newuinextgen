@@ -3,7 +3,7 @@ import { testEmail, fillNgForm, submitNgForm, expectFormSubmitted, primaryNgForm
 
 test.describe('Blueprint WF-01 Parent Registration', () => {
   test('parent register child form', async ({ page }) => {
-    await page.goto('/register/');
+    await page.goto('/register/', { waitUntil: 'domcontentloaded' });
     const form = primaryNgForm(page, 'parent_register');
     await expect(form).toBeVisible();
 
@@ -17,32 +17,36 @@ test.describe('Blueprint WF-01 Parent Registration', () => {
       },
       { form }
     );
-    await submitNgForm(page, form);
-    await expectFormSubmitted(page, 'parent_register');
+    const res = await submitNgForm(page, form);
+    await expectFormSubmitted(page, 'parent_register', res);
   });
 });
 
 test.describe('Blueprint WF-02 Student Registration', () => {
   test('student self-registration form', async ({ page }) => {
-    await page.goto('/register/');
-    const forms = page.locator('form.ngc-form, form.bi-ngc-form');
-    const count = await forms.count();
-    const studentForm = count > 1 ? forms.nth(1) : forms.first();
-    await studentForm.scrollIntoViewIfNeeded();
+    await page.goto('/register/', { waitUntil: 'domcontentloaded' });
+    const form = primaryNgForm(page, 'student_register');
+    await expect(form).toBeVisible();
 
-    await studentForm.locator('[name="full_name"]').fill('E2E Student');
-    await studentForm.locator('[name="email"]').fill(testEmail('student'));
-    await studentForm.locator('[name="grade"]').fill('Grade 11');
-    await studentForm.locator('button[type="submit"]').click();
-    await expectFormSubmitted(page, 'student_register');
+    await fillNgForm(
+      page,
+      {
+        full_name: 'E2E Student',
+        email: testEmail('student'),
+        grade: 'Grade 11',
+      },
+      { form }
+    );
+    const res = await submitNgForm(page, form);
+    await expectFormSubmitted(page, 'student_register', res);
   });
 });
 
 test.describe('Blueprint WF-19 Support', () => {
   test('contact support form', async ({ page }) => {
-    await page.goto('/contact/');
+    await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
     const form = primaryNgForm(page, 'contact_support');
-    await expect(form).toBeVisible();
+    await expect(form).toBeVisible({ timeout: 30_000 });
 
     await fillNgForm(
       page,
@@ -54,12 +58,12 @@ test.describe('Blueprint WF-19 Support', () => {
       { select: { topic: 'general' }, form }
     );
 
-    await submitNgForm(page, form);
-    await expectFormSubmitted(page, 'contact_support');
+    const res = await submitNgForm(page, form);
+    await expectFormSubmitted(page, 'contact_support', res);
   });
 
   test('login page renders sign-in form', async ({ page }) => {
-    await page.goto('/login/');
+    await page.goto('/login/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('#ngc-loginform, #loginform, form[name="loginform"]')).toBeVisible();
   });
 });

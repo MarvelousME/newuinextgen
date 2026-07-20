@@ -76,11 +76,23 @@ class NGC_Platform_Demo {
 	}
 
 	/**
-	 * Seed demo users.
+	 * Seed demo users (legacy) — delegates to Phase 14 relational seeder when available.
 	 *
 	 * @return array<string, mixed>
 	 */
 	public static function seed_demo_users() {
+		if ( class_exists( 'NGC_Demo_Seeder' ) ) {
+			NGC_Demo_Env::set_demo_mode( true );
+			$result = NGC_Demo_Seeder::seed( 'all' );
+			if ( is_wp_error( $result ) ) {
+				return [ 'created' => 0, 'user_ids' => [], 'error' => $result->get_error_message() ];
+			}
+			return [
+				'created'  => count( $result['users'] ?? [] ),
+				'user_ids' => array_values( $result['users'] ?? [] ),
+				'graph'    => $result,
+			];
+		}
 		$seed_map = [
 			'demo.parent@nextgen.local'          => [ 'Demo Parent', 'parent' ],
 			'demo.student@nextgen.local'         => [ 'Demo Student', 'student' ],
@@ -130,6 +142,13 @@ class NGC_Platform_Demo {
 	 * @return array<string, mixed>
 	 */
 	public static function clear_demo_data() {
+		if ( class_exists( 'NGC_Demo_Reset' ) ) {
+			$result = NGC_Demo_Reset::reset( 'all' );
+			if ( is_wp_error( $result ) ) {
+				return [ 'deleted_users' => 0, 'error' => $result->get_error_message() ];
+			}
+			return $result;
+		}
 		$users = get_users(
 			[
 				'meta_key'   => 'ngc_is_demo_user',

@@ -2,13 +2,41 @@
 
 **Updated:** 2026-07-20
 
+## Reading paths
+
+| If you are… | Read this first |
+|-------------|-----------------|
+| New engineer | [platform-architecture.md](./platform-architecture.md) → [tutorials/01-phase14-demo-walkthrough.md](./tutorials/01-phase14-demo-walkthrough.md) |
+| Architect | [platform-architecture.md](./platform-architecture.md) → ADRs |
+| API / frontend | [api-reference-ngc-v1.md](./api-reference-ngc-v1.md) |
+| Ops / privacy / SRE | [ops-privacy-observability.md](./ops-privacy-observability.md) |
+| Demo evaluator | [tutorials/01-phase14-demo-walkthrough.md](./tutorials/01-phase14-demo-walkthrough.md) + [../.agent-audit/demo/LIVE-DEMONSTRATION-RUNBOOK.md](../.agent-audit/demo/LIVE-DEMONSTRATION-RUNBOOK.md) |
+
+Doc generation plan: [DOCUMENTATION-PLAN.md](./DOCUMENTATION-PLAN.md)
+
 ## Start here
 
 | Doc | Audience | Purpose |
 |-----|----------|---------|
+| [../BESPOKE-THEME-AND-COMPANION-GUIDE.md](../BESPOKE-THEME-AND-COMPANION-GUIDE.md) | Implementers | Step-by-step bespoke of BeyondInfinity + Companion |
+| [platform-architecture.md](./platform-architecture.md) | Architects / engineers | Living system architecture |
 | [master-directive-status.md](./master-directive-status.md) | All | Stage status, paths, smoke results |
 | [project-boundaries.md](./project-boundaries.md) | Architects | What not to activate / merge |
-| [architecture.md](./architecture.md) | Architects | Stage 1 discovery summary (historical) |
+| [architecture.md](./architecture.md) | Architects | Shorter live summary (UI-focused) |
+
+## Platform APIs & ops
+
+| Doc | Purpose |
+|-----|---------|
+| [api-reference-ngc-v1.md](./api-reference-ngc-v1.md) | REST `ngc/v1` + CLI companions |
+| [ops-privacy-observability.md](./ops-privacy-observability.md) | PRIV-001 retention/export + OBS-001 metrics |
+| [../.agent-audit/demo/README.md](../.agent-audit/demo/README.md) | Phase 14 demo commands |
+
+## Tutorials
+
+| Doc | Purpose |
+|-----|---------|
+| [tutorials/01-phase14-demo-walkthrough.md](./tutorials/01-phase14-demo-walkthrough.md) | Hands-on relational demo seed → login → evidence |
 
 ## UI library
 
@@ -42,6 +70,8 @@
 
 - `audit-reports/content-enhancement/FINAL-REPORT.md`
 - `audit-reports/magicui-conversion-matrix.json`
+- `.agent-audit/AUTONOMOUS-CODING-AGENT-MASTER-DIRECTIVE.md`
+- `.agent-audit/reports/demo-implementation-report.md`
 
 ## Quick verification
 

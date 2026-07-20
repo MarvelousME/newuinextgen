@@ -9,16 +9,19 @@
 
 $root   = dirname( __DIR__ );
 $errors = 0;
+$passed = 0;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', $root . '/tests-stub/' );
 }
 
 function ngc_test_assert( $label, $ok ) {
-	global $errors;
+	global $errors, $passed;
 	if ( ! $ok ) {
 		echo "FAIL: {$label}\n";
 		++$errors;
+	} else {
+		++$passed;
 	}
 }
 
@@ -343,10 +346,145 @@ ngc_test_assert( 'fraud has booking_velocity', isset( $fr['booking_velocity'] ) 
 ngc_test_assert( 'fraud has harassment_signal', isset( $fr['harassment_signal'] ) );
 ngc_test_assert( 'fraud rule count >= 12', count( $fr ) >= 12 );
 
+// --- PRIV-001 retention settings ---
+if ( ! defined( 'DAY_IN_SECONDS' ) ) {
+	define( 'DAY_IN_SECONDS', 86400 );
+}
+if ( ! defined( 'HOUR_IN_SECONDS' ) ) {
+	define( 'HOUR_IN_SECONDS', 3600 );
+}
+if ( ! defined( 'MINUTE_IN_SECONDS' ) ) {
+	define( 'MINUTE_IN_SECONDS', 60 );
+}
+if ( ! function_exists( 'wp_next_scheduled' ) ) {
+	function wp_next_scheduled( $hook ) {
+		unset( $hook );
+		return false;
+	}
+}
+if ( ! function_exists( 'wp_schedule_event' ) ) {
+	function wp_schedule_event( $timestamp, $recurrence, $hook ) {
+		unset( $timestamp, $recurrence, $hook );
+		return true;
+	}
+}
+if ( ! function_exists( 'wp_unschedule_event' ) ) {
+	function wp_unschedule_event( $timestamp, $hook ) {
+		unset( $timestamp, $hook );
+		return true;
+	}
+}
+if ( ! function_exists( 'esc_url_raw' ) ) {
+	function esc_url_raw( $url ) {
+		return filter_var( (string) $url, FILTER_SANITIZE_URL ) ?: '';
+	}
+}
+if ( ! function_exists( 'wp_generate_password' ) ) {
+	function wp_generate_password( $length = 12, $special_chars = true, $extra_special_chars = false ) {
+		unset( $special_chars, $extra_special_chars );
+		return substr( str_repeat( 'abcdef0123456789', 8 ), 0, (int) $length );
+	}
+}
+
+require_once $root . '/includes/class-ngc-privacy.php';
+$priv = NGC_Privacy::save_settings(
+	[
+		'minor_days'     => 10, // below floor → 30
+		'analytics_days' => 3,  // below floor → 7
+		'log_days'       => 90,
+		'auto_purge'     => true,
+	]
+);
+ngc_test_assert( 'privacy minor days floored to 30', 30 === (int) $priv['minor_days'] );
+ngc_test_assert( 'privacy analytics days floored to 7', 7 === (int) $priv['analytics_days'] );
+ngc_test_assert( 'privacy auto purge enabled', ! empty( $priv['auto_purge'] ) );
+
+$exporters = NGC_Privacy::register_exporter( [] );
+ngc_test_assert( 'privacy exporter registered', isset( $exporters[ NGC_Privacy::EXPORTER_KEY ] ) );
+$erasers = NGC_Privacy::register_eraser( [] );
+ngc_test_assert( 'privacy eraser registered', isset( $erasers[ NGC_Privacy::ERASER_KEY ] ) );
+
+// --- OBS-001 metrics ---
+require_once $root . '/includes/diagnostics/class-ngc-metrics.php';
+$mset = NGC_Metrics::save_settings(
+	[
+		'enabled'               => true,
+		'push_url'              => 'https://collector.example/ingest',
+		'alert_error_threshold' => 10,
+		'rotate_token'          => true,
+	]
+);
+ngc_test_assert( 'metrics enabled', ! empty( $mset['enabled'] ) );
+ngc_test_assert( 'metrics token length', strlen( (string) $mset['token'] ) >= 32 );
+ngc_test_assert( 'metrics push url saved', 'https://collector.example/ingest' === $mset['push_url'] );
+
+NGC_Metrics::bump( 'test_counter', 3 );
+$counters = get_transient( NGC_Metrics::TRANSIENT_COUNTERS );
+ngc_test_assert( 'metrics bump works', is_array( $counters ) && 3 === (int) ( $counters['test_counter'] ?? 0 ) );
+
+// --- Phase 14 demo subsystem ---
+if ( ! function_exists( 'home_url' ) ) {
+	function home_url( $path = '' ) {
+		return 'http://localhost:8900' . $path;
+	}
+}
+if ( ! function_exists( 'sanitize_file_name' ) ) {
+	function sanitize_file_name( $name ) {
+		return preg_replace( '/[^a-zA-Z0-9_\-\.]/', '', (string) $name );
+	}
+}
+if ( ! function_exists( 'wp_generate_uuid4' ) ) {
+	function wp_generate_uuid4() {
+		return '00000000-0000-4000-8000-000000000001';
+	}
+}
+if ( ! function_exists( 'wp_mkdir_p' ) ) {
+	function wp_mkdir_p( $dir ) {
+		return is_dir( $dir ) || mkdir( $dir, 0777, true );
+	}
+}
+if ( ! defined( 'NGC_PLUGIN_DIR' ) ) {
+	define( 'NGC_PLUGIN_DIR', $root . '/' );
+}
+
+require_once $root . '/includes/demo/class-ngc-demo-env.php';
+require_once $root . '/includes/demo/class-ngc-demo-clock.php';
+require_once $root . '/includes/demo/class-ngc-demo-notifications.php';
+require_once $root . '/includes/demo/class-ngc-demo-registry.php';
+require_once $root . '/includes/demo/class-ngc-demo-journeys.php';
+
+$meta = NGC_Demo_Env::demo_meta( 'MATCH-001' );
+ngc_test_assert( 'demo meta is_demo', ! empty( $meta['is_demo'] ) );
+ngc_test_assert( 'demo meta scenario', 'match-001' === $meta['demo_scenario_id'] );
+ngc_test_assert( 'demo meta version', NGC_Demo_Env::SEED_VERSION === $meta['demo_seed_version'] );
+
+$personas = NGC_Demo_Registry::personas();
+ngc_test_assert( 'demo personas >= 18', count( $personas ) >= 18 );
+ngc_test_assert( 'demo primary parent exists', isset( $personas['NGT-DEMO-P0001'] ) );
+ngc_test_assert( 'demo approved tutor exists', isset( $personas['NGT-DEMO-T0001'] ) );
+
+NGC_Demo_Notifications::clear();
+NGC_Demo_Notifications::emit( 'booking-confirmed', 'demo.parent@nextgen.local', 'booking.confirmed', [ 'id' => 1 ] );
+$notes = NGC_Demo_Notifications::all();
+ngc_test_assert( 'demo notification recorded', count( $notes ) >= 1 && 'booking-confirmed' === ( $notes[0]['template'] ?? '' ) );
+
+$journeys = NGC_Demo_Journeys::list_journeys();
+ngc_test_assert( 'demo journey catalogue >= 29', count( $journeys ) >= 29 );
+$ids = array_map(
+	static function ( $j ) {
+		return (string) ( $j['id'] ?? '' );
+	},
+	$journeys
+);
+ngc_test_assert( 'demo journey MATCH-001 present', in_array( 'MATCH-001', $ids, true ) );
+ngc_test_assert( 'demo journey BOOK-001 present', in_array( 'BOOK-001', $ids, true ) );
+ngc_test_assert( 'demo journey FIN-001 present', in_array( 'FIN-001', $ids, true ) );
+ngc_test_assert( 'demo journey umbrella parent present', in_array( 'JOURNEY-PARENT-001', $ids, true ) );
+
 if ( $errors > 0 ) {
 	echo "\n{$errors} test(s) failed\n";
 	exit( 1 );
 }
 
-echo "OK — 43 unit tests passed\n";
+echo "OK — unit tests passed ({$passed} assertions)\n";
 exit( 0 );

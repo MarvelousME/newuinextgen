@@ -1,0 +1,49 @@
+.ng-ui-booking-list { display: grid; gap: var(--ng-space-3); }
+.ng-ui-booking-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ng-space-4);
+  padding: var(--ng-space-4);
+  border: 1px solid var(--ng-color-border);
+  border-radius: var(--ng-radius-md);
+  background: var(--ng-color-surface);
+}
+.ng-ui-booking-row__avatar { border-radius: var(--ng-radius-sm); object-fit: cover; }
+.ng-ui-booking-row__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ng-ui-booking-row__meta { font-size: var(--ng-text-sm); color: var(--ng-color-muted); }
+
+.ng-ui-calendar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--ng-space-3);
+}
+.ng-ui-calendar__slot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--ng-space-3) var(--ng-space-4);
+  border: 1px solid var(--ng-color-border);
+  border-radius: var(--ng-radius-md);
+  background: var(--ng-color-surface);
+  cursor: pointer;
+  text-align: left;
+}
+.ng-ui-calendar__slot:focus-visible {
+  outline: 2px solid var(--ng-color-accent);
+  outline-offset: 2px;
+}
+.ng-ui-calendar__date { font-size: var(--ng-text-xs); color: var(--ng-color-muted); }
+.ng-ui-calendar__time { font-weight: var(--ng-weight-bold); }
+
+.ng-ui-badges { display: flex; flex-wrap: wrap; gap: var(--ng-space-3); }
+.ng-ui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ng-space-2);
+  padding: var(--ng-space-2) var(--ng-space-3);
+  border-radius: var(--ng-radius-pill);
+  background: var(--ng-color-surface-elevated);
+  border: 1px solid var(--ng-color-border);
+  font-size: var(--ng-text-sm);
+}
+.ng-ui-badge__glyph { color: var(--ng-color-warning); }

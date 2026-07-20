@@ -1,0 +1,172 @@
+-- NextGen Tutors Core - Database Schema & Seed Data
+-- Run this script in phpMyAdmin to instantly bypass WordPress restrictions
+-- --------------------------------------------------------
+
+-- 1. Logs table
+CREATE TABLE IF NOT EXISTS wp_ngt_logs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    level VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    context LONGTEXT,
+    user_id BIGINT DEFAULT 0,
+    ip_address VARCHAR(45),
+    url TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX level (level),
+    INDEX created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 2. Queue table
+CREATE TABLE IF NOT EXISTS wp_ngt_queue (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    job_type VARCHAR(100) NOT NULL,
+    payload LONGTEXT NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    attempts INT DEFAULT 0,
+    max_attempts INT DEFAULT 3,
+    error_message TEXT,
+    scheduled_at DATETIME,
+    started_at DATETIME,
+    completed_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX job_type (job_type),
+    INDEX status (status),
+    INDEX scheduled_at (scheduled_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 3. Contacts table
+CREATE TABLE IF NOT EXISTS wp_ngt_contacts (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email VARCHAR(255),
+    phone VARCHAR(20),
+    role VARCHAR(50),
+    status VARCHAR(20) DEFAULT 'active',
+    metadata LONGTEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY email (email),
+    INDEX user_id (user_id),
+    INDEX status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 4. Earnings table
+CREATE TABLE IF NOT EXISTS wp_ngt_earnings (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    tutor_id BIGINT NOT NULL,
+    session_id BIGINT,
+    order_id BIGINT,
+    amount DECIMAL(10, 2) NOT NULL,
+    currency VARCHAR(3) DEFAULT 'ZAR',
+    payfast_transaction_id VARCHAR(100),
+    status VARCHAR(20) DEFAULT 'pending',
+    notes TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    paid_at DATETIME,
+    INDEX tutor_id (tutor_id),
+    INDEX status (status),
+    INDEX created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 5. Ratings table
+CREATE TABLE IF NOT EXISTS wp_ngt_ratings (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    session_id BIGINT,
+    parent_id BIGINT,
+    tutor_id BIGINT,
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    feedback TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX session_id (session_id),
+    INDEX tutor_id (tutor_id),
+    INDEX rating (rating)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 6. Tutor verification table
+CREATE TABLE IF NOT EXISTS wp_ngt_verification (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    verified_by BIGINT,
+    documents LONGTEXT,
+    notes TEXT,
+    verified_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY user_id (user_id),
+    INDEX status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 7. POPIA Consent table
+CREATE TABLE IF NOT EXISTS wp_ngt_consent (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT,
+    contact_id BIGINT,
+    consent_version VARCHAR(10),
+    accepted BOOLEAN DEFAULT 0,
+    ip_address_encrypted VARCHAR(255),
+    user_agent VARCHAR(255),
+    consent_type VARCHAR(50) DEFAULT 'checkout',
+    expires_at DATETIME,
+    withdrawn_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX user_id (user_id),
+    INDEX created_at (created_at),
+    INDEX expires_at (expires_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 8. Alerts table
+CREATE TABLE IF NOT EXISTS wp_ngt_alerts (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    alert_type VARCHAR(100) NOT NULL,
+    severity VARCHAR(20) DEFAULT 'info',
+    title VARCHAR(255),
+    message TEXT,
+    action_url TEXT,
+    dismissed INT DEFAULT 0,
+    dismissed_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX alert_type (alert_type),
+    INDEX severity (severity),
+    INDEX dismissed (dismissed)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 9. Notifications table
+CREATE TABLE IF NOT EXISTS wp_ngt_notifications (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT,
+    contact_id BIGINT,
+    notification_type VARCHAR(100),
+    subject VARCHAR(255),
+    message TEXT,
+    status VARCHAR(20) DEFAULT 'pending',
+    sent_at DATETIME,
+    opened_at DATETIME,
+    clicked_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX user_id (user_id),
+    INDEX status (status),
+    INDEX created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+-- SEED DATA INJECTION
+-- --------------------------------------------------------
+
+-- Insert a System Init Log
+INSERT INTO wp_ngt_logs (level, message, context, ip_address, url) 
+VALUES ('info', 'System manually initialized via phpMyAdmin', '{"method": "manual_sql"}', '127.0.0.1', 'localhost');
+
+-- Insert a Default Alert for the Admin Dashboard
+INSERT INTO wp_ngt_alerts (alert_type, severity, title, message, action_url)
+VALUES ('system_init', 'success', 'System Ready', 'The database schemas have been successfully imported and mapped.', '/wp-admin/admin.php?page=ngt-dashboard');
+
+-- Insert a Pending Verification record for testing
+INSERT INTO wp_ngt_verification (user_id, status, notes)
+VALUES (9999, 'pending', 'Awaiting ID and Academic Transcript upload');
+
+-- Insert a sample POPIA Consent trace
+INSERT INTO wp_ngt_consent (user_id, consent_version, accepted, ip_address_encrypted, user_agent, consent_type)
+VALUES (9999, '1.0', 1, 'ENCRYPTED_SEED_IP', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100', 'registration');

@@ -1,0 +1,37 @@
+﻿{
+    "id":  "FIN-003",
+    "name":  "Duplicate Payment Webhook",
+    "persona":  "system",
+    "scenario":  "all",
+    "family":  "finance",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "replay-itn"
+                  },
+                  {
+                      "action":  "assert-idempotent"
+                  }
+              ],
+    "expected_events":  [
+                            "payment.succeeded"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "commerce-order"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=FIN-003",
+                         "seed_graph_keys":  [
+                                                 "FIN-003"
+                                             ]
+                     }
+}
