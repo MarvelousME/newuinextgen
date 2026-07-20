@@ -6,7 +6,7 @@
 |----|-------|--------|
 | FIN-001 | Dual payout cron (Companion + Hub) | **FIXED** — Hub defers when `NGC_Payout_Scheduler` exists |
 | SEC-001 | phpMyAdmin exposed on :8082 in compose | **FIXED** — bind `127.0.0.1` via `PMA_BIND` |
-| GIT-001 | No VCS baseline | **FIXED** — git init + `.gitignore` |
+| GIT-001 | No VCS baseline | **FIXED** — git init + lean baseline commit (bulk dumps gitignored) |
 
 ## P1
 
