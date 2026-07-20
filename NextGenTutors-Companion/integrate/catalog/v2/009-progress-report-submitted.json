@@ -1,0 +1,46 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-009",
+  "slug": "progress-report-submitted",
+  "name": "Progress Report Submitted",
+  "trigger": {
+    "event": "progress_report_published",
+    "source": "Tutor Dashboard"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "notify_parent",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "update_student_dashboard",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_retention_touchpoint",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_admin_if_low_progress",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

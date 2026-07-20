@@ -1,0 +1,64 @@
+/* Kind: card — split from catalog.css */
+/* —— Cards —— */
+.ngt-ui-card {
+  position: relative;
+  border-radius: 1.1rem;
+  padding: 1.25rem;
+  background: #111;
+  color: #f5f5f5;
+  overflow: hidden;
+  min-height: 140px;
+}
+.ngt-ui-card__title { margin: 0 0 .5rem; font-size: 1.15rem; }
+.ngt-ui-card__content { margin: 0; opacity: .85; }
+.ngt-ui-card--neon-gradient-card {
+  background: linear-gradient(#12121a, #12121a) padding-box,
+    linear-gradient(120deg, var(--ngt-accent,#9E7AFF), var(--ngt-accent-2,#FE8BBB), #22d3ee) border-box;
+  border: 2px solid transparent;
+}
+.ngt-ui-card--shine-border::before {
+  content: "";
+  position: absolute; inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--ngt-angle,0deg), transparent 40%, var(--ngt-accent,#9E7AFF), transparent 60%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: ngt-angle 4s linear infinite;
+}
+.ngt-ui-card--warp-background .ngt-ui-card__fx {
+  position: absolute; inset: -30%;
+  background: radial-gradient(circle at 30% 40%, rgba(158,122,255,.45), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(254,139,187,.4), transparent 42%);
+  filter: blur(20px);
+  animation: ngt-warp 8s ease-in-out infinite alternate;
+}
+.ngt-ui-card--backlight {
+  box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 20px 60px rgba(158,122,255,.35);
+}
+.ngt-ui-card--progressive-blur .ngt-ui-card__fx {
+  position: absolute; inset: auto 0 0 0; height: 55%;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(transparent, rgba(0,0,0,.55));
+}
+.ngt-ui-card--glare-hover .ngt-ui-card__fx {
+  position: absolute; inset: 0;
+  background: radial-gradient(180px circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,.28), transparent 40%);
+  opacity: 0; transition: opacity .2s;
+  pointer-events: none;
+}
+.ngt-ui-card--glare-hover:hover .ngt-ui-card__fx { opacity: 1; }
+.ngt-ui-tweet-meta { margin-top: .75rem; opacity: .65; font-size: .85rem; }
+
+@property --ngt-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes ngt-angle { to { --ngt-angle: 360deg; } }
+@keyframes ngt-warp {
+  from { transform: translate(-4%, -2%) scale(1); }
+  to { transform: translate(4%, 3%) scale(1.08); }
+}

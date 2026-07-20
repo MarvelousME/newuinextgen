@@ -1,0 +1,48 @@
+/* NGC Matching wizard — design-system aligned */
+.ngc-match-wizard { font-family: inherit; }
+.ngc-match-step { display: none; }
+.ngc-match-step.is-active { display: block; animation: ngc-fadein .35s ease; }
+@keyframes ngc-fadein { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.ngc-match-step-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 28px; }
+.ngc-match-step-num { font-size: 2.2rem; font-weight: 900; color: #2563eb; font-family: ui-monospace, monospace; line-height: 1; flex: none; }
+.ngc-match-step-head h3 { margin: 0 0 4px; font-size: 1.35rem; }
+.ngc-match-step-head p { margin: 0; color: #64748b; font-size: 14px; }
+
+.ngc-match-form { display: flex; flex-direction: column; gap: 18px; }
+.ngc-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 600px) { .ngc-field-row { grid-template-columns: 1fr; } }
+
+.ngc-btn-accent { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; border: none; border-radius: 10px; padding: 12px 18px; font-weight: 700; cursor: pointer; }
+.ngc-btn-accent:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.ngc-btn, .ngc-btn-alt, .ngc-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 10px; padding: 10px 14px; font-weight: 700; text-decoration: none; border: 1px solid #e2e8f0; background: #fff; color: #0f2744; cursor: pointer; }
+.ngc-btn-alt { background: #f8fafc; }
+.ngc-btn-ghost { background: transparent; border-color: transparent; color: #2563eb; }
+.ngc-match-submit { min-width: 200px; position: relative; }
+.ngc-match-submit:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+/* Results */
+.ngc-match-summary { font-size: 15px; margin-bottom: 20px; }
+.ngc-match-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.ngc-match-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); transition: transform .2s, box-shadow .2s; }
+.ngc-match-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,.12); }
+.ngc-match-card-head { display: flex; align-items: center; gap: 12px; }
+.ngc-match-photo { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex: none; background: #e0f2fe; }
+.ngc-match-photo--ph { display: inline-flex; align-items: center; justify-content: center; font-weight: 800; color: #1d4ed8; font-size: 20px; }
+.ngc-match-card-id { flex: 1; min-width: 0; }
+.ngc-match-card-id strong { display: block; font-size: 15px; }
+.ngc-match-card-id span { font-size: 12px; color: #64748b; display: inline-block; margin-right: 6px; }
+
+.ngc-match-score { text-align: center; flex: none; padding: 8px 12px; border-radius: 12px; }
+.ngc-match-score--high   { background: #dcfce7; color: #15803d; }
+.ngc-match-score--medium { background: #fef9c3; color: #854d0e; }
+.ngc-match-score--fair   { background: #fee2e2; color: #991b1b; }
+.ngc-score-pct  { display: block; font-size: 1.3rem; font-weight: 900; line-height: 1; }
+.ngc-score-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+
+.ngc-match-bar-wrap { height: 4px; background: #f1f5f9; border-radius: 999px; overflow: hidden; }
+.ngc-match-bar { height: 100%; border-radius: 999px; transition: width .6s cubic-bezier(.19,1,.22,1); }
+.ngc-match-bar--high   { background: linear-gradient(90deg, #16a34a, #15803d); }
+.ngc-match-bar--medium { background: linear-gradient(90deg, #eab308, #ca8a04); }
+.ngc-match-bar--fair   { background: linear-gradient(90deg, #f87171, #dc2626); }
+.ngc-match-bio { margin: 0; font-size: 13px; line-height: 1.6; color: #475569; flex: 1; }

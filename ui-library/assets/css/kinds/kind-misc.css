@@ -1,0 +1,6 @@
+/* Kind: misc — split from catalog.css */
+.ngt-ui-blur-fade { animation: ngt-blur-in .8s ease both; }
+@keyframes ngt-blur-in {
+  from { filter: blur(12px); opacity: 0; }
+  to { filter: blur(0); opacity: 1; }
+}

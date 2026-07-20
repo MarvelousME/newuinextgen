@@ -1,0 +1,34 @@
+{
+  "version": "2.0",
+  "name": "NGT — Session Cancellation Win-Back",
+  "description": "Fires when Amelia appointment is cancelled. Tags client as cancelled and triggers FluentCRM win-back sequence.",
+  "status": "active",
+  "type": "user",
+  "triggers": [
+    {
+      "integration": "amelia",
+      "trigger": "amelia_after_appointment_status_changed",
+      "parameters": {
+        "status": "canceled"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_add_tag_to_contact",
+      "parameters": {
+        "email":  "{{trigger:amelia:customer_email}}",
+        "tag_id": "REPLACE_WITH_CANCELLED_TAG_ID"
+      }
+    },
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_trigger_email_sequence",
+      "parameters": {
+        "email":       "{{trigger:amelia:customer_email}}",
+        "sequence_id": "REPLACE_WITH_CANCELLATION_WINBACK_SEQUENCE_ID"
+      }
+    }
+  ]
+}

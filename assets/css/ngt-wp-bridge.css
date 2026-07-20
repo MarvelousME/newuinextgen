@@ -1,0 +1,132 @@
+/**
+ * Bridge BeyondInfinity theme markup with NextGen Styling design tokens.
+ * Scoped to .bi-ngt-skin — does not override global theme outside content areas.
+ */
+
+body.bi-ngt-skin {
+  background: var(--cream, #fcfaf3);
+  color: var(--slate-800, #1e293b);
+  font-family: var(--font-sans, "Open Sans", system-ui, sans-serif);
+}
+
+/* Theme nav enhanced with NGT chrome */
+body.bi-ngt-skin .ngt-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--nav-h, 132px);
+  display: flex;
+  align-items: center;
+  transition: background 0.4s var(--ease-smooth, ease), box-shadow 0.4s, height 0.3s;
+  border-bottom: 4px solid transparent;
+  background: transparent;
+}
+
+body.bi-ngt-skin .ngt-nav.is-solid,
+body.bi-ngt-skin .ngt-nav.ngt-nav--solid {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom-color: var(--lime, #aece61);
+  box-shadow: 0 6px 24px rgba(9, 39, 70, 0.07);
+  height: 72px;
+}
+
+body.bi-ngt-skin .ngt-nav__logo img {
+  height: 72px;
+  width: auto;
+  transition: height 0.35s ease;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.25));
+}
+
+body.bi-ngt-skin .ngt-nav.is-solid .ngt-nav__logo img {
+  height: 48px;
+}
+
+body.bi-ngt-skin .site-main.bi-theme-main,
+body.bi-ngt-skin .bi-theme-content {
+  padding-top: var(--nav-h, 132px);
+}
+
+body.bi-ngt-skin .ngt-nav.is-solid ~ .site-main.bi-theme-main,
+body.bi-ngt-skin .ngt-nav.ngt-nav--solid ~ .site-main.bi-theme-main {
+  padding-top: 72px;
+}
+
+/* Map theme buttons to NGT button system inside content */
+body.bi-ngt-skin .bi-theme-content .ngt-btn--primary,
+body.bi-ngt-skin .bi-theme-content .btn.btn--lime {
+  background: linear-gradient(135deg, var(--lime, #aece61), var(--lime-bright, #c4e07a));
+  color: var(--navy, #092746);
+  border: none;
+  font-weight: 800;
+  border-radius: var(--r-pill, 999px);
+}
+
+body.bi-ngt-skin .bi-theme-content .ngt-btn--outline,
+body.bi-ngt-skin .bi-theme-content .btn.btn--ghost {
+  border: 2px solid rgba(9, 39, 70, 0.15);
+  border-radius: var(--r-pill, 999px);
+  font-weight: 800;
+}
+
+/* Interior page patterns from imported HTML */
+body.bi-ngt-skin .bi-theme-content .wrap {
+  max-width: var(--maxw, 1240px);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+body.bi-ngt-skin .bi-theme-content .pagehead {
+  margin-top: calc(var(--nav-h, 132px) * -1);
+  padding-top: calc(var(--nav-h, 132px) + 56px);
+}
+
+/* Kinetic homepage — same nav overlap as become-a-tutor pagehead */
+body.bi-ngt-skin.bi-kinetic-home .site-main.bi-theme-main {
+  padding-top: 0;
+}
+
+body.bi-ngt-skin.bi-kinetic-home .bi-theme-content .ngi-hero--theme {
+  margin-top: calc(var(--nav-h, 132px) * -1);
+  padding-top: calc(var(--nav-h, 132px) + 48px);
+}
+
+body.bi-ngt-skin .bi-theme-content .section {
+  padding: 48px 0;
+}
+
+body.bi-ngt-skin .bi-theme-content [data-reveal],
+body.bi-ngt-skin .bi-theme-content [data-reveal-x],
+body.bi-ngt-skin .bi-theme-content [data-reveal-scale] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+body.bi-ngt-skin .bi-theme-content [data-reveal-x] {
+  transform: translateX(var(--rx, 40px));
+}
+
+@media (max-width: 760px) {
+  body.bi-ngt-skin .ngt-nav {
+    height: 88px;
+  }
+
+  body.bi-ngt-skin .ngt-nav__logo img {
+    height: 52px;
+  }
+
+  body.bi-ngt-skin .site-main.bi-theme-main {
+    padding-top: 88px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.bi-ngt-skin .bi-theme-content [data-reveal],
+  body.bi-ngt-skin .bi-theme-content [data-reveal-x],
+  body.bi-ngt-skin .bi-theme-content [data-reveal-scale] {
+    opacity: 1;
+    transform: none;
+  }
+}

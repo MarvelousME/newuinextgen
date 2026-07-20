@@ -1,0 +1,92 @@
+/* NGC Form Validation — animated, accessible, design-system aligned. */
+
+/* Progress bar */
+.ngc-form-progress {
+  height: 4px; background: #e2e8f0; border-radius: 999px; margin-bottom: 20px;
+  overflow: hidden; position: relative;
+}
+.ngc-form-progress-inner {
+  height: 100%; width: 0; background: linear-gradient(90deg, #2563eb, #15803d);
+  border-radius: 999px; transition: width .4s cubic-bezier(.19,1,.22,1);
+}
+
+/* Field group states */
+.ngc-field-group { position: relative; display: flex; flex-direction: column; gap: 6px; }
+.ngc-field-group label { font-size: 13px; font-weight: 600; color: #334155; }
+
+.ngc-field-group input,
+.ngc-field-group select,
+.ngc-field-group textarea {
+  width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 10px;
+  font: inherit; font-size: 14px; color: #0f172a; background: #fff; outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.ngc-field-group input:focus,
+.ngc-field-group select:focus,
+.ngc-field-group textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* Valid state */
+.ngc-field-group.is-valid input,
+.ngc-field-group.is-valid select,
+.ngc-field-group.is-valid textarea {
+  border-color: #15803d;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2315803d' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 6-11 11-5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+  padding-right: 42px;
+}
+
+/* Error state */
+.ngc-field-group.has-error input,
+.ngc-field-group.has-error select,
+.ngc-field-group.has-error textarea {
+  border-color: #dc2626;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dc2626' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8v4m0 4h.01'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+  padding-right: 42px;
+}
+
+/* Error message */
+.ngc-field-error {
+  display: block; font-size: 12px; font-weight: 600; color: #dc2626;
+  min-height: 0; max-height: 0; opacity: 0; overflow: hidden;
+  transform: translateY(-4px);
+  transition: max-height .22s ease, opacity .22s ease, transform .22s ease;
+}
+.ngc-field-error.is-visible {
+  max-height: 40px; opacity: 1; transform: translateY(0);
+}
+.ngc-field-error.ngc-err-exit {
+  opacity: 0; transform: translateY(-4px);
+}
+
+/* Shake animation */
+@keyframes ngc-shake {
+  0%,100% { transform: translateX(0); }
+  15%      { transform: translateX(-8px); }
+  30%      { transform: translateX(7px); }
+  45%      { transform: translateX(-6px); }
+  60%      { transform: translateX(5px); }
+  75%      { transform: translateX(-3px); }
+}
+.ngc-shake { animation: ngc-shake .45s cubic-bezier(.36,.07,.19,.97) both; }
+
+/* Spinner on submit button */
+.ngc-btn-spinner {
+  display: inline-block; width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ngc-spin .7s linear infinite;
+  vertical-align: middle; margin-left: 8px;
+}
+@keyframes ngc-spin { to { transform: rotate(360deg); } }
+
+/* Tooltip-style hint */
+.ngc-field-hint { font-size: 11px; color: #64748b; }

@@ -1,0 +1,184 @@
+{
+  "key": "group_ngt_lesson",
+  "title": "NGT Lesson Relationships",
+  "fields": [
+    {
+      "key": "field_ngt_lesson_student",
+      "label": "Student",
+      "name": "ngt_student_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_student_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_lesson_tutor",
+      "label": "Tutor",
+      "name": "ngt_tutor_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_tutor_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_lesson_booking",
+      "label": "Booking",
+      "name": "ngt_booking",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_booking"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_lesson_subject",
+      "label": "Subject",
+      "name": "ngt_subject",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_subject"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_lesson_date",
+      "label": "Lesson Date/Time",
+      "name": "ngt_lesson_date",
+      "aria-label": "",
+      "type": "date_time_picker",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_lesson_duration",
+      "label": "Duration Minutes",
+      "name": "ngt_duration_minutes",
+      "aria-label": "",
+      "type": "number",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_lesson_mode",
+      "label": "Mode",
+      "name": "ngt_mode",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "online": "Online",
+        "in_person": "In-person",
+        "hybrid": "Hybrid"
+      }
+    },
+    {
+      "key": "field_ngt_lesson_status",
+      "label": "Lesson Status",
+      "name": "ngt_lesson_status",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "scheduled": "Scheduled",
+        "completed": "Completed",
+        "missed": "Missed",
+        "cancelled": "Cancelled"
+      }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "ngt_lesson"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true
+}

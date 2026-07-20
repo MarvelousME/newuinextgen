@@ -1,0 +1,15 @@
+/* Kind: map — split from catalog.css */
+.ngt-ui-map {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 4px;
+  padding: 1rem;
+  background: #0b1220;
+  border-radius: 1rem;
+}
+.ngt-ui-map span {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+}
+.ngt-ui-map span.is-on { background: rgba(96,165,250,.85); }

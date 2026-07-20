@@ -1,0 +1,13 @@
+{
+  "journey": "finance",
+  "label": "Demo Finance",
+  "source": "demo",
+  "dashboard": {
+    "paidInvoices": 32,
+    "pendingPayments": 4,
+    "failedPayments": 1,
+    "refunds": 1,
+    "walletBalances": 9700,
+    "tutorPayouts": 6400
+  }
+}

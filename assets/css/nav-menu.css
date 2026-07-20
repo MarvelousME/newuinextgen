@@ -1,0 +1,291 @@
+/* Primary navigation menu */
+.ngt-nav__menu {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.ngt-nav__menu .menu-item {
+  position: relative;
+}
+
+.ngt-nav__menu .menu-item > a {
+  display: block;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ngt-text, #0f2744);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.ngt-nav__menu .menu-item > a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--ngt-accent, #10b981);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.ngt-nav__menu .menu-item > a:hover {
+  color: var(--ngt-primary, #1e1b4b);
+}
+
+.ngt-nav__menu .menu-item > a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Current page indicator */
+.ngt-nav__menu .current-menu-item > a,
+.ngt-nav__menu .current_page_item > a {
+  color: var(--ngt-primary, #1e1b4b);
+}
+
+.ngt-nav__menu .current-menu-item > a::after,
+.ngt-nav__menu .current_page_item > a::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Mobile menu styles */
+@media (max-width: 1099px) {
+  .ngt-nav__menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    max-width: 320px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0;
+    background: white;
+    padding: 4rem 2rem 2rem;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    border-right: 1px solid var(--ngt-border-light, #e2e8f0);
+  }
+
+  .ngt-nav__menu.is-open {
+    transform: translateX(0);
+  }
+
+  .ngt-nav__menu .menu-item {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .ngt-nav__menu .menu-item > a {
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.125rem;
+    border-bottom: none;
+  }
+
+  .ngt-nav__menu .menu-item > a::after {
+    display: none;
+  }
+
+  /* Hide CTA in mobile menu */
+  .ngt-nav__cta {
+    display: none;
+  }
+
+  /* Adjust toggle button position for mobile */
+  .ngt-nav {
+    position: relative;
+    z-index: 1001;
+  }
+
+  .ngt-nav__toggle {
+    display: block !important;
+    margin-left: auto;
+  }
+}
+
+/* Hide toggle on desktop */
+@media (min-width: 1100px) {
+  .ngt-nav__toggle {
+    display: none;
+  }
+
+  .ngt-nav__menu {
+    position: static;
+    height: auto;
+    width: auto;
+    transform: none;
+    box-shadow: none;
+    flex-direction: row;
+  }
+
+  .ngt-nav__menu .menu-item {
+    margin: 0;
+  }
+
+  .ngt-nav__menu .menu-item > a {
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+  }
+}
+
+/* Grouped primary navigation dropdowns */
+.ngt-nav__menu .menu-item-has-children,
+.ngt-nav__dropdown {
+  position: relative;
+}
+
+.ngt-nav__dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+}
+
+.ngt-nav__caret {
+  transition: transform 0.2s ease;
+}
+
+.ngt-nav__dropdown.is-open > .ngt-nav__dropdown-trigger .ngt-nav__caret,
+.menu-item-has-children.is-open > .ngt-nav__dropdown-trigger .ngt-nav__caret {
+  transform: rotate(180deg);
+}
+
+.ngt-nav__submenu,
+.ngt-nav__menu .sub-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 220px;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--ngt-border-light, #e2e8f0);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(15, 39, 68, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 1060;
+}
+
+.ngt-nav__dropdown.is-open > .ngt-nav__submenu,
+.ngt-nav__dropdown.is-open > .sub-menu,
+.menu-item-has-children.is-open > .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.ngt-nav__sublink,
+.ngt-nav__submenu a {
+  display: block;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ngt-text, #0f2744);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.ngt-nav__sublink:hover,
+.ngt-nav__submenu a:hover {
+  background: rgba(174, 206, 97, 0.12);
+  color: var(--ngt-navy, #0f2744);
+}
+
+/* Tutoring imagery strip */
+.ngt-imagery-strip {
+  padding: 48px 0;
+  background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+}
+
+.ngt-imagery-strip .ngt-container {
+  display: grid;
+  gap: 20px;
+}
+
+.ngt-imagery-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.ngt-imagery-card {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(15, 39, 68, 0.08);
+}
+
+.ngt-imagery-card img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* Float rail — vertical stack centered on right, panels left of dock */
+body.has-float-dock .float-dock {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 52px;
+}
+
+body.has-float-dock .chat-panel,
+body.has-float-dock .support-panel,
+body.has-float-dock .ngc-match-panel {
+  right: calc(20px + 52px + 16px);
+  top: 50%;
+  bottom: auto;
+}
+
+body.has-float-dock .fdock-btn {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  body.has-float-dock .float-dock {
+    right: 12px;
+    top: auto;
+    bottom: 16px;
+    transform: none;
+    gap: 10px;
+  }
+  body.has-float-dock .chat-panel,
+  body.has-float-dock .support-panel,
+  body.has-float-dock .ngc-match-panel {
+    right: 0;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    transform: none;
+  }
+}

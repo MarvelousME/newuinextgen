@@ -1,0 +1,162 @@
+{
+  "key": "group_ngt_support",
+  "title": "NGT Support Case Relationships",
+  "fields": [
+    {
+      "key": "field_ngt_support_user",
+      "label": "Related WP User ID",
+      "name": "ngt_related_user",
+      "aria-label": "",
+      "type": "number",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_support_parent",
+      "label": "Parent",
+      "name": "ngt_parent_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_parent_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_support_student",
+      "label": "Student",
+      "name": "ngt_student_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_student_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_support_tutor",
+      "label": "Tutor",
+      "name": "ngt_tutor_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_tutor_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_support_priority",
+      "label": "Priority",
+      "name": "ngt_priority",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "low": "Low",
+        "normal": "Normal",
+        "high": "High",
+        "urgent": "Urgent"
+      }
+    },
+    {
+      "key": "field_ngt_support_status",
+      "label": "Case Status",
+      "name": "ngt_case_status",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "open": "Open",
+        "waiting": "Waiting",
+        "resolved": "Resolved",
+        "closed": "Closed"
+      }
+    },
+    {
+      "key": "field_ngt_support_source",
+      "label": "Source",
+      "name": "ngt_source",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "ngt_support_case"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true
+}

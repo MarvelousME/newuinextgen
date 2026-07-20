@@ -1,0 +1,132 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+    paths-ignore:
+      - 'documentation/**'
+      - 'reference-style-extraction/**'
+      - 'audit-reports/**'
+      - 'content-enhancement/**'
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - 'documentation/**'
+      - 'reference-style-extraction/**'
+      - 'audit-reports/**'
+      - 'content-enhancement/**'
+      - '**.md'
+
+jobs:
+  php-unit:
+    name: PHP unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Run lightweight test runner
+        run: php NextGenTutors-Companion/tests/run.php
+
+      - name: Run agent evaluation harness
+        run: php NextGenTutors-Companion/tests/agent-evaluation.php
+
+      - name: Install Composer dependencies
+        working-directory: NextGenTutors-Companion
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run PHPUnit
+        working-directory: NextGenTutors-Companion
+        run: vendor/bin/phpunit --configuration phpunit.xml.dist
+
+      - name: Catalog render snapshots
+        run: php ui-library/tests/catalog-snapshot.php
+
+      - name: UI integration smoke
+        run: php ui-library/tests/integration-smoke.php
+
+  docker-smoke:
+    name: Docker smoke + E2E
+    runs-on: ubuntu-latest
+    needs: php-unit
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare Docker env
+        working-directory: docker
+        run: cp .env.example .env
+
+      - name: Start stack
+        working-directory: docker
+        run: docker compose up -d
+
+      - name: Wait for WordPress
+        run: |
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:8900/ >/dev/null; then
+              echo "WordPress is up"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "WordPress did not become ready in time"
+          docker compose -f docker/docker-compose.yml logs wordpress
+          exit 1
+
+      - name: Bootstrap WordPress
+        working-directory: docker
+        run: |
+          docker compose --profile setup run --rm wpcli
+          docker compose --profile setup run --rm --entrypoint sh wpcli /setup/apply-defaults.sh || true
+
+      - name: Seed NGT UI demo page
+        working-directory: docker
+        run: |
+          docker compose run --rm --entrypoint wp wpcli --path=/var/www/html eval-file /tmp/ngt-ui-smoke.php --allow-root
+
+      - name: Guard, calculator, and WPBakery adapter smoke
+        working-directory: docker
+        run: |
+          docker compose run --rm --entrypoint wp wpcli --path=/var/www/html eval \
+            "echo NGC_Legacy_Plugin_Guard::is_denied('nextgen-tutors-core/nextgen-tutors-core.php')?'DENY_OK':'DENY_FAIL';" \
+            --allow-root | grep -q DENY_OK
+          docker compose run --rm --entrypoint wp wpcli --path=/var/www/html eval \
+            "echo strpos(do_shortcode('[ngt_income_calculator]'),'data-ngt-income-calculator')!==false?'IC_OK':'IC_FAIL';" \
+            --allow-root | grep -q IC_OK
+          docker compose run --rm --entrypoint wp wpcli --path=/var/www/html eval \
+            "echo strpos(do_shortcode('[ngt_ui_vc component=\"magic-card\" title=\"CI\"]'),'data-ngt-ui=\"magic-card\"')!==false?'VC_OK':'VC_FAIL';" \
+            --allow-root | grep -q VC_OK
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Install Playwright
+        working-directory: e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Full Playwright blueprint suite
+        working-directory: e2e
+        env:
+          CI: true
+          BASE_URL: http://127.0.0.1:8900
+        run: npx playwright test
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: e2e/reports/
+          if-no-files-found: ignore

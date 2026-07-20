@@ -1,0 +1,36 @@
+/* Kind: progress — split from catalog.css */
+/* —— Progress —— */
+.ngt-ui-progress {
+  height: 6px;
+  width: 100%;
+  background: rgba(0,0,0,.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.ngt-ui-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ngt-accent,#9E7AFF), var(--ngt-accent-2,#FE8BBB));
+  transition: width .2s linear;
+}
+.ngt-ui-scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  height: 4px;
+  pointer-events: none;
+}
+.ngt-ui-ring { width: 120px; height: 120px; display: block; }
+.ngt-ui-ring__track,
+.ngt-ui-ring__value {
+  fill: none;
+  stroke-width: 10;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+.ngt-ui-ring__track { stroke: rgba(0,0,0,.08); }
+.ngt-ui-ring__value {
+  stroke: var(--ngt-accent, #9E7AFF);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease;
+}
+.ngt-ui-ring__label { font-size: 1.1rem; font-weight: 700; fill: currentColor; }

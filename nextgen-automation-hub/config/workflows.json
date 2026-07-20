@@ -1,0 +1,128 @@
+{
+  "schema": "ngt_workflow_pack",
+  "version": "1.0.0",
+  "project": "NextGen Tutors",
+  "workflows": [
+    {
+      "key": "parent_find_tutor_intake",
+      "name": "Parent Find a Tutor Intake",
+      "enabled": true,
+      "trigger": { "event": "ngt.find_tutor.submitted" },
+      "actions": [
+        { "type": "log_event", "source": "find_a_tutor" },
+        { "type": "create_rtm_message", "room": "staff", "message": "New Find a Tutor request: {{name}} | Grade: {{grade}} | Subject: {{subject}} | Area: {{area}} | Phone: {{phone}} | Email: {{email}}" },
+        { "type": "create_rtm_message", "room": "booking-issues", "message": "Matching required within 24 hours for {{name}}: {{subject}}, {{grade}}, {{area}}." },
+        { "type": "wp_mail_admin", "subject": "New NextGen tutor request", "message": "New request from {{name}}. Grade: {{grade}}. Subject: {{subject}}. Area: {{area}}. Phone: {{phone}}. Email: {{email}}." }
+      ]
+    },
+    {
+      "key": "tutor_application_review",
+      "name": "Tutor Application Review",
+      "enabled": true,
+      "trigger": { "event": "ngt.tutor_application.submitted" },
+      "actions": [
+        { "type": "log_event", "source": "become_a_tutor" },
+        { "type": "create_rtm_message", "room": "staff", "message": "New tutor application: {{name}} | Subjects: {{subjects}} | Area: {{area}} | Email: {{email}}" },
+        { "type": "create_rtm_message", "room": "tutor-support", "message": "Tutor application received for review: {{name}}. Approval SLA: 48 hours." },
+        { "type": "wp_mail_admin", "subject": "New tutor application", "message": "Tutor application from {{name}}. Subjects: {{subjects}}. Area: {{area}}. Email: {{email}}. Bio: {{bio}}" }
+      ]
+    },
+    {
+      "key": "new_user_role_routing",
+      "name": "New User Role Routing",
+      "enabled": true,
+      "trigger": { "event": "wp.user_registered" },
+      "actions": [
+        { "type": "log_event", "source": "wordpress" },
+        { "type": "create_rtm_message", "room": "staff", "message": "New WordPress user registered: User ID {{user_id}}." }
+      ]
+    },
+    {
+      "key": "woocommerce_payment_completed",
+      "name": "WooCommerce Payment Completed",
+      "enabled": true,
+      "trigger": { "event": "woocommerce.order.completed" },
+      "actions": [
+        { "type": "log_event", "source": "woocommerce" },
+        { "type": "create_rtm_message", "room": "payment-issues", "message": "Payment completed. Order ID: {{order_id}}. Customer user ID: {{user_id}}." },
+        { "type": "create_rtm_message", "room": "staff", "message": "Order {{order_id}} completed. Confirm lesson/session provisioning." }
+      ]
+    },
+    {
+      "key": "amelia_booking_created",
+      "name": "Amelia Booking Created",
+      "enabled": true,
+      "trigger": { "event": "amelia.booking.created" },
+      "actions": [
+        { "type": "log_event", "source": "amelia" },
+        { "type": "create_rtm_message", "room": "booking-issues", "message": "New Amelia booking created. Booking ID: {{booking_id}}. Service: {{service_id}}. Tutor/employee: {{employee_id}}." },
+        { "type": "create_rtm_message", "room": "tutor-support", "message": "Booking notification: Booking {{booking_id}} requires tutor confirmation." }
+      ]
+    },
+    {
+      "key": "lesson_completed_awards",
+      "name": "Lesson Completed Awards",
+      "enabled": true,
+      "trigger": { "event": "ngt.lesson.completed" },
+      "actions": [
+        { "type": "log_event", "source": "lesson" },
+        { "type": "create_rtm_message", "room": "lesson-issues", "message": "Lesson completed for learner/student user ID {{student_user_id}} by tutor user ID {{tutor_user_id}}. Progress note: {{progress_note}}" }
+      ]
+    },
+    {
+      "key": "support_escalation",
+      "name": "Support Escalation",
+      "enabled": true,
+      "trigger": { "event": "ngt.support.escalated" },
+      "actions": [
+        { "type": "log_event", "source": "support" },
+        { "type": "create_rtm_message", "room": "escalated-support", "message": "Escalated support case: {{summary}} | Source: {{source}} | Priority: {{priority}}" },
+        { "type": "wp_mail_admin", "subject": "NextGen support escalation", "message": "Escalated support case: {{summary}}. Source: {{source}}. Priority: {{priority}}." }
+      ]
+    },
+    {
+      "key": "tutor_approved_onboarding",
+      "name": "Tutor Approved Onboarding",
+      "enabled": true,
+      "trigger": { "event": "ngt.tutor.approved" },
+      "actions": [
+        { "type": "log_event", "source": "tutor_onboarding" },
+        { "type": "add_user_role", "role": "ngt_tutor", "user_id": "{{user_id}}" },
+        { "type": "create_rtm_message", "room": "tutor-support", "message": "Tutor approved and onboarded: User ID {{user_id}}. Send profile completion and availability instructions." }
+      ]
+    },
+    {
+      "key": "dashboard_health_check",
+      "name": "Dashboard Health Check",
+      "enabled": true,
+      "trigger": { "event": "ngt.daily.health_check" },
+      "actions": [
+        { "type": "log_event", "source": "system" },
+        { "type": "create_rtm_message", "room": "admin", "message": "Daily health check completed. Review plugin status, bookings, payments, support queues and workflow failures." }
+      ]
+    },
+    {
+      "key": "lesson_completed_notify_parent",
+      "name": "Lesson Completed — Notify Parent",
+      "enabled": true,
+      "trigger": { "event": "ngt.lesson.completed" },
+      "actions": [
+        { "type": "log_event", "source": "lesson" },
+        { "type": "wp_mail_user", "user_id": "{{parent_user_id}}", "subject": "Lesson completed for your child", "message": "A tutoring session has been completed. Tutor notes: {{progress_note}}. Log in to view the full progress report." },
+        { "type": "create_rtm_message", "room": "staff", "message": "Lesson completed: Student {{student_user_id}} with Tutor {{tutor_user_id}}. Progress note filed." }
+      ]
+    },
+    {
+      "key": "payment_overdue_escalation",
+      "name": "Payment Overdue Escalation",
+      "enabled": true,
+      "trigger": { "event": "ngt.payment.overdue" },
+      "actions": [
+        { "type": "log_event", "source": "payments" },
+        { "type": "create_support_case", "title": "Overdue payment — {{parent_name}}", "description": "Payment for booking {{booking_id}} is overdue. Amount: R{{amount}}. Parent contact: {{email}}.", "priority": "high" },
+        { "type": "create_rtm_message", "room": "payment-issues", "message": "Payment overdue alert: {{parent_name}}, R{{amount}} for booking {{booking_id}}." },
+        { "type": "wp_mail_admin", "subject": "Overdue payment alert", "message": "Booking {{booking_id}} has an overdue payment of R{{amount}} from {{parent_name}} ({{email}})." }
+      ]
+    }
+  ]
+}

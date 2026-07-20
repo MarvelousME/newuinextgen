@@ -1,0 +1,46 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-004",
+  "slug": "student-created",
+  "name": "Student Created",
+  "trigger": {
+    "event": "ngt_student_created",
+    "source": "NextGen Foundation"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "link_student_to_parent",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_student_dashboard_record",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_parent",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "recommend_subject_resources",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

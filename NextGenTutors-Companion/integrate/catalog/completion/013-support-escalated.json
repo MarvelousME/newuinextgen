@@ -1,0 +1,13 @@
+{
+  "id": "013-SUPPORT-ESCALATED",
+  "name": "Support Escalated",
+  "trigger": "supportboard_escalation",
+  "actions": [
+    "create_fluent_support_ticket",
+    "notify_support_room",
+    "log_sla_timer"
+  ],
+  "import_target": "NextGen Completion Suite",
+  "status": "draft",
+  "version": "1.0.0"
+}

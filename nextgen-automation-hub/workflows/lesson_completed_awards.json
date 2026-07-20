@@ -1,0 +1,19 @@
+{
+  "key": "lesson_completed_awards",
+  "name": "Lesson Completed Awards",
+  "enabled": true,
+  "trigger": {
+    "event": "ngt.lesson.completed"
+  },
+  "actions": [
+    {
+      "type": "log_event",
+      "source": "lesson"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "lesson-issues",
+      "message": "Lesson completed for learner/student user ID {{student_user_id}} by tutor user ID {{tutor_user_id}}. Progress note: {{progress_note}}"
+    }
+  ]
+}

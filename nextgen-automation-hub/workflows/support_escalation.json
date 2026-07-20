@@ -1,0 +1,24 @@
+{
+  "key": "support_escalation",
+  "name": "Support Escalation",
+  "enabled": true,
+  "trigger": {
+    "event": "ngt.support.escalated"
+  },
+  "actions": [
+    {
+      "type": "log_event",
+      "source": "support"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "escalated-support",
+      "message": "Escalated support case: {{summary}} | Source: {{source}} | Priority: {{priority}}"
+    },
+    {
+      "type": "wp_mail_admin",
+      "subject": "NextGen support escalation",
+      "message": "Escalated support case: {{summary}}. Source: {{source}}. Priority: {{priority}}."
+    }
+  ]
+}

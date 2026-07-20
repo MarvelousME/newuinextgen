@@ -1,0 +1,12 @@
+/* NextGenTutors-Companion — AI Suite admin */
+.ngc-ai-tabs { display: flex; gap: 8px; margin: 14px 0; flex-wrap: wrap; }
+.ngc-ai-tab { padding: 8px 16px; border: 1px solid #dcdcde; background: #f6f7f7; border-radius: 999px; cursor: pointer; font-weight: 600; }
+.ngc-ai-tab.is-active { background: #092746; color: #fff; border-color: #092746; }
+.ngc-ai-panel { margin-top: 16px; }
+.ngc-ai-panel[hidden] { display: none; }
+.ngc-ai-msg { margin: 10px 0; font-weight: 600; min-height: 1.2em; }
+.ngc-ai-msg.is-error { color: #b3261e; }
+.ngc-ai-msg.is-ok { color: #1f7a3d; }
+.ngc-ai-log { border: 1px solid #dcdcde; border-radius: 8px; background: #fff; padding: 14px; max-height: 420px; overflow-y: auto; margin-bottom: 10px; }
+.ngc-ai-turn { padding: 6px 0; border-bottom: 1px solid #f0f0f1; line-height: 1.5; }
+.ngc-ai-turn:last-child { border-bottom: 0; }

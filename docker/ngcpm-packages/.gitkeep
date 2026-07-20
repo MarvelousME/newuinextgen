@@ -1,0 +1,9 @@
+# Place plugin .zip archives here for automatic detection by NextGenTutors Plugin Manager.
+#
+# Examples:
+#   woocommerce.zip
+#   elementor.zip
+#   ameliabooking.zip
+#   js_composer.zip
+#
+# Docker maps this folder to wp-content/ngcpm-packages inside WordPress.

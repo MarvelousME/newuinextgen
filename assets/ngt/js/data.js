@@ -1,0 +1,126 @@
+/* NextGen Tutors — content data */
+window.NGT = {
+  marquee: [
+    { t: "CAPS Curriculum", e: "🇿🇦" },
+    { t: "IEB Curriculum", e: "⭐" },
+    { t: "Cambridge AS & A", e: "🇬🇧" },
+    { t: "SACE Registered Tutors", e: "🛡️" },
+    { t: "Wits Graduates", e: "🎓" },
+    { t: "UCT Honours Alumni", e: "🏛️" },
+    { t: "Stellenbosch Reps", e: "🎗️" },
+    { t: "100% ID Background Checked", e: "🔒" },
+    { t: "Pure Maths Experts", e: "📐" },
+    { t: "IEB Physics Specialists", e: "🧪" },
+  ],
+
+  subjects: [
+    { name: "Mathematics", icon: "binary", desc: "CAPS & IEB Pure Maths (Gr 1–12) plus full Matric prep." },
+    { name: "English HL", icon: "book-open", desc: "Home Language essays, literature study and comprehension." },
+    { name: "Physical Sciences", icon: "flask-conical", desc: "Physics & Organic Chemistry curriculum training." },
+    { name: "Coding & Python", icon: "code", desc: "IT/CAT projects, Scratch and Python foundations." },
+    { name: "Accounting", icon: "coins", desc: "Gr 10–12 bookkeeping, ledgers and financial equations." },
+    { name: "Afrikaans FAL", icon: "languages", desc: "First Additional Language speaking and grammar." },
+    { name: "Life Sciences", icon: "sparkles", desc: "Biology, cellular structures and evolution models." },
+    { name: "Economics", icon: "trending-up", desc: "Macro, micro and market systems explained simply." },
+    { name: "History", icon: "globe", desc: "South African & global history essay coaching." },
+    { name: "Business Studies", icon: "briefcase", desc: "Corporate models, structures and management." },
+    { name: "Life Orientation", icon: "compass", desc: "Career guidance, study skills and exam strategy." },
+    { name: "Statistics", icon: "bar-chart-3", desc: "Varsity stats, hypothesis testing and data analysis." },
+  ],
+
+  tutors: [
+    {
+      name: "Karabo Molefe", rate: 500, rating: 4.95, type: "both",
+      img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "B.Sc (Hons) Theoretical Physics · UCT",
+      bio: "I break difficult calculus and mechanics into simple building blocks that learners find incredibly intuitive.",
+      subjects: ["Mathematics", "Physical Sciences", "Stats"],
+    },
+    {
+      name: "Lindiwe Nkosi", rate: 320, rating: 5.0, type: "both",
+      img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "B.Sc Applied Maths & Comp Sci · Wits",
+      bio: "Ex-Wits engineer combining interactive science tutoring with coding fundamentals for Grade 8–12.",
+      subjects: ["Phys Sciences", "Python", "Maths"],
+    },
+    {
+      name: "Johan van der Merwe", rate: 300, rating: 4.8, type: "personal",
+      img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "B.A. English & Economics · Stellenbosch",
+      bio: "Passionate IEB educator specialising in essay planning, grammar and confidence coaching.",
+      subjects: ["English HL", "Economics", "History"],
+    },
+    {
+      name: "Priya Govender", rate: 320, rating: 4.9, type: "online",
+      img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "B.Com Accounting · UKZN",
+      bio: "Licensed SA accountant teaching bookkeeping formulas with highly visual spreadsheet templates.",
+      subjects: ["Accounting", "Business", "Afrikaans"],
+    },
+    {
+      name: "Sipho Dube", rate: 300, rating: 4.75, type: "personal",
+      img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "MBChB Candidate · University of Pretoria",
+      bio: "Helping Gr 10–12 master biology, cellular systems and maths through custom memory tricks.",
+      subjects: ["Life Sciences", "Maths", "Afrikaans"],
+    },
+    {
+      name: "Aisha Patel", rate: 450, rating: 4.92, type: "both",
+      img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "B.Sc (Hons) Chemistry · Rhodes",
+      bio: "Cambridge & IEB chemistry specialist turning abstract reactions into clear, visual stories.",
+      subjects: ["Chemistry", "Phys Sciences", "Maths"],
+    },
+    {
+      name: "Thabo Ndlovu", rate: 400, rating: 4.9, type: "both",
+      img: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "B.Sc Mathematics · Wits",
+      bio: "Six years of Matric maths coaching with a 92% distinction rate among my Grade 12 learners.",
+      subjects: ["Mathematics", "Stats", "Economics"],
+    },
+    {
+      name: "Sarah Pretorius", rate: 450, rating: 5.0, type: "online",
+      img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "B.Sc Physics · Cambridge",
+      bio: "Physics made intuitive — I teach the 'why' behind every formula so it finally sticks.",
+      subjects: ["Physical Sciences", "Maths", "Coding"],
+    },
+    {
+      name: "Daniel Garrison", rate: 300, rating: 4.7, type: "personal",
+      img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "B.Com Economics · UJ",
+      bio: "I make Accounting and Business Studies practical with real South African case studies.",
+      subjects: ["Accounting", "Business", "Economics"],
+    },
+    {
+      name: "Lerato Khumalo", rate: 320, rating: 4.85, type: "both",
+      img: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=600&h=600",
+      degree: "B.Ed English & History · UP",
+      bio: "Essay structure, comprehension and exam technique for English HL and History learners.",
+      subjects: ["English HL", "History", "Life Orientation"],
+    },
+  ],
+
+  testimonials: [
+    {
+      author: "Naledi Maduna", role: "IEB Matric · Parent of Lethabo",
+      img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300&h=300",
+      quote: "Lindiwe's lessons changed how I view Pure Mathematics. I went from 54% to a distinction in my final IEB Matric — the recorded sessions were a lifesaver for last-minute revisions.",
+    },
+    {
+      author: "Hennie Swart", role: "Parent · Johannesburg",
+      img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300&h=300",
+      quote: "The mandatory ID and police-clearance badges meant we could trust our tutor completely. Finding safe at-home tutors in JHB is usually stressful — NextGen made it effortless.",
+    },
+    {
+      author: "Brian Woods", role: "Grade 11 Learner",
+      img: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&q=80&w=300&h=300",
+      quote: "I used to think studying with a tutor meant you weren't good enough. Now I understand how great it is to learn additionally — every session is genuinely interesting.",
+    },
+    {
+      author: "Pamela Raymond", role: "Tertiary Student",
+      img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300&h=300",
+      quote: "My dream came true. I was able to start working toward my degree, and without your help it would have taken me so much longer. Thank you — please keep up the great work!",
+    },
+  ],
+};

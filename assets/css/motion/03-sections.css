@@ -1,0 +1,45 @@
+/* ===== FRAME CONTAINER (Centered, Max-Width) ===== */
+.framer-frame {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ===== GRID LAYOUT WITH GAP ===== */
+.framer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* ===== STACKED FRAMES (Z-Index Layers) ===== */
+.frame-stack {
+  position: relative;
+}
+.frame-stack > * {
+  position: relative;
+  z-index: 1;
+}
+.frame-stack > *:nth-child(2) { z-index: 2; margin-top: -40px; }
+.frame-stack > *:nth-child(3) { z-index: 3; margin-top: -40px; }
+
+/* ===== MASK REVEAL ANIMATION ===== */
+.mask-reveal {
+  position: relative;
+  overflow: hidden;
+}
+.mask-reveal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: scaleX(1);
+  transform-origin: right;
+  transition: transform 0.8s var(--ease-smooth);
+  z-index: 10;
+}
+.mask-reveal.revealed::before,
+.mask-reveal:hover::before {
+  transform: scaleX(0);
+  transform-origin: left;
+}

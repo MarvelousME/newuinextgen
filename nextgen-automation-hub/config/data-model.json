@@ -1,0 +1,69 @@
+{
+  "schema": "ngt_data_model",
+  "version": "1.0.0",
+  "project": "NextGen Tutors",
+  "post_types": {
+    "ngt_parent_profile": {
+      "relationships": {
+        "students": "ngt_student_profile.ngt_parent_profile"
+      }
+    },
+    "ngt_student_profile": {
+      "belongs_to": "ngt_parent_profile",
+      "relationships": {
+        "bookings": "ngt_booking.ngt_student_profile",
+        "lessons": "ngt_lesson.ngt_student_profile",
+        "progress_reports": "ngt_progress_report.ngt_student_profile"
+      }
+    },
+    "ngt_tutor_profile": {
+      "relationships": {
+        "subjects": "ngt_subject",
+        "bookings": "ngt_booking.ngt_tutor_profile",
+        "lessons": "ngt_lesson.ngt_tutor_profile",
+        "payouts": "ngt_payout.ngt_tutor_profile",
+        "reviews": "ngt_review.ngt_tutor_profile"
+      }
+    },
+    "ngt_booking": {
+      "belongs_to": [
+        "ngt_parent_profile",
+        "ngt_student_profile",
+        "ngt_tutor_profile",
+        "ngt_subject"
+      ]
+    },
+    "ngt_lesson": {
+      "belongs_to": [
+        "ngt_booking",
+        "ngt_student_profile",
+        "ngt_tutor_profile",
+        "ngt_subject"
+      ]
+    },
+    "ngt_progress_report": {
+      "belongs_to": [
+        "ngt_student_profile",
+        "ngt_tutor_profile",
+        "ngt_lesson"
+      ]
+    },
+    "ngt_support_case": {
+      "belongs_to_optional": [
+        "ngt_parent_profile",
+        "ngt_student_profile",
+        "ngt_tutor_profile"
+      ]
+    },
+    "ngt_payout": {
+      "belongs_to": "ngt_tutor_profile"
+    },
+    "ngt_review": {
+      "belongs_to": [
+        "ngt_tutor_profile",
+        "ngt_student_profile",
+        "ngt_parent_profile"
+      ]
+    }
+  }
+}

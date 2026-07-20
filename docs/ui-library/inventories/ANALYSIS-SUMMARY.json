@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-07-06T03:59:14.514Z",
+  "htmlFiles": [
+    {
+      "label": "nextgentutors_final",
+      "found": true,
+      "pageType": "home",
+      "sections": 13,
+      "risks": [
+        "hardcoded-tutor-data",
+        "hardcoded-pricing"
+      ]
+    },
+    {
+      "label": "nextgentutors_complete",
+      "found": true,
+      "pageType": "tutor",
+      "sections": 11,
+      "risks": [
+        "hardcoded-tutor-data",
+        "hardcoded-pricing"
+      ]
+    },
+    {
+      "label": "nextgen_tutors_redesign",
+      "found": true,
+      "pageType": "home",
+      "sections": 7,
+      "risks": [
+        "hardcoded-tutor-data",
+        "hardcoded-pricing"
+      ]
+    },
+    {
+      "label": "nextgen_tutors_full_redesign_v2",
+      "found": true,
+      "pageType": "home",
+      "sections": 9,
+      "risks": [
+        "hardcoded-tutor-data",
+        "hardcoded-pricing"
+      ]
+    }
+  ],
+  "oldThemeFound": true,
+  "oldThemeFiles": 181,
+  "duplicateHeadings": 6,
+  "tokenCount": 90
+}

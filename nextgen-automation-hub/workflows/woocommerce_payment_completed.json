@@ -1,0 +1,24 @@
+{
+  "key": "woocommerce_payment_completed",
+  "name": "WooCommerce Payment Completed",
+  "enabled": true,
+  "trigger": {
+    "event": "woocommerce.order.completed"
+  },
+  "actions": [
+    {
+      "type": "log_event",
+      "source": "woocommerce"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "payment-issues",
+      "message": "Payment completed. Order ID: {{order_id}}. Customer user ID: {{user_id}}."
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "staff",
+      "message": "Order {{order_id}} completed. Confirm lesson/session provisioning."
+    }
+  ]
+}

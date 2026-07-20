@@ -1,0 +1,19 @@
+{
+  "id": "workflow-06-lead-intake",
+  "name": "Lead Intake & Matching",
+  "blueprint_wf": "WF-07",
+  "business_goal": "Parent submits find-a-tutor intake; Companion scores tutors and proposes or auto-assigns.",
+  "description": "Replaces automations/automation-1-lead-intake.json — routes through NGC_Matching and NGC_Smart_Matching.",
+  "trigger": "find_tutor form submitted",
+  "events": [
+    "find_tutor.submitted",
+    "match.proposed",
+    "match.auto_assigned"
+  ],
+  "companion_modules": [
+    "NGC_Matching",
+    "NGC_Smart_Matching",
+    "NGC_Registration"
+  ],
+  "deprecated_automation": "automations/automation-1-lead-intake.json"
+}

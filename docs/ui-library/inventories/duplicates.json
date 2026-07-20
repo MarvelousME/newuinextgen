@@ -1,0 +1,58 @@
+[
+  {
+    "item": "flat monthly packages.",
+    "sources": [
+      "nextgentutors_final",
+      "nextgen_tutors_redesign",
+      "nextgen_tutors_full_redesign_v2"
+    ],
+    "similarity": "exact-heading",
+    "action": "merge-to-single-backend-field"
+  },
+  {
+    "item": "common questions",
+    "sources": [
+      "nextgentutors_final",
+      "nextgen_tutors_redesign",
+      "nextgen_tutors_full_redesign_v2"
+    ],
+    "similarity": "exact-heading",
+    "action": "merge-to-single-backend-field"
+  },
+  {
+    "item": "want to become",
+    "sources": [
+      "nextgentutors_final",
+      "nextgen_tutors_full_redesign_v2"
+    ],
+    "similarity": "exact-heading",
+    "action": "merge-to-single-backend-field"
+  },
+  {
+    "item": "love the lesson",
+    "sources": [
+      "nextgentutors_final",
+      "nextgen_tutors_full_redesign_v2"
+    ],
+    "similarity": "exact-heading",
+    "action": "merge-to-single-backend-field"
+  },
+  {
+    "item": "everything for",
+    "sources": [
+      "nextgen_tutors_redesign",
+      "nextgen_tutors_full_redesign_v2"
+    ],
+    "similarity": "exact-heading",
+    "action": "merge-to-single-backend-field"
+  },
+  {
+    "item": "expert tutors.",
+    "sources": [
+      "nextgen_tutors_redesign",
+      "nextgen_tutors_full_redesign_v2"
+    ],
+    "similarity": "exact-heading",
+    "action": "merge-to-single-backend-field"
+  }
+]

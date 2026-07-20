@@ -1,0 +1,18 @@
+{
+  "source": "demo",
+  "first_touch": {
+    "utm_source": "facebook",
+    "utm_medium": "paid_social",
+    "utm_campaign": "winter_parent_leads",
+    "affiliate_id": "aff-127"
+  },
+  "last_touch": {
+    "utm_source": "google",
+    "utm_medium": "cpc",
+    "utm_campaign": "maths_tutor_search",
+    "gclid": "demo-gclid-123"
+  },
+  "affiliate_performance": {
+    "aff-127": {"clicks": 14, "leads": 4, "bookings": 2, "revenue": 6200}
+  }
+}

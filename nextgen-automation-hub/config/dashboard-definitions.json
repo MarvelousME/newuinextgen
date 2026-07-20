@@ -1,0 +1,66 @@
+{
+  "schema": "ngt_dashboard_definitions",
+  "version": "1.0.0",
+  "dashboards": [
+    {
+      "key": "student",
+      "page": "student-dashboard",
+      "widgets": [
+        "upcoming_lessons",
+        "lesson_history",
+        "progress_reports",
+        "course_progress",
+        "badges_points",
+        "support_chat"
+      ]
+    },
+    {
+      "key": "parent",
+      "page": "parent-dashboard",
+      "widgets": [
+        "children",
+        "upcoming_bookings",
+        "payment_history",
+        "progress_reports",
+        "tutor_matches",
+        "support_chat"
+      ]
+    },
+    {
+      "key": "tutor",
+      "page": "tutor-dashboard",
+      "widgets": [
+        "today_schedule",
+        "active_students",
+        "availability",
+        "lesson_notes",
+        "payout_status",
+        "tutor_support_room"
+      ]
+    },
+    {
+      "key": "admin",
+      "page": "admin-control-plane",
+      "widgets": [
+        "system_health",
+        "leads",
+        "bookings_today",
+        "payments_today",
+        "tutor_utilization",
+        "support_sla",
+        "workflow_failures"
+      ]
+    },
+    {
+      "key": "support",
+      "page": "support-center",
+      "widgets": [
+        "support_board",
+        "fluent_support_tickets",
+        "escalated_cases",
+        "booking_issues",
+        "payment_issues"
+      ]
+    }
+  ]
+}

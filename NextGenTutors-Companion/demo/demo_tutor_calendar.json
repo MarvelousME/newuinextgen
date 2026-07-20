@@ -1,0 +1,53 @@
+{
+  "source": "demo",
+  "slots": [
+    {
+      "date": "2026-07-06",
+      "start_time": "09:00",
+      "end_time": "10:00",
+      "status": "available",
+      "delivery_mode": "online",
+      "public_label": "Available"
+    },
+    {
+      "date": "2026-07-06",
+      "start_time": "10:00",
+      "end_time": "11:00",
+      "status": "booked",
+      "delivery_mode": "online",
+      "public_label": "Booked"
+    },
+    {
+      "date": "2026-07-06",
+      "start_time": "11:00",
+      "end_time": "12:00",
+      "status": "pending",
+      "delivery_mode": "in-person",
+      "public_label": "Pending confirmation"
+    },
+    {
+      "date": "2026-07-06",
+      "start_time": "13:00",
+      "end_time": "14:00",
+      "status": "blocked",
+      "delivery_mode": "hybrid",
+      "public_label": "Unavailable"
+    },
+    {
+      "date": "2026-07-07",
+      "start_time": "14:00",
+      "end_time": "15:00",
+      "status": "available",
+      "delivery_mode": "in-person",
+      "public_label": "Available"
+    },
+    {
+      "date": "2026-07-07",
+      "start_time": "15:00",
+      "end_time": "16:00",
+      "status": "available",
+      "delivery_mode": "hybrid",
+      "public_label": "Available"
+    }
+  ]
+}

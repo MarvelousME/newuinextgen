@@ -1,0 +1,170 @@
+{
+  "key": "group_ngt_booking",
+  "title": "NGT Booking Relationships",
+  "fields": [
+    {
+      "key": "field_ngt_booking_parent",
+      "label": "Parent",
+      "name": "ngt_parent_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_parent_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_booking_student",
+      "label": "Student",
+      "name": "ngt_student_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_student_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_booking_tutor",
+      "label": "Tutor",
+      "name": "ngt_tutor_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_tutor_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_booking_subject",
+      "label": "Subject",
+      "name": "ngt_subject",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_subject"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_booking_external",
+      "label": "External Booking ID",
+      "name": "ngt_external_booking_id",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_booking_status",
+      "label": "Booking Status",
+      "name": "ngt_booking_status",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "matching_required": "Matching Required",
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
+    },
+    {
+      "key": "field_ngt_booking_mode",
+      "label": "Delivery Mode",
+      "name": "ngt_delivery_mode",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "online": "Online",
+        "in_person": "In-person",
+        "hybrid": "Hybrid"
+      }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "ngt_booking"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true
+}

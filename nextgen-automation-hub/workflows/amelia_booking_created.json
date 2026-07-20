@@ -1,0 +1,24 @@
+{
+  "key": "amelia_booking_created",
+  "name": "Amelia Booking Created",
+  "enabled": true,
+  "trigger": {
+    "event": "amelia.booking.created"
+  },
+  "actions": [
+    {
+      "type": "log_event",
+      "source": "amelia"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "booking-issues",
+      "message": "New Amelia booking created. Booking ID: {{booking_id}}. Service: {{service_id}}. Tutor/employee: {{employee_id}}."
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "tutor-support",
+      "message": "Booking notification: Booking {{booking_id}} requires tutor confirmation."
+    }
+  ]
+}

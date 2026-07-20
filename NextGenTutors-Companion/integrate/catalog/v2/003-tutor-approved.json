@@ -1,0 +1,51 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-003",
+  "slug": "tutor-approved",
+  "name": "Tutor Approved",
+  "trigger": {
+    "event": "tutor_status_changed_to_approved",
+    "source": "Admin"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "assign_wp_role_ngt_tutor",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_tutor_support_room_access",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "send_welcome_email",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_operations",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_task_onboarding_call",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

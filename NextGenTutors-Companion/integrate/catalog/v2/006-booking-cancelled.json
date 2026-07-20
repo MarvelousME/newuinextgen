@@ -1,0 +1,46 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-006",
+  "slug": "booking-cancelled",
+  "name": "Booking Cancelled",
+  "trigger": {
+    "event": "booking_status_cancelled",
+    "source": "Amelia/WooCommerce"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "notify_parent",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_tutor",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "apply_cancellation_policy",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_admin_review_task",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

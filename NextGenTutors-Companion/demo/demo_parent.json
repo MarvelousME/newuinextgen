@@ -1,0 +1,27 @@
+{
+  "journey": "parent",
+  "label": "Demo Parent",
+  "source": "demo",
+  "dashboard": {
+    "kpis": {
+      "sessionsCompleted": 4,
+      "learnerCount": 2,
+      "accountBalance": 1250,
+      "avgRatingGiven": 4.5
+    },
+    "studentProfile": {
+      "name": "Demo Student",
+      "grade": "Grade 9",
+      "subjects": ["Mathematics", "Science"]
+    },
+    "matchSuggestions": [
+      {"tutor": "Demo Approved Tutor", "subject": "Mathematics", "score": 92}
+    ],
+    "bookings": 3,
+    "invoices": 2,
+    "payments": 2,
+    "lessonHistory": 4,
+    "progressNotes": 4,
+    "reviewsSubmitted": 2
+  }
+}

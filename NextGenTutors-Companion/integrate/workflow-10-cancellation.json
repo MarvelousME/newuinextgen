@@ -1,0 +1,16 @@
+{
+  "id": "workflow-10-cancellation",
+  "name": "Booking Cancellation",
+  "blueprint_wf": "WF-14",
+  "business_goal": "Cancelled sessions notify stakeholders and update booking status.",
+  "description": "Replaces automations/automation-5-cancellation.json.",
+  "trigger": "Booking status transition to cancelled",
+  "events": [
+    "booking.cancelled"
+  ],
+  "companion_modules": [
+    "NGC_Bookings",
+    "NGC_Amelia"
+  ],
+  "deprecated_automation": "automations/automation-5-cancellation.json"
+}

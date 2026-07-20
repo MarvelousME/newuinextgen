@@ -1,0 +1,44 @@
+{
+  "id": "workflow-04-review-rating",
+  "name": "Review & Rating Workflow",
+  "business_goal": "Improve tutor quality, measure satisfaction, and trigger interventions for poor ratings.",
+  "description": "After session completion, the system waits two hours, sends review requests, stores rating, updates tutor average, adjusts matching visibility, applies CRM tags/badges, and alerts admin for low ratings.",
+  "trigger": "Session marked completed in Amelia.",
+  "actors": [
+    "Amelia",
+    "AutomatorWP",
+    "Student/Parent",
+    "FluentCRM",
+    "GamiPress",
+    "Taurus Observer",
+    "Admin",
+    "Tutor"
+  ],
+  "steps": [
+    "Session marked completed",
+    "Wait 2 hours",
+    "Send review request",
+    "Student submits rating",
+    "Update tutor average rating",
+    "Top rating branch: tag/badge/visibility boost",
+    "Low rating branch: admin alert/coaching/visibility reduction",
+    "Update CRM satisfaction field",
+    "Record audit trail"
+  ],
+  "events": [
+    "session.completed",
+    "review.request.sent",
+    "review.submitted",
+    "tutor.rating.updated",
+    "tutor.top_rated",
+    "tutor.low_rating_alerted"
+  ],
+  "seed_data": [
+    "8 completed sessions",
+    "8 reviews",
+    "2 low rating cases",
+    "2 five-star cases",
+    "badges",
+    "quality review tasks"
+  ]
+}

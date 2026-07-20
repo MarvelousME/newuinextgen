@@ -1,0 +1,38 @@
+{
+  "name": "NGT — Tutor Onboarding Sequence",
+  "description": "Welcome and onboarding for newly approved tutors.",
+  "status": "active",
+  "type": "sequence",
+  "trigger_type": "tag",
+  "trigger_id": "REPLACE_WITH_APPROVED_TUTOR_TAG_ID",
+  "emails": [
+    {
+      "sequence_order": 1,
+      "delay_unit": "minutes",
+      "delay_value": 30,
+      "subject": "Welcome to NextGen Tutors — your profile is approved!",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>Congratulations — your NextGen Tutors profile has been approved! You are now part of South Africa's growing network of quality, vetted tutors.</p><p>Here's how to get started:</p><ol><li><strong>Complete your profile:</strong> Add a professional photo, detailed bio, and subject specialisations. <a href='https://nextgentutors.co.za/wp-login.php'>Login to your dashboard →</a></li><li><strong>Set your availability:</strong> Let us know your available hours so we can match you with learners quickly.</li><li><strong>Check your email daily:</strong> We send new match requests by email. Quick responses get more bookings.</li></ol><p>Welcome aboard!</p><p>The NextGen Tutors Team</p>"
+    },
+    {
+      "sequence_order": 2,
+      "delay_unit": "days",
+      "delay_value": 2,
+      "subject": "Tips for a standout NextGen Tutors profile",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>Tutors with complete profiles receive 3× more booking requests. Here's what makes a great profile:</p><ul><li><strong>Professional photo:</strong> Clear, well-lit headshot with a neutral background</li><li><strong>Specific bio:</strong> Mention your qualifications, teaching approach, and notable results</li><li><strong>Subject clarity:</strong> List every grade and curriculum you're comfortable with (CAPS, IEB, Cambridge)</li><li><strong>Location details:</strong> Specify which suburbs you're willing to travel to for in-person sessions</li></ul><p><a href='https://nextgentutors.co.za/wp-login.php'>Update your profile →</a></p>"
+    },
+    {
+      "sequence_order": 3,
+      "delay_unit": "days",
+      "delay_value": 5,
+      "subject": "Session best practices from our top tutors",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>Our highest-rated tutors follow these practices consistently:</p><ul><li><strong>First session:</strong> Spend 15 minutes diagnosing gaps before diving into content</li><li><strong>Structure every session:</strong> Review → Teach → Practice → Preview next session</li><li><strong>Communicate with parents:</strong> A 2-minute summary message after each session builds trust and retention</li><li><strong>Use past papers:</strong> Especially in the final term — it's what parents are paying for</li><li><strong>Be punctual:</strong> Late sessions without notice are the #1 complaint. Set a reminder 30 minutes before.</li></ul>"
+    },
+    {
+      "sequence_order": 4,
+      "delay_unit": "days",
+      "delay_value": 10,
+      "subject": "How and when you get paid",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>Here's how payouts work at NextGen Tutors:</p><ul><li><strong>Payment flow:</strong> Parents pay the platform via PayFast after each confirmed booking. You receive your tutor rate directly.</li><li><strong>Rates:</strong> Online sessions: R200/hr · In-person sessions: R250/hr · Tertiary: R350/hr</li><li><strong>Payout schedule:</strong> Payments are processed within 5 business days of the completed session.</li><li><strong>Disputes:</strong> Any billing queries should be sent to billing@nextgentutors.co.za with the session date and learner name.</li></ul><p>Questions? Reply to this email — we're here to help.</p>"
+    }
+  ]
+}

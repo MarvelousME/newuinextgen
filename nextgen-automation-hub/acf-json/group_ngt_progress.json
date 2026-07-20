@@ -1,0 +1,135 @@
+{
+  "key": "group_ngt_progress",
+  "title": "NGT Progress Report Relationships",
+  "fields": [
+    {
+      "key": "field_ngt_progress_student",
+      "label": "Student",
+      "name": "ngt_student_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_student_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_progress_tutor",
+      "label": "Tutor",
+      "name": "ngt_tutor_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_tutor_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_progress_lesson",
+      "label": "Lesson",
+      "name": "ngt_lesson",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_lesson"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_progress_score",
+      "label": "Score / Progress %",
+      "name": "ngt_score",
+      "aria-label": "",
+      "type": "number",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_progress_notes",
+      "label": "Notes",
+      "name": "ngt_notes",
+      "aria-label": "",
+      "type": "textarea",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_progress_next",
+      "label": "Next Steps",
+      "name": "ngt_next_steps",
+      "aria-label": "",
+      "type": "textarea",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "ngt_progress_report"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true
+}

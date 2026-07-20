@@ -1,0 +1,19 @@
+{
+  "key": "dashboard_health_check",
+  "name": "Dashboard Health Check",
+  "enabled": true,
+  "trigger": {
+    "event": "ngt.daily.health_check"
+  },
+  "actions": [
+    {
+      "type": "log_event",
+      "source": "system"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "admin",
+      "message": "Daily health check completed. Review plugin status, bookings, payments, support queues and workflow failures."
+    }
+  ]
+}

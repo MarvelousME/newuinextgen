@@ -1,0 +1,44 @@
+{
+  "version": "2.0.0",
+  "created_files": [
+    "includes/class-ngt-hub.php",
+    "includes/class-ngt-hub-*.php",
+    "assets/js/ngt-rtm.js",
+    "assets/js/ngt-dashboard.js",
+    "assets/css/ngt-hub.css",
+    "languages/nextgen-automation-hub.pot"
+  ],
+  "install_steps": [
+    "Upload plugin zip",
+    "Activate",
+    "NextGen Hub > Run / Repair Setup",
+    "ACF fields load automatically when ACF is active",
+    "Use CPT menus to link Parent > Student > Booking > Lesson > Progress Report"
+  ],
+  "functionality_gaps_closed": [
+    "Live dashboard data (native CPT queries + Companion bridge fallback)",
+    "Front-end registration/login shortcodes [ngt_register] / [ngt_login]",
+    "RTM SSE stream at GET /ngt/v1/rtm/stream with polling fallback",
+    "Automated tutor-student matching on find-a-tutor intake",
+    "Tutor application file uploads (ID, qualification)",
+    "User notification system (DB + email + REST)",
+    "Calendar/scheduling UI via [ngt_calendar] from ngt_lesson CPT",
+    "Payout calculation logic + monthly cron",
+    "Gamification points/badges engine on Hub events",
+    "Daily health check cron (ngt.daily.health_check)",
+    "Lesson completion trigger (ngt.lesson.completed) on ngt_lesson save",
+    "Form rate limiting, honeypot, and validation",
+    "Admin workflow enable/disable toggles",
+    "i18n via load_plugin_textdomain",
+    "REST endpoints for dashboards, notifications, calendar, gamification"
+  ],
+  "companion_integration": {
+    "bridge_class": "NGC_Automation_Hub_Bridge",
+    "features": [
+      "Hub events forwarded to Companion workflow engine",
+      "Live dashboard widgets via REST /ngc/v1/hub/dashboard-widgets/{role}",
+      "Gamification delegation when NGC_Gamification is active",
+      "Matching delegation when NGC_Matching is active"
+    ]
+  }
+}

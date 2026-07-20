@@ -1,0 +1,110 @@
+{
+  "key": "group_ngt_student",
+  "title": "NGT Student Profile Relationships",
+  "fields": [
+    {
+      "key": "field_ngt_student_user",
+      "label": "Linked WP User ID",
+      "name": "ngt_user_id",
+      "aria-label": "",
+      "type": "number",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_student_parent",
+      "label": "Parent / Guardian",
+      "name": "ngt_parent_profile",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_parent_profile"
+      ],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_ngt_student_grade",
+      "label": "Grade",
+      "name": "ngt_grade",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_student_curriculum",
+      "label": "Curriculum",
+      "name": "ngt_curriculum",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "CAPS": "CAPS",
+        "IEB": "IEB",
+        "Cambridge": "Cambridge",
+        "Tertiary": "Tertiary"
+      }
+    },
+    {
+      "key": "field_ngt_student_focus",
+      "label": "Subject Focus",
+      "name": "ngt_subject_focus",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "ngt_student_profile"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true
+}

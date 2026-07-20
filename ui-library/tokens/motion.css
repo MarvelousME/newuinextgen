@@ -1,0 +1,21 @@
+:root {
+  --ngt-radius-sm: 8px;
+  --ngt-radius-md: 14px;
+  --ngt-radius-lg: 20px;
+  --ngt-radius-full: 999px;
+  --ngt-shadow-sm: 0 4px 12px rgba(15, 28, 46, 0.08);
+  --ngt-shadow-lg: 0 20px 50px rgba(15, 28, 46, 0.18);
+  --ngt-motion-duration-fast: 180ms;
+  --ngt-motion-duration-normal: 320ms;
+  --ngt-motion-easing-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ngt-z-base: 1;
+  --ngt-z-overlay: 40;
+  --ngt-z-modal: 100;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ngt-motion-duration-fast: 1ms;
+    --ngt-motion-duration-normal: 1ms;
+  }
+}

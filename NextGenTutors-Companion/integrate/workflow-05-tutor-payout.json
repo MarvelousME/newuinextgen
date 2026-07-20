@@ -1,0 +1,45 @@
+{
+  "id": "workflow-05-tutor-payout",
+  "name": "Tutor Payout Workflow",
+  "business_goal": "Calculate tutor earnings and produce payout records and reports on a recurring schedule.",
+  "description": "On the first day of each month at 02:00, the system retrieves completed sessions, calculates payout using session earnings minus fees/penalties/refunds plus bonuses, creates payout records, sends emails, generates admin reports/invoices and logs transactions.",
+  "trigger": "Monthly cron job: 1st of month at 02:00.",
+  "actors": [
+    "Taurus Observer Scheduler",
+    "Amelia",
+    "WooCommerce",
+    "FluentCRM",
+    "Tutor",
+    "Admin",
+    "Accounting/Invoice System"
+  ],
+  "steps": [
+    "Monthly cron trigger",
+    "Retrieve completed sessions",
+    "Calculate gross earnings",
+    "Apply payout formula",
+    "Create payout records",
+    "Generate invoices/reports",
+    "Send payout emails",
+    "Update CRM payout fields",
+    "Admin marks EFT pending/paid",
+    "Log transactions"
+  ],
+  "events": [
+    "payout.run.started",
+    "payout.sessions.retrieved",
+    "payout.calculated",
+    "payout.record.created",
+    "payout.email.sent",
+    "payout.eft.marked_paid"
+  ],
+  "seed_data": [
+    "3 tutors with completed sessions",
+    "monthly payout run",
+    "platform fees",
+    "penalties",
+    "bonuses",
+    "payout emails",
+    "admin payout report"
+  ]
+}

@@ -1,0 +1,72 @@
+/* Kind: text — split from catalog.css */
+/* —— Text effects —— */
+.ngt-ui-text { font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; }
+.ngt-ui-text--aurora-text .ngt-ui-text__value,
+.ngt-ui-text--animated-gradient-text .ngt-ui-text__value {
+  background: linear-gradient(90deg, var(--ngt-accent,#9E7AFF), var(--ngt-accent-2,#FE8BBB), #60a5fa, var(--ngt-accent,#9E7AFF));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ngt-grad 6s linear infinite;
+}
+.ngt-ui-text--animated-shiny-text .ngt-ui-text__value,
+.ngt-ui-text--line-shadow-text .ngt-ui-text__value {
+  background: linear-gradient(90deg, #111 0%, #111 40%, #fff 50%, #111 60%, #111 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ngt-shine-text 3s linear infinite;
+}
+.ngt-ui-text--comic-text .ngt-ui-text__value {
+  font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+  text-shadow: 3px 3px 0 #ffd93d, 6px 6px 0 #111;
+  letter-spacing: .02em;
+}
+.ngt-ui-highlighter {
+  background: linear-gradient(transparent 55%, #ffe566 55%);
+  padding: 0 .15em;
+  color: inherit;
+}
+.ngt-ui-video-text__fill {
+  display: inline-block;
+  font-size: clamp(2rem, 8vw, 5rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #22d3ee, #a78bfa, #fb7185);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ngt-grad 5s ease infinite;
+}
+.ngt-ui-spin-ring {
+  position: relative;
+  display: block;
+  width: 8rem; height: 8rem;
+  margin: 1rem auto;
+  animation: ngt-spin 12s linear infinite;
+}
+.ngt-ui-spin-ring span {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: rotate(var(--deg)) translateY(-3.4rem);
+  font-size: .85rem;
+  font-weight: 700;
+}
+.ngt-ui-text--sparkles-text .ngt-ui-text__value { position: relative; }
+.ngt-ui-text--sparkles-text .ngt-ui-text__value::before,
+.ngt-ui-text--sparkles-text .ngt-ui-text__value::after {
+  content: "✦";
+  position: absolute;
+  font-size: .55em;
+  color: var(--ngt-accent, #9E7AFF);
+  animation: ngt-twinkle 1.6s ease-in-out infinite;
+}
+.ngt-ui-text--sparkles-text .ngt-ui-text__value::before { top: -.2em; left: -.5em; }
+.ngt-ui-text--sparkles-text .ngt-ui-text__value::after { bottom: -.1em; right: -.45em; animation-delay: .4s; }
+
+@keyframes ngt-grad { to { background-position: 300% 0; } }
+@keyframes ngt-shine-text { to { background-position: -200% 0; } }
+@keyframes ngt-spin { to { transform: rotate(360deg); } }
+@keyframes ngt-twinkle { 50% { opacity: .25; transform: scale(1.25); } }

@@ -1,0 +1,72 @@
+.ngt-ui-border-beam {
+  --ngt-bb-size: 50px;
+  --ngt-bb-duration: 6s;
+  --ngt-bb-delay: 0s;
+  --ngt-bb-from: #ffaa40;
+  --ngt-bb-to: #9c40ff;
+  --ngt-bb-width: 1px;
+  position: relative;
+  border-radius: var(--ngt-radius-lg);
+  padding: 1.1rem 1.2rem;
+  background: var(--ngt-color-surface-2);
+  border: var(--ngt-bb-width) solid var(--ngt-color-border);
+  overflow: hidden;
+}
+
+.ngt-ui-border-beam__frame {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ngt-ui-border-beam__ray {
+  position: absolute;
+  width: var(--ngt-bb-size);
+  height: var(--ngt-bb-size);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--ngt-bb-from), var(--ngt-bb-to), transparent);
+  filter: blur(0.2px);
+  offset-path: rect(0% auto auto 0% round var(--ngt-bb-size));
+  offset-rotate: 0deg;
+  animation: ngt-bb-travel var(--ngt-bb-duration) linear infinite;
+  animation-delay: calc(var(--ngt-bb-delay) * -1);
+}
+
+.ngt-ui-border-beam.is-reverse .ngt-ui-border-beam__ray {
+  animation-direction: reverse;
+}
+
+.ngt-ui-border-beam__body {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes ngt-bb-travel {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ngt-ui-border-beam__ray {
+    animation: none;
+    opacity: 0.55;
+    inset: auto auto 12% 12%;
+    offset-path: none;
+  }
+}
+
+@supports not (offset-path: rect(0 auto auto 0)) {
+  .ngt-ui-border-beam__ray {
+    inset: -20% auto auto -20%;
+    animation: ngt-bb-fallback var(--ngt-bb-duration) linear infinite;
+  }
+  @keyframes ngt-bb-fallback {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(120%, 0); }
+    50% { transform: translate(120%, 120%); }
+    75% { transform: translate(0, 120%); }
+    100% { transform: translate(0, 0); }
+  }
+}

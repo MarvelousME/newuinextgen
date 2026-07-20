@@ -1,0 +1,56 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-001",
+  "slug": "parent-request-tutor",
+  "name": "Parent Requests Tutor",
+  "trigger": {
+    "event": "find_a_tutor_form_submitted",
+    "source": "NextGen Foundation"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "create_parent",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_student",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_booking_request",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_admin",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "open_support_case",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "add_fluentcrm_tag_parent_lead",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

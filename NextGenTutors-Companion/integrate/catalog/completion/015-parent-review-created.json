@@ -1,0 +1,13 @@
+{
+  "id": "015-PARENT-REVIEW-CREATED",
+  "name": "Parent Review Created",
+  "trigger": "review_submitted",
+  "actions": [
+    "update_tutor_rating",
+    "notify_admin",
+    "request_google_review_if_positive"
+  ],
+  "import_target": "NextGen Completion Suite",
+  "status": "draft",
+  "version": "1.0.0"
+}

@@ -1,0 +1,107 @@
+/* Kind: interactive — split from catalog.css */
+/* —— Interactive —— */
+.ngt-ui-canvas { width: 100%; max-width: 640px; height: auto; display: block; background: #050510; border-radius: 1rem; }
+.ngt-ui-orbit {
+  position: relative;
+  width: 220px; height: 220px;
+  margin: 1rem auto;
+}
+.ngt-ui-orbit__core {
+  position: absolute; inset: 50% auto auto 50%;
+  transform: translate(-50%,-50%);
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: #111; color: #fff; font-weight: 700;
+}
+.ngt-ui-orbit__item {
+  position: absolute; left: 50%; top: 50%;
+  width: 36px; height: 36px;
+  margin: -18px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--ngt-accent,#9E7AFF), var(--ngt-accent-2,#FE8BBB));
+  color: #fff; font-size: .7rem; font-weight: 700;
+  animation: ngt-orbit 8s linear infinite;
+  animation-delay: calc(var(--i,0) * -1.33s);
+  transform-origin: 0 0;
+}
+@keyframes ngt-orbit {
+  from { transform: rotate(0deg) translateX(90px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
+}
+.ngt-ui-beam {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  gap: .5rem;
+  min-height: 80px;
+}
+.ngt-ui-beam__node {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--ngt-accent, #9E7AFF);
+  box-shadow: 0 0 0 6px rgba(158,122,255,.2);
+}
+.ngt-ui-beam__svg { width: 100%; height: 80px; }
+.ngt-ui-beam__svg path {
+  fill: none;
+  stroke: url(#ngtBeamGrad);
+  stroke: var(--ngt-accent-2, #FE8BBB);
+  stroke-width: 2;
+  stroke-dasharray: 8 10;
+  animation: ngt-dash 1.2s linear infinite;
+}
+@keyframes ngt-dash { to { stroke-dashoffset: -36; } }
+.ngt-ui-icon-cloud {
+  position: relative;
+  height: 200px;
+}
+.ngt-ui-icon-cloud span {
+  position: absolute;
+  left: calc(8% + var(--i) * 8%);
+  top: calc(20% + (var(--i) % 4) * 15%);
+  width: 2.2rem; height: 2.2rem;
+  border-radius: .65rem;
+  display: grid; place-items: center;
+  background: #111; color: #fff;
+  animation: ngt-float 4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * .2s);
+}
+@keyframes ngt-float {
+  50% { transform: translateY(-10px); }
+}
+.ngt-ui-confetti-layer {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.ngt-ui-lens { position: relative; overflow: hidden; border-radius: 1rem; min-height: 160px; background: #111; color: #fff; padding: 1.5rem; }
+.ngt-ui-lens__glass {
+  position: absolute;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.5);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.2), inset 0 0 30px rgba(255,255,255,.15);
+  backdrop-filter: blur(0);
+  transform: translate(-50%,-50%) scale(0);
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,.12), transparent 60%);
+}
+.ngt-ui-lens:hover .ngt-ui-lens__glass { transform: translate(-50%,-50%) scale(1); }
+.ngt-ui-cursor-demo {
+  position: relative;
+  min-height: 140px;
+  border-radius: 1rem;
+  background: #0b0b12;
+  color: #ddd;
+  display: grid; place-items: center;
+  cursor: none;
+}
+.ngt-ui-cursor-dot {
+  position: absolute;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--ngt-accent, #9E7AFF);
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  mix-blend-mode: screen;
+}

@@ -1,0 +1,13 @@
+{
+  "id": "011-PROGRESS-REPORT-SUBMITTED",
+  "name": "Progress Report Submitted",
+  "trigger": "progress_report_created",
+  "actions": [
+    "notify_parent",
+    "notify_admin",
+    "update_student_dashboard"
+  ],
+  "import_target": "NextGen Completion Suite",
+  "status": "draft",
+  "version": "1.0.0"
+}

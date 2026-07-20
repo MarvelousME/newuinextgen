@@ -1,0 +1,39 @@
+{
+  "id": "workflow-03-reminder-notification",
+  "name": "Reminder & Notification Workflow",
+  "business_goal": "Reduce no-shows by sending staged reminders before each booked tutoring session.",
+  "description": "Once a session is scheduled, reminders are queued for 24 hours, 1 hour, and 15 minutes before the session with preparation instructions, tutor details, join link and emergency contact details.",
+  "trigger": "Upcoming Amelia session scheduled.",
+  "actors": [
+    "Amelia",
+    "Notifyer",
+    "FluentCRM",
+    "Tutor",
+    "Student/Parent",
+    "Taurus Observer Scheduler"
+  ],
+  "steps": [
+    "Session scheduled",
+    "Create reminder schedule",
+    "Send 24-hour WhatsApp/email reminder",
+    "Send 1-hour SMS reminder",
+    "Send 15-minute join-link notification",
+    "Record delivery status",
+    "Retry or alert on failed delivery",
+    "Student joins session"
+  ],
+  "events": [
+    "session.scheduled",
+    "reminder.24h.sent",
+    "reminder.1h.sent",
+    "reminder.15m.sent",
+    "notification.failed",
+    "session.joined"
+  ],
+  "seed_data": [
+    "10 reminder schedules",
+    "successful notifications",
+    "failed notification sample",
+    "retry queue sample"
+  ]
+}

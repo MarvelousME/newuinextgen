@@ -1,0 +1,1131 @@
+[
+  {
+    "label": "nextgentutors_final",
+    "file": "C:/Users/marvi/Desktop/nextgentutors-full-website/Implementation/Research-Artifacts/nextgentutors_final.html",
+    "sizeKb": 72,
+    "title": "NextGen Tutors — Next Level Learning",
+    "pageType": "home",
+    "sectionCount": 13,
+    "sections": [
+      {
+        "id": null,
+        "classes": [],
+        "heading": null
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Trending Subjects"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Trending Subjects"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "How It Works"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Featured Tutors"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "All Tutors"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "What Our Students Say"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Flat Monthly Packages."
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Common Questions"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "From Our Blog"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Want to Become"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Love the lesson"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Contact Information"
+      }
+    ],
+    "sectionPurposes": [
+      "unnamed",
+      "Trending Subjects",
+      "How It Works",
+      "Featured Tutors",
+      "All Tutors",
+      "What Our Students Say",
+      "Flat Monthly Packages.",
+      "Common Questions",
+      "From Our Blog",
+      "Want to Become",
+      "Love the lesson",
+      "Contact Information"
+    ],
+    "cssVars": {
+      "--bg": "#020617",
+      "--bg2": "#070e1f",
+      "--card": "rgba(15,23,42,0.8)",
+      "--ap": "#38bdf8",
+      "--as": "#818cf8",
+      "--ag": "#34d399",
+      "--txt": "#f8fafc",
+      "--muted": "#94a3b8",
+      "--border": "rgba(255,255,255,0.08)",
+      "--glass": "blur(16px) saturate(180%)",
+      "--r": "16px",
+      "--spring": "cubic-bezier(0.175,0.885,0.32,1.275)",
+      "--smooth": "cubic-bezier(0.4,0,0.2,1)",
+      "--expo": "cubic-bezier(0.87,0,0.13,1)",
+      "--fh": "'Fraunces',Georgia,serif",
+      "--fb": "'Plus Jakarta Sans',system-ui,sans-serif"
+    },
+    "classPrefixes": [
+      {
+        "prefix": "tutor",
+        "count": 108
+      },
+      {
+        "prefix": "subj",
+        "count": 88
+      },
+      {
+        "prefix": "mq",
+        "count": 72
+      },
+      {
+        "prefix": "faq",
+        "count": 44
+      },
+      {
+        "prefix": "rv",
+        "count": 32
+      },
+      {
+        "prefix": "rs",
+        "count": 32
+      },
+      {
+        "prefix": "sec",
+        "count": 31
+      },
+      {
+        "prefix": "testi",
+        "count": 22
+      },
+      {
+        "prefix": "guar",
+        "count": 20
+      },
+      {
+        "prefix": "how",
+        "count": 17
+      },
+      {
+        "prefix": "blog",
+        "count": 15
+      },
+      {
+        "prefix": "stat",
+        "count": 12
+      },
+      {
+        "prefix": "rl",
+        "count": 10
+      },
+      {
+        "prefix": "btn",
+        "count": 9
+      },
+      {
+        "prefix": "hero",
+        "count": 8
+      },
+      {
+        "prefix": "footer",
+        "count": 8
+      },
+      {
+        "prefix": "ws",
+        "count": 5
+      },
+      {
+        "prefix": "slide",
+        "count": 5
+      },
+      {
+        "prefix": "hw",
+        "count": 5
+      },
+      {
+        "prefix": "become",
+        "count": 5
+      },
+      {
+        "prefix": "nav",
+        "count": 4
+      },
+      {
+        "prefix": "cta",
+        "count": 4
+      },
+      {
+        "prefix": "sdot",
+        "count": 3
+      },
+      {
+        "prefix": "hl",
+        "count": 3
+      },
+      {
+        "prefix": "on",
+        "count": 2
+      },
+      {
+        "prefix": "hi",
+        "count": 2
+      },
+      {
+        "prefix": "sc",
+        "count": 2
+      },
+      {
+        "prefix": "open",
+        "count": 2
+      },
+      {
+        "prefix": "scroll",
+        "count": 1
+      },
+      {
+        "prefix": "stats",
+        "count": 1
+      }
+    ],
+    "headings": [
+      {
+        "level": 1,
+        "text": ""
+      },
+      {
+        "level": 2,
+        "text": "Trending Subjects"
+      },
+      {
+        "level": 2,
+        "text": "How It Works"
+      },
+      {
+        "level": 2,
+        "text": "Featured Tutors"
+      },
+      {
+        "level": 2,
+        "text": "All Tutors"
+      },
+      {
+        "level": 2,
+        "text": "What Our Students Say"
+      },
+      {
+        "level": 2,
+        "text": "Flat Monthly Packages."
+      },
+      {
+        "level": 2,
+        "text": "Common Questions"
+      },
+      {
+        "level": 2,
+        "text": "From Our Blog"
+      },
+      {
+        "level": 2,
+        "text": "Want to Become"
+      },
+      {
+        "level": 2,
+        "text": "Love the lesson"
+      },
+      {
+        "level": 2,
+        "text": "Contact Information"
+      }
+    ],
+    "dynamicFields": {
+      "tutor_name": [
+        "tutor-name"
+      ],
+      "price": [
+        "R300",
+        "R320",
+        "R280",
+        "R200",
+        "R250",
+        "R260",
+        "R290"
+      ],
+      "email": [
+        "support@nextgentutors.co.za"
+      ]
+    },
+    "forms": 0,
+    "hasNav": true,
+    "hasFooter": true,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,700&display=swap"
+    ],
+    "risks": [
+      "hardcoded-tutor-data",
+      "hardcoded-pricing"
+    ]
+  },
+  {
+    "label": "nextgentutors_complete",
+    "file": "C:/Users/marvi/Desktop/nextgentutors-full-website/Implementation/Research-Artifacts/nextgentutors_complete (1).html",
+    "sizeKb": 88,
+    "title": "NextGen Tutors — South Africa's Premier Online Tutoring Platform",
+    "pageType": "tutor",
+    "sectionCount": 11,
+    "sections": [
+      {
+        "id": null,
+        "classes": [],
+        "heading": null
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Find Your"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "How NextGen Tutors Works"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Share Your Knowledge,"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Transforming Education"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "What Our Students &amp; Parents Say"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Affordable. Flexible."
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "How We Compare"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Frequently Asked Questions"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "94% of students improve."
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "We're Here to Help"
+      }
+    ],
+    "sectionPurposes": [
+      "unnamed",
+      "Find Your",
+      "How NextGen Tutors Works",
+      "Share Your Knowledge,",
+      "Transforming Education",
+      "What Our Students &amp; Parents Say",
+      "Affordable. Flexible.",
+      "How We Compare",
+      "Frequently Asked Questions",
+      "94% of students improve.",
+      "We're Here to Help"
+    ],
+    "cssVars": {
+      "--primary": "#0066CC",
+      "--primary-dark": "#004A99",
+      "--primary-light": "#3385D6",
+      "--secondary": "#00C896",
+      "--secondary-dark": "#00A67D",
+      "--accent": "#FF6B35",
+      "--bg": "#FAFBFC",
+      "--bg-white": "#FFFFFF",
+      "--surface": "#F5F7FA",
+      "--border": "#E1E8ED",
+      "--border-light": "#EDF2F7",
+      "--text-primary": "#1A202C",
+      "--text-secondary": "#4A5568",
+      "--text-tertiary": "#718096",
+      "--success": "#10B981",
+      "--success-bg": "#D1FAE5",
+      "--shadow-sm": "0 1px 3px rgba(0,0,0,0.08)",
+      "--shadow": "0 4px 12px rgba(0,0,0,0.08)",
+      "--shadow-lg": "0 12px 32px rgba(0,0,0,0.12)",
+      "--radius-sm": "8px",
+      "--radius": "12px",
+      "--radius-lg": "20px",
+      "--radius-full": "9999px",
+      "--font-display": "'Sora', sans-serif",
+      "--font-body": "'Inter', sans-serif",
+      "--ease-spring": "cubic-bezier(0.175,0.885,0.32,1.275)",
+      "--ease-smooth": "cubic-bezier(0.4,0,0.2,1)"
+    },
+    "classPrefixes": [
+      {
+        "prefix": "tutor",
+        "count": 99
+      },
+      {
+        "prefix": "mq",
+        "count": 68
+      },
+      {
+        "prefix": "faq",
+        "count": 48
+      },
+      {
+        "prefix": "rv",
+        "count": 41
+      },
+      {
+        "prefix": "sec",
+        "count": 40
+      },
+      {
+        "prefix": "btn",
+        "count": 38
+      },
+      {
+        "prefix": "benefit",
+        "count": 24
+      },
+      {
+        "prefix": "rs",
+        "count": 22
+      },
+      {
+        "prefix": "testi",
+        "count": 22
+      },
+      {
+        "prefix": "step",
+        "count": 20
+      },
+      {
+        "prefix": "how",
+        "count": 17
+      },
+      {
+        "prefix": "search",
+        "count": 15
+      },
+      {
+        "prefix": "about",
+        "count": 14
+      },
+      {
+        "prefix": "stat",
+        "count": 12
+      },
+      {
+        "prefix": "value",
+        "count": 12
+      },
+      {
+        "prefix": "container",
+        "count": 11
+      },
+      {
+        "prefix": "no",
+        "count": 11
+      },
+      {
+        "prefix": "hero",
+        "count": 9
+      },
+      {
+        "prefix": "rr",
+        "count": 9
+      },
+      {
+        "prefix": "calc",
+        "count": 9
+      },
+      {
+        "prefix": "footer",
+        "count": 8
+      },
+      {
+        "prefix": "nav",
+        "count": 7
+      },
+      {
+        "prefix": "filter",
+        "count": 7
+      },
+      {
+        "prefix": "yes",
+        "count": 7
+      },
+      {
+        "prefix": "pw",
+        "count": 5
+      },
+      {
+        "prefix": "slide",
+        "count": 5
+      },
+      {
+        "prefix": "rl",
+        "count": 5
+      },
+      {
+        "prefix": "logo",
+        "count": 4
+      },
+      {
+        "prefix": "trust",
+        "count": 4
+      },
+      {
+        "prefix": "tick",
+        "count": 4
+      }
+    ],
+    "headings": [
+      {
+        "level": 1,
+        "text": ""
+      },
+      {
+        "level": 2,
+        "text": "Find Your"
+      },
+      {
+        "level": 2,
+        "text": "How NextGen Tutors Works"
+      },
+      {
+        "level": 2,
+        "text": "Share Your Knowledge,"
+      },
+      {
+        "level": 3,
+        "text": "How to Get Started"
+      },
+      {
+        "level": 3,
+        "text": "Calculate Your Potential Earnings"
+      },
+      {
+        "level": 2,
+        "text": "Transforming Education"
+      },
+      {
+        "level": 3,
+        "text": "What Drives Us Every Day"
+      },
+      {
+        "level": 3,
+        "text": "Access for All"
+      },
+      {
+        "level": 3,
+        "text": "Safety First"
+      },
+      {
+        "level": 3,
+        "text": "Empower Educators"
+      },
+      {
+        "level": 3,
+        "text": "Measurable Results"
+      },
+      {
+        "level": 3,
+        "text": "Proudly South African"
+      },
+      {
+        "level": 3,
+        "text": "Continuous Innovation"
+      },
+      {
+        "level": 2,
+        "text": "What Our Students &amp; Parents Say"
+      },
+      {
+        "level": 2,
+        "text": "Affordable. Flexible."
+      },
+      {
+        "level": 2,
+        "text": "How We Compare"
+      },
+      {
+        "level": 2,
+        "text": "Frequently Asked Questions"
+      },
+      {
+        "level": 2,
+        "text": "94% of students improve."
+      },
+      {
+        "level": 2,
+        "text": "We're Here to Help"
+      },
+      {
+        "level": 3,
+        "text": "Send Us a Message"
+      }
+    ],
+    "dynamicFields": {
+      "tutor_name": [
+        "tutor-name"
+      ],
+      "rating": [
+        "★4.8"
+      ],
+      "price": [
+        "R300",
+        "R400",
+        "R450",
+        "R320",
+        "R380",
+        "R350",
+        "R340",
+        "R15"
+      ],
+      "email": [
+        "hello@nextgentutors.co.za",
+        "support@nextgentutors.co.za",
+        "tutors@nextgentutors.co.za",
+        "billing@nextgentutors.co.za",
+        "partners@nextgentutors.co.za"
+      ]
+    },
+    "forms": 0,
+    "hasNav": true,
+    "hasFooter": true,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@600;700;800&display=swap"
+    ],
+    "risks": [
+      "hardcoded-tutor-data",
+      "hardcoded-pricing"
+    ]
+  },
+  {
+    "label": "nextgen_tutors_redesign",
+    "file": "C:/Users/marvi/Desktop/nextgentutors-full-website/Implementation/Research-Artifacts/nextgen_tutors_redesign.html",
+    "sizeKb": 40,
+    "title": "NextGen Tutors — Redesign Preview",
+    "pageType": "home",
+    "sectionCount": 7,
+    "sections": [
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Unlock your"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Simple. Structured. Effective."
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Everything for"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Expert tutors."
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Flat monthly packages."
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Common questions"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": null
+      }
+    ],
+    "sectionPurposes": [
+      "Unlock your",
+      "Simple. Structured. Effective.",
+      "Everything for",
+      "Expert tutors.",
+      "Flat monthly packages.",
+      "Common questions",
+      "unnamed"
+    ],
+    "cssVars": {
+      "--ink": "#0d0f14",
+      "--ink2": "#22262f",
+      "--muted": "#6b7280",
+      "--accent": "#00c896",
+      "--accent2": "#005eff",
+      "--gold": "#f5a623",
+      "--bg": "#f7f8fa",
+      "--card": "#ffffff",
+      "--border": "rgba(0,0,0,0.07)",
+      "--border2": "rgba(0,0,0,0.12)",
+      "--radius": "16px",
+      "--font-head": "'Syne',sans-serif",
+      "--font-body": "'DM Sans',sans-serif"
+    },
+    "classPrefixes": [
+      {
+        "prefix": "subj",
+        "count": 50
+      },
+      {
+        "prefix": "faq",
+        "count": 41
+      },
+      {
+        "prefix": "tutor",
+        "count": 38
+      },
+      {
+        "prefix": "chip",
+        "count": 30
+      },
+      {
+        "prefix": "reveal",
+        "count": 28
+      },
+      {
+        "prefix": "hero",
+        "count": 20
+      },
+      {
+        "prefix": "price",
+        "count": 18
+      },
+      {
+        "prefix": "step",
+        "count": 17
+      },
+      {
+        "prefix": "hfc",
+        "count": 15
+      },
+      {
+        "prefix": "section",
+        "count": 12
+      },
+      {
+        "prefix": "testimonial",
+        "count": 10
+      },
+      {
+        "prefix": "btn",
+        "count": 7
+      },
+      {
+        "prefix": "nav",
+        "count": 3
+      },
+      {
+        "prefix": "scroll",
+        "count": 3
+      },
+      {
+        "prefix": "cta",
+        "count": 3
+      },
+      {
+        "prefix": "blob1",
+        "count": 2
+      },
+      {
+        "prefix": "blob2",
+        "count": 2
+      },
+      {
+        "prefix": "marquee",
+        "count": 2
+      },
+      {
+        "prefix": "featured",
+        "count": 2
+      },
+      {
+        "prefix": "open",
+        "count": 2
+      },
+      {
+        "prefix": "footer",
+        "count": 2
+      },
+      {
+        "prefix": "page",
+        "count": 1
+      },
+      {
+        "prefix": "blob3",
+        "count": 1
+      },
+      {
+        "prefix": "steps",
+        "count": 1
+      },
+      {
+        "prefix": "subjects",
+        "count": 1
+      },
+      {
+        "prefix": "tutors",
+        "count": 1
+      },
+      {
+        "prefix": "pricing",
+        "count": 1
+      }
+    ],
+    "headings": [
+      {
+        "level": 1,
+        "text": "Unlock your"
+      },
+      {
+        "level": 2,
+        "text": "Simple. Structured. Effective."
+      },
+      {
+        "level": 2,
+        "text": "Everything for"
+      },
+      {
+        "level": 2,
+        "text": "Expert tutors."
+      },
+      {
+        "level": 2,
+        "text": "Flat monthly packages."
+      },
+      {
+        "level": 2,
+        "text": "Common questions"
+      }
+    ],
+    "dynamicFields": {
+      "tutor_name": [
+        "tutor-name"
+      ],
+      "price": [
+        "R799"
+      ]
+    },
+    "forms": 0,
+    "hasNav": true,
+    "hasFooter": true,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    ],
+    "risks": [
+      "hardcoded-tutor-data",
+      "hardcoded-pricing"
+    ]
+  },
+  {
+    "label": "nextgen_tutors_full_redesign_v2",
+    "file": "C:/Users/marvi/Desktop/nextgentutors-full-website/Implementation/Research-Artifacts/nextgen_tutors_full_redesign_v2.html",
+    "sizeKb": 52,
+    "title": "",
+    "pageType": "home",
+    "sectionCount": 9,
+    "sections": [
+      {
+        "id": null,
+        "classes": [],
+        "heading": ""
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": null
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Everything for"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Simple. Structured."
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Expert tutors."
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Love the lesson"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Flat monthly packages."
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": "Want to become"
+      },
+      {
+        "id": null,
+        "classes": [],
+        "heading": null
+      }
+    ],
+    "sectionPurposes": [
+      "unnamed",
+      "Everything for",
+      "Simple. Structured.",
+      "Expert tutors.",
+      "Love the lesson",
+      "Flat monthly packages.",
+      "Want to become"
+    ],
+    "cssVars": {
+      "--blue": "#1a56db",
+      "--blue-d": "#1240a8",
+      "--green": "#1a8a3c",
+      "--green-l": "#22c55e",
+      "--ink": "#0b0f1a",
+      "--ink2": "#1c2235",
+      "--muted": "#6b7897",
+      "--bg": "#f4f6fb",
+      "--card": "#ffffff",
+      "--border": "rgba(0,0,0,0.07)",
+      "--r": "18px",
+      "--ease-spring": "cubic-bezier(0.175,0.885,0.32,1.275)",
+      "--ease-smooth": "cubic-bezier(0.4,0,0.2,1)",
+      "--ease-elastic": "cubic-bezier(0.68,-0.55,0.265,1.55)",
+      "--ease-expo": "cubic-bezier(0.87,0,0.13,1)",
+      "--font-head": "'Clash Display',sans-serif",
+      "--font-body": "'Satoshi',sans-serif"
+    },
+    "classPrefixes": [
+      {
+        "prefix": "subj",
+        "count": 68
+      },
+      {
+        "prefix": "tutor",
+        "count": 46
+      },
+      {
+        "prefix": "faq",
+        "count": 44
+      },
+      {
+        "prefix": "gsap",
+        "count": 37
+      },
+      {
+        "prefix": "sec",
+        "count": 18
+      },
+      {
+        "prefix": "how",
+        "count": 17
+      },
+      {
+        "prefix": "hf",
+        "count": 15
+      },
+      {
+        "prefix": "stat",
+        "count": 12
+      },
+      {
+        "prefix": "hero",
+        "count": 8
+      },
+      {
+        "prefix": "btn",
+        "count": 8
+      },
+      {
+        "prefix": "pt",
+        "count": 5
+      },
+      {
+        "prefix": "word",
+        "count": 5
+      },
+      {
+        "prefix": "nav",
+        "count": 4
+      },
+      {
+        "prefix": "become",
+        "count": 4
+      },
+      {
+        "prefix": "cta",
+        "count": 4
+      },
+      {
+        "prefix": "footer",
+        "count": 4
+      },
+      {
+        "prefix": "line",
+        "count": 3
+      },
+      {
+        "prefix": "scroll",
+        "count": 3
+      },
+      {
+        "prefix": "section",
+        "count": 3
+      },
+      {
+        "prefix": "guarantee",
+        "count": 3
+      },
+      {
+        "prefix": "marquee",
+        "count": 2
+      },
+      {
+        "prefix": "open",
+        "count": 2
+      },
+      {
+        "prefix": "filled",
+        "count": 1
+      },
+      {
+        "prefix": "stats",
+        "count": 1
+      },
+      {
+        "prefix": "tutors",
+        "count": 1
+      },
+      {
+        "prefix": "pricing",
+        "count": 1
+      },
+      {
+        "prefix": "feat",
+        "count": 1
+      }
+    ],
+    "headings": [
+      {
+        "level": 1,
+        "text": ""
+      },
+      {
+        "level": 2,
+        "text": "Everything for"
+      },
+      {
+        "level": 2,
+        "text": "Simple. Structured."
+      },
+      {
+        "level": 2,
+        "text": "Expert tutors."
+      },
+      {
+        "level": 2,
+        "text": "Love the lesson"
+      },
+      {
+        "level": 2,
+        "text": "Flat monthly packages."
+      },
+      {
+        "level": 2,
+        "text": "Common questions"
+      },
+      {
+        "level": 2,
+        "text": "Want to become"
+      }
+    ],
+    "dynamicFields": {
+      "tutor_name": [
+        "tutor-body{padding:20px}\n.tutor-name",
+        "tutor-name"
+      ],
+      "price": [
+        "R250",
+        "R280",
+        "R220",
+        "R300",
+        "R799"
+      ]
+    },
+    "forms": 0,
+    "hasNav": true,
+    "hasFooter": true,
+    "fonts": [
+      "fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Satoshi:wght@300;400;500;700&display=swap"
+    ],
+    "risks": [
+      "hardcoded-tutor-data",
+      "hardcoded-pricing"
+    ]
+  }
+]

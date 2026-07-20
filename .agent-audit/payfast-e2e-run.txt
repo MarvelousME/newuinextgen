@@ -1,0 +1,22 @@
+﻿NextGen PayFast E2E
+--------------------------------------------
+OK   woocommerce_active — ok
+OK   payfast_itn_helper
+OK   ngc_payfast_class
+OK   gateway_enabled — yes
+OK   product_ready — 54118
+OK   order_created — 54142
+OK   checkout_redirect — success
+OK   sandbox_url — https://sandbox.payfast.co.za/eng/process?...
+OK   itn_rejects_amount_tamper — 400  status=pending
+OK   itn_http_200 — 200 OK
+OK   order_paid — processing
+OK   itn_replay_idempotent — 200 OK
+OK   itn_http_second — 200 OK
+OK   itn_http_paid — processing
+--------------------------------------------
+OK — PayFast sandbox E2E passed
+
+Environment: Docker newuinextgen wpcli --skip-plugins=kirki
+Date: 2026-07-20
+Command: docker compose --profile setup run --rm --entrypoint wp wpcli --skip-plugins=kirki eval-file wp-content/plugins/NextGenTutors-Companion/scripts/payfast-e2e-docker.php

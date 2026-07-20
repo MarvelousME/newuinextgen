@@ -1,0 +1,51 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-005",
+  "slug": "booking-created",
+  "name": "Booking Created",
+  "trigger": {
+    "event": "ngt_booking_created_or_amelia_booking_created",
+    "source": "Amelia"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "assign_tutor",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_jitsi_lesson_room",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_parent",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_tutor",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "log_system_event",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

@@ -1,0 +1,146 @@
+{
+  "key": "group_ngt_tutor",
+  "title": "NGT Tutor Profile Relationships",
+  "fields": [
+    {
+      "key": "field_ngt_tutor_user",
+      "label": "Linked WP User ID",
+      "name": "ngt_user_id",
+      "aria-label": "",
+      "type": "number",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_tutor_status",
+      "label": "Tutor Status",
+      "name": "ngt_status",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "pending_review": "Pending Review",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "suspended": "Suspended"
+      }
+    },
+    {
+      "key": "field_ngt_tutor_subjects",
+      "label": "Subjects",
+      "name": "ngt_subjects",
+      "aria-label": "",
+      "type": "relationship",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "ngt_subject"
+      ],
+      "taxonomy": "",
+      "filters": [
+        "search",
+        "post_type"
+      ],
+      "return_format": "id",
+      "min": "",
+      "max": "",
+      "elements": [
+        "featured_image"
+      ]
+    },
+    {
+      "key": "field_ngt_tutor_areas",
+      "label": "Areas / Suburbs",
+      "name": "ngt_areas",
+      "aria-label": "",
+      "type": "textarea",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_tutor_online",
+      "label": "Online Available",
+      "name": "ngt_online_available",
+      "aria-label": "",
+      "type": "true_false",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_tutor_inperson",
+      "label": "In-Person Available",
+      "name": "ngt_in_person_available",
+      "aria-label": "",
+      "type": "true_false",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_tutor_rate",
+      "label": "Tutor Hourly Rate",
+      "name": "ngt_hourly_rate",
+      "aria-label": "",
+      "type": "number",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "ngt_tutor_profile"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true
+}

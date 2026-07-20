@@ -1,0 +1,62 @@
+# Secrets & local env
+.env
+.env.*
+!.env.example
+!**/.env.example
+docker/.env
+**/credentials.json
+**/secrets.json
+*.pem
+*.key
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Dependencies & builds
+node_modules/
+vendor/
+**/node_modules/
+**/vendor/
+dist/
+build/
+*.min.map
+NextGenTutors-Companion/build-src/
+build-src/
+ui-library/node_modules/
+
+# Logs & caches
+*.log
+npm-debug.log*
+.cache/
+.tmp/
+temp/
+
+# Docker local extracts
+docker/hello-elementor/
+docker/hello-elementor.zip
+docker/_hello_extract/
+docker/ngcpm-packages/*.zip
+
+# Large / generated / reference dumps (baseline excludes bulk media)
+content/_extracted/
+content/
+webpages-content/
+agntix/
+to-discard/
+reference-style-extraction/
+*.zip
+
+# WordPress runtime (if ever present at root)
+wp-content/uploads/
+wp-content/cache/
+wp-config.php
+
+# Test / agent scratch
+.phpunit.result.cache
+coverage/

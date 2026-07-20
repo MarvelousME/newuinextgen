@@ -1,0 +1,22 @@
+{
+  "id": "workflow-09-automated-matching",
+  "name": "Automated Matching (WF-09)",
+  "blueprint_wf": "WF-09",
+  "business_goal": "When auto-assign policy is enabled, top-scoring tutor is accepted and booking is created automatically.",
+  "description": "NGC_Matching::maybe_auto_accept() after find_tutor intake. Toggle via ngc_auto_assign_enabled option or demo mode.",
+  "trigger": "match.proposed with score >= ngc_auto_assign_min_score",
+  "events": [
+    "match.proposed",
+    "match.auto_assigned",
+    "match.accepted"
+  ],
+  "companion_modules": [
+    "NGC_Matching",
+    "NGC_Smart_Matching"
+  ],
+  "policy": {
+    "option": "ngc_auto_assign_enabled",
+    "min_score_filter": "ngc_auto_assign_min_score",
+    "default_on_demo": true
+  }
+}

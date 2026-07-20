@@ -1,0 +1,61 @@
+{
+  "version": "2.0",
+  "name": "NGT — Payment Completed → Activate Client",
+  "description": "Fires when WooCommerce order status changes to Completed. Tags as paid, moves list, awards GamiPress points, enrolls in MasterStudy course.",
+  "status": "active",
+  "type": "user",
+  "triggers": [
+    {
+      "integration": "woocommerce",
+      "trigger": "woocommerce_order_status_changed",
+      "parameters": {
+        "from_status": "any",
+        "to_status":   "completed"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_add_tag_to_contact",
+      "parameters": {
+        "email":  "{{trigger:woocommerce:customer_billing_email}}",
+        "tag_id": "REPLACE_WITH_PAID_CLIENT_TAG_ID"
+      }
+    },
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_remove_contact_from_list",
+      "parameters": {
+        "email":   "{{trigger:woocommerce:customer_billing_email}}",
+        "list_id": "REPLACE_WITH_NEW_LEAD_LIST_ID"
+      }
+    },
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_add_contact_to_list",
+      "parameters": {
+        "email":   "{{trigger:woocommerce:customer_billing_email}}",
+        "list_id": "REPLACE_WITH_ACTIVE_CLIENTS_LIST_ID"
+      }
+    },
+    {
+      "integration": "gamipress",
+      "action": "gamipress_award_points_to_user",
+      "parameters": {
+        "user_id":    "{{trigger:woocommerce:customer_user_id}}",
+        "points":     100,
+        "points_type": "ngt-points",
+        "reason":     "Session payment completed — Order #{{trigger:woocommerce:order_id}}"
+      }
+    },
+    {
+      "integration": "masterstudy",
+      "action": "masterstudy_enroll_user_in_course",
+      "parameters": {
+        "user_id":   "{{trigger:woocommerce:customer_user_id}}",
+        "course_id": "REPLACE_WITH_COURSE_ID_IF_APPLICABLE"
+      }
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "key": "group_ngt_parent",
+  "title": "NGT Parent Profile Relationships",
+  "fields": [
+    {
+      "key": "field_ngt_parent_user",
+      "label": "Linked WP User ID",
+      "name": "ngt_user_id",
+      "aria-label": "",
+      "type": "number",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_parent_phone",
+      "label": "Phone",
+      "name": "ngt_phone",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_parent_email",
+      "label": "Email",
+      "name": "ngt_email",
+      "aria-label": "",
+      "type": "email",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      }
+    },
+    {
+      "key": "field_ngt_parent_contact",
+      "label": "Preferred Contact",
+      "name": "ngt_preferred_contact",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "phone": "Phone",
+        "email": "Email",
+        "whatsapp": "WhatsApp",
+        "phone_email": "Phone + Email"
+      }
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "ngt_parent_profile"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true
+}

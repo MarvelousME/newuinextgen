@@ -1,0 +1,88 @@
+.ngt-ui-magic-card {
+  --ngt-mc-x: -200px;
+  --ngt-mc-y: -200px;
+  --ngt-mc-size: 200px;
+  --ngt-mc-from: #9e7aff;
+  --ngt-mc-to: #fe8bbb;
+  --ngt-mc-spot: #262626;
+  --ngt-mc-opacity: 0.8;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--ngt-radius-lg);
+  min-height: 140px;
+  padding: 1.25rem 1.35rem;
+  background: transparent;
+}
+
+.ngt-ui-magic-card__border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background:
+    linear-gradient(var(--ngt-color-surface-2), var(--ngt-color-surface-2)) padding-box,
+    radial-gradient(
+      var(--ngt-mc-size) circle at var(--ngt-mc-x) var(--ngt-mc-y),
+      var(--ngt-mc-from),
+      var(--ngt-mc-to),
+      var(--ngt-color-border) 100%
+    ) border-box;
+  border: 1px solid transparent;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ngt-ui-magic-card__surface {
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: var(--ngt-color-surface-2);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ngt-ui-magic-card__spot {
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--ngt-motion-duration-fast) var(--ngt-motion-easing-standard);
+  background: radial-gradient(
+    var(--ngt-mc-size) circle at var(--ngt-mc-x) var(--ngt-mc-y),
+    var(--ngt-mc-spot),
+    transparent 100%
+  );
+}
+
+.ngt-ui-magic-card.is-active .ngt-ui-magic-card__spot,
+.ngt-ui-magic-card:hover .ngt-ui-magic-card__spot {
+  opacity: var(--ngt-mc-opacity);
+}
+
+.ngt-ui-magic-card__body {
+  position: relative;
+  z-index: 4;
+}
+
+.ngt-ui-magic-card__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.ngt-ui-magic-card__content {
+  margin: 0;
+  color: rgba(15, 28, 46, 0.78);
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ngt-ui-magic-card__spot {
+    transition: none;
+    opacity: 0.25;
+    background: linear-gradient(135deg, rgba(158, 122, 255, 0.12), rgba(254, 139, 187, 0.12));
+  }
+}

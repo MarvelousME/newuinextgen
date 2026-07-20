@@ -1,0 +1,18 @@
+{
+  "id": "workflow-07-booking-confirmed",
+  "name": "Booking Confirmed",
+  "blueprint_wf": "WF-10",
+  "business_goal": "Session booking confirmed via Amelia or internal bookings table.",
+  "description": "Replaces automations/automation-2-booking-confirmed.json.",
+  "trigger": "Amelia appointment approved OR NGC_Bookings transition to confirmed",
+  "events": [
+    "booking.created",
+    "amelia.booking.created",
+    "session.scheduled"
+  ],
+  "companion_modules": [
+    "NGC_Bookings",
+    "NGC_Amelia"
+  ],
+  "deprecated_automation": "automations/automation-2-booking-confirmed.json"
+}

@@ -1,0 +1,24 @@
+{
+  "key": "tutor_approved_onboarding",
+  "name": "Tutor Approved Onboarding",
+  "enabled": true,
+  "trigger": {
+    "event": "ngt.tutor.approved"
+  },
+  "actions": [
+    {
+      "type": "log_event",
+      "source": "tutor_onboarding"
+    },
+    {
+      "type": "add_user_role",
+      "role": "ngt_tutor",
+      "user_id": "{{user_id}}"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "tutor-support",
+      "message": "Tutor approved and onboarded: User ID {{user_id}}. Send profile completion and availability instructions."
+    }
+  ]
+}

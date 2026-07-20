@@ -1,0 +1,41 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-010",
+  "slug": "parent-review-submitted",
+  "name": "Parent Review Submitted",
+  "trigger": {
+    "event": "review_submitted",
+    "source": "Parent Dashboard"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "attach_review_to_tutor",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "recalculate_tutor_rating",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_quality_team",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

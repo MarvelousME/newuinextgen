@@ -1,0 +1,159 @@
+/**
+ * Prototype blend — kinetic polish on NGT marketing prototype markup.
+ */
+
+.bi-prototype-blend {
+  --lime: var(--ngi-cyan, #28c7f7);
+  --lime-bright: #5dd4fa;
+  --lime-soft: rgba(40, 199, 247, 0.14);
+  --lime-deep: #1aa8d4;
+  --navy: var(--ngi-navy, #07172f);
+  --blue: var(--ngi-blue, #123c7c);
+  --amber: var(--ngi-gold, #ffb703);
+  --cream: var(--ngi-soft, #f5f8ff);
+  background: var(--ngi-soft, #f5f8ff);
+  color: var(--ngi-text, #10213f);
+}
+
+.bi-prototype-blend .pagehead {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  padding: clamp(3rem, 8vw, 5rem) 0 clamp(2.5rem, 6vw, 4rem);
+  background:
+    radial-gradient(circle at 74% 18%, rgba(40, 199, 247, 0.34), transparent 23%),
+    radial-gradient(circle at 12% 78%, rgba(255, 183, 3, 0.2), transparent 26%),
+    linear-gradient(135deg, var(--ngi-midnight, #031126), var(--ngi-blue, #123c7c));
+}
+
+.bi-prototype-blend .pagehead__mesh {
+  background:
+    radial-gradient(circle at var(--mx, 70%) var(--my, 20%), rgba(40, 199, 247, 0.32), transparent 20%),
+    radial-gradient(circle at 20% 72%, rgba(255, 183, 3, 0.18), transparent 28%);
+  mix-blend-mode: screen;
+  transition: background 0.25s ease;
+}
+
+.bi-prototype-blend .pagehead__title .accent,
+.bi-prototype-blend .pagehead__eyebrow,
+.bi-prototype-blend .pagehead__stat .n {
+  color: var(--ngi-cyan, #28c7f7);
+}
+
+.bi-prototype-blend .section {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.bi-prototype-blend .stat-card,
+.bi-prototype-blend .value-card,
+.bi-prototype-blend .price-card,
+.bi-prototype-blend .step,
+.bi-prototype-blend .tl-item {
+  border-radius: var(--ngi-radius, 28px);
+  border: 1px solid var(--ngi-line, #e6edf7);
+  box-shadow: var(--ngi-shadow, 0 24px 70px rgba(18, 60, 124, 0.12));
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bi-prototype-blend .stat-card:hover,
+.bi-prototype-blend .value-card:hover,
+.bi-prototype-blend .price-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--ngi-cyan, #28c7f7);
+  box-shadow: 0 32px 80px rgba(18, 60, 124, 0.18);
+}
+
+.bi-prototype-blend .btn--primary,
+.bi-prototype-blend .btn--lime {
+  background: var(--ngi-cyan, #28c7f7);
+  color: #041326;
+  border-radius: 18px;
+  font-weight: 800;
+  box-shadow: 0 12px 32px rgba(40, 199, 247, 0.28);
+}
+
+.bi-prototype-blend .btn--primary:hover,
+.bi-prototype-blend .btn--lime:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(40, 199, 247, 0.35);
+}
+
+.bi-prototype-blend .cta-band {
+  background: linear-gradient(135deg, var(--ngi-midnight, #031126), var(--ngi-blue, #123c7c));
+  border-radius: var(--ngi-radius, 28px);
+  box-shadow: 0 35px 90px rgba(7, 23, 47, 0.28);
+}
+
+.bi-prototype-blend .cta-band .eyebrow {
+  color: var(--ngi-gold, #ffb703);
+}
+
+.bi-prototype-blend .bi-prototype-shortcodes,
+.bi-prototype-blend .bi-prototype-marketplace {
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+}
+
+.bi-prototype-blend .bi-prototype-shortcodes .ngc-form-card,
+.bi-prototype-blend .bi-prototype-marketplace .ngc-marketplace,
+.bi-prototype-blend .bi-shortcode-block {
+  border-radius: var(--ngi-radius, 28px);
+  box-shadow: var(--ngi-shadow);
+}
+
+/* Live marketplace replaces static directory when Companion is active */
+body.bi-has-live-marketplace .bi-prototype-blend .directory {
+  display: none;
+}
+
+body.bi-has-live-marketplace .bi-prototype-blend .bi-prototype-marketplace {
+  margin-top: -1rem;
+}
+
+.bi-prototype-live-dash {
+  padding-top: 0;
+  margin-top: -1.5rem;
+}
+
+.bi-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ngi-blue, #123c7c);
+  background: rgba(40, 199, 247, 0.12);
+  border: 1px solid rgba(40, 199, 247, 0.35);
+}
+
+.bi-prototype-live-empty {
+  grid-column: 1 / -1;
+  padding: 2rem;
+  text-align: center;
+  color: var(--slate-500, #64748b);
+}
+
+body.bi-dashboard-live-active .bi-prototype-blend .kpi-grid,
+body.bi-dashboard-live-active .bi-prototype-blend .dash-grid {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(0.2);
+}
+
+body.bi-dashboard-live-active .bi-prototype-live-dash {
+  margin-bottom: 1.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bi-prototype-blend .stat-card:hover,
+  .bi-prototype-blend .value-card:hover,
+  .bi-prototype-blend .price-card:hover,
+  .bi-prototype-blend .btn--primary:hover,
+  .bi-prototype-blend .btn--lime:hover {
+    transform: none;
+  }
+}

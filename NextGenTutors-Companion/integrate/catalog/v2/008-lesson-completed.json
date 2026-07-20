@@ -1,0 +1,46 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-008",
+  "slug": "lesson-completed",
+  "name": "Lesson Completed",
+  "trigger": {
+    "event": "lesson_status_completed",
+    "source": "Tutor Dashboard"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "request_progress_report",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "award_gamipress_points",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_parent",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "update_student_history",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

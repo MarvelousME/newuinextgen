@@ -1,0 +1,29 @@
+{
+  "key": "parent_find_tutor_intake",
+  "name": "Parent Find a Tutor Intake",
+  "enabled": true,
+  "trigger": {
+    "event": "ngt.find_tutor.submitted"
+  },
+  "actions": [
+    {
+      "type": "log_event",
+      "source": "find_a_tutor"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "staff",
+      "message": "New Find a Tutor request: {{name}} | Grade: {{grade}} | Subject: {{subject}} | Area: {{area}} | Phone: {{phone}} | Email: {{email}}"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "booking-issues",
+      "message": "Matching required within 24 hours for {{name}}: {{subject}}, {{grade}}, {{area}}."
+    },
+    {
+      "type": "wp_mail_admin",
+      "subject": "New NextGen tutor request",
+      "message": "New request from {{name}}. Grade: {{grade}}. Subject: {{subject}}. Area: {{area}}. Phone: {{phone}}. Email: {{email}}."
+    }
+  ]
+}

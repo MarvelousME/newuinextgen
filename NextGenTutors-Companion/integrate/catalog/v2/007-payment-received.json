@@ -1,0 +1,51 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-007",
+  "slug": "payment-received",
+  "name": "Payment Received",
+  "trigger": {
+    "event": "woocommerce_order_status_completed",
+    "source": "WooCommerce"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "mark_booking_paid",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_payment_event",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_parent",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_finance",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "queue_tutor_payout",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

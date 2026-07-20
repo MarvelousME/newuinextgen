@@ -1,0 +1,21 @@
+.ngt-ui-magic-card,
+.ngt-ui-border-beam,
+.ngt-ui-marquee,
+.ngt-ui-comp {
+  box-sizing: border-box;
+  color: var(--ngt-color-text);
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+
+.ngt-ui-magic-card *,
+.ngt-ui-border-beam *,
+.ngt-ui-marquee *,
+.ngt-ui-comp * {
+  box-sizing: border-box;
+}
+
+html.ngt-ui-dark {
+  color-scheme: dark;
+  background: #0b0b12;
+  color: #f5f5f5;
+}

@@ -1,0 +1,13 @@
+{
+  "id": "016-RESOURCE-RECOMMENDED",
+  "name": "Learning Resource Recommended",
+  "trigger": "weakness_identified",
+  "actions": [
+    "attach_resource_to_student",
+    "notify_parent",
+    "notify_tutor"
+  ],
+  "import_target": "NextGen Completion Suite",
+  "status": "draft",
+  "version": "1.0.0"
+}

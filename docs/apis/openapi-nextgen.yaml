@@ -1,0 +1,130 @@
+openapi: 3.0.3
+info:
+  title: NextGen Platform API
+  version: 1.0.0
+  description: OpenAPI subset generated from verified repository routes.
+servers:
+  - url: /wp-json
+paths:
+  /ngc/v1/dashboard/parent:
+    get:
+      summary: Parent dashboard payload
+      security:
+        - wpNonce: []
+      responses:
+        '200':
+          description: Parent dashboard data
+  /ngc/v1/bookings:
+    get:
+      summary: List bookings for authenticated actor scope
+      security:
+        - wpNonce: []
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Booking list
+    post:
+      summary: Create booking
+      security:
+        - wpNonce: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Created booking
+        '400':
+          description: Validation error
+  /ngc/v1/reviews:
+    post:
+      summary: Submit review
+      security:
+        - wpNonce: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Review result
+  /ngc/v1/platform/analytics:
+    get:
+      summary: Platform analytics snapshot
+      security:
+        - wpNonce: []
+      parameters:
+        - in: query
+          name: demo
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Analytics payload
+  /nextgen/v1/tutors/{tutor_id}/calendar:
+    get:
+      summary: Public tutor calendar
+      parameters:
+        - in: path
+          name: tutor_id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: subject
+          schema:
+            type: string
+        - in: query
+          name: delivery_mode
+          schema:
+            type: string
+            enum: [online, in-person, hybrid]
+        - in: query
+          name: timezone
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Public-safe calendar payload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  meta:
+                    type: object
+        '404':
+          description: Tutor not publicly bookable
+components:
+  securitySchemes:
+    wpNonce:
+      type: apiKey
+      in: header
+      name: X-WP-Nonce
+

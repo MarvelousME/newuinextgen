@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head><meta charset="UTF-8"><title>Welcome Tutor</title></head>
+<body style="margin:0;padding:0;background-color:#f4f6f8;font-family:sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f8;">
+        <tr><td align="center" style="padding: 20px 0;">
+            <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:8px;overflow:hidden;">
+                <tr>
+                    <td align="center" style="background-color:#0f172a;padding: 30px 20px;">
+                        <h1 style="color:#00c896;margin:0;font-size:24px;">NextGen Tutors</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 30px 40px;">
+                        <h2 style="color:#0f172a;margin:0 0 16px;font-size:20px;">Congratulations {{contact.first_name}},</h2>
+                        <p style="color:#334155;line-height:1.6;margin:0 0 20px;">
+                            Your profile has been verified and is now <strong>LIVE</strong>! Parents can see you in the tutor directory starting today.
+                        </p>
+                        <p style="color:#334155;line-height:1.6;margin:0 0 20px;">
+                            <strong>✅ Your Status:</strong> <span style="background-color:#dcfce7;color:#166534;padding:4px 8px;border-radius:4px;font-weight:600;">Verified Tutor</span><br>
+                            <strong>💰 Payout Rate:</strong> {{contact.custom.payout_rate}}/hr<br>
+                            <strong>📅 Next Payout:</strong> 1st of the month via EFT
+                        </p>
+                        <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 24px 0;">
+                            <tr><td align="center" style="background-color:#0066cc;border-radius:6px;"><a href="{{contact.custom.tutor_dashboard_link}}" style="display:inline-block;padding:12px 28px;color:#ffffff;font-weight:600;text-decoration:none;">Set Availability & Start Earning</a></td></tr>
+                        </table>
+                        <p style="color:#475569;font-size:14px;margin:0;">
+                            Need help setting up Amelia or your profile? Visit our <a href="{{contact.custom.kb_link}}" style="color:#0066cc;">Tutor Knowledge Base</a>.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#f8fafc;padding: 24px 40px;border-top:1px solid #e2e8f0;">
+                        <p style="color:#64748b;font-size:13px;line-height:1.5;margin:0 0 12px;">
+                            <strong>POPIA Notice:</strong> Your ID and clearance data is encrypted and stored securely per South African law.
+                        </p>
+                        <p style="color:#94a3b8;font-size:12px;margin:0;">NextGen Tutors (Pty) Ltd | Sandton, Johannesburg</p>
+                    </td>
+                </tr>
+            </table>
+        </td></tr>
+    </table>
+</body>
+</html>

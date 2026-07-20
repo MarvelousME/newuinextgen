@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="480" viewBox="0 0 920 480" role="img" aria-label="Payment Workflow workflow diagram">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4A5568"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#FAFBFC"/>
+  
+    <text x="24" y="36" font-family="Sora,Segoe UI,sans-serif" font-size="20" font-weight="600" fill="#1A202C">WF-11: Payment Workflow</text>
+    <text x="24" y="58" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#4A5568">BPMN flow · BeyondInfinity v1.4.6</text>
+    <rect x="750" y="20" width="146" height="28" rx="14" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="823" y="39" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="11" font-weight="600" fill="#1A202C">PARTIAL</text>
+    
+    <rect x="40" y="110" width="150" height="64" rx="8" fill="#E8F1FB" stroke="#0066CC" stroke-width="1.5"/>
+    <text x="115" y="132" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="115" dy="0">woocommerce.order.comp</tspan></text>
+    
+    <rect x="214" y="110" width="150" height="64" rx="8" fill="#FFFFFF" stroke="#0066CC" stroke-width="1.5"/>
+    <text x="289" y="132" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="289" dy="0">Dispatch payment workflow</tspan></text>
+    
+    <rect x="388" y="110" width="150" height="64" rx="8" fill="#FFFFFF" stroke="#0066CC" stroke-width="1.5"/>
+    <text x="463" y="132" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="463" dy="0">RTM alerts</tspan></text>
+    <line x1="194" y1="142" x2="210" y2="142" stroke="#4A5568" stroke-width="2" marker-end="url(#arrow)"/><line x1="368" y1="142" x2="384" y2="142" stroke="#4A5568" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="40" y="310" width="412" height="60" rx="8" fill="#F5F7FA" stroke="#718096" stroke-width="1.5"/>
+    <text x="246" y="332" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="246" dy="0">Actor</tspan><tspan x="246" dy="16">Parent / system</tspan></text>
+    
+    <rect x="468" y="310" width="412" height="60" rx="8" fill="#F5F7FA" stroke="#718096" stroke-width="1.5"/>
+    <text x="674" y="332" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="674" dy="0">Notify</tspan><tspan x="674" dy="16">RTM</tspan></text>
+    
+    <rect x="40" y="382" width="412" height="60" rx="8" fill="#F5F7FA" stroke="#718096" stroke-width="1.5"/>
+    <text x="246" y="404" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="246" dy="0">DB</tspan><tspan x="246" dy="16">—</tspan></text>
+    
+    <rect x="468" y="382" width="412" height="60" rx="8" fill="#F5F7FA" stroke="#718096" stroke-width="1.5"/>
+    <text x="674" y="404" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="674" dy="0">Audit</tspan><tspan x="674" dy="16">woocommerce_payment_completed</tspan></text>
+    
+</svg>

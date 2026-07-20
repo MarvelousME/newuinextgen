@@ -1,0 +1,13 @@
+{
+  "id": "014-TUTOR-PAYOUT-READY",
+  "name": "Tutor Payout Ready",
+  "trigger": "lesson_confirmed_paid",
+  "actions": [
+    "create_payout_record",
+    "notify_finance",
+    "mark_pending_eft"
+  ],
+  "import_target": "NextGen Completion Suite",
+  "status": "draft",
+  "version": "1.0.0"
+}

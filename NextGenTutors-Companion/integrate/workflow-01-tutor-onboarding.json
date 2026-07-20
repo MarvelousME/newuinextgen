@@ -1,0 +1,47 @@
+{
+  "id": "workflow-01-tutor-onboarding",
+  "name": "Tutor Onboarding Workflow",
+  "business_goal": "Convert tutor applicants into verified tutors and activate them for matching.",
+  "description": "Tutor applies through Become a Tutor. The system creates CRM records, alerts admin, tracks review, and on approval creates/links tutor user, Amelia employee, MasterStudy onboarding, notifications, and matching eligibility.",
+  "trigger": "Tutor application form submitted OR admin changes tutor status to approved.",
+  "actors": [
+    "Tutor Applicant",
+    "Admin Reviewer",
+    "AutomatorWP",
+    "FluentCRM",
+    "Amelia",
+    "MasterStudy LMS",
+    "Notifyer"
+  ],
+  "steps": [
+    "Tutor submits application",
+    "Create FluentCRM contact and tutor-applicant tag",
+    "Notify admin",
+    "Create pending review task",
+    "Admin reviews documents",
+    "Approve, reject, or request more info",
+    "Create/link WordPress tutor user",
+    "Create Amelia employee",
+    "Enroll MasterStudy onboarding course",
+    "Send welcome notifications",
+    "Enable matching"
+  ],
+  "events": [
+    "tutor.application.submitted",
+    "tutor.review.started",
+    "tutor.approved",
+    "tutor.rejected",
+    "tutor.more_info_requested",
+    "tutor.matching.enabled"
+  ],
+  "seed_data": [
+    "3 tutor applicants",
+    "2 approved tutors",
+    "1 pending tutor",
+    "1 rejected tutor",
+    "subject mappings",
+    "document metadata",
+    "review tasks",
+    "CRM tags"
+  ]
+}

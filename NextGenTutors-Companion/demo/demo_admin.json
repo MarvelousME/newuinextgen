@@ -1,0 +1,18 @@
+{
+  "journey": "admin",
+  "label": "Demo Admin",
+  "source": "demo",
+  "dashboard": {
+    "leads": 28,
+    "parents": 14,
+    "students": 22,
+    "tutorVetting": {"pending": 3, "approved": 12, "rejected": 2},
+    "matchingConsole": {"open": 5, "assigned": 7},
+    "bookings": {"active": 10, "completed": 40},
+    "payments": {"pending": 4, "paid": 32, "refunds": 1},
+    "analytics": true,
+    "auditLogs": 120,
+    "verification": true,
+    "selfHealing": true
+  }
+}

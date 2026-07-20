@@ -1,0 +1,20 @@
+{
+  "id": "workflow-08-payment-complete",
+  "name": "Payment Completed",
+  "blueprint_wf": "WF-11",
+  "business_goal": "WooCommerce order paid — wallet credit, invoice, booking confirm, CRM hooks.",
+  "description": "Replaces automations/automation-3-payment-complete.json. Supports PayFast via NGC_PayFast_Gateway.",
+  "trigger": "woocommerce_order_status_completed OR PayFast ITN COMPLETE",
+  "events": [
+    "order.completed",
+    "payment.received",
+    "payment.completed"
+  ],
+  "companion_modules": [
+    "NGC_Payments",
+    "NGC_PayFast",
+    "NGC_Invoices",
+    "NGC_Wallet"
+  ],
+  "deprecated_automation": "automations/automation-3-payment-complete.json"
+}

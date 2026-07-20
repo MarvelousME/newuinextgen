@@ -1,0 +1,333 @@
+/**
+ * Blended page layout — UI library + section components + motion.
+ */
+
+.ng-page {
+  position: relative;
+  background: var(--ng-color-bg, var(--cream, #fcfaf3));
+  color: var(--ng-color-ink, #0b1220);
+  overflow-x: clip;
+}
+
+.ng-page__canvas {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(174, 206, 97, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 0%, rgba(19, 68, 119, 0.12), transparent 50%);
+  z-index: 0;
+}
+
+.ng-page__body {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero */
+.ng-page-hero {
+  position: relative;
+  min-height: clamp(320px, 42vh, 520px);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ng-page-hero__mesh {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #092746 0%, #134477 45%, #0a3058 100%);
+  z-index: 0;
+}
+
+.ng-page-hero__mesh::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(174, 206, 97, 0.22), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.15), transparent 35%);
+  mix-blend-mode: screen;
+}
+
+.ng-page-hero__photo,
+.ng-page-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+  z-index: 1;
+}
+
+.ng-page-hero__photo {
+  background-size: cover;
+  background-position: center;
+}
+
+.ng-page-hero--has-video .ng-page-hero__photo {
+  opacity: 0.2;
+}
+
+.ng-page-hero__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--ng-space-8, 2rem);
+  align-items: end;
+}
+
+@media (min-width: 900px) {
+  .ng-page-hero__inner {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+
+.ng-page-hero__title {
+  font-family: var(--ng-font-heading, "Sora", system-ui, sans-serif);
+  font-size: var(--ng-text-4xl, clamp(2rem, 4vw, 3rem));
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.ng-page-hero__subtitle {
+  margin: 0;
+  max-width: 42rem;
+  font-size: var(--ng-text-lg, 1.125rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.ng-page-hero__actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.ng-page-hero__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.ng-page-hero__stat {
+  padding: 1rem;
+  border-radius: var(--ng-radius-md, 16px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  text-align: center;
+}
+
+.ng-page-hero__stat strong {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ng-color-accent, #aece61);
+}
+
+.ng-page-hero__stat span {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+
+/* Sections */
+.ng-page-section {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.ng-page-section--narrow .ng-page-section__inner {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.ng-page-section--glass .ngt-card,
+.ng-page-section--glass .bi-shortcode-block {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(9, 39, 70, 0.08);
+  box-shadow: var(--ng-shadow-card);
+}
+
+.ng-page-heading {
+  text-align: center;
+  max-width: 46rem;
+  margin: 0 auto 2.5rem;
+}
+
+.ng-page-heading__eyebrow {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ng-color-secondary, #134477);
+  margin: 0 0 0.5rem;
+}
+
+.ng-page-heading__title {
+  font-family: var(--ng-font-heading);
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  margin: 0 0 0.65rem;
+  letter-spacing: -0.02em;
+}
+
+.ng-page-heading__subtitle {
+  margin: 0;
+  color: var(--ng-color-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Cards grid — 3D hover blend */
+.ng-page-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.ng-page-grid .ngt-card,
+.ng-page-grid .bi-stat-card {
+  transition: transform 0.35s var(--ng-ease-spring), box-shadow 0.35s ease;
+  transform-style: preserve-3d;
+}
+
+.ng-page-grid .ngt-card:hover,
+.ng-page-grid .bi-stat-card:hover {
+  transform: translateY(-6px) rotateX(2deg);
+  box-shadow: var(--ng-shadow-lg);
+}
+
+/* Steps */
+.ng-page .bi-steps {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ng-page .bi-step {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: var(--ng-radius-lg);
+  background: var(--ng-color-surface);
+  border: 1px solid var(--ng-color-border);
+  box-shadow: var(--ng-shadow-sm);
+}
+
+/* Forms in cards */
+.ng-page .bi-shortcode-block {
+  border-radius: var(--ng-radius-lg);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  box-shadow: var(--ng-shadow-card);
+}
+
+/* Trust rail */
+.ng-page-trust-rail {
+  margin-top: -1px;
+  background: var(--ng-color-surface);
+  border-block: 1px solid var(--ng-color-border);
+}
+
+.ng-page-trust-rail .bi-trust-strip {
+  margin: 0;
+}
+
+/* Footer band */
+.ng-page-footer-band {
+  margin-top: 0;
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+  background: linear-gradient(120deg, #092746, #134477);
+  color: #fff;
+}
+
+.ng-page-footer-band__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.ng-page-footer-band__title {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+}
+
+.ng-page-footer-band__text {
+  margin: 0;
+  opacity: 0.88;
+  max-width: 36rem;
+}
+
+.ng-page-footer-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Reveal motion */
+.ng-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s var(--ng-ease-smooth), transform 0.65s var(--ng-ease-smooth);
+}
+
+.ng-reveal.is-inview {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ng-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .ng-page-grid .ngt-card:hover,
+  .ng-page-grid .bi-stat-card:hover {
+    transform: none;
+  }
+}
+
+/* Dashboard pages — calmer surface */
+.ng-page-section--dashboard {
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+.ng-page-section--dashboard .ngt-card {
+  border-radius: var(--ng-radius-lg);
+  box-shadow: var(--ng-shadow-sm);
+}
+
+.ng-page[data-page-type="dashboard"] .ng-page-hero {
+  min-height: clamp(200px, 28vh, 320px);
+}
+
+.ng-page[data-page-type="auth"] .ng-page-hero {
+  min-height: clamp(220px, 32vh, 360px);
+}
+
+/* UI library hero harmonization inside ng-page */
+.ng-page .ng-ui-hero {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+.ng-page .ng-ui--stats-band {
+  margin-block: 0;
+  padding-block: 1.5rem;
+  background: var(--ng-color-surface-elevated);
+  border-block: 1px solid var(--ng-color-border);
+}

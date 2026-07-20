@@ -1,0 +1,29 @@
+{
+  "key": "tutor_application_review",
+  "name": "Tutor Application Review",
+  "enabled": true,
+  "trigger": {
+    "event": "ngt.tutor_application.submitted"
+  },
+  "actions": [
+    {
+      "type": "log_event",
+      "source": "become_a_tutor"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "staff",
+      "message": "New tutor application: {{name}} | Subjects: {{subjects}} | Area: {{area}} | Email: {{email}}"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "tutor-support",
+      "message": "Tutor application received for review: {{name}}. Approval SLA: 48 hours."
+    },
+    {
+      "type": "wp_mail_admin",
+      "subject": "New tutor application",
+      "message": "Tutor application from {{name}}. Subjects: {{subjects}}. Area: {{area}}. Email: {{email}}. Bio: {{bio}}"
+    }
+  ]
+}

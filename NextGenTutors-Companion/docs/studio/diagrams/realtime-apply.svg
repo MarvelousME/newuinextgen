@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="Inter, Arial, sans-serif">
+  <rect width="800" height="400" fill="#f6f9ff"/>
+  <text x="40" y="40" fill="#123c7c" font-size="18" font-weight="700">Realtime Apply Engine</text>
+  <rect x="40" y="70" width="120" height="50" rx="8" fill="#123c7c"/><text x="58" y="100" fill="#fff" font-size="12">Save</text>
+  <polygon points="180,95 200,95 200,85 220,105 200,125 200,115 180,115" fill="#28c7f7"/>
+  <rect x="230" y="70" width="120" height="50" rx="8" fill="#fff" stroke="#123c7c"/><text x="248" y="100" fill="#123c7c" font-size="11">Validate</text>
+  <polygon points="370,95 390,95 390,85 410,105 390,125 390,115 370,115" fill="#28c7f7"/>
+  <rect x="420" y="70" width="120" height="50" rx="8" fill="#fff" stroke="#123c7c"/><text x="438" y="100" fill="#123c7c" font-size="11">Persist</text>
+  <polygon points="560,95 580,95 580,85 600,105 580,125 580,115 560,115" fill="#28c7f7"/>
+  <rect x="610" y="70" width="120" height="50" rx="8" fill="#fff" stroke="#123c7c"/><text x="628" y="100" fill="#123c7c" font-size="11">Compile</text>
+  <line x1="100" y1="120" x2="100" y2="180" stroke="#28c7f7" stroke-width="2"/>
+  <rect x="40" y="180" width="690" height="50" rx="8" fill="#28c7f7"/><text x="58" y="210" fill="#07172f" font-size="12" font-weight="700">Register hooks · triggers · listeners · audit  IN MEMORY</text>
+  <line x1="385" y1="230" x2="385" y2="280" stroke="#27ae60" stroke-width="2"/>
+  <rect x="200" y="280" width="400" height="60" rx="10" fill="#27ae60"/><text x="220" y="315" fill="#fff" font-size="14" font-weight="700">Workflow ACTIVE  No restart required</text>
+  <text x="40" y="370" fill="#687386" font-size="11">Emails · Roles · Notifications · CRM · LMS apply on next trigger</text>
+</svg>

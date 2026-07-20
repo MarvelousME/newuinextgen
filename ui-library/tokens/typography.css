@@ -1,0 +1,8 @@
+:root {
+  --ngt-font-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --ngt-font-display: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --ngt-text-sm: 0.875rem;
+  --ngt-text-md: 1rem;
+  --ngt-text-lg: 1.25rem;
+  --ngt-text-xl: clamp(1.5rem, 4vw, 3rem);
+}

@@ -1,0 +1,780 @@
+{
+  "schema": "ngt_flow_manifest",
+  "version": "1.0.0",
+  "generatedAt": "2026-07-06T05:58:50.243Z",
+  "source": "NextGenTutors-BeyondInfinity/docs/enterprise-blueprint/diagrams/workflows",
+  "count": 25,
+  "workflows": [
+    {
+      "id": "WF-01",
+      "file": "WF-01-parent-registration.svg",
+      "title": "Parent Registration",
+      "diagramStatus": "VERIFIED",
+      "placeholder": false,
+      "trigger": "POST parent_register",
+      "steps": [
+        "POST parent_register",
+        "Sanitize",
+        "ngc_form_queue",
+        "admin mail",
+        "optional OpenWA",
+        "Queued submission +"
+      ],
+      "decisions": [
+        "Nonce valid?"
+      ],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Visitor / parent",
+        "notify": "Admin email (+ OpenWA) + RTM staff",
+        "db": "—",
+        "audit": "parent_register_intake workflow"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "parent_register form",
+        "companionEvent": "parent_register.submitted",
+        "themeEvent": "ngt.parent_register.submitted",
+        "themeKey": "parent_register_intake",
+        "orchestrator": "PARENT_REGISTERED",
+        "formId": "parent_register",
+        "e2e": "blueprint-wf01-wf02-wf19-registration.spec.ts"
+      }
+    },
+    {
+      "id": "WF-02",
+      "file": "WF-02-student-registration.svg",
+      "title": "Student Registration",
+      "diagramStatus": "VERIFIED",
+      "placeholder": false,
+      "trigger": "POST",
+      "steps": [
+        "POST",
+        "Sanitize",
+        "queue",
+        "mail",
+        "OpenWA",
+        "Queued submission +"
+      ],
+      "decisions": [
+        "Nonce valid?"
+      ],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Visitor / student",
+        "notify": "Admin email (+ OpenWA) + RTM staff",
+        "db": "—",
+        "audit": "student_register_intake workflow"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "student_register form",
+        "companionEvent": "student_register.submitted",
+        "themeEvent": "ngt.student_register.submitted",
+        "themeKey": "student_register_intake",
+        "orchestrator": "STUDENT_REGISTERED",
+        "formId": "student_register",
+        "e2e": "blueprint-wf01-wf02-wf19-registration.spec.ts"
+      }
+    },
+    {
+      "id": "WF-03",
+      "file": "WF-03-tutor-registration.svg",
+      "title": "Tutor Registration",
+      "diagramStatus": "VERIFIED",
+      "placeholder": false,
+      "trigger": "POST become_tutor form",
+      "steps": [
+        "POST become_tutor form",
+        "Queue",
+        "mail",
+        "bi_form_submitted",
+        "ngt.tutor_application.submitted",
+        "Queue + workflow"
+      ],
+      "decisions": [
+        "Nonce valid?"
+      ],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Tutor applicant",
+        "notify": "RTM + admin mail",
+        "db": "—",
+        "audit": "tutor_application_review"
+      },
+      "integrateSpec": "workflow-01-tutor-onboarding",
+      "runtimeBinding": {
+        "trigger": "become_tutor form",
+        "companionEvent": "tutor_application.submitted",
+        "themeEvent": "ngt.tutor_application.submitted",
+        "themeKey": "tutor_application_review",
+        "orchestrator": "TUTOR_REGISTERED",
+        "formId": "become_tutor",
+        "e2e": "blueprint-wf03-tutor-registration.spec.ts"
+      }
+    },
+    {
+      "id": "WF-04",
+      "file": "WF-04-tutor-approval.svg",
+      "title": "Tutor Approval",
+      "diagramStatus": "VERIFIED (theme runtime) / PARTIAL (user must exist)",
+      "placeholder": false,
+      "trigger": "ngt.tutor.approved",
+      "steps": [
+        "ngt.tutor.approved",
+        "Dispatch pack",
+        "log",
+        "add_user_role (alias ngt_tuto",
+        "tutor)",
+        "Tutor role + verified"
+      ],
+      "decisions": [
+        "User exists? Rol"
+      ],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Admin (Operations screen) or | companion bridge",
+        "notify": "RTM tutor-support",
+        "db": "—",
+        "audit": "tutor_approved_onboarding | workflow + add_user_role log"
+      },
+      "integrateSpec": "workflow-01-tutor-onboarding",
+      "runtimeBinding": {
+        "trigger": "ngt.tutor.approved",
+        "companionEvent": "tutor.approved",
+        "themeEvent": "ngt.tutor.approved",
+        "themeKey": "tutor_approved_onboarding",
+        "orchestrator": "TUTOR_APPROVED",
+        "module": "NGC_Tutor_Lifecycle"
+      }
+    },
+    {
+      "id": "WF-05",
+      "file": "WF-05-tutor-rejection.svg",
+      "title": "Tutor Rejection",
+      "diagramStatus": "PARTIAL (Companion)",
+      "placeholder": false,
+      "trigger": "ngt.tutor.rejected",
+      "steps": [
+        "ngt.tutor.rejected",
+        "TUTOR_REJECTED",
+        "NGC_Tutor_Lifecycle",
+        "FluentCRM + email",
+        "RTM tutor-support"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Admin reviewer",
+        "notify": "tutor_application_rejected theme pack",
+        "db": "tutor application status rejected",
+        "audit": "workflow-01-tutor-onboarding integrate"
+      },
+      "integrateSpec": "workflow-01-tutor-onboarding",
+      "runtimeBinding": {
+        "trigger": "ngt.tutor.rejected",
+        "companionEvent": "tutor.rejected",
+        "themeEvent": "ngt.tutor.rejected",
+        "themeKey": "tutor_application_rejected",
+        "orchestrator": "TUTOR_REJECTED",
+        "module": "NGC_Tutor_Lifecycle"
+      }
+    },
+    {
+      "id": "WF-06",
+      "file": "WF-06-tutor-resubmission.svg",
+      "title": "Tutor Re-submission",
+      "diagramStatus": "PARTIAL (Companion)",
+      "placeholder": false,
+      "trigger": "tutor.more_info_requested",
+      "steps": [
+        "tutor.more_info_requested",
+        "TUTOR_RESUBMITTED",
+        "NGC_Tutor_Lifecycle",
+        "status pending",
+        "notify admin"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Tutor applicant / admin",
+        "notify": "email adapter + RTM staff",
+        "db": "application pending review",
+        "audit": "workflow-01-tutor-onboarding integrate"
+      },
+      "integrateSpec": "workflow-01-tutor-onboarding",
+      "runtimeBinding": {
+        "trigger": "tutor resubmit",
+        "companionEvent": "tutor.more_info_requested",
+        "orchestrator": "TUTOR_RESUBMITTED",
+        "module": "NGC_Tutor_Lifecycle"
+      }
+    },
+    {
+      "id": "WF-07",
+      "file": "WF-07-tutor-matching.svg",
+      "title": "Tutor Matching",
+      "diagramStatus": "PARTIAL",
+      "placeholder": false,
+      "trigger": "ngt.find_tutor.submitt",
+      "steps": [
+        "ngt.find_tutor.submitt",
+        "Dispatch",
+        "RTM staff + booking-issues",
+        "mail",
+        "Staff notification"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Parent / staff",
+        "notify": "RTM + mail",
+        "db": "—",
+        "audit": "parent_find_tutor_intake"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "find_tutor form / match API",
+        "companionEvent": "find_tutor.submitted",
+        "themeEvent": "ngt.find_tutor.submitted",
+        "themeKey": "parent_find_tutor_intake",
+        "formId": "find_tutor",
+        "module": "NGC_Matching",
+        "e2e": "blueprint-wf07-wf10-booking-payment.spec.ts"
+      }
+    },
+    {
+      "id": "WF-08",
+      "file": "WF-08-manual-matching.svg",
+      "title": "Manual Matching",
+      "diagramStatus": "PARTIAL",
+      "placeholder": false,
+      "trigger": "Operational RTM",
+      "steps": [
+        "Operational RTM",
+        "Manual assignment external",
+        "External assignment"
+      ],
+      "decisions": [
+        "Staff judgment"
+      ],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Operations staff",
+        "notify": "RTM",
+        "db": "—",
+        "audit": "PARTIAL"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "REST matches assign",
+        "companionEvent": "match.assigned",
+        "module": "NGC_Matching",
+        "rest": "/ngc/v1/matches/{id}/assign"
+      }
+    },
+    {
+      "id": "WF-09",
+      "file": "WF-09-automated-matching.svg",
+      "title": "Automated Matching",
+      "diagramStatus": "UNKNOWN",
+      "placeholder": false,
+      "trigger": "POST /match/smart",
+      "steps": [
+        "POST /match/smart",
+        "NGC_Matching",
+        "score + rank tutors",
+        "return ranked list",
+        "no auto-assign"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "System / support API consumer",
+        "notify": "— (manual WF-08 follow-up)",
+        "db": "ngc_matches ranked candidates",
+        "audit": "PARTIAL — scoring only"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "POST /ngc/v1/match/smart",
+        "companionEvent": null,
+        "module": "NGC_Matching",
+        "rest": "/ngc/v1/match/smart",
+        "status": "deferred",
+        "gap": "Scoring implemented; auto-assign deferred — use WF-08 manual assign"
+      }
+    },
+    {
+      "id": "WF-10",
+      "file": "WF-10-booking.svg",
+      "title": "Booking Workflow",
+      "diagramStatus": "PARTIAL",
+      "placeholder": false,
+      "trigger": "amelia.booking.created",
+      "steps": [
+        "amelia.booking.created",
+        "Log",
+        "RTM booking + tutor-support",
+        "Notifications"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Parent / tutor",
+        "notify": "RTM",
+        "db": "—",
+        "audit": "amelia_booking_created"
+      },
+      "integrateSpec": "workflow-02-booking-payment",
+      "runtimeBinding": {
+        "trigger": "amelia.booking.created",
+        "themeEvent": "amelia.booking.created",
+        "themeKey": "amelia_booking_created",
+        "module": "NGC_Bookings",
+        "automation": "automation-2-booking-confirmed.json",
+        "e2e": "blueprint-wf07-wf10-booking-payment.spec.ts"
+      }
+    },
+    {
+      "id": "WF-11",
+      "file": "WF-11-payment.svg",
+      "title": "Payment Workflow",
+      "diagramStatus": "PARTIAL",
+      "placeholder": false,
+      "trigger": "woocommerce.order.comp",
+      "steps": [
+        "woocommerce.order.comp",
+        "Dispatch payment workflow",
+        "RTM alerts"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Parent / system",
+        "notify": "RTM",
+        "db": "—",
+        "audit": "woocommerce_payment_completed"
+      },
+      "integrateSpec": "workflow-02-booking-payment",
+      "runtimeBinding": {
+        "trigger": "woocommerce.order.completed",
+        "themeEvent": "woocommerce.order.completed",
+        "themeKey": "woocommerce_payment_completed",
+        "companionEvent": "payment.received",
+        "module": "NGC_Payments",
+        "automation": "automation-3-payment-complete.json",
+        "e2e": "wf02-booking-payment.spec.ts"
+      }
+    },
+    {
+      "id": "WF-12",
+      "file": "WF-12-invoice.svg",
+      "title": "Invoice Workflow",
+      "diagramStatus": "PARTIAL (Companion)",
+      "placeholder": false,
+      "trigger": "Woo order paid",
+      "steps": [
+        "Woo order paid",
+        "NGC_Invoices",
+        "invoice.issued",
+        "ngt.invoice.issued",
+        "RTM payment-issues"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Finance / WooCommerce hook",
+        "notify": "invoice_issued_notification theme pack",
+        "db": "ngc_invoices table",
+        "audit": "workflow-02-booking-payment integrate"
+      },
+      "integrateSpec": "workflow-02-booking-payment",
+      "runtimeBinding": {
+        "trigger": "ngt.invoice.issued",
+        "themeEvent": "ngt.invoice.issued",
+        "themeKey": "invoice_issued_notification",
+        "module": "NGC_Invoices"
+      }
+    },
+    {
+      "id": "WF-13",
+      "file": "WF-13-refund.svg",
+      "title": "Refund Workflow",
+      "diagramStatus": "PARTIAL (Companion)",
+      "placeholder": false,
+      "trigger": "Woo refund hook",
+      "steps": [
+        "Woo refund hook",
+        "NGC_Payments",
+        "payment.refunded",
+        "ngt.payment.refunded",
+        "RTM payment-issues"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Finance / WooCommerce",
+        "notify": "payment_refunded_alert theme pack",
+        "db": "wallet ledger adjust",
+        "audit": "workflow-02-booking-payment integrate"
+      },
+      "integrateSpec": "workflow-02-booking-payment",
+      "runtimeBinding": {
+        "trigger": "ngt.payment.refunded",
+        "themeEvent": "ngt.payment.refunded",
+        "themeKey": "payment_refunded_alert",
+        "module": "NGC_Payments"
+      }
+    },
+    {
+      "id": "WF-14",
+      "file": "WF-14-cancellation.svg",
+      "title": "Cancellation Workflow",
+      "diagramStatus": "PARTIAL (Companion)",
+      "placeholder": false,
+      "trigger": "booking.cancelled",
+      "steps": [
+        "booking.cancelled",
+        "NGC_Bookings",
+        "ngt.booking.cancelled",
+        "RTM booking-issues",
+        "Amelia sync optional"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Parent / tutor / support",
+        "notify": "booking_cancelled_alert theme pack",
+        "db": "ngc_bookings status cancelled",
+        "audit": "automation-5-cancellation.json (optional)"
+      },
+      "integrateSpec": "workflow-02-booking-payment",
+      "runtimeBinding": {
+        "trigger": "ngt.booking.cancelled",
+        "themeEvent": "ngt.booking.cancelled",
+        "themeKey": "booking_cancelled_alert",
+        "automation": "automation-5-cancellation.json"
+      }
+    },
+    {
+      "id": "WF-15",
+      "file": "WF-15-session-completion.svg",
+      "title": "Session Completion",
+      "diagramStatus": "PARTIAL",
+      "placeholder": false,
+      "trigger": "ngt.lesson.completed",
+      "steps": [
+        "ngt.lesson.completed",
+        "Log",
+        "RTM lesson-issues",
+        "Progress note"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Tutor / system",
+        "notify": "RTM",
+        "db": "—",
+        "audit": "lesson_completed_awards"
+      },
+      "integrateSpec": "workflow-04-review-rating",
+      "runtimeBinding": {
+        "trigger": "ngt.lesson.completed",
+        "themeEvent": "ngt.lesson.completed",
+        "themeKey": "lesson_completed_awards",
+        "companionEvent": "lesson.completed"
+      }
+    },
+    {
+      "id": "WF-16",
+      "file": "WF-16-tutor-payout.svg",
+      "title": "Tutor Payout",
+      "diagramStatus": "PARTIAL (Companion)",
+      "placeholder": false,
+      "trigger": "ngc_biweekly_payout_batch",
+      "steps": [
+        "ngc_biweekly_payout_batch",
+        "NGC_Payout_Scheduler",
+        "payout.calculated",
+        "ngt.payout.processed",
+        "RTM staff + tutor-support",
+        "Payout records + audit"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Finance / cron / admin",
+        "notify": "tutor_payout_processed theme pack",
+        "db": "ngc_payouts / earnings ledger",
+        "audit": "workflow-05-tutor-payout integrate spec"
+      },
+      "integrateSpec": "workflow-05-tutor-payout",
+      "runtimeBinding": {
+        "trigger": "ngc_biweekly_payout_batch cron",
+        "companionEvent": "payout.calculated",
+        "themeEvent": "ngt.payout.processed",
+        "themeKey": "tutor_payout_processed",
+        "module": "NGC_Payout_Scheduler",
+        "cli": "wp ngc run_biweekly_payout_batch",
+        "e2e": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts"
+      }
+    },
+    {
+      "id": "WF-17",
+      "file": "WF-17-parent-review.svg",
+      "title": "Parent Review",
+      "diagramStatus": "PARTIAL",
+      "placeholder": false,
+      "trigger": "UI display",
+      "steps": [
+        "UI display",
+        "Read testimonials/ratings",
+        "Display only"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Parent",
+        "notify": "—",
+        "db": "—",
+        "audit": "—"
+      },
+      "integrateSpec": "workflow-04-review-rating",
+      "runtimeBinding": {
+        "trigger": "review submit",
+        "companionEvent": "review.submitted",
+        "module": "NGC_Reviews",
+        "e2e": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts"
+      }
+    },
+    {
+      "id": "WF-18",
+      "file": "WF-18-tutor-rating.svg",
+      "title": "Tutor Rating",
+      "diagramStatus": "PARTIAL",
+      "placeholder": false,
+      "trigger": "Rating display",
+      "steps": [
+        "Rating display",
+        "Render stars from tutor data",
+        "Display"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Visitor",
+        "notify": "—",
+        "db": "—",
+        "audit": "—"
+      },
+      "integrateSpec": "workflow-04-review-rating",
+      "runtimeBinding": {
+        "trigger": "review.submitted",
+        "companionEvent": "review.submitted",
+        "module": "NGC_Reviews",
+        "e2e": "blueprint-wf16-wf17-wf18-reviews-pricing.spec.ts"
+      }
+    },
+    {
+      "id": "WF-19",
+      "file": "WF-19-support.svg",
+      "title": "Support Workflow",
+      "diagramStatus": "VERIFIED",
+      "placeholder": false,
+      "trigger": "POST contact_support",
+      "steps": [
+        "POST contact_support",
+        "Queue",
+        "mail",
+        "ngt.support.escalated",
+        "Escalation"
+      ],
+      "decisions": [
+        "Nonce valid?"
+      ],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Any user",
+        "notify": "RTM + mail",
+        "db": "—",
+        "audit": "support_escalation"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "contact_support form",
+        "companionEvent": "support.escalated",
+        "themeEvent": "ngt.support.escalated",
+        "themeKey": "support_escalation",
+        "formId": "contact_support",
+        "e2e": "blueprint-wf01-wf02-wf19-registration.spec.ts"
+      }
+    },
+    {
+      "id": "WF-20",
+      "file": "WF-20-escalation.svg",
+      "title": "Escalation Workflow",
+      "diagramStatus": "VERIFIED/PARTIAL",
+      "placeholder": false,
+      "trigger": "ngt.support.escalated",
+      "steps": [
+        "ngt.support.escalated",
+        "RTM + admin mail",
+        "Staff alert"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Support / admin",
+        "notify": "RTM + mail",
+        "db": "—",
+        "audit": "Workflow log"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "support.escalated",
+        "themeEvent": "ngt.support.escalated",
+        "themeKey": "support_escalation"
+      }
+    },
+    {
+      "id": "WF-21",
+      "file": "WF-21-crm.svg",
+      "title": "CRM Workflow",
+      "diagramStatus": "PARTIAL",
+      "placeholder": false,
+      "trigger": "FluentCRM contract",
+      "steps": [
+        "FluentCRM contract",
+        "No direct API in theme",
+        "—"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Marketing",
+        "notify": "—",
+        "db": "—",
+        "audit": "—"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "CRM adapter",
+        "module": "NGC_Fluentcrm_Adapter",
+        "automation": "fluentcrm-sequence-*.json"
+      }
+    },
+    {
+      "id": "WF-22",
+      "file": "WF-22-email.svg",
+      "title": "Email Workflow",
+      "diagramStatus": "VERIFIED",
+      "placeholder": false,
+      "trigger": "Form / wp_mail_admin",
+      "steps": [
+        "Form / wp_mail_admin",
+        "wp_mail to admin",
+        "Email"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "System",
+        "notify": "Email",
+        "db": "—",
+        "audit": "—"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "email adapter",
+        "module": "NGC_Email_Adapter"
+      }
+    },
+    {
+      "id": "WF-23",
+      "file": "WF-23-whatsapp.svg",
+      "title": "WhatsApp Workflow",
+      "diagramStatus": "VERIFIED",
+      "placeholder": false,
+      "trigger": "OpenWA send/webhook",
+      "steps": [
+        "OpenWA send/webhook",
+        "bi_openwa_*",
+        "WhatsApp msg"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "System / user",
+        "notify": "WhatsApp",
+        "db": "—",
+        "audit": "PARTIAL"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "OpenWA / WhatsApp",
+        "module": "theme/inc/openwa.php",
+        "e2e": "blueprint-wf24-reminders-homepage.spec.ts"
+      }
+    },
+    {
+      "id": "WF-24",
+      "file": "WF-24-notification.svg",
+      "title": "Notification Workflow",
+      "diagramStatus": "VERIFIED",
+      "placeholder": false,
+      "trigger": "Workflow actions",
+      "steps": [
+        "Workflow actions",
+        "Email + RTM + WhatsApp fan-out",
+        "Multi-channel"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "System",
+        "notify": "All",
+        "db": "—",
+        "audit": "bi_workflow_log"
+      },
+      "integrateSpec": "workflow-03-reminder-notification",
+      "runtimeBinding": {
+        "trigger": "session.scheduled",
+        "companionEvent": "session.scheduled",
+        "module": "NGC_Session_Reminders",
+        "cli": "wp ngc process_reminders",
+        "e2e": "blueprint-wf24-reminders-homepage.spec.ts"
+      }
+    },
+    {
+      "id": "WF-25",
+      "file": "WF-25-dashboard.svg",
+      "title": "Dashboard Workflow",
+      "diagramStatus": "PARTIAL",
+      "placeholder": false,
+      "trigger": "Login + page access",
+      "steps": [
+        "Login + page access",
+        "Shell",
+        "dashboard-rest.js",
+        "ngc/v1",
+        "Dashboard view"
+      ],
+      "decisions": [],
+      "exceptions": [],
+      "lanes": {
+        "actor": "Authenticated user",
+        "notify": "—",
+        "db": "—",
+        "audit": "—"
+      },
+      "integrateSpec": null,
+      "runtimeBinding": {
+        "trigger": "dashboard REST",
+        "rest": "/ngc/v1/dashboard/*",
+        "module": "NGC_Studio_Dashboards",
+        "e2e": "phase3 docker + dashboards"
+      }
+    }
+  ]
+}

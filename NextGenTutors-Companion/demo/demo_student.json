@@ -1,0 +1,13 @@
+{
+  "journey": "student",
+  "label": "Demo Student",
+  "source": "demo",
+  "dashboard": {
+    "assignedTutor": "Demo Approved Tutor",
+    "upcomingLessons": 2,
+    "lessonNotes": 6,
+    "homeworkItems": 3,
+    "progress": {"mathematics": 74, "science": 68},
+    "achievements": 5
+  }
+}

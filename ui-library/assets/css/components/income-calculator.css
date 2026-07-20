@@ -1,0 +1,112 @@
+/**
+ * Tutor income calculator styles.
+ *
+ * @package NGT_UI
+ */
+
+.ngt-ui-income-calculator {
+  padding: 1.5rem;
+  border-radius: var(--ngt-radius-lg, 1rem);
+  border: 1px solid var(--ngt-color-border);
+  background: var(--ngt-color-surface-2);
+  color: var(--ngt-color-text);
+  max-width: 36rem;
+}
+
+.ngt-ui-ic__title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.ngt-ui-ic__grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.ngt-ui-ic__field {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+}
+
+.ngt-ui-ic__field span {
+  font-weight: 500;
+}
+
+.ngt-ui-ic__field input[type="number"] {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--ngt-color-border);
+  border-radius: 0.5rem;
+  background: var(--ngt-color-surface);
+  color: inherit;
+}
+
+.ngt-ui-ic__field input[type="range"] {
+  width: 100%;
+  accent-color: var(--ngt-color-accent, var(--ngt-color-primary));
+}
+
+.ngt-ui-ic__field output {
+  font-variant-numeric: tabular-nums;
+  color: var(--ngt-color-accent, var(--ngt-color-primary));
+  font-weight: 600;
+}
+
+.ngt-ui-ic__results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.75rem;
+}
+
+.ngt-ui-ic__result {
+  padding: 0.85rem 1rem;
+  border-radius: 0.65rem;
+  background: var(--ngt-color-surface);
+  border: 1px solid var(--ngt-color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ngt-ui-ic__result span {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.ngt-ui-ic__result strong {
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.ngt-ui-ic__result--highlight {
+  border-color: var(--ngt-color-accent, var(--ngt-color-primary));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ngt-color-accent, var(--ngt-color-primary)) 35%, transparent);
+}
+
+.ngt-ui-ic__note {
+  margin: 1rem 0 0;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+/* Become a Tutor — dark calc section wrapper */
+.calc--ngt-ui .calc__inner--shortcode {
+  padding: 1.5rem;
+}
+
+.calc--ngt-ui .ngt-ui-ic--become-a-tutor {
+  background: rgba(15, 28, 46, 0.92);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f5f5f5;
+}
+
+.calc--ngt-ui .ngt-ui-ic--become-a-tutor .ngt-ui-ic__title {
+  color: #fff;
+}
+
+.calc--ngt-ui .calc__cta-wrap {
+  margin-top: 1.25rem;
+}

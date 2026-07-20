@@ -1,0 +1,12 @@
+{
+  "journey": "tutor_applicant",
+  "label": "Demo Tutor Applicant",
+  "source": "demo",
+  "dashboard": {
+    "profileCompletion": 82,
+    "documentUploadStatus": "pending_review",
+    "vettingStatus": "submitted",
+    "rejectionResubmissionDemo": true,
+    "approvalDemo": true
+  }
+}

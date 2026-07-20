@@ -1,0 +1,7 @@
+# Packaging excludes — keep deploy artifacts lean
+content-enhancement/_extracted/
+audit-reports/
+*.zip
+.git/
+node_modules/
+.cursor/

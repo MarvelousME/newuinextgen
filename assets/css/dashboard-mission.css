@@ -1,0 +1,110 @@
+/**
+ * Mission dashboard styling — from ngt-dashboard.html + control-plane preview tokens.
+ */
+.bi-mission-dashboard {
+  --ngt-navy: #092746;
+  --ngt-lime: #aece61;
+  --ngt-mission-gold: #c9a84c;
+  --ngt-mission-surface: #f5f7fa;
+}
+
+.bi-mission-dashboard .bi-theme-content {
+  background: var(--ngt-mission-surface);
+}
+
+.bi-mission-dashboard .ngt-hero.bi-hero {
+  min-height: 320px;
+}
+
+.bi-mission-dashboard .ngt-hero__bg.bi-hero__bg {
+  background: linear-gradient(120deg, var(--ngt-navy), #0c3258) !important;
+}
+
+.bi-mission-dashboard .ngt-hero__bg.bi-hero__bg--image::after {
+  background: linear-gradient(120deg, rgba(9, 39, 70, 0.92), rgba(12, 50, 88, 0.88));
+}
+
+.bi-mission-dashboard .bi-dash-kpi,
+.bi-mission-dashboard .bi-dashboard-rest .bi-dash-kpi,
+.bi-mission-dashboard .ngt-card.bi-dash-kpi {
+  border: 1px solid #cfd8e3;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(9, 39, 70, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bi-mission-dashboard .bi-dash-kpi:hover,
+.bi-mission-dashboard .ngt-card.bi-dash-kpi:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(9, 39, 70, 0.12);
+}
+
+.bi-mission-dashboard .bi-dash-kpi__value,
+.bi-mission-dashboard .bi-dash-kpi__label {
+  color: var(--ngt-navy);
+}
+
+.bi-mission-dashboard .bi-dash-kpi__value {
+  font-family: Sora, Inter, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.bi-mission-dashboard .bi-dash-kpi__label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #7c8aa0;
+}
+
+.bi-mission-dashboard .bi-dashboard-rest__heading {
+  font-family: Sora, Inter, sans-serif;
+  color: var(--ngt-navy);
+}
+
+.bi-mission-dashboard .bi-control-plane-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(120deg, var(--ngt-navy), #0c3258);
+  color: #fff;
+  border-radius: 14px;
+  padding: 18px 22px;
+  margin-bottom: 24px;
+}
+
+.bi-mission-dashboard .bi-control-plane-bar h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.bi-mission-dashboard .bi-brand-chip {
+  background: var(--ngt-lime);
+  color: var(--ngt-navy);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.bi-mission-dashboard .bi-dash-session {
+  border-bottom: 1px solid #eef1f5;
+  padding: 12px 0;
+}
+
+.bi-mission-dashboard .bi-dash-session__status {
+  background: rgba(47, 158, 111, 0.16);
+  color: #2f9e6f;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.bi-mission-dashboard .ngt-section {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}

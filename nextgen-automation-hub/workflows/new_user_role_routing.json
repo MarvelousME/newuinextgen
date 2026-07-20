@@ -1,0 +1,19 @@
+{
+  "key": "new_user_role_routing",
+  "name": "New User Role Routing",
+  "enabled": true,
+  "trigger": {
+    "event": "wp.user_registered"
+  },
+  "actions": [
+    {
+      "type": "log_event",
+      "source": "wordpress"
+    },
+    {
+      "type": "create_rtm_message",
+      "room": "staff",
+      "message": "New WordPress user registered: User ID {{user_id}}."
+    }
+  ]
+}

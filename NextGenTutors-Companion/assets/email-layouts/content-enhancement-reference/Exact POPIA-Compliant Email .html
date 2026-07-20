@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-ZA" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{subject}}</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+    body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; background-color: #f4f6f8; }
+    @media screen and (max-width: 600px) {
+      .container { width: 100% !important; max-width: 100% !important; }
+      .mobile-padding { padding: 15px !important; }
+      .mobile-stack { display: block !important; width: 100% !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f4f6f8;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f4f6f8;">
+    <tr>
+      <td align="center" valign="top" style="padding: 20px 0;">
+        <table role="presentation" class="container" width="600" cellspacing="0" cellpadding="0" border="0" style="background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+          
+          <!-- Header -->
+          <tr>
+            <td align="center" style="background-color:#0066cc; padding: 30px 20px;">
+              <h1 style="color:#ffffff; margin:0; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:24px; font-weight:600;">NextGen Tutors</h1>
+              <p style="color:#e0e7ff; margin:8px 0 0; font-size:14px; font-family:inherit;">Accessible. Verified. South African.</p>
+            </td>
+          </tr>
+
+          <!-- Body Content -->
+          <tr>
+            <td class="mobile-padding" style="padding: 30px 40px;">
+              <h2 style="color:#0f172a; font-family:inherit; font-size:20px; margin:0 0 16px;">Hello {{contact.first_name}},</h2>
+              <p style="color:#334155; font-family:inherit; font-size:15px; line-height:1.6; margin:0 0 20px;">
+                {{body_content}}
+              </p>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 24px 0;">
+                <tr>
+                  <td align="center" style="background-color:#00c896; border-radius:6px;">
+                    <a href="{{action_url}}" style="display:inline-block; padding:12px 28px; color:#0f172a; font-family:inherit; font-size:15px; font-weight:600; text-decoration:none;">
+                      {{cta_text}}
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="color:#475569; font-family:inherit; font-size:14px; line-height:1.6; margin:0;">
+                If you have questions, reply to this email or visit our <a href="https://nextgentutors.co.za/support" style="color:#0066cc; text-decoration:underline;">Support Hub</a>.
+              </p>
+            </td>
+          </tr>
+
+          <!-- POPIA Compliance Footer -->
+          <tr>
+            <td style="background-color:#f8fafc; padding: 24px 40px; border-top:1px solid #e2e8f0;">
+              <p style="color:#64748b; font-family:inherit; font-size:13px; line-height:1.5; margin:0 0 12px;">
+                <strong>POPIA Consent & Data Rights:</strong><br>
+                You are receiving this email because you explicitly consented to data processing on {{contact.custom.popia_consent_date}} at checkout/registration. 
+                Your data is encrypted, retained for service duration, and never sold to third parties.
+              </p>
+              <p style="color:#64748b; font-family:inherit; font-size:13px; line-height:1.5; margin:0 0 12px;">
+                <strong>Your Rights (POPIA §24):</strong> Access, correct, or delete your personal information at any time.
+                <a href="{{contact.manage_preferences_url}}" style="color:#0066cc; text-decoration:underline;">Manage Preferences</a> | 
+                <a href="{{contact.unsubscribe_url}}" style="color:#0066cc; text-decoration:underline;">Withdraw Consent</a>
+              </p>
+              <p style="color:#94a3b8; font-family:inherit; font-size:12px; line-height:1.4; margin:0 0 8px;">
+                NextGen Tutors (Pty) Ltd | 42 Innovation Drive, Sandton, Johannesburg, 2196, South Africa<br>
+                Registration: 2025/123456/07 | PAIA Manual & Privacy Policy: <a href="https://nextgentutors.co.za/privacy-policy" style="color:#64748b; text-decoration:underline;">View</a>
+              </p>
+              <p style="color:#94a3b8; font-family:inherit; font-size:12px; line-height:1.4; margin:0;">
+                © {{year}} NextGen Tutors. All rights reserved.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "schema": "nextgen.workflow.v2",
+  "id": "NGT-V2-011",
+  "slug": "support-escalated",
+  "name": "Support Escalated",
+  "trigger": {
+    "event": "supportboard_human_escalation",
+    "source": "Support Board"
+  },
+  "conditions": [],
+  "actions": [
+    {
+      "name": "create_support_case",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "notify_support_agent",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "create_fluent_support_ticket",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    },
+    {
+      "name": "post_to_support_escalation_room",
+      "status": "definition_only",
+      "handler": "manual_or_connector"
+    }
+  ],
+  "target_plugins": [
+    "NextGen Platform Foundation",
+    "NextGen Command Center",
+    "AutomatorWP",
+    "FluentCRM",
+    "Support Board",
+    "Fluent Support",
+    "WooCommerce",
+    "Amelia",
+    "GamiPress"
+  ],
+  "import_mode": "definition_record",
+  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+}

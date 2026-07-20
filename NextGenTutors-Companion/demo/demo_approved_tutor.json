@@ -1,0 +1,14 @@
+{
+  "journey": "approved_tutor",
+  "label": "Demo Approved Tutor",
+  "source": "demo",
+  "dashboard": {
+    "matchRequests": 4,
+    "acceptedMatches": 3,
+    "bookingCalendarItems": 6,
+    "lessonsCompleted": 12,
+    "earnings": 8420,
+    "payoutHistory": 3,
+    "rating": 4.8
+  }
+}

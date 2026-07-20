@@ -1,0 +1,50 @@
+{
+  "name": "NGT — New Lead Nurture Sequence",
+  "description": "5 emails over 14 days for new parent enquiries. Triggered when contact is added to 'New Lead' list.",
+  "status": "active",
+  "type": "sequence",
+  "trigger_type": "list",
+  "trigger_id": "REPLACE_WITH_NEW_LEAD_LIST_ID",
+  "emails": [
+    {
+      "sequence_order": 1,
+      "delay_unit": "minutes",
+      "delay_value": 10,
+      "subject": "Welcome to NextGen Tutors — here's what happens next",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>Thanks for reaching out to NextGen Tutors. We're South Africa's most trusted affordable tutoring network, and we're here to help your learner succeed.</p><p>Here's what to expect over the next 24 hours:</p><ol><li>A member of our team will review your request</li><li>We'll match you with 2–3 vetted tutors who specialise in your learner's subject and grade</li><li>You'll receive tutor profiles to review before making any commitment</li></ol><p>In the meantime, why not browse our <a href='https://nextgentutors.co.za/subjects'>full subject catalogue</a>?</p><p>Warm regards,<br>The NextGen Tutors Team</p>",
+      "design": "plain"
+    },
+    {
+      "sequence_order": 2,
+      "delay_unit": "days",
+      "delay_value": 2,
+      "subject": "How we match you with the perfect tutor",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>Every learner is different — so is every tutor. Here's how our matching process works:</p><ul><li><strong>Subject expertise:</strong> We only match tutors who have demonstrable results in your learner's specific subject and grade level.</li><li><strong>Location & format:</strong> Whether you prefer online or in-person, we match accordingly.</li><li><strong>Personality fit:</strong> We consider learning style, personality, and goals.</li></ul><p>Our tutors are vetted, reference-checked, and approved by our academic team before joining the platform.</p><p><a href='https://nextgentutors.co.za/find-a-tutor'>Browse available tutors →</a></p>",
+      "design": "plain"
+    },
+    {
+      "sequence_order": 3,
+      "delay_unit": "days",
+      "delay_value": 5,
+      "subject": "How we vet every NextGen Tutor",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>Trust matters — especially when it comes to your child's education. Here's our vetting process:</p><ol><li>Online application with qualifications and subject proof</li><li>Criminal background check and ID verification</li><li>Subject knowledge assessment</li><li>Reference check from previous students or institutions</li><li>Trial lesson review by our academic team</li></ol><p>Only tutors who pass all 5 stages are approved to teach on the NextGen platform.</p><p>Questions? Reply to this email anytime — a real person reads every message.</p>",
+      "design": "plain"
+    },
+    {
+      "sequence_order": 4,
+      "delay_unit": "days",
+      "delay_value": 9,
+      "subject": "How Thabo went from a 42% to a 71% in 8 weeks",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>Thabo was a Grade 11 learner in Soweto struggling with Pure Mathematics. After just 8 weeks of weekly sessions with his NextGen tutor, he improved from 42% to 71% — and gained the confidence to tackle Paper 2 without anxiety.</p><p>His mother said: <em>\"I wish we had found NextGen Tutors in Grade 9. The difference is night and day.\"</em></p><p>We'd love to write a similar story for your learner.</p><p><a href='https://nextgentutors.co.za/find-a-tutor'>Find your tutor today →</a></p>",
+      "design": "plain"
+    },
+    {
+      "sequence_order": 5,
+      "delay_unit": "days",
+      "delay_value": 14,
+      "subject": "Last chance — spots filling fast this term",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>We know life gets busy, and following up on tutoring can slip down the list. We just wanted to remind you that our tutors often fill their available slots quickly — especially as exams approach.</p><p>If you'd like to lock in a spot for {{contact.first_name}}, now is a great time.</p><ul><li>✅ No lock-in contract for your first month</li><li>✅ First session satisfaction guarantee</li><li>✅ Online or in-person across all 9 provinces</li></ul><p><a href='https://nextgentutors.co.za/find-a-tutor'>Book your first session →</a></p><p>If you no longer need our help, no worries at all — you can <a href='{{unsubscribe_url}}'>unsubscribe here</a>.</p>",
+      "design": "plain"
+    }
+  ]
+}

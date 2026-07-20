@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360" role="img" aria-label="TUTOR_APPROVED trigger flow">
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4A5568"/></marker></defs>
+  <rect width="100%" height="100%" fill="#FAFBFC"/>
+  
+    <text x="24" y="36" font-family="Sora,Segoe UI,sans-serif" font-size="20" font-weight="600" fill="#1A202C">Tutor Approved</text>
+    <text x="24" y="58" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#4A5568">ngt.tutor.approved</text>
+    <rect x="710" y="20" width="146" height="28" rx="14" fill="#D1FAE5" stroke="#10B981" stroke-width="1.5"/>
+    <text x="783" y="39" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="11" font-weight="600" fill="#1A202C">VERIFIED</text>
+    
+    <rect x="48" y="120" width="170" height="70" rx="8" fill="#E8F1FB" stroke="#0066CC" stroke-width="1.5"/>
+    <text x="133" y="142" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="133" dy="0">Source</tspan><tspan x="133" dy="16">Admin Operations</tspan></text>
+    <line x1="218" y1="155" x2="246" y2="155" stroke="#4A5568" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="246" y="120" width="170" height="70" rx="8" fill="#FFFFFF" stroke="#0066CC" stroke-width="1.5"/>
+    <text x="331" y="142" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="331" dy="0">Dispatch</tspan><tspan x="331" dy="16">bi_workflow_dispatch()</tspan></text>
+    <line x1="416" y1="155" x2="444" y2="155" stroke="#4A5568" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="444" y="120" width="170" height="70" rx="8" fill="#FFFFFF" stroke="#0066CC" stroke-width="1.5"/>
+    <text x="529" y="142" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="529" dy="0">Actions</tspan><tspan x="529" dy="16">log · RTM · mail · role</tspan></text>
+    <line x1="614" y1="155" x2="642" y2="155" stroke="#4A5568" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="642" y="120" width="170" height="70" rx="8" fill="#FFFFFF" stroke="#0066CC" stroke-width="1.5"/>
+    <text x="727" y="142" text-anchor="middle" font-family="Inter,Segoe UI,sans-serif" font-size="12" fill="#1A202C"><tspan x="727" dy="0">Queues</tspan><tspan x="727" dy="16">bi_rtm_queue / ngc_form_</tspan></text>
+    <text x="440" y="250" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#4A5568">Audit: bi_workflow_log · Notify: email / RTM / OpenWA</text>
+</svg>

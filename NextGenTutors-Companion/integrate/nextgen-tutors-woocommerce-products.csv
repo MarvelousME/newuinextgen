@@ -1,0 +1,17 @@
+Type,SKU,Name,Published,Is featured?,Visibility in catalog,Short description,Description,Regular price,Categories,Virtual
+simple,NGT-ONLINE-1HR,Online Tutoring - Single 1 Hour Lesson,1,0,visible,Single online tutoring lesson for Grade 1 to tertiary learners.,Single online tutoring lesson for Grade 1 to tertiary learners.,320,Online Tutoring,1
+simple,NGT-INPERSON-1HR,In-Person Tutoring - Single 1 Hour Lesson,1,0,visible,Single in-person tutoring lesson where the tutor travels to the learner.,Single in-person tutoring lesson where the tutor travels to the learner.,350,In-Person Tutoring,1
+simple,NGT-TERTIARY-1HR,Tertiary Tutoring - Single 1 Hour Lesson,1,0,visible,Single tertiary tutoring lesson.,Single tertiary tutoring lesson.,500,Tertiary Tutoring,1
+simple,NGT-ONLINE-4-1TO3,Online Tutoring - 4 Lessons Monthly - 1 to 3 Month Commitment,1,0,visible,4 online lessons per month at R320/lesson.,4 online lessons per month at R320/lesson.,1280,Online Tutoring,1
+simple,NGT-ONLINE-8-1TO3,Online Tutoring - 8 Lessons Monthly - 1 to 3 Month Commitment,1,0,visible,8 online lessons per month at R320/lesson.,8 online lessons per month at R320/lesson.,2560,Online Tutoring,1
+simple,NGT-ONLINE-4-3TO12,Online Tutoring - 4 Lessons Monthly - 3 to 12 Month Commitment,1,0,visible,4 online lessons per month at R300/lesson.,4 online lessons per month at R300/lesson.,1200,Online Tutoring,1
+simple,NGT-ONLINE-8-3TO12,Online Tutoring - 8 Lessons Monthly - 3 to 12 Month Commitment,1,0,visible,8 online lessons per month at R300/lesson.,8 online lessons per month at R300/lesson.,2400,Online Tutoring,1
+simple,NGT-INPERSON-4-1TO3,In-Person Tutoring - 4 Lessons Monthly - 1 to 3 Month Commitment,1,0,visible,4 in-person lessons per month at R350/lesson.,4 in-person lessons per month at R350/lesson.,1400,In-Person Tutoring,1
+simple,NGT-INPERSON-8-1TO3,In-Person Tutoring - 8 Lessons Monthly - 1 to 3 Month Commitment,1,0,visible,8 in-person lessons per month at R350/lesson.,8 in-person lessons per month at R350/lesson.,2800,In-Person Tutoring,1
+simple,NGT-INPERSON-4-3TO12,In-Person Tutoring - 4 Lessons Monthly - 3 to 12 Month Commitment,1,0,visible,4 in-person lessons per month at R320/lesson.,4 in-person lessons per month at R320/lesson.,1280,In-Person Tutoring,1
+simple,NGT-INPERSON-8-3TO12,In-Person Tutoring - 8 Lessons Monthly - 3 to 12 Month Commitment,1,0,visible,8 in-person lessons per month at R320/lesson.,8 in-person lessons per month at R320/lesson.,2560,In-Person Tutoring,1
+simple,NGT-TERTIARY-4,Tertiary Tutoring - 4 Lessons Monthly,1,0,visible,4 tertiary lessons per month at R500/lesson.,4 tertiary lessons per month at R500/lesson.,2000,Tertiary Tutoring,1
+simple,NGT-TERTIARY-8,Tertiary Tutoring - 8 Lessons Monthly,1,0,visible,8 tertiary lessons per month at R500/lesson.,8 tertiary lessons per month at R500/lesson.,4000,Tertiary Tutoring,1
+simple,NGT-HIGHFREQ-12,High-Frequency Tutoring - 12 Lessons Monthly,1,0,visible,12 lessons per month at R300/lesson.,12 lessons per month at R300/lesson.,3600,High-Frequency Tutoring,1
+simple,NGT-HIGHFREQ-16,High-Frequency Tutoring - 16 Lessons Monthly,1,0,visible,16 lessons per month at R300/lesson.,16 lessons per month at R300/lesson.,4800,High-Frequency Tutoring,1
+simple,NGT-HIGHFREQ-20,High-Frequency Tutoring - 20 Lessons Monthly,1,0,visible,20 lessons per month at R300/lesson.,20 lessons per month at R300/lesson.,6000,High-Frequency Tutoring,1

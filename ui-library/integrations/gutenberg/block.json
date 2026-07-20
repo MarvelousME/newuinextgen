@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "ngt-ui/component",
+  "title": "NGT UI Component",
+  "category": "widgets",
+  "icon": "art",
+  "description": "Renders a NextGen UI Library component via the canonical PHP renderer.",
+  "keywords": ["nextgen", "magic ui", "ngt"],
+  "textdomain": "ngt-ui",
+  "attributes": {
+    "component": {
+      "type": "string",
+      "default": "magic-card"
+    },
+    "text": {
+      "type": "string",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    },
+    "items": {
+      "type": "string",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "content": {
+      "type": "string",
+      "default": ""
+    },
+    "settingsJson": {
+      "type": "string",
+      "default": "{}"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "editorScript": "ngt-ui-block-editor"
+}

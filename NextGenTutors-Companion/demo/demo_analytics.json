@@ -1,0 +1,16 @@
+{
+  "source": "demo",
+  "metrics": {
+    "total_users": 48,
+    "total_parents": 14,
+    "total_students": 22,
+    "total_tutors": 12,
+    "active_bookings": 10,
+    "completed_lessons": 40,
+    "revenue": 152000,
+    "conversion_rate": 9.2
+  },
+  "device_breakdown": {"desktop": 21, "mobile": 19, "tablet": 8},
+  "browser_breakdown": {"chrome": 27, "safari": 10, "firefox": 7, "edge": 4},
+  "location_breakdown": {"ZA": 38, "BW": 5, "NA": 3, "ZM": 2}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "012-TUTOR-LESSON-NOTE-CREATED",
+  "name": "Tutor Lesson Note Created",
+  "trigger": "lesson_note_created",
+  "actions": [
+    "link_to_student",
+    "link_to_booking",
+    "notify_parent_optional"
+  ],
+  "import_target": "NextGen Completion Suite",
+  "status": "draft",
+  "version": "1.0.0"
+}

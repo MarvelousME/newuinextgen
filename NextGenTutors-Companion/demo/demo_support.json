@@ -1,0 +1,12 @@
+{
+  "journey": "support",
+  "label": "Demo Support",
+  "source": "demo",
+  "dashboard": {
+    "openTickets": 6,
+    "escalations": 2,
+    "avgResolutionHours": 4.2,
+    "bookingIssues": 1,
+    "paymentIssues": 1
+  }
+}

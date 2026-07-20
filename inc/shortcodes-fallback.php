@@ -1,0 +1,355 @@
+<?php
+/**
+ * ngc_* shortcode fallbacks — registered only when nextgencompanion is inactive.
+ *
+ * @package BeyondInfinity
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+/**
+ * Shortcode tags the theme requires (must match companion registry).
+ *
+ * @return string[]
+ */
+function bi_required_ngc_shortcodes() {
+    return [
+        'ngc_find_tutor_form',
+        'ngc_become_tutor_form',
+        'ngc_contact_support_form',
+        'ngc_parent_register_child_form',
+        'ngc_student_register_form',
+        'ngc_login_form',
+        'ngc_forgot_password_form',
+        'ngc_parent_dashboard',
+        'ngc_student_dashboard',
+        'ngc_tutor_dashboard',
+        'ngc_admin_dashboard',
+    ];
+}
+
+add_action( 'init', 'bi_register_ngc_shortcode_fallbacks', 99 );
+
+/**
+ * Register theme-owned fallbacks when companion did not register shortcodes.
+ */
+function bi_register_ngc_shortcode_fallbacks() {
+    if ( class_exists( 'NGC_Plugin', false ) ) {
+        return;
+    }
+
+    $map = [
+        'ngc_find_tutor_form'            => 'bi_ngc_form_find_tutor',
+        'ngc_become_tutor_form'          => 'bi_ngc_form_become_tutor',
+        'ngc_contact_support_form'       => 'bi_ngc_form_contact_support',
+        'ngc_parent_register_child_form' => 'bi_ngc_form_parent_register',
+        'ngc_student_register_form'      => 'bi_ngc_form_student_register',
+        'ngc_login_form'                 => 'bi_ngc_form_login',
+        'ngc_forgot_password_form'       => 'bi_ngc_form_forgot_password',
+        'ngc_parent_dashboard'           => 'bi_ngc_dashboard_shortcode',
+        'ngc_student_dashboard'          => 'bi_ngc_dashboard_shortcode',
+        'ngc_tutor_dashboard'            => 'bi_ngc_dashboard_shortcode',
+        'ngc_admin_dashboard'            => 'bi_ngc_dashboard_shortcode',
+    ];
+
+    foreach ( $map as $tag => $callback ) {
+        if ( ! shortcode_exists( $tag ) && is_callable( $callback ) ) {
+            add_shortcode( $tag, $callback );
+        }
+    }
+
+    if ( ! has_action( 'admin_post_nopriv_ngc_form_submit', 'bi_ngc_handle_form_submit' ) ) {
+        add_action( 'admin_post_nopriv_ngc_form_submit', 'bi_ngc_handle_form_submit' );
+        add_action( 'admin_post_ngc_form_submit', 'bi_ngc_handle_form_submit' );
+    }
+}
+
+/**
+ * @param string               $form_id Form key.
+ * @param string               $title   Heading.
+ * @param array<int, array<string, mixed>> $fields  Fields.
+ * @param array<string, string>            $values  Pre-filled field values keyed by name.
+ * @return string
+ */
+function bi_ngc_field_validate_rules( $field ) {
+	$rules = [];
+	if ( ! empty( $field['validate'] ) ) {
+		return (string) $field['validate'];
+	}
+	if ( ! empty( $field['required'] ) ) {
+		$rules[] = 'required';
+	}
+	$type = $field['type'] ?? 'text';
+	if ( 'email' === $type ) {
+		$rules[] = 'email';
+	}
+	if ( 'tel' === $type ) {
+		$rules[] = 'sa-phone';
+	}
+	if ( 'textarea' === $type && ! empty( $field['required'] ) ) {
+		$rules[] = 'min-length:10';
+	} elseif ( ! empty( $field['required'] ) && 'select' !== $type ) {
+		$rules[] = 'min-length:2';
+	}
+	$rules[] = 'no-script';
+	return implode( '|', array_unique( array_filter( $rules ) ) );
+}
+
+function bi_ngc_render_form( $form_id, $title, $fields, $values = [] ) {
+    ob_start();
+    ?>
+    <form class="ngc-form ngt-form bi-ngc-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" novalidate>
+      <input type="hidden" name="action" value="ngc_form_submit" />
+      <input type="hidden" name="ngc_form_id" value="<?php echo esc_attr( $form_id ); ?>" />
+      <?php wp_nonce_field( 'ngc_form_' . $form_id, 'ngc_form_nonce' ); ?>
+      <?php if ( $title ) : ?>
+        <h3 class="ngc-form__title"><?php echo esc_html( $title ); ?></h3>
+      <?php endif; ?>
+      <?php foreach ( $fields as $field ) :
+          $fname = $field['name'] ?? '';
+          $fval  = isset( $values[ $fname ] ) ? (string) $values[ $fname ] : '';
+          $rules = bi_ngc_field_validate_rules( $field );
+          ?>
+        <div class="ngc-field-group ngt-form-group">
+          <label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_html( $field['label'] ); ?></label>
+          <?php if ( 'textarea' === ( $field['type'] ?? 'text' ) ) : ?>
+            <textarea id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $fname ); ?>" rows="<?php echo esc_attr( (string) ( $field['rows'] ?? 4 ) ); ?>" <?php echo $rules ? 'data-validate="' . esc_attr( $rules ) . '"' : ''; ?> <?php echo ! empty( $field['required'] ) ? 'required aria-required="true"' : ''; ?>><?php echo esc_textarea( $fval ); ?></textarea>
+          <?php elseif ( 'select' === ( $field['type'] ?? '' ) ) : ?>
+            <select id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $fname ); ?>" <?php echo $rules ? 'data-validate="' . esc_attr( $rules ) . '"' : ''; ?> <?php echo ! empty( $field['required'] ) ? 'required aria-required="true"' : ''; ?>>
+              <?php foreach ( (array) ( $field['options'] ?? [] ) as $value => $label ) : ?>
+                <option value="<?php echo esc_attr( (string) $value ); ?>" <?php selected( $fval, (string) $value ); ?>><?php echo esc_html( $label ); ?></option>
+              <?php endforeach; ?>
+            </select>
+          <?php else : ?>
+            <input type="<?php echo esc_attr( $field['type'] ?? 'text' ); ?>" id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $fname ); ?>" value="<?php echo esc_attr( $fval ); ?>" <?php echo $rules ? 'data-validate="' . esc_attr( $rules ) . '"' : ''; ?> <?php echo ! empty( $field['required'] ) ? 'required aria-required="true"' : ''; ?> />
+          <?php endif; ?>
+          <span class="ngc-field-error" aria-live="polite"></span>
+        </div>
+      <?php endforeach; ?>
+      <button type="submit" class="ngt-btn ngt-btn--primary"><?php esc_html_e( 'Submit', 'beyondinfinity' ); ?></button>
+    </form>
+    <?php
+    return (string) ob_get_clean();
+}
+
+/** @return string */
+function bi_ngc_form_find_tutor() {
+    $values = [];
+    if ( function_exists( 'bi_get_search_query_arg' ) ) {
+        $subject = bi_get_search_query_arg( 'subject' );
+        if ( $subject && function_exists( 'bi_subject_label_from_slug' ) ) {
+            $values['subject'] = bi_subject_label_from_slug( $subject );
+        }
+        $location = bi_get_search_query_arg( 'location' );
+        if ( $location ) {
+            $values['notes'] = sprintf(
+                /* translators: %s: city or suburb */
+                __( 'Preferred area: %s', 'beyondinfinity' ),
+                $location
+            );
+        }
+    }
+
+    return bi_ngc_render_form( 'find_tutor', '', [
+        [ 'id' => 'bi-ngc-parent-name', 'name' => 'parent_name', 'label' => __( 'Parent / guardian name', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'Phone', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-grade', 'name' => 'grade', 'type' => 'select', 'label' => __( 'Learner grade', 'beyondinfinity' ), 'options' => [ '' => __( 'Select…', 'beyondinfinity' ), 'primary' => __( 'Primary', 'beyondinfinity' ), 'high' => __( 'High school', 'beyondinfinity' ), 'matric' => __( 'Matric', 'beyondinfinity' ) ], 'required' => true ],
+        [ 'id' => 'bi-ngc-subject', 'name' => 'subject', 'label' => __( 'Subject needed', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-notes', 'name' => 'notes', 'type' => 'textarea', 'label' => __( 'Additional details', 'beyondinfinity' ) ],
+    ], $values );
+}
+
+/** @return string */
+function bi_ngc_form_become_tutor() {
+    return bi_ngc_render_form( 'become_tutor', '', [
+        [ 'id' => 'bi-ngc-t-name', 'name' => 'full_name', 'label' => __( 'Full name', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-t-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-t-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'Phone', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-t-subjects', 'name' => 'subjects', 'label' => __( 'Subjects you teach', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-t-exp', 'name' => 'experience', 'type' => 'textarea', 'label' => __( 'Teaching experience', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-t-province', 'name' => 'province', 'label' => __( 'Province', 'beyondinfinity' ), 'required' => true ],
+    ] );
+}
+
+/** @return string */
+function bi_ngc_form_contact_support() {
+    return bi_ngc_render_form( 'contact_support', '', [
+        [ 'id' => 'bi-ngc-s-name', 'name' => 'name', 'label' => __( 'Your name', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-s-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-s-topic', 'name' => 'topic', 'type' => 'select', 'label' => __( 'Topic', 'beyondinfinity' ), 'options' => [ 'general' => __( 'General', 'beyondinfinity' ), 'billing' => __( 'Billing', 'beyondinfinity' ), 'safety' => __( 'Safety', 'beyondinfinity' ) ], 'required' => true ],
+        [ 'id' => 'bi-ngc-s-message', 'name' => 'message', 'type' => 'textarea', 'label' => __( 'Message', 'beyondinfinity' ), 'required' => true ],
+    ] );
+}
+
+/** @return string */
+function bi_ngc_form_parent_register() {
+    return bi_ngc_render_form( 'parent_register', __( 'Register a learner (parent / guardian)', 'beyondinfinity' ), [
+        [ 'id' => 'bi-ngc-p-name', 'name' => 'parent_name', 'label' => __( 'Your name', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-p-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-p-child', 'name' => 'child_name', 'label' => __( 'Learner name', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-p-grade', 'name' => 'grade', 'label' => __( 'Grade', 'beyondinfinity' ), 'required' => true ],
+    ] );
+}
+
+/** @return string */
+function bi_ngc_form_student_register() {
+    return bi_ngc_render_form( 'student_register', __( 'Student self-registration', 'beyondinfinity' ), [
+        [ 'id' => 'bi-ngc-st-name', 'name' => 'full_name', 'label' => __( 'Full name', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-st-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-st-grade', 'name' => 'grade', 'label' => __( 'Grade / year', 'beyondinfinity' ), 'required' => true ],
+    ] );
+}
+
+/** @return string */
+function bi_ngc_form_login() {
+    if ( is_user_logged_in() ) {
+        return '<p class="ngc-form-notice">' . esc_html__( 'You are already signed in.', 'beyondinfinity' ) . '</p>';
+    }
+    $redirect = home_url( '/student-dashboard' );
+    if ( ! empty( $_GET['redirect_to'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $redirect = bi_validate_internal_redirect( wp_unslash( $_GET['redirect_to'] ), $redirect ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    }
+    ob_start();
+    wp_login_form( [
+        'echo'           => true,
+        'redirect'       => $redirect,
+        'form_id'        => 'ngc-loginform',
+        'label_username' => __( 'Email or username', 'beyondinfinity' ),
+        'label_password' => __( 'Password', 'beyondinfinity' ),
+        'label_remember' => __( 'Remember me', 'beyondinfinity' ),
+        'label_log_in'   => __( 'Sign in', 'beyondinfinity' ),
+    ] );
+    return '<div class="ngc-form ngc-form--login">' . ob_get_clean() . '</div>';
+}
+
+/** @return string */
+function bi_ngc_form_forgot_password() {
+    if ( is_user_logged_in() ) {
+        return '';
+    }
+    return '<p class="ngc-form-forgot"><a href="' . esc_url( wp_lostpassword_url() ) . '">' . esc_html__( 'Forgot your password?', 'beyondinfinity' ) . '</a></p>';
+}
+
+/**
+ * Dashboard shortcodes (attribute type=parent|student|tutor|admin).
+ *
+ * @param array<string, string>|string $atts Attributes.
+ * @param string                       $content Content.
+ * @param string                       $tag Shortcode tag.
+ * @return string
+ */
+function bi_ngc_dashboard_shortcode( $atts, $content = '', $tag = '' ) {
+    $type_map = [
+        'ngc_parent_dashboard'  => 'parent',
+        'ngc_student_dashboard' => 'student',
+        'ngc_tutor_dashboard'   => 'tutor',
+        'ngc_admin_dashboard'   => 'admin',
+    ];
+    $type = $type_map[ $tag ] ?? 'student';
+
+    if ( ! is_user_logged_in() ) {
+        $login = add_query_arg( 'redirect_to', rawurlencode( get_permalink() ), home_url( '/login' ) );
+        return '<p class="ngc-dashboard-notice"><a href="' . esc_url( $login ) . '">' . esc_html__( 'Sign in to view your dashboard.', 'beyondinfinity' ) . '</a></p>';
+    }
+
+    bi_enqueue_dashboard_rest_for_type( $type );
+
+    ob_start();
+    ?>
+    <div class="bi-dashboard-rest ngt-card ngt-animate" data-dashboard="<?php echo esc_attr( $type ); ?>" role="region" aria-live="polite" aria-busy="true">
+      <p class="bi-dashboard-rest__loading"><?php esc_html_e( 'Loading your dashboard…', 'beyondinfinity' ); ?></p>
+    </div>
+    <?php
+    return (string) ob_get_clean();
+}
+
+/**
+ * Form POST handler (theme fallback when companion inactive).
+ */
+function bi_ngc_handle_form_submit() {
+    $form_id = isset( $_POST['ngc_form_id'] ) ? sanitize_key( wp_unslash( $_POST['ngc_form_id'] ) ) : '';
+    if ( ! $form_id || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ngc_form_nonce'] ?? '' ) ), 'ngc_form_' . $form_id ) ) {
+        wp_die( esc_html__( 'Invalid form submission.', 'beyondinfinity' ), 403 );
+    }
+
+    $payload = [];
+    foreach ( $_POST as $key => $value ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if ( in_array( $key, [ 'action', 'ngc_form_id', 'ngc_form_nonce', '_wp_http_referer' ], true ) ) {
+            continue;
+        }
+        $payload[ sanitize_key( $key ) ] = is_array( $value )
+            ? array_map( 'sanitize_text_field', wp_unslash( $value ) )
+            : sanitize_textarea_field( wp_unslash( $value ) );
+    }
+
+    $queue = get_option( 'ngc_form_queue', [] );
+    if ( ! is_array( $queue ) ) {
+        $queue = [];
+    }
+    $queue[] = [
+        'form'    => $form_id,
+        'data'    => $payload,
+        'source'  => 'theme-fallback',
+        'created' => gmdate( 'c' ),
+    ];
+    update_option( 'ngc_form_queue', array_slice( $queue, -100 ), false );
+
+    add_action(
+        'shutdown',
+        static function () use ( $form_id, $payload ) {
+            if ( function_exists( 'do_action' ) ) {
+                do_action( 'ngc_form_submitted', $form_id, $payload );
+            }
+
+            wp_mail(
+                get_option( 'admin_email' ),
+                sprintf( '[NextGen] %s submission', $form_id ),
+                wp_json_encode( $payload, JSON_PRETTY_PRINT )
+            );
+
+            if ( function_exists( 'bi_openwa_notify_form_submission' ) ) {
+                bi_openwa_notify_form_submission( $form_id, $payload );
+            }
+
+            do_action( 'bi_form_submitted', $form_id, $payload );
+        },
+        1
+    );
+
+    $redirect_map = [
+        'find_tutor'       => home_url( '/find-a-tutor/' ),
+        'become_tutor'     => home_url( '/become-a-tutor/' ),
+        'contact_support'  => home_url( '/contact/' ),
+        'parent_register'  => home_url( '/register/' ),
+        'student_register' => home_url( '/register/' ),
+    ];
+    $redirect = wp_get_referer();
+    if ( ! $redirect || ! wp_validate_redirect( $redirect, false ) ) {
+        $redirect = $redirect_map[ $form_id ] ?? home_url( '/thank-you/' );
+    }
+    $redirect = apply_filters( 'ngc_form_redirect_url', $redirect, $form_id );
+
+    wp_safe_redirect( add_query_arg( 'ngc_submitted', $form_id, $redirect ) );
+    exit;
+}
+
+/**
+ * @return array{ok: bool, missing: string[]}
+ */
+if ( ! function_exists( 'bi_ngc_shortcode_health' ) ) {
+	function bi_ngc_shortcode_health() {
+		$missing = [];
+		foreach ( bi_required_ngc_shortcodes() as $tag ) {
+			if ( ! shortcode_exists( $tag ) ) {
+				$missing[] = $tag;
+			}
+		}
+		return [
+			'ok'      => empty( $missing ),
+			'missing' => $missing,
+		];
+	}
+}

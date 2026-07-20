@@ -1,0 +1,49 @@
+{
+  "id": "workflow-02-booking-payment",
+  "name": "Booking & Payment Workflow",
+  "business_goal": "Allow parents/students to book and pay for tutoring sessions through a managed platform flow.",
+  "description": "Parent/student selects tutor, subject and time, pays through WooCommerce/PayFast or Peach, then the system creates Amelia booking, updates FluentCRM, creates calendar/LMS artefacts and sends notifications.",
+  "trigger": "WooCommerce payment completed OR Amelia booking created with paid status.",
+  "actors": [
+    "Parent/Student",
+    "WooCommerce",
+    "PayFast/Peach",
+    "AutomatorWP",
+    "Amelia",
+    "FluentCRM",
+    "Notifyer",
+    "MasterStudy LMS",
+    "Tutor"
+  ],
+  "steps": [
+    "Select tutor service",
+    "Checkout and payment",
+    "Handle failed payment",
+    "Payment success event",
+    "Create Amelia booking",
+    "Update FluentCRM active customer",
+    "Create calendar event",
+    "Send booking confirmation",
+    "Create LMS lesson shell",
+    "Notify tutor and student",
+    "Queue reminder workflow"
+  ],
+  "events": [
+    "booking.requested",
+    "payment.completed",
+    "payment.failed",
+    "booking.created",
+    "crm.customer.activated",
+    "lesson.shell.created",
+    "reminders.queued"
+  ],
+  "seed_data": [
+    "6 paid bookings",
+    "2 failed payments",
+    "Amelia services",
+    "WooCommerce demo orders",
+    "calendar events",
+    "LMS lesson shells",
+    "CRM tags"
+  ]
+}

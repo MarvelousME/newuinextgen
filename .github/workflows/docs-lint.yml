@@ -1,0 +1,38 @@
+name: Documentation lint
+
+on:
+  push:
+    paths:
+      - 'documentation/**'
+      - '.github/workflows/docs-lint.yml'
+  pull_request:
+    paths:
+      - 'documentation/**'
+
+jobs:
+  markdown-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check internal markdown links
+        run: |
+          python3 <<'PY'
+          import re, sys
+          from pathlib import Path
+          root = Path('documentation')
+          missing = []
+          link_re = re.compile(r'\]\(([^)]+)\)')
+          for md in root.rglob('*.md'):
+              text = md.read_text(encoding='utf-8')
+              for target in link_re.findall(text):
+                  if target.startswith('http') or target.startswith('#'):
+                      continue
+                  path = (md.parent / target.split('#')[0]).resolve()
+                  if not path.exists():
+                      missing.append(f"{md}: {target}")
+          if missing:
+              print("Broken documentation links:")
+              print("\n".join(missing))
+              sys.exit(1)
+          print("OK — documentation links verified")
+          PY
