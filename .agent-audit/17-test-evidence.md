@@ -9,6 +9,7 @@
 | 2026-07-20 Phase 3 | `tests/agent-evaluation.php` | Host PHP 8.4 | **20** | 0 | 0 | Policy + ITN abuse scenarios |
 | 2026-07-20 open items | `NextGenTutors-Companion/tests/run.php` | Host PHP 8.4 | **35** | 0 | 0 | +7 NGC_Access IDOR unit tests |
 | 2026-07-20 open items | `scripts/payfast-e2e-docker.php` | Docker WP `:8900` | **14/14** | 0 | 0 | Sandbox redirect + ITN + amount tamper + replay — see `payfast-e2e-run.txt` |
+| 2026-07-20 SFG/FRD/EVT | `NextGenTutors-Companion/tests/run.php` | Host PHP 8.4 | **43** | 0 | 0 | +SLA helpers + fraud rule coverage asserts |
 
 ## Agent policy tests added
 
