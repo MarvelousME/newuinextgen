@@ -113,4 +113,4 @@ APPROVED WITH CONDITIONS
 
 | ID | Evidence |
 |----|----------|
-| REL-001 | Commit `955d1ad`; tag `release/bi-1.9.16-ngc-1.9.5`; five `dist/*.zip` artifacts; SHA-256 file under `.agent-audit/evidence/release/` |
+| REL-001 | Commits `955d1ad` + `3bde122`; tag `release/bi-1.9.16-ngc-1.9.5`; five `dist/*.zip` artifacts; SHA-256 file under `.agent-audit/evidence/release/` |
