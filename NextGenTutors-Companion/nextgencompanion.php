@@ -3,7 +3,7 @@
  * Plugin Name:       NextGenTutors-Companion
  * Plugin URI:        https://beyondinfinity.co.za/
  * Description:       Business logic, data layer, REST API, workflows, and multi-model BYOK AI suite for NextGen Tutors (BeyondInfinity theme).
- * Version:           1.9.0
+ * Version:           1.9.5
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            BeyondInfinity
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NGC_VERSION', '1.9.1' );
+define( 'NGC_VERSION', '1.9.5' );
 define( 'NGC_PLUGIN_FILE', __FILE__ );
 define( 'NGC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NGC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -157,8 +157,15 @@ final class NGC_Plugin {
 	 * Bootstrap all modules.
 	 */
 	public function bootstrap() {
-		load_plugin_textdomain( 'nextgencompanion', false, dirname( NGC_PLUGIN_BASENAME ) . '/languages' );
+		add_action( 'init', [ $this, 'load_textdomain' ] );
 		NGC_Plugin_Bootstrap::init();
+	}
+
+	/**
+	 * Load translations at init or later.
+	 */
+	public function load_textdomain() {
+		load_plugin_textdomain( 'nextgencompanion', false, dirname( NGC_PLUGIN_BASENAME ) . '/languages' );
 	}
 }
 

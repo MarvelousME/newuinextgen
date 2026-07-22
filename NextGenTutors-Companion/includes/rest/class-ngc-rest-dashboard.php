@@ -210,6 +210,23 @@ class NGC_Rest_Dashboard {
 			)
 		);
 
+		$apps_table  = NGC_Database::table( 'tutor_applications' );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$app_row     = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT status, review_notes, created_at, updated_at FROM {$apps_table} WHERE user_id = %d ORDER BY id DESC LIMIT 1",
+				$user_id
+			)
+		);
+		$application = $app_row
+			? [
+				'status'      => $app_row->status,
+				'reviewNotes' => (string) $app_row->review_notes,
+				'submittedAt' => $app_row->created_at,
+				'updatedAt'   => $app_row->updated_at,
+			]
+			: null;
+
 		return new WP_REST_Response(
 			self::response(
 				array_merge(
@@ -224,6 +241,7 @@ class NGC_Rest_Dashboard {
 					'averageRating'  => NGC_Reviews::average_for_tutor( $user_id ) ?: null,
 					'pendingPayout'  => NGC_Reviews::pending_payout_for_tutor( $user_id ),
 				],
+				'application'    => $application,
 				'recentSessions' => [],
 				'nextSession'    => null,
 					],

@@ -232,24 +232,14 @@ function bi_enqueue_motion_assets() {
         return;
     }
 
-    $motion_dir = BI_URI . '/assets/css/motion/';
-    $files      = [
-        'bi-motion-base'       => '01-base.css',
-        'bi-motion-entrance'   => '02-entrance.css',
-        'bi-motion-sections'   => '03-sections.css',
-        'bi-motion-hover'      => '04-hover.css',
-        'bi-motion-parallax'   => '05-parallax.css',
-        'bi-motion-responsive' => '06-responsive.css',
-        'bi-motion-stagger'    => '07-stagger.css',
-        'bi-motion-subtle'     => '08-subtle.css',
-        'bi-motion-bridge'     => '09-theme-bridge.css',
-    ];
-
-    $deps = [ 'bi-style' ];
-    foreach ( $files as $handle => $file ) {
-        wp_enqueue_style( $handle, $motion_dir . $file, $deps, BI_VERSION );
-        $deps = [ $handle ];
-    }
+    // Phase 5 consolidation: single combined stylesheet instead of 9 requests.
+    // Source files (motion/01–09) stay in the repo; re-concatenate after edits.
+    wp_enqueue_style(
+        'bi-motion-pack',
+        BI_URI . '/assets/css/motion/motion-pack.css',
+        [ 'bi-style' ],
+        BI_VERSION
+    );
 
     if ( bi_motion_enabled() ) {
         wp_enqueue_script( 'bi-motion', BI_URI . '/assets/js/motion.js', [], BI_VERSION, true );

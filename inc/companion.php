@@ -153,9 +153,12 @@ function bi_dashboard_rest_config( $type ) {
         'type'      => $type,
         'version'   => bi_ngc_version(),
         'pages'     => [
-            'findATutor' => home_url( '/find-a-tutor' ),
-            'contact'    => home_url( '/contact' ),
-            'support'    => home_url( '/contact' ),
+            'findATutor'   => home_url( '/find-a-tutor' ),
+            'becomeATutor' => home_url( '/become-a-tutor' ),
+            'pricing'      => home_url( '/pricing' ),
+            'contact'      => home_url( '/contact' ),
+            'support'      => home_url( '/contact' ),
+            'adminArea'    => current_user_can( 'manage_options' ) ? admin_url() : '',
         ],
         'i18n'      => [
             'loading'  => __( 'Loading your dashboard…', 'beyondinfinity' ),

@@ -13,7 +13,7 @@
 .ngt-ui-card__content { margin: 0; opacity: .85; }
 .ngt-ui-card--neon-gradient-card {
   background: linear-gradient(#12121a, #12121a) padding-box,
-    linear-gradient(120deg, var(--ngt-accent,#9E7AFF), var(--ngt-accent-2,#FE8BBB), #22d3ee) border-box;
+    linear-gradient(120deg, var(--ngt-accent,#059669), var(--ngt-accent-2,#FF9F0A), #22d3ee) border-box;
   border: 2px solid transparent;
 }
 .ngt-ui-card--shine-border::before {
@@ -21,7 +21,7 @@
   position: absolute; inset: 0;
   padding: 1px;
   border-radius: inherit;
-  background: conic-gradient(from var(--ngt-angle,0deg), transparent 40%, var(--ngt-accent,#9E7AFF), transparent 60%);
+  background: conic-gradient(from var(--ngt-angle,0deg), transparent 40%, var(--ngt-accent,#059669), transparent 60%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -30,13 +30,13 @@
 }
 .ngt-ui-card--warp-background .ngt-ui-card__fx {
   position: absolute; inset: -30%;
-  background: radial-gradient(circle at 30% 40%, rgba(158,122,255,.45), transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(254,139,187,.4), transparent 42%);
+  background: radial-gradient(circle at 30% 40%, rgba(5,150,105,.4), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(255,159,10,.35), transparent 42%);
   filter: blur(20px);
   animation: ngt-warp 8s ease-in-out infinite alternate;
 }
 .ngt-ui-card--backlight {
-  box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 20px 60px rgba(158,122,255,.35);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 20px 60px rgba(5,150,105,.35);
 }
 .ngt-ui-card--progressive-blur .ngt-ui-card__fx {
   position: absolute; inset: auto 0 0 0; height: 55%;
@@ -61,4 +61,11 @@
 @keyframes ngt-warp {
   from { transform: translate(-4%, -2%) scale(1); }
   to { transform: translate(4%, 3%) scale(1.08); }
+}
+
+/* blur-fade is registered as kind:card — its rules must live here, not kind-misc. */
+.ngt-ui-blur-fade { animation: ngt-blur-in .8s ease both; }
+@keyframes ngt-blur-in {
+  from { filter: blur(12px); opacity: 0; }
+  to { filter: blur(0); opacity: 1; }
 }

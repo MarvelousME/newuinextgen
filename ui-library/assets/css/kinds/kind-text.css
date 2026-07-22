@@ -3,7 +3,7 @@
 .ngt-ui-text { font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; }
 .ngt-ui-text--aurora-text .ngt-ui-text__value,
 .ngt-ui-text--animated-gradient-text .ngt-ui-text__value {
-  background: linear-gradient(90deg, var(--ngt-accent,#9E7AFF), var(--ngt-accent-2,#FE8BBB), #60a5fa, var(--ngt-accent,#9E7AFF));
+  background: linear-gradient(90deg, var(--ngt-accent,#059669), var(--ngt-accent-2,#FF9F0A), #0F1A2F, var(--ngt-accent,#059669));
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -60,7 +60,7 @@
   content: "✦";
   position: absolute;
   font-size: .55em;
-  color: var(--ngt-accent, #9E7AFF);
+  color: var(--ngt-accent, #FF9F0A);
   animation: ngt-twinkle 1.6s ease-in-out infinite;
 }
 .ngt-ui-text--sparkles-text .ngt-ui-text__value::before { top: -.2em; left: -.5em; }

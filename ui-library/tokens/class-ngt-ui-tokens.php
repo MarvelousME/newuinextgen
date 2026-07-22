@@ -15,8 +15,8 @@ if ( ! class_exists( 'NGT_UI_Tokens' ) ) {
 
 		public const ACCENT     = 'var(--ngt-color-accent)';
 		public const ACCENT_2   = 'var(--ngt-color-magic-accent-2)';
-		public const ACCENT_HEX = '#c4a35a';
-		public const ACCENT_2_HEX = '#3b2f6e';
+		public const ACCENT_HEX = '#059669';
+		public const ACCENT_2_HEX = '#FF9F0A';
 
 		/**
 		 * Resolve accent color for inline styles (falls back to token hex).

@@ -144,7 +144,13 @@
   }
 
   function init(rootEl) {
-    var state = { page: 1, per_page: cfg.perPage || 12 };
+    var query = new URLSearchParams(window.location.search);
+    var prefill = {};
+    ["subject", "province", "grade", "format", "q"].forEach(function (key) {
+      var value = query.get(key);
+      if (value) prefill[key] = value;
+    });
+    var state = { page: 1, per_page: cfg.perPage || 12, prefill: prefill };
     var statusEl = rootEl.querySelector(".ngc-marketplace__status");
     var gridEl = rootEl.querySelector(".ngc-marketplace__grid");
     var pagerEl = rootEl.querySelector(".ngc-marketplace__pagination");
@@ -155,7 +161,12 @@
     var debounce;
 
     function collectFilters() {
-      var f = { page: state.page, per_page: state.per_page, sort: sortEl ? sortEl.value : "rating", q: searchEl ? searchEl.value.trim() : "" };
+      var f = Object.assign({}, state.prefill, {
+        page: state.page,
+        per_page: state.per_page,
+        sort: sortEl ? sortEl.value : "rating",
+        q: searchEl && searchEl.value.trim() ? searchEl.value.trim() : (state.prefill.q || "")
+      });
       rootEl.querySelectorAll("[data-field]").forEach(function (el) {
         var key = el.getAttribute("data-field");
         if (el.type === "checkbox") {
@@ -200,6 +211,15 @@
     function load() {
       setStatus(i18n.loading || "Loading…");
       gridEl.classList.add("is-loading");
+      gridEl.innerHTML =
+        '<div class="ngt-skeleton-grid" role="status" aria-busy="true" aria-label="' + esc(i18n.loading || "Loading") + '">' +
+        '<span class="ngt-skeleton ngt-skeleton--card" aria-hidden="true"></span>' +
+        '<span class="ngt-skeleton ngt-skeleton--card" aria-hidden="true"></span>' +
+        '<span class="ngt-skeleton ngt-skeleton--card" aria-hidden="true"></span>' +
+        '<span class="ngt-skeleton ngt-skeleton--card" aria-hidden="true"></span>' +
+        '<span class="ngt-skeleton ngt-skeleton--card" aria-hidden="true"></span>' +
+        '<span class="ngt-skeleton ngt-skeleton--card" aria-hidden="true"></span>' +
+        "</div>";
       api("/marketplace/tutors", collectFilters())
         .then(function (data) {
           var items = data.items || [];
@@ -221,7 +241,15 @@
       fillSelect(rootEl.querySelector('[data-field="grade"]'), opts.grades);
       fillSelect(rootEl.querySelector('[data-field="province"]'), opts.provinces);
       fillSelect(rootEl.querySelector('[data-field="format"]'), opts.formats);
+      Object.keys(state.prefill).forEach(function (key) {
+        var field = rootEl.querySelector('[data-field="' + key + '"]');
+        if (field) field.value = state.prefill[key];
+      });
     });
+
+    if (searchEl && state.prefill.q) {
+      searchEl.value = state.prefill.q;
+    }
 
     if (toggleBtn && filtersEl) {
       toggleBtn.addEventListener("click", function () {
@@ -232,6 +260,7 @@
 
     rootEl.querySelectorAll("select[data-field], input[data-field]").forEach(function (el) {
       el.addEventListener("change", function () {
+        delete state.prefill[el.getAttribute("data-field")];
         state.page = 1;
         load();
       });
@@ -241,6 +270,7 @@
       searchEl.addEventListener("input", function () {
         clearTimeout(debounce);
         debounce = setTimeout(function () {
+          delete state.prefill.q;
           state.page = 1;
           load();
         }, 350);
@@ -253,6 +283,24 @@
         load();
       });
     }
+
+    document.querySelectorAll("[data-bi-marketplace-filter]").forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        var key = link.getAttribute("data-bi-marketplace-filter");
+        var value = link.getAttribute("data-bi-marketplace-value");
+        var field = rootEl.querySelector('[data-field="' + key + '"]');
+        if (!field || !value) return;
+        event.preventDefault();
+        state.prefill[key] = value;
+        field.value = value;
+        state.page = 1;
+        var nextUrl = new URL(window.location.href);
+        nextUrl.searchParams.set(key, value);
+        window.history.replaceState({}, "", nextUrl.toString());
+        load();
+        rootEl.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+      });
+    });
 
     load();
   }

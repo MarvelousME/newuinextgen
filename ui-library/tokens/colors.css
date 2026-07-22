@@ -1,20 +1,23 @@
+/* Brand-aligned with the NextGenTutors canonical palette (theme --ngt-*).
+   When the BeyondInfinity theme is active, tokens/unified.css re-points these
+   to live theme tokens; the values below are the standalone defaults. */
 :root {
-  --ngt-color-primary: #0d6e6e;
-  --ngt-color-secondary: #3b2f6e;
-  --ngt-color-accent: #c4a35a;
-  --ngt-color-magic-accent: var(--ngt-color-accent);
-  --ngt-color-magic-accent-2: #3b2f6e;
-  --ngt-color-surface: #f7f4ef;
+  --ngt-color-primary: #0F1A2F;
+  --ngt-color-secondary: #059669;
+  --ngt-color-accent: #FF9F0A;
+  --ngt-color-magic-accent: #059669;
+  --ngt-color-magic-accent-2: #FF9F0A;
+  --ngt-color-surface: #F8FAFC;
   --ngt-color-surface-2: #ffffff;
-  --ngt-color-text: #0f1c2e;
-  --ngt-color-border: rgba(15, 28, 46, 0.14);
+  --ngt-color-text: #1E293B;
+  --ngt-color-border: rgba(15, 26, 47, 0.14);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --ngt-color-surface: #0b0b12;
-    --ngt-color-surface-2: #151522;
-    --ngt-color-text: #f5f5f5;
+    --ngt-color-surface: #0B1524;
+    --ngt-color-surface-2: #101D33;
+    --ngt-color-text: #E6EDF7;
     --ngt-color-border: rgba(255, 255, 255, 0.14);
   }
 }

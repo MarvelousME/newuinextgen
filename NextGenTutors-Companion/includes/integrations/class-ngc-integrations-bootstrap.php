@@ -19,7 +19,8 @@ class NGC_Integrations_Bootstrap {
 	 */
 	public static function init() {
 		add_action( 'ngc_integrate_runtime_ready', [ __CLASS__, 'maybe_auto_configure' ], 20 );
-		add_action( 'plugins_loaded', [ __CLASS__, 'maybe_bootstrap_fluentcrm' ], 25 );
+		// init (not plugins_loaded): translations may load and FluentCRM migrations must be done.
+		add_action( 'init', [ __CLASS__, 'maybe_bootstrap_fluentcrm' ], 20 );
 	}
 
 	/**
@@ -29,9 +30,14 @@ class NGC_Integrations_Bootstrap {
 		if ( ! class_exists( 'NGC_Fluentcrm_Adapter' ) ) {
 			return;
 		}
-		$adapter = new NGC_Fluentcrm_Adapter();
-		if ( $adapter->is_available() ) {
-			$adapter->bootstrap_assets();
+		try {
+			$adapter = new NGC_Fluentcrm_Adapter();
+			if ( $adapter->is_available() ) {
+				$adapter->bootstrap_assets();
+			}
+		} catch ( Throwable $e ) {
+			// Never take the site down over CRM bootstrap (e.g. FluentCRM tables not migrated yet).
+			error_log( 'NGC FluentCRM bootstrap skipped: ' . $e->getMessage() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 	}
 

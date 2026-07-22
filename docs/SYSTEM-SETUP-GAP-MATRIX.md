@@ -1,6 +1,6 @@
 # System setup gap matrix — Master autonomous prompt vs repo
 
-**Updated:** 2026-07-20  
+**Updated:** 2026-07-21  
 **Theme package (mandatory):** `NextGenTutors-BeyondInfinity` (never BeyondIdentity)
 
 | Area | Expected (master prompt) | Actual | Status | Remediation |
@@ -18,6 +18,7 @@
 | Phase 14 demo | Relational | Seeder + headed e2e green | PASS | `wp ngt system seed` / `npm run test:phase14` |
 | E2E all WF | Headed every workflow | 12 specs incl. gaps smoke + phase14 | PARTIAL | Deep PayFast/refund still sandbox-gated |
 | Docs deliverables | `/docs/` full list | Partial + BESPOKE + this matrix | PARTIAL | Export via `wp ngt system export-report` |
+| AI bridge | Fifth package `NextGenTutors-AI-Integration`: HMAC bridge, durable replay protection, deliveries/approvals tables, callbacks, cron, CLI, admin | Implemented (`ngtai/v1`, `wp_ngtai_*`, `wp ngtai *`); unit suite standalone | PARTIAL | agents-api endpoint + HMAC secret must be configured (Coolify) before live delivery evidence; see `.agent-audit/ai-integration/06-production-readiness.md` |
 
 ## Commands
 

@@ -2,8 +2,8 @@
   --ngt-mc-x: -200px;
   --ngt-mc-y: -200px;
   --ngt-mc-size: 200px;
-  --ngt-mc-from: #9e7aff;
-  --ngt-mc-to: #fe8bbb;
+  --ngt-mc-from: var(--ngt-color-magic-accent, #059669);
+  --ngt-mc-to: var(--ngt-color-magic-accent-2, #FF9F0A);
   --ngt-mc-spot: #262626;
   --ngt-mc-opacity: 0.8;
   position: relative;
@@ -83,6 +83,6 @@
   .ngt-ui-magic-card__spot {
     transition: none;
     opacity: 0.25;
-    background: linear-gradient(135deg, rgba(158, 122, 255, 0.12), rgba(254, 139, 187, 0.12));
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.12), rgba(255, 159, 10, 0.12));
   }
 }

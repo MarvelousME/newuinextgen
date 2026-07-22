@@ -160,9 +160,26 @@ class NGCPM_Local_Packages {
 		foreach ( self::pending_installs() as $item ) {
 			$slug = (string) $item['slug'];
 			$def  = NGCPM_Registry::get( $slug );
-			$r    = NGCPM_Installer::install( $slug );
-			if ( $activate_required && ! empty( $r['success'] ) && ! empty( $def['required'] ) && current_user_can( 'activate_plugins' ) ) {
-				NGCPM_Activator::activate( $slug );
+			try {
+				$r = NGCPM_Installer::install( $slug );
+				if ( $activate_required && ! empty( $r['success'] ) && ! empty( $def['required'] ) && current_user_can( 'activate_plugins' ) ) {
+					$activation = NGCPM_Activator::activate( $slug );
+					if ( empty( $activation['success'] ) ) {
+						$r['activation_error'] = $activation['message'] ?? __( 'Activation failed safely.', 'nextgentutors-plugin-manager' );
+					}
+				}
+			} catch ( Throwable $e ) {
+				$r = [
+					'success' => false,
+					'message' => sprintf(
+						/* translators: %s: exception message */
+						__( 'Package failed safely: %s', 'nextgentutors-plugin-manager' ),
+						wp_strip_all_tags( $e->getMessage() )
+					),
+					'slug'    => $slug,
+					'code'    => 'package_exception',
+				];
+				NGCPM_Logger::log( 'package_exception', $r['message'], [ 'slug' => $slug ] );
 			}
 			$results[] = array_merge(
 				$r,
@@ -171,6 +188,83 @@ class NGCPM_Local_Packages {
 					'zip'  => (string) $item['zip'],
 				]
 			);
+		}
+
+		NGCPM_Scanner::clear_cache();
+		return $results;
+	}
+
+	/**
+	 * Install every zip shipped in offline-packages.
+	 *
+	 * Registry packages are installed first in dependency/priority order. Any
+	 * additional bundled package is then installed and activated from its zip.
+	 *
+	 * @param bool $activate Activate successfully installed packages.
+	 * @return array<int, array<string, mixed>>
+	 */
+	public static function install_all_bundled( $activate = true ) {
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			return [
+				[
+					'success' => false,
+					'message' => __( 'Permission denied.', 'nextgentutors-plugin-manager' ),
+					'slug'    => '',
+				],
+			];
+		}
+
+		$results          = self::install_pending( $activate );
+		$registered_files = [];
+
+		foreach ( NGCPM_Registry::get_all() as $slug => $def ) {
+			$def['registry_key'] = $slug;
+			$path                = NGCPM_Installer::resolve_local_path( $def );
+			if ( $path ) {
+				$registered_files[ basename( $path ) ] = true;
+			}
+		}
+
+		$bundled = trailingslashit( NGCPM_PLUGIN_DIR ) . 'offline-packages';
+		foreach ( (array) glob( trailingslashit( $bundled ) . '*.zip' ) as $zip ) {
+			$basename = basename( $zip );
+			if ( isset( $registered_files[ $basename ] ) ) {
+				continue;
+			}
+
+			$slug = sanitize_key( preg_replace( '/(?:[.-]\d+(?:\.\d+)*)?\.zip$/i', '', $basename ) );
+			try {
+				$result = NGCPM_Installer::install_from_local_package( $slug, $zip );
+
+				if ( $activate && ! empty( $result['success'] ) && ! empty( $result['plugin_file'] ) && current_user_can( 'activate_plugins' ) ) {
+					if ( ! function_exists( 'activate_plugin' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/plugin.php';
+					}
+					// Non-silent so the plugin's activation hooks run (table creation, rewrite rules).
+					$activation = activate_plugin( (string) $result['plugin_file'], '', false, false );
+					if ( is_wp_error( $activation ) ) {
+						$result['activation_error'] = $activation->get_error_message();
+					} else {
+						$result['activated'] = true;
+					}
+				}
+			} catch ( Throwable $e ) {
+				$result = [
+					'success' => false,
+					'message' => sprintf(
+						/* translators: %s: exception message */
+						__( 'Bundled package failed safely: %s', 'nextgentutors-plugin-manager' ),
+						wp_strip_all_tags( $e->getMessage() )
+					),
+					'slug'    => $slug,
+					'code'    => 'bundled_package_exception',
+				];
+				NGCPM_Logger::log( 'bundled_package_exception', $result['message'], [ 'slug' => $slug, 'zip' => $basename ] );
+			}
+
+			$result['name'] = $basename;
+			$result['zip']  = $basename;
+			$results[]      = $result;
 		}
 
 		NGCPM_Scanner::clear_cache();

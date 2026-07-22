@@ -40,10 +40,43 @@ final class NGC_AI_Models {
 	}
 
 	/**
+	 * Resolve an id to its stored canonical form.
+	 *
+	 * Legacy ids contained uppercase characters while REST input was lowercased
+	 * by sanitize_key(), so lookups must be case-insensitive.
+	 *
+	 * @param string $id Model id (any case).
+	 * @return string Canonical stored id, or '' when not found.
+	 */
+	public static function resolve_id( $id ) {
+		$id = trim( (string) $id );
+		if ( '' === $id ) {
+			return '';
+		}
+		$models = get_option( self::MODELS_OPTION, [] );
+		if ( ! is_array( $models ) ) {
+			return '';
+		}
+		if ( isset( $models[ $id ] ) ) {
+			return $id;
+		}
+		foreach ( array_keys( $models ) as $stored ) {
+			if ( 0 === strcasecmp( (string) $stored, $id ) ) {
+				return (string) $stored;
+			}
+		}
+		return '';
+	}
+
+	/**
 	 * @param string $id Model id.
 	 * @return array<string,mixed>|null
 	 */
 	public static function get( $id ) {
+		$id = self::resolve_id( $id );
+		if ( '' === $id ) {
+			return null;
+		}
 		$models = get_option( self::MODELS_OPTION, [] );
 		return isset( $models[ $id ] ) && is_array( $models[ $id ] ) ? $models[ $id ] : null;
 	}
@@ -60,14 +93,31 @@ final class NGC_AI_Models {
 
 		$id    = sanitize_key( (string) ( $data['id'] ?? '' ) );
 		$label = sanitize_text_field( (string) ( $data['label'] ?? '' ) );
-		$base  = esc_url_raw( trim( (string) ( $data['base_url'] ?? '' ) ) );
+		$raw   = trim( (string) ( $data['base_url'] ?? '' ) );
 		$model = sanitize_text_field( (string) ( $data['model'] ?? '' ) );
 
-		if ( '' === $base || '' === $model ) {
-			return new WP_Error( 'ngc_model', __( 'Base URL and model id are required.', 'nextgencompanion' ), [ 'status' => 400 ] );
+		if ( '' !== $raw && ! preg_match( '#^https?://#i', $raw ) ) {
+			$raw = 'https://' . $raw;
+		}
+		$base = esc_url_raw( $raw );
+
+		if ( '' === $raw ) {
+			return new WP_Error( 'ngc_model', __( 'Base URL is required (e.g. https://api.openai.com/v1).', 'nextgencompanion' ), [ 'status' => 400 ] );
+		}
+		if ( '' === $base ) {
+			return new WP_Error( 'ngc_model', __( 'The base URL is not a valid URL. Use the provider API root, e.g. https://api.openai.com/v1.', 'nextgencompanion' ), [ 'status' => 400 ] );
+		}
+		if ( '' === $model ) {
+			return new WP_Error( 'ngc_model', __( 'Model id is required (e.g. gpt-4o-mini).', 'nextgencompanion' ), [ 'status' => 400 ] );
+		}
+		if ( '' !== $id ) {
+			$existing = self::resolve_id( $id );
+			if ( '' !== $existing ) {
+				$id = $existing;
+			}
 		}
 		if ( '' === $id ) {
-			$id = sanitize_key( $label ?: $model ) . '-' . wp_generate_password( 4, false, false );
+			$id = sanitize_key( $label ?: $model ) . '-' . strtolower( wp_generate_password( 4, false, false ) );
 		}
 
 		$models = get_option( self::MODELS_OPTION, [] );
@@ -104,6 +154,7 @@ final class NGC_AI_Models {
 		if ( is_wp_error( $gate ) ) {
 			return $gate;
 		}
+		$id     = self::resolve_id( $id ) ?: $id;
 		$models = get_option( self::MODELS_OPTION, [] );
 		$keys   = get_option( self::KEYS_OPTION, [] );
 		unset( $models[ $id ], $keys[ $id ] );
@@ -122,6 +173,10 @@ final class NGC_AI_Models {
 		$gate = BIA_Policy::can( 'ai.model.manage' );
 		if ( is_wp_error( $gate ) ) {
 			return $gate;
+		}
+		$id = self::resolve_id( $id ) ?: $id;
+		if ( '' === $id ) {
+			return new WP_Error( 'ngc_model', __( 'Model not found.', 'nextgencompanion' ), [ 'status' => 404 ] );
 		}
 		$cipher = NGC_Crypto::encrypt( $key );
 		if ( is_wp_error( $cipher ) ) {
@@ -142,7 +197,18 @@ final class NGC_AI_Models {
 	 */
 	public static function has_key( $id ) {
 		$keys = get_option( self::KEYS_OPTION, [] );
-		return is_array( $keys ) && ! empty( $keys[ $id ] );
+		if ( ! is_array( $keys ) ) {
+			return false;
+		}
+		if ( ! empty( $keys[ $id ] ) ) {
+			return true;
+		}
+		foreach ( array_keys( $keys ) as $stored ) {
+			if ( 0 === strcasecmp( (string) $stored, (string) $id ) && ! empty( $keys[ $stored ] ) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -151,6 +217,17 @@ final class NGC_AI_Models {
 	 */
 	private static function key_for( $id ) {
 		$keys = get_option( self::KEYS_OPTION, [] );
+		if ( ! is_array( $keys ) ) {
+			$keys = [];
+		}
+		if ( empty( $keys[ $id ] ) ) {
+			foreach ( array_keys( $keys ) as $stored ) {
+				if ( 0 === strcasecmp( (string) $stored, (string) $id ) && ! empty( $keys[ $stored ] ) ) {
+					$id = (string) $stored;
+					break;
+				}
+			}
+		}
 		if ( empty( $keys[ $id ] ) ) {
 			return new WP_Error( 'ngc_key', __( 'No API key set for this model.', 'nextgencompanion' ), [ 'status' => 400 ] );
 		}
@@ -191,6 +268,10 @@ final class NGC_AI_Models {
 			}
 		}
 
+		$resolved = self::resolve_id( $id );
+		if ( '' !== $resolved ) {
+			$id = $resolved;
+		}
 		$model = self::get( $id );
 		if ( null === $model ) {
 			return new WP_Error( 'ngc_model', __( 'Model not found.', 'nextgencompanion' ), [ 'status' => 404 ] );
@@ -247,7 +328,11 @@ final class NGC_AI_Models {
 
 		if ( $code < 200 || $code >= 300 ) {
 			$detail = is_array( $body ) && isset( $body['error']['message'] ) ? (string) $body['error']['message'] : ( 'HTTP ' . $code );
-			return new WP_Error( 'ngc_provider', $detail, [ 'status' => $code ?: 502 ] );
+			/* translators: 1: provider HTTP status code, 2: provider error detail. */
+			$message = sprintf( __( 'AI provider error (HTTP %1$d): %2$s', 'nextgencompanion' ), $code, $detail );
+			BIA_Policy::audit( 'ai.chat', 'error', [ 'id' => $id, 'provider_status' => $code, 'message' => $detail ] );
+			// Always surface provider failures as 502 so they are not mistaken for missing local REST routes.
+			return new WP_Error( 'ngc_provider', $message, [ 'status' => 502 ] );
 		}
 
 		$content = '';
@@ -264,8 +349,15 @@ final class NGC_AI_Models {
 	 * @return string
 	 */
 	private static function endpoint( $base ) {
+		$base = untrailingslashit( $base );
 		if ( false !== strpos( $base, '/chat/completions' ) ) {
 			return $base;
+		}
+		// OpenAI-compatible APIs live under /v1; add it when the base URL is a bare host
+		// (e.g. https://api.anthropic.com → https://api.anthropic.com/v1/chat/completions).
+		$path = (string) wp_parse_url( $base, PHP_URL_PATH );
+		if ( '' === $path || '/' === $path ) {
+			$base .= '/v1';
 		}
 		return $base . '/chat/completions';
 	}

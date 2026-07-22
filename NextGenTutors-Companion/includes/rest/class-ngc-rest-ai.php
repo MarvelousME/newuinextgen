@@ -42,6 +42,16 @@ class NGC_Rest_Ai {
 	}
 
 	/**
+	 * Sanitize an id while preserving case (stored ids may contain uppercase).
+	 *
+	 * @param string $id Raw id.
+	 * @return string
+	 */
+	private static function clean_id( $id ) {
+		return preg_replace( '/[^A-Za-z0-9_\-]/', '', (string) $id ) ?? '';
+	}
+
+	/**
 	 * @param mixed $result Result or error.
 	 * @return WP_REST_Response
 	 */
@@ -71,7 +81,7 @@ class NGC_Rest_Ai {
 	 * @return WP_REST_Response
 	 */
 	public static function models_delete( $request ) {
-		$id = sanitize_key( (string) ( $request->get_json_params()['id'] ?? '' ) );
+		$id = self::clean_id( (string) ( $request->get_json_params()['id'] ?? '' ) );
 		return self::respond( NGC_AI_Models::delete( $id ) );
 	}
 
@@ -81,7 +91,7 @@ class NGC_Rest_Ai {
 	 */
 	public static function models_key( $request ) {
 		$body = (array) $request->get_json_params();
-		$id   = sanitize_key( (string) ( $body['id'] ?? '' ) );
+		$id   = self::clean_id( (string) ( $body['id'] ?? '' ) );
 		$key  = (string) ( $body['api_key'] ?? '' );
 		return self::respond( NGC_AI_Models::set_key( $id, $key ) );
 	}
@@ -91,7 +101,7 @@ class NGC_Rest_Ai {
 	 * @return WP_REST_Response
 	 */
 	public static function models_test( $request ) {
-		$id = sanitize_key( (string) ( $request->get_json_params()['id'] ?? '' ) );
+		$id = self::clean_id( (string) ( $request->get_json_params()['id'] ?? '' ) );
 		return self::respond( NGC_AI_Models::test( $id ) );
 	}
 
@@ -113,7 +123,7 @@ class NGC_Rest_Ai {
 	 * @return WP_REST_Response
 	 */
 	public static function agents_delete( $request ) {
-		$id = sanitize_key( (string) ( $request->get_json_params()['id'] ?? '' ) );
+		$id = self::clean_id( (string) ( $request->get_json_params()['id'] ?? '' ) );
 		return self::respond( NGC_AI_Agents::delete( $id ) );
 	}
 
@@ -144,11 +154,16 @@ class NGC_Rest_Ai {
 		}
 
 		if ( ! empty( $body['agent_ids'] ) && is_array( $body['agent_ids'] ) ) {
-			$ids = array_map( 'sanitize_key', $body['agent_ids'] );
+			$ids = array_map(
+				static function ( $aid ) {
+					return self::clean_id( (string) $aid );
+				},
+				$body['agent_ids']
+			);
 			return self::respond( NGC_AI_Chat::run_swarm( $ids, $message ) );
 		}
 
-		$agent_id = sanitize_key( (string) ( $body['agent_id'] ?? '' ) );
+		$agent_id = self::clean_id( (string) ( $body['agent_id'] ?? '' ) );
 		return self::respond( NGC_AI_Chat::run_single( $agent_id, $history, $message ) );
 	}
 }

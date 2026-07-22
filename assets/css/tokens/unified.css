@@ -1,0 +1,158 @@
+/**
+ * Unified design tokens — single source of truth ("Beyond Clarity").
+ *
+ * Loaded AFTER all legacy token layers (see bi_enqueue_unified_tokens, priority 60)
+ * so its alias declarations win the cascade. Legacy namespaces (--ng-*, NGT
+ * --navy/--lime, ui-library --ngt-color-*) resolve to the canonical --ngt-*
+ * values below via var() references, which keeps skin switching intact:
+ * skins override --ngt-* semantics and every alias follows automatically.
+ *
+ * Spec: documentation/ux-redesign/03-design-system.md
+ */
+
+:root {
+  /* ---- Canonical additions (new tokens, no legacy equivalent) ---- */
+  --ngt-primary-strong: var(--ngt-primary-dark, #0B1524);
+  --ngt-surface-2: #F1F5F9;
+  --ngt-text-invert: #FFFFFF;
+
+  --ngt-info: #0369A1;
+  --ngt-info-bg: #E0F2FE;
+  --ngt-warning-bg: #FEF3C7;
+  --ngt-error-bg: #FEE2E2;
+
+  /* Focus (WCAG 2.4.7 / 2.4.11) */
+  --ngt-focus-ring: var(--ngt-secondary, #059669);
+  --ngt-focus-ring-width: 2px;
+  --ngt-focus-ring-offset: 2px;
+
+  /* Fluid type scale */
+  --ngt-text-xs: 0.75rem;
+  --ngt-text-sm: 0.875rem;
+  --ngt-text-base: 1rem;
+  --ngt-text-lg: 1.125rem;
+  --ngt-text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --ngt-text-2xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --ngt-text-3xl: clamp(2rem, 1.5rem + 2vw, 3rem);
+
+  /* Glass (overlays only — nav on scroll, drawers, loader) */
+  --ngt-blur-glass: 14px;
+  --ngt-shadow-glass: 0 8px 32px rgba(15, 26, 47, 0.18);
+  --ngt-glass-surface: rgba(255, 255, 255, 0.72);
+  --ngt-glass-surface-dark: rgba(15, 26, 47, 0.72);
+
+  /* Motion (extends tokens/base.css) */
+  --ngt-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ngt-duration-base: var(--ngt-duration, 250ms);
+
+  /* Z-index scale */
+  --ngt-z-nav: 100;
+  --ngt-z-drawer: 700;
+  --ngt-z-modal: 800;
+  --ngt-z-toast: 900;
+  --ngt-z-loader: 1000;
+
+  /* Layout */
+  --ngt-grid-gap: clamp(16px, 2vw, 24px);
+}
+
+/* ---- Alias bridge: UI-library namespace (--ng-*) ---- */
+:root {
+  --ng-color-primary: var(--ngt-primary, #0F1A2F);
+  --ng-color-primary-dark: var(--ngt-primary-dark, #0B1524);
+  --ng-color-primary-light: var(--ngt-primary-light, #E6F0FA);
+  --ng-color-secondary: var(--ngt-secondary, #059669);
+  --ng-color-secondary-dark: var(--ngt-secondary-dark, #047857);
+  --ng-color-secondary-light: var(--ngt-secondary-light, #D1FAE5);
+  --ng-color-accent: var(--ngt-accent, #FF9F0A);
+  --ng-color-accent-dark: var(--ngt-accent-dark, #E68900);
+  --ng-color-accent-light: var(--ngt-accent-light, #FFEBCC);
+
+  --ng-color-success: var(--ngt-success, #10B981);
+  --ng-color-success-bg: var(--ngt-success-bg, #D1FAE5);
+  --ng-color-warning: var(--ngt-warning, #F59E0B);
+  --ng-color-error: var(--ngt-error, #EF4444);
+
+  --ng-color-ink: var(--ngt-text, #1E293B);
+  --ng-color-muted: var(--ngt-text-2, #64748B);
+  --ng-color-border: var(--ngt-border, #E2E8F0);
+  --ng-color-bg: var(--ngt-bg, #F8FAFC);
+  --ng-color-surface: var(--ngt-surface, #FFFFFF);
+  --ng-color-surface-elevated: var(--ngt-surface-2, #F1F5F9);
+  --ng-color-text-2: var(--ngt-text-2, #64748B);
+  --ng-color-text-3: var(--ngt-text-3, #94A3B8);
+
+  --ng-font-heading: var(--ngt-font-display, "Sora", system-ui, sans-serif);
+  --ng-font-body: var(--ngt-font-body, "Inter", system-ui, sans-serif);
+
+  --ng-radius-sm: var(--ngt-radius-sm, 6px);
+  --ng-radius-md: var(--ngt-radius-md, 10px);
+  --ng-radius-lg: var(--ngt-radius-lg, 16px);
+  --ng-radius-xl: var(--ngt-radius-xl, 24px);
+  --ng-radius-pill: var(--ngt-radius-full, 9999px);
+
+  --ng-shadow-sm: var(--ngt-shadow-sm, 0 2px 8px rgba(15, 26, 47, 0.06));
+  --ng-shadow-card: var(--ngt-shadow-md, 0 8px 24px rgba(15, 26, 47, 0.08));
+  --ng-shadow-lg: var(--ngt-shadow-lg, 0 20px 40px rgba(15, 26, 47, 0.12));
+  --ng-shadow-xl: var(--ngt-shadow-xl, 0 24px 48px rgba(15, 26, 47, 0.16));
+
+  --ng-container: var(--ngt-layout-max, 1280px);
+}
+
+/* ---- Alias bridge: legacy NGT marketing namespace ---- */
+:root {
+  --navy: var(--ngt-primary, #0F1A2F);
+  --blue: var(--ngt-primary-light, #1d4ed8);
+  --lime: var(--ngt-secondary, #059669);
+  --lime-bright: var(--ngt-success, #10B981);
+  --lime-soft: var(--ngt-secondary-light, #D1FAE5);
+  --lime-deep: var(--ngt-secondary-dark, #047857);
+  --amber: var(--ngt-accent, #FF9F0A);
+  --amber-deep: var(--ngt-accent-dark, #E68900);
+  --ink: var(--ngt-text, #1E293B);
+  --cream: var(--ngt-bg, #F8FAFC);
+}
+
+/* ---- Alias bridge: ui-library (Magic UI) namespace ---- */
+:root {
+  --ngt-color-primary: var(--ngt-primary, #0F1A2F);
+  --ngt-color-secondary: var(--ngt-secondary, #059669);
+  --ngt-color-accent: var(--ngt-accent, #FF9F0A);
+  --ngt-color-magic-accent: var(--ngt-secondary, #059669);
+  --ngt-color-magic-accent-2: var(--ngt-accent, #FF9F0A);
+  --ngt-color-surface: var(--ngt-bg, #F8FAFC);
+  --ngt-color-surface-2: var(--ngt-surface, #FFFFFF);
+  --ngt-color-text: var(--ngt-text, #1E293B);
+  --ngt-color-border: var(--ngt-border, #E2E8F0);
+}
+
+/* ---- Global focus visibility (repairs outline:none suppressions) ---- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: var(--ngt-focus-ring-width) solid var(--ngt-focus-ring);
+  outline-offset: var(--ngt-focus-ring-offset);
+  border-radius: var(--ngt-radius-sm, 6px);
+}
+
+/* ---- Dark scheme hook (Phase 4; components consume tokens only) ---- */
+html[data-bi-scheme="dark"] {
+  --ngt-bg: #0B1524;
+  --ngt-surface: #101D33;
+  --ngt-surface-2: #16233B;
+  --ngt-border: #24344F;
+  --ngt-border-light: #1D2B44;
+  --ngt-text: #E6EDF7;
+  --ngt-text-2: #9FB0C7;
+  --ngt-text-3: #6C7E99;
+  --ngt-primary-light: #16233B;
+  --ngt-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --ngt-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --ngt-shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.45);
+  --ngt-shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.55);
+  --ngt-glass-surface: rgba(15, 26, 47, 0.72);
+  color-scheme: dark;
+}

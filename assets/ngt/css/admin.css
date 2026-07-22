@@ -186,8 +186,9 @@
 .date-range-input {
   font-family: var(--font-sans); font-size: 12px; font-weight: 800;
   background: transparent; border: none; color: #fff;
-  cursor: pointer; outline: none; color-scheme: dark; min-width: 120px;
+  cursor: pointer; color-scheme: dark; min-width: 120px;
 }
+.date-range-input:focus-visible { outline: var(--ngt-focus-ring-width, 2px) solid var(--ngt-focus-ring, #059669); outline-offset: var(--ngt-focus-ring-offset, 2px); border-radius: 4px; }
 .date-range-sep { color: rgba(255,255,255,.4); font-size: 15px; font-weight: 700; }
 
 /* ===================== REPORTS ===================== */

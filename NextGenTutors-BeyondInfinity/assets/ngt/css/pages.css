@@ -170,7 +170,8 @@ html.pt-incoming::before { content: ""; position: fixed; inset: 0; z-index: 8998
   background: var(--slate-50); color: var(--slate-800); transition: border-color .2s, background .2s;
 }
 .field textarea { resize: vertical; min-height: 130px; }
-.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--lime); background: #fff; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--lime); background: #fff; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: var(--ngt-focus-ring-width, 2px) solid var(--ngt-focus-ring, #059669); outline-offset: var(--ngt-focus-ring-offset, 2px); }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
 .form-success { display: none; align-items: center; gap: 10px; background: var(--lime-soft); border: 1.5px solid var(--lime); color: var(--navy); padding: 14px 18px; border-radius: var(--r-md); font-weight: 800; font-size: 13px; margin-top: 16px; }

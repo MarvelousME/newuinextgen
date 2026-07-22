@@ -47,7 +47,8 @@ class NGC_AI_Admin {
 			return;
 		}
 		wp_enqueue_style( 'ngc-ai', NGC_PLUGIN_URL . 'assets/css/ngc-ai.css', [], NGC_VERSION );
-		wp_enqueue_script( 'ngc-ai', NGC_PLUGIN_URL . 'assets/js/ngc-ai.js', [], NGC_VERSION, true );
+		wp_enqueue_script( 'ngc-dialog', NGC_PLUGIN_URL . 'assets/js/ngc-dialog.js', [], NGC_VERSION, true );
+		wp_enqueue_script( 'ngc-ai', NGC_PLUGIN_URL . 'assets/js/ngc-ai.js', [ 'ngc-dialog' ], NGC_VERSION, true );
 		wp_localize_script(
 			'ngc-ai',
 			'NGC_ADMIN',

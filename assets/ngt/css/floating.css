@@ -96,7 +96,8 @@
 
 .chat-compose { padding: 12px 16px; border-top: 1px solid var(--slate-100); display: flex; gap: 10px; align-items: center; flex-shrink: 0; background: #fff; }
 .chat-compose input { flex: 1; background: var(--slate-50); border: 1.5px solid var(--slate-200); border-radius: 22px; padding: 10px 16px; font-family: var(--font-sans); font-size: 13.5px; font-weight: 500; color: var(--slate-800); transition: border-color .2s; }
-.chat-compose input:focus { outline: none; border-color: var(--lime); background: #fff; }
+.chat-compose input:focus { border-color: var(--lime); background: #fff; }
+.chat-compose input:focus-visible { outline: var(--ngt-focus-ring-width, 2px) solid var(--ngt-focus-ring, #059669); outline-offset: var(--ngt-focus-ring-offset, 2px); }
 .chat-compose button { width: 40px; height: 40px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s, transform .2s; }
 .chat-compose button:hover { background: var(--blue); transform: scale(1.06); }
 .chat-compose button svg { width: 18px; height: 18px; }
@@ -207,7 +208,8 @@
   background: var(--slate-50); color: var(--slate-800); transition: border-color .2s, background .2s;
 }
 .sp-field textarea { resize: none; height: 76px; }
-.sp-field input:focus, .sp-field select:focus, .sp-field textarea:focus { outline: none; border-color: var(--lime); background: #fff; }
+.sp-field input:focus, .sp-field select:focus, .sp-field textarea:focus { border-color: var(--lime); background: #fff; }
+.sp-field input:focus-visible, .sp-field select:focus-visible, .sp-field textarea:focus-visible { outline: var(--ngt-focus-ring-width, 2px) solid var(--ngt-focus-ring, #059669); outline-offset: var(--ngt-focus-ring-offset, 2px); }
 
 .sp-success { display: none; text-align: center; padding: 22px 16px; }
 .sp-success.show { display: block; }

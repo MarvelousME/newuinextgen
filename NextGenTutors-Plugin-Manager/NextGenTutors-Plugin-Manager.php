@@ -3,7 +3,7 @@
  * Plugin Name:       NextGenTutors Plugin Manager
  * Plugin URI:        https://www.nextgentutors.co.za/
  * Description:       Detects required core plugins, reports dependency health, and provides secure one-click install/activate workflows.
- * Version:           1.3.0
+ * Version:           1.3.5
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            NextGen Tutors
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NGCPM_VERSION', '1.3.3' );
+define( 'NGCPM_VERSION', '1.3.5' );
 define( 'NGCPM_PLUGIN_FILE', __FILE__ );
 define( 'NGCPM_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NGCPM_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

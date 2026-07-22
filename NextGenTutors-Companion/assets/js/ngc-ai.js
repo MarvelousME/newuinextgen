@@ -205,11 +205,33 @@
         }
       });
     } else if (t.dataset && t.dataset.delm) {
-      if (!window.confirm('Delete this model and its key?')) { return; }
-      api('/ai/models/delete', 'POST', { id: t.dataset.delm }).then(function () { loadModels(); });
+      var delModel = function () {
+        api('/ai/models/delete', 'POST', { id: t.dataset.delm }).then(function () { loadModels(); });
+      };
+      if (window.NGCDialog) {
+        window.NGCDialog.confirm({
+          title: 'Delete model',
+          message: 'Delete this model and its key? This cannot be undone.',
+          confirmLabel: 'Delete',
+          danger: true,
+        }).then(function (ok) { if (ok) { delModel(); } });
+      } else if (window.confirm('Delete this model and its key?')) {
+        delModel();
+      }
     } else if (t.dataset && t.dataset.dela) {
-      if (!window.confirm('Delete this agent?')) { return; }
-      api('/ai/agents/delete', 'POST', { id: t.dataset.dela }).then(function () { loadAgents(); });
+      var delAgent = function () {
+        api('/ai/agents/delete', 'POST', { id: t.dataset.dela }).then(function () { loadAgents(); });
+      };
+      if (window.NGCDialog) {
+        window.NGCDialog.confirm({
+          title: 'Delete agent',
+          message: 'Delete this agent? This cannot be undone.',
+          confirmLabel: 'Delete',
+          danger: true,
+        }).then(function (ok) { if (ok) { delAgent(); } });
+      } else if (window.confirm('Delete this agent?')) {
+        delAgent();
+      }
     }
   });
 

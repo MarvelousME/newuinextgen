@@ -427,6 +427,7 @@ class NGCPM_Installer {
 	 * @return array{success:bool,message:string,slug:string}
 	 */
 	private static function install_from_download_url( $slug, $url, $overwrite = false ) {
+		$url = self::normalize_download_url( $url );
 		self::begin_http_filters();
 		$tmp = download_url( $url, self::HTTP_TIMEOUT );
 		self::end_http_filters();
@@ -444,6 +445,36 @@ class NGCPM_Installer {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Normalize common WordPress.org plugin page URLs into direct zip URLs.
+	 *
+	 * @param string $url Candidate URL from settings/UI.
+	 * @return string
+	 */
+	private static function normalize_download_url( $url ) {
+		$url = esc_url_raw( (string) $url );
+		if ( ! $url ) {
+			return '';
+		}
+
+		$parts = wp_parse_url( $url );
+		if ( ! is_array( $parts ) ) {
+			return $url;
+		}
+
+		$host = strtolower( (string) ( $parts['host'] ?? '' ) );
+		$path = trim( (string) ( $parts['path'] ?? '' ), '/' );
+		if ( 'wordpress.org' !== $host && 'www.wordpress.org' !== $host ) {
+			return $url;
+		}
+
+		if ( preg_match( '#^plugins/([a-z0-9-]+)/?$#i', $path, $m ) ) {
+			return self::wporg_zip_url( sanitize_key( $m[1] ) );
+		}
+
+		return $url;
 	}
 
 	/**

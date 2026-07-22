@@ -1,0 +1,20 @@
+{
+  "name": "nextgentutors/ai-integration",
+  "description": "Signed asynchronous bridge from Companion outbox events to agents-api.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.0"
+  },
+  "autoload": {
+    "classmap": [
+      "includes/"
+    ]
+  },
+  "scripts": {
+    "test": "php tests/run.php"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

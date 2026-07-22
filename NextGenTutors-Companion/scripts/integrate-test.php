@@ -300,8 +300,10 @@ if ( ! is_file( $checkout ) ) {
 }
 
 $main = file_get_contents( $root . '/nextgencompanion.php' );
-if ( false === strpos( $main, "define( 'NGC_VERSION', '1.9.0' )" ) ) {
-	echo "FAIL: expected NGC_VERSION 1.9.0\n";
+preg_match( "/define\\(\\s*'NGC_VERSION'\\s*,\\s*'([^']+)'\\s*\\)/", $main, $version_constant );
+preg_match( '/Version:\s*([0-9.]+)/', $main, $version_header );
+if ( empty( $version_constant[1] ) || ( $version_header[1] ?? '' ) !== $version_constant[1] ) {
+	echo "FAIL: Companion header and NGC_VERSION must match\n";
 	++$errors;
 }
 

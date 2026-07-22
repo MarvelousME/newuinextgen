@@ -199,8 +199,18 @@ class NGC_Smart_Matching {
 
 		ob_start();
 		?>
-		<div class="ngc-match-wizard" data-ngc-matcher>
-			<div class="ngc-match-step is-active" data-step="1">
+		<div class="ngc-match-wizard" data-ngc-matcher data-ngt-stepper-scope>
+			<ol class="ngt-stepper" data-ngt-stepper data-storage-key="ngc-match-wizard" aria-label="<?php esc_attr_e( 'Match wizard steps', 'nextgencompanion' ); ?>">
+				<li class="ngt-stepper__item is-active" data-step="1">
+					<span class="ngt-stepper__marker" aria-hidden="true">1</span>
+					<span class="ngt-stepper__label"><?php esc_html_e( 'Your needs', 'nextgencompanion' ); ?></span>
+				</li>
+				<li class="ngt-stepper__item" data-step="2">
+					<span class="ngt-stepper__marker" aria-hidden="true">2</span>
+					<span class="ngt-stepper__label"><?php esc_html_e( 'Matches', 'nextgencompanion' ); ?></span>
+				</li>
+			</ol>
+			<div class="ngc-match-step is-active" data-step="1" data-ngt-step-panel="1">
 				<div class="ngc-match-step-head">
 					<span class="ngc-match-step-num">01</span>
 					<div>
@@ -274,7 +284,7 @@ class NGC_Smart_Matching {
 					</button>
 				</form>
 			</div>
-			<div class="ngc-match-step" data-step="2" hidden>
+			<div class="ngc-match-step" data-step="2" data-ngt-step-panel="2" hidden>
 				<div class="ngc-match-step-head">
 					<span class="ngc-match-step-num">02</span>
 					<div>

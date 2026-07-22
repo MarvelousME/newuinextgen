@@ -1,7 +1,7 @@
 <?php
 /**
  * Section: Academic impact showcase (dark, with animated counters).
- * Ports the "Our Academic Impact" gallery block. Counters animate via theme.js.
+ * Ports the "Our Academic Impact" gallery block. Counters animate via main.js.
  *
  * @package NextGen_Tutors
  */
@@ -10,12 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$stats = array(
-	array( 94, '%', __( 'Average grade improvement', 'nextgen-tutors' ) ),
-	array( 9000, '+', __( 'Active learners & families', 'nextgen-tutors' ) ),
-	array( 500, '+', __( 'Vetted educators nationwide', 'nextgen-tutors' ) ),
-	array( 24, 'h', __( 'Average match turnaround', 'nextgen-tutors' ) ),
-);
+$stats = function_exists( 'bi_real_stat_cards' ) ? bi_real_stat_cards() : array();
 ?>
 <section class="ngt-impact" data-reveal>
 	<div class="ngt-impact-glow" aria-hidden="true"></div>
@@ -30,8 +25,14 @@ $stats = array(
 	<div class="ngt-impact-stats">
 		<?php foreach ( $stats as $s ) : ?>
 			<div class="ngt-stat">
-				<span class="ngt-stat-num" data-counter="<?php echo esc_attr( $s[0] ); ?>" data-suffix="<?php echo esc_attr( $s[1] ); ?>">0<?php echo esc_html( $s[1] ); ?></span>
-				<span class="ngt-stat-label"><?php echo esc_html( $s[2] ); ?></span>
+				<span
+					class="ngt-stat-num"
+					<?php if ( (float) $s['count'] > 0 ) : ?>
+						data-bi-count="<?php echo esc_attr( (string) $s['count'] ); ?>"
+						data-bi-suffix="<?php echo esc_attr( $s['suffix'] ); ?>"
+					<?php endif; ?>
+				><?php echo esc_html( number_format_i18n( (float) $s['count'], is_float( $s['count'] ) ? 1 : 0 ) . $s['suffix'] ); ?></span>
+				<span class="ngt-stat-label"><?php echo esc_html( $s['label'] ); ?></span>
 			</div>
 		<?php endforeach; ?>
 	</div>

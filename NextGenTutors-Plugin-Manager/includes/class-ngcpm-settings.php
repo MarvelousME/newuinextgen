@@ -96,6 +96,14 @@ class NGCPM_Settings {
 			if ( $url && 0 !== strpos( $url, 'https://' ) ) {
 				continue;
 			}
+			$parts = wp_parse_url( $url );
+			if ( is_array( $parts ) ) {
+				$host = strtolower( (string) ( $parts['host'] ?? '' ) );
+				$path = trim( (string) ( $parts['path'] ?? '' ), '/' );
+				if ( ( 'wordpress.org' === $host || 'www.wordpress.org' === $host ) && preg_match( '#^plugins/([a-z0-9-]+)/?$#i', $path, $m ) ) {
+					$url = 'https://downloads.wordpress.org/plugin/' . rawurlencode( sanitize_key( $m[1] ) ) . '.latest-stable.zip';
+				}
+			}
 			if ( $url ) {
 				$clean[ sanitize_key( $slug ) ] = $url;
 			}

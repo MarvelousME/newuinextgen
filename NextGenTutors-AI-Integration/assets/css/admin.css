@@ -1,0 +1,29 @@
+.ngtai-admin {
+	--ngtai-border: #dcdcde;
+	max-width: 1280px;
+}
+
+.ngtai-admin .widefat {
+	margin-top: 16px;
+}
+
+.ngtai-admin pre {
+	max-width: 720px;
+	max-height: 260px;
+	margin: 8px 0;
+	padding: 12px;
+	overflow: auto;
+	border: 1px solid var(--ngtai-border);
+	background: #f6f7f7;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.ngtai-admin textarea {
+	width: min(100%, 420px);
+	min-height: 72px;
+}
+
+.ngtai-admin code {
+	word-break: break-all;
+}

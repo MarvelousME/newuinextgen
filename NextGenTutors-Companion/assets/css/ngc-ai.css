@@ -10,3 +10,28 @@
 .ngc-ai-log { border: 1px solid #dcdcde; border-radius: 8px; background: #fff; padding: 14px; max-height: 420px; overflow-y: auto; margin-bottom: 10px; }
 .ngc-ai-turn { padding: 6px 0; border-bottom: 1px solid #f0f0f1; line-height: 1.5; }
 .ngc-ai-turn:last-child { border-bottom: 0; }
+
+/* Accessible confirm dialog (ngc-dialog.js) */
+.ngc-dialog-root {
+  position: fixed; inset: 0; z-index: 100100;
+  display: grid; place-items: center; padding: 24px;
+  background: rgba(15, 26, 47, 0.5);
+  opacity: 0; pointer-events: none;
+  transition: opacity 150ms linear;
+}
+.ngc-dialog-root.is-open { opacity: 1; pointer-events: auto; }
+.ngc-dialog {
+  width: min(440px, 100%);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 24px 48px rgba(15, 26, 47, 0.2);
+  padding: 24px;
+}
+.ngc-dialog__title { margin: 0 0 10px; font-size: 1.15rem; color: #0F1A2F; }
+.ngc-dialog__body { margin: 0 0 20px; color: #475569; line-height: 1.55; }
+.ngc-dialog__actions { display: flex; justify-content: flex-end; gap: 8px; }
+.ngc-dialog__confirm--danger { background: #b91c1c !important; border-color: #b91c1c !important; color: #fff !important; }
+@media (prefers-reduced-motion: reduce) {
+  .ngc-dialog-root { transition: none; }
+}
+

@@ -331,6 +331,106 @@ function bi_marquee_band() {
     echo '</div></div>';
 }
 
+/**
+ * Render a compact contextual trust message.
+ *
+ * @param string               $label Trust statement.
+ * @param string               $url Optional destination.
+ * @param array<string, mixed> $args Optional icon, modifier and aria_label.
+ */
+function bi_trust_chip( $label, $url = '', $args = [] ) {
+    $args = wp_parse_args(
+        $args,
+        [
+            'icon'       => 'shield',
+            'modifier'   => '',
+            'aria_label' => '',
+        ]
+    );
+    $class = 'bi-trust-chip';
+    if ( $args['modifier'] ) {
+        $class .= ' bi-trust-chip--' . sanitize_html_class( $args['modifier'] );
+    }
+    $icon = bi_ui_icon( sanitize_key( $args['icon'] ), 16 );
+    $tag  = $url ? 'a' : 'span';
+    echo '<' . esc_attr( $tag ) . ' class="' . esc_attr( $class ) . '"';
+    if ( $url ) {
+        echo ' href="' . esc_url( $url ) . '"';
+    }
+    if ( $args['aria_label'] ) {
+        echo ' aria-label="' . esc_attr( $args['aria_label'] ) . '"';
+    }
+    echo '>';
+    if ( $icon ) {
+        echo '<span class="bi-trust-chip__icon" aria-hidden="true">' . $icon . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    }
+    echo '<span>' . esc_html( $label ) . '</span>';
+    if ( $url ) {
+        echo '<span class="bi-trust-chip__arrow" aria-hidden="true">→</span>';
+    }
+    echo '</' . esc_attr( $tag ) . '>';
+}
+
+/**
+ * Render live subject or province taxonomy coverage as filter links.
+ *
+ * Empty taxonomies render nothing so the public page never fabricates coverage.
+ *
+ * @param string $taxonomy subject|province.
+ * @param int    $limit Maximum terms.
+ * @return bool Whether the band rendered.
+ */
+function bi_coverage_band( $taxonomy, $limit = 9 ) {
+    if ( ! in_array( $taxonomy, [ 'subject', 'province' ], true ) ) {
+        return false;
+    }
+    $terms = [];
+    if ( taxonomy_exists( $taxonomy ) ) {
+        $terms = get_terms(
+            [
+                'taxonomy'   => $taxonomy,
+                'hide_empty' => true,
+                'number'     => max( 1, min( 16, (int) $limit ) ),
+                'orderby'    => 'count',
+                'order'      => 'DESC',
+            ]
+        );
+        if ( is_wp_error( $terms ) ) {
+            $terms = [];
+        }
+    }
+    $title = 'subject' === $taxonomy
+        ? __( 'Popular subject coverage', 'beyondinfinity' )
+        : __( 'Tutor coverage by province', 'beyondinfinity' );
+    ?>
+    <section class="bi-coverage-band" aria-labelledby="bi-coverage-<?php echo esc_attr( $taxonomy ); ?>">
+      <div class="bi-coverage-band__header">
+        <h2 id="bi-coverage-<?php echo esc_attr( $taxonomy ); ?>"><?php echo esc_html( $title ); ?></h2>
+        <p><?php esc_html_e( 'Choose an area to apply it to the live tutor directory.', 'beyondinfinity' ); ?></p>
+      </div>
+      <div class="bi-coverage-band__chips" role="list">
+        <?php if ( empty( $terms ) ) : ?>
+          <p class="bi-coverage-band__empty" role="listitem"><?php esc_html_e( 'Coverage will appear here as vetted tutor profiles go live.', 'beyondinfinity' ); ?></p>
+        <?php else : ?>
+          <?php foreach ( $terms as $term ) : ?>
+          <a
+            class="bi-coverage-chip"
+            role="listitem"
+            href="<?php echo esc_url( add_query_arg( $taxonomy, $term->slug, home_url( '/find-a-tutor/' ) ) ); ?>"
+            data-bi-marketplace-filter="<?php echo esc_attr( $taxonomy ); ?>"
+            data-bi-marketplace-value="<?php echo esc_attr( $term->slug ); ?>"
+          >
+            <span><?php echo esc_html( $term->name ); ?></span>
+            <span class="bi-coverage-chip__count" aria-label="<?php echo esc_attr( sprintf( _n( '%d tutor', '%d tutors', (int) $term->count, 'beyondinfinity' ), (int) $term->count ) ); ?>"><?php echo esc_html( (string) (int) $term->count ); ?></span>
+          </a>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </div>
+    </section>
+    <?php
+    return true;
+}
+
 function bi_safety_notice( $context = 'parent' ) {
     $url = home_url( '/safety-guide' );
     ?>
@@ -495,10 +595,30 @@ function bi_sticky_mobile_cta() {
     if ( bi_is_elementor_canvas_template() || bi_is_builder_edit_mode() ) {
         return;
     }
+
+    $auth_url   = home_url( '/login/' );
+    $auth_label = __( 'Login', 'beyondinfinity' );
+    if ( is_user_logged_in() ) {
+        $roles      = (array) wp_get_current_user()->roles;
+        $auth_label = __( 'Dashboard', 'beyondinfinity' );
+        if ( array_intersect( $roles, [ 'administrator', 'ngc_finance', 'ngc_support' ] ) ) {
+            $auth_url = home_url( '/admin-dashboard/' );
+        } elseif ( array_intersect( $roles, [ 'tutor' ] ) ) {
+            $auth_url = home_url( '/tutor-dashboard/' );
+        } elseif ( array_intersect( $roles, [ 'parent', 'parent_guardian' ] ) ) {
+            $auth_url = home_url( '/parent-dashboard/' );
+        } elseif ( array_intersect( $roles, [ 'student', 'subscriber' ] ) ) {
+            $auth_url = home_url( '/student-dashboard/' );
+        } else {
+            $auth_url = home_url( '/' );
+        }
+    }
     ?>
-    <div class="bi-sticky-cta" aria-hidden="false">
-      <a href="<?php echo esc_url( home_url( '/find-a-tutor' ) ); ?>" class="ngt-btn ngt-btn--primary ngt-btn--block"><?php esc_html_e( 'Find a Tutor', 'beyondinfinity' ); ?></a>
-    </div>
+    <nav class="bi-sticky-cta ngt-sticky-actions" aria-label="<?php esc_attr_e( 'Quick actions', 'beyondinfinity' ); ?>">
+      <a href="<?php echo esc_url( home_url( '/find-a-tutor/' ) ); ?>" class="ngt-sticky-actions__link ngt-sticky-actions__link--primary"><?php esc_html_e( 'Find', 'beyondinfinity' ); ?></a>
+      <a href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>" class="ngt-sticky-actions__link"><?php esc_html_e( 'Pricing', 'beyondinfinity' ); ?></a>
+      <a href="<?php echo esc_url( $auth_url ); ?>" class="ngt-sticky-actions__link"><?php echo esc_html( $auth_label ); ?></a>
+    </nav>
     <?php
 }
 
@@ -569,6 +689,7 @@ function bi_render_tutor_carousel_card( $tutor ) {
         <div class="tutor-badges">
           <?php if ( $online ) : ?><span class="tutor-badge tutor-badge--online">Online</span><?php endif; ?>
           <?php if ( $home ) : ?><span class="tutor-badge tutor-badge--home">In-Person</span><?php endif; ?>
+          <?php if ( ! empty( $tutor['vetted'] ) ) : ?><span class="tutor-badge tutor-badge--vetted"><?php esc_html_e( 'Verified', 'beyondinfinity' ); ?></span><?php endif; ?>
         </div>
         <?php if ( $rate > 0 ) : ?>
           <div class="tutor-price"><span class="r">R</span><span class="n"><?php echo esc_html( (string) $rate ); ?></span><span class="h">/hr</span></div>
@@ -669,33 +790,54 @@ function bi_render_tutors_carousel( $args = [] ) {
  */
 function bi_render_tutor_directory( $limit = 12 ) {
     $subject  = bi_get_search_query_arg( 'subject' );
+    $province = bi_get_search_query_arg( 'province' );
     $location = bi_get_search_query_arg( 'location' );
-    $tutors   = bi_get_carousel_tutors( $subject ? $limit * 3 : $limit );
+    $need_pool = $subject || $province || $location;
+    $tutors   = bi_get_carousel_tutors( $need_pool ? $limit * 3 : $limit );
 
     if ( $subject && function_exists( 'bi_filter_tutors_by_subject' ) ) {
         $tutors = bi_filter_tutors_by_subject( $tutors, $subject );
+    }
+    if ( $province ) {
+        $tutors = array_values(
+            array_filter(
+                $tutors,
+                static function ( $tutor ) use ( $province ) {
+                    $value = (string) ( $tutor['province'] ?? $tutor['location'] ?? '' );
+                    return $value && ( sanitize_title( $value ) === $province || false !== stripos( $value, str_replace( '-', ' ', $province ) ) );
+                }
+            )
+        );
+    }
+    if ( $need_pool ) {
         $tutors = array_slice( $tutors, 0, $limit );
     }
 
-    if ( empty( $tutors ) && ! $subject && ! $location ) {
+    if ( empty( $tutors ) && ! $subject && ! $province && ! $location ) {
         return;
     }
 
     $subject_label = $subject && function_exists( 'bi_subject_label_from_slug' )
         ? bi_subject_label_from_slug( $subject )
         : '';
+    $province_label = '';
+    if ( $province ) {
+        $map = bi_provinces();
+        $province_label = $map[ $province ] ?? ucwords( str_replace( '-', ' ', $province ) );
+    }
+    $place_label = $province_label ?: $location;
     ?>
     <section class="ngt-section ngt-section--alt" id="tutor-directory">
       <div class="ngt-container">
-        <?php if ( $subject_label || $location ) : ?>
+        <?php if ( $subject_label || $place_label ) : ?>
           <div class="bi-search-context ngt-card ngt-animate" style="padding:16px 20px;margin-bottom:20px">
             <p style="margin:0">
-              <?php if ( $subject_label && $location ) : ?>
-                <?php printf( esc_html__( 'Showing tutors for %1$s near %2$s.', 'beyondinfinity' ), esc_html( $subject_label ), esc_html( $location ) ); ?>
+              <?php if ( $subject_label && $place_label ) : ?>
+                <?php printf( esc_html__( 'Showing tutors for %1$s near %2$s.', 'beyondinfinity' ), esc_html( $subject_label ), esc_html( $place_label ) ); ?>
               <?php elseif ( $subject_label ) : ?>
                 <?php printf( esc_html__( 'Showing tutors for %s.', 'beyondinfinity' ), esc_html( $subject_label ) ); ?>
               <?php else : ?>
-                <?php printf( esc_html__( 'Showing tutors near %s.', 'beyondinfinity' ), esc_html( $location ) ); ?>
+                <?php printf( esc_html__( 'Showing tutors near %s.', 'beyondinfinity' ), esc_html( $place_label ) ); ?>
               <?php endif; ?>
               <a href="<?php echo esc_url( home_url( '/find-a-tutor' ) ); ?>"><?php esc_html_e( 'Clear search', 'beyondinfinity' ); ?></a>
             </p>
@@ -766,7 +908,7 @@ function bi_render_tutor_profile( $tutor ) {
             }
         }
     }
-    $approved  = $tutor_user_id ? ( (bool) get_user_meta( $tutor_user_id, 'ngc_tutor_verified', true ) || (bool) get_user_meta( $tutor_user_id, 'ngt_tutor_verified', true ) ) : false;
+    $approved  = ! empty( $tutor['vetted'] ) || ( $tutor_user_id ? ( (bool) get_user_meta( $tutor_user_id, 'ngc_tutor_verified', true ) || (bool) get_user_meta( $tutor_user_id, 'ngt_tutor_verified', true ) ) : false );
     $suspended = $tutor_user_id ? ( (bool) get_user_meta( $tutor_user_id, 'ngc_tutor_suspended', true ) || (bool) get_user_meta( $tutor_user_id, 'ngt_tutor_suspended', true ) ) : false;
     $incomplete = empty( $tutor['bio'] ) || empty( $tutor['subjects'] );
     ?>
@@ -790,11 +932,13 @@ function bi_render_tutor_profile( $tutor ) {
               <span><?php echo esc_html( 'R' . $rate . '/hr' ); ?></span>
             <?php endif; ?>
           </div>
-          <div class="bi-profile-badges">
-            <?php foreach ( $badges as $badge ) : ?>
-              <span class="bi-profile-badge"><?php echo esc_html( $badge ); ?></span>
-            <?php endforeach; ?>
-          </div>
+          <?php if ( $approved ) : ?>
+            <div class="bi-profile-badges" aria-label="<?php esc_attr_e( 'Tutor verification', 'beyondinfinity' ); ?>">
+              <?php foreach ( $badges as $badge ) : ?>
+                <span class="bi-profile-badge"><?php echo esc_html( $badge ); ?></span>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
           <div class="bi-profile-hero__cta">
             <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="ngt-btn ngt-btn--secondary ngt-btn--lg"><?php esc_html_e( 'Book a Session', 'beyondinfinity' ); ?></a>
             <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="ngt-btn ngt-btn--outline ngt-btn--lg" style="border-color:#fff;color:#fff"><?php esc_html_e( 'Message Tutor', 'beyondinfinity' ); ?></a>

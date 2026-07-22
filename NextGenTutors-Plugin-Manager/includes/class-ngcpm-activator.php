@@ -41,7 +41,24 @@ class NGCPM_Activator {
 			return [ 'success' => false, 'message' => __( 'Plugin not installed.', 'nextgentutors-plugin-manager' ), 'slug' => $slug ];
 		}
 
-		$result = activate_plugin( $main_file, '', false, true );
+		// Non-silent so the plugin's activation hooks run (e.g. FluentCRM creates its fc_* tables).
+		try {
+			$result = activate_plugin( $main_file, '', false, false );
+		} catch ( Throwable $e ) {
+			$message = sprintf(
+				/* translators: %s: activation exception message */
+				__( 'Plugin activation failed safely: %s', 'nextgentutors-plugin-manager' ),
+				wp_strip_all_tags( $e->getMessage() )
+			);
+			NGCPM_Logger::log( 'activation_exception', $message, [ 'slug' => $slug ] );
+			NGCPM_Scanner::clear_cache();
+			return [
+				'success' => false,
+				'message' => $message,
+				'slug'    => $slug,
+				'code'    => 'activation_exception',
+			];
+		}
 
 		NGCPM_Scanner::clear_cache();
 

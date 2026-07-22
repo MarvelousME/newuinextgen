@@ -19,13 +19,13 @@ $top_earnings_label = $top_earnings > 0 ? 'R' . number_format( $top_earnings, 0 
     <div class="bi-stat-grid" style="margin-bottom:0">
       <?php foreach (
           [
-              [ $top_earnings_label, __( 'Top monthly earnings', 'beyondinfinity' ) ],
-              [ __( 'Weekly', 'beyondinfinity' ), __( 'Platform payouts', 'beyondinfinity' ) ],
-              [ $policy_sla['first_booking_target'], __( 'First booking target', 'beyondinfinity' ) ],
+              [ $top_earnings_label, __( 'Top monthly earnings', 'beyondinfinity' ), $top_earnings > 0 ? (string) (int) $top_earnings : '' ],
+              [ __( 'Weekly', 'beyondinfinity' ), __( 'Platform payouts', 'beyondinfinity' ), '' ],
+              [ $policy_sla['first_booking_target'], __( 'First booking target', 'beyondinfinity' ), preg_match( '/\d+/', (string) $policy_sla['first_booking_target'], $m ) ? $m[0] : '' ],
           ] as $s
       ) : ?>
         <div class="bi-stat-card ngt-animate">
-          <div class="bi-stat-card__num"><?php echo esc_html( $s[0] ); ?></div>
+          <div class="bi-stat-card__num"<?php if ( '' !== $s[2] ) : ?> data-bi-count="<?php echo esc_attr( $s[2] ); ?>"<?php endif; ?>><?php echo esc_html( $s[0] ); ?></div>
           <div class="bi-stat-card__label"><?php echo esc_html( $s[1] ); ?></div>
         </div>
       <?php endforeach; ?>
@@ -56,6 +56,14 @@ $top_earnings_label = $top_earnings > 0 ? 'R' . number_format( $top_earnings, 0 
 
 <section class="ngt-section">
   <div class="ngt-container bi-narrow">
+    <div class="bi-trust-chip-row ngt-animate" role="note" aria-label="<?php esc_attr_e( 'Tutor payout information', 'beyondinfinity' ); ?>">
+      <?php
+      $payout_message = $top_earnings > 0
+          ? sprintf( __( 'Top recorded monthly tutor earnings: %s · payouts tracked weekly', 'beyondinfinity' ), $top_earnings_label )
+          : __( 'Weekly platform payouts with transparent earnings tracking', 'beyondinfinity' );
+      bi_trust_chip( $payout_message, '', [ 'icon' => 'check' ] );
+      ?>
+    </div>
     <?php bi_shortcode_block( '[ngc_become_tutor_form]', __( 'Tutor Application', 'beyondinfinity' ) ); ?>
     <?php bi_safety_notice( 'tutor' ); ?>
   </div>

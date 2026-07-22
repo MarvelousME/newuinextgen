@@ -17,6 +17,20 @@ if ( ! is_user_logged_in() ) {
 	return;
 }
 
+?>
+<section class="ngt-section bi-checkout-trust" aria-labelledby="bi-checkout-trust-title">
+	<div class="ngt-container bi-narrow">
+		<div class="bi-trust-inject ngt-animate" role="note">
+			<h2 id="bi-checkout-trust-title"><?php esc_html_e( 'Your first lesson is protected', 'beyondinfinity' ); ?></h2>
+			<p><?php esc_html_e( 'If the first lesson is not the right fit, NextGen100 gives you a rematch or a full refund under the guarantee terms.', 'beyondinfinity' ); ?></p>
+			<div class="bi-trust-chip-row">
+				<?php bi_trust_chip( __( 'Read the NextGen100 guarantee', 'beyondinfinity' ), home_url( '/guarantee/' ), [ 'icon' => 'check' ] ); ?>
+			</div>
+		</div>
+	</div>
+</section>
+<?php
+
 if ( shortcode_exists( 'ngc_parent_checkout' ) ) {
 	echo do_shortcode( '[ngc_parent_checkout]' );
 } else {

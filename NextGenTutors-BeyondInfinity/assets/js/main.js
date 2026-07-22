@@ -148,13 +148,16 @@
     });
   }
 
-  /* Hero search → scroll to directory on find-a-tutor */
+  /* Coverage / hero search → scroll to live marketplace or fallback directory */
   var searchParams = new URLSearchParams(window.location.search);
-  if (searchParams.has('subject') || searchParams.has('location')) {
-    var directory = document.getElementById('tutor-directory');
+  if (searchParams.has('subject') || searchParams.has('province') || searchParams.has('location') || searchParams.has('format')) {
+    var directory = document.querySelector('[data-ngc-marketplace]') || document.getElementById('tutor-directory');
     if (directory) {
       window.setTimeout(function() {
-        directory.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        directory.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'start'
+        });
       }, 150);
     }
   }
@@ -170,6 +173,55 @@
       });
     }, { threshold: 0.5 });
     statObserver.observe(el);
+  });
+
+  /* Numeric counters — shared, suffix-safe and reduced-motion aware. */
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var counterObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) { return; }
+      var el = entry.target;
+      var rawTarget = el.getAttribute('data-target') || el.getAttribute('data-bi-count') || '0';
+      var target = parseFloat(rawTarget);
+      counterObserver.unobserve(el);
+      if (!Number.isFinite(target) || target <= 0) { return; }
+      var original = el.textContent || '';
+      var numberMatch = original.match(/-?[\d,\s]+(?:\.\d+)?/);
+      var inferredPrefix = numberMatch ? original.slice(0, numberMatch.index) : '';
+      var inferredSuffix = numberMatch ? original.slice(numberMatch.index + numberMatch[0].length) : '';
+      var prefix = el.hasAttribute('data-bi-prefix') ? el.getAttribute('data-bi-prefix') : inferredPrefix;
+      var suffix = el.hasAttribute('data-bi-suffix') ? el.getAttribute('data-bi-suffix') : inferredSuffix;
+      var decimalPart = String(rawTarget).split('.')[1] || '';
+      var decimals = Math.min(2, parseInt(el.getAttribute('data-bi-decimals') || String(decimalPart.length), 10) || 0);
+
+      function renderCounter(value) {
+        el.textContent = prefix + value.toLocaleString('en-ZA', {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals
+        }) + suffix;
+      }
+
+      if (reducedMotion) {
+        renderCounter(target);
+        return;
+      }
+      var startTime;
+      function tick(now) {
+        if (!startTime) { startTime = now; }
+        var progress = Math.min((now - startTime) / 900, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        renderCounter(target * eased);
+        if (progress < 1) {
+          window.requestAnimationFrame(tick);
+        } else {
+          renderCounter(target);
+        }
+      }
+      window.requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.counter[data-target], [data-bi-count]').forEach(function (el) {
+    counterObserver.observe(el);
   });
 
 })(jQuery);

@@ -9,7 +9,7 @@
 }
 .ngt-ui-progress__bar {
   height: 100%;
-  background: linear-gradient(90deg, var(--ngt-accent,#9E7AFF), var(--ngt-accent-2,#FE8BBB));
+  background: linear-gradient(90deg, var(--ngt-accent,#059669), var(--ngt-accent-2,#FF9F0A));
   transition: width .2s linear;
 }
 .ngt-ui-scroll-progress {
@@ -29,7 +29,7 @@
 }
 .ngt-ui-ring__track { stroke: rgba(0,0,0,.08); }
 .ngt-ui-ring__value {
-  stroke: var(--ngt-accent, #9E7AFF);
+  stroke: var(--ngt-accent, #059669);
   stroke-linecap: round;
   transition: stroke-dashoffset 1s ease;
 }

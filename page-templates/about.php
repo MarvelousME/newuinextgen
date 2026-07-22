@@ -148,30 +148,5 @@ get_template_part('template-parts/nav');
   </div>
 </section>
 
-<script>
-(function () {
-  // Counter animation
-  const counters = document.querySelectorAll('.counter[data-target]');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el     = entry.target;
-      const target = parseInt(el.dataset.target, 10);
-      const step   = Math.ceil(target / 60);
-      let current  = 0;
-      const timer  = setInterval(() => {
-        current = Math.min(current + step, target);
-        el.textContent = current.toLocaleString('en-ZA') + (target >= 1000 ? '' : '');
-        if (current >= target) clearInterval(timer);
-      }, 25);
-      observer.unobserve(el);
-    });
-  }, { threshold: 0.3 });
-  counters.forEach(c => observer.observe(c));
-
-  if (window.lucide) lucide.createIcons();
-})();
-</script>
-
 <?php get_template_part('template-parts/footer'); ?>
 <?php get_template_part('template-parts/footer-close'); ?>

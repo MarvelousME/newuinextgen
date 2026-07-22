@@ -23,7 +23,7 @@ bi_hero(
         <span class="bi-price-plan__tag"><?php esc_html_e( 'Online Classroom', 'beyondinfinity' ); ?></span>
         <h3><?php esc_html_e( 'Grade 1–12 Online', 'beyondinfinity' ); ?></h3>
         <p class="bi-price-plan__desc"><?php esc_html_e( 'Digital whiteboards, past-paper training and CAPS / IEB / Cambridge syllabi.', 'beyondinfinity' ); ?></p>
-        <div class="ngt-pricing-card__price"><?php echo esc_html( $rate_online ); ?></div>
+        <div class="ngt-pricing-card__price" data-bi-count="<?php echo esc_attr( (string) $online_num ); ?>"><?php echo esc_html( $rate_online ); ?></div>
         <p class="bi-calculator__note"><?php esc_html_e( 'per 1-hour lesson (1–3 month plan)', 'beyondinfinity' ); ?></p>
         <?php bi_bullets( [
           __( 'CAPS / IEB / Cambridge syllabi', 'beyondinfinity' ),
@@ -33,11 +33,11 @@ bi_hero(
         ] ); ?>
         <a href="<?php echo esc_url( home_url( '/find-a-tutor' ) ); ?>" class="ngt-btn ngt-btn--outline ngt-btn--block" style="margin-top:20px"><?php esc_html_e( 'Choose Online', 'beyondinfinity' ); ?></a>
       </div>
-      <div class="ngt-pricing-card ngt-pricing-card--featured bi-price-plan ngt-animate ngt-animate--delay-2">
+      <div class="ngt-pricing-card ngt-pricing-card--featured bi-price-plan bi-price-plan--popular ngt-animate ngt-animate--delay-2" aria-label="<?php esc_attr_e( 'Most popular plan', 'beyondinfinity' ); ?>">
         <span class="bi-price-plan__tag bi-price-plan__tag--lime"><?php esc_html_e( 'Most Popular', 'beyondinfinity' ); ?></span>
         <h3 style="color:#fff"><?php esc_html_e( 'In-Person At Home', 'beyondinfinity' ); ?></h3>
         <p class="bi-price-plan__desc" style="color:rgba(255,255,255,.85)"><?php esc_html_e( 'A vetted tutor travels to your home with ID and clearance checks.', 'beyondinfinity' ); ?></p>
-        <div class="ngt-pricing-card__price" style="font-size:2rem;color:#fff"><?php echo esc_html( $rate_inperson ); ?></div>
+        <div class="ngt-pricing-card__price" style="font-size:2rem;color:#fff" data-bi-count="<?php echo esc_attr( (string) bi_rate_to_number( $rate_inperson ) ); ?>"><?php echo esc_html( $rate_inperson ); ?></div>
         <p style="color:rgba(255,255,255,.75)"><?php echo esc_html( sprintf( __( 'per hour (1–3 months) · %s for 3–12 months', 'beyondinfinity' ), $rate_inperson ) ); ?></p>
         <?php
         echo '<ul class="bi-bullets bi-bullets--light">';
@@ -57,7 +57,7 @@ bi_hero(
         <span class="bi-price-plan__tag"><?php esc_html_e( 'University Core', 'beyondinfinity' ); ?></span>
         <h3><?php esc_html_e( 'Tertiary Subjects', 'beyondinfinity' ); ?></h3>
         <p class="bi-price-plan__desc"><?php esc_html_e( 'Engineering, accounting, statistics and computer science specialists.', 'beyondinfinity' ); ?></p>
-        <div class="ngt-pricing-card__price"><?php echo esc_html( $rate_tertiary ); ?></div>
+        <div class="ngt-pricing-card__price" data-bi-count="<?php echo esc_attr( (string) bi_rate_to_number( $rate_tertiary ) ); ?>"><?php echo esc_html( $rate_tertiary ); ?></div>
         <p class="bi-calculator__note"><?php esc_html_e( 'per lesson', 'beyondinfinity' ); ?></p>
         <?php bi_bullets( [
           __( 'Honours-level specialists', 'beyondinfinity' ),
@@ -67,6 +67,26 @@ bi_hero(
         ] ); ?>
         <a href="<?php echo esc_url( home_url( '/find-a-tutor' ) ); ?>" class="ngt-btn ngt-btn--outline ngt-btn--block" style="margin-top:20px"><?php esc_html_e( 'Choose Tertiary', 'beyondinfinity' ); ?></a>
       </div>
+    </div>
+
+    <div class="bi-trust-chip-row ngt-animate" role="note" aria-label="<?php esc_attr_e( 'Booking protections', 'beyondinfinity' ); ?>">
+      <?php bi_trust_chip( __( 'Every tutor passes 5-step vetting', 'beyondinfinity' ), home_url( '/tutor-vetting/' ) ); ?>
+      <?php bi_trust_chip( __( 'First lesson covered by NextGen100', 'beyondinfinity' ), home_url( '/guarantee/' ), [ 'icon' => 'check' ] ); ?>
+    </div>
+    <div class="bi-trust-inject ngt-animate" role="note">
+      <p>
+        <?php
+        printf(
+          wp_kses(
+            /* translators: 1: tutor-vetting URL, 2: guarantee URL */
+            __( 'Every tutor passes our <a href="%1$s">5-step vetting</a>. Lessons are covered by the <a href="%2$s">NextGen100 first-lesson guarantee</a> — match again or get a full refund.', 'beyondinfinity' ),
+            [ 'a' => [ 'href' => [] ] ]
+          ),
+          esc_url( home_url( '/tutor-vetting/' ) ),
+          esc_url( home_url( '/guarantee/' ) )
+        );
+        ?>
+      </p>
     </div>
   </div>
 </section>
@@ -82,6 +102,40 @@ bi_hero(
   </div>
 </section>
 <?php endif; ?>
+
+<section class="ngt-section ngt-section--alt">
+  <div class="ngt-container bi-narrow">
+    <div class="ngt-section__header ngt-animate">
+      <h2><?php esc_html_e( 'Online vs In-Person', 'beyondinfinity' ); ?></h2>
+      <p><?php esc_html_e( 'Same vetted tutors. Choose the format that fits your household.', 'beyondinfinity' ); ?></p>
+    </div>
+    <?php
+    if ( function_exists( 'ng_ui_component' ) ) {
+      ng_ui_component(
+        'comparison-card',
+        [
+          'left'  => [
+            'title' => __( 'Online', 'beyondinfinity' ),
+            'items' => [
+              __( 'Digital whiteboards & session recordings', 'beyondinfinity' ),
+              __( 'CAPS / IEB / Cambridge coverage', 'beyondinfinity' ),
+              sprintf( __( 'From %s / hour', 'beyondinfinity' ), $rate_online ),
+            ],
+          ],
+          'right' => [
+            'title' => __( 'In-person', 'beyondinfinity' ),
+            'items' => [
+              __( 'Tutor travels to your home', 'beyondinfinity' ),
+              __( 'ID & police-clearance vetted', 'beyondinfinity' ),
+              sprintf( __( 'From %s / hour · NextGen100 guarantee', 'beyondinfinity' ), $rate_inperson ),
+            ],
+          ],
+        ]
+      );
+    }
+    ?>
+  </div>
+</section>
 
 <section class="ngt-section ngt-section--alt">
   <div class="ngt-container">

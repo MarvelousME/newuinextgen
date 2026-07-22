@@ -197,7 +197,8 @@
 @media (max-width: 520px) { .newsletter__form { flex-direction: column; } }
 .newsletter__form input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: var(--r-md); padding: 15px 18px; color: #fff; font-family: var(--font-sans); font-weight: 600; font-size: 14px; }
 .newsletter__form input::placeholder { color: rgba(255,255,255,0.5); }
-.newsletter__form input:focus { outline: none; border-color: var(--lime); }
+.newsletter__form input:focus { border-color: var(--lime); }
+.newsletter__form input:focus-visible { outline: var(--ngt-focus-ring-width, 2px) solid var(--ngt-focus-ring, #059669); outline-offset: var(--ngt-focus-ring-offset, 2px); }
 
 /* ===================== CONTENT PROSE BLOCKS ===================== */
 .prose-block { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }

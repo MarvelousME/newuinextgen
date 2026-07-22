@@ -162,21 +162,45 @@
 
   const videoModal = document.getElementById('ngiVideoModal');
   const videoFrame = document.getElementById('ngiVideoFrame');
+  let videoTrap = null;
+  let bookingTrap = null;
+
+  function openDialog(el, trapRefSetter, onClose) {
+    if (!el) return;
+    el.classList.add('is-open');
+    if (window.BIFocusTrap) {
+      trapRefSetter(window.BIFocusTrap.activate(el.querySelector('.ngi-modal-card') || el, {
+        onEscape: onClose,
+      }));
+    }
+  }
+  function closeDialog(el, trap) {
+    if (!el) return;
+    el.classList.remove('is-open');
+    if (window.BIFocusTrap) window.BIFocusTrap.release(trap);
+  }
+
   root.querySelector('#ngiOpenVideo')?.addEventListener('click', () => {
     if (videoFrame && !videoFrame.src) {
       videoFrame.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0';
     }
-    videoModal?.classList.add('is-open');
+    openDialog(videoModal, (t) => { videoTrap = t; }, () => {
+      closeDialog(videoModal, videoTrap);
+      videoTrap = null;
+      if (videoFrame) videoFrame.src = '';
+    });
   });
   root.querySelectorAll('[data-ngi-video-close]').forEach((btn) =>
     btn.addEventListener('click', () => {
-      videoModal?.classList.remove('is-open');
+      closeDialog(videoModal, videoTrap);
+      videoTrap = null;
       if (videoFrame) videoFrame.src = '';
     })
   );
   videoModal?.addEventListener('click', (e) => {
     if (e.target === videoModal) {
-      videoModal.classList.remove('is-open');
+      closeDialog(videoModal, videoTrap);
+      videoTrap = null;
       if (videoFrame) videoFrame.src = '';
     }
   });
@@ -246,12 +270,23 @@
 
   const modal = document.getElementById('ngiBookingModal');
   root.querySelectorAll('[data-ngi-open]').forEach((btn) =>
-    btn.addEventListener('click', () => modal?.classList.add('is-open'))
+    btn.addEventListener('click', () => {
+      openDialog(modal, (t) => { bookingTrap = t; }, () => {
+        closeDialog(modal, bookingTrap);
+        bookingTrap = null;
+      });
+    })
   );
   root.querySelectorAll('[data-ngi-close]').forEach((btn) =>
-    btn.addEventListener('click', () => modal?.classList.remove('is-open'))
+    btn.addEventListener('click', () => {
+      closeDialog(modal, bookingTrap);
+      bookingTrap = null;
+    })
   );
   modal?.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('is-open');
+    if (e.target === modal) {
+      closeDialog(modal, bookingTrap);
+      bookingTrap = null;
+    }
   });
 })();

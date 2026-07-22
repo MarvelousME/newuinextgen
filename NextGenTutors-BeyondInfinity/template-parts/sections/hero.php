@@ -1,7 +1,7 @@
 <?php
 /**
  * Section: Hero carousel. Ports the React <HeroCarousel /> (4 slides).
- * Animation/auto-rotation handled by assets/js/theme.js (vanilla, replaces Framer Motion).
+ * Animation/auto-rotation handled by assets/js/main.js (vanilla, replaces Framer Motion).
  *
  * @package NextGen_Tutors
  */

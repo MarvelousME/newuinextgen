@@ -1,6 +1,6 @@
 # NextGenTutors — Solution Architecture
 
-One product, **four deployable packages**. Each package has a single responsibility; cross-package contracts are explicit and versioned.
+One product, **five deployable packages**. Each package has a single responsibility; cross-package contracts are explicit and versioned.
 
 ## Packages (canonical source only)
 
@@ -8,6 +8,7 @@ One product, **four deployable packages**. Each package has a single responsibil
 |---------|--------|----------------|----------------|
 | **BeyondInfinity** | `NextGenTutors-BeyondInfinity/` | `themes/nextgentutors-beyondinfinity` | Presentation: templates, design tokens, page defaults, theme workflows (fallback), `[bi_*]` / consumed `[ngc_*]` |
 | **Companion** | `NextGenTutors-Companion/` | `plugins/NextGenTutors-Companion` | Domain: data layer, CPTs, `[ngc_*]` shortcodes, `ngc/v1` REST, matching, bookings, AI suite, integrations |
+| **AI-Integration** | `NextGenTutors-AI-Integration/` | `plugins/NextGenTutors-AI-Integration` | Transport/security/governance bridge for approved AI integrations. No Companion domain ownership and no direct LLM or model runtime. |
 | **Html-Importer** | `NextGenTutors-Html-Importer/` | `plugins/NextGenTutors-Html-Importer` | One-time / ops: static HTML → WP pages (dry-run, rollback). No runtime business logic. |
 | **Plugin-Manager** | `NextGenTutors-Plugin-Manager/` | `plugins/NextGenTutors-Plugin-Manager` | Operator console: install/activate stack plugins, health, offline zips. Does not own tutor data. |
 
@@ -18,6 +19,7 @@ One product, **four deployable packages**. Each package has a single responsibil
 ### Single Responsibility
 - **Theme** — render UX; no custom DB tables; no payment/matching business rules.
 - **Companion** — business rules, persistence, APIs, AI policy (`BIA_Policy`).
+- **AI-Integration** — authenticated, redacted, idempotent transport between Companion contracts and approved external AI services; no domain or model-runtime ownership.
 - **Html-Importer** — content migration only.
 - **Plugin-Manager** — fleet management only.
 
@@ -45,6 +47,7 @@ Theme  ──consumes──►  [ngc_*] shortcodes, ngc/v1 REST
 Companion  ──owns──►  ngc_* namespace, NGC_* tables, NGC_AI_*
 Plugin-Manager  ──orchestrates──►  wp plugin install/activate (never duplicates Companion logic)
 Html-Importer  ──writes──►  post_content / pages only (never touches ngc_* tables)
+AI-Integration  ──bridges──►  governed event/callback transport (never owns Companion domain state or invokes model runtimes directly)
 ```
 
 ### Version constants
@@ -64,6 +67,7 @@ Html-Importer  ──writes──►  post_content / pages only (never touches n
 | Tutor CPT, earnings, payouts | Companion | Theme |
 | Smart matching scoring | Companion | Theme |
 | Multi-model BYOK | Companion AI Suite | Theme, Plugin-Manager |
+| AI transport signing, redaction, callback authentication | AI-Integration | Companion domain layer, Theme |
 | Page HTML import | Html-Importer | Companion |
 | WooCommerce/Elementor install | Plugin-Manager | Companion |
 | `bi_workflow_*` JSON fallback | Theme | Companion (when active, Companion owns hooks) |
@@ -87,11 +91,12 @@ All mounts point at **canonical folders** at repo root:
 ```yaml
 ../NextGenTutors-BeyondInfinity  → themes/nextgentutors-beyondinfinity
 ../NextGenTutors-Companion       → plugins/NextGenTutors-Companion
+../NextGenTutors-AI-Integration  → plugins/NextGenTutors-AI-Integration
 ../NextGenTutors-Html-Importer   → plugins/NextGenTutors-Html-Importer
 ../NextGenTutors-Plugin-Manager  → plugins/NextGenTutors-Plugin-Manager
 ```
 
-## Verify (all four packages)
+## Verify (all five packages)
 
 ```powershell
 powershell -File scripts/verify-solution.ps1
@@ -105,7 +110,7 @@ Runs structure checks, Docker mount audit, Companion + Plugin-Manager `validate.
 powershell -File scripts/build-release.ps1
 ```
 
-Produces `dist/*.zip` for all four packages with WordPress-correct folder roots.
+Produces `dist/*.zip` for all five packages with WordPress-correct folder roots.
 
 ## Out of scope (archived)
 

@@ -1,0 +1,117 @@
+/**
+ * Booking drawer — in-place confirmation panel.
+ * Spec: documentation/ux-redesign/02-information-architecture.md §4.1
+ */
+
+.bi-booking-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ngt-z-drawer, 700);
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(15, 26, 47, 0);
+  pointer-events: none;
+  transition: background var(--ngt-duration-base, 300ms) var(--ngt-ease-out, ease);
+}
+.bi-booking-drawer.is-open {
+  background: rgba(15, 26, 47, 0.45);
+  pointer-events: auto;
+}
+
+.bi-booking-drawer__panel {
+  width: min(420px, 100%);
+  height: 100%;
+  background: var(--ngt-surface, #fff);
+  box-shadow: var(--ngt-shadow-xl, 0 24px 48px rgba(15, 26, 47, 0.16));
+  transform: translateX(100%);
+  transition: transform var(--ngt-duration-base, 300ms) var(--ngt-ease-out, ease);
+  display: flex;
+  flex-direction: column;
+  padding: var(--ngt-space-xl, 32px) var(--ngt-space-lg, 24px);
+  overflow-y: auto;
+}
+.bi-booking-drawer.is-open .bi-booking-drawer__panel {
+  transform: translateX(0);
+}
+
+.bi-booking-drawer__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.bi-booking-drawer__head h2 {
+  margin: 0;
+  font-family: var(--ngt-font-display, "Sora", sans-serif);
+  font-size: var(--ngt-text-xl, 1.25rem);
+  color: var(--ngt-primary, #0F1A2F);
+}
+.bi-booking-drawer__close {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ngt-radius-full, 9999px);
+  border: 1px solid var(--ngt-border, #E2E8F0);
+  background: var(--ngt-surface-2, #F1F5F9);
+  color: var(--ngt-text, #1E293B);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.bi-booking-drawer__close:focus-visible {
+  outline: var(--ngt-focus-ring-width, 2px) solid var(--ngt-focus-ring, #059669);
+  outline-offset: var(--ngt-focus-ring-offset, 2px);
+}
+
+.bi-booking-drawer__facts {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.bi-booking-drawer__facts li {
+  padding: 12px 14px;
+  border-radius: var(--ngt-radius-md, 10px);
+  background: var(--ngt-bg, #F8FAFC);
+  border: 1px solid var(--ngt-border, #E2E8F0);
+  font-weight: 600;
+  color: var(--ngt-text, #1E293B);
+}
+
+.bi-booking-drawer__trust {
+  margin: 0 0 24px;
+  padding: 14px 16px;
+  border-radius: var(--ngt-radius-md, 10px);
+  background: var(--ngt-secondary-light, #D1FAE5);
+  color: var(--ngt-primary, #0F1A2F);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.bi-booking-drawer__trust a {
+  color: var(--ngt-secondary-dark, #047857);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.bi-booking-drawer__actions {
+  margin-top: auto;
+  display: grid;
+  gap: 10px;
+}
+.bi-booking-drawer__actions .ngt-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+body.bi-drawer-open {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bi-booking-drawer,
+  .bi-booking-drawer__panel {
+    transition: none;
+  }
+}

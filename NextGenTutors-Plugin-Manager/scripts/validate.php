@@ -230,9 +230,23 @@ if ( ! function_exists( 'admin_url' ) ) {
 		return 'http://example.test/wp-admin/' . ltrim( $path, '/' );
 	}
 }
+if ( ! function_exists( 'wp_normalize_path' ) ) {
+	function wp_normalize_path( $path ) {
+		$path = str_replace( '\\', '/', (string) $path );
+		$path = preg_replace( '#/+#', '/', $path );
+		return $path;
+	}
+}
 
 require_once $root . '/includes/class-ngcpm-registry.php';
 require_once $root . '/includes/class-ngcpm-settings.php';
+if ( ! class_exists( 'NGCPM_Installer' ) ) {
+	class NGCPM_Installer {
+		public static function resolve_local_path( $def ) {
+			return false;
+		}
+	}
+}
 require_once $root . '/includes/class-ngcpm-queue.php';
 
 $stub_scan = [];

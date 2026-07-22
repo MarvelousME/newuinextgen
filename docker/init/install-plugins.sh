@@ -20,6 +20,7 @@ activate_plugin() {
 }
 
 COMPANION_OK=0
+AI_OK=0
 PM_OK=0
 RHI_OK=0
 
@@ -41,6 +42,7 @@ if activate_plugin "NextGenTutors-Companion/nextgencompanion" "NextGenTutors-Com
 	wp ngc verify --path="$WP_PATH" --allow-root 2>/dev/null || log "WARN: wp ngc verify reported issues (integrations may need extra plugins)"
 fi
 
+activate_plugin "NextGenTutors-AI-Integration/nextgentutors-ai-integration" "NextGenTutors-AI-Integration/nextgentutors-ai-integration.php" && AI_OK=1
 activate_plugin "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager" "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" && PM_OK=1
 activate_plugin "NextGenTutors-Html-Importer/revamp-html-importer" "NextGenTutors-Html-Importer/revamp-html-importer.php" && RHI_OK=1
 
@@ -54,4 +56,4 @@ if [ "$COMPANION_OK" -eq 0 ]; then
 	exit 1
 fi
 
-log "Fleet ready — companion:${COMPANION_OK} plugin-manager:${PM_OK} html-importer:${RHI_OK}"
+log "Fleet ready — companion:${COMPANION_OK} ai-integration:${AI_OK} plugin-manager:${PM_OK} html-importer:${RHI_OK}"

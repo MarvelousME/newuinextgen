@@ -58,6 +58,7 @@ services:
       - ../tests:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/tests
       - ../agntix/agntix-child:/var/www/html/wp-content/themes/agntix-child
       - ${COMPANION_PLUGIN_PATH:-../NextGenTutors-Companion}:/var/www/html/wp-content/plugins/NextGenTutors-Companion
+      - ../NextGenTutors-AI-Integration:/var/www/html/wp-content/plugins/NextGenTutors-AI-Integration
       - ../nextgen-automation-hub:/var/www/html/wp-content/plugins/nextgen-automation-hub
       - ../NextGenTutors-Plugin-Manager:/var/www/html/wp-content/plugins/NextGenTutors-Plugin-Manager
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer
@@ -104,6 +105,7 @@ services:
       - ../tests:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/tests
       - ../agntix/agntix-child:/var/www/html/wp-content/themes/agntix-child
       - ${COMPANION_PLUGIN_PATH:-../NextGenTutors-Companion}:/var/www/html/wp-content/plugins/NextGenTutors-Companion
+      - ../NextGenTutors-AI-Integration:/var/www/html/wp-content/plugins/NextGenTutors-AI-Integration
       - ../nextgen-automation-hub:/var/www/html/wp-content/plugins/nextgen-automation-hub
       - ../NextGenTutors-Plugin-Manager:/var/www/html/wp-content/plugins/NextGenTutors-Plugin-Manager
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer

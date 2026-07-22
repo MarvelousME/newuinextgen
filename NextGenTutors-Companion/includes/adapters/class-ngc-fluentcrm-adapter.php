@@ -44,7 +44,83 @@ class NGC_Fluentcrm_Adapter extends NGC_Adapter_Base {
 	 * @return bool
 	 */
 	public function is_available() {
-		return function_exists( 'FluentCrmApi' ) && class_exists( '\FluentCrm\App\Models\Subscriber' );
+		return function_exists( 'FluentCrmApi' )
+			&& class_exists( '\FluentCrm\App\Models\Subscriber' )
+			&& $this->tables_exist();
+	}
+
+	/**
+	 * FluentCRM was activated but may not have run its DB migrations yet
+	 * (e.g. silent activation). Querying its models then throws a fatal
+	 * QueryException, so verify the core table first.
+	 *
+	 * @return bool
+	 */
+	private function tables_exist() {
+		static $exists = null;
+		if ( null !== $exists ) {
+			return $exists;
+		}
+
+		$required = [ 'fc_lists', 'fc_tags', 'fc_subscribers' ];
+		$resolved = [];
+		foreach ( $required as $suffix ) {
+			$table = $this->resolve_table_name( $suffix );
+			if ( ! $table ) {
+				$exists = false;
+				return false;
+			}
+			$resolved[] = $table;
+		}
+
+		// All core tables must belong to one discovered prefix/schema set.
+		$prefixes = [];
+		foreach ( $resolved as $index => $table ) {
+			$prefixes[] = substr( $table, 0, -strlen( $required[ $index ] ) );
+		}
+		$exists = 1 === count( array_unique( $prefixes ) );
+		return $exists;
+	}
+
+	/**
+	 * Resolve a FluentCRM table from the live database rather than assuming a
+	 * hard-coded WordPress prefix. Exact current-site and network prefixes are
+	 * preferred; a suffix lookup supports migrated/staged installations.
+	 *
+	 * @param string $suffix FluentCRM table suffix.
+	 * @return string Empty when no table exists.
+	 */
+	private function resolve_table_name( $suffix ) {
+		global $wpdb;
+
+		$suffix     = preg_replace( '/[^a-z0-9_]/i', '', (string) $suffix );
+		$candidates = array_unique(
+			array_filter(
+				[
+					$wpdb->prefix . $suffix,
+					$wpdb->base_prefix . $suffix,
+				]
+			)
+		);
+
+		try {
+			foreach ( $candidates as $candidate ) {
+				$found = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $candidate ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				if ( $found === $candidate ) {
+					return $found;
+				}
+			}
+
+			$pattern = '%' . $wpdb->esc_like( '_' . $suffix );
+			$matches = $wpdb->get_col( $wpdb->prepare( 'SHOW TABLES LIKE %s', $pattern ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			if ( 1 === count( $matches ) ) {
+				return (string) $matches[0];
+			}
+		} catch ( Throwable $e ) {
+			error_log( 'NGC FluentCRM table lookup failed: ' . $e->getMessage() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
+
+		return '';
 	}
 
 	/**
@@ -236,36 +312,41 @@ class NGC_Fluentcrm_Adapter extends NGC_Adapter_Base {
 					}
 				}
 			}
-		} catch ( Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+		} catch ( Throwable $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
 			// Model fallback below.
 		}
 
-		if ( 'list' === $type && class_exists( '\FluentCrm\App\Models\Lists' ) ) {
-			$model = \FluentCrm\App\Models\Lists::where( 'title', $title )->orWhere( 'slug', $slug )->first();
-			if ( $model ) {
-				return (int) $model->id;
+		try {
+			if ( 'list' === $type && class_exists( '\FluentCrm\App\Models\Lists' ) ) {
+				$model = \FluentCrm\App\Models\Lists::where( 'title', $title )->orWhere( 'slug', $slug )->first();
+				if ( $model ) {
+					return (int) $model->id;
+				}
+				$model = \FluentCrm\App\Models\Lists::create(
+					[
+						'title' => $title,
+						'slug'  => $slug,
+					]
+				);
+				return $model ? (int) $model->id : 0;
 			}
-			$model = \FluentCrm\App\Models\Lists::create(
-				[
-					'title' => $title,
-					'slug'  => $slug,
-				]
-			);
-			return $model ? (int) $model->id : 0;
-		}
 
-		if ( 'tag' === $type && class_exists( '\FluentCrm\App\Models\Tag' ) ) {
-			$model = \FluentCrm\App\Models\Tag::where( 'title', $title )->orWhere( 'slug', $slug )->first();
-			if ( $model ) {
-				return (int) $model->id;
+			if ( 'tag' === $type && class_exists( '\FluentCrm\App\Models\Tag' ) ) {
+				$model = \FluentCrm\App\Models\Tag::where( 'title', $title )->orWhere( 'slug', $slug )->first();
+				if ( $model ) {
+					return (int) $model->id;
+				}
+				$model = \FluentCrm\App\Models\Tag::create(
+					[
+						'title' => $title,
+						'slug'  => $slug,
+					]
+				);
+				return $model ? (int) $model->id : 0;
 			}
-			$model = \FluentCrm\App\Models\Tag::create(
-				[
-					'title' => $title,
-					'slug'  => $slug,
-				]
-			);
-			return $model ? (int) $model->id : 0;
+		} catch ( Throwable $e ) {
+			// FluentCRM schema unavailable — skip instead of fataling the whole site.
+			error_log( 'NGC FluentCRM asset bootstrap skipped: ' . $e->getMessage() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 
 		return 0;

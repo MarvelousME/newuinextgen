@@ -22,7 +22,10 @@ if ( ! defined( 'ABSPATH' ) ) {
         <?php endif; ?>
         <div class="ngt-nav__logo-text">NextGen<span>Tutors</span></div>
       </a>
-      <a href="<?php echo esc_url( home_url( '/support' ) ); ?>" class="ngt-btn ngt-btn--outline ngt-btn--sm"><?php esc_html_e( 'Help', 'beyondinfinity' ); ?></a>
+      <div class="ngt-nav__cta">
+        <?php if ( function_exists( 'bi_scheme_toggle_button' ) ) { bi_scheme_toggle_button(); } ?>
+        <a href="<?php echo esc_url( home_url( '/support' ) ); ?>" class="ngt-btn ngt-btn--outline ngt-btn--sm"><?php esc_html_e( 'Help', 'beyondinfinity' ); ?></a>
+      </div>
     </div>
   </div>
 </header>

@@ -45,6 +45,7 @@ final class NGC_Domain_Event_Bridge {
 		add_action( 'ngc_referral_converted', [ __CLASS__, 'on_referral' ], 5, 2 );
 		add_action( 'ngc_workflow_dispatched', [ __CLASS__, 'on_workflow' ], 5, 2 );
 		add_action( 'ngc_payment_settled', [ __CLASS__, 'on_payment_settled' ], 5, 1 );
+		add_action( 'ngc_match_requested', [ __CLASS__, 'on_match_requested' ], 5, 2 );
 		add_action( 'ngc_match_accepted', [ __CLASS__, 'on_match_accepted' ], 5, 1 );
 	}
 
@@ -130,6 +131,21 @@ final class NGC_Domain_Event_Bridge {
 	public static function on_payment_settled( $order ) {
 		$id = is_array( $order ) ? (int) ( $order['order_id'] ?? 0 ) : (int) $order;
 		self::emit_once( 'ngc:pay:' . $id, 'PaymentSettled', 'order', (string) $id, is_array( $order ) ? $order : [ 'order_id' => $id ] );
+	}
+
+	/**
+	 * @param int                  $match_id Match request ID.
+	 * @param array<string,mixed>  $context  Deterministic request context.
+	 */
+	public static function on_match_requested( $match_id, $context = [] ) {
+		$match_id = (int) $match_id;
+		self::emit_once(
+			'ngc:match_request:' . $match_id,
+			'MatchRequested',
+			'match',
+			(string) $match_id,
+			is_array( $context ) ? $context : [ 'match_id' => $match_id ]
+		);
 	}
 
 	/**

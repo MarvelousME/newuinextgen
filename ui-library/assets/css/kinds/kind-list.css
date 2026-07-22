@@ -23,7 +23,7 @@
   width: 2.4rem; height: 2.4rem;
   border-radius: 50%;
   margin-left: calc(var(--i,0) * -0.55rem);
-  background: linear-gradient(135deg, var(--ngt-accent,#9E7AFF), var(--ngt-accent-2,#FE8BBB));
+  background: linear-gradient(135deg, var(--ngt-accent,#059669), var(--ngt-accent-2,#FF9F0A));
   color: #fff;
   font-weight: 700;
   border: 2px solid #fff;

@@ -24,6 +24,11 @@ if ( ! function_exists( 'apply_filters' ) ) {
 		return $value;
 	}
 }
+if ( ! function_exists( 'do_action' ) ) {
+	function do_action( $tag, ...$args ) {
+		return;
+	}
+}
 if ( ! function_exists( 'get_option' ) ) {
 	function get_option( $key, $default = false ) {
 		global $options;
@@ -69,6 +74,44 @@ if ( ! function_exists( 'sanitize_text_field' ) ) {
 		return trim( strip_tags( (string) $str ) );
 	}
 }
+if ( ! function_exists( 'sanitize_file_name' ) ) {
+	function sanitize_file_name( $filename ) {
+		$filename = (string) $filename;
+		$filename = preg_replace( '/[^A-Za-z0-9._-]/', '', $filename );
+		return $filename ?: 'file';
+	}
+}
+if ( ! function_exists( 'wp_normalize_path' ) ) {
+	function wp_normalize_path( $path ) {
+		$path = str_replace( '\\', '/', (string) $path );
+		$path = preg_replace( '#/+#', '/', $path );
+		return $path;
+	}
+}
+if ( ! function_exists( 'wp_upload_dir' ) ) {
+	function wp_upload_dir( $time = null, $create_dir = true, $refresh_cache = false ) {
+		$base = trailingslashit( WP_CONTENT_DIR ) . 'uploads';
+		return [
+			'path'    => $base,
+			'url'     => 'http://example.test/wp-content/uploads',
+			'subdir'  => '',
+			'basedir' => $base,
+			'baseurl' => 'http://example.test/wp-content/uploads',
+			'error'   => false,
+		];
+	}
+}
+if ( ! function_exists( 'plugin_dir_path' ) ) {
+	function plugin_dir_path( $file ) {
+		return trailingslashit( dirname( $file ) );
+	}
+}
+if ( ! defined( 'NGCPM_PLUGIN_FILE' ) ) {
+	define( 'NGCPM_PLUGIN_FILE', dirname( __DIR__ ) . '/NextGenTutors-Plugin-Manager.php' );
+}
+if ( ! defined( 'NGCPM_PLUGIN_DIR' ) ) {
+	define( 'NGCPM_PLUGIN_DIR', dirname( __DIR__ ) . '/' );
+}
 if ( ! function_exists( 'wp_generate_uuid4' ) ) {
 	function wp_generate_uuid4() {
 		return 'test-uuid';
@@ -83,6 +126,20 @@ if ( ! function_exists( 'get_current_user_id' ) ) {
 require_once $root . '/includes/class-ngcpm-logger.php';
 require_once $root . '/includes/class-ngcpm-registry.php';
 require_once $root . '/includes/class-ngcpm-settings.php';
+if ( ! class_exists( 'NGCPM_Installer' ) ) {
+	/**
+	 * Minimal installer stub for offline unit tests.
+	 */
+	class NGCPM_Installer {
+		/**
+		 * @param array<string,mixed> $def Plugin definition.
+		 * @return string|false
+		 */
+		public static function resolve_local_path( $def ) {
+			return false;
+		}
+	}
+}
 require_once $root . '/includes/class-ngcpm-queue.php';
 require_once $root . '/includes/class-ngcpm-repair.php';
 

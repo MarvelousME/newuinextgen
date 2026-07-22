@@ -59,6 +59,29 @@ class NGC_Matching {
 		$match_id = (int) $wpdb->insert_id;
 		NGC_Audit::log( 'match_created', 'match', $match_id, $data, $parent_id );
 
+		/**
+		 * Fires after the authoritative match request is persisted.
+		 *
+		 * External integrations must subscribe asynchronously and must not
+		 * block or alter the deterministic matching transaction.
+		 *
+		 * @param int                  $match_id Match request ID.
+		 * @param array<string, mixed> $context  Persisted request context and eligible candidates.
+		 */
+		do_action(
+			'ngc_match_requested',
+			$match_id,
+			[
+				'match_id'        => $match_id,
+				'student_user_id' => $student_id,
+				'parent_user_id'  => $parent_id,
+				'subject'         => $subject,
+				'grade'           => $grade,
+				'province'        => $province,
+				'candidates'      => array_slice( $best, 0, 5 ),
+			]
+		);
+
 		NGC_Workflows::dispatch(
 			'match.proposed',
 			[

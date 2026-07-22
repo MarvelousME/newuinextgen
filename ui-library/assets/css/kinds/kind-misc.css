@@ -1,6 +1,3 @@
-/* Kind: misc — split from catalog.css */
-.ngt-ui-blur-fade { animation: ngt-blur-in .8s ease both; }
-@keyframes ngt-blur-in {
-  from { filter: blur(12px); opacity: 0; }
-  to { filter: blur(0); opacity: 1; }
-}
+/* Kind: misc — fallback kind; blur-fade rules moved to kind-card.css
+   (blur-fade is registered as kind:card, so this file never loaded for it). */
+.ngt-ui-misc { display: block; }

@@ -43,7 +43,7 @@ Business SSOT: [`config/nextgentutors-business-profile.json`](config/nextgentuto
 | C — Companion behaviour | 9–13 | Domain, REST, admin, integrations |
 | D — Verify & ship | 14–16 | Tests, demo, packaging |
 
-Do **not** fork domain tables into the theme. Do **not** put booking/money logic in page templates.
+Do **not** fork domain tables into the theme. Do **not** put booking/money logic in page templates. Do **not** put HMAC/agents-api client code or callback routes in the theme — that belongs to `NextGenTutors-AI-Integration`.
 
 ---
 
@@ -56,6 +56,7 @@ Do **not** fork domain tables into the theme. Do **not** put booking/money logic
 | Theme | `NextGenTutors-BeyondInfinity/` | Pages, defaults, CSS tokens, prototypes, Elementor-friendly chrome |
 | Companion | `NextGenTutors-Companion/` | `wp_ngc_*` tables, REST `ngc/v1`, matching, bookings, PayFast, agents, demo, privacy, metrics |
 | UI library | `ui-library/` | Shared components (theme + Companion admin can consume) |
+| AI-Integration | `NextGenTutors-AI-Integration/` | `wp_ngtai_*` tables, REST `ngtai/v1`, HMAC-signed bridge to hosted agents-api (events out, verified callbacks in, human approvals) — never domain logic |
 | Docker | `docker/` | Local WordPress on port **8900** |
 
 2. Theme is a **child of Hello Elementor** (`Template: hello-elementor` in `style.css`). Parent theme must stay installed.

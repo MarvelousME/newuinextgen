@@ -283,10 +283,26 @@ class NGC_Workflow_Admin {
 				<tr><td colspan="4"><?php esc_html_e( 'No workflow runs logged yet.', 'nextgencompanion' ); ?></td></tr>
 			<?php else : ?>
 				<?php foreach ( $rows as $row ) : ?>
+					<?php
+					$status_raw = sanitize_key( (string) ( $row->status ?? '' ) );
+					$badge_map  = [
+						'completed' => 'success',
+						'success'   => 'success',
+						'pass'      => 'success',
+						'failed'    => 'error',
+						'fail'      => 'error',
+						'error'     => 'error',
+						'pending'   => 'warning',
+						'queued'    => 'warning',
+						'running'   => 'info',
+						'processing'=> 'info',
+					];
+					$badge_state = $badge_map[ $status_raw ] ?? 'neutral';
+					?>
 					<tr>
 						<td><?php echo (int) $row->id; ?></td>
 						<td><code><?php echo esc_html( $row->workflow_key ); ?></code></td>
-						<td><?php echo esc_html( $row->status ); ?></td>
+						<td><span class="ngt-badge ngt-badge--<?php echo esc_attr( $badge_state ); ?>"><span class="ngt-badge__dot" aria-hidden="true"></span><?php echo esc_html( $row->status ); ?></span></td>
 						<td><?php echo esc_html( $row->created_at ); ?></td>
 					</tr>
 				<?php endforeach; ?>

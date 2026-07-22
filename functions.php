@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'BI_VERSION', '1.9.10' );
+define( 'BI_VERSION', '1.9.16' );
 define( 'BI_DIR', get_stylesheet_directory() );
 define( 'BI_URI', get_stylesheet_directory_uri() );
 if ( ! defined( 'NGT_URI' ) ) {
@@ -24,6 +24,11 @@ require_once BI_DIR . '/inc/shortcodes-fallback.php';
 require_once BI_DIR . '/inc/tutor-data.php';
 require_once BI_DIR . '/inc/config/bootstrap.php';
 require_once BI_DIR . '/inc/theme-switcher.php';
+require_once BI_DIR . '/inc/loader.php';
+require_once BI_DIR . '/inc/booking-drawer.php';
+require_once BI_DIR . '/inc/enterprise-components.php';
+require_once BI_DIR . '/inc/scheme.php';
+require_once BI_DIR . '/inc/command-palette.php';
 require_once BI_DIR . '/inc/motion.php';
 require_once BI_DIR . '/inc/bi-3d.php';
 require_once BI_DIR . '/inc/openwa.php';
@@ -122,7 +127,8 @@ function bi_enqueue_assets() {
             wp_enqueue_style( 'bi-kinetic-tokens', BI_URI . '/assets/css/kinetic-tokens.css', [ 'bi-style' ], BI_VERSION );
             wp_enqueue_style( 'bi-kinetic-home', BI_URI . '/assets/css/kinetic-home.css', [ 'bi-kinetic-tokens' ], BI_VERSION );
             wp_enqueue_style( 'bi-kinetic-image-hover', BI_URI . '/assets/css/kinetic-image-hover.css', [ 'bi-kinetic-home' ], BI_VERSION );
-            wp_enqueue_script( 'bi-kinetic-home', BI_URI . '/assets/js/kinetic-home.js', [], BI_VERSION, true );
+            wp_enqueue_script( 'bi-focus-trap', BI_URI . '/assets/js/bi-focus-trap.js', [], BI_VERSION, true );
+            wp_enqueue_script( 'bi-kinetic-home', BI_URI . '/assets/js/kinetic-home.js', [ 'bi-focus-trap' ], BI_VERSION, true );
             $layout_max = (int) apply_filters( 'ngt_content_width', 1280 );
             if ( $layout_max < 960 ) {
                 $layout_max = 1280;
@@ -173,7 +179,17 @@ function bi_enqueue_dashboard_rest_for_type( $type ) {
     if ( wp_script_is( 'bi-dashboard-rest', 'enqueued' ) ) {
         return;
     }
-    wp_enqueue_script( 'bi-dashboard-rest', BI_URI . '/assets/js/dashboard-rest.js', [], BI_VERSION, true );
+    // Chart.js is consumed by the analytics panels (paintCharts guards on window.Chart).
+    wp_enqueue_script( 'chart-js', 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js', [], '4.4.1', true );
+    // Single runtime source: prefer the Companion copy when the plugin is active.
+    if ( defined( 'NGC_PLUGIN_URL' ) && defined( 'NGC_VERSION' ) && file_exists( WP_PLUGIN_DIR . '/' . dirname( NGC_PLUGIN_BASENAME ) . '/assets/js/dashboard-rest.js' ) ) {
+        $src = NGC_PLUGIN_URL . 'assets/js/dashboard-rest.js';
+        $ver = NGC_VERSION;
+    } else {
+        $src = BI_URI . '/assets/js/dashboard-rest.js';
+        $ver = BI_VERSION;
+    }
+    wp_enqueue_script( 'bi-dashboard-rest', $src, [ 'chart-js' ], $ver, true );
     wp_localize_script( 'bi-dashboard-rest', 'biDashboard', bi_dashboard_rest_config( $type ) );
 }
 

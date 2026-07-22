@@ -337,7 +337,7 @@ class NGC_Marketplace {
 					'match'    => __( 'Match', 'nextgencompanion' ),
 					'available'=> __( 'Available', 'nextgencompanion' ),
 					'unavailable' => __( 'Busy', 'nextgencompanion' ),
-					'verified' => __( 'Verified only', 'nextgencompanion' ),
+					'verified' => __( 'Verified', 'nextgencompanion' ),
 				],
 			]
 		);

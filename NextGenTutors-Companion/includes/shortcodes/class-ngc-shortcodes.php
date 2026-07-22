@@ -244,6 +244,18 @@ class NGC_Shortcodes {
 		}
 
 		$dashboard_html = '<div class="bi-dashboard-rest ngt-card" data-dashboard="' . esc_attr( $type ) . '" role="region" aria-live="polite" aria-busy="true"><p class="bi-dashboard-rest__loading">' . esc_html__( 'Loading your dashboard…', 'nextgencompanion' ) . '</p></div>';
+
+		/**
+		 * Filters dashboard shell content for separately deployed integrations.
+		 *
+		 * Integrations may append read-only UI, but Companion remains the
+		 * authoritative owner of dashboard and domain data.
+		 *
+		 * @param string $dashboard_html Dashboard markup.
+		 * @param string $type           Dashboard persona.
+		 * @param int    $user_id        Current WordPress user ID.
+		 */
+		$dashboard_html = (string) apply_filters( 'ngc_dashboard_html', $dashboard_html, $type, get_current_user_id() );
 		return self::render_shell( 'ngc-dashboard-shell ng-dashboard', $dashboard_html );
 	}
 
@@ -335,7 +347,7 @@ class NGC_Shortcodes {
 							</div>
 							<div class="ngc-slot__meta"><?php echo esc_html( ucfirst( (string) ( $slot['delivery_mode'] ?? 'hybrid' ) ) ); ?> · <?php echo esc_html( $label ); ?></div>
 							<?php if ( $is_available ) : ?>
-								<a class="ngc-slot__cta" href="<?php echo esc_url( $booking_url ); ?>" data-ngc-slot="1" data-tutor-id="<?php echo esc_attr( (string) $tutor_id ); ?>" data-date="<?php echo esc_attr( (string) $slot['date'] ); ?>" data-start="<?php echo esc_attr( (string) $slot['start_time'] ); ?>" data-subject="<?php echo esc_attr( (string) ( $slot['subject'] ?? '' ) ); ?>" data-delivery="<?php echo esc_attr( (string) ( $slot['delivery_mode'] ?? '' ) ); ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'ngc_calendar_slot' ) ); ?>">
+								<a class="ngc-slot__cta" href="<?php echo esc_url( $booking_url ); ?>" data-ngc-slot="1" data-bi-booking-drawer="1" data-tutor-id="<?php echo esc_attr( (string) $tutor_id ); ?>" data-date="<?php echo esc_attr( (string) $slot['date'] ); ?>" data-start="<?php echo esc_attr( (string) $slot['start_time'] ); ?>" data-end="<?php echo esc_attr( (string) ( $slot['end_time'] ?? '' ) ); ?>" data-subject="<?php echo esc_attr( (string) ( $slot['subject'] ?? '' ) ); ?>" data-delivery="<?php echo esc_attr( (string) ( $slot['delivery_mode'] ?? '' ) ); ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'ngc_calendar_slot' ) ); ?>">
 									<?php esc_html_e( 'Book this time', 'nextgencompanion' ); ?>
 								</a>
 							<?php else : ?>
@@ -477,16 +489,19 @@ class NGC_Shortcodes {
 	 */
 	private static function form_redirect_url( $form_id ) {
 		$map = [
-			'find_tutor'       => home_url( '/find-a-tutor/' ),
-			'become_tutor'     => home_url( '/become-a-tutor/' ),
-			'contact_support'  => home_url( '/contact/' ),
-			'parent_register'  => home_url( '/register/' ),
-			'student_register' => home_url( '/register/' ),
+			'find_tutor'       => home_url( '/thank-you/?type=parent' ),
+			'become_tutor'     => home_url( '/thank-you/?type=tutor' ),
+			'contact_support'  => home_url( '/thank-you/?type=contact' ),
+			'parent_register'  => home_url( '/thank-you/?type=parent' ),
+			'student_register' => home_url( '/thank-you/?type=general' ),
 		];
 
 		$redirect = wp_get_referer();
-		if ( ! $redirect || ! wp_validate_redirect( $redirect, false ) ) {
-			$redirect = $map[ $form_id ] ?? home_url( '/thank-you/' );
+		// Prefer the thank-you page so the timeline can set expectations.
+		if ( isset( $map[ $form_id ] ) ) {
+			$redirect = $map[ $form_id ];
+		} elseif ( ! $redirect || ! wp_validate_redirect( $redirect, false ) ) {
+			$redirect = home_url( '/thank-you/' );
 		}
 
 		return (string) apply_filters( 'ngc_form_redirect_url', $redirect, $form_id );

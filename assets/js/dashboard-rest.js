@@ -1,5 +1,6 @@
 /**
- * Dashboard REST client — KPIs, sessions, Chart.js analytics (ngc/v1).
+ * Dashboard REST client — role-specific layouts, KPIs, quick actions,
+ * sessions, Chart.js analytics (ngc/v1).
  */
 (function () {
   "use strict";
@@ -7,6 +8,7 @@
   var cfg = window.biDashboard || {};
   var root = (cfg.restRoot || "/wp-json/").replace(/\/?$/, "/");
   var ns = cfg.namespace || "ngc/v1";
+  var pages = cfg.pages || {};
   var chartInstances = [];
 
   function esc(s) {
@@ -67,10 +69,87 @@
     return '<span class="bi-dashboard-rest__source" data-source="' + esc(src) + '">' + esc("Source: " + src) + "</span>";
   }
 
+  /**
+   * Next-session hero card (student/parent).
+   */
+  function nextSessionHero(s) {
+    if (!s) return "";
+    return (
+      '<div class="bi-dash-hero ngt-card">' +
+      '<div class="bi-dash-hero__eyebrow">' + esc("Next session") + "</div>" +
+      '<div class="bi-dash-hero__row">' +
+      (s.peerImage ? '<img src="' + esc(s.peerImage) + '" alt="" class="bi-dash-hero__img" loading="lazy" />' : "") +
+      '<div class="bi-dash-hero__body">' +
+      '<div class="bi-dash-hero__title">' + esc(s.peerName) + " · " + esc(s.subject) + "</div>" +
+      '<div class="bi-dash-hero__meta">' + esc(fmtDate(s.createdAt)) + (s.statusLabel ? " · " + esc(s.statusLabel) : "") + "</div>" +
+      "</div></div></div>"
+    );
+  }
+
+  /**
+   * Role-specific quick actions built from localized page URLs.
+   */
+  function quickActions(type) {
+    var actions = [];
+    if (type === "tutor") {
+      if (pages.support || pages.contact) actions.push({ label: "Get support", url: pages.support || pages.contact });
+      if (pages.findATutor) actions.push({ label: "View marketplace", url: pages.findATutor, primary: false });
+    } else if (type === "admin") {
+      if (pages.adminArea) actions.push({ label: "Open admin area", url: pages.adminArea, primary: true });
+      if (pages.support || pages.contact) actions.push({ label: "Support inbox", url: pages.support || pages.contact });
+    } else if (type === "parent") {
+      if (pages.findATutor) actions.push({ label: "Book for your child", url: pages.findATutor, primary: true });
+      if (pages.pricing) actions.push({ label: "View pricing", url: pages.pricing });
+      if (pages.support || pages.contact) actions.push({ label: "Billing help", url: pages.support || pages.contact });
+    } else {
+      if (pages.findATutor) actions.push({ label: "Book a session", url: pages.findATutor, primary: true });
+      if (pages.pricing) actions.push({ label: "View pricing", url: pages.pricing });
+      if (pages.support || pages.contact) actions.push({ label: "Get help", url: pages.support || pages.contact });
+    }
+    if (!actions.length) return "";
+    var html = '<nav class="bi-dash-actions" aria-label="' + esc("Quick actions") + '">';
+    actions.forEach(function (a) {
+      html +=
+        '<a href="' + esc(a.url) + '" class="ngt-btn ngt-btn--sm ' + (a.primary ? "ngt-btn--primary" : "ngt-btn--outline") + '">' +
+        esc(a.label) +
+        "</a>";
+    });
+    html += "</nav>";
+    return html;
+  }
+
+  /**
+   * Tutor application status card (pending / approved / rejected).
+   */
+  function applicationCard(app) {
+    if (!app || !app.status) return "";
+    var status = String(app.status).toLowerCase();
+    var copy = {
+      pending: "Your tutor application is being reviewed. We typically respond within 2 business days.",
+      approved: "Your tutor application has been approved. Welcome aboard!",
+      rejected: "Your tutor application was not approved this time.",
+    };
+    var html =
+      '<div class="bi-dash-app-status ngt-card" data-status="' + esc(status) + '">' +
+      '<div class="bi-dash-app-status__head">' +
+      '<h3 class="bi-dash-app-status__title">' + esc("Application status") + "</h3>" +
+      '<span class="ngt-badge ngt-badge--' + esc(status) + '">' + esc(status.charAt(0).toUpperCase() + status.slice(1)) + "</span>" +
+      "</div>" +
+      '<p class="bi-dash-app-status__copy">' + esc(copy[status] || "") + "</p>";
+    if (status === "rejected" && app.reviewNotes) {
+      html += '<p class="bi-dash-app-status__notes">' + esc(app.reviewNotes) + "</p>";
+    }
+    if (app.submittedAt) {
+      html += '<p class="bi-dash-app-status__meta">' + esc("Submitted " + fmtDate(app.submittedAt)) + "</p>";
+    }
+    html += "</div>";
+    return html;
+  }
+
   function chartsHtml(charts) {
     if (!charts || !Object.keys(charts).length) return "";
     var html = '<div class="bi-dash-charts">';
-    Object.keys(charts).forEach(function (key, i) {
+    Object.keys(charts).forEach(function (key) {
       html += '<div class="bi-dash-chart ngt-card"><canvas id="bi-dash-chart-' + esc(key) + '" data-chart-key="' + esc(key) + '" height="180"></canvas></div>';
     });
     html += "</div>";
@@ -132,7 +211,7 @@
     a.click();
   }
 
-  function toolbar(type) {
+  function toolbar() {
     return (
       '<div class="bi-dashboard-rest__toolbar">' +
       '<button type="button" class="ngt-btn ngt-btn--outline bi-dash-refresh" data-action="refresh">' + esc("Refresh") + "</button>" +
@@ -141,39 +220,86 @@
     );
   }
 
-  function renderStudentLike(data, isParent, meta) {
+  function heading(text, meta) {
+    return '<h2 class="bi-dashboard-rest__heading">' + esc(text) + "</h2>" + sourceBadge(meta);
+  }
+
+  function recentList(data) {
+    var i18n = cfg.i18n || {};
+    var recent = data.recentSessions || [];
+    var html = "<h3>" + esc(i18n.sessions || "Recent sessions") + "</h3>";
+    html += recent.length ? recent.map(sessionRow).join("") : '<p class="bi-dashboard-rest__empty">' + esc(i18n.empty) + "</p>";
+    return html;
+  }
+
+  /**
+   * Student — next-lesson hero first, then KPIs and sessions.
+   */
+  function renderStudent(data, meta) {
     var user = data.user || {};
     var kpis = data.kpis || {};
-    var i18n = cfg.i18n || {};
-    var html = '<div class="bi-dashboard-rest__inner nbi-bento-layout">';
-    html += toolbar(isParent ? "parent" : "student");
-    if (isParent) html += '<p class="bi-dashboard-rest__note">' + esc("Family learning overview.") + "</p>";
-    html += '<h2 class="bi-dashboard-rest__heading">' + esc("Welcome back, " + (user.displayName || "Learner")) + "</h2>" + sourceBadge(meta);
+    var html = '<div class="bi-dashboard-rest__inner">' + toolbar();
+    html += heading("Welcome back, " + (user.displayName || "Learner"), meta);
+    html += nextSessionHero(data.nextSession);
+    html += quickActions("student");
     html += '<div class="bi-dash-kpi-grid">';
-    html += kpiCard("Sessions completed", String(kpis.sessionsCompleted ?? 0));
+    html += kpiCard("Sessions completed", String(kpis.sessionsCompleted != null ? kpis.sessionsCompleted : 0));
     html += kpiCard("Avg. rating given", kpis.avgRatingGiven != null ? String(kpis.avgRatingGiven) : "—");
     html += kpiCard("Account balance", "R" + zar(kpis.accountBalance));
-    html += kpiCard("Achievements", String(kpis.achievementCount ?? 0));
+    html += kpiCard("Achievements", String(kpis.achievementCount != null ? kpis.achievementCount : 0));
     html += "</div>";
     html += chartsHtml(data.charts);
-    if (data.nextSession) html += "<h3>Next session</h3>" + sessionRow(data.nextSession);
-    var recent = data.recentSessions || [];
-    html += "<h3>" + esc(i18n.sessions || "Recent sessions") + "</h3>";
-    html += recent.length ? recent.map(sessionRow).join("") : '<p class="bi-dashboard-rest__empty">' + esc(i18n.empty) + "</p>";
+    html += recentList(data);
     html += "</div>";
     return html;
   }
 
+  /**
+   * Parent — family overview (learners) and balance first.
+   */
+  function renderParent(data, meta) {
+    var user = data.user || {};
+    var kpis = data.kpis || {};
+    var learners = data.learners || [];
+    var html = '<div class="bi-dashboard-rest__inner">' + toolbar();
+    html += heading("Welcome back, " + (user.displayName || "Parent"), meta);
+    if (learners.length) {
+      html += '<div class="bi-dash-learners" role="list" aria-label="' + esc("Your learners") + '">';
+      learners.forEach(function (l) {
+        var name = typeof l === "string" ? l : (l && (l.name || l.displayName)) || "";
+        if (name) html += '<span class="bi-dash-learners__chip" role="listitem">' + esc(name) + "</span>";
+      });
+      html += "</div>";
+    }
+    html += nextSessionHero(data.nextSession);
+    html += quickActions("parent");
+    html += '<div class="bi-dash-kpi-grid">';
+    html += kpiCard("Account balance", "R" + zar(kpis.accountBalance));
+    html += kpiCard("Learners", String(kpis.learnerCount != null ? kpis.learnerCount : learners.length));
+    html += kpiCard("Sessions completed", String(kpis.sessionsCompleted != null ? kpis.sessionsCompleted : 0));
+    html += kpiCard("Avg. rating given", kpis.avgRatingGiven != null ? String(kpis.avgRatingGiven) : "—");
+    html += "</div>";
+    html += chartsHtml(data.charts);
+    html += recentList(data);
+    html += "</div>";
+    return html;
+  }
+
+  /**
+   * Tutor — earnings and payout first, plus application status card.
+   */
   function renderTutor(data, meta) {
     var user = data.user || {};
     var kpis = data.kpis || {};
-    var html = '<div class="bi-dashboard-rest__inner nbi-bento-layout">' + toolbar("tutor");
-    html += '<h2 class="bi-dashboard-rest__heading">' + esc(user.displayName || "Tutor") + "</h2>" + sourceBadge(meta);
+    var html = '<div class="bi-dashboard-rest__inner">' + toolbar();
+    html += heading(user.displayName || "Tutor", meta);
+    html += applicationCard(data.application);
+    html += quickActions("tutor");
     html += '<div class="bi-dash-kpi-grid">';
     html += kpiCard("This month", "R" + zar(kpis.monthEarnings));
-    html += kpiCard("Sessions", String(kpis.sessionsMonth ?? 0));
-    html += kpiCard("Rating", kpis.averageRating ? String(kpis.averageRating) : "—");
     html += kpiCard("Pending payout", "R" + zar(kpis.pendingPayout));
+    html += kpiCard("Sessions", String(kpis.sessionsMonth != null ? kpis.sessionsMonth : 0));
+    html += kpiCard("Rating", kpis.averageRating ? String(kpis.averageRating) : "—");
     html += "</div>";
     html += chartsHtml(data.charts);
     html += "</div>";
@@ -182,12 +308,13 @@
 
   function renderAdmin(data, meta) {
     var kpis = data.kpis || {};
-    var html = '<div class="bi-dashboard-rest__inner nbi-bento-layout">' + toolbar("admin") + sourceBadge(meta);
+    var html = '<div class="bi-dashboard-rest__inner">' + toolbar() + sourceBadge(meta);
+    html += quickActions("admin");
     html += '<div class="bi-dash-kpi-grid">';
     html += kpiCard("Revenue", "R" + zar(kpis.revenue));
-    html += kpiCard("Sessions", String(kpis.sessions ?? 0));
-    html += kpiCard("Tutors", String(kpis.tutors ?? 0));
-    html += kpiCard("Pending apps", String(kpis.pending ?? 0));
+    html += kpiCard("Sessions", String(kpis.sessions != null ? kpis.sessions : 0));
+    html += kpiCard("Tutors", String(kpis.tutors != null ? kpis.tutors : 0));
+    html += kpiCard("Pending apps", String(kpis.pending != null ? kpis.pending : 0));
     html += "</div>";
     html += chartsHtml(data.charts);
     html += "</div>";
@@ -197,8 +324,8 @@
   function render(type, data, meta) {
     if (type === "admin") return renderAdmin(data, meta);
     if (type === "tutor") return renderTutor(data, meta);
-    if (type === "parent") return renderStudentLike(data, true, meta);
-    return renderStudentLike(data, false, meta);
+    if (type === "parent") return renderParent(data, meta);
+    return renderStudent(data, meta);
   }
 
   function bindToolbar(el, type, getData) {
@@ -216,7 +343,16 @@
     var i18n = cfg.i18n || {};
     var lastData = {};
     el.setAttribute("aria-busy", "true");
-    el.innerHTML = '<p class="bi-dashboard-rest__loading">' + esc(i18n.loading) + "</p>";
+    el.innerHTML =
+      '<div class="ngt-skeleton-grid" role="status" aria-label="' + esc(i18n.loading) + '">' +
+      '<span class="ngt-skeleton ngt-skeleton--kpi" aria-hidden="true"></span>' +
+      '<span class="ngt-skeleton ngt-skeleton--kpi" aria-hidden="true"></span>' +
+      '<span class="ngt-skeleton ngt-skeleton--kpi" aria-hidden="true"></span>' +
+      '<span class="ngt-skeleton ngt-skeleton--kpi" aria-hidden="true"></span>' +
+      '</div>' +
+      '<span class="ngt-skeleton ngt-skeleton--title" aria-hidden="true"></span>' +
+      '<span class="ngt-skeleton ngt-skeleton--card" aria-hidden="true"></span>' +
+      '<p class="screen-reader-text bi-dashboard-rest__loading">' + esc(i18n.loading) + "</p>";
     fetchDashboard()
       .then(function (result) {
         var data = result.payload || {};
@@ -226,20 +362,6 @@
         paintCharts(data.charts);
         bindToolbar(el, type, function () { return lastData; });
         el.setAttribute("aria-busy", "false");
-        try {
-          var kpis = data.kpis || {};
-          el.dispatchEvent(
-            new CustomEvent("nbi:dashboard-loaded", {
-              detail: {
-                kpis: [
-                  { label: "balance", value: "R" + (kpis.accountBalance != null ? kpis.accountBalance : 0) },
-                  { label: "sessions", value: String(kpis.sessionsCompleted != null ? kpis.sessionsCompleted : 0) },
-                  { label: "achievements", value: String(kpis.achievementCount != null ? kpis.achievementCount : 0) },
-                ],
-              },
-            })
-          );
-        } catch (e) { /* noop */ }
       })
       .catch(function () {
         el.innerHTML = '<div class="bi-dashboard-rest__error" role="alert"><p>' + esc(i18n.error) + "</p></div>";

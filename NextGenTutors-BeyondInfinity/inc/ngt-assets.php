@@ -143,13 +143,9 @@ function bi_ngt_enqueue_assets() {
 		}
 	}
 
-	$deps = [ 'bi-ngt-wp-bridge' ];
-	if ( in_array( 'static', $bundles, true ) || in_array( 'home', $bundles, true ) ) {
-		wp_enqueue_script( 'bi-ngt-gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', [], '3.12.5', true );
-		wp_enqueue_script( 'bi-ngt-scrolltrigger', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', [ 'bi-ngt-gsap' ], '3.12.5', true );
-		$deps[] = 'bi-ngt-scrolltrigger';
-	}
-
+	// Resolve the effective bundle list first so vendor scripts (GSAP) are
+	// only fetched when a bundle that uses them will actually load (Phase 5).
+	$effective = [];
 	foreach ( array_unique( $bundles ) as $bundle ) {
 		$file = bi_ngt_assets_dir() . '/js/' . $bundle . '.js';
 		if ( ! file_exists( $file ) ) {
@@ -165,6 +161,17 @@ function bi_ngt_enqueue_assets() {
 		if ( 'home' === $bundle && function_exists( 'bi_use_kinetic_home' ) && bi_use_kinetic_home() && is_front_page() ) {
 			continue;
 		}
+		$effective[] = $bundle;
+	}
+
+	$deps = [ 'bi-ngt-wp-bridge' ];
+	if ( in_array( 'static', $effective, true ) || in_array( 'home', $effective, true ) ) {
+		wp_enqueue_script( 'bi-ngt-gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', [], '3.12.5', true );
+		wp_enqueue_script( 'bi-ngt-scrolltrigger', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', [ 'bi-ngt-gsap' ], '3.12.5', true );
+		$deps[] = 'bi-ngt-scrolltrigger';
+	}
+
+	foreach ( $effective as $bundle ) {
 		$handle = 'bi-ngt-' . $bundle;
 		wp_enqueue_script( $handle, $uri . '/js/' . $bundle . '.js', $deps, $ver, true );
 		$deps[] = $handle;

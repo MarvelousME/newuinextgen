@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action( 'wp_enqueue_scripts', 'bi_enqueue_skin_layers', 5 );
+add_action( 'wp_enqueue_scripts', 'bi_enqueue_unified_tokens', 60 );
 add_filter( 'language_attributes', 'bi_skin_html_attributes', 20 );
 add_filter( 'body_class', 'bi_skin_body_classes' );
 add_shortcode( 'bi_theme_switcher', 'bi_theme_switcher_shortcode' );
@@ -55,6 +56,29 @@ function bi_enqueue_skin_layers() {
 		[ 'bi-tokens-base' ],
 		BI_VERSION
 	);
+}
+
+/**
+ * Enqueue the unified token layer last so its alias declarations win the
+ * cascade over every legacy token namespace (--ng-*, NGT --navy/--lime,
+ * ui-library --ngt-color-*). Skins still override --ngt-* semantics and all
+ * aliases follow automatically via var() indirection.
+ */
+function bi_enqueue_unified_tokens() {
+	if ( is_admin() || bi_is_builder_edit_mode() ) {
+		return;
+	}
+
+	$file = BI_DIR . '/assets/css/tokens/unified.css';
+	if ( ! file_exists( $file ) ) {
+		return;
+	}
+
+	// Phase 5: inline the token layer (critical CSS). Removes a render-blocking
+	// request and guarantees tokens exist at first paint (loader, dark scheme).
+	wp_register_style( 'bi-tokens-unified', false, [ 'bi-tokens-base' ], BI_VERSION );
+	wp_enqueue_style( 'bi-tokens-unified' );
+	wp_add_inline_style( 'bi-tokens-unified', (string) file_get_contents( $file ) );
 }
 
 /**
@@ -247,6 +271,13 @@ function bi_ajax_set_skin_preview() {
 			]
 		);
 		$_COOKIE['bi_skin_preview'] = $skin; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	} else {
+		setcookie( 'bi_skin_preview', '', time() - HOUR_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
+		unset( $_COOKIE['bi_skin_preview'] );
+	}
+
+	wp_send_json_success( [ 'skin' => $skin ?: bi_get_theme_option( 'visual_preset', 'beyond-infinity' ) ] );
+}
 	} else {
 		setcookie( 'bi_skin_preview', '', time() - HOUR_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
 		unset( $_COOKIE['bi_skin_preview'] );

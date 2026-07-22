@@ -5,7 +5,7 @@
  Author: NextGen Tutors
  Author URI: https://www.nextgentutors.co.za
  Template: hello-elementor
- Version: 1.9.3
+ Version: 1.9.16
  License: GNU General Public License v2 or later
  License URI: http://www.gnu.org/licenses/gpl-2.0.html
  Text Domain: beyondinfinity
@@ -944,11 +944,37 @@ a:hover {
 /* Sticky mobile CTA */
 .bi-sticky-cta {
   display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 998;
-  padding: 12px 16px; background: rgba(255,255,255,.96);
+  padding: 9px max(12px, env(safe-area-inset-left)) calc(9px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-right));
+  background: rgba(255,255,255,.96);
   border-top: 1px solid var(--ngt-border-light);
   backdrop-filter: blur(10px);
   box-shadow: 0 -4px 20px rgba(0,0,0,.08);
 }
+.ngt-sticky-actions {
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: 8px;
+}
+.ngt-sticky-actions__link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  border: 1px solid var(--ngt-border);
+  border-radius: var(--ngt-radius-md);
+  background: var(--ngt-surface);
+  color: var(--ngt-primary);
+  font-size: .82rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+.ngt-sticky-actions__link--primary {
+  border-color: var(--ngt-primary);
+  background: var(--ngt-primary);
+  color: #fff;
+}
+.ngt-sticky-actions__link:hover { color: var(--ngt-secondary-dark); }
+.ngt-sticky-actions__link--primary:hover { color: #fff; background: var(--ngt-primary-dark); }
 
 /* Nav responsive (moved from header inline) */
 .ngt-nav--scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
@@ -957,9 +983,9 @@ a:hover {
 #ngt-become-btn { display: none; }
 
 @media (max-width: 768px) {
-  .bi-sticky-cta { display: block; }
-  body { padding-bottom: 72px; }
-  .bi-whatsapp-fab { bottom: 88px; }
+  .bi-sticky-cta { display: grid; }
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+  .bi-whatsapp-fab { bottom: calc(88px + env(safe-area-inset-bottom)); }
 }
 
 @media (min-width: 1200px) {

@@ -4,7 +4,7 @@ Tags: plugins, dependencies, installer, woocommerce, health
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.3
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ Premium plugins are never faked as installable from WordPress.org. Manual instal
 1. Upload the `NextGenTutors-Plugin-Manager` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the Plugins screen.
 3. Open **NextGenTutors Plugins** in the admin menu (`admin.php?page=ui-ux-pro-max`).
-4. Place premium zips in `wp-content/ngcpm-packages/` (or `docker/ngcpm-packages/` when using Docker). Plugin Manager detects them automatically.
+4. Bundled packages in `offline-packages/` install automatically on the first authenticated admin request after activation. Additional premium zips can be placed in `wp-content/ngcpm-packages/`.
 
 == Frequently Asked Questions ==
 
@@ -34,6 +34,15 @@ Only if you provide a valid zip in the configured local packages directory or a 
 The `[ngc_plugin_manager]` shortcode is read-only for users without `install_plugins`. Write actions require admin capabilities and nonces.
 
 == Changelog ==
+
+= 1.3.5 =
+* Catch third-party install and activation exceptions without crashing WordPress.
+* Preserve pending bundled installs for safe retry after an unexpected failure.
+
+= 1.3.4 =
+* Ship bundled offline packages and install them automatically after Plugin Manager activation.
+* Normalize WordPress.org plugin page URLs to direct package URLs.
+* Load translations at `init` for WordPress 6.7+ compatibility.
 
 = 1.1.3 =
 * Fix plugin installs: load Plugin_Upgrader dependencies, safer AJAX responses, WordPress.org API diagnostics.

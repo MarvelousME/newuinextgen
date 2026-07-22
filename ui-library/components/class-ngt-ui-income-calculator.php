@@ -65,7 +65,7 @@ if ( ! class_exists( 'NGT_UI_Income_Calculator' ) ) {
 			$title  = (string) ( $settings['title'] ?? '' );
 			$hours  = max( 1, min( 60, (float) ( $settings['hours_per_week'] ?? 10 ) ) );
 			$rate   = max( 0, (float) ( $settings['hourly_rate'] ?? 350 ) );
-			$fee    = max( 0, min( 50, (float) ( $settings['platform_fee'] ?? 15 ) ) );
+			$fee    = max( 0, min( 30, (float) ( $settings['platform_fee'] ?? 15 ) ) );
 			$weeks  = max( 1, min( 5, (float) ( $settings['weeks_per_month'] ?? 4.33 ) ) );
 			$symbol = (string) ( $settings['currency_symbol'] ?? 'R' );
 			$currency = sanitize_key( (string) ( $settings['currency'] ?? 'ZAR' ) );

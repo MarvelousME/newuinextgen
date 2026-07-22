@@ -59,7 +59,7 @@ final class NGC_AI_Chat {
 
 		$agents = [];
 		foreach ( $agent_ids as $aid ) {
-			$a = NGC_AI_Agents::get( sanitize_key( $aid ) );
+			$a = NGC_AI_Agents::get( (string) $aid );
 			if ( $a ) {
 				$agents[] = $a;
 			}

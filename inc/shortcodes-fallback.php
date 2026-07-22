@@ -320,16 +320,13 @@ function bi_ngc_handle_form_submit() {
     );
 
     $redirect_map = [
-        'find_tutor'       => home_url( '/find-a-tutor/' ),
-        'become_tutor'     => home_url( '/become-a-tutor/' ),
-        'contact_support'  => home_url( '/contact/' ),
-        'parent_register'  => home_url( '/register/' ),
-        'student_register' => home_url( '/register/' ),
+        'find_tutor'       => home_url( '/thank-you/?type=parent' ),
+        'become_tutor'     => home_url( '/thank-you/?type=tutor' ),
+        'contact_support'  => home_url( '/thank-you/?type=contact' ),
+        'parent_register'  => home_url( '/thank-you/?type=parent' ),
+        'student_register' => home_url( '/thank-you/?type=general' ),
     ];
-    $redirect = wp_get_referer();
-    if ( ! $redirect || ! wp_validate_redirect( $redirect, false ) ) {
-        $redirect = $redirect_map[ $form_id ] ?? home_url( '/thank-you/' );
-    }
+    $redirect = $redirect_map[ $form_id ] ?? home_url( '/thank-you/' );
     $redirect = apply_filters( 'ngc_form_redirect_url', $redirect, $form_id );
 
     wp_safe_redirect( add_query_arg( 'ngc_submitted', $form_id, $redirect ) );

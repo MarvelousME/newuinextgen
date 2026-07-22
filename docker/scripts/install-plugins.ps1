@@ -22,6 +22,7 @@ Get-Content '.env' | ForEach-Object {
 
 foreach ($path in @(
     $companionPath,
+    "$repoRoot/NextGenTutors-AI-Integration",
     "$repoRoot/NextGenTutors-Plugin-Manager",
     "$repoRoot/NextGenTutors-Html-Importer"
 )) {
@@ -44,5 +45,6 @@ if ($LASTEXITCODE -ne 0) { throw 'install-plugins failed' }
 Write-Host ''
 Write-Host 'NextGen fleet plugins are active:'
 Write-Host '  - NextGenTutors-Companion (forms, dashboards, marketplace)'
+Write-Host '  - NextGenTutors-AI-Integration (signed agents-api outbox bridge)'
 Write-Host '  - NextGenTutors-Plugin-Manager (dependency health + installs)'
 Write-Host '  - NextGenTutors-Html-Importer (webpages-content import)'

@@ -58,3 +58,53 @@ APPROVED WITH CONDITIONS
 - Accessibility audit  
 - Full Playwright e2e suite  
 - UI Ops Centre polish 
+
+---
+
+# Assessment 2026-07-22 — Enterprise-grade SWOT gap gate (post UX Phase 6 / UX-CRO-006)
+
+**Scope note:** This entry evaluates distance to *enterprise-grade*, a stricter bar than the staged-rollout conditions above. Prior closed items (GIT-001 … OBS-001) are not re-litigated; statuses below reflect evidence available in this session only.
+
+## Per-capability status
+
+| Capability | Status | Evidence / missing evidence |
+|---|---|---|
+| UX Phases 1–6 code gates | `VERIFIED` | PHP lint clean (touched files); `validate.php` green (211 files, 64 assertions); catalog snapshots 28/28; integration smoke green; versions BI 1.9.16 / NGC 1.9.5 synchronized (17-test-evidence 2026-07-21 rows) |
+| UX Phase 6 runtime behavior | `NOT VERIFIED` | No browser render, keyboard walk, reduced-motion smoke, mobile sticky/FAB collision test, or find→book ≤3-click audit executed. Local Docker binds root `inc/`+`assets/` mirrors over the packaged theme (dual-tree drift) |
+| PayFast payment integrity | `VERIFIED` | Docker sandbox e2e 14/14 (2026-07-20): redirect, ITN, amount tamper, replay |
+| Authorization / IDOR | `PARTIAL` | 7 NGC_Access unit tests pass; no full cross-role authorization matrix executed |
+| Privacy & minor protection | `PARTIAL` | Exporters/erasers/retention implemented (PRIV-001); consent versioning, masking, and deletion flows not demonstrated end-to-end this session |
+| Safeguarding | `PARTIAL` | Case tables, SLA, moderator queue exist; no evidence a live signal→case→escalation chain was executed |
+| Fraud engine | `PARTIAL` | 15 rules wired + review UI; thresholds firing into reviewable cases with real signals not demonstrated |
+| Financial reconciliation | `PARTIAL` | Payout scheduler/export code present; ledger-ready journals and reconciliation reports not produced from executed transactions |
+| Event reliability (outbox/DLQ/replay) | `PARTIAL` | Outbox + event bridge exist; idempotency, dead-letter, and authorized-replay behavior not exercised under test |
+| Observability | `PARTIAL` | `/ngc/v1/metrics` Prometheus + system log exist; no collector wired, no alert fired in test, no tracing |
+| AI-agent governance | `PARTIAL` | Policy engine + kill switch + 20-case eval harness pass; autonomy remains Level 0–1 (observe/recommend/case) — prompt-injection suite minimal |
+| Testing depth | `PARTIAL` | 64 unit assertions + snapshots; PHPUnit suite SKIPPED (no composer install); Playwright e2e NOT RUN; no coverage measurement |
+| Accessibility | `NOT VERIFIED` | No axe/manual audit executed any session |
+| Release reproducibility | `NOT VERIFIED` | `build-release.ps1` blocked — C: at ~0.07 GB free; no green `dist/*.zip` artifact exists for BI 1.9.16 / NGC 1.9.5 |
+| Demo environment (Phase 14) | `PARTIAL` | Register: `COMPLETE WITH LIMITATIONS`; full trigger/notification/reconciliation evidence packs incomplete |
+
+## SWOT (enterprise-grade lens)
+
+- **Strengths:** hardened PayFast path with real e2e evidence; escaped presentation layer reusing one token system; governance scaffolding (policy engine, kill switch, eval harness, audit registers) that most WordPress stacks lack.
+- **Weaknesses:** all 2026-07-21/22 verification is static — zero runtime/browser evidence; dual theme trees drifted (packaged vs root mirrors); PHPUnit and Playwright unexecuted; no accessibility or performance evidence.
+- **Opportunities:** analytics plumbing (`NGC_Platform_Analytics`, conversions table) enables real CRO measurement; demo seed + journey catalogue can be extended into executable e2e evidence packs cheaply.
+- **Threats:** heavily dirty worktree (Phases 1–6 + AI-Integration plugin uncommitted) risks unreproducible releases; minors + payments domain means unproven safeguarding/reconciliation controls are audit-fail items, not nice-to-haves; disk exhaustion blocks even artifact creation.
+
+## Enterprise-grade exit criteria (ordered)
+
+1. **Release integrity:** free disk, commit/tag the worktree, delete or sync root mirrors, run `build-release.ps1` green, archive `dist/*.zip` hashes.
+2. **Runtime verification:** deploy 1.9.16/1.9.5 to Docker/staging; execute Playwright journeys (find→book ≤3 clicks), keyboard walk, reduced-motion smoke, axe scan, Lighthouse ≥95 targets.
+3. **Test depth:** `composer install` + PHPUnit in CI; authorization matrix + webhook-replay + negative payment tests executed, not listed.
+4. **Safeguarding/fraud/reconciliation proofs:** execute one full chain each (signal→case→escalation; rule→case→review; transactions→journal→reconciliation report) and file evidence packs.
+5. **Observability activation:** wire a collector, fire one real alert in staging, document runbook.
+6. **Phase 14 completion:** journey evidence packs + live demonstration runbook to `COMPLETE`.
+
+## Decision (this entry)
+
+```text
+APPROVED WITH CONDITIONS
+```
+
+Unchanged for **staged/limited rollout** under the 2026-07-20 conditions plus: (7) rebuild and hash release ZIPs before any deploy; (8) complete runtime verification of UX Phase 6 surfaces on staging. **The enterprise-grade bar is NOT met** until the six exit criteria above hold; a request for unrestricted public production approval today would return `NOT APPROVED FOR PRODUCTION`.

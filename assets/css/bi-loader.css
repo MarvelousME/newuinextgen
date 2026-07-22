@@ -1,0 +1,157 @@
+/**
+ * Premium page loader — branded rotating loading experiences.
+ * Fixed overlay: no layout participation → zero CLS.
+ * Spec: documentation/ux-redesign/04-motion-spec.md §5
+ */
+
+.bi-loader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ngt-z-loader, 1000);
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(80% 60% at 50% 30%, rgba(5, 150, 105, 0.10), transparent 60%),
+    var(--ngt-primary, #0F1A2F);
+  opacity: 1;
+  transition: opacity 400ms var(--ngt-ease-out, cubic-bezier(0, 0, 0.2, 1));
+}
+.bi-loader.is-leaving { opacity: 0; pointer-events: none; }
+
+/* Repeat-view / reduced-motion gate decided pre-paint in <head>. */
+html.bi-loader-skip .bi-loader { display: none; }
+
+.bi-loader__stage {
+  display: grid;
+  place-items: center;
+  gap: 24px;
+}
+
+.bi-loader__brand {
+  margin: 0;
+  font-family: var(--ngt-font-display, "Sora", sans-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  animation: bi-loader-breathe 1.8s ease-in-out infinite;
+}
+.bi-loader__brand span { color: var(--ngt-secondary, #059669); }
+
+/* Variants are hidden until bi-loader.js activates one. */
+.bi-loader__variant { display: none; }
+.bi-loader[data-bi-loader-variant="constellation"] .bi-loader__variant--constellation,
+.bi-loader[data-bi-loader-variant="orb"] .bi-loader__variant--orb,
+.bi-loader[data-bi-loader-variant="wave"] .bi-loader__variant--wave,
+.bi-loader[data-bi-loader-variant="nodes"] .bi-loader__variant--nodes,
+.bi-loader[data-bi-loader-variant="pulse"] .bi-loader__variant--pulse {
+  display: block;
+}
+
+/* 1 · Constellation (canvas driven by JS) */
+.bi-loader__canvas { display: block; }
+
+/* 2 · Glass orb */
+.bi-loader__orb {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--ngt-glass-surface-dark, rgba(15, 26, 47, 0.72));
+  backdrop-filter: blur(var(--ngt-blur-glass, 14px));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 0 32px rgba(5, 150, 105, 0.35),
+    0 0 48px rgba(5, 150, 105, 0.25);
+  animation: bi-loader-breathe 2s ease-in-out infinite;
+}
+.bi-loader__orb-ring {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--ngt-accent, #FF9F0A);
+  border-bottom-color: var(--ngt-secondary, #059669);
+  animation: bi-loader-spin 1.4s linear infinite;
+}
+
+/* 3 · Gradient wave */
+.bi-loader__wave {
+  width: 220px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--ngt-primary-light, #E6F0FA),
+    var(--ngt-secondary, #059669),
+    var(--ngt-accent, #FF9F0A),
+    var(--ngt-secondary, #059669),
+    var(--ngt-primary-light, #E6F0FA)
+  );
+  background-size: 300% 100%;
+  animation: bi-loader-wave 1.6s linear infinite;
+}
+
+/* 4 · Knowledge nodes */
+.bi-loader__nodes {
+  display: grid;
+  grid-template-columns: repeat(3, 22px);
+  gap: 18px;
+}
+.bi-loader__nodes span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  animation: bi-loader-node 1.5s ease-in-out infinite;
+}
+.bi-loader__nodes span:nth-child(1) { animation-delay: 0ms; }
+.bi-loader__nodes span:nth-child(2) { animation-delay: 120ms; }
+.bi-loader__nodes span:nth-child(3) { animation-delay: 240ms; }
+.bi-loader__nodes span:nth-child(4) { animation-delay: 360ms; }
+.bi-loader__nodes span:nth-child(5) { animation-delay: 480ms; }
+.bi-loader__nodes span:nth-child(6) { animation-delay: 600ms; }
+.bi-loader__nodes span:nth-child(7) { animation-delay: 720ms; }
+.bi-loader__nodes span:nth-child(8) { animation-delay: 840ms; }
+.bi-loader__nodes span:nth-child(9) { animation-delay: 960ms; }
+
+/* 5 · Logo pulse — brand text alone carries this variant. */
+.bi-loader__variant--pulse { width: 1px; height: 1px; }
+
+/* Slim top progress bar for subsequent in-site navigations. */
+.bi-loader-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  z-index: var(--ngt-z-loader, 1000);
+  background: linear-gradient(90deg, var(--ngt-secondary, #059669), var(--ngt-accent, #FF9F0A));
+  opacity: 0;
+  transition: width 300ms ease-out, opacity 200ms linear;
+  pointer-events: none;
+}
+.bi-loader-bar.is-active { opacity: 1; }
+
+@keyframes bi-loader-spin { to { transform: rotate(360deg); } }
+@keyframes bi-loader-breathe {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.04); opacity: 0.82; }
+}
+@keyframes bi-loader-wave { to { background-position: -300% 0; } }
+@keyframes bi-loader-node {
+  0%, 100% { background: rgba(255, 255, 255, 0.14); transform: scale(1); }
+  50% { background: var(--ngt-secondary, #059669); transform: scale(1.25); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bi-loader__variant { display: none !important; }
+  .bi-loader__brand,
+  .bi-loader__orb,
+  .bi-loader__orb-ring,
+  .bi-loader__wave,
+  .bi-loader__nodes span {
+    animation: none !important;
+  }
+}

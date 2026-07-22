@@ -241,7 +241,8 @@
   transition: border-color .2s, background .2s;
 }
 .hero-search select option { color: var(--slate-900); }
-.hero-search select:focus, .hero-search input:focus { outline: none; border-color: var(--lime); background: rgba(255,255,255,0.12); }
+.hero-search select:focus, .hero-search input:focus { border-color: var(--lime); background: rgba(255,255,255,0.12); }
+.hero-search select:focus-visible, .hero-search input:focus-visible { outline: var(--ngt-focus-ring-width, 2px) solid var(--ngt-focus-ring, #059669); outline-offset: var(--ngt-focus-ring-offset, 2px); }
 .hero-search input::placeholder { color: rgba(255,255,255,0.5); }
 
 .hero-stats { margin-top: 30px; display: flex; gap: 30px; }

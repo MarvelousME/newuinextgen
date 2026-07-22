@@ -28,6 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <?php bi_render_primary_nav_menu(); ?>
 
       <div class="ngt-nav__cta">
+        <?php if ( function_exists( 'bi_scheme_toggle_button' ) ) { bi_scheme_toggle_button(); } ?>
         <a href="<?php echo esc_url( home_url( '/become-a-tutor' ) ); ?>" class="ngt-btn ngt-btn--outline" id="ngt-become-btn"><?php esc_html_e( 'Become a Tutor', 'beyondinfinity' ); ?></a>
         <a href="<?php echo esc_url( home_url( '/find-a-tutor' ) ); ?>" class="ngt-btn ngt-btn--primary"><?php esc_html_e( 'Find a Tutor', 'beyondinfinity' ); ?></a>
       </div>

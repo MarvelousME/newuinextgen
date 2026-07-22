@@ -45,10 +45,40 @@ final class NGC_AI_Agents {
 	}
 
 	/**
+	 * Resolve an id to its stored canonical form (case-insensitive for legacy ids).
+	 *
+	 * @param string $id Agent id (any case).
+	 * @return string Canonical stored id, or '' when not found.
+	 */
+	public static function resolve_id( $id ) {
+		$id = trim( (string) $id );
+		if ( '' === $id ) {
+			return '';
+		}
+		$agents = get_option( self::OPTION, [] );
+		if ( ! is_array( $agents ) ) {
+			return '';
+		}
+		if ( isset( $agents[ $id ] ) ) {
+			return $id;
+		}
+		foreach ( array_keys( $agents ) as $stored ) {
+			if ( 0 === strcasecmp( (string) $stored, $id ) ) {
+				return (string) $stored;
+			}
+		}
+		return '';
+	}
+
+	/**
 	 * @param string $id Agent id.
 	 * @return array<string,mixed>|null
 	 */
 	public static function get( $id ) {
+		$id = self::resolve_id( $id );
+		if ( '' === $id ) {
+			return null;
+		}
 		$agents = get_option( self::OPTION, [] );
 		return isset( $agents[ $id ] ) && is_array( $agents[ $id ] ) ? $agents[ $id ] : null;
 	}
@@ -68,8 +98,14 @@ final class NGC_AI_Agents {
 		if ( '' === $name ) {
 			return new WP_Error( 'ngc_agent', __( 'Agent name is required.', 'nextgencompanion' ), [ 'status' => 400 ] );
 		}
+		if ( '' !== $id ) {
+			$existing = self::resolve_id( $id );
+			if ( '' !== $existing ) {
+				$id = $existing;
+			}
+		}
 		if ( '' === $id ) {
-			$id = sanitize_key( $name ) . '-' . wp_generate_password( 4, false, false );
+			$id = sanitize_key( $name ) . '-' . strtolower( wp_generate_password( 4, false, false ) );
 		}
 
 		$valid_skills = array_keys( self::available_skills() );
@@ -91,10 +127,15 @@ final class NGC_AI_Agents {
 		if ( ! is_array( $agents ) ) {
 			$agents = [];
 		}
+		$model_id = sanitize_text_field( (string) ( $data['model_id'] ?? '' ) );
+		if ( '' !== $model_id && class_exists( 'NGC_AI_Models' ) ) {
+			$model_id = NGC_AI_Models::resolve_id( $model_id ) ?: $model_id;
+		}
+
 		$agents[ $id ] = [
 			'id'       => $id,
 			'name'     => $name,
-			'model_id' => sanitize_key( (string) ( $data['model_id'] ?? '' ) ),
+			'model_id' => $model_id,
 			'rules'    => sanitize_textarea_field( (string) ( $data['rules'] ?? '' ) ),
 			'role'     => sanitize_key( (string) ( $data['role'] ?? 'worker' ) ),
 			'commands' => $commands,
@@ -115,6 +156,7 @@ final class NGC_AI_Agents {
 		if ( is_wp_error( $gate ) ) {
 			return $gate;
 		}
+		$id     = self::resolve_id( $id ) ?: $id;
 		$agents = get_option( self::OPTION, [] );
 		unset( $agents[ $id ] );
 		update_option( self::OPTION, $agents, false );

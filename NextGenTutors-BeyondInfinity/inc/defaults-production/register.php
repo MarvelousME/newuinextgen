@@ -4,24 +4,74 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-bi_hero( __( 'Register with NextGen Tutors', 'beyondinfinity' ), __( 'Choose the registration path that matches you.', 'beyondinfinity' ) );
+$role = sanitize_key( $_GET['role'] ?? '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+if ( ! in_array( $role, [ 'parent', 'student', 'tutor' ], true ) ) {
+    $role = '';
+}
+
+bi_hero( __( 'Register with NextGen Tutors', 'beyondinfinity' ), __( 'Choose the path that matches you — then complete a focused form.', 'beyondinfinity' ) );
 ?>
 
 <section class="ngt-section">
-  <div class="ngt-container" style="max-width:1000px">
-    <div class="bi-grid-2">
-      <div class="ngt-card ngt-animate" style="padding:32px">
-        <h2 style="margin-bottom:12px"><?php esc_html_e( 'Parent Registering a Child', 'beyondinfinity' ); ?></h2>
-        <p style="margin-bottom:24px"><?php esc_html_e( 'For parents or guardians registering a learner under 18.', 'beyondinfinity' ); ?></p>
+  <div class="ngt-container bi-register" style="max-width:1000px">
+    <div class="bi-role-selector" role="tablist" aria-label="<?php esc_attr_e( 'Registration type', 'beyondinfinity' ); ?>">
+      <a
+        href="<?php echo esc_url( add_query_arg( 'role', 'parent', get_permalink() ) ); ?>"
+        class="bi-role-card<?php echo 'parent' === $role ? ' is-active' : ''; ?>"
+        role="tab"
+        aria-selected="<?php echo 'parent' === $role ? 'true' : 'false'; ?>"
+        id="bi-role-parent"
+      >
+        <span class="bi-role-card__eyebrow"><?php esc_html_e( 'Families', 'beyondinfinity' ); ?></span>
+        <h2 class="bi-role-card__title"><?php esc_html_e( 'I’m a Parent', 'beyondinfinity' ); ?></h2>
+        <p class="bi-role-card__desc"><?php esc_html_e( 'Register a learner under 18 and manage bookings, invoices and safety controls.', 'beyondinfinity' ); ?></p>
+      </a>
+      <a
+        href="<?php echo esc_url( add_query_arg( 'role', 'student', get_permalink() ) ); ?>"
+        class="bi-role-card<?php echo 'student' === $role ? ' is-active' : ''; ?>"
+        role="tab"
+        aria-selected="<?php echo 'student' === $role ? 'true' : 'false'; ?>"
+        id="bi-role-student"
+      >
+        <span class="bi-role-card__eyebrow"><?php esc_html_e( 'Adult learners', 'beyondinfinity' ); ?></span>
+        <h2 class="bi-role-card__title"><?php esc_html_e( 'I’m a Student 18+', 'beyondinfinity' ); ?></h2>
+        <p class="bi-role-card__desc"><?php esc_html_e( 'Register yourself for tutoring, track progress and book sessions.', 'beyondinfinity' ); ?></p>
+      </a>
+      <a
+        href="<?php echo esc_url( home_url( '/become-a-tutor/' ) ); ?>"
+        class="bi-role-card"
+        role="tab"
+        aria-selected="false"
+        id="bi-role-tutor"
+      >
+        <span class="bi-role-card__eyebrow"><?php esc_html_e( 'Educators', 'beyondinfinity' ); ?></span>
+        <h2 class="bi-role-card__title"><?php esc_html_e( 'I’m a Tutor', 'beyondinfinity' ); ?></h2>
+        <p class="bi-role-card__desc"><?php esc_html_e( 'Apply to join the vetted tutor network — earnings calculator included.', 'beyondinfinity' ); ?></p>
+      </a>
+    </div>
+
+    <?php if ( '' === $role ) : ?>
+      <div class="ngt-card bi-surface-card ngt-animate bi-register__hint" role="status">
+        <p style="margin:0"><?php esc_html_e( 'Select a role above to open the matching registration form. This keeps the page short and reduces mistakes.', 'beyondinfinity' ); ?></p>
+      </div>
+    <?php elseif ( 'parent' === $role ) : ?>
+      <div class="ngt-card ngt-animate bi-register__panel" role="tabpanel" aria-labelledby="bi-role-parent">
+        <h2 class="bi-register__panel-title"><?php esc_html_e( 'Parent Registering a Child', 'beyondinfinity' ); ?></h2>
+        <p class="bi-register__panel-lead"><?php esc_html_e( 'For parents or guardians registering a learner under 18.', 'beyondinfinity' ); ?></p>
+        <div class="bi-trust-chip-row bi-trust-chip-row--start" role="note">
+          <?php bi_trust_chip( __( 'Built around parent consent and child-safe tutoring', 'beyondinfinity' ), home_url( '/child-safety/' ) ); ?>
+        </div>
         <?php bi_render_shortcode( '[ngc_parent_register_child_form]' ); ?>
         <?php bi_safety_notice( 'parent' ); ?>
       </div>
-      <div class="ngt-card ngt-animate ngt-animate--delay-2" style="padding:32px">
-        <h2 style="margin-bottom:12px"><?php esc_html_e( 'Student 18+', 'beyondinfinity' ); ?></h2>
-        <p style="margin-bottom:24px"><?php esc_html_e( 'For students aged 18 or older registering themselves.', 'beyondinfinity' ); ?></p>
+    <?php else : ?>
+      <div class="ngt-card ngt-animate bi-register__panel" role="tabpanel" aria-labelledby="bi-role-student">
+        <h2 class="bi-register__panel-title"><?php esc_html_e( 'Student 18+', 'beyondinfinity' ); ?></h2>
+        <p class="bi-register__panel-lead"><?php esc_html_e( 'For students aged 18 or older registering themselves.', 'beyondinfinity' ); ?></p>
         <?php bi_render_shortcode( '[ngc_student_register_form]' ); ?>
       </div>
-    </div>
+    <?php endif; ?>
+
     <div class="ngt-card bi-surface-card ngt-animate">
       <h3 style="margin-bottom:8px"><?php esc_html_e( 'Account Activation', 'beyondinfinity' ); ?></h3>
       <p style="margin:0"><?php esc_html_e( 'After registration, you may be asked to verify your email address before accessing your dashboard.', 'beyondinfinity' ); ?></p>

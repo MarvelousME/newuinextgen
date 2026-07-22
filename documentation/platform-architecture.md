@@ -8,7 +8,7 @@
 
 ## 1. Executive summary
 
-NextGen Tutors is a WordPress-centred tutoring platform for South African online / in-person / hybrid lessons. **NextGenTutors-Companion** owns the domain model (`ngc_*` tables), REST (`ngc/v1`), workflows, payments (PayFast sandbox/live), fraud/safeguarding, governed AI agents, privacy retention, metrics export, and Phase 14 relational demo seeding. The **BeyondInfinity** theme and **ui-library** own presentation. Legacy Content-Enhancement plugins are blocked by `NGC_Legacy_Plugin_Guard`.
+NextGen Tutors is a WordPress-centred tutoring platform for South African online / in-person / hybrid lessons, shipped as **one product, five deployable packages**. **NextGenTutors-Companion** owns the domain model (`ngc_*` tables), REST (`ngc/v1`), workflows, payments (PayFast sandbox/live), fraud/safeguarding, governed AI agents, privacy retention, metrics export, and Phase 14 relational demo seeding. The **BeyondInfinity** theme and **ui-library** own presentation. **NextGenTutors-AI-Integration** is a thin, signed bridge (`ngtai/v1`, `ngtai_*` tables) between Companion domain events and the hosted agents-api platform — it never owns domain state. Legacy Content-Enhancement plugins are blocked by `NGC_Legacy_Plugin_Guard`.
 
 **Why this shape:** keep a single source of truth for bookings/money/minors, while allowing Magic UI + editor adapters without dual business logic.
 
@@ -30,6 +30,7 @@ flowchart TB
     Hub[Automation Hub]
     NGCPM[Plugin Manager]
     Importer[Html Importer]
+    NGTAI[AI-Integration bridge]
     UI[ui-library NGT_UI]
   end
 
@@ -38,6 +39,7 @@ flowchart TB
     Amelia[Amelia]
     CRM[FluentCRM]
     LMS[MasterStudy]
+    AgentsAPI[agents-api / LiteLLM / RAGFlow]
   end
 
   Browser --> Theme
@@ -50,6 +52,9 @@ flowchart TB
   Comp --> LMS
   Hub --> Comp
   NGCPM --> Comp
+  Comp -->|ngc_domain_event| NGTAI
+  NGTAI -->|HMAC-signed POST /v1/events| AgentsAPI
+  AgentsAPI -->|signed callbacks ngtai/v1| NGTAI
   APM -->|Bearer /ngc/v1/metrics| Comp
   CLI --> Comp
 ```
@@ -62,6 +67,7 @@ flowchart TB
 | Hub | `nextgen-automation-hub/` | Automation events (defers payouts when Companion scheduler present) |
 | Plugin Manager | `NextGenTutors-Plugin-Manager/` | Install/update; respects `is_denied()` |
 | Html Importer | `NextGenTutors-Html-Importer/` | Content import only |
+| AI-Integration | `NextGenTutors-AI-Integration/` | HMAC-signed outbox bridge to agents-api; callbacks, approvals, replay protection, redaction — no domain authority |
 
 ---
 
