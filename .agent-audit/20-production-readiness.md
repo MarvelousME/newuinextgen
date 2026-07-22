@@ -70,7 +70,7 @@ APPROVED WITH CONDITIONS
 | Capability | Status | Evidence / missing evidence |
 |---|---|---|
 | UX Phases 1–6 code gates | `VERIFIED` | PHP lint clean (touched files); `validate.php` green (211 files, 64 assertions); catalog snapshots 28/28; integration smoke green; versions BI 1.9.16 / NGC 1.9.5 synchronized (17-test-evidence 2026-07-21 rows) |
-| UX Phase 6 runtime behavior | `NOT VERIFIED` | No browser render, keyboard walk, reduced-motion smoke, mobile sticky/FAB collision test, or find→book ≤3-click audit executed. Docker binds root `inc/`+`assets/` over the theme path; those dirs are junctions to the same files (not dual-tree drift) |
+| UX Phase 6 runtime behavior | `PARTIAL` | Playwright `phase6-cro-runtime.spec.ts` **8/8** on `:8900` (2026-07-22) with Hello Elementor + BeyondInfinity active and prototype blend forced off; axe still reports `color-contrast` + `select-name`; Lighthouse not run (disk). Evidence: `.agent-audit/evidence/runtime/` |
 | PayFast payment integrity | `VERIFIED` | Docker sandbox e2e 14/14 (2026-07-20): redirect, ITN, amount tamper, replay |
 | Authorization / IDOR | `PARTIAL` | 7 NGC_Access unit tests pass; no full cross-role authorization matrix executed |
 | Privacy & minor protection | `PARTIAL` | Exporters/erasers/retention implemented (PRIV-001); consent versioning, masking, and deletion flows not demonstrated end-to-end this session |
@@ -81,7 +81,7 @@ APPROVED WITH CONDITIONS
 | Observability | `PARTIAL` | `/ngc/v1/metrics` Prometheus + system log exist; no collector wired, no alert fired in test, no tracing |
 | AI-agent governance | `PARTIAL` | Policy engine + kill switch + 20-case eval harness pass; autonomy remains Level 0–1 (observe/recommend/case) — prompt-injection suite minimal |
 | Testing depth | `PARTIAL` | 64 unit assertions + snapshots; PHPUnit suite SKIPPED (no composer install); Playwright e2e NOT RUN; no coverage measurement |
-| Accessibility | `NOT VERIFIED` | No axe/manual audit executed any session |
+| Accessibility | `PARTIAL` | axe on find-a-tutor (2026-07-22): serious/critical = `color-contrast` (footer), `select-name` (marketplace filter selects). Evidence: `phase6-axe-find-a-tutor.json` |
 | Release reproducibility | `VERIFIED` | Disk reclaimed; worktree committed `955d1ad`; `build-release.ps1` green 2026-07-22; SHA-256 hashes in `.agent-audit/evidence/release/SHA256-BI-1.9.16-NGC-1.9.5-2026-07-22.txt`; versions BI 1.9.16 / NGC 1.9.5 synchronized |
 | Demo environment (Phase 14) | `PARTIAL` | Register: `COMPLETE WITH LIMITATIONS`; full trigger/notification/reconciliation evidence packs incomplete |
 
@@ -95,7 +95,7 @@ APPROVED WITH CONDITIONS
 ## Enterprise-grade exit criteria (ordered)
 
 1. **Release integrity:** ✅ COMPLETE 2026-07-22 — disk freed, commit `955d1ad`, junction audit (root ≡ packaged), `build-release.ps1` green, SHA-256 archive filed. Tag `release/bi-1.9.16-ngc-1.9.5` applied.
-2. **Runtime verification:** deploy 1.9.16/1.9.5 to Docker/staging; execute Playwright journeys (find→book ≤3 clicks), keyboard walk, reduced-motion smoke, axe scan, Lighthouse ≥95 targets.
+2. **Runtime verification:** 🟡 PARTIAL 2026-07-22 — Playwright Phase 6 suite 8/8; sticky/trust/coverage/keyboard/reduced-motion/click-budget verified under production-defaults force. Remaining: Lighthouse ≥95; clear axe `color-contrast` + `select-name`; decide default for `prototype_blend` on staging.
 3. **Test depth:** `composer install` + PHPUnit in CI; authorization matrix + webhook-replay + negative payment tests executed, not listed.
 4. **Safeguarding/fraud/reconciliation proofs:** execute one full chain each (signal→case→escalation; rule→case→review; transactions→journal→reconciliation report) and file evidence packs.
 5. **Observability activation:** wire a collector, fire one real alert in staging, document runbook.

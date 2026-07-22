@@ -278,10 +278,3 @@ function bi_ajax_set_skin_preview() {
 
 	wp_send_json_success( [ 'skin' => $skin ?: bi_get_theme_option( 'visual_preset', 'beyond-infinity' ) ] );
 }
-	} else {
-		setcookie( 'bi_skin_preview', '', time() - HOUR_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
-		unset( $_COOKIE['bi_skin_preview'] );
-	}
-
-	wp_send_json_success( [ 'skin' => $skin ?: bi_get_theme_option( 'visual_preset', 'beyond-infinity' ) ] );
-}

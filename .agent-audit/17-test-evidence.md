@@ -21,6 +21,10 @@
 | 2026-07-22 REL-001 | Junction audit (root ↔ packaged theme) | Host | **OK** | 0 | 0 | `assets`/`inc`/`templates`/etc. under BeyondInfinity are junctions to root — content identical (not dual-tree drift) |
 | 2026-07-22 REL-001 | `scripts/build-release.ps1` | Host PHP 8.4 / Node | **OK** | 0 | PHPUnit skipped | validate.php green; Studio vite build; NGCPM validate; 5 ZIPs with forward-slash entries |
 | 2026-07-22 REL-001 | Release ZIP SHA-256 archive | Host | **OK** | 0 | 0 | `.agent-audit/evidence/release/SHA256-BI-1.9.16-NGC-1.9.5-2026-07-22.txt` (theme 29.0 MB, Companion 0.88 MB, AI 0.10 MB, Importer 0.03 MB, Manager 82.9 MB) |
+| 2026-07-22 RT-001 | Theme activate BeyondInfinity + Hello Elementor | Docker `:8900` | **OK** | 0 | 0 | Was Twenty Twenty-Three; installed hello-elementor 3.4.4; DB stylesheet/template switch; fixed `theme-switcher.php` parse error |
+| 2026-07-22 RT-001 | MU-plugin force production defaults | Docker | **OK** | 0 | 0 | `mu-plugins/ngt-phase6-runtime-verify.php` disables prototype blend for CRO surface verification |
+| 2026-07-22 RT-001 | Playwright `phase6-cro-runtime.spec.ts` | Host Chrome → `:8900` | **8** | 0 | 0 | Trust/coverage/sticky/deep-link/click-budget/reduced-motion/keyboard/axe evidence |
+| 2026-07-22 RT-001 | axe WCAG 2 A/AA on find-a-tutor | Playwright | **recorded** | 2 blocking rule IDs | 0 | `color-contrast`, `select-name` → Accessibility PARTIAL |
 
 ## Agent policy tests added
 
@@ -33,9 +37,8 @@
 ## Not executed this session
 
 - Full PHPUnit suite  
-- Playwright e2e  
+- Full Playwright blueprint suite (only Phase 6 CRO runtime + prior PayFast e2e)  
 - Backup/restore  
-- Phase 6 live keyboard/mobile/reduced-motion/CRO click-count walk on staging/Docker
-- Accessibility (axe) and Lighthouse scoring
+- Lighthouse scoring (disk)
 
 Mark: **NOT VERIFIED** where not run.
