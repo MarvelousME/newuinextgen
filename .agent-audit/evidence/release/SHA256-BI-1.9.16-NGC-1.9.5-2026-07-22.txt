@@ -1,0 +1,12 @@
+﻿# Release artifact hashes
+# Commit: 955d1add3adc5e7605644ded87d2c6bea480892f
+# Built: 2026-07-22T12:44:08.9985903+02:00
+# Free disk after build: 1.418 GB
+
+File | Bytes | SHA256
+--- | ---: | ---
+NextGenTutors-AI-Integration.zip | 100441 | ceb2a657626d4495ee6d4852ae33f0fcc0dec9f02e9b51c5d22bd57c58df3b48
+NextGenTutors-BeyondInfinity.zip | 29037892 | 15f91a96ccb87c7653e51053a5484738b9825b8e82408eb287a2668dae70458d
+NextGenTutors-Companion.zip | 877846 | 2adb8d92b3a6bf1d7ce7834bf580441f90170073f12f9893e10eb070743c9ac8
+NextGenTutors-Html-Importer.zip | 33961 | 6678c56a576e2c95e4e210a1075ec65e9509e0477aac7f36bfde0483d421ec22
+NextGenTutors-Plugin-Manager.zip | 82959560 | e88c7155f38504550058748cd42daff658caa825c532e97c4172f1e1aad6df3e

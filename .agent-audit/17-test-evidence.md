@@ -16,6 +16,11 @@
 | 2026-07-21 UX-CRO-006 | `ui-library/tests/catalog-snapshot.php` | Host PHP 8.4 | **28** | 0 | 0 | Catalog hashes unchanged |
 | 2026-07-21 UX-CRO-006 | `ui-library/tests/integration-smoke.php` | Host PHP 8.4 | **OK** | 0 | 0 | Integration smoke green |
 | 2026-07-21 UX-CRO-006 | `git diff --check` (scoped files) | Git/Windows | **OK** | 0 | 0 | Only expected LF→CRLF working-copy warnings |
+| 2026-07-22 REL-001 | Disk reclaim (unused Docker images/volumes + temp/npm cache) | Host | **OK** | 0 | 0 | C: free 0.33 GB → 1.53 GB before build; active `newuinextgen_*` volumes retained |
+| 2026-07-22 REL-001 | `git commit` worktree | Host | **OK** | 0 | 0 | `955d1ad` — 282 files (UX 1–6 + AI Integration + audit docs) |
+| 2026-07-22 REL-001 | Junction audit (root ↔ packaged theme) | Host | **OK** | 0 | 0 | `assets`/`inc`/`templates`/etc. under BeyondInfinity are junctions to root — content identical (not dual-tree drift) |
+| 2026-07-22 REL-001 | `scripts/build-release.ps1` | Host PHP 8.4 / Node | **OK** | 0 | PHPUnit skipped | validate.php green; Studio vite build; NGCPM validate; 5 ZIPs with forward-slash entries |
+| 2026-07-22 REL-001 | Release ZIP SHA-256 archive | Host | **OK** | 0 | 0 | `.agent-audit/evidence/release/SHA256-BI-1.9.16-NGC-1.9.5-2026-07-22.txt` (theme 29.0 MB, Companion 0.88 MB, AI 0.10 MB, Importer 0.03 MB, Manager 82.9 MB) |
 
 ## Agent policy tests added
 
@@ -30,7 +35,7 @@
 - Full PHPUnit suite  
 - Playwright e2e  
 - Backup/restore  
-- Phase 6 live keyboard/mobile/reduced-motion/CRO click-count walk (Docker theme bind overlays packaged `inc/` and `assets/` with dirty root mirrors)
-- Phase 6 release ZIP build (C: had only 0.07 GB free)
+- Phase 6 live keyboard/mobile/reduced-motion/CRO click-count walk on staging/Docker
+- Accessibility (axe) and Lighthouse scoring
 
 Mark: **NOT VERIFIED** where not run.

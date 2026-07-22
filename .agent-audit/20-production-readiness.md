@@ -70,7 +70,7 @@ APPROVED WITH CONDITIONS
 | Capability | Status | Evidence / missing evidence |
 |---|---|---|
 | UX Phases 1–6 code gates | `VERIFIED` | PHP lint clean (touched files); `validate.php` green (211 files, 64 assertions); catalog snapshots 28/28; integration smoke green; versions BI 1.9.16 / NGC 1.9.5 synchronized (17-test-evidence 2026-07-21 rows) |
-| UX Phase 6 runtime behavior | `NOT VERIFIED` | No browser render, keyboard walk, reduced-motion smoke, mobile sticky/FAB collision test, or find→book ≤3-click audit executed. Local Docker binds root `inc/`+`assets/` mirrors over the packaged theme (dual-tree drift) |
+| UX Phase 6 runtime behavior | `NOT VERIFIED` | No browser render, keyboard walk, reduced-motion smoke, mobile sticky/FAB collision test, or find→book ≤3-click audit executed. Docker binds root `inc/`+`assets/` over the theme path; those dirs are junctions to the same files (not dual-tree drift) |
 | PayFast payment integrity | `VERIFIED` | Docker sandbox e2e 14/14 (2026-07-20): redirect, ITN, amount tamper, replay |
 | Authorization / IDOR | `PARTIAL` | 7 NGC_Access unit tests pass; no full cross-role authorization matrix executed |
 | Privacy & minor protection | `PARTIAL` | Exporters/erasers/retention implemented (PRIV-001); consent versioning, masking, and deletion flows not demonstrated end-to-end this session |
@@ -82,19 +82,19 @@ APPROVED WITH CONDITIONS
 | AI-agent governance | `PARTIAL` | Policy engine + kill switch + 20-case eval harness pass; autonomy remains Level 0–1 (observe/recommend/case) — prompt-injection suite minimal |
 | Testing depth | `PARTIAL` | 64 unit assertions + snapshots; PHPUnit suite SKIPPED (no composer install); Playwright e2e NOT RUN; no coverage measurement |
 | Accessibility | `NOT VERIFIED` | No axe/manual audit executed any session |
-| Release reproducibility | `NOT VERIFIED` | `build-release.ps1` blocked — C: at ~0.07 GB free; no green `dist/*.zip` artifact exists for BI 1.9.16 / NGC 1.9.5 |
+| Release reproducibility | `VERIFIED` | Disk reclaimed; worktree committed `955d1ad`; `build-release.ps1` green 2026-07-22; SHA-256 hashes in `.agent-audit/evidence/release/SHA256-BI-1.9.16-NGC-1.9.5-2026-07-22.txt`; versions BI 1.9.16 / NGC 1.9.5 synchronized |
 | Demo environment (Phase 14) | `PARTIAL` | Register: `COMPLETE WITH LIMITATIONS`; full trigger/notification/reconciliation evidence packs incomplete |
 
 ## SWOT (enterprise-grade lens)
 
 - **Strengths:** hardened PayFast path with real e2e evidence; escaped presentation layer reusing one token system; governance scaffolding (policy engine, kill switch, eval harness, audit registers) that most WordPress stacks lack.
-- **Weaknesses:** all 2026-07-21/22 verification is static — zero runtime/browser evidence; dual theme trees drifted (packaged vs root mirrors); PHPUnit and Playwright unexecuted; no accessibility or performance evidence.
+- **Weaknesses:** all 2026-07-21/22 verification outside the release build is static — zero runtime/browser evidence; PHPUnit and Playwright unexecuted; no accessibility or performance evidence.
 - **Opportunities:** analytics plumbing (`NGC_Platform_Analytics`, conversions table) enables real CRO measurement; demo seed + journey catalogue can be extended into executable e2e evidence packs cheaply.
-- **Threats:** heavily dirty worktree (Phases 1–6 + AI-Integration plugin uncommitted) risks unreproducible releases; minors + payments domain means unproven safeguarding/reconciliation controls are audit-fail items, not nice-to-haves; disk exhaustion blocks even artifact creation.
+- **Threats:** minors + payments domain means unproven safeguarding/reconciliation controls are audit-fail items, not nice-to-haves; disk pressure remains chronic (~1.4 GB free after build) and can block future rebuilds.
 
 ## Enterprise-grade exit criteria (ordered)
 
-1. **Release integrity:** free disk, commit/tag the worktree, delete or sync root mirrors, run `build-release.ps1` green, archive `dist/*.zip` hashes.
+1. **Release integrity:** ✅ COMPLETE 2026-07-22 — disk freed, commit `955d1ad`, junction audit (root ≡ packaged), `build-release.ps1` green, SHA-256 archive filed. Tag `release/bi-1.9.16-ngc-1.9.5` applied.
 2. **Runtime verification:** deploy 1.9.16/1.9.5 to Docker/staging; execute Playwright journeys (find→book ≤3 clicks), keyboard walk, reduced-motion smoke, axe scan, Lighthouse ≥95 targets.
 3. **Test depth:** `composer install` + PHPUnit in CI; authorization matrix + webhook-replay + negative payment tests executed, not listed.
 4. **Safeguarding/fraud/reconciliation proofs:** execute one full chain each (signal→case→escalation; rule→case→review; transactions→journal→reconciliation report) and file evidence packs.
@@ -107,4 +107,10 @@ APPROVED WITH CONDITIONS
 APPROVED WITH CONDITIONS
 ```
 
-Unchanged for **staged/limited rollout** under the 2026-07-20 conditions plus: (7) rebuild and hash release ZIPs before any deploy; (8) complete runtime verification of UX Phase 6 surfaces on staging. **The enterprise-grade bar is NOT met** until the six exit criteria above hold; a request for unrestricted public production approval today would return `NOT APPROVED FOR PRODUCTION`.
+**Staged/limited rollout:** condition (7) rebuild+hash ZIPs is **closed**. Remaining gate before broader traffic: (8) runtime verification of UX Phase 6 on staging/Docker. **The enterprise-grade bar is NOT met** until exit criteria 2–6 hold; unrestricted public production approval today remains `NOT APPROVED FOR PRODUCTION`.
+
+### REL-001 closed
+
+| ID | Evidence |
+|----|----------|
+| REL-001 | Commit `955d1ad`; tag `release/bi-1.9.16-ngc-1.9.5`; five `dist/*.zip` artifacts; SHA-256 file under `.agent-audit/evidence/release/` |
