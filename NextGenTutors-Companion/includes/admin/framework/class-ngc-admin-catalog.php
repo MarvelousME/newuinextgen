@@ -89,7 +89,7 @@ final class NGC_Admin_Catalog {
 				'category'   => 'platform',
 				'order'      => 1,
 				'callback'   => [ 'NGTMC_Admin', 'render' ],
-				'keywords'   => [ 'dashboard', 'health', 'overview', 'orchestrator' ],
+				'keywords'   => [ 'dashboard', 'health', 'overview', 'orchestrator', 'mission', 'mission control', 'ngtmc' ],
 				'dependencies' => [ 'NGTMC_Admin' ],
 			],
 			[

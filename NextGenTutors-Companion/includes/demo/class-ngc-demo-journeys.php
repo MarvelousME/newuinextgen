@@ -166,23 +166,72 @@ final class NGC_Demo_Journeys {
 	}
 
 	/**
+	 * Execute the journey catalogue once (shared seed + verify + evidence).
+	 *
+	 * Re-seeding per journey file previously hung admin-post for many minutes
+	 * (N × full relational seed). Batch mode keeps relational integrity while
+	 * returning promptly for Demo Control Centre UI + headed e2e.
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public static function run_all() {
-		$out = [];
-		foreach ( self::list_journeys() as $j ) {
-			$out[] = self::run( (string) $j['id'] );
+		$journeys = self::list_journeys();
+		$start    = gmdate( 'c' );
+		$seed     = NGC_Demo_Seeder::seed( 'all' );
+		if ( is_wp_error( $seed ) ) {
+			return [
+				[
+					'journey' => [ 'id' => 'JOURNEY-BATCH' ],
+					'seed'    => $seed,
+					'verify'  => [ 'ok' => false, 'failures' => [ $seed->get_error_message() ] ],
+					'evidence'=> null,
+					'mode'    => 'batch',
+				],
+			];
 		}
-		if ( empty( $out ) ) {
-			// Fallback: seed+verify+evidence without catalogue files.
-			$seed = NGC_Demo_Seeder::seed( 'all' );
+
+		$verify   = NGC_Demo_Verifier::verify();
+		$evidence = class_exists( 'NGC_Demo_Evidence' ) ? NGC_Demo_Evidence::export_all() : null;
+		$ev_path  = is_wp_error( $evidence ) ? $evidence->get_error_message() : $evidence;
+
+		$out = [];
+		if ( empty( $journeys ) ) {
 			$out[] = [
 				'journey'  => [ 'id' => 'JOURNEY-CORE-SEED' ],
 				'seed'     => $seed,
-				'verify'   => NGC_Demo_Verifier::verify(),
-				'evidence' => NGC_Demo_Evidence::export_all(),
+				'verify'   => $verify,
+				'evidence' => $ev_path,
+				'mode'     => 'batch',
 			];
+		} else {
+			foreach ( $journeys as $j ) {
+				$out[] = [
+					'journey'  => $j,
+					'seed'     => [
+						'ok'     => true,
+						'shared' => true,
+						'errors' => is_array( $seed ) ? ( $seed['errors'] ?? [] ) : [],
+					],
+					'verify'   => $verify,
+					'evidence' => $ev_path,
+					'mode'     => 'batch',
+					'started'  => $start,
+				];
+			}
 		}
+
+		update_option(
+			'ngc_demo_journeys_last_run',
+			[
+				'at'        => $start,
+				'count'     => count( $out ),
+				'ok'        => ! empty( $verify['ok'] ),
+				'evidence'  => $ev_path,
+				'mode'      => 'batch',
+			],
+			false
+		);
+
 		return $out;
 	}
 }

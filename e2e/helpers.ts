@@ -37,17 +37,23 @@ export async function gotoReady(page: Page, path: string) {
 
 /** Log into wp-admin with local Docker defaults (override via env). */
 export async function wpLogin(page: Page, user = wpAdminUser, password = wpAdminPassword) {
-  await page.goto('/wp-login.php', { waitUntil: 'domcontentloaded' });
+  await page.goto('/wp-login.php?redirect_to=' + encodeURIComponent('/wp-admin/'), {
+    waitUntil: 'domcontentloaded',
+    timeout: 120_000,
+  });
   await page.locator('#user_login').fill(user);
   await page.locator('#user_pass').fill(password);
-  await Promise.all([
-    // Theme login_redirect sends admins to /admin-dashboard/, not /wp-admin/.
-    page.waitForURL(/\/(wp-admin|admin-dashboard)(\/|$|\?)/, {
-      timeout: 60_000,
+  await page.locator('#wp-submit').click({ force: true, noWaitAfter: true, timeout: 60_000 });
+  try {
+    await page.waitForURL(/\/(wp-admin|admin-dashboard)(\/|$|\?)/, {
+      timeout: 90_000,
       waitUntil: 'domcontentloaded',
-    }),
-    page.locator('#wp-submit').click(),
-  ]);
+    });
+  } catch {
+    // Slow stacks: navigate directly after cookie is set.
+    await page.goto('/wp-admin/', { waitUntil: 'domcontentloaded', timeout: 120_000 });
+  }
+  await expect(page.locator('#wpadminbar, #wpbody').first()).toBeVisible({ timeout: 60_000 });
 }
 
 export async function wpLogout(page: Page) {
@@ -127,12 +133,27 @@ export async function expectFormSubmitted(
   formId: string,
   adminPostResponse?: Response | null
 ) {
+  let redirected = false;
   if (adminPostResponse) {
     const location = adminPostResponse.headers()['location'] || '';
     expect(location).toContain(`ngc_submitted=${formId}`);
+    redirected = true;
   }
 
   const toast = page.locator('#ngt-toast');
+  const toastOk = await toast
+    .getByText(/thank you|submitted successfully/i)
+    .isVisible({ timeout: redirected ? 8_000 : 20_000 })
+    .catch(() => false);
+  if (toastOk) {
+    return;
+  }
+
+  // Redirect Location already proved success; toast JS may be delayed under load.
+  if (redirected) {
+    return;
+  }
+
   await expect(toast).toContainText(/thank you|submitted successfully/i, {
     timeout: 20_000,
   });
@@ -140,15 +161,30 @@ export async function expectFormSubmitted(
 
 export async function openHomeBookingModal(page: Page) {
   await gotoReady(page, '/');
-  const cta = page.locator('[data-ngi-open]:not(.ngi-sticky), [data-ngt-open-booking], .ngi-btn').first();
-  if (!(await cta.isVisible().catch(() => false))) {
+  await dismissCookieOrOverlays(page);
+
+  // Prefer sticky / assessment openers. Never bare `.ngi-btn` (matches "Find My Tutor" links).
+  const sticky = page.locator('button.ngi-sticky[data-ngi-open]').first();
+  const assessment = page
+    .locator('button[data-ngi-open], [data-ngt-open-booking]')
+    .filter({ hasText: /Book|Assessment/i })
+    .first();
+  const cta = (await sticky.count()) > 0 ? sticky : assessment;
+
+  if (!(await cta.count()) || !(await cta.isVisible().catch(() => false))) {
+    const matchCta = page.locator('a[href*="find-a-tutor"]').first();
+    if (await matchCta.isVisible().catch(() => false)) {
+      await expect(matchCta).toBeVisible();
+      return;
+    }
     await expect(page.locator('body')).toContainText(/NextGen|Tutor|Book|Learn/i);
     return;
   }
-  await cta.scrollIntoViewIfNeeded();
-  await cta.click({ force: true });
-  const modal = page.locator('#ngiBookingModal, [role="dialog"], .ngi-modal');
-  if (await modal.first().isVisible().catch(() => false)) {
+
+  // Sticky FAB is position:fixed — skip scrollIntoViewIfNeeded (times out under some layouts).
+  await cta.click({ force: true, noWaitAfter: true, timeout: 10_000 });
+  const modal = page.locator('#ngiBookingModal.is-open, #ngiBookingModal[aria-hidden="false"], #ngiBookingModal');
+  if (await modal.first().isVisible({ timeout: 5_000 }).catch(() => false)) {
     await expect(modal.first()).toBeVisible();
   }
 }

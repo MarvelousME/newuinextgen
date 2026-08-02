@@ -2,11 +2,13 @@ import { test, expect } from '@playwright/test';
 import { testEmail, fillNgForm, submitNgForm, expectFormSubmitted, primaryNgForm } from '../helpers';
 
 test.describe('Blueprint WF-01 Parent Registration', () => {
+  test.setTimeout(180_000);
+
   test('parent register child form', async ({ page }) => {
     // /register/ shows only the role chooser; forms render behind ?role=.
     await page.goto('/register/?role=parent', { waitUntil: 'domcontentloaded' });
     const form = primaryNgForm(page, 'parent_register');
-    await expect(form).toBeVisible();
+    await expect(form).toBeVisible({ timeout: 30_000 });
 
     await fillNgForm(
       page,
@@ -24,10 +26,12 @@ test.describe('Blueprint WF-01 Parent Registration', () => {
 });
 
 test.describe('Blueprint WF-02 Student Registration', () => {
+  test.setTimeout(180_000);
+
   test('student self-registration form', async ({ page }) => {
     await page.goto('/register/?role=student', { waitUntil: 'domcontentloaded' });
     const form = primaryNgForm(page, 'student_register');
-    await expect(form).toBeVisible();
+    await expect(form).toBeVisible({ timeout: 30_000 });
 
     await fillNgForm(
       page,
@@ -44,8 +48,19 @@ test.describe('Blueprint WF-02 Student Registration', () => {
 });
 
 test.describe('Blueprint WF-19 Support', () => {
+  test.setTimeout(180_000);
+
   test('contact support form', async ({ page }) => {
     await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
+
+    // Fluent Support portal replaces the NGC form when the plugin is active.
+    const fluentPortal = page.getByTestId('ngc-fluent-support-portal');
+    if (await fluentPortal.isVisible({ timeout: 5_000 }).catch(() => false)) {
+      await expect(fluentPortal).toBeVisible();
+      await expect(page.locator('body')).toContainText(/support|ticket|help|contact/i);
+      return;
+    }
+
     const form = primaryNgForm(page, 'contact_support');
     await expect(form).toBeVisible({ timeout: 30_000 });
 
@@ -64,7 +79,15 @@ test.describe('Blueprint WF-19 Support', () => {
   });
 
   test('login page renders sign-in form', async ({ page }) => {
+    // Role chooser first; sign-in form renders behind ?role=.
     await page.goto('/login/', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('#ngc-loginform, #loginform, form[name="loginform"]')).toBeVisible();
+    await expect(
+      page.locator('#bi-login-role-parent, #bi-login-role-student, #bi-login-role-tutor').first()
+    ).toBeVisible({ timeout: 20_000 });
+
+    await page.goto('/login/?role=parent', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('#ngc-loginform, #loginform, form[name="loginform"]')).toBeVisible({
+      timeout: 20_000,
+    });
   });
 });

@@ -81,9 +81,26 @@ class NGC_Payments {
 		}
 
 		$user_id = (int) $order->get_user_id();
-		$amount  = (float) $order->get_total();
+		// Guest / PayFast ITN orders often have user_id 0 — resolve billing email so
+		// each paid order still lands a per-order wallet ledger row on the parent.
+		if ( $user_id <= 0 ) {
+			$email = (string) $order->get_billing_email();
+			if ( $email && is_email( $email ) ) {
+				$by_email = get_user_by( 'email', $email );
+				if ( $by_email ) {
+					$user_id = (int) $by_email->ID;
+					if ( ! $order->get_user_id() ) {
+						$order->set_customer_id( $user_id );
+						$order->save();
+					}
+				}
+			}
+		}
+		$amount = (float) $order->get_total();
 
-		NGC_Wallet::credit( $user_id, $amount, 'order:' . $order_id, __( 'Payment received', 'nextgencompanion' ) );
+		if ( $user_id > 0 && $amount > 0 ) {
+			NGC_Wallet::credit( $user_id, $amount, 'order:' . $order_id, __( 'Payment received', 'nextgencompanion' ) );
+		}
 		NGC_Invoices::generate_from_order( $order );
 
 		$booking_id = (int) $order->get_meta( 'ngc_booking_id' );

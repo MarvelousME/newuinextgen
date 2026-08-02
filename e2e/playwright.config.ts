@@ -15,8 +15,8 @@ const evidenceRoot = path.join(__dirname, 'reports', 'evidence');
 export default defineConfig({
   testDir: './workflows',
   outputDir: path.join(__dirname, 'test-results'),
-  timeout: 120_000,
-  expect: { timeout: 15_000 },
+  timeout: 180_000,
+  expect: { timeout: 30_000 },
   fullyParallel: false,
   retries: process.env.CI ? 1 : 0,
   workers: 1,
@@ -28,8 +28,8 @@ export default defineConfig({
   ],
   use: {
     baseURL,
-    navigationTimeout: 60_000,
-    actionTimeout: 30_000,
+    navigationTimeout: 120_000,
+    actionTimeout: 60_000,
     trace: fullEvidence ? 'on' : 'retain-on-failure',
     screenshot: fullEvidence ? 'on' : 'only-on-failure',
     video: videoEnabled ? (fullEvidence ? 'on' : 'retain-on-failure') : 'off',

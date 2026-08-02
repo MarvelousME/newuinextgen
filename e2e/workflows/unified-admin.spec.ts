@@ -52,8 +52,13 @@ test.describe('Unified NEXT GEN TUTORS admin', () => {
     });
     const search = page.getByTestId('ngt-admin-search');
     await expect(search).toBeVisible({ timeout: 30_000 });
-    await search.fill('mission');
-    await expect(page.locator('#ngt-admin-search-results a').first()).toBeVisible({ timeout: 15_000 });
+    await search.click();
+    await search.fill('');
+    await search.pressSequentially('mission', { delay: 40 });
+    const hit = page.locator('#ngt-admin-search-results a, [data-testid="ngt-admin-search-hit"]').first();
+    // Local index + REST/ajax — allow debounce + render.
+    await expect(hit).toBeVisible({ timeout: 30_000 });
+    await expect(hit).toContainText(/Mission Control/i);
   });
 
   test('legacy page slugs still resolve under shell', async ({ page }) => {

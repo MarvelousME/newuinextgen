@@ -229,17 +229,20 @@ test.describe('System verification — admin', () => {
     record('demo.control', 'pass');
 
     const verifyBtn = page.getByTestId('ngc-demo-verify-btn');
-    if (await verifyBtn.isVisible().catch(() => false)) {
-      await verifyBtn.click({ force: true });
+    const verify = page.getByTestId('ngc-demo-verify');
+    // Prefer existing status if already verified; otherwise POST with noWaitAfter.
+    let text = (await verify.textContent().catch(() => ''))?.trim() || '';
+    if (!/PASS|FAIL/i.test(text) && (await verifyBtn.isVisible().catch(() => false))) {
+      await verifyBtn.click({ force: true, noWaitAfter: true });
+      await page.waitForURL(/page=ngc-demo-control/, { timeout: 180_000 }).catch(() => null);
       await page.waitForLoadState('domcontentloaded').catch(() => null);
-      const verify = page.getByTestId('ngc-demo-verify');
-      if (await verify.isVisible().catch(() => false)) {
-        const text = (await verify.textContent())?.trim() || '';
-        expect(text).toMatch(/PASS|FAIL/i);
-        record('demo.verify', 'pass', text);
-      } else {
-        record('demo.verify', 'skip', 'verify status node missing');
-      }
+      text = (await verify.textContent().catch(() => ''))?.trim() || '';
+    }
+    if (/PASS|FAIL/i.test(text)) {
+      expect(text).toMatch(/PASS|FAIL/i);
+      record('demo.verify', 'pass', text);
+    } else if (await verifyBtn.isVisible().catch(() => false)) {
+      record('demo.verify', 'skip', 'verify status node missing after click');
     } else {
       record('demo.verify', 'skip', 'verify button missing');
     }

@@ -177,8 +177,22 @@ final class NGC_Demo_Admin {
 				$msg = ! empty( $v['ok'] ) ? 'Verify PASS' : 'Verify FAIL: ' . implode( '; ', $v['failures'] );
 				break;
 			case 'run_journeys':
-				NGC_Demo_Journeys::run_all();
-				$msg = 'Journeys executed';
+				$batch = NGC_Demo_Journeys::run_all();
+				$count = is_array( $batch ) ? count( $batch ) : 0;
+				$ok    = true;
+				foreach ( (array) $batch as $row ) {
+					if ( empty( $row['verify']['ok'] ) && is_wp_error( $row['seed'] ?? null ) ) {
+						$ok = false;
+						break;
+					}
+					if ( isset( $row['verify']['ok'] ) && empty( $row['verify']['ok'] ) ) {
+						$ok = false;
+						break;
+					}
+				}
+				$msg = $ok
+					? sprintf( 'Journeys executed (%d)', $count )
+					: sprintf( 'Journeys executed with failures (%d)', $count );
 				break;
 			case 'export_evidence':
 				$path = NGC_Demo_Evidence::export_all();

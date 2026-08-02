@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-08-02T18:09:48.369Z",
+  "base_url": "http://localhost:8900",
+  "headed": true,
+  "checks": [
+    {
+      "id": "home.booking_cta",
+      "status": "pass"
+    }
+  ],
+  "summary": {
+    "pass": 1,
+    "fail": 0,
+    "skip": 0
+  }
+}

@@ -18,15 +18,66 @@
   function renderHits(hits) {
     if (!results) return;
     if (!hits || !hits.length) {
-      results.innerHTML = '<div class="ngt-admin-search-meta" style="padding:12px">' + esc((cfg.i18n && cfg.i18n.noResults) || 'No results') + '</div>';
+      results.innerHTML = '<div class="ngt-admin-search-meta" style="padding:12px" data-testid="ngt-admin-search-empty">' +
+        esc((cfg.i18n && cfg.i18n.noResults) || 'No results') + '</div>';
       results.hidden = false;
       return;
     }
     results.innerHTML = hits.map(function (h) {
-      return '<a role="option" href="' + esc(h.url) + '"><strong>' + esc(h.title) + '</strong>' +
+      return '<a role="option" href="' + esc(h.url) + '" data-testid="ngt-admin-search-hit"><strong>' + esc(h.title) + '</strong>' +
         '<span class="ngt-admin-search-meta">' + esc(h.module || '') + ' · ' + esc(h.slug || '') + '</span></a>';
     }).join('');
     results.hidden = false;
+  }
+
+  function parseHits(payload) {
+    if (!payload) return [];
+    if (Array.isArray(payload.results)) return payload.results;
+    if (payload.data && Array.isArray(payload.data.results)) return payload.data.results;
+    return [];
+  }
+
+  function searchLocal(q) {
+    var index = Array.isArray(cfg.index) ? cfg.index : [];
+    var needle = String(q || '').toLowerCase();
+    if (!needle) return [];
+    var hits = [];
+    for (var i = 0; i < index.length; i++) {
+      var row = index[i] || {};
+      var hay = (Array.isArray(row.keywords) ? row.keywords.join(' ') : '') + ' ' +
+        (row.title || '') + ' ' + (row.module || '') + ' ' + (row.slug || '');
+      if (hay.toLowerCase().indexOf(needle) !== -1) {
+        hits.push({
+          slug: row.slug || '',
+          title: row.title || row.slug || '',
+          url: row.url || '#',
+          module: row.module || ''
+        });
+      }
+      if (hits.length >= 25) break;
+    }
+    return hits;
+  }
+
+  function searchAjax(q) {
+    var ajaxUrl = cfg.ajaxUrl || (typeof window.ajaxurl === 'string' ? window.ajaxurl : '');
+    if (!ajaxUrl) {
+      renderHits(searchLocal(q));
+      return;
+    }
+    var url = ajaxUrl +
+      (ajaxUrl.indexOf('?') >= 0 ? '&' : '?') +
+      'action=ngt_admin_search&q=' + encodeURIComponent(q) +
+      '&nonce=' + encodeURIComponent(cfg.ajaxNonce || '');
+    fetch(url, { credentials: 'same-origin' })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var hits = parseHits(data.success ? data : { results: parseHits(data) });
+        renderHits(hits.length ? hits : searchLocal(q));
+      })
+      .catch(function () {
+        renderHits(searchLocal(q));
+      });
   }
 
   function search(q) {
@@ -34,14 +85,32 @@
       if (results) results.hidden = true;
       return;
     }
-    var url = (cfg.restRoot || '').replace(/\/$/, '') + '/search?q=' + encodeURIComponent(q);
+    // Prefer embedded index (works even when REST/ajax host differs in Docker).
+    var local = searchLocal(q);
+    if (local.length) {
+      renderHits(local);
+      return;
+    }
+    var root = (cfg.restRoot || '').replace(/\/$/, '');
+    if (!root) {
+      searchAjax(q);
+      return;
+    }
+    var url = root + '/search?q=' + encodeURIComponent(q);
     fetch(url, {
       credentials: 'same-origin',
       headers: { 'X-WP-Nonce': cfg.nonce || '' }
-    }).then(function (r) { return r.json(); }).then(function (data) {
-      renderHits(data.results || []);
+    }).then(function (r) {
+      if (!r.ok) {
+        throw new Error('search http ' + r.status);
+      }
+      return r.json();
+    }).then(function (data) {
+      var hits = parseHits(data);
+      renderHits(hits.length ? hits : searchLocal(q));
     }).catch(function () {
-      if (results) results.hidden = true;
+      // REST may fail under cookie/nonce/permalink edge cases — fall back to admin-ajax / local.
+      searchAjax(q);
     });
   }
 

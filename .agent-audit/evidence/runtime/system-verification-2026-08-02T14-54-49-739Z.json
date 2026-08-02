@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-08-02T14:54:49.740Z",
+  "base_url": "http://localhost:8900",
+  "headed": true,
+  "checks": [
+    {
+      "id": "auth.login_roles",
+      "status": "pass"
+    },
+    {
+      "id": "forms.register",
+      "status": "pass"
+    },
+    {
+      "id": "forms.find_a_tutor",
+      "status": "pass"
+    },
+    {
+      "id": "tutors.archive",
+      "status": "pass"
+    },
+    {
+      "id": "a11y.home_axe",
+      "status": "pass",
+      "detail": "serious:aria-hidden-focus, serious:color-contrast"
+    },
+    {
+      "id": "admin.login",
+      "status": "pass"
+    },
+    {
+      "id": "admin.companion_settings",
+      "status": "pass",
+      "detail": "via plugins.php"
+    },
+    {
+      "id": "demo.control",
+      "status": "pass"
+    },
+    {
+      "id": "demo.verify",
+      "status": "pass",
+      "detail": "PASS"
+    },
+    {
+      "id": "auth.logout",
+      "status": "pass"
+    }
+  ],
+  "summary": {
+    "pass": 10,
+    "fail": 0,
+    "skip": 0
+  }
+}

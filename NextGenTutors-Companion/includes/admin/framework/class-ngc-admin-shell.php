@@ -121,18 +121,55 @@ final class NGC_Admin_Shell {
 		wp_enqueue_script( 'ngt-admin-theme-designer', NGC_PLUGIN_URL . 'assets/js/admin-theme-designer.js', [ 'ngt-admin-shell' ], $ver, true );
 
 		$page = isset( $_GET['page'] ) ? sanitize_key( (string) $_GET['page'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$search_index = [];
+		if ( class_exists( 'NGC_Admin_Registry' ) ) {
+			foreach ( NGC_Admin_Registry::visible_screens() as $screen ) {
+				$search_index[] = [
+					'slug'     => (string) ( $screen['slug'] ?? '' ),
+					'title'    => (string) ( $screen['title'] ?? '' ),
+					'module'   => (string) ( $screen['module'] ?? '' ),
+					'url'      => admin_url( 'admin.php?page=' . (string) ( $screen['slug'] ?? '' ) ),
+					'keywords' => array_values(
+						array_map(
+							'strval',
+							array_merge(
+								[
+									(string) ( $screen['title'] ?? '' ),
+									(string) ( $screen['menu_title'] ?? '' ),
+									(string) ( $screen['module'] ?? '' ),
+									(string) ( $screen['category'] ?? '' ),
+									(string) ( $screen['slug'] ?? '' ),
+								],
+								(array) ( $screen['keywords'] ?? [] )
+							)
+						)
+					),
+				];
+			}
+			// Parent landing is Mission Control when MC is active.
+			$search_index[] = [
+				'slug'     => self::PARENT_SLUG,
+				'title'    => __( 'Mission Control', 'nextgencompanion' ),
+				'module'   => 'mission-control',
+				'url'      => admin_url( 'admin.php?page=' . self::PARENT_SLUG ),
+				'keywords' => [ 'mission', 'mission control', 'dashboard', 'ngt-admin', 'orchestrator' ],
+			];
+		}
 		wp_localize_script(
 			'ngt-admin-shell',
 			'ngtAdminShell',
 			[
-				'restRoot' => esc_url_raw( rest_url( 'ngc/v1/admin' ) ),
-				'nonce'    => wp_create_nonce( 'wp_rest' ),
-				'parent'   => self::PARENT_SLUG,
-				'title'    => self::menu_title(),
-				'version'  => class_exists( 'NGC_Platform_Version' ) ? NGC_Platform_Version::bundle() : [],
-				'page'     => $page,
-				'searchUrl'=> admin_url( 'admin.php?page=' . self::PARENT_SLUG . '&ngt_search=' ),
-				'i18n'     => [
+				'restRoot'  => esc_url_raw( rest_url( 'ngc/v1/admin' ) ),
+				'nonce'     => wp_create_nonce( 'wp_rest' ),
+				'ajaxUrl'   => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
+				'ajaxNonce' => wp_create_nonce( 'ngt_admin_search' ),
+				'index'     => $search_index,
+				'parent'    => self::PARENT_SLUG,
+				'title'     => self::menu_title(),
+				'version'   => class_exists( 'NGC_Platform_Version' ) ? NGC_Platform_Version::bundle() : [],
+				'page'      => $page,
+				'searchUrl' => admin_url( 'admin.php?page=' . self::PARENT_SLUG . '&ngt_search=' ),
+				'i18n'      => [
 					'searchPlaceholder' => __( 'Search NextGen administration…', 'nextgencompanion' ),
 					'noResults'         => __( 'No matching screens.', 'nextgencompanion' ),
 				],
