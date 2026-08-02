@@ -9,7 +9,7 @@
 (function () {
   'use strict';
 
-  var VARIANTS = ['constellation', 'orb', 'wave', 'nodes', 'pulse'];
+  var VARIANTS = ['constellation', 'orb', 'wave', 'nodes', 'pulse', 'aurora', 'ring', 'spark'];
   var FAILSAFE_MS = 2500;
   var loader = document.getElementById('bi-loader');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

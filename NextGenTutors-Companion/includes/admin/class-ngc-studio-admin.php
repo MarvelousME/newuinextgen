@@ -31,6 +31,9 @@ class NGC_Studio_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
+		if ( class_exists( 'NGC_Admin_Shell' ) ) {
+			return; // Catalog / navigation owns the menu entry.
+		}
 		add_menu_page(
 			__( 'Automation Studio', 'nextgencompanion' ),
 			__( 'Automation Studio', 'nextgencompanion' ),
@@ -52,19 +55,24 @@ class NGC_Studio_Admin {
 			return;
 		}
 
-		$css = NGC_PLUGIN_DIR . 'assets/studio/studio.bundle.css';
-		$js  = NGC_PLUGIN_DIR . 'assets/studio/studio.bundle.js';
-		$ver = file_exists( $js ) ? (string) filemtime( $js ) : NGC_VERSION;
+		$css     = NGC_PLUGIN_DIR . 'assets/studio/studio.bundle.css';
+		$js      = NGC_PLUGIN_DIR . 'assets/studio/studio.bundle.js';
+		$shell   = NGC_PLUGIN_DIR . 'assets/studio/studio-shell.css';
+		$fb      = NGC_PLUGIN_DIR . 'assets/studio/studio-fallback.js';
+		$ver     = file_exists( $js ) ? (string) filemtime( $js ) : NGC_VERSION;
+		$shell_v = file_exists( $shell ) ? (string) filemtime( $shell ) : NGC_VERSION;
+		$fb_v    = file_exists( $fb ) ? (string) filemtime( $fb ) : NGC_VERSION;
 
 		if ( file_exists( $css ) ) {
 			wp_enqueue_style( 'ngc-studio', NGC_PLUGIN_URL . 'assets/studio/studio.bundle.css', [], $ver );
 		}
-		wp_enqueue_style( 'ngc-studio-shell', NGC_PLUGIN_URL . 'assets/studio/studio-shell.css', [], NGC_VERSION );
+		wp_enqueue_style( 'ngc-studio-shell', NGC_PLUGIN_URL . 'assets/studio/studio-shell.css', [], $shell_v );
 
+		// Prefer the CRUD fallback UI when the built SPA bundle is absent.
 		if ( file_exists( $js ) ) {
 			wp_enqueue_script( 'ngc-studio', NGC_PLUGIN_URL . 'assets/studio/studio.bundle.js', [], $ver, true );
 		} else {
-			wp_enqueue_script( 'ngc-studio-fallback', NGC_PLUGIN_URL . 'assets/studio/studio-fallback.js', [], NGC_VERSION, true );
+			wp_enqueue_script( 'ngc-studio-fallback', NGC_PLUGIN_URL . 'assets/studio/studio-fallback.js', [], $fb_v, true );
 		}
 
 		wp_localize_script(
@@ -99,8 +107,11 @@ class NGC_Studio_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'Unauthorized.', 'nextgencompanion' ) );
 		}
+		if ( class_exists( 'NGC_Studio_Importer' ) ) {
+			NGC_Studio_Importer::maybe_auto_sync();
+		}
 		echo '<div class="wrap ngc-studio-wrap">';
-		echo '<div id="ngc-studio-root" class="ngc-studio-root" data-studio-version="' . esc_attr( NGC_VERSION ) . '"></div>';
+		echo '<div id="ngc-studio-root" class="ngc-studio-root" data-studio-version="' . esc_attr( NGC_VERSION ) . '" data-testid="ngc-studio-root"></div>';
 		echo '</div>';
 	}
 }

@@ -30,16 +30,19 @@ class NGC_Workflow_Admin {
 			return;
 		}
 
-		$parent = 'ngc-workflows';
-		add_menu_page(
-			__( 'Workflows', 'nextgencompanion' ),
-			__( 'Workflows', 'nextgencompanion' ),
-			'manage_options',
-			$parent,
-			[ __CLASS__, 'render_trigger_manager' ],
-			'dashicons-randomize',
-			57
-		);
+		$parent = function_exists( 'ngt_admin_parent' ) ? ngt_admin_parent() : 'ngt-admin';
+		if ( ! class_exists( 'NGC_Admin_Shell' ) ) {
+			$parent = 'ngc-workflows';
+			add_menu_page(
+				__( 'Workflows', 'nextgencompanion' ),
+				__( 'Workflows', 'nextgencompanion' ),
+				'manage_options',
+				$parent,
+				[ __CLASS__, 'render_trigger_manager' ],
+				'dashicons-randomize',
+				57
+			);
+		}
 
 		$pages = [
 			[ 'ngc-workflow-triggers', __( 'Trigger Manager', 'nextgencompanion' ), 'render_trigger_manager' ],

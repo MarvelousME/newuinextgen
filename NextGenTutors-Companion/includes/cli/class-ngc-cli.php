@@ -324,6 +324,42 @@ class NGC_CLI {
 	}
 
 	/**
+	 * Import Hub / Integrate / Orchestrator / Template workflows into Automation Studio.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--force]
+	 * : Overwrite existing imported Studio rows.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc studio_import
+	 *     wp ngc studio_import --force
+	 *
+	 * @param array $args       Positional.
+	 * @param array $assoc_args Flags.
+	 */
+	public function studio_import( $args, $assoc_args ) {
+		if ( ! class_exists( 'NGC_Studio_Importer' ) ) {
+			WP_CLI::error( 'Studio importer not loaded.' );
+		}
+		$force  = isset( $assoc_args['force'] );
+		$result = NGC_Studio_Importer::import_all( $force );
+		WP_CLI::line( wp_json_encode( $result, JSON_PRETTY_PRINT ) );
+		if ( empty( $result['ok'] ) ) {
+			WP_CLI::halt( 1 );
+		}
+		WP_CLI::success(
+			sprintf(
+				'Studio import — created %d, updated %d, skipped %d.',
+				(int) ( $result['created'] ?? 0 ),
+				(int) ( $result['updated'] ?? 0 ),
+				(int) ( $result['skipped'] ?? 0 )
+			)
+		);
+	}
+
+	/**
 	 * Import integrate/ workflow JSON into the spec store.
 	 *
 	 * ## EXAMPLES

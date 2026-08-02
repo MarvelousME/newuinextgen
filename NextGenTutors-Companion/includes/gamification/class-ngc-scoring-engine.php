@@ -117,8 +117,8 @@ class NGC_Scoring_Engine {
 				[ '%d' ]
 			);
 		} else {
-			$wpdb->insert(
-				$table,
+			NGC_Database::insert(
+				'gamification_scores',
 				[
 					'user_id'    => $user_id,
 					'point_type' => $point_type,
@@ -168,9 +168,8 @@ class NGC_Scoring_Engine {
 	 * @param array<string, mixed> $context    Context.
 	 */
 	private static function log_event( $user_id, $event_key, $point_type, $points, $context ) {
-		global $wpdb;
-		$wpdb->insert(
-			NGC_Database::table( 'gamification_events' ),
+		NGC_Database::insert(
+			'gamification_events',
 			[
 				'user_id'    => (int) $user_id,
 				'event_key'  => sanitize_key( $event_key ),

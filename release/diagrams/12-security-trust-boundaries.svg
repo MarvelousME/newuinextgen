@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img">
+  <title>12 - Security Trust Boundaries</title>
+  <desc>Trust zones for public web, authenticated portals, admin, payments, email, and AI providers.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0D7377"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F7FBFC"/>
+  <text x="24" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B2545">12 - Security Trust Boundaries</text>
+  <rect x="40" y="70" width="280" height="200" rx="8" fill="#FFFFFF" stroke="#0D7377" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="50" y="92" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#0D7377">Public Internet</text>
+  <rect x="60" y="110" width="110" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="115" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B2545">Browsers</text>
+  <rect x="190" y="110" width="110" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="245" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B2545">CDN / DNS</text>
+  <rect x="360" y="70" width="360" height="320" rx="8" fill="#FFFFFF" stroke="#0B2545" stroke-width="2"/>
+  <text x="370" y="92" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#0B2545">WordPress Application Trust</text>
+  <rect x="380" y="110" width="150" height="55" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="455" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">Theme + portals</text>
+  <rect x="550" y="110" width="150" height="55" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="625" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">Companion + REST</text>
+  <rect x="380" y="185" width="150" height="55" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="455" y="217" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">NGC_Access gates</text>
+  <rect x="550" y="185" width="150" height="55" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="625" y="217" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">WP Admin / Wizard</text>
+  <rect x="380" y="260" width="320" height="55" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="540" y="292" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">DB: users + wp_ngc_* (host-secured)</text>
+  <rect x="760" y="70" width="160" height="90" rx="8" fill="#FFFFFF" stroke="#0D7377" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="840" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0D7377">PayFast</text>
+  <text x="840" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">ITN signed</text>
+  <rect x="760" y="180" width="160" height="90" rx="8" fill="#FFFFFF" stroke="#0D7377" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="840" y="210" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0D7377">SMTP / AI</text>
+  <text x="840" y="230" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">provider APIs</text>
+  <line x1="320" y1="140" x2="360" y2="140" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="720" y1="140" x2="760" y2="115" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="720" y1="220" x2="760" y2="220" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <rect x="40" y="420" width="500" height="80" rx="4" fill="#FFFFFF" stroke="#0B2545"/>
+  <text x="50" y="442" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Legend</text>
+  <text x="50" y="462" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Solid border = app trust � Dashed = external provider zone</text>
+  <text x="50" y="480" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Demo mode: sandbox email + PayFast sandbox filters</text>
+</svg>

@@ -141,17 +141,37 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || file_exists( '/.dockerenv' ) ) {
 /**
  * @param string                $itn_url Endpoint.
  * @param array<string, string> $body    ITN payload.
+ * @param int                   $retries Extra attempts after first failure.
  * @return array{code:int, body:string}
  */
-function ngc_pf_post_itn( $itn_url, $body ) {
-	$http = wp_remote_post( $itn_url, [ 'timeout' => 20, 'body' => $body ] );
-	if ( is_wp_error( $http ) ) {
-		return [ 'code' => 0, 'body' => $http->get_error_message() ];
+function ngc_pf_post_itn( $itn_url, $body, $retries = 2 ) {
+	$attempt = 0;
+	$last    = [ 'code' => 0, 'body' => 'no attempt' ];
+	while ( $attempt <= $retries ) {
+		$http = wp_remote_post(
+			$itn_url,
+			[
+				'timeout' => 45,
+				'body'    => $body,
+			]
+		);
+		if ( is_wp_error( $http ) ) {
+			$last = [ 'code' => 0, 'body' => $http->get_error_message() ];
+		} else {
+			$last = [
+				'code' => (int) wp_remote_retrieve_response_code( $http ),
+				'body' => trim( wp_remote_retrieve_body( $http ) ),
+			];
+			if ( 200 === $last['code'] ) {
+				return $last;
+			}
+		}
+		++$attempt;
+		if ( $attempt <= $retries ) {
+			usleep( 500000 ); // 0.5s backoff between ITN posts under Docker load.
+		}
 	}
-	return [
-		'code' => (int) wp_remote_retrieve_response_code( $http ),
-		'body' => trim( wp_remote_retrieve_body( $http ) ),
-	];
+	return $last;
 }
 
 // --- Amount tamper: valid signature for wrong amount must not pay order ---

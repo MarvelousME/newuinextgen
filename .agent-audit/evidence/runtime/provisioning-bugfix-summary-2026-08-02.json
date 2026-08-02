@@ -1,0 +1,27 @@
+{
+  "at": "2026-08-02T14:18:00+00:00",
+  "note": "Retest after Bugs 1–4 fixes. Extracted from wp eval-file run (stderr mixed in raw capture).",
+  "summary": {
+    "demo_ok": true,
+    "demo_seed": "14.0.0",
+    "demo_verify": true,
+    "demo_nested": true,
+    "verification_ok": true,
+    "verification_demo": true,
+    "packaging_ok": true,
+    "packaging_status": "COMPLETED",
+    "packaging_msg": "Release manifest found (includes Mission Control + ui-library)",
+    "packaging_mc": true,
+    "packaging_ui": true,
+    "packaging_packages": [
+      "NextGenTutors-BeyondInfinity",
+      "NextGenTutors-Companion",
+      "NextGenTutors-AI-Integration",
+      "NextGenTutors-Mission-Control",
+      "NextGenTutors-Plugin-Manager",
+      "NextGenTutors-Html-Importer",
+      "ngt-ui-library"
+    ],
+    "packaging_path": "/var/www/html/wp-content/release/release-manifest.json"
+  }
+}

@@ -131,6 +131,23 @@ class NGC_Rest_Studio {
 
 		register_rest_route(
 			$ns,
+			'/studio/import',
+			[
+				[
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ __CLASS__, 'import_sources' ],
+					'permission_callback' => [ 'NGC_Rest', 'require_admin' ],
+				],
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ __CLASS__, 'import_run' ],
+					'permission_callback' => [ 'NGC_Rest', 'require_admin' ],
+				],
+			]
+		);
+
+		register_rest_route(
+			$ns,
 			'/studio/executions',
 			[
 				'methods'             => WP_REST_Server::READABLE,
@@ -426,6 +443,23 @@ class NGC_Rest_Studio {
 			return NGC_Rest::error_response( 'instantiate_failed', $result['message'] ?? '', 400 );
 		}
 		return new WP_REST_Response( $result, 201 );
+	}
+
+	/**
+	 * @return WP_REST_Response
+	 */
+	public static function import_sources() {
+		return new WP_REST_Response( NGC_Studio_Importer::sources(), 200 );
+	}
+
+	/**
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	public static function import_run( $request ) {
+		$body  = $request->get_json_params();
+		$force = is_array( $body ) ? ! empty( $body['force'] ) : false;
+		return new WP_REST_Response( NGC_Studio_Importer::import_all( $force ), 200 );
 	}
 
 	/**

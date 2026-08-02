@@ -62,8 +62,8 @@ class NGC_Achievement_Engine {
 		$def   = $catalog[ $achievement_key ];
 		$table = NGC_Database::table( 'gamification_achievements' );
 
-		$wpdb->insert(
-			$table,
+		NGC_Database::insert(
+			'gamification_achievements',
 			[
 				'user_id'         => $user_id,
 				'achievement_key' => $achievement_key,

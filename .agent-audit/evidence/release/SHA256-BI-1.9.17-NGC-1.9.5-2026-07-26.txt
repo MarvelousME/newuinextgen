@@ -1,0 +1,8 @@
+﻿SHA256 release hashes — BI 1.9.17 / NGC 1.9.5 — 2026-07-26 (WP-safe zip rewrite)
+0ffc92768bf4e89979e65c1abbcd90c32f0fa3f1e08b1de1c9481c156ec3c771  NextGenTutors-AI-Integration.zip  (0.09 MB)
+ef884e70f033168fa80f49d3315b68aceb687e14526fe8fd94f37c64f480d263  NextGenTutors-BeyondInfinity.zip  (27.67 MB)
+69b7818f71d5b3be8f6565ec2a6a99d436867ab456e3626c5ae315c29347c6d5  NextGenTutors-Companion.zip  (0.81 MB)
+7e64d06b6e372a3c61a5a1aad947251279016574dd4d4ef35f2549be7943da83  NextGenTutors-Html-Importer.zip  (0.03 MB)
+4f28371ed08daa1f38c05c2a648b026a6a372e349140562846ad022a67816def  NextGenTutors-Plugin-Manager.zip  (79.11 MB)
+
+Notes: All zips built with Python zipfile (forward slashes, flag_bits=0, create_system=DOS). Fixes WP/PclZip theme install failure from tar -a data-descriptor bit.

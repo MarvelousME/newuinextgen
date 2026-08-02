@@ -132,7 +132,12 @@ function bi_page_heading( $title, $subtitle = '', $eyebrow = '' ) {
  * @param array  $args     Extra: class, cta_label, cta_url, show_stats, show_trust.
  */
 function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
-	if ( function_exists( 'bi_should_show_page_title' ) && ! bi_should_show_page_title() ) {
+	$title    = trim( (string) $title );
+	$subtitle = (string) $subtitle;
+
+	// Explicit theme titles always render — keep a real H1 for structure.
+	// Only honour "hide page title" when no title was supplied by the caller.
+	if ( '' === $title && function_exists( 'bi_should_show_page_title' ) && ! bi_should_show_page_title() ) {
 		return;
 	}
 
@@ -140,18 +145,22 @@ function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
 	$used_ui    = false;
 	$ui_context = array_merge(
 		[
-			'slug'       => 'hero',
-			'page_key'   => $slug,
-			'section_key'=> 'hero',
+			'slug'        => 'hero',
+			'page_key'    => $slug,
+			'section_key' => 'hero',
+			'title'       => $title,
+			'subtitle'    => $subtitle,
 		],
 		$args
 	);
 
-	if ( function_exists( 'ng_ui_component' ) && class_exists( 'NGC_UI_Component_Registry' ) ) {
+	// Prefer the theme hero when we already have a clear page title — CMS/UI
+	// heroes often render empty shells and leave the page without an H1.
+	if ( '' === $title && function_exists( 'ng_ui_component' ) && class_exists( 'NGC_UI_Component_Registry' ) ) {
 		ob_start();
 		ng_ui_component( 'hero', $ui_context );
 		$ui_html = trim( (string) ob_get_clean() );
-		if ( $ui_html && false === strpos( $ui_html, 'ng-ui-fallback' ) ) {
+		if ( $ui_html && false === strpos( $ui_html, 'ng-ui-fallback' ) && false !== stripos( $ui_html, '<h1' ) ) {
 			echo $ui_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$used_ui = true;
 		}
@@ -164,24 +173,45 @@ function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
 		$img_key   = function_exists( 'bi_hero_image_key' ) ? bi_hero_image_key( $extra ) : 'hero_bg';
 		$bg_url    = function_exists( 'bi_get_theme_image_url' ) ? bi_get_theme_image_url( $img_key ) : '';
 		$video_url = function_exists( 'bi_tutoring_video_url' ) ? bi_tutoring_video_url( $slug ) : '';
+		$poster    = function_exists( 'bi_tutoring_video_poster_url' ) ? bi_tutoring_video_poster_url( $slug ) : '';
+		if ( ! $poster && $bg_url ) {
+			$poster = $bg_url;
+		}
 
-		$hero_classes = trim( 'ng-page-hero bi-hero ngt-hero nbi-aurora-hero ' . $extra );
-		if ( $video_url ) {
+		if ( '' === $title && function_exists( 'get_the_title' ) ) {
+			$title = (string) get_the_title();
+		}
+		if ( '' === $title ) {
+			$title = __( 'NextGen Tutors', 'beyondinfinity' );
+		}
+
+		$hero_classes = trim( 'ng-page-hero bi-hero ngt-hero nbi-aurora-hero ng-page-hero--cinematic ' . $extra );
+		if ( $video_url || $poster ) {
 			$hero_classes .= ' ng-page-hero--has-video';
 		}
 		?>
 		<section class="<?php echo esc_attr( $hero_classes ); ?>" aria-labelledby="ng-page-hero-title">
 			<div class="ng-page-hero__mesh" aria-hidden="true"></div>
 			<div class="nbi-aurora-layer" aria-hidden="true"></div>
-			<?php bi_nbi_render_constellation( [ 'id' => 'nbi-page-constellation' ] ); ?>
-			<?php if ( $bg_url ) : ?>
-				<div class="ng-page-hero__photo" style="background-image:url(<?php echo esc_url( $bg_url ); ?>)" aria-hidden="true"></div>
+			<?php if ( function_exists( 'bi_nbi_render_constellation' ) ) { bi_nbi_render_constellation( [ 'id' => 'nbi-page-constellation' ] ); } ?>
+			<?php if ( $bg_url || $poster ) : ?>
+				<div class="ng-page-hero__photo" style="background-image:url(<?php echo esc_url( $poster ? $poster : $bg_url ); ?>)" aria-hidden="true"></div>
 			<?php endif; ?>
 			<?php if ( $video_url ) : ?>
-				<video class="ng-page-hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+				<video
+					class="ng-page-hero__video"
+					data-bi-cinematic
+					muted
+					loop
+					playsinline
+					preload="metadata"
+					<?php echo $poster ? 'poster="' . esc_url( $poster ) . '"' : ''; ?>
+					aria-hidden="true"
+				>
 					<source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4" />
 				</video>
 			<?php endif; ?>
+			<div class="ng-page-hero__scrim" aria-hidden="true"></div>
 			<div class="ng-container ng-page-hero__inner">
 				<div class="ng-page-hero__copy ng-reveal" data-bi-motion="slide-up">
 					<h1 id="ng-page-hero-title" class="ng-page-hero__title"><?php echo esc_html( $title ); ?></h1>
@@ -313,9 +343,22 @@ function bi_page_composer_assets() {
 		[ 'bi-style', 'ng-ui-components' ],
 		BI_VERSION
 	);
+	wp_enqueue_style(
+		'bi-cinematic-hero',
+		BI_URI . '/assets/css/bi-cinematic-hero.css',
+		[ 'bi-page-composer' ],
+		BI_VERSION
+	);
 	wp_enqueue_script(
 		'bi-page-composer',
 		BI_URI . '/assets/js/page-composer.js',
+		[],
+		BI_VERSION,
+		true
+	);
+	wp_enqueue_script(
+		'bi-cinematic-video',
+		BI_URI . '/assets/js/bi-cinematic-video.js',
 		[],
 		BI_VERSION,
 		true

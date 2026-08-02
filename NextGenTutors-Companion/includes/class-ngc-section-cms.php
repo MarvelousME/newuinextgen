@@ -63,8 +63,7 @@ class NGC_Section_CMS {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		add_submenu_page(
-			'ngc-operations',
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin',
 			__( 'Homepage Sections', 'nextgencompanion' ),
 			__( 'Home Sections', 'nextgencompanion' ),
 			'manage_options',

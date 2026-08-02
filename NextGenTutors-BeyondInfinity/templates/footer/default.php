@@ -55,16 +55,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <div>
         <h4 class="ngt-footer__heading"><?php esc_html_e( 'Contact', 'beyondinfinity' ); ?></h4>
-        <ul class="ngt-footer__links bi-footer-contact">
+        <ul class="ngt-footer__links bi-footer-contact" data-testid="bi-footer-contact">
           <li class="bi-footer-contact__item">
             <span class="bi-footer-contact__icon" aria-hidden="true"><?php echo bi_ui_icon( 'phone', 18 ); // phpcs:ignore ?></span>
-            <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', bi_get_phone() ) ); ?>"><?php echo esc_html( bi_get_phone() ); ?></a>
+            <a data-testid="bi-footer-phone" href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', bi_get_phone() ) ); ?>"><?php echo esc_html( bi_get_phone() ); ?></a>
           </li>
           <li class="bi-footer-contact__item">
             <span class="bi-footer-contact__icon" aria-hidden="true"><?php echo bi_ui_icon( 'mail', 18 ); // phpcs:ignore ?></span>
-            <a href="mailto:<?php echo esc_attr( bi_get_support_email() ); ?>"><?php echo esc_html( bi_get_support_email() ); ?></a>
+            <a data-testid="bi-footer-email" href="mailto:<?php echo esc_attr( bi_get_support_email() ); ?>"><?php echo esc_html( bi_get_support_email() ); ?></a>
           </li>
-          <li class="bi-footer-contact__item">
+          <li class="bi-footer-contact__item" data-testid="bi-footer-service-area">
             <span class="bi-footer-contact__icon" aria-hidden="true"><?php echo bi_ui_icon( 'map-pin', 18 ); // phpcs:ignore ?></span>
             <span><?php echo esc_html( bi_get_service_area() ); ?></span>
           </li>

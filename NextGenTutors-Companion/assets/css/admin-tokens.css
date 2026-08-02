@@ -1,0 +1,38 @@
+/* NEXT GEN TUTORS v1.0 — design tokens (defaults; Theme Designer overrides via :root inject) */
+:root {
+  --ngt-admin-primary: #1d4ed8;
+  --ngt-admin-secondary: #0f172a;
+  --ngt-admin-accent: #0891b2;
+  --ngt-admin-success: #15803d;
+  --ngt-admin-warning: #b45309;
+  --ngt-admin-error: #b91c1c;
+  --ngt-admin-bg: #f1f5f9;
+  --ngt-admin-fg: #0f172a;
+  --ngt-admin-sidebar: #0f172a;
+  --ngt-admin-sidebar-text: #e2e8f0;
+  --ngt-admin-hover: #1e293b;
+  --ngt-admin-active: #2563eb;
+  --ngt-admin-card: #ffffff;
+  --ngt-admin-button: #1d4ed8;
+  --ngt-admin-table: #ffffff;
+  --ngt-admin-form: #ffffff;
+  --ngt-admin-font: "Segoe UI", system-ui, sans-serif;
+  --ngt-admin-font-size: 14px;
+  --ngt-admin-font-weight: 400;
+  --ngt-admin-letter-spacing: 0;
+  --ngt-admin-line-height: 1.45;
+  --ngt-admin-sidebar-width: 280px;
+  --ngt-admin-card-radius: 12px;
+  --ngt-admin-radius: 8px;
+  --ngt-admin-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --ngt-admin-spacing: 16px;
+  --ngt-admin-density: comfortable;
+  --ngt-admin-motion: 1;
+  --ngt-admin-motion-ms: 280ms;
+  --ngt-admin-icon-size: 18px;
+  --ngt-admin-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --ngt-admin-motion: 0; --ngt-admin-motion-ms: 0ms; }
+}

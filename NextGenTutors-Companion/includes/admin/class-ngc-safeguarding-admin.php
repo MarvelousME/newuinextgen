@@ -24,106 +24,51 @@ final class NGC_Safeguarding_Admin {
 	}
 
 	public static function register_menu() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		$cap = current_user_can( 'ngc_manage_safeguarding' ) ? 'ngc_manage_safeguarding' : 'manage_options';
+		if ( ! current_user_can( $cap ) && ! current_user_can( 'ngc_manage_fraud' ) ) {
 			return;
 		}
-		add_submenu_page(
-			'ngc-operations',
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin',
 			__( 'Safeguarding', 'nextgencompanion' ),
 			__( 'Safeguarding', 'nextgencompanion' ),
-			'manage_options',
+			current_user_can( 'ngc_manage_safeguarding' ) ? 'ngc_manage_safeguarding' : 'manage_options',
 			'ngc-safeguarding',
 			[ __CLASS__, 'render_page' ]
 		);
-		add_submenu_page(
-			'ngc-operations',
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin',
 			__( 'Fraud cases', 'nextgencompanion' ),
 			__( 'Fraud cases', 'nextgencompanion' ),
-			'manage_options',
+			current_user_can( 'ngc_manage_fraud' ) ? 'ngc_manage_fraud' : 'manage_options',
 			'ngc-fraud-cases',
 			[ __CLASS__, 'render_fraud_page' ]
 		);
 	}
 
 	public static function render_page() {
-		if ( ! current_user_can( 'manage_options' ) || ! class_exists( 'NGC_Safeguarding' ) ) {
+		if ( ( ! current_user_can( 'ngc_manage_safeguarding' ) && ! current_user_can( 'manage_options' ) ) || ! class_exists( 'NGC_Safeguarding' ) ) {
 			return;
 		}
 		$stats = NGC_Safeguarding::stats();
-		$cases = NGC_Safeguarding::query( [ 'limit' => 50 ] );
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Safeguarding moderator queue', 'nextgencompanion' ); ?></h1>
-			<p class="description"><?php esc_html_e( 'AI signals are review-only. Escalate on SLA breach or risk. Never store unmasked ID/bank data in notes.', 'nextgencompanion' ); ?></p>
-
-			<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:16px 0">
-				<div class="card" style="padding:12px"><strong><?php echo esc_html( (string) $stats['open'] ); ?></strong><br><?php esc_html_e( 'Open', 'nextgencompanion' ); ?></div>
-				<div class="card" style="padding:12px"><strong><?php echo esc_html( (string) $stats['high'] ); ?></strong><br><?php esc_html_e( 'High / critical', 'nextgencompanion' ); ?></div>
-				<div class="card" style="padding:12px;background:#fef2f2"><strong><?php echo esc_html( (string) $stats['breached'] ); ?></strong><br><?php esc_html_e( 'SLA breached', 'nextgencompanion' ); ?></div>
-				<div class="card" style="padding:12px"><strong><?php echo esc_html( (string) $stats['escalated'] ); ?></strong><br><?php esc_html_e( 'Escalated', 'nextgencompanion' ); ?></div>
-			</div>
-
-			<table class="widefat striped">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th><?php esc_html_e( 'Priority', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Status', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'SLA', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Summary', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Assigned', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Actions', 'nextgencompanion' ); ?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php if ( empty( $cases ) ) : ?>
-						<tr><td colspan="7"><?php esc_html_e( 'No open safeguarding cases.', 'nextgencompanion' ); ?></td></tr>
-					<?php endif; ?>
-					<?php foreach ( $cases as $case ) : ?>
-						<?php
-						$sla = NGC_Safeguarding::sla_status( $case );
-						?>
-						<tr<?php echo $sla['breached'] ? ' style="background:#fef2f2"' : ''; ?>>
-							<td><?php echo esc_html( (string) $case->id ); ?></td>
-							<td><code><?php echo esc_html( $case->priority ); ?></code></td>
-							<td><?php echo esc_html( $case->status ); ?><?php echo ! empty( $case->ai_signal ) ? ' · AI' : ''; ?></td>
-							<td><strong><?php echo esc_html( $sla['label'] ); ?></strong><br><small><?php echo esc_html( (string) ( $case->due_at ?? '' ) ); ?></small></td>
-							<td><?php echo esc_html( $case->summary ); ?></td>
-							<td><?php echo $case->assigned_to ? esc_html( '#' . $case->assigned_to ) : '—'; ?></td>
-							<td>
-								<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:inline">
-									<?php wp_nonce_field( 'ngc_safeguarding_action' ); ?>
-									<input type="hidden" name="action" value="ngc_safeguarding_action" />
-									<input type="hidden" name="case_id" value="<?php echo esc_attr( (string) $case->id ); ?>" />
-									<input type="hidden" name="op" value="assign" />
-									<button class="button button-small"><?php esc_html_e( 'Assign me', 'nextgencompanion' ); ?></button>
-								</form>
-								<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:inline">
-									<?php wp_nonce_field( 'ngc_safeguarding_action' ); ?>
-									<input type="hidden" name="action" value="ngc_safeguarding_action" />
-									<input type="hidden" name="case_id" value="<?php echo esc_attr( (string) $case->id ); ?>" />
-									<input type="hidden" name="op" value="escalate" />
-									<button class="button button-small"><?php esc_html_e( 'Escalate', 'nextgencompanion' ); ?></button>
-								</form>
-								<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:inline">
-									<?php wp_nonce_field( 'ngc_safeguarding_action' ); ?>
-									<input type="hidden" name="action" value="ngc_safeguarding_action" />
-									<input type="hidden" name="case_id" value="<?php echo esc_attr( (string) $case->id ); ?>" />
-									<input type="hidden" name="op" value="resolve" />
-									<input type="hidden" name="resolution" value="closed" />
-									<button class="button button-primary button-small"><?php esc_html_e( 'Resolve', 'nextgencompanion' ); ?></button>
-								</form>
-							</td>
-						</tr>
-					<?php endforeach; ?>
-				</tbody>
-			</table>
-		</div>
-		<?php
+		NGC_Admin_Layout::render_page(
+			[
+				'title'   => __( 'Safeguarding', 'nextgencompanion' ),
+				'summary' => sprintf(
+					/* translators: 1 open 2 high 3 breached */
+					__( 'Open: %1$d · High/critical: %2$d · SLA breached: %3$d. AI signals are review-only.', 'nextgencompanion' ),
+					(int) $stats['open'],
+					(int) $stats['high'],
+					(int) $stats['breached']
+				),
+				'content' => static function () {
+					NGC_Admin_Grid::render( 'safeguarding_cases' );
+				},
+				'help'    => __( 'Never store unmasked ID/bank data in notes.', 'nextgencompanion' ),
+			]
+		);
 	}
 
 	public static function render_fraud_page() {
-		if ( ! current_user_can( 'manage_options' ) || ! class_exists( 'NGC_Fraud_Engine' ) ) {
+		if ( ( ! current_user_can( 'ngc_manage_fraud' ) && ! current_user_can( 'manage_options' ) ) || ! class_exists( 'NGC_Fraud_Engine' ) ) {
 			return;
 		}
 		$stats = NGC_Fraud_Engine::stats();
@@ -191,7 +136,7 @@ final class NGC_Safeguarding_Admin {
 	}
 
 	public static function handle_action() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'ngc_manage_safeguarding' ) && ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'Forbidden', 'nextgencompanion' ) );
 		}
 		check_admin_referer( 'ngc_safeguarding_action' );
@@ -209,7 +154,7 @@ final class NGC_Safeguarding_Admin {
 	}
 
 	public static function handle_fraud_resolve() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'ngc_manage_fraud' ) && ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'Forbidden', 'nextgencompanion' ) );
 		}
 		check_admin_referer( 'ngc_fraud_resolve' );

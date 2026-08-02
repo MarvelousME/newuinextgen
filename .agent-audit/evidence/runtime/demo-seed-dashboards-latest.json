@@ -1,0 +1,24 @@
+﻿{
+    "generated_at":  "2026-07-27T00:31:55.4637436Z",
+    "base_url":  "http://localhost:8900",
+    "demo_password_env":  "NGC_DEMO_PASSWORD",
+    "dashboards_headed":  {
+                              "command":  "npm run test:dashboards-headed",
+                              "failed":  0,
+                              "passed":  11
+                          },
+    "demo_seed":  {
+                      "version":  "14.0.0",
+                      "verify_ok":  false,
+                      "personas_ok":  true,
+                      "bookings":  [
+                                       "BOOK-001",
+                                       "BOOK-COMPLETED",
+                                       "BOOK-PENDING-PAY",
+                                       "BOOK-ADULT"
+                                   ],
+                      "users":  22,
+                      "status":  "seeded",
+                      "verify_failure":  "Journey catalogue incomplete (found 0)"
+                  }
+}

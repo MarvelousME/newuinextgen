@@ -109,6 +109,15 @@ class NGC_Shortcodes {
 
 	/** @return string */
 	public static function contact_support_form() {
+		if ( shortcode_exists( 'fluent_support_portal' ) ) {
+			$mailbox_id = (int) get_option( 'ngc_fluent_support_mailbox_id', 0 );
+			$sc         = '[fluent_support_portal show_logout="yes"';
+			if ( $mailbox_id > 0 ) {
+				$sc .= ' business_box_id="' . $mailbox_id . '"';
+			}
+			$sc .= ']';
+			return '<div class="ngc-fluent-support-portal" data-testid="ngc-fluent-support-portal">' . do_shortcode( $sc ) . '</div>';
+		}
 		if ( function_exists( 'bi_ngc_form_contact_support' ) ) {
 			return bi_ngc_form_contact_support();
 		}
@@ -164,10 +173,33 @@ class NGC_Shortcodes {
 		if ( is_user_logged_in() ) {
 			return '<p class="ngc-form-notice">' . esc_html__( 'You are already signed in.', 'nextgencompanion' ) . '</p>';
 		}
+
+		$role = sanitize_key( $_GET['role'] ?? '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! in_array( $role, [ 'parent', 'student', 'tutor' ], true ) ) {
+			$role = 'student';
+		}
+
+		$redirect = home_url( '/student-dashboard' );
+		if ( function_exists( 'bi_role_dashboard_url' ) ) {
+			$redirect = bi_role_dashboard_url( $role );
+		} elseif ( 'parent' === $role ) {
+			$redirect = home_url( '/parent-dashboard' );
+		} elseif ( 'tutor' === $role ) {
+			$redirect = home_url( '/tutor-dashboard' );
+		}
+
+		if ( ! empty( $_GET['redirect_to'] ) && function_exists( 'bi_validate_internal_redirect' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$redirect = bi_validate_internal_redirect( wp_unslash( $_GET['redirect_to'] ), $redirect ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		} elseif ( ! empty( $_GET['redirect_to'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$candidate = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$validated = wp_validate_redirect( $candidate, $redirect );
+			$redirect  = $validated ? $validated : $redirect;
+		}
+
 		ob_start();
 		wp_login_form( [
 			'echo'           => true,
-			'redirect'       => home_url( '/student-dashboard' ),
+			'redirect'       => $redirect,
 			'form_id'        => 'ngc-loginform',
 			'label_username' => __( 'Email or username', 'nextgencompanion' ),
 			'label_password' => __( 'Password', 'nextgencompanion' ),

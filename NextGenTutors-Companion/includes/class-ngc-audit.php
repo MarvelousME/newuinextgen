@@ -65,6 +65,18 @@ class NGC_Audit {
 		);
 
 		do_action( 'ngc_audit_logged', $action, $object_type, $object_id, $context, (int) $actor_id, $meta );
+		if ( class_exists( 'NGC_Immutable_Audit' ) ) {
+			NGC_Immutable_Audit::append(
+				(string) $action,
+				(string) $object_type,
+				(int) $object_id,
+				[
+					'context'  => $context,
+					'actor_id' => (int) $actor_id,
+					'meta'     => $meta,
+				]
+			);
+		}
 	}
 
 	/**

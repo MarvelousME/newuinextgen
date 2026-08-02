@@ -1,0 +1,66 @@
+{
+  "generated_at": "2026-08-02T13:44:37.253Z",
+  "base_url": "http://localhost:8900",
+  "headed": true,
+  "checks": [
+    {
+      "id": "site.reachable",
+      "status": "pass",
+      "detail": "HTTP 200"
+    },
+    {
+      "id": "page.Home",
+      "status": "pass",
+      "detail": "/"
+    },
+    {
+      "id": "page.About",
+      "status": "pass",
+      "detail": "/about/"
+    },
+    {
+      "id": "page.Find a Tutor",
+      "status": "pass",
+      "detail": "/find-a-tutor/"
+    },
+    {
+      "id": "page.Become a Tutor",
+      "status": "pass",
+      "detail": "/become-a-tutor/"
+    },
+    {
+      "id": "page.Pricing",
+      "status": "pass",
+      "detail": "/pricing/"
+    },
+    {
+      "id": "page.Login",
+      "status": "pass",
+      "detail": "/login/"
+    },
+    {
+      "id": "page.Register",
+      "status": "pass",
+      "detail": "/register/"
+    },
+    {
+      "id": "page.Contact",
+      "status": "pass",
+      "detail": "/contact/"
+    },
+    {
+      "id": "page.Guarantee",
+      "status": "pass",
+      "detail": "/guarantee/"
+    },
+    {
+      "id": "home.landmarks",
+      "status": "pass"
+    }
+  ],
+  "summary": {
+    "pass": 11,
+    "fail": 0,
+    "skip": 0
+  }
+}

@@ -13,9 +13,8 @@ final class NGTAI_Admin {
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'assets' ] );
 	}
 	public static function menu() {
-		$parent = 'ngc-operations';
-		global $menu, $submenu;
-		if ( empty( $submenu[ $parent ] ) ) {
+		$parent = function_exists( 'ngt_admin_parent' ) ? ngt_admin_parent() : 'ngt-admin';
+		if ( ! class_exists( 'NGC_Admin_Shell' ) ) {
 			add_menu_page( __( 'AI Integration', 'nextgentutors-ai-integration' ), __( 'AI Integration', 'nextgentutors-ai-integration' ), 'manage_options', 'ngtai', [ 'NGTAI_Settings_Page', 'render' ], 'dashicons-rest-api' );
 			$parent = 'ngtai';
 		}

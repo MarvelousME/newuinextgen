@@ -65,6 +65,9 @@ class NGC_Database {
 			'child_learners'     => $wpdb->prefix . 'ngc_child_learners',
 			'page_sections'      => $wpdb->prefix . 'ngc_page_sections',
 			'system_log'         => $wpdb->prefix . 'ngc_system_log',
+			'intel_events'       => $wpdb->prefix . 'ngc_intel_events',
+			'intel_kpi_hourly'   => $wpdb->prefix . 'ngc_intel_kpi_hourly',
+			'intel_notifications'=> $wpdb->prefix . 'ngc_intel_notifications',
 		];
 	}
 
@@ -169,7 +172,8 @@ class NGC_Database {
 			PRIMARY KEY  (id),
 			KEY user_id (user_id),
 			KEY entry_type (entry_type),
-			KEY created_at (created_at)
+			KEY created_at (created_at),
+			UNIQUE KEY reference (reference)
 		) $charset;";
 
 		$sql[] = "CREATE TABLE {$t['payouts']} (
@@ -838,6 +842,65 @@ class NGC_Database {
 			KEY status (status)
 		) $charset;";
 
+		$sql[] = "CREATE TABLE {$t['intel_events']} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			uuid char(36) NOT NULL DEFAULT '',
+			event_key varchar(100) NOT NULL DEFAULT '',
+			plugin_slug varchar(64) NOT NULL DEFAULT '',
+			module varchar(64) NOT NULL DEFAULT '',
+			feature varchar(64) NOT NULL DEFAULT '',
+			domain varchar(64) NOT NULL DEFAULT '',
+			severity varchar(16) NOT NULL DEFAULT 'info',
+			outcome varchar(16) NOT NULL DEFAULT 'unknown',
+			user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			correlation_id varchar(64) NOT NULL DEFAULT '',
+			request_id varchar(32) NOT NULL DEFAULT '',
+			duration_ms int(11) unsigned NULL,
+			message varchar(500) NOT NULL DEFAULT '',
+			payload longtext NULL,
+			context longtext NULL,
+			source varchar(64) NOT NULL DEFAULT 'sdk',
+			recorded_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (id),
+			KEY event_key (event_key),
+			KEY plugin_slug (plugin_slug),
+			KEY domain (domain),
+			KEY severity (severity),
+			KEY recorded_at (recorded_at),
+			KEY correlation_id (correlation_id)
+		) $charset;";
+
+		$sql[] = "CREATE TABLE {$t['intel_kpi_hourly']} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			bucket_hour datetime NOT NULL,
+			metric_key varchar(128) NOT NULL DEFAULT '',
+			plugin_slug varchar(64) NOT NULL DEFAULT '',
+			domain varchar(64) NOT NULL DEFAULT '',
+			event_count int(11) unsigned NOT NULL DEFAULT 0,
+			error_count int(11) unsigned NOT NULL DEFAULT 0,
+			PRIMARY KEY (id),
+			UNIQUE KEY bucket_metric (bucket_hour, metric_key, plugin_slug),
+			KEY domain (domain)
+		) $charset;";
+
+		$sql[] = "CREATE TABLE {$t['intel_notifications']} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			uuid char(36) NOT NULL DEFAULT '',
+			type varchar(16) NOT NULL DEFAULT 'info',
+			title varchar(191) NOT NULL DEFAULT '',
+			message text NOT NULL,
+			meta longtext NULL,
+			status varchar(16) NOT NULL DEFAULT 'open',
+			dedupe_hash char(32) NOT NULL DEFAULT '',
+			ack_user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			ack_at datetime NULL,
+			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (id),
+			KEY status (status),
+			KEY dedupe_hash (dedupe_hash),
+			KEY created_at (created_at)
+		) $charset;";
+
 		$sql[] = "CREATE TABLE {$t['page_sections']} (
 			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 			uuid char(36) NOT NULL DEFAULT '',
@@ -893,6 +956,7 @@ class NGC_Database {
 
 	/**
 	 * Add uuid column + backfill on every ngc_* custom table.
+	 * Never leave unique '' values — that blocks subsequent inserts.
 	 */
 	public static function ensure_uuid_columns() {
 		global $wpdb;
@@ -911,21 +975,71 @@ class NGC_Database {
 				$wpdb->query( "ALTER TABLE {$table} ADD COLUMN uuid char(36) NOT NULL DEFAULT '' AFTER id" );
 			}
 
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$rows = $wpdb->get_col( "SELECT id FROM {$table} WHERE uuid = '' OR uuid IS NULL LIMIT 500" );
-			foreach ( (array) $rows as $row_id ) {
-				$uuid = class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4();
+			// Backfill in batches until none remain empty.
+			for ( $i = 0; $i < 50; $i++ ) {
 				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				$wpdb->update( $table, [ 'uuid' => $uuid ], [ 'id' => (int) $row_id ], [ '%s' ], [ '%d' ] );
+				$rows = $wpdb->get_col( "SELECT id FROM {$table} WHERE uuid = '' OR uuid IS NULL LIMIT 500" );
+				if ( empty( $rows ) ) {
+					break;
+				}
+				foreach ( (array) $rows as $row_id ) {
+					$uuid = class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4();
+					// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$wpdb->update( $table, [ 'uuid' => $uuid ], [ 'id' => (int) $row_id ], [ '%s' ], [ '%d' ] );
+				}
 			}
 
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$empty_left = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} WHERE uuid = '' OR uuid IS NULL" );
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$has_index = $wpdb->get_results( "SHOW INDEX FROM {$table} WHERE Key_name = 'uuid'" );
-			if ( empty( $has_index ) ) {
+			if ( empty( $has_index ) && 0 === $empty_left ) {
 				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				$wpdb->query( "ALTER TABLE {$table} ADD UNIQUE KEY uuid (uuid)" );
 			}
 		}
+	}
+
+	/**
+	 * Inject a uuid when the target table has a uuid column and the payload omits it.
+	 *
+	 * @param string               $table Full table name.
+	 * @param array<string,mixed>  $data  Row data.
+	 * @return array<string,mixed>
+	 */
+	public static function ensure_row_uuid( $table, array $data ) {
+		if ( isset( $data['uuid'] ) && is_string( $data['uuid'] ) && '' !== $data['uuid'] ) {
+			return $data;
+		}
+		global $wpdb;
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$cols = $wpdb->get_col( "SHOW COLUMNS FROM {$table}", 0 );
+		if ( is_array( $cols ) && in_array( 'uuid', $cols, true ) ) {
+			$data['uuid'] = class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4();
+		}
+		return $data;
+	}
+
+	/**
+	 * Safe insert that auto-fills uuid when required by schema.
+	 *
+	 * @param string                   $table_key Table key.
+	 * @param array<string,mixed>      $data Data.
+	 * @param array<int,string>|null   $format Format.
+	 * @return int|false
+	 */
+	public static function insert( $table_key, array $data, $format = null ) {
+		global $wpdb;
+		$table = self::table( $table_key );
+		$data  = self::ensure_row_uuid( $table, $data );
+		if ( null === $format ) {
+			return $wpdb->insert( $table, $data );
+		}
+		// Align formats if uuid was injected.
+		if ( isset( $data['uuid'] ) && count( $format ) === count( $data ) - 1 ) {
+			$format[] = '%s';
+		}
+		return $wpdb->insert( $table, $data, $format );
 	}
 
 	/**

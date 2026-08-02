@@ -2,7 +2,7 @@
 
 Complete reference for all deployable packages in the monorepo.
 
-**Last updated:** 2026-07-13
+**Last updated:** 2026-07-27
 
 ---
 
@@ -12,8 +12,10 @@ Complete reference for all deployable packages in the monorepo.
 newuinextgen/                          ← monorepo root
 ├── (theme files)                      ← BeyondInfinity theme
 ├── NextGenTutors-Companion/           ← domain plugin
+├── NextGenTutors-Mission-Control/     ← ops control plane
 ├── NextGenTutors-Plugin-Manager/      ← fleet operator console
 ├── NextGenTutors-Html-Importer/       ← HTML migration tool
+├── ui-library/                        ← shared Magic UI (deploy separately)
 ├── content/
 │   ├── page-map.json                  ← launch page registry
 │   ├── nextgen-workflow-pack.json     ← executable workflow actions
@@ -182,7 +184,36 @@ Override: `NGCPM_LOCAL_ZIP_DIR` in `wp-config.php` or Docker env.
 
 ---
 
-## 4. NextGenTutors-Html-Importer
+## 4. NextGenTutors-Mission-Control
+
+| Field | Value |
+|-------|--------|
+| **WordPress path** | `wp-content/plugins/NextGenTutors-Mission-Control` |
+| **Main file** | `nextgentutors-mission-control.php` |
+| **Responsibility** | Operational control plane — configure, repair, seed, verify, overrides, plugin matrix |
+
+Shares orchestrator state with `wp ngt system` (`ngt_system_orchestrator_state`). Does **not** duplicate domain logic — delegates to Companion.
+
+Open **WP Admin → Mission Control** (top of menu).
+
+---
+
+## 5. ui-library (shared)
+
+| Field | Value |
+|-------|--------|
+| **WordPress path** | `wp-content/ngt-ui-library` |
+| **Source** | `ui-library/` at repo root |
+| **Bootstrap** | `bootstrap/class-ngt-ui-bootstrap.php` |
+| **Responsibility** | Magic UI catalog — components, tokens, builder adapters |
+
+**Not bundled in the theme zip.** Deploy `dist/ngt-ui-library.zip` to `wp-content/ngt-ui-library` or bind-mount in Docker.
+
+Theme integration: `inc/ui-library/` + `template-parts/ui-library/`. Companion bridge: `NGC_UI_Library_Bridge`.
+
+---
+
+## 6. NextGenTutors-Html-Importer
 
 | Field | Value |
 |-------|--------|
@@ -203,7 +234,7 @@ Override: `NGCPM_LOCAL_ZIP_DIR` in `wp-config.php` or Docker env.
 
 ---
 
-## 5. NextGen Command Center (content pack)
+## 7. NextGen Command Center (content pack)
 
 | Field | Value |
 |-------|--------|
@@ -217,7 +248,7 @@ Mission Control dashboards, RTM staff chat rooms, Jitsi links, workflow v2 JSON 
 
 ---
 
-## 6. NextGen Completion Suite (content pack)
+## 8. NextGen Completion Suite (content pack)
 
 | Field | Value |
 |-------|--------|
@@ -249,4 +280,6 @@ Align `style.css` Version, `BI_VERSION`, `NGC_VERSION`, and Plugin Manager heade
 powershell -File scripts/build-release.ps1
 ```
 
-Output: `dist/*.zip` with WordPress-correct folder roots for all four core packages.
+Output: `dist/*.zip` — theme, Companion, AI Integration, Html Importer, Plugin Manager, **Mission Control**, **ngt-ui-library**.
+
+Extract `ngt-ui-library.zip` to `wp-content/ngt-ui-library` on the host (not inside the theme folder).

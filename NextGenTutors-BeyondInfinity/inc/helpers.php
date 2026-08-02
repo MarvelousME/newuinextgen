@@ -221,6 +221,9 @@ function ngt_render_route_app( $slug ) {
  * @return array<int,array<string,mixed>>
  */
 function ngt_demo_tutors_enabled() {
+	if ( function_exists( 'bi_demo_content_enabled' ) && bi_demo_content_enabled() ) {
+		return true;
+	}
 	if ( class_exists( 'NGC_Platform_Demo' ) && NGC_Platform_Demo::is_enabled() ) {
 		return true;
 	}

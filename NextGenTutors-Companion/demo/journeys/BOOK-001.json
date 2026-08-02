@@ -1,0 +1,47 @@
+﻿{
+    "id":  "BOOK-001",
+    "name":  "New Confirmed Booking",
+    "persona":  "demo-parent",
+    "scenario":  "all",
+    "family":  "booking",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "accept-match"
+                  },
+                  {
+                      "action":  "select-slot"
+                  },
+                  {
+                      "action":  "initiate-payment"
+                  },
+                  {
+                      "action":  "confirm-booking"
+                  }
+              ],
+    "expected_events":  [
+                            "booking.created",
+                            "payment.succeeded",
+                            "booking.confirmed"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "crm-parent-sync",
+                                  "booking-sync",
+                                  "commerce-order"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=BOOK-001",
+                         "seed_graph_keys":  [
+                                                 "BOOK-001"
+                                             ]
+                     }
+}

@@ -7,6 +7,8 @@
   background: var(--ng-color-bg, var(--cream, #fcfaf3));
   color: var(--ng-color-ink, #0b1220);
   overflow-x: clip;
+  margin: 0;
+  padding: 0;
 }
 
 .ng-page__canvas {
@@ -22,6 +24,8 @@
 .ng-page__body {
   position: relative;
   z-index: 1;
+  margin: 0;
+  padding: 0;
 }
 
 /* Hero */
@@ -30,7 +34,8 @@
   min-height: clamp(320px, 42vh, 520px);
   display: flex;
   align-items: flex-end;
-  padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(2.25rem, 5vw, 3.5rem) 0 clamp(2rem, 4vw, 3rem);
+  margin-top: 0;
   color: #fff;
   overflow: hidden;
   isolation: isolate;
@@ -60,17 +65,19 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.35;
-  z-index: 1;
+  object-position: center center;
+  opacity: var(--bi-hero-video-opacity, 0.35);
+  z-index: var(--bi-z-hero-video, 1);
 }
 
 .ng-page-hero__photo {
   background-size: cover;
   background-position: center;
+  z-index: var(--bi-z-hero-poster, 0);
 }
 
 .ng-page-hero--has-video .ng-page-hero__photo {
-  opacity: 0.2;
+  opacity: var(--bi-hero-poster-under-video, 0.2);
 }
 
 .ng-page-hero__inner {

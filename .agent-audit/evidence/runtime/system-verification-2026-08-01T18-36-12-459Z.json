@@ -1,0 +1,11 @@
+{
+  "generated_at": "2026-08-01T18:36:12.459Z",
+  "base_url": "http://localhost:8900",
+  "headed": true,
+  "checks": [],
+  "summary": {
+    "pass": 0,
+    "fail": 0,
+    "skip": 0
+  }
+}

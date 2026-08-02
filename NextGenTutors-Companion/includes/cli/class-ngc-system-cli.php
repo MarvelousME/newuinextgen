@@ -393,6 +393,82 @@ class NGC_System_CLI {
 	}
 
 	/**
+	 * Versioned 32-step provisioning (Setup Wizard backend).
+	 *
+	 * ## OPTIONS
+	 *
+	 * <action>
+	 * : catalogue|status|run|rollback|clear-lock
+	 *
+	 * [--dry-run]
+	 * [--force-safe]
+	 * [--allow-demo]
+	 * [--from=<step_id>]
+	 * [--only=<step_id>]
+	 * [--step=<step_id>]
+	 *
+	 * @param array<int,string>   $args Args.
+	 * @param array<string,mixed> $assoc_args Flags.
+	 */
+	public function provision( $args, $assoc_args ) {
+		require_once NGC_PLUGIN_DIR . 'includes/provisioning/class-ngc-provisioning-engine.php';
+		$action = isset( $args[0] ) ? sanitize_key( str_replace( '-', '_', $args[0] ) ) : 'catalogue';
+
+		if ( 'catalogue' === $action || 'list' === $action ) {
+			self::out( [ 'steps' => NGC_Provisioning_Engine::catalogue() ], $assoc_args );
+			return;
+		}
+		if ( 'status' === $action ) {
+			self::out(
+				[
+					'state' => NGC_Provisioning_Engine::state(),
+					'lock'  => get_option( NGC_Provisioning_Engine::LOCK_OPTION ),
+				],
+				$assoc_args
+			);
+			return;
+		}
+		if ( 'clear_lock' === $action ) {
+			NGC_Provisioning_Engine::release_lock();
+			WP_CLI::success( 'Provisioning lock cleared' );
+			return;
+		}
+		if ( 'rollback' === $action ) {
+			$step = isset( $assoc_args['step'] ) ? sanitize_key( (string) $assoc_args['step'] ) : '';
+			if ( ! $step ) {
+				WP_CLI::error( 'Provide --step=<id>' );
+			}
+			$ctx = new NGC_Provision_Context(
+				[
+					'force_safe' => isset( $assoc_args['force-safe'] ),
+					'allow_demo' => isset( $assoc_args['allow-demo'] ),
+				]
+			);
+			self::out( NGC_Provisioning_Engine::rollback_step( $step, $ctx ), $assoc_args );
+			return;
+		}
+		if ( 'run' !== $action ) {
+			WP_CLI::error( 'Unknown provision action. Use: catalogue|status|run|rollback|clear-lock' );
+		}
+
+		$ctx = new NGC_Provision_Context(
+			[
+				'dry_run'    => isset( $assoc_args['dry-run'] ),
+				'force_safe' => isset( $assoc_args['force-safe'] ),
+				'allow_demo' => isset( $assoc_args['allow-demo'] ),
+			]
+		);
+		$from = isset( $assoc_args['from'] ) ? sanitize_key( (string) $assoc_args['from'] ) : null;
+		$only = isset( $assoc_args['only'] ) ? sanitize_key( (string) $assoc_args['only'] ) : null;
+		$report = NGC_Provisioning_Engine::run( $ctx, $from, $only );
+		self::out( $report, $assoc_args );
+		if ( empty( $report['ok'] ) ) {
+			WP_CLI::halt( 1 );
+		}
+		WP_CLI::success( 'Provisioning finished: ' . ( $report['status'] ?? '' ) );
+	}
+
+	/**
 	 * Show orchestrator state.
 	 *
 	 * @param array<int,string>   $args Args.
@@ -400,9 +476,11 @@ class NGC_System_CLI {
 	 */
 	public function status( $args, $assoc_args ) {
 		$report = [
-			'state'    => self::state(),
-			'business' => class_exists( 'NGC_Business_Profile' ) ? NGC_Business_Profile::status() : null,
-			'theme'    => wp_get_theme()->get( 'Name' ),
+			'state'          => self::state(),
+			'business'       => class_exists( 'NGC_Business_Profile' ) ? NGC_Business_Profile::status() : null,
+			'theme'          => wp_get_theme()->get( 'Name' ),
+			'plugins'        => self::plugin_matrix(),
+			'observability'  => class_exists( 'NGC_Observability_Service' ) ? NGC_Observability_Service::snapshot() : null,
 		];
 		self::out( $report, $assoc_args );
 	}
@@ -416,9 +494,13 @@ class NGC_System_CLI {
 		}
 		$want = [
 			'NextGenTutors-Companion/nextgencompanion.php' => 'NextGenTutors Companion',
-			'NextGenTutors-Plugin-Manager/nextgentutors-plugin-manager.php' => 'Plugin Manager',
+			'NextGenTutors-Mission-Control/nextgentutors-mission-control.php' => 'Mission Control',
+			'NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php' => 'Plugin Manager',
+			'NextGenTutors-AI-Integration/nextgentutors-ai-integration.php' => 'AI Integration',
+			'nextgen-automation-hub/nextgen-automation-hub.php' => 'Automation Hub',
 			'woocommerce/woocommerce.php' => 'WooCommerce',
 			'fluent-crm/fluent-crm.php' => 'FluentCRM',
+			'fluent-support/fluent-support.php' => 'Fluent Support',
 			'fluent-smtp/fluent-smtp.php' => 'FluentSMTP',
 			'elementor/elementor.php' => 'Elementor',
 		];
@@ -462,18 +544,21 @@ class NGC_NGT_CLI {
 	 * ## OPTIONS
 	 *
 	 * <command>
-	 * : inspect|preflight|install|configure|seed|verify|repair|export-report|reset-demo|run-all|status
+	 * : inspect|preflight|install|configure|seed|verify|repair|export-report|reset-demo|run-all|status|provision
 	 *
 	 * [--dry-run]
 	 * [--apply]
 	 * [--force-safe]
+	 * [--allow-demo]
+	 * [--from=<step_id>]
+	 * [--only=<step_id>]
+	 * [--step=<step_id>]
 	 * [--output=<format>]
 	 *
 	 * @param array<int,string>   $args Args.
 	 * @param array<string,mixed> $assoc_args Flags.
 	 */
 	public function system( $args, $assoc_args ) {
-		$cmd = isset( $args[0] ) ? sanitize_key( str_replace( '-', '_', $args[0] ) ) : 'status';
 		$map = [
 			'inspect'        => 'inspect',
 			'preflight'      => 'preflight',
@@ -483,22 +568,29 @@ class NGC_NGT_CLI {
 			'verify'         => 'verify',
 			'repair'         => 'repair',
 			'export_report'  => 'export_report',
-			'export-report'  => 'export_report',
 			'reset_demo'     => 'reset_demo',
-			'reset-demo'     => 'reset_demo',
 			'run_all'        => 'run_all',
-			'run-all'        => 'run_all',
 			'status'         => 'status',
+			'provision'      => 'provision',
 		];
-		// Normalize hyphenated first arg.
 		$raw = isset( $args[0] ) ? (string) $args[0] : 'status';
 		$key = str_replace( '-', '_', sanitize_key( $raw ) );
-		if ( ! isset( $map[ $key ] ) && ! isset( $map[ $raw ] ) ) {
-			WP_CLI::error( 'Unknown system command. Use: inspect|preflight|install|configure|seed|verify|repair|export-report|reset-demo|run-all|status' );
+		if ( ! isset( $map[ $key ] ) ) {
+			WP_CLI::error( 'Unknown system command. Use: inspect|preflight|install|configure|seed|verify|repair|export-report|reset-demo|run-all|status|provision' );
 		}
-		$method = $map[ $key ] ?? $map[ $raw ];
 		$cli = new NGC_System_CLI();
-		call_user_func( [ $cli, $method ], array_slice( $args, 1 ), $assoc_args );
+		call_user_func( [ $cli, $map[ $key ] ], array_slice( $args, 1 ), $assoc_args );
+	}
+
+	/**
+	 * Direct: `wp ngt provision <action>`.
+	 *
+	 * @param array<int,string>   $args Args.
+	 * @param array<string,mixed> $assoc_args Flags.
+	 */
+	public function provision( $args, $assoc_args ) {
+		$cli = new NGC_System_CLI();
+		$cli->provision( $args, $assoc_args );
 	}
 }
 

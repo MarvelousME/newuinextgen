@@ -1,0 +1,19 @@
+﻿{
+    "phone":  "0813340625",
+    "plugins":  [
+                    "Companion Business Profile",
+                    "WP General",
+                    "AI Integration",
+                    "Automation Hub",
+                    "Plugin Manager"
+                ],
+    "generated_at":  "2026-07-27T01:14:00.1506326Z",
+    "suite":  "test:business-headed",
+    "result":  "9 passed",
+    "email":  "support@nextgentutors.co.za",
+    "public":  [
+                   "footer",
+                   "contact",
+                   "whatsapp"
+               ]
+}

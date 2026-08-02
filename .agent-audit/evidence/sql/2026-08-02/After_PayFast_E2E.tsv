@@ -1,0 +1,17 @@
+﻿Tables_in_wordpress (wp_wc_orders)
+wp_wc_orders
+id	status	total_amount	payment_method	date_created_gmt
+57634	wc-processing	320.00000000		2026-08-02 13:07:36
+57633	wc-pending	320.00000000		2026-08-02 13:06:05
+57632	wc-processing	320.00000000		2026-08-02 13:06:03
+57631	wc-processing	320.00000000		2026-08-02 13:00:30
+57630	wc-pending	320.00000000		2026-08-02 12:59:54
+57629	wc-processing	320.00000000		2026-08-02 12:59:53
+57425	wc-checkout-draft	320.00000000	ngc_payfast	2026-07-21 07:55:34
+54148	wc-processing	320.00000000		2026-07-20 12:18:22
+id	entry_type	amount	reference	created_at
+34	credit	320.00	order:57629	2026-08-02 13:00:13
+33	credit	2000.00	DEMO-WALLET-TOPUP-14.0.0	2026-07-27 09:04:26
+1	credit	320.00	order:54119	2026-07-20 12:15:32
+ngtai_audit
+24

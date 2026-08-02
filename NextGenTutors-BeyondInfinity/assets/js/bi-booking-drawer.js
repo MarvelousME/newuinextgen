@@ -6,17 +6,13 @@
 (function () {
   'use strict';
 
-  var drawer = document.getElementById('bi-booking-drawer');
-  if (!drawer) { return; }
-
-  var panel = drawer.querySelector('.bi-booking-drawer__panel');
-  var titleEl = drawer.querySelector('[data-bi-bd-title]');
-  var metaEl = drawer.querySelector('[data-bi-bd-meta]');
-  var trustEl = drawer.querySelector('[data-bi-bd-trust]');
-  var continueBtn = drawer.querySelector('[data-bi-bd-continue]');
-  var loginBtn = drawer.querySelector('[data-bi-bd-login]');
   var trap = null;
   var openTrigger = null;
+
+  // Footer scripts can print before the drawer markup, so resolve it lazily.
+  function getDrawer() {
+    return document.getElementById('bi-booking-drawer');
+  }
 
   function esc(s) {
     var d = document.createElement('div');
@@ -25,8 +21,10 @@
   }
 
   function close() {
-    if (!drawer.classList.contains('is-open')) { return; }
+    var drawer = getDrawer();
+    if (!drawer || !drawer.classList.contains('is-open')) { return; }
     drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('bi-drawer-open');
     if (window.BIFocusTrap) { window.BIFocusTrap.release(trap); }
     trap = null;
@@ -37,6 +35,16 @@
   }
 
   function open(data, trigger) {
+    var drawer = getDrawer();
+    if (!drawer) { return false; }
+
+    var panel = drawer.querySelector('.bi-booking-drawer__panel');
+    var titleEl = drawer.querySelector('[data-bi-bd-title]');
+    var metaEl = drawer.querySelector('[data-bi-bd-meta]');
+    var trustEl = drawer.querySelector('[data-bi-bd-trust]');
+    var continueBtn = drawer.querySelector('[data-bi-bd-continue]');
+    var loginBtn = drawer.querySelector('[data-bi-bd-login]');
+
     openTrigger = trigger || null;
     var tutor = data.tutorId || '';
     var date = data.date || '';
@@ -57,11 +65,14 @@
       if (start) { bits.push(end ? (start + '–' + end) : start); }
       if (subject) { bits.push(subject); }
       if (delivery) { bits.push(delivery.charAt(0).toUpperCase() + delivery.slice(1)); }
+      var emptyCopy = tutorName
+        ? 'Continue to confirm your details and we will lock in a time with ' + tutorName + '.'
+        : 'Pick a time on the calendar, then continue.';
       metaEl.innerHTML = bits.length
         ? '<ul class="bi-booking-drawer__facts">' + bits.map(function (b) {
             return '<li>' + esc(b) + '</li>';
           }).join('') + '</ul>'
-        : '<p>' + esc('Pick a time on the calendar, then continue.') + '</p>';
+        : '<p>' + esc(emptyCopy) + '</p>';
     }
     if (trustEl) {
       trustEl.hidden = false;
@@ -87,6 +98,7 @@
     }
 
     drawer.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
     document.body.classList.add('bi-drawer-open');
     if (window.BIFocusTrap) {
       trap = window.BIFocusTrap.activate(panel || drawer, {
@@ -94,6 +106,7 @@
         onEscape: close,
       });
     }
+    return true;
   }
 
   function readFromLink(link) {
@@ -109,6 +122,9 @@
   }
 
   document.addEventListener('click', function (e) {
+    var drawer = getDrawer();
+    if (!drawer) { return; }
+
     var closeBtn = e.target.closest('[data-bi-bd-close]');
     if (closeBtn) {
       e.preventDefault();
@@ -119,12 +135,20 @@
       close();
       return;
     }
+    if (e.target.closest('#bi-booking-drawer')) {
+      return;
+    }
 
     var trigger = e.target.closest('[data-bi-booking-drawer], [data-ngc-slot="1"], .bi-book-lesson-trigger');
     if (!trigger) { return; }
     // Progressive enhancement: drawer opens, link still works without JS.
-    e.preventDefault();
-    open(readFromLink(trigger), trigger);
+    if (open(readFromLink(trigger), trigger)) {
+      e.preventDefault();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { close(); }
   });
 
   // Prefill if the page already has slot query args (deep link / refresh).

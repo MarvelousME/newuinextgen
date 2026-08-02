@@ -152,3 +152,97 @@ export async function openHomeBookingModal(page: Page) {
     await expect(modal.first()).toBeVisible();
   }
 }
+
+/** Marketing / auth pages used by full-system headed verification. */
+export const PUBLIC_SYSTEM_PAGES: Array<{
+  path: string;
+  name: string;
+  mustMatch: RegExp;
+  landmark?: string;
+}> = [
+  { path: '/', name: 'Home', mustMatch: /Tutor|NextGen|Pace|Learn/i, landmark: 'h1' },
+  { path: '/about/', name: 'About', mustMatch: /South African|Tutor|NextGen|exist/i, landmark: 'h1' },
+  { path: '/find-a-tutor/', name: 'Find a Tutor', mustMatch: /Find|Tutor|Match|Subject/i, landmark: 'h1' },
+  { path: '/become-a-tutor/', name: 'Become a Tutor', mustMatch: /Become|Tutor|Earn|Teach/i, landmark: 'h1' },
+  { path: '/pricing/', name: 'Pricing', mustMatch: /Price|Package|R\s*\d|Plan|Rate/i, landmark: 'h1' },
+  { path: '/login/', name: 'Login', mustMatch: /Sign in|Login|Continue as|Parent|Tutor/i },
+  { path: '/register/', name: 'Register', mustMatch: /Register|Parent|Student|Create/i },
+  { path: '/contact/', name: 'Contact', mustMatch: /Contact|Support|Message|Help/i },
+  { path: '/guarantee/', name: 'Guarantee', mustMatch: /Guarantee|Lesson|Risk|First/i, landmark: 'h1' },
+];
+
+const IGNORED_CONSOLE =
+  /Download the React DevTools|third-party|facebook|googletagmanager|clarity\.ms|hotjar|Failed to load resource: net::ERR_|ResizeObserver loop|Non-Error promise rejection/i;
+
+/**
+ * Attach a console / pageerror collector. Call before navigation.
+ * Returns a getter plus a dispose() that removes listeners (avoids stacking in loops).
+ */
+export function attachConsoleGuard(page: Page): {
+  getFatals: () => string[];
+  dispose: () => void;
+} {
+  const fatals: string[] = [];
+  const onPageError = (err: Error) => {
+    const msg = String(err?.message || err);
+    if (!IGNORED_CONSOLE.test(msg)) fatals.push(`pageerror: ${msg}`);
+  };
+  const onConsole = (msg: { type: () => string; text: () => string }) => {
+    if (msg.type() !== 'error') return;
+    const text = msg.text();
+    if (IGNORED_CONSOLE.test(text)) return;
+    if (/favicon|fonts\.googleapis|cdn\.|404/i.test(text)) return;
+    fatals.push(`console.error: ${text}`);
+  };
+  page.on('pageerror', onPageError);
+  page.on('console', onConsole);
+  return {
+    getFatals: () => [...fatals],
+    dispose: () => {
+      page.off('pageerror', onPageError);
+      page.off('console', onConsole);
+    },
+  };
+}
+
+/** Soft assert: no unexpected pageerrors (console noise alone does not fail). */
+export function expectNoPageErrors(fatals: string[]) {
+  const pageErrors = fatals.filter((f) => f.startsWith('pageerror:'));
+  expect(pageErrors, pageErrors.join('\n')).toEqual([]);
+}
+
+export async function expectPageHealthy(
+  page: Page,
+  path: string,
+  opts: { mustMatch: RegExp; landmark?: string; name?: string }
+) {
+  const guard = attachConsoleGuard(page);
+  try {
+    let res = null as Awaited<ReturnType<Page['goto']>>;
+    try {
+      res = await page.goto(path, { waitUntil: 'domcontentloaded', timeout: 90_000 });
+    } catch (first) {
+      // Slow WP / aborted navigations — one retry on a fresh load.
+      await page.waitForTimeout(1_000);
+      res = await page.goto(path, { waitUntil: 'domcontentloaded', timeout: 90_000 });
+      if (!res) throw first;
+    }
+    expect(res, `${opts.name || path} should respond`).toBeTruthy();
+    const status = res!.status();
+    expect(status, `${opts.name || path} HTTP status`).toBeLessThan(500);
+    await dismissCookieOrOverlays(page);
+
+    const bodyText = (await page.locator('body').innerText().catch(() => '')) || '';
+    if (status === 404 || /page can.?t be found|not found/i.test(bodyText.slice(0, 400))) {
+      throw new Error(`${opts.name || path} returned not found`);
+    }
+
+    if (opts.landmark) {
+      await expect(page.locator(opts.landmark).first()).toBeVisible({ timeout: 30_000 });
+    }
+    await expect(page.locator('body')).toContainText(opts.mustMatch, { timeout: 30_000 });
+    expectNoPageErrors(guard.getFatals());
+  } finally {
+    guard.dispose();
+  }
+}

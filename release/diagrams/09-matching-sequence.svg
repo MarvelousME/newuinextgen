@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img">
+  <title>09 - Matching Sequence</title>
+  <desc>Parent request through Companion smart matching to ranked tutor shortlist, optional AI assist.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0D7377"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F7FBFC"/>
+  <text x="24" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B2545">09 - Matching Sequence</text>
+  <text x="90" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Parent</text>
+  <text x="280" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Match UI</text>
+  <text x="480" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">NGC Matching</text>
+  <text x="680" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">AI (optional)</text>
+  <text x="860" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Tutors</text>
+  <line x1="90" y1="90" x2="90" y2="400" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="280" y1="90" x2="280" y2="400" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="480" y1="90" x2="480" y2="400" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="680" y1="90" x2="680" y2="400" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="860" y1="90" x2="860" y2="400" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="90" y1="130" x2="280" y2="130" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="185" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">1 request match</text>
+  <line x1="280" y1="180" x2="480" y2="180" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="380" y="172" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">2 criteria + access gate</text>
+  <line x1="480" y1="230" x2="860" y2="230" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="670" y="222" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">3 query eligible tutors</text>
+  <line x1="480" y1="280" x2="680" y2="280" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="580" y="272" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">4 optional AI assist</text>
+  <line x1="680" y1="320" x2="480" y2="320" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="580" y="312" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">5 ranked hints</text>
+  <line x1="480" y1="370" x2="90" y2="370" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="280" y="362" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">6 shortlist to parent</text>
+  <rect x="40" y="430" width="560" height="55" rx="4" fill="#FFFFFF" stroke="#0B2545"/>
+  <text x="50" y="450" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Legend: AI path PARTIAL without BYOK keys. Scoring stays in Companion (theme must not own).</text>
+  <text x="50" y="468" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Journeys MATCH-* - Phase 14 COMPLETE WITH LIMITATIONS.</text>
+</svg>

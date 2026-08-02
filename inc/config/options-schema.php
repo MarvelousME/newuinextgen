@@ -260,7 +260,7 @@ function bi_options_create() {
         ],
         'home_image_hover_mode' => [
             'title'   => __( 'Default image hover mode', 'beyondinfinity' ),
-            'std'     => 'zoom',
+            'std'     => 'shine',
             'options' => [
                 'zoom'  => __( 'Zoom overlay', 'beyondinfinity' ),
                 'slide' => __( 'Slide caption', 'beyondinfinity' ),

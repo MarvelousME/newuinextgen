@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img">
+  <title>14 - Observability and Recovery</title>
+  <desc>Health, metrics, logs, provisioning locks, and backup/restore recovery paths.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0D7377"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F7FBFC"/>
+  <text x="24" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B2545">14 - Observability and Recovery</text>
+  <rect x="40" y="90" width="180" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="130" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Health Scanner</text>
+  <text x="130" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Plugin Manager</text>
+  <rect x="250" y="90" width="180" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="340" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Metrics</text>
+  <text x="340" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">/ngc/v1/metrics</text>
+  <rect x="460" y="90" width="180" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="550" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">System Log</text>
+  <text x="550" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Admin UI</text>
+  <rect x="670" y="90" width="240" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="790" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Verify / export-report</text>
+  <text x="790" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">wp ngt system *</text>
+  <rect x="200" y="230" width="560" height="80" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="480" y="265" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#0B2545">Operator decision</text>
+  <text x="480" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#5A6A7A">clear-lock � rollback step � DB restore � redeploy zip</text>
+  <rect x="40" y="370" width="200" height="60" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="140" y="405" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Host backups</text>
+  <rect x="280" y="370" width="200" height="60" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="380" y="405" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Provision rollback</text>
+  <rect x="520" y="370" width="200" height="60" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="620" y="405" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Demo reset</text>
+  <rect x="760" y="370" width="160" height="60" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="840" y="405" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Prior release</text>
+  <line x1="130" y1="160" x2="350" y2="230" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="340" y1="160" x2="420" y2="230" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="550" y1="160" x2="500" y2="230" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="790" y1="160" x2="600" y2="230" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="350" y1="310" x2="140" y2="370" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="430" y1="310" x2="380" y2="370" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="520" y1="310" x2="620" y2="370" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="600" y1="310" x2="840" y2="370" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="24" y="480" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Legend: detect � decide � recover. Backup step in provisioner is awareness only - operator proves restore.</text>
+</svg>

@@ -111,6 +111,18 @@ function bi_ngc_render_form( $form_id, $title, $fields, $values = [] ) {
           $fname = $field['name'] ?? '';
           $fval  = isset( $values[ $fname ] ) ? (string) $values[ $fname ] : '';
           $rules = bi_ngc_field_validate_rules( $field );
+          if ( 'hidden' === ( $field['type'] ?? '' ) ) :
+              ?>
+        <input type="hidden" name="<?php echo esc_attr( $fname ); ?>" value="<?php echo esc_attr( $fval ); ?>" <?php echo ! empty( $field['id'] ) ? 'id="' . esc_attr( $field['id'] ) . '"' : ''; ?> />
+              <?php
+              continue;
+          endif;
+          if ( 'notice' === ( $field['type'] ?? '' ) ) :
+              ?>
+        <p class="ngc-form-notice bi-ngc-form__notice" data-bi-intake-notice><?php echo esc_html( (string) ( $field['label'] ?? '' ) ); ?></p>
+              <?php
+              continue;
+          endif;
           ?>
         <div class="ngc-field-group ngt-form-group">
           <label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_html( $field['label'] ); ?></label>
@@ -137,6 +149,9 @@ function bi_ngc_render_form( $form_id, $title, $fields, $values = [] ) {
 /** @return string */
 function bi_ngc_form_find_tutor() {
     $values = [];
+    $notes  = [];
+    $lead   = [];
+
     if ( function_exists( 'bi_get_search_query_arg' ) ) {
         $subject = bi_get_search_query_arg( 'subject' );
         if ( $subject && function_exists( 'bi_subject_label_from_slug' ) ) {
@@ -144,7 +159,7 @@ function bi_ngc_form_find_tutor() {
         }
         $location = bi_get_search_query_arg( 'location' );
         if ( $location ) {
-            $values['notes'] = sprintf(
+            $notes[] = sprintf(
                 /* translators: %s: city or suburb */
                 __( 'Preferred area: %s', 'beyondinfinity' ),
                 $location
@@ -152,14 +167,65 @@ function bi_ngc_form_find_tutor() {
         }
     }
 
-    return bi_ngc_render_form( 'find_tutor', '', [
+    // "Book Session" carries the chosen tutor (and slot) into the match request.
+    $tutor = function_exists( 'bi_get_requested_tutor_context' ) ? bi_get_requested_tutor_context() : [];
+    if ( ! empty( $tutor['id'] ) ) {
+        $slot_label = function_exists( 'bi_format_tutor_slot_label' ) ? bi_format_tutor_slot_label( $tutor['slot'] ) : '';
+
+        $lead[] = [
+            'type'  => 'notice',
+            'label' => $slot_label
+                ? sprintf(
+                    /* translators: 1: tutor name, 2: slot summary */
+                    __( 'Booking request for %1$s — %2$s. Confirm your details and we will secure this session.', 'beyondinfinity' ),
+                    $tutor['name'],
+                    $slot_label
+                )
+                : sprintf(
+                    /* translators: %s: tutor name */
+                    __( 'Booking request for %s. Confirm your details and we will secure this session.', 'beyondinfinity' ),
+                    $tutor['name']
+                ),
+        ];
+        $lead[] = [ 'type' => 'hidden', 'id' => 'bi-ngc-preferred-tutor-id', 'name' => 'preferred_tutor_id' ];
+        $lead[] = [ 'type' => 'hidden', 'id' => 'bi-ngc-preferred-tutor', 'name' => 'preferred_tutor' ];
+
+        $values['preferred_tutor_id'] = (string) $tutor['id'];
+        $values['preferred_tutor']    = (string) $tutor['name'];
+
+        if ( ! empty( $tutor['slot']['subject'] ) && empty( $values['subject'] ) ) {
+            $values['subject'] = (string) $tutor['slot']['subject'];
+        }
+        if ( $slot_label ) {
+            $lead[] = [ 'type' => 'hidden', 'id' => 'bi-ngc-preferred-slot', 'name' => 'preferred_slot' ];
+            $values['preferred_slot'] = $slot_label;
+            $notes[] = sprintf(
+                /* translators: 1: tutor name, 2: slot summary */
+                __( 'Requested tutor: %1$s · Requested time: %2$s', 'beyondinfinity' ),
+                $tutor['name'],
+                $slot_label
+            );
+        } else {
+            $notes[] = sprintf(
+                /* translators: %s: tutor name */
+                __( 'Requested tutor: %s', 'beyondinfinity' ),
+                $tutor['name']
+            );
+        }
+    }
+
+    if ( $notes ) {
+        $values['notes'] = implode( "\n", $notes );
+    }
+
+    return bi_ngc_render_form( 'find_tutor', '', array_merge( $lead, [
         [ 'id' => 'bi-ngc-parent-name', 'name' => 'parent_name', 'label' => __( 'Parent / guardian name', 'beyondinfinity' ), 'required' => true ],
         [ 'id' => 'bi-ngc-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
         [ 'id' => 'bi-ngc-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'Phone', 'beyondinfinity' ), 'required' => true ],
         [ 'id' => 'bi-ngc-grade', 'name' => 'grade', 'type' => 'select', 'label' => __( 'Learner grade', 'beyondinfinity' ), 'options' => [ '' => __( 'Select…', 'beyondinfinity' ), 'primary' => __( 'Primary', 'beyondinfinity' ), 'high' => __( 'High school', 'beyondinfinity' ), 'matric' => __( 'Matric', 'beyondinfinity' ) ], 'required' => true ],
         [ 'id' => 'bi-ngc-subject', 'name' => 'subject', 'label' => __( 'Subject needed', 'beyondinfinity' ), 'required' => true ],
         [ 'id' => 'bi-ngc-notes', 'name' => 'notes', 'type' => 'textarea', 'label' => __( 'Additional details', 'beyondinfinity' ) ],
-    ], $values );
+    ] ), $values );
 }
 
 /** @return string */
@@ -208,10 +274,20 @@ function bi_ngc_form_login() {
     if ( is_user_logged_in() ) {
         return '<p class="ngc-form-notice">' . esc_html__( 'You are already signed in.', 'beyondinfinity' ) . '</p>';
     }
-    $redirect = home_url( '/student-dashboard' );
+
+    $role = sanitize_key( $_GET['role'] ?? '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    if ( ! in_array( $role, [ 'parent', 'student', 'tutor' ], true ) ) {
+        $role = 'student';
+    }
+
+    $redirect = function_exists( 'bi_role_dashboard_url' )
+        ? bi_role_dashboard_url( $role )
+        : home_url( '/student-dashboard' );
+
     if ( ! empty( $_GET['redirect_to'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $redirect = bi_validate_internal_redirect( wp_unslash( $_GET['redirect_to'] ), $redirect ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     }
+
     ob_start();
     wp_login_form( [
         'echo'           => true,
@@ -222,7 +298,7 @@ function bi_ngc_form_login() {
         'label_remember' => __( 'Remember me', 'beyondinfinity' ),
         'label_log_in'   => __( 'Sign in', 'beyondinfinity' ),
     ] );
-    return '<div class="ngc-form ngc-form--login">' . ob_get_clean() . '</div>';
+    return '<div class="ngc-form ngc-form--login" data-bi-login-role="' . esc_attr( $role ) . '">' . ob_get_clean() . '</div>';
 }
 
 /** @return string */

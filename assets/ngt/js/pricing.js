@@ -36,7 +36,9 @@
   }
 
   function seg(id, key, after) {
-    $(id).addEventListener("click", (e) => {
+    const root = $(id);
+    if (!root) return;
+    root.addEventListener("click", (e) => {
       const b = e.target.closest("button"); if (!b) return;
       $$(id + " button").forEach((x) => x.classList.remove("is-active"));
       b.classList.add("is-active");
@@ -47,6 +49,9 @@
   }
 
   function initCalc() {
+    // Prototype calculator (#calc-*) — skip when page uses theme bi-calc controls only.
+    if (!$("#calc-level") || !$("#calc-lessons") || !$("#calc-rate")) return;
+
     seg("#calc-level", "level", (b) => {
       // varsity forces commitment reset
       if (b.dataset.level === "tertiary") { st.commit = "1-3"; }
@@ -70,9 +75,10 @@
   function initFAQ() {
     $$(".faq-item").forEach((item) => {
       const q = $(".faq-q", item), a = $(".faq-a", item);
+      if (!q || !a) return;
       q.addEventListener("click", () => {
         const open = item.classList.contains("is-open");
-        $$(".faq-item").forEach((o) => { o.classList.remove("is-open"); $(".faq-a", o).style.maxHeight = null; });
+        $$(".faq-item").forEach((o) => { o.classList.remove("is-open"); const fa = $(".faq-a", o); if (fa) fa.style.maxHeight = null; });
         if (!open) { item.classList.add("is-open"); a.style.maxHeight = a.scrollHeight + "px"; }
       });
     });

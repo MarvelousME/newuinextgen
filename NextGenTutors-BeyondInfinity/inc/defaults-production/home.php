@@ -128,12 +128,23 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <button class="ngi-sticky" data-ngi-open type="button"><?php esc_html_e( 'Book Free Assessment', 'beyondinfinity' ); ?></button>
 
   <?php if ( bi_home_section_enabled( 'hero' ) ) : ?>
-  <section class="ngi-hero ngi-hero--theme<?php echo function_exists( 'bi_get_hero_video_url' ) && bi_get_hero_video_url() ? ' ngi-hero--has-video' : ''; ?>" aria-label="<?php esc_attr_e( 'NextGen Tutors homepage hero', 'beyondinfinity' ); ?>">
+  <section class="ngi-hero ngi-hero--theme ngi-hero--cinematic<?php echo function_exists( 'bi_get_hero_video_url' ) && bi_get_hero_video_url() ? ' ngi-hero--has-video' : ''; ?>" aria-label="<?php esc_attr_e( 'NextGen Tutors homepage hero', 'beyondinfinity' ); ?>">
     <?php
-    $hero_video = function_exists( 'bi_get_hero_video_url' ) ? bi_get_hero_video_url() : esc_url( (string) bi_get_theme_option( 'home_hero_video_url', '' ) );
+    $hero_video  = function_exists( 'bi_get_hero_video_url' ) ? bi_get_hero_video_url() : esc_url( (string) bi_get_theme_option( 'home_hero_video_url', '' ) );
+    $hero_poster = function_exists( 'bi_get_hero_video_poster_url' ) ? bi_get_hero_video_poster_url() : ( function_exists( 'bi_get_theme_image_url' ) ? bi_get_theme_image_url( 'home_video' ) : '' );
     if ( $hero_video ) :
         ?>
-      <video class="ngi-hero-video" id="ngiHeroVideo" muted loop playsinline preload="metadata" aria-hidden="true">
+      <video
+        class="ngi-hero-video"
+        id="ngiHeroVideo"
+        data-bi-cinematic
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        <?php echo $hero_poster ? 'poster="' . esc_url( $hero_poster ) . '"' : ''; ?>
+        aria-hidden="true"
+      >
         <source src="<?php echo esc_url( $hero_video ); ?>" type="video/mp4" />
       </video>
     <?php endif; ?>
@@ -356,27 +367,27 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <section class="ngi-section ngi-aura" id="platform-highlights">
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
-        <div class="ngi-eyebrow"><?php esc_html_e( 'Platform highlights', 'beyondinfinity' ); ?></div>
-        <h2 class="ngi-heading ngi-kinetic-text"><?php esc_html_e( 'Motion and clarity that builds parent confidence.', 'beyondinfinity' ); ?></h2>
-        <p class="ngi-subtitle"><?php esc_html_e( 'Polished interactions — progress proof, video story, journey discovery and accessible motion fallbacks.', 'beyondinfinity' ); ?></p>
+        <div class="ngi-eyebrow"><?php esc_html_e( 'Why families choose us', 'beyondinfinity' ); ?></div>
+        <h2 class="ngi-heading ngi-kinetic-text"><?php esc_html_e( 'Clear proof, safer matching, better first lessons.', 'beyondinfinity' ); ?></h2>
+        <p class="ngi-subtitle"><?php esc_html_e( 'From vetted tutors to parent dashboards and a first-lesson guarantee — every step is built for confidence.', 'beyondinfinity' ); ?></p>
       </div>
       <div class="ngi-feature-grid">
         <article class="ngi-card ngi-kinetic-box ngi-reveal">
           <div class="ngi-icon"><?php echo bi_kinetic_icon( 'box' ); // phpcs:ignore ?></div>
-          <h3><?php esc_html_e( 'Trust blocks', 'beyondinfinity' ); ?></h3>
-          <p><?php esc_html_e( 'Glass-style containers for guarantees, vetting badges and dashboard previews.', 'beyondinfinity' ); ?></p>
-          <a class="ngi-btn ngi-btn-primary ngi-magnetic" href="<?php echo esc_url( $find_url ); ?>"><?php esc_html_e( 'Start Matching', 'beyondinfinity' ); ?></a>
+          <h3><?php esc_html_e( 'Verified trust signals', 'beyondinfinity' ); ?></h3>
+          <p><?php esc_html_e( 'See ID checks, background screening, subject credentials and live availability before you book.', 'beyondinfinity' ); ?></p>
+          <a class="ngi-btn ngi-btn-primary ngi-magnetic" href="<?php echo esc_url( $find_url ); ?>"><?php esc_html_e( 'Find a Tutor', 'beyondinfinity' ); ?></a>
         </article>
         <article class="ngi-card ngi-reveal">
           <div class="ngi-icon"><?php echo bi_kinetic_icon( 'type' ); // phpcs:ignore ?></div>
-          <h3><?php esc_html_e( 'Readable headlines', 'beyondinfinity' ); ?></h3>
-          <p><?php esc_html_e( 'Animated typography with full text fallback when reduced motion is enabled.', 'beyondinfinity' ); ?></p>
-          <p class="ngi-kh-note"><?php esc_html_e( 'WCAG-friendly: content stays readable without animation.', 'beyondinfinity' ); ?></p>
+          <h3><?php esc_html_e( 'Progress you can follow', 'beyondinfinity' ); ?></h3>
+          <p><?php esc_html_e( 'Session notes, goals and report cards stay visible in your dashboard — even when motion effects are turned off.', 'beyondinfinity' ); ?></p>
+          <p class="ngi-kh-note"><?php esc_html_e( 'Accessible by design: every update remains readable without animation.', 'beyondinfinity' ); ?></p>
         </article>
         <article class="ngi-card ngi-reveal">
           <div class="ngi-icon"><?php echo bi_kinetic_icon( 'sparkles' ); // phpcs:ignore ?></div>
-          <h3><?php esc_html_e( 'Interactive CTAs', 'beyondinfinity' ); ?></h3>
-          <p><?php esc_html_e( 'Pointer-aware buttons for Find a Tutor, Book Assessment and Become a Tutor.', 'beyondinfinity' ); ?></p>
+          <h3><?php esc_html_e( 'Fast next steps', 'beyondinfinity' ); ?></h3>
+          <p><?php esc_html_e( 'Match a tutor, request an assessment, or apply to teach — clear CTAs for parents, students and educators.', 'beyondinfinity' ); ?></p>
           <button class="ngi-btn ngi-btn-primary ngi-magnetic" data-ngi-open type="button"><?php esc_html_e( 'Book Assessment', 'beyondinfinity' ); ?></button>
         </article>
         <article class="ngi-card ngi-reveal">
@@ -407,34 +418,46 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <?php endif; ?>
 
   <?php if ( bi_home_section_enabled( 'video' ) ) : ?>
-  <section class="ngi-section" id="video-story">
-    <div class="ngi-wrap ngi-split">
-      <div class="ngi-split-media ngi-reveal">
-        <?php
-        $video_poster = function_exists( 'bi_get_theme_image_url' ) ? bi_get_theme_image_url( 'home_video' ) : '';
-        $tile_style   = $video_poster ? ' style="background-image:url(' . esc_url( $video_poster ) . ')"' : '';
-        ?>
-        <div class="ngi-video-tile<?php echo $video_poster ? ' bi-video-tile--image' : ''; ?>"<?php echo $tile_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-          <button class="ngi-play" id="ngiOpenVideo" type="button" aria-label="<?php esc_attr_e( 'Open NextGen Tutors story video', 'beyondinfinity' ); ?>">
+  <?php
+  $story_video  = function_exists( 'bi_tutoring_video_url' ) ? bi_tutoring_video_url( 'video-story' ) : '';
+  $story_poster = function_exists( 'bi_tutoring_video_poster_url' ) ? bi_tutoring_video_poster_url( 'video-story' ) : ( function_exists( 'bi_get_theme_image_url' ) ? bi_get_theme_image_url( 'home_video' ) : '' );
+  ?>
+  <section class="ngi-section bi-cinematic-band<?php echo $story_video ? ' bi-cinematic-band--has-video' : ''; ?>" id="video-story" aria-labelledby="ngi-story-heading">
+    <div class="bi-cinematic-band__media" aria-hidden="true">
+      <?php if ( $story_poster ) : ?>
+        <div class="bi-cinematic-band__poster" style="background-image:url(<?php echo esc_url( $story_poster ); ?>)"></div>
+      <?php endif; ?>
+      <?php if ( $story_video ) : ?>
+        <video
+          class="bi-cinematic-video"
+          data-bi-cinematic
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          <?php echo $story_poster ? 'poster="' . esc_url( $story_poster ) . '"' : ''; ?>
+        >
+          <source src="<?php echo esc_url( $story_video ); ?>" type="video/mp4" />
+        </video>
+      <?php endif; ?>
+      <div class="bi-cinematic-band__scrim"></div>
+    </div>
+    <div class="ngi-wrap bi-cinematic-band__inner">
+      <div class="ngi-reveal">
+        <p class="ngi-eyebrow" style="color:rgba(255,255,255,.75)"><?php esc_html_e( 'Our story', 'beyondinfinity' ); ?></p>
+        <h2 id="ngi-story-heading" class="bi-cinematic-band__title" style="font-size:clamp(1.75rem,3vw,2.5rem);margin:0 0 0.75rem"><?php esc_html_e( 'See how NextGen works', 'beyondinfinity' ); ?></h2>
+        <p><?php esc_html_e( 'Real online lessons, verified tutors, and families who finally feel in control of the learning journey.', 'beyondinfinity' ); ?></p>
+        <div style="margin-top:1.25rem;display:flex;flex-wrap:wrap;gap:0.75rem">
+          <button class="ngi-btn ngi-btn-primary" id="ngiOpenVideo" type="button" aria-label="<?php esc_attr_e( 'Open NextGen Tutors story video', 'beyondinfinity' ); ?>">
             <?php echo bi_kinetic_icon( 'play' ); // phpcs:ignore ?>
+            <span><?php esc_html_e( 'Watch trailer', 'beyondinfinity' ); ?></span>
           </button>
-        </div>
-        <div style="margin-top:18px">
-          <h3><?php esc_html_e( 'See how NextGen works', 'beyondinfinity' ); ?></h3>
-          <p><?php esc_html_e( 'Brand trailer, tutor intro or parent onboarding video — lazy-loaded in modal.', 'beyondinfinity' ); ?></p>
-        </div>
-        <div class="ngi-audio" style="margin-top:18px">
-          <button id="ngiAudioToggle" type="button" aria-pressed="false" aria-label="<?php esc_attr_e( 'Play audio preview', 'beyondinfinity' ); ?>"><?php echo bi_kinetic_icon( 'play' ); // phpcs:ignore ?></button>
-          <div>
-            <b><?php esc_html_e( 'Parent story audio', 'beyondinfinity' ); ?></b>
-            <div class="ngi-audio-bar" aria-hidden="true"><span id="ngiAudioBar"></span></div>
-          </div>
         </div>
       </div>
       <div>
         <article class="ngi-split-item ngi-reveal"><h3><?php esc_html_e( 'Parent confidence', 'beyondinfinity' ); ?></h3><p><?php esc_html_e( 'Pinned media stays visible while content explains the tutoring journey step by step.', 'beyondinfinity' ); ?></p></article>
-        <article class="ngi-split-item ngi-reveal"><h3><?php esc_html_e( 'Verified tutor matching', 'beyondinfinity' ); ?></h3><p><?php esc_html_e( 'Subject fit, grade support, province availability and learning format — all visible before you book.', 'beyondinfinity' ); ?></p></article>
-        <article class="ngi-split-item ngi-reveal"><h3><?php esc_html_e( 'CRM-ready follow-up', 'beyondinfinity' ); ?></h3><p><?php esc_html_e( 'Each CTA connects to Fluent Forms, FluentCRM, Amelia and NextGenCompanion workflows.', 'beyondinfinity' ); ?></p></article>
+        <article class="ngi-split-item ngi-reveal" style="margin-top:0.85rem"><h3><?php esc_html_e( 'Verified tutor matching', 'beyondinfinity' ); ?></h3><p><?php esc_html_e( 'Subject fit, grade support, province availability and learning format — all visible before you book.', 'beyondinfinity' ); ?></p></article>
+        <article class="ngi-split-item ngi-reveal" style="margin-top:0.85rem"><h3><?php esc_html_e( 'CRM-ready follow-up', 'beyondinfinity' ); ?></h3><p><?php esc_html_e( 'Each CTA connects to Fluent Forms, FluentCRM, Amelia and NextGenCompanion workflows.', 'beyondinfinity' ); ?></p></article>
       </div>
     </div>
   </section>

@@ -1,0 +1,42 @@
+﻿{
+    "id":  "FIN-001",
+    "name":  "Successful Payment",
+    "persona":  "demo-parent",
+    "scenario":  "all",
+    "family":  "finance",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "initiate-payfast-sandbox"
+                  },
+                  {
+                      "action":  "receive-itn"
+                  },
+                  {
+                      "action":  "confirm-order"
+                  }
+              ],
+    "expected_events":  [
+                            "payment.succeeded",
+                            "booking.confirmed"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "commerce-order",
+                                  "crm-parent-sync"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=FIN-001",
+                         "seed_graph_keys":  [
+                                                 "FIN-001"
+                                             ]
+                     }
+}

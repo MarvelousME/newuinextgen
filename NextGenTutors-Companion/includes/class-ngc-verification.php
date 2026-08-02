@@ -58,6 +58,7 @@ class NGC_Verification {
 			'payments_engine'        => self::check_payments_engine(),
 			'amelia_integration'     => self::check_integration_adapter( 'NGC_Amelia_Adapter', 'amelia' ),
 			'fluentcrm_integration'  => self::check_integration_adapter( 'NGC_Fluentcrm_Adapter', 'fluentcrm' ),
+			'fluent_support_integration' => self::check_integration_adapter( 'NGC_FluentSupport_Adapter', 'fluent_support' ),
 			'masterstudy_integration'=> self::check_integration_adapter( 'NGC_Masterstudy_Adapter', 'masterstudy' ),
 			'gamipress_integration'  => self::check_gamipress(),
 			'popia_consent_config'   => self::check_popia_config(),

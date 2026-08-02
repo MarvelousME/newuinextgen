@@ -36,7 +36,7 @@
 
     function render() {
       var spread = Math.min(380, Math.max(220, Math.floor(root.clientWidth * 0.2)));
-      var cardTop = window.matchMedia("(max-width: 767px)").matches ? "62%" : "58%";
+      var cardTop = window.matchMedia("(max-width: 767px)").matches ? "78%" : "76%";
       cards.forEach(function (card, i) {
         var diff = i - current;
         if (diff > n / 2) diff -= n;

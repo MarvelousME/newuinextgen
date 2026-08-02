@@ -260,6 +260,14 @@ class NGC_Reviews {
 		);
 
 		NGC_Audit::log( 'payout_processed', 'payout', (int) $payout_id, [ 'amount' => $amount ], 0 );
+		do_action(
+			'ngc_payout_completed',
+			(int) $payout_id,
+			[
+				'amount'         => $amount,
+				'tutor_user_id'  => $tutor_id,
+			]
+		);
 		return (int) $payout_id;
 	}
 

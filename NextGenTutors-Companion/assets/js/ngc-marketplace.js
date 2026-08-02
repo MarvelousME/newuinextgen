@@ -98,19 +98,49 @@
       '">' +
       esc(i18n.view || "View profile") +
       "</a>" +
-      '<button type="button" class="ngc-mkt-btn ngc-mkt-btn--book" data-nbi-book="' +
+      '<a class="ngc-mkt-btn ngc-mkt-btn--book bi-book-lesson-trigger" href="' +
+      esc(bookUrl(t)) +
+      '" data-bi-booking-drawer="1" data-nbi-book="' +
       esc(t.postId || "") +
+      '" data-tutor-id="' +
+      esc(t.postId || "") +
+      '" data-tutor-name="' +
+      esc(t.name || "") +
       '">' +
       esc(i18n.book || "Book Session") +
-      "</button>" +
+      "</a>" +
       "</div></div></article>"
     );
+  }
+
+  /** Booking intent keeps the tutor in the URL so the intake/checkout can honour it. */
+  function bookUrl(t) {
+    if (!cfg.bookUrl) {
+      return (t.permalink || t.url || "#") + "#book";
+    }
+    var sep = cfg.bookUrl.indexOf("?") >= 0 ? "&" : "?";
+    if (t.postId) {
+      return cfg.bookUrl + sep + "ngc_tutor_id=" + encodeURIComponent(t.postId);
+    }
+    if (t.name) {
+      return cfg.bookUrl + sep + "preferred_tutor=" + encodeURIComponent(t.name);
+    }
+    return t.permalink || t.url || cfg.bookUrl;
+  }
+
+  function themeDrawerPresent() {
+    return !!document.getElementById("bi-booking-drawer");
   }
 
   function wireCards(gridEl) {
     gridEl.querySelectorAll("[data-nbi-book]").forEach(function (btn) {
       bindMagnetic(btn);
-      btn.addEventListener("click", function () {
+      // The theme booking drawer owns [data-bi-booking-drawer] clicks; without it
+      // fall back to the marketplace drawer, then to the tutor-scoped intake URL.
+      if (themeDrawerPresent()) {
+        return;
+      }
+      btn.addEventListener("click", function (e) {
         var article = btn.closest(".ngc-mkt-card");
         var id = btn.getAttribute("data-nbi-book");
         var tutor = (window.__ngcMktItems || []).find(function (t) {
@@ -124,10 +154,13 @@
             permalink: linkEl ? linkEl.getAttribute("href") : "#",
           };
         }
-        if (window.nbiOpenBookingDrawer && tutor) {
+        if (!tutor) {
+          return;
+        }
+        tutor.bookUrl = btn.getAttribute("href") || bookUrl(tutor);
+        if (window.nbiOpenBookingDrawer) {
+          e.preventDefault();
           window.nbiOpenBookingDrawer(tutor);
-        } else if (tutor && tutor.permalink) {
-          window.location.href = tutor.permalink + "#book";
         }
       });
     });
@@ -222,18 +255,62 @@
         "</div>";
       api("/marketplace/tutors", collectFilters())
         .then(function (data) {
-          var items = data.items || [];
+          var items = (data && data.items) || [];
+          if (!items.length) {
+            items = filterFallback(collectFilters());
+            if (items.length) {
+              setStatus(i18n.demo || "Showing sample tutors");
+            } else {
+              setStatus(i18n.empty || "No tutors found");
+            }
+          } else {
+            var label = items.length + " " + (i18n.results || "tutors found");
+            if (data.fallback || data.source === "demo") {
+              label = (i18n.demo || "Sample tutors") + " · " + label;
+            }
+            setStatus(label);
+          }
           window.__ngcMktItems = items;
           gridEl.classList.remove("is-loading");
-          setStatus(items.length ? items.length + " " + (i18n.results || "tutors found") : i18n.empty || "No tutors found");
           gridEl.innerHTML = items.length ? items.map(card).join("") : '<p class="ngc-mkt-empty">' + esc(i18n.empty || "") + "</p>";
           wireCards(gridEl);
-          renderPager(data.total || 0, data.page || 1, data.pages || 0);
+          renderPager(data && data.total ? data.total : items.length, data && data.page ? data.page : 1, data && data.pages ? data.pages : 1);
         })
         .catch(function () {
+          var items = filterFallback(collectFilters());
+          window.__ngcMktItems = items;
           gridEl.classList.remove("is-loading");
-          gridEl.innerHTML = '<p class="ngc-mkt-error" role="alert">' + esc(i18n.error || "Error") + "</p>";
+          if (items.length) {
+            setStatus(i18n.demo || "Showing sample tutors");
+            gridEl.innerHTML = items.map(card).join("");
+            wireCards(gridEl);
+            renderPager(items.length, 1, 1);
+          } else {
+            gridEl.innerHTML = '<p class="ngc-mkt-error" role="alert">' + esc(i18n.error || "Error") + "</p>";
+          }
         });
+    }
+
+    function filterFallback(f) {
+      var pool = Array.isArray(cfg.fallback) ? cfg.fallback.slice() : [];
+      if (!pool.length) return [];
+      var subject = (f.subject || "").toLowerCase();
+      var province = (f.province || "").toLowerCase();
+      var q = (f.q || "").toLowerCase();
+      return pool.filter(function (t) {
+        if (subject) {
+          var hit = (t.subjects || []).some(function (s) {
+            return String(s).toLowerCase().replace(/\s+/g, "-") === subject || String(s).toLowerCase().indexOf(subject) >= 0;
+          });
+          if (!hit) return false;
+        }
+        if (province && String(t.province || "").toLowerCase().replace(/\s+/g, "-") !== province) return false;
+        if (q) {
+          var hay = (t.name || "") + " " + (t.subjects || []).join(" ");
+          if (hay.toLowerCase().indexOf(q) < 0) return false;
+        }
+        return true;
+      });
     }
 
     api("/marketplace/filters").then(function (opts) {

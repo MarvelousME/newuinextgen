@@ -61,12 +61,16 @@ services:
       - ../NextGenTutors-AI-Integration:/var/www/html/wp-content/plugins/NextGenTutors-AI-Integration
       - ../nextgen-automation-hub:/var/www/html/wp-content/plugins/nextgen-automation-hub
       - ../NextGenTutors-Plugin-Manager:/var/www/html/wp-content/plugins/NextGenTutors-Plugin-Manager
+      - ../NextGenTutors-Mission-Control:/var/www/html/wp-content/plugins/NextGenTutors-Mission-Control
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer
       - ../content/_extracted/nextgen-command-center-v1.0:/var/www/html/wp-content/plugins/nextgen-command-center
       - ../content/_extracted/nextgen-completion-suite:/var/www/html/wp-content/plugins/nextgen-completion-suite
       - ../webpages-content:/var/www/html/wp-content/ngt-html-source
       - ../ui-library:/var/www/html/wp-content/ngt-ui-library
+      - ../release:/var/www/html/wp-content/release:ro
       - ./ngcpm-packages:/var/www/html/wp-content/ngcpm-packages
+      - ../config:/var/www/config
+      - ./mu-plugins:/var/www/html/wp-content/mu-plugins
       - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
     depends_on:
       db:
@@ -108,12 +112,15 @@ services:
       - ../NextGenTutors-AI-Integration:/var/www/html/wp-content/plugins/NextGenTutors-AI-Integration
       - ../nextgen-automation-hub:/var/www/html/wp-content/plugins/nextgen-automation-hub
       - ../NextGenTutors-Plugin-Manager:/var/www/html/wp-content/plugins/NextGenTutors-Plugin-Manager
+      - ../NextGenTutors-Mission-Control:/var/www/html/wp-content/plugins/NextGenTutors-Mission-Control
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer
       - ../content/_extracted/nextgen-command-center-v1.0:/var/www/html/wp-content/plugins/nextgen-command-center
       - ../content/_extracted/nextgen-completion-suite:/var/www/html/wp-content/plugins/nextgen-completion-suite
       - ../webpages-content:/var/www/html/wp-content/ngt-html-source
       - ../ui-library:/var/www/html/wp-content/ngt-ui-library
+      - ../release:/var/www/html/wp-content/release:ro
       - ./ngcpm-packages:/var/www/html/wp-content/ngcpm-packages
+      - ../config:/var/www/config
       - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - ./init/setup.sh:/setup/setup.sh:ro
       - ./init/apply-defaults.sh:/setup/apply-defaults.sh:ro

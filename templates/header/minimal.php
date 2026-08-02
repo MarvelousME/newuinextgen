@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <header class="ngt-nav ngt-nav--minimal" role="banner">
   <div class="ngt-container">
     <div class="ngt-nav__inner ngt-nav__inner--minimal">
-      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="ngt-nav__logo">
+      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="ngt-nav__logo" data-ngt-transition data-testid="ngt-nav-logo" aria-label="<?php esc_attr_e( 'NextGen Tutors home', 'beyondinfinity' ); ?>">
         <?php if ( has_custom_logo() ) :
           $logo_id  = get_theme_mod( 'custom_logo' );
           $logo_url = wp_get_attachment_image_url( $logo_id, 'full' );

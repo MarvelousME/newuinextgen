@@ -177,8 +177,8 @@ function bi_ngt_enqueue_assets() {
 		$deps[] = $handle;
 	}
 
-	$skip_floating = is_front_page() && function_exists( 'bi_use_kinetic_home' ) && bi_use_kinetic_home();
-	if ( ! $skip_floating && ! bi_is_dashboard_page() ) {
+	$skip_floating = bi_is_dashboard_page();
+	if ( ! $skip_floating ) {
 		wp_enqueue_script( 'bi-ngt-floating', $uri . '/js/floating.js', [ 'bi-ngt-wp-bridge' ], $ver, true );
 		if ( file_exists( bi_ngt_assets_dir() . '/js/chat.js' ) ) {
 			wp_enqueue_script( 'bi-ngt-chat', $uri . '/js/chat.js', [ 'bi-ngt-floating' ], $ver, true );
@@ -196,7 +196,10 @@ function bi_ngt_enqueue_assets() {
 			'findUrl'    => home_url( '/find-a-tutor' ),
 			'loginUrl'   => home_url( '/login' ),
 			'contactUrl' => home_url( '/contact' ),
-			'waNumber'   => preg_replace( '/\D+/', '', (string) bi_get_theme_option( 'whatsapp_number', '27123456789' ) ),
+			'waNumber'   => preg_replace( '/\D+/', '', (string) bi_get_theme_option( 'whatsapp_number', bi_get_theme_option( 'bi_whatsapp', '27813340625' ) ) ),
+			'supportUrl' => home_url( '/support/' ),
+			'restUrl'    => esc_url_raw( rest_url( 'ngc/v1' ) ),
+			'nonce'      => wp_create_nonce( 'wp_rest' ),
 		]
 	);
 }

@@ -36,8 +36,12 @@ class NGC_Rest {
 		NGC_Rest_Bookings::register();
 		NGC_Rest_Reviews::register();
 		NGC_Rest_Admin::register();
+		NGC_Rest_Admin_Shell::register();
 		NGC_Rest_Platform::register();
 		NGC_Rest_Platform_Services::register();
+		if ( class_exists( 'NGC_Rest_Platform_Kernel' ) ) {
+			NGC_Rest_Platform_Kernel::register();
+		}
 		NGC_Rest_Ai::register();
 		NGC_Rest_Studio::register();
 		NGC_Rest_Section_Cms::register();
@@ -45,6 +49,8 @@ class NGC_Rest {
 		NGC_Rest_Page_Forms_Registry::register();
 		NGC_Rest_System_Log::register();
 		NGC_Rest_Metrics::register();
+		NGC_Rest_Intelligence::register();
+		NGC_Rest_Support::register();
 		NGC_Rest_Legacy_Alias::register_alias_routes();
 	}
 

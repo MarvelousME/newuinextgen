@@ -25,7 +25,7 @@ class NGC_Rest_Marketplace {
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ __CLASS__, 'tutors' ],
 				'permission_callback' => function () {
-					return NGC_Rest::public_throttled( 'marketplace_search', 60, 600 );
+					return NGC_Rest::public_throttled( 'marketplace_search', 240, 600 );
 				},
 			]
 		);
@@ -37,7 +37,7 @@ class NGC_Rest_Marketplace {
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ __CLASS__, 'filters' ],
 				'permission_callback' => function () {
-					return NGC_Rest::public_throttled( 'marketplace_search', 60, 600 );
+					return NGC_Rest::public_throttled( 'marketplace_search', 240, 600 );
 				},
 			]
 		);
@@ -48,7 +48,7 @@ class NGC_Rest_Marketplace {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public static function tutors( $request ) {
-		$allowed = NGC_Rest::public_throttled( 'marketplace_search', 60, 600 );
+		$allowed = NGC_Rest::public_throttled( 'marketplace_search', 240, 600 );
 		if ( is_wp_error( $allowed ) ) {
 			return $allowed;
 		}

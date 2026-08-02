@@ -63,6 +63,21 @@ class NGC_Wallet {
 	private static function entry( $user_id, $type, $amount, $reference, $description ) {
 		global $wpdb;
 		$amount  = abs( (float) $amount );
+		$reference = sanitize_text_field( $reference );
+		$table = NGC_Database::table( 'wallet_ledger' );
+
+		if ( $reference !== '' ) {
+			$existing = (int) $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT id FROM {$table} WHERE reference = %s LIMIT 1",
+					$reference
+				)
+			);
+			if ( $existing ) {
+				return $existing;
+			}
+		}
+
 		$balance = self::balance( $user_id );
 		if ( 'credit' === $type ) {
 			$balance += $amount;
@@ -70,7 +85,6 @@ class NGC_Wallet {
 			$balance -= $amount;
 		}
 
-		$table = NGC_Database::table( 'wallet_ledger' );
 		$inserted = $wpdb->insert(
 			$table,
 			[
@@ -79,7 +93,7 @@ class NGC_Wallet {
 				'amount'         => $amount,
 				'currency'       => 'ZAR',
 				'balance_after'  => $balance,
-				'reference'      => sanitize_text_field( $reference ),
+				'reference'      => $reference,
 				'description'    => sanitize_text_field( $description ),
 				'created_at'     => current_time( 'mysql', true ),
 			],
@@ -92,6 +106,15 @@ class NGC_Wallet {
 
 		update_user_meta( $user_id, 'ngc_wallet_balance', $balance );
 		NGC_Audit::log( 'wallet_' . $type, 'wallet', (int) $wpdb->insert_id, [ 'amount' => $amount, 'user_id' => $user_id ] );
+		do_action(
+			'ngc_wallet_' . ( 'credit' === $type ? 'credited' : 'debited' ),
+			(int) $user_id,
+			[
+				'amount'    => $amount,
+				'reference' => $reference,
+				'entry_id'  => (int) $wpdb->insert_id,
+			]
+		);
 		return (int) $wpdb->insert_id;
 	}
 

@@ -185,7 +185,7 @@
       }
     }
     if (cta) {
-      cta.href = tutor.permalink || tutor.url || "#book";
+      cta.href = tutor.bookUrl || ((tutor.permalink || tutor.url || "") + "#book") || "#book";
     }
     drawer.removeAttribute("hidden");
     drawer.classList.add("is-open");

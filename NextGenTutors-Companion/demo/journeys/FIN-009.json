@@ -1,0 +1,37 @@
+﻿{
+    "id":  "FIN-009",
+    "name":  "Chargeback",
+    "persona":  "demo-finance",
+    "scenario":  "all",
+    "family":  "finance",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "record-chargeback"
+                  },
+                  {
+                      "action":  "freeze-payout"
+                  }
+              ],
+    "expected_events":  [
+                            "fraud.signal.raised"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "commerce-order"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=FIN-009",
+                         "seed_graph_keys":  [
+                                                 "FIN-009"
+                                             ]
+                     }
+}

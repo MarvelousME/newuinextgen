@@ -72,6 +72,14 @@ class NGC_Payments {
 			return true;
 		}
 
+		$idem_key = 'payment-settle:' . (int) $order_id;
+		if ( class_exists( 'NGC_Idempotency' ) ) {
+			$begun = NGC_Idempotency::begin( $idem_key, 'order:' . (int) $order_id, 'payments' );
+			if ( is_wp_error( $begun ) || 'replay' === ( $begun['status'] ?? '' ) ) {
+				return true;
+			}
+		}
+
 		$user_id = (int) $order->get_user_id();
 		$amount  = (float) $order->get_total();
 
@@ -131,8 +139,22 @@ class NGC_Payments {
 			NGC_Audit::log( 'payment_completed', 'order', $order_id, [ 'amount' => $amount ] );
 		}
 
+		do_action(
+			'ngc_payment_settled',
+			(int) $order_id,
+			[
+				'amount'   => $amount,
+				'user_id'  => $user_id,
+				'currency' => method_exists( $order, 'get_currency' ) ? (string) $order->get_currency() : 'ZAR',
+			]
+		);
+
 		$order->update_meta_data( 'ngc_payment_settled', gmdate( 'c' ) );
 		$order->save();
+
+		if ( class_exists( 'NGC_Idempotency' ) ) {
+			NGC_Idempotency::commit( $idem_key, [ 'order_id' => (int) $order_id, 'amount' => $amount ] );
+		}
 
 		return true;
 	}
@@ -189,5 +211,6 @@ class NGC_Payments {
 		);
 
 		NGC_Audit::log( 'payment_refunded', 'order', $order_id, [ 'amount' => $amount ] );
+		do_action( 'ngc_payment_refunded', (int) $order_id, [ 'amount' => $amount, 'user_id' => $user_id ] );
 	}
 }

@@ -45,7 +45,10 @@ html.bi-loader-skip .bi-loader { display: none; }
 .bi-loader[data-bi-loader-variant="orb"] .bi-loader__variant--orb,
 .bi-loader[data-bi-loader-variant="wave"] .bi-loader__variant--wave,
 .bi-loader[data-bi-loader-variant="nodes"] .bi-loader__variant--nodes,
-.bi-loader[data-bi-loader-variant="pulse"] .bi-loader__variant--pulse {
+.bi-loader[data-bi-loader-variant="pulse"] .bi-loader__variant--pulse,
+.bi-loader[data-bi-loader-variant="aurora"] .bi-loader__variant--aurora,
+.bi-loader[data-bi-loader-variant="ring"] .bi-loader__variant--ring,
+.bi-loader[data-bi-loader-variant="spark"] .bi-loader__variant--spark {
   display: block;
 }
 
@@ -119,6 +122,72 @@ html.bi-loader-skip .bi-loader { display: none; }
 /* 5 · Logo pulse — brand text alone carries this variant. */
 .bi-loader__variant--pulse { width: 1px; height: 1px; }
 
+/* 6 · Aurora sweep */
+.bi-loader__aurora {
+  width: 200px;
+  height: 72px;
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      110deg,
+      transparent 20%,
+      rgba(5, 150, 105, 0.55) 40%,
+      rgba(255, 159, 10, 0.55) 55%,
+      transparent 75%
+    ),
+    rgba(255, 255, 255, 0.06);
+  background-size: 220% 100%, 100% 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  animation: bi-loader-aurora 1.8s ease-in-out infinite;
+}
+
+/* 7 · Dual ring */
+.bi-loader__ring {
+  position: relative;
+  width: 88px;
+  height: 88px;
+}
+.bi-loader__ring-outer,
+.bi-loader__ring-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+}
+.bi-loader__ring-outer {
+  border-top-color: var(--ngt-secondary, #059669);
+  border-right-color: rgba(5, 150, 105, 0.25);
+  animation: bi-loader-spin 1.1s linear infinite;
+}
+.bi-loader__ring-inner {
+  inset: 14px;
+  border-bottom-color: var(--ngt-accent, #FF9F0A);
+  border-left-color: rgba(255, 159, 10, 0.25);
+  animation: bi-loader-spin 1.6s linear infinite reverse;
+}
+
+/* 8 · Spark dots */
+.bi-loader__spark {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.bi-loader__spark span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ngt-secondary, #059669);
+  animation: bi-loader-spark 0.9s ease-in-out infinite;
+}
+.bi-loader__spark span:nth-child(2) {
+  background: var(--ngt-accent, #FF9F0A);
+  animation-delay: 150ms;
+}
+.bi-loader__spark span:nth-child(3) {
+  background: rgba(255, 255, 255, 0.85);
+  animation-delay: 300ms;
+}
+
 /* Slim top progress bar for subsequent in-site navigations. */
 .bi-loader-bar {
   position: fixed;
@@ -144,6 +213,14 @@ html.bi-loader-skip .bi-loader { display: none; }
   0%, 100% { background: rgba(255, 255, 255, 0.14); transform: scale(1); }
   50% { background: var(--ngt-secondary, #059669); transform: scale(1.25); }
 }
+@keyframes bi-loader-aurora {
+  0%, 100% { background-position: 100% 0, 0 0; opacity: 0.85; }
+  50% { background-position: 0% 0, 0 0; opacity: 1; }
+}
+@keyframes bi-loader-spark {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.55; }
+  50% { transform: translateY(-10px) scale(1.15); opacity: 1; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .bi-loader__variant { display: none !important; }
@@ -151,7 +228,11 @@ html.bi-loader-skip .bi-loader { display: none; }
   .bi-loader__orb,
   .bi-loader__orb-ring,
   .bi-loader__wave,
-  .bi-loader__nodes span {
+  .bi-loader__nodes span,
+  .bi-loader__aurora,
+  .bi-loader__ring-outer,
+  .bi-loader__ring-inner,
+  .bi-loader__spark span {
     animation: none !important;
   }
 }

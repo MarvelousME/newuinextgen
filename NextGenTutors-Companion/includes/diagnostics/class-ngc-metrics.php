@@ -157,6 +157,42 @@ final class NGC_Metrics {
 	}
 
 	/**
+	 * Alias for bump (platform kernel + Prometheus series).
+	 *
+	 * @param string               $key    Counter key.
+	 * @param int                  $delta  Delta.
+	 * @param array<string,string> $labels Optional labels (folded into key suffix).
+	 */
+	public static function inc( $key, $delta = 1, $labels = [] ) {
+		$suffix = '';
+		if ( is_array( $labels ) && $labels ) {
+			ksort( $labels );
+			$parts = [];
+			foreach ( $labels as $lk => $lv ) {
+				$parts[] = sanitize_key( (string) $lk ) . '_' . sanitize_key( (string) $lv );
+			}
+			$suffix = '_' . implode( '_', $parts );
+		}
+		self::bump( sanitize_key( (string) $key ) . $suffix, $delta );
+	}
+
+	/**
+	 * Store a gauge value in the counters transient under gauge_ prefix.
+	 *
+	 * @param string $key   Gauge key.
+	 * @param float  $value Value.
+	 */
+	public static function set_gauge( $key, $value ) {
+		$key      = 'gauge_' . sanitize_key( (string) $key );
+		$counters = get_transient( self::TRANSIENT_COUNTERS );
+		if ( ! is_array( $counters ) ) {
+			$counters = [];
+		}
+		$counters[ $key ] = (float) $value;
+		set_transient( self::TRANSIENT_COUNTERS, $counters, DAY_IN_SECONDS );
+	}
+
+	/**
 	 * Full metrics snapshot (gauges + counters).
 	 *
 	 * @return array{generated_at:string,counters:array<string,int>,gauges:array<string,float|int>,labels:array<string,string>}
@@ -215,6 +251,24 @@ final class NGC_Metrics {
 		if ( class_exists( 'NGC_Fraud_Engine' ) && method_exists( 'NGC_Fraud_Engine', 'stats' ) ) {
 			$frd = NGC_Fraud_Engine::stats();
 			$gauges['ngc_fraud_open'] = (int) ( $frd['open'] ?? 0 );
+		}
+
+		if ( class_exists( 'NGC_Durable_Queue' ) ) {
+			$qstats = NGC_Durable_Queue::stats();
+			$gauges['ngc_queue_dlq_open'] = (int) ( $qstats['dlq_open'] ?? 0 );
+			foreach ( (array) ( $qstats['queues'] ?? [] ) as $qname => $statuses ) {
+				foreach ( (array) $statuses as $st => $cnt ) {
+					$gauges[ 'ngc_queue_' . sanitize_key( $qname ) . '_' . sanitize_key( $st ) ] = (int) $cnt;
+				}
+			}
+		}
+		if ( class_exists( 'NGC_Ledger' ) ) {
+			$gauges['ngc_ledger_cash'] = (float) NGC_Ledger::balance( 'cash' );
+		}
+		foreach ( $counters as $ck => $cv ) {
+			if ( 0 === strpos( (string) $ck, 'gauge_' ) ) {
+				$gauges[ 'ngc_' . substr( (string) $ck, 6 ) ] = (float) $cv;
+			}
 		}
 
 		$outbox = $wpdb->prefix . 'ngc_event_outbox';

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img">
+  <title>08 - Tutor Approval Sequence</title>
+  <desc>Sequence from tutor application through ops approval to live tutor role.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0D7377"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F7FBFC"/>
+  <text x="24" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B2545">08 - Tutor Approval Sequence</text>
+  <text x="100" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Applicant</text>
+  <text x="300" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Companion</text>
+  <text x="520" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Ops / Compliance</text>
+  <text x="760" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Matching pool</text>
+  <line x1="100" y1="90" x2="100" y2="420" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="300" y1="90" x2="300" y2="420" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="520" y1="90" x2="520" y2="420" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="760" y1="90" x2="760" y2="420" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="100" y1="130" x2="300" y2="130" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="200" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">1 submit application</text>
+  <line x1="300" y1="180" x2="100" y2="180" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="200" y="172" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">2 role = applicant</text>
+  <line x1="300" y1="230" x2="520" y2="230" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="410" y="222" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">3 queue for review</text>
+  <line x1="520" y1="290" x2="300" y2="290" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="410" y="282" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">4 approve / reject</text>
+  <line x1="300" y1="350" x2="100" y2="350" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="200" y="342" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">5 promote ngt_tutor</text>
+  <line x1="300" y1="400" x2="760" y2="400" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="530" y="392" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">6 eligible for match (NGT-T)</text>
+  <rect x="40" y="450" width="520" height="45" rx="4" fill="#FFFFFF" stroke="#0B2545"/>
+  <text x="50" y="470" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Legend: ops caps required. Document checks / safeguarding gates as configured.</text>
+  <text x="50" y="486" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Journey JOURNEY-TUTOR-001 - verify on staging.</text>
+</svg>

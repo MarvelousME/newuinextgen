@@ -69,6 +69,7 @@ class NGC_Integrations_Bootstrap {
 		$results = [
 			'payfast'         => self::configure_payfast(),
 			'fluentcrm'       => self::configure_fluentcrm(),
+			'fluent_support'  => self::configure_fluent_support(),
 			'gamipress'       => self::configure_gamipress(),
 			'masterstudy'     => self::configure_masterstudy(),
 			'amelia'          => self::configure_amelia(),
@@ -130,6 +131,31 @@ class NGC_Integrations_Bootstrap {
 		return [
 			'ok'     => ! empty( $verify['ok'] ),
 			'status' => $verify['status'] ?? 'bootstrapped',
+		];
+	}
+
+	/**
+	 * Seed Fluent Support mailbox + portal with NextGenTutors business details.
+	 *
+	 * @return array<string, mixed>
+	 */
+	public static function configure_fluent_support() {
+		if ( ! class_exists( 'NGC_FluentSupport_Adapter' ) ) {
+			return [ 'ok' => false, 'reason' => 'adapter_missing' ];
+		}
+
+		$adapter = new NGC_FluentSupport_Adapter();
+		if ( ! $adapter->is_available() ) {
+			return [ 'ok' => false, 'reason' => 'fluent_support_inactive' ];
+		}
+
+		$boot   = $adapter->bootstrap_assets( true );
+		$verify = $adapter->verify();
+
+		return [
+			'ok'     => ! empty( $verify['ok'] ),
+			'status' => $verify['status'] ?? 'bootstrapped',
+			'boot'   => $boot,
 		];
 	}
 

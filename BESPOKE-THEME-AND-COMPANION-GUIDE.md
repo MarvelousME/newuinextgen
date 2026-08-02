@@ -293,6 +293,10 @@ php NextGenTutors-Companion/tests/run.php
 cd e2e
 $env:BASE_URL='http://localhost:8900'
 npm run test:phase14
+
+# Full-system headed verification (public pages, auth, forms, admin)
+npm run test:system-headed
+# See e2e/SYSTEM-VERIFICATION.md
 ```
 
 Smoke manually:

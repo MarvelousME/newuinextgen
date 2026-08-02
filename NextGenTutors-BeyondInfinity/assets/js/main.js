@@ -104,7 +104,7 @@
     calcTotal.textContent = 'R' + total.toLocaleString('en-ZA');
   }
 
-  if (calcFormat) {
+  if (calcFormat && calcLessons && calcTotal) {
     calcFormat.addEventListener('change', updatePricingCalc);
     calcLessons.addEventListener('change', updatePricingCalc);
     if (calcWeeks) calcWeeks.addEventListener('change', updatePricingCalc);
@@ -146,20 +146,6 @@
         applyDirFilter(chip.getAttribute('data-format'));
       });
     });
-  }
-
-  /* Coverage / hero search → scroll to live marketplace or fallback directory */
-  var searchParams = new URLSearchParams(window.location.search);
-  if (searchParams.has('subject') || searchParams.has('province') || searchParams.has('location') || searchParams.has('format')) {
-    var directory = document.querySelector('[data-ngc-marketplace]') || document.getElementById('tutor-directory');
-    if (directory) {
-      window.setTimeout(function() {
-        directory.scrollIntoView({
-          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-          block: 'start'
-        });
-      }, 150);
-    }
   }
 
   /* Stats animation */

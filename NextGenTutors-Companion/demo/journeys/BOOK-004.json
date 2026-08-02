@@ -1,0 +1,41 @@
+﻿{
+    "id":  "BOOK-004",
+    "name":  "Cancellation Within Policy",
+    "persona":  "demo-parent",
+    "scenario":  "all",
+    "family":  "booking",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "cancel-booking"
+                  },
+                  {
+                      "action":  "apply-policy"
+                  },
+                  {
+                      "action":  "notify"
+                  }
+              ],
+    "expected_events":  [
+                            "booking.cancelled"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "booking-sync",
+                                  "commerce-order"
+                              ],
+    "expected_audit_events":  "demo_seed_completed",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=BOOK-004",
+                         "seed_graph_keys":  [
+                                                 "BOOK-004"
+                                             ]
+                     }
+}

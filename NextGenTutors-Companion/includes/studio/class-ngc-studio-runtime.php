@@ -135,9 +135,24 @@ class NGC_Studio_Runtime {
 		$ids = self::$trigger_index[ $key ] ?? [];
 		foreach ( $ids as $workflow_id ) {
 			$wf = self::$workflows[ (int) $workflow_id ] ?? null;
-			if ( $wf ) {
-				NGC_Studio_Engine::execute( $wf, $context, $key );
+			if ( ! $wf ) {
+				continue;
 			}
+			$should = apply_filters( 'ngc_studio_should_execute_side_effects', true, $wf, $context, $key );
+			if ( ! $should && class_exists( 'NGC_Workflow_Authority' ) ) {
+				NGC_Workflow_Authority::from_producer(
+					'studio',
+					'studio_workflow',
+					[
+						'workflow_id' => (int) $workflow_id,
+						'trigger'     => $key,
+						'context'     => $context,
+						'idempotency_key' => 'studio:' . (int) $workflow_id . ':' . $key . ':' . md5( wp_json_encode( $context ) ),
+					]
+				);
+				continue;
+			}
+			NGC_Studio_Engine::execute( $wf, $context, $key );
 		}
 	}
 

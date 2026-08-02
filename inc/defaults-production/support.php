@@ -20,10 +20,10 @@ bi_hero(
               [ '💳', __( 'Billing & Refunds', 'beyondinfinity' ), __( 'Invoices, guarantee claims and payment issues.', 'beyondinfinity' ), '/guarantee' ],
           ] as $i => $card
       ) : ?>
-        <a href="<?php echo esc_url( home_url( $card[3] ) ); ?>" class="ngt-card ngt-animate ngt-animate--delay-<?php echo $i + 1; ?>" style="padding:28px;text-decoration:none;color:inherit">
-          <div style="font-size:2rem;margin-bottom:12px"><?php echo esc_html( $card[0] ); ?></div>
-          <h3 style="margin-bottom:8px"><?php echo esc_html( $card[1] ); ?></h3>
-          <p style="margin:0;color:var(--ngt-text-2)"><?php echo esc_html( $card[2] ); ?></p>
+        <a href="<?php echo esc_url( home_url( $card[3] ) ); ?>" class="ngt-card ngt-animate ngt-animate--delay-<?php echo (int) ( $i + 1 ); ?> bi-pad-md bi-card-link">
+          <div class="bi-icon-lg"><?php echo esc_html( $card[0] ); ?></div>
+          <h3 class="bi-mb-xs"><?php echo esc_html( $card[1] ); ?></h3>
+          <p class="bi-copy-flush bi-text-muted"><?php echo esc_html( $card[2] ); ?></p>
         </a>
       <?php endforeach; ?>
     </div>
@@ -40,9 +40,9 @@ bi_hero(
             [ __( 'How are tutors vetted?', 'beyondinfinity' ), __( 'ID verification, qualification review, manual approval and ongoing monitoring. See the tutor vetting page for detail.', 'beyondinfinity' ) ],
         ] as $faq
     ) : ?>
-      <details class="ngt-card bi-faq ngt-animate" style="padding:20px;margin-bottom:12px">
-        <summary style="font-weight:700;cursor:pointer"><?php echo esc_html( $faq[0] ); ?></summary>
-        <p style="margin:12px 0 0;color:var(--ngt-text-2)"><?php echo esc_html( $faq[1] ); ?></p>
+      <details class="ngt-card bi-faq ngt-animate">
+        <summary><?php echo esc_html( $faq[0] ); ?></summary>
+        <p><?php echo esc_html( $faq[1] ); ?></p>
       </details>
     <?php endforeach; ?>
   </div>
@@ -50,9 +50,22 @@ bi_hero(
 
 <section class="ngt-section">
   <div class="ngt-container bi-narrow">
-    <?php bi_shortcode_block( '[ngc_contact_support_form]', __( 'Open a Support Ticket', 'beyondinfinity' ) ); ?>
-    <div class="ngt-card ngt-animate bi-center" style="padding:24px;margin-top:24px">
-      <p style="margin:0 0 16px"><?php esc_html_e( 'Prefer WhatsApp? Our team replies during business hours.', 'beyondinfinity' ); ?></p>
+    <?php
+    if ( shortcode_exists( 'fluent_support_portal' ) ) {
+        $mailbox_id = (int) get_option( 'ngc_fluent_support_mailbox_id', 0 );
+        $sc         = '[fluent_support_portal show_logout="yes"';
+        if ( $mailbox_id > 0 ) {
+            $sc .= ' business_box_id="' . $mailbox_id . '"';
+        }
+        $sc .= ']';
+        echo '<div class="ngt-section__header ngt-animate"><h2>' . esc_html__( 'Open a Support Ticket', 'beyondinfinity' ) . '</h2></div>';
+        echo do_shortcode( $sc ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    } else {
+        bi_shortcode_block( '[ngc_contact_support_form]', __( 'Open a Support Ticket', 'beyondinfinity' ) );
+    }
+    ?>
+    <div class="ngt-card ngt-animate bi-center bi-pad-sm bi-mt-md">
+      <p class="bi-mb-md"><?php esc_html_e( 'Prefer WhatsApp? Our team replies during business hours.', 'beyondinfinity' ); ?></p>
       <a href="<?php echo esc_url( bi_whatsapp_url() ); ?>" class="ngt-btn ngt-btn--secondary" target="_blank" rel="noopener"><?php esc_html_e( 'Chat on WhatsApp', 'beyondinfinity' ); ?></a>
     </div>
   </div>

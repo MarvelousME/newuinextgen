@@ -1,0 +1,49 @@
+{
+    "schema_version":  "1.0.0",
+    "generated_at":  "2026-08-02T10:59:58.1290152Z",
+    "git_commit":  "b7beae4a1f90d95eda0e52b9de79e04fde44a5f4",
+    "theme_version":  "1.9.17",
+    "companion_version":  "1.9.5",
+    "target_site":  "https://www.nextgentutors.co.za",
+    "timezone":  "Africa/Johannesburg",
+    "currency":  "ZAR",
+    "packages":  [
+                     {
+                         "path":  "theme/NextGenTutors-BeyondInfinity-v1.9.17.zip",
+                         "name":  "NextGenTutors-BeyondInfinity",
+                         "version":  "1.9.17"
+                     },
+                     {
+                         "path":  "plugins/NextGenTutors-Companion-v1.9.5.zip",
+                         "name":  "NextGenTutors-Companion",
+                         "version":  "1.9.5"
+                     },
+                     {
+                         "path":  "plugins/NextGenTutors-AI-Integration-v1.9.5.zip",
+                         "name":  "NextGenTutors-AI-Integration",
+                         "version":  "1.9.5"
+                     },
+                     {
+                         "path":  "plugins/NextGenTutors-Mission-Control-v1.9.5.zip",
+                         "name":  "NextGenTutors-Mission-Control",
+                         "version":  "1.9.5"
+                     },
+                     {
+                         "path":  "plugins/NextGenTutors-Plugin-Manager-v1.9.5.zip",
+                         "name":  "NextGenTutors-Plugin-Manager",
+                         "version":  "1.9.5"
+                     },
+                     {
+                         "path":  "plugins/NextGenTutors-Html-Importer-v1.9.5.zip",
+                         "name":  "NextGenTutors-Html-Importer",
+                         "version":  "1.9.5"
+                     },
+                     {
+                         "path":  "plugins/ngt-ui-library-v1.9.5.zip",
+                         "name":  "ngt-ui-library",
+                         "version":  "1.9.5"
+                     }
+                 ],
+    "checksums_file":  "checksums.sha256",
+    "notes":  "Production deployment requires explicit authorization. Secrets are never packaged."
+}

@@ -99,10 +99,83 @@ function bi_filter_tutors_by_subject( $tutors, $subject_slug ) {
 /**
  * Whether placeholder/demo roster content is allowed (default: off for production).
  *
+ * Auto-on for Docker / local demo seed stacks so empty CPT never blanks the UI.
+ *
  * @return bool
  */
 function bi_demo_content_enabled() {
-	return (bool) apply_filters( 'bi_demo_content_enabled', false );
+	$default = false;
+	if ( class_exists( 'NGC_Platform_Demo' ) && method_exists( 'NGC_Platform_Demo', 'is_enabled' ) && NGC_Platform_Demo::is_enabled() ) {
+		$default = true;
+	} elseif ( class_exists( 'NGC_Tutor_Seeder' ) && method_exists( 'NGC_Tutor_Seeder', 'demo_seed_allowed' ) && NGC_Tutor_Seeder::demo_seed_allowed() ) {
+		$default = true;
+	} elseif ( defined( 'NGC_ALLOW_DEMO_SEED' ) && NGC_ALLOW_DEMO_SEED ) {
+		$default = true;
+	}
+	return (bool) apply_filters( 'bi_demo_content_enabled', $default );
+}
+
+/**
+ * Merge static demo roster rows with live CPT tutors of the same name.
+ *
+ * Keeps booking/view CTAs working when the UI falls back to demo data.
+ *
+ * @param array<int, array<string, mixed>> $demo Demo rows.
+ * @return array<int, array<string, mixed>>
+ */
+function bi_hydrate_demo_tutors_with_live( $demo ) {
+	if ( empty( $demo ) || ! is_array( $demo ) ) {
+		return [];
+	}
+	$live = [];
+	if ( function_exists( 'bi_get_live_tutors' ) ) {
+		// Avoid recursion: pull CPT only (skip static demo) when possible.
+		if ( post_type_exists( 'tutors' ) ) {
+			$q = new WP_Query(
+				[
+					'post_type'      => 'tutors',
+					'post_status'    => 'publish',
+					'posts_per_page' => 48,
+					'no_found_rows'  => true,
+					'orderby'        => 'title',
+					'order'          => 'ASC',
+				]
+			);
+			foreach ( $q->posts as $post ) {
+				$live[] = bi_format_tutor_post( $post );
+			}
+			wp_reset_postdata();
+		}
+	}
+	if ( empty( $live ) ) {
+		return array_values( $demo );
+	}
+
+	$by_name = [];
+	foreach ( $live as $row ) {
+		$key = strtolower( trim( (string) ( $row['name'] ?? '' ) ) );
+		if ( $key ) {
+			$by_name[ $key ] = $row;
+		}
+	}
+
+	$out = [];
+	foreach ( $demo as $row ) {
+		$key = strtolower( trim( (string) ( $row['name'] ?? '' ) ) );
+		if ( $key && isset( $by_name[ $key ] ) ) {
+			$merged           = array_merge( $row, $by_name[ $key ] );
+			$merged['isDemo'] = ! empty( $by_name[ $key ]['isDemo'] ) || bi_tutor_post_is_demo( (int) ( $by_name[ $key ]['postId'] ?? 0 ) );
+			$out[]            = $merged;
+		} else {
+			$row['isDemo'] = true;
+			if ( empty( $row['permalink'] ) ) {
+				$row['permalink'] = add_query_arg( 'preferred_tutor', rawurlencode( (string) ( $row['name'] ?? '' ) ), home_url( '/find-a-tutor/' ) );
+				$row['url']       = $row['permalink'];
+			}
+			$out[] = $row;
+		}
+	}
+	return $out;
 }
 
 /**
@@ -117,51 +190,154 @@ function bi_get_demo_tutors( $limit = 10 ) {
 	}
 
 	$all = [
-        [
-            'name' => 'Karabo Molefe', 'hourlyRate' => 500, 'rating' => 4.95, 'groupType' => 'both',
-            'imageUrl' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600&h=600',
-            'degree' => 'B.Sc (Hons) Theoretical Physics · UCT',
-            'bio' => 'I break difficult calculus and mechanics into simple building blocks learners find intuitive.',
-            'subjects' => [ 'Mathematics', 'Physical Sciences', 'Statistics' ],
-        ],
-        [
-            'name' => 'Lindiwe Nkosi', 'hourlyRate' => 320, 'rating' => 5.0, 'groupType' => 'both',
-            'imageUrl' => 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600&h=600',
-            'degree' => 'B.Sc Applied Maths & Comp Sci · Wits',
-            'bio' => 'Interactive science tutoring combined with coding fundamentals for Grade 8–12.',
-            'subjects' => [ 'Physical Sciences', 'Python', 'Mathematics' ],
-        ],
-        [
-            'name' => 'Johan van der Merwe', 'hourlyRate' => 300, 'rating' => 4.8, 'groupType' => 'personal',
-            'imageUrl' => 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600&h=600',
-            'degree' => 'B.A. English & Economics · Stellenbosch',
-            'bio' => 'IEB educator specialising in essay planning, grammar and confidence coaching.',
-            'subjects' => [ 'English HL', 'Economics', 'History' ],
-        ],
-        [
-            'name' => 'Priya Govender', 'hourlyRate' => 320, 'rating' => 4.9, 'groupType' => 'online',
-            'imageUrl' => 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=600&h=600',
-            'degree' => 'B.Com Accounting · UKZN',
-            'bio' => 'Teaching bookkeeping with visual spreadsheet templates learners can reuse.',
-            'subjects' => [ 'Accounting', 'Business Studies', 'Afrikaans FAL' ],
-        ],
-        [
-            'name' => 'Thabo Ndlovu', 'hourlyRate' => 400, 'rating' => 4.9, 'groupType' => 'both',
-            'imageUrl' => 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=600&h=600',
-            'degree' => 'B.Sc Mathematics · Wits',
-            'bio' => 'Six years of Matric maths coaching focused on distinctions and exam technique.',
-            'subjects' => [ 'Mathematics', 'Statistics', 'Economics' ],
-        ],
-        [
-            'name' => 'Sarah Pretorius', 'hourlyRate' => 450, 'rating' => 5.0, 'groupType' => 'online',
-            'imageUrl' => 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=600&h=600',
-            'degree' => 'B.Sc Physics · Cambridge',
-            'bio' => 'Physics made intuitive — I teach the why behind every formula so it sticks.',
-            'subjects' => [ 'Physical Sciences', 'Mathematics', 'Coding' ],
-        ],
-    ];
+		[
+			'postId'     => 0,
+			'name'       => 'Karabo Molefe',
+			'hourlyRate' => 500,
+			'rate'       => 500,
+			'rating'     => 4.95,
+			'reviews'    => 42,
+			'groupType'  => 'both',
+			'imageUrl'   => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600&h=600',
+			'avatar'     => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600&h=600',
+			'degree'     => 'B.Sc (Hons) Theoretical Physics · UCT',
+			'bio'        => 'I break difficult calculus and mechanics into simple building blocks learners find intuitive.',
+			'subjects'   => [ 'Mathematics', 'Physical Sciences', 'Statistics' ],
+			'grades'     => [ 'Grade 10', 'Grade 11', 'Grade 12' ],
+			'province'   => 'Western Cape',
+			'location'   => 'Western Cape',
+			'formats'    => [ 'Online', 'In-person' ],
+			'vetted'     => true,
+			'available'  => true,
+			'matchScore' => 99,
+			'permalink'  => home_url( '/find-a-tutor/' ),
+			'url'        => home_url( '/find-a-tutor/' ),
+			'isDemo'     => true,
+		],
+		[
+			'postId'     => 0,
+			'name'       => 'Lindiwe Nkosi',
+			'hourlyRate' => 320,
+			'rate'       => 320,
+			'rating'     => 5.0,
+			'reviews'    => 156,
+			'groupType'  => 'both',
+			'imageUrl'   => 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600&h=600',
+			'avatar'     => 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600&h=600',
+			'degree'     => 'B.Sc Applied Maths & Comp Sci · Wits',
+			'bio'        => 'Interactive science tutoring combined with coding fundamentals for Grade 8–12.',
+			'subjects'   => [ 'Physical Sciences', 'Python', 'Mathematics' ],
+			'grades'     => [ 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12' ],
+			'province'   => 'Gauteng',
+			'location'   => 'Gauteng',
+			'formats'    => [ 'Online' ],
+			'vetted'     => true,
+			'available'  => true,
+			'matchScore' => 99,
+			'permalink'  => home_url( '/find-a-tutor/' ),
+			'url'        => home_url( '/find-a-tutor/' ),
+			'isDemo'     => true,
+		],
+		[
+			'postId'     => 0,
+			'name'       => 'Johan van der Merwe',
+			'hourlyRate' => 300,
+			'rate'       => 300,
+			'rating'     => 4.8,
+			'reviews'    => 67,
+			'groupType'  => 'personal',
+			'imageUrl'   => 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600&h=600',
+			'avatar'     => 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600&h=600',
+			'degree'     => 'B.A. English & Economics · Stellenbosch',
+			'bio'        => 'IEB educator specialising in essay planning, grammar and confidence coaching.',
+			'subjects'   => [ 'English HL', 'Economics', 'History' ],
+			'grades'     => [ 'Grade 10', 'Grade 11', 'Grade 12' ],
+			'province'   => 'Western Cape',
+			'location'   => 'Western Cape',
+			'formats'    => [ 'In-person' ],
+			'vetted'     => true,
+			'available'  => true,
+			'matchScore' => 96,
+			'permalink'  => home_url( '/find-a-tutor/' ),
+			'url'        => home_url( '/find-a-tutor/' ),
+			'isDemo'     => true,
+		],
+		[
+			'postId'     => 0,
+			'name'       => 'Priya Govender',
+			'hourlyRate' => 320,
+			'rate'       => 320,
+			'rating'     => 4.9,
+			'reviews'    => 88,
+			'groupType'  => 'online',
+			'imageUrl'   => 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=600&h=600',
+			'avatar'     => 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=600&h=600',
+			'degree'     => 'B.Com Accounting · UKZN',
+			'bio'        => 'Teaching bookkeeping with visual spreadsheet templates learners can reuse.',
+			'subjects'   => [ 'Accounting', 'Business Studies', 'Afrikaans FAL' ],
+			'grades'     => [ 'Grade 10', 'Grade 11', 'Grade 12' ],
+			'province'   => 'KwaZulu-Natal',
+			'location'   => 'KwaZulu-Natal',
+			'formats'    => [ 'Online' ],
+			'vetted'     => true,
+			'available'  => true,
+			'matchScore' => 98,
+			'permalink'  => home_url( '/find-a-tutor/' ),
+			'url'        => home_url( '/find-a-tutor/' ),
+			'isDemo'     => true,
+		],
+		[
+			'postId'     => 0,
+			'name'       => 'Thabo Ndlovu',
+			'hourlyRate' => 400,
+			'rate'       => 400,
+			'rating'     => 4.9,
+			'reviews'    => 112,
+			'groupType'  => 'both',
+			'imageUrl'   => 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=600&h=600',
+			'avatar'     => 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=600&h=600',
+			'degree'     => 'B.Sc Mathematics · Wits',
+			'bio'        => 'Six years of Matric maths coaching focused on distinctions and exam technique.',
+			'subjects'   => [ 'Mathematics', 'Statistics', 'Economics' ],
+			'grades'     => [ 'Grade 10', 'Grade 11', 'Grade 12' ],
+			'province'   => 'Gauteng',
+			'location'   => 'Gauteng',
+			'formats'    => [ 'Online', 'In-person' ],
+			'vetted'     => true,
+			'available'  => true,
+			'matchScore' => 98,
+			'permalink'  => home_url( '/find-a-tutor/' ),
+			'url'        => home_url( '/find-a-tutor/' ),
+			'isDemo'     => true,
+		],
+		[
+			'postId'     => 0,
+			'name'       => 'Sarah Pretorius',
+			'hourlyRate' => 450,
+			'rate'       => 450,
+			'rating'     => 5.0,
+			'reviews'    => 89,
+			'groupType'  => 'online',
+			'imageUrl'   => 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=600&h=600',
+			'avatar'     => 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=600&h=600',
+			'degree'     => 'B.Sc Physics · Cambridge',
+			'bio'        => 'Physics made intuitive — I teach the why behind every formula so it sticks.',
+			'subjects'   => [ 'Physical Sciences', 'Mathematics', 'Coding' ],
+			'grades'     => [ 'Grade 11', 'Grade 12' ],
+			'province'   => 'Gauteng',
+			'location'   => 'Gauteng',
+			'formats'    => [ 'Online' ],
+			'vetted'     => true,
+			'available'  => true,
+			'matchScore' => 99,
+			'permalink'  => home_url( '/find-a-tutor/' ),
+			'url'        => home_url( '/find-a-tutor/' ),
+			'isDemo'     => true,
+		],
+	];
 
-    return array_slice( $all, 0, max( 1, (int) $limit ) );
+	$sliced = array_slice( $all, 0, max( 1, (int) $limit ) );
+	return bi_hydrate_demo_tutors_with_live( $sliced );
 }
 
 /**
@@ -233,6 +409,158 @@ function bi_format_tutor_post( $post ) {
 }
 
 /**
+ * Booking URL that carries a tutor (and optional slot) into the workflow.
+ *
+ * Logged-out parents land on the find-a-tutor intake; the drawer swaps in
+ * parent-checkout for signed-in users.
+ *
+ * @param int                   $tutor_id Tutors CPT ID.
+ * @param array<string, string> $slot     Optional date/start/end/subject/delivery.
+ * @return string
+ */
+function bi_tutor_booking_url( $tutor_id, $slot = [] ) {
+	$tutor_id = (int) $tutor_id;
+	if ( $tutor_id <= 0 ) {
+		return home_url( '/find-a-tutor/' );
+	}
+
+	$args = [ 'ngc_tutor_id' => $tutor_id ];
+	$map  = [
+		'date'     => 'ngc_slot_date',
+		'start'    => 'ngc_slot_start',
+		'end'      => 'ngc_slot_end',
+		'subject'  => 'ngc_subject',
+		'delivery' => 'ngc_delivery_mode',
+	];
+	foreach ( $map as $key => $arg ) {
+		if ( ! empty( $slot[ $key ] ) ) {
+			$args[ $arg ] = sanitize_text_field( (string) $slot[ $key ] );
+		}
+	}
+
+	return add_query_arg( $args, home_url( '/find-a-tutor/' ) );
+}
+
+/**
+ * Tutor + slot the visitor asked to book, read from booking query args.
+ *
+ * @return array<string, mixed> Empty array when no valid tutor was requested.
+ */
+function bi_get_requested_tutor_context() {
+	// phpcs:disable WordPress.Security.NonceVerification.Recommended
+	$tutor_id = isset( $_GET['ngc_tutor_id'] ) ? absint( wp_unslash( $_GET['ngc_tutor_id'] ) ) : 0;
+	$name_q   = isset( $_GET['preferred_tutor'] ) ? sanitize_text_field( wp_unslash( $_GET['preferred_tutor'] ) ) : '';
+
+	$post = null;
+	if ( $tutor_id ) {
+		$post = get_post( $tutor_id );
+	}
+	if ( ( ! $post || 'tutors' !== $post->post_type || 'publish' !== $post->post_status ) && $name_q && post_type_exists( 'tutors' ) ) {
+		$found = get_posts(
+			[
+				'post_type'      => 'tutors',
+				'post_status'    => 'publish',
+				'title'          => $name_q,
+				'posts_per_page' => 1,
+				'no_found_rows'  => true,
+			]
+		);
+		// WP_Query title exact match is unreliable across versions — scan.
+		if ( empty( $found ) ) {
+			$found = get_posts(
+				[
+					'post_type'      => 'tutors',
+					'post_status'    => 'publish',
+					's'              => $name_q,
+					'posts_per_page' => 12,
+					'no_found_rows'  => true,
+				]
+			);
+		}
+		foreach ( $found as $candidate ) {
+			if ( strcasecmp( $candidate->post_title, $name_q ) === 0 ) {
+				$post     = $candidate;
+				$tutor_id = (int) $candidate->ID;
+				break;
+			}
+		}
+	}
+
+	if ( ! $post || 'tutors' !== $post->post_type || 'publish' !== $post->post_status ) {
+		if ( $name_q ) {
+			$slot = [];
+			foreach (
+				[
+					'date'     => 'ngc_slot_date',
+					'start'    => 'ngc_slot_start',
+					'end'      => 'ngc_slot_end',
+					'subject'  => 'ngc_subject',
+					'delivery' => 'ngc_delivery_mode',
+				] as $key => $arg
+			) {
+				if ( ! empty( $_GET[ $arg ] ) ) {
+					$slot[ $key ] = sanitize_text_field( wp_unslash( $_GET[ $arg ] ) );
+				}
+			}
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
+			return [
+				'id'        => 0,
+				'name'      => $name_q,
+				'permalink' => home_url( '/find-a-tutor/' ),
+				'slot'      => $slot,
+			];
+		}
+		return [];
+	}
+
+	$slot = [];
+	foreach (
+		[
+			'date'     => 'ngc_slot_date',
+			'tart'    => 'ngc_slot_start',
+			'send'      => 'ngc_slot_end',
+			'subject'  => 'ngc_subject',
+			'delivery' => 'ngc_delivery_mode',
+		] as $key => $arg
+	) {
+		if ( ! empty( $_GET[ $arg ] ) ) {
+			$slot[ $key ] = sanitize_text_field( wp_unslash( $_GET[ $arg ] ) );
+		}
+	}
+	// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+	return [
+		'id'        => $tutor_id,
+		'name'      => $post->post_title,
+		'permalink' => (string) get_permalink( $post ),
+		'slot'      => $slot,
+	];
+}
+
+/**
+ * Human-readable slot summary for intake notes and drawer copy.
+ *
+ * @param array<string, string> $slot Slot parts.
+ * @return string
+ */
+function bi_format_tutor_slot_label( $slot ) {
+	if ( empty( $slot ) ) {
+		return '';
+	}
+	$bits = [];
+	if ( ! empty( $slot['date'] ) ) {
+		$bits[] = $slot['date'];
+	}
+	if ( ! empty( $slot['start'] ) ) {
+		$bits[] = empty( $slot['end'] ) ? $slot['start'] : $slot['start'] . '–' . $slot['end'];
+	}
+	if ( ! empty( $slot['delivery'] ) ) {
+		$bits[] = ucfirst( (string) $slot['delivery'] );
+	}
+	return implode( ' · ', $bits );
+}
+
+/**
  * Ensure published tutors CPT exists (no auto-seed).
  *
  * @return bool
@@ -247,9 +575,15 @@ function bi_ensure_live_tutor_cpt() {
 /**
  * Exclude companion demo-seed tutors from public listings.
  *
- * @return array<string, mixed>
+ * When demo content is allowed (local / NGC_ALLOW_DEMO_SEED), return null so
+ * seeded CPT tutors remain visible instead of blanking the marketplace.
+ *
+ * @return array<string, mixed>|null
  */
 function bi_tutor_exclude_demo_meta_query() {
+	if ( bi_demo_content_enabled() ) {
+		return null;
+	}
 	return [
 		'relation' => 'OR',
 		[
@@ -294,7 +628,7 @@ function bi_count_published_tutors() {
 function bi_get_live_tutors( $limit = 6 ) {
 	$limit = max( 1, (int) $limit );
 	if ( ! post_type_exists( 'tutors' ) ) {
-		return [];
+		return bi_get_demo_tutors( $limit );
 	}
 
 	$base_args = [
@@ -302,8 +636,11 @@ function bi_get_live_tutors( $limit = 6 ) {
 		'post_status'    => 'publish',
 		'posts_per_page' => $limit,
 		'no_found_rows'  => true,
-		'meta_query'     => [ bi_tutor_exclude_demo_meta_query() ],
 	];
+	$demo_filter = bi_tutor_exclude_demo_meta_query();
+	if ( $demo_filter ) {
+		$base_args['meta_query'] = [ $demo_filter ];
+	}
 
 	$query = new WP_Query(
 		array_merge(
@@ -328,14 +665,21 @@ function bi_get_live_tutors( $limit = 6 ) {
 		);
 	}
 
-	$out = [];
+	$out          = [];
+	$allow_demo   = bi_demo_content_enabled();
 	foreach ( $query->posts as $post ) {
-		if ( bi_tutor_post_is_demo( $post->ID ) ) {
+		if ( ! $allow_demo && bi_tutor_post_is_demo( $post->ID ) ) {
 			continue;
 		}
-		$out[] = bi_format_tutor_post( $post );
+		$row           = bi_format_tutor_post( $post );
+		$row['isDemo'] = bi_tutor_post_is_demo( $post->ID );
+		$out[]         = $row;
 	}
 	wp_reset_postdata();
+
+	if ( empty( $out ) ) {
+		$out = bi_get_demo_tutors( $limit );
+	}
 
 	return apply_filters( 'bi_live_tutors', $out, $limit );
 }
@@ -354,39 +698,8 @@ function bi_get_carousel_tutors( $limit = 10 ) {
 		return $live;
 	}
 
-	if ( function_exists( 'ngt_format_tutor' ) ) {
-        $query = new WP_Query( [
-            'post_type'      => 'tutors',
-            'post_status'    => 'publish',
-            'posts_per_page' => $limit,
-            'meta_query'     => [ bi_tutor_exclude_demo_meta_query() ],
-        ] );
-        if ( $query->have_posts() ) {
-            $out = [];
-            foreach ( $query->posts as $post ) {
-                if ( bi_tutor_post_is_demo( $post->ID ) ) {
-                    continue;
-                }
-                $t = ngt_format_tutor( $post );
-                $out[] = [
-                    'postId'     => $t['postId'],
-                    'name'       => $t['name'],
-                    'imageUrl'   => $t['imageUrl'],
-                    'rating'     => $t['rating'],
-                    'hourlyRate' => $t['hourlyRate'],
-                    'groupType'  => $t['groupType'],
-                    'degree'     => $t['degree'],
-                    'bio'        => wp_strip_all_tags( $t['bio'] ),
-                    'subjects'   => (array) $t['subjects'],
-                    'permalink'  => get_permalink( $t['postId'] ),
-                ];
-            }
-            wp_reset_postdata();
-            return $out;
-        }
-    }
-
-    return apply_filters( 'bi_filter_carousel_tutors', $live, $limit );
+	$demo = bi_get_demo_tutors( $limit );
+	return apply_filters( 'bi_filter_carousel_tutors', $demo, $limit );
 }
 
 /**

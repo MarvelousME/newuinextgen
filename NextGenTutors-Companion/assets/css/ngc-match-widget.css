@@ -161,9 +161,9 @@
 
 /* Dock match button */
 .fdock-btn--match {
-  background: linear-gradient(135deg, #aecf61, #8fb84a);
+  background: #aecf61;
   color: #0f2744;
-  animation: ngc-match-glow 3s ease-in-out infinite;
+  border: 2.5px solid #6f8f2f;
 }
 
 .fdock-btn--match.has-pulse::after {

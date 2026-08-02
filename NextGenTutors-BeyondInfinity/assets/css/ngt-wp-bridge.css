@@ -9,48 +9,93 @@ body.bi-ngt-skin {
   font-family: var(--font-sans, "Open Sans", system-ui, sans-serif);
 }
 
-/* Theme nav enhanced with NGT chrome */
+/* Theme nav — solid theme blue chrome (no header CTAs) */
 body.bi-ngt-skin .ngt-nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  height: var(--nav-h, 132px);
+  height: var(--nav-h, 88px);
   display: flex;
   align-items: center;
-  transition: background 0.4s var(--ease-smooth, ease), box-shadow 0.4s, height 0.3s;
-  border-bottom: 4px solid transparent;
-  background: transparent;
+  transition: background 0.35s var(--ease-smooth, ease), box-shadow 0.35s, height 0.3s;
+  border-bottom: 3px solid rgba(174, 206, 97, 0.55);
+  background: var(--blue, #1a5594);
+  background: linear-gradient(180deg, var(--blue, #1a5594) 0%, var(--navy, #092746) 100%);
+  box-shadow: 0 10px 28px rgba(7, 23, 47, 0.28);
+  color: #fff;
 }
 
 body.bi-ngt-skin .ngt-nav.is-solid,
-body.bi-ngt-skin .ngt-nav.ngt-nav--solid {
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(16px) saturate(1.4);
-  border-bottom-color: var(--lime, #aece61);
-  box-shadow: 0 6px 24px rgba(9, 39, 70, 0.07);
+body.bi-ngt-skin .ngt-nav.ngt-nav--solid,
+body.bi-ngt-skin .ngt-nav.ngt-nav--scrolled,
+body.bi-ngt-skin .ngt-nav.ngt-nav--transparent {
+  background: linear-gradient(180deg, var(--blue, #1a5594) 0%, var(--navy, #092746) 100%);
+  backdrop-filter: none;
+  border-bottom-color: rgba(174, 206, 97, 0.65);
+  box-shadow: 0 10px 28px rgba(7, 23, 47, 0.28);
   height: 72px;
 }
 
+body.bi-ngt-skin .ngt-nav__logo-text,
+body.bi-ngt-skin .ngt-nav__menu .menu-item > a,
+body.bi-ngt-skin .ngt-nav__link,
+body.bi-ngt-skin .ngt-nav__dropdown-trigger {
+  color: #e8f3ff;
+}
+
+body.bi-ngt-skin .ngt-nav__logo-text span {
+  color: var(--lime, #aece61);
+}
+
+body.bi-ngt-skin .ngt-nav__menu .menu-item > a:hover,
+body.bi-ngt-skin .ngt-nav__menu .current-menu-item > a,
+body.bi-ngt-skin .ngt-nav__menu .current_page_item > a {
+  color: #fff;
+}
+
+body.bi-ngt-skin .ngt-nav__cta--tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.bi-ngt-skin .ngt-nav__cta--tools .ngt-btn--outline,
+body.bi-ngt-skin .ngt-nav__cta--tools .ngt-btn--primary {
+  display: none !important;
+}
+
+body.bi-ngt-skin .ngt-nav__toggle {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
 body.bi-ngt-skin .ngt-nav__logo img {
-  height: 72px;
+  height: 56px;
   width: auto;
   transition: height 0.35s ease;
   filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.25));
 }
 
 body.bi-ngt-skin .ngt-nav.is-solid .ngt-nav__logo img {
-  height: 48px;
+  height: 44px;
 }
 
-body.bi-ngt-skin .site-main.bi-theme-main,
+/*
+ * Nav offset — once on content shell only (never also on nested main).
+ * Previous double padding (main + content) created a large cream gap above heroes.
+ */
+body.bi-ngt-skin .site-main.bi-theme-main {
+  padding-top: 0;
+}
+
 body.bi-ngt-skin .bi-theme-content {
-  padding-top: var(--nav-h, 132px);
+  padding-top: var(--nav-h, 88px);
 }
 
-body.bi-ngt-skin .ngt-nav.is-solid ~ .site-main.bi-theme-main,
-body.bi-ngt-skin .ngt-nav.ngt-nav--solid ~ .site-main.bi-theme-main {
+body.bi-ngt-skin .ngt-nav.is-solid ~ .site-main.bi-theme-main .bi-theme-content,
+body.bi-ngt-skin .ngt-nav.ngt-nav--solid ~ .site-main.bi-theme-main .bi-theme-content {
   padding-top: 72px;
 }
 
@@ -78,19 +123,44 @@ body.bi-ngt-skin .bi-theme-content .wrap {
   padding-inline: 24px;
 }
 
-body.bi-ngt-skin .bi-theme-content .pagehead {
-  margin-top: calc(var(--nav-h, 132px) * -1);
-  padding-top: calc(var(--nav-h, 132px) + 56px);
+/*
+ * Full-bleed heroes — cancel content padding so dark hero meets the nav,
+ * then add a tight top pad for title clearance only.
+ */
+body.bi-ngt-skin .bi-theme-content > .pagehead,
+body.bi-ngt-skin .bi-theme-content > .ng-page-hero,
+body.bi-ngt-skin .bi-theme-content > .bi-hero,
+body.bi-ngt-skin .bi-theme-content > .ngi-hero,
+body.bi-ngt-skin .ng-page__body > .ng-page-hero,
+body.bi-ngt-skin .ng-page__body > .bi-hero,
+body.bi-ngt-skin .ng-page__body > .pagehead,
+body.bi-ngt-skin .ngi-home > .ngi-hero,
+body.bi-ngt-skin .bi-theme-content .ngi-home > .ngi-hero {
+  margin-top: calc(var(--nav-h, 88px) * -1);
+  border-radius: 0;
+  width: 100%;
+  max-width: none;
+  padding-top: calc(var(--nav-h, 88px) + 1rem);
 }
 
-/* Kinetic homepage — same nav overlap as become-a-tutor pagehead */
+body.bi-ngt-skin .bi-theme-content .pagehead {
+  margin-top: calc(var(--nav-h, 88px) * -1);
+  padding-top: calc(var(--nav-h, 88px) + 1rem);
+}
+
+/* Kinetic homepage */
 body.bi-ngt-skin.bi-kinetic-home .site-main.bi-theme-main {
   padding-top: 0;
 }
 
-body.bi-ngt-skin.bi-kinetic-home .bi-theme-content .ngi-hero--theme {
-  margin-top: calc(var(--nav-h, 132px) * -1);
-  padding-top: calc(var(--nav-h, 132px) + 48px);
+body.bi-ngt-skin.bi-kinetic-home .bi-theme-content {
+  padding-top: var(--nav-h, 88px);
+}
+
+body.bi-ngt-skin.bi-kinetic-home .bi-theme-content .ngi-hero--theme,
+body.bi-ngt-skin.bi-kinetic-home .ngi-home > .ngi-hero--theme {
+  margin-top: calc(var(--nav-h, 88px) * -1);
+  padding-top: calc(var(--nav-h, 88px) + 0.75rem);
 }
 
 body.bi-ngt-skin .bi-theme-content .section {
@@ -110,15 +180,29 @@ body.bi-ngt-skin .bi-theme-content [data-reveal-x] {
 
 @media (max-width: 760px) {
   body.bi-ngt-skin .ngt-nav {
-    height: 88px;
+    height: 72px;
   }
 
   body.bi-ngt-skin .ngt-nav__logo img {
-    height: 52px;
+    height: 44px;
   }
 
-  body.bi-ngt-skin .site-main.bi-theme-main {
-    padding-top: 88px;
+  body.bi-ngt-skin .bi-theme-content,
+  body.bi-ngt-skin.bi-kinetic-home .bi-theme-content {
+    padding-top: 72px;
+  }
+
+  body.bi-ngt-skin .bi-theme-content > .pagehead,
+  body.bi-ngt-skin .bi-theme-content > .ng-page-hero,
+  body.bi-ngt-skin .bi-theme-content > .bi-hero,
+  body.bi-ngt-skin .bi-theme-content > .ngi-hero,
+  body.bi-ngt-skin .ng-page__body > .ng-page-hero,
+  body.bi-ngt-skin .ngi-home > .ngi-hero,
+  body.bi-ngt-skin .bi-theme-content .ngi-home > .ngi-hero,
+  body.bi-ngt-skin .bi-theme-content .pagehead,
+  body.bi-ngt-skin.bi-kinetic-home .bi-theme-content .ngi-hero--theme {
+    margin-top: -72px;
+    padding-top: calc(72px + 0.75rem);
   }
 }
 

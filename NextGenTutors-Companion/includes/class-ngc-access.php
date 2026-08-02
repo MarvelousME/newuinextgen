@@ -24,8 +24,31 @@ final class NGC_Access {
 		$user_id = $user_id ?: get_current_user_id();
 		return user_can( $user_id, 'manage_options' )
 			|| user_can( $user_id, 'ngc_admin_operations' )
+			|| user_can( $user_id, 'ngc_manage_platform' )
 			|| user_can( $user_id, 'ngc_manage_bookings' )
 			|| user_can( $user_id, 'ngc_manage_matches' );
+	}
+
+	/**
+	 * Soft-tenant guard — row must belong to current tenant when tenant_id present.
+	 *
+	 * @param object|array|null $row Row with optional tenant_id.
+	 * @return bool
+	 */
+	public static function same_tenant( $row ) {
+		if ( ! $row ) {
+			return false;
+		}
+		$tid = is_array( $row ) ? ( $row['tenant_id'] ?? null ) : ( $row->tenant_id ?? null );
+		if ( null === $tid || '' === $tid ) {
+			return true;
+		}
+		$current = class_exists( 'NGC_Tenant_Context' ) ? NGC_Tenant_Context::id() : 1;
+		$ok      = (int) $tid === (int) $current;
+		if ( ! $ok && class_exists( 'NGC_Authz_Matrix' ) ) {
+			NGC_Authz_Matrix::audit( get_current_user_id(), 'tenant', (int) $tid, 'ngc_tenant_scope', 'deny', 'cross_tenant' );
+		}
+		return $ok;
 	}
 
 	/**

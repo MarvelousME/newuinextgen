@@ -6,7 +6,9 @@
  */
 
 get_header();
-
+?>
+<main id="primary" class="site-main bi-theme-main bi-tutor-archive-main">
+<?php
 if ( function_exists( 'bi_page_open' ) ) {
 	bi_page_open( 'tutor-marketplace' );
 }
@@ -33,4 +35,7 @@ if ( function_exists( 'bi_page_open' ) ) {
 if ( function_exists( 'bi_page_close' ) ) {
 	bi_page_close( 'tutor-marketplace' );
 }
+?>
+</main>
+<?php
 get_footer();

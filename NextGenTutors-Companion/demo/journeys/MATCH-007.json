@@ -1,0 +1,41 @@
+﻿{
+    "id":  "MATCH-007",
+    "name":  "Manual Administrator Match",
+    "persona":  "demo-admin",
+    "scenario":  "all",
+    "family":  "matching",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active",
+                          "demo seed version 14.0.0"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "open-match-queue"
+                  },
+                  {
+                      "action":  "manual-assign"
+                  },
+                  {
+                      "action":  "notify-parties"
+                  }
+              ],
+    "expected_events":  [
+                            "match.accepted"
+                        ],
+    "expected_notifications":  [
+                                   "sandbox-notification"
+                               ],
+    "expected_integrations":  [
+                                  "crm-parent-sync",
+                                  "booking-sync"
+                              ],
+    "expected_audit_events":  "match_manual_assign",
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=MATCH-007",
+                         "seed_graph_keys":  [
+                                                 "MATCH-007"
+                                             ]
+                     }
+}

@@ -44,6 +44,7 @@ require_once NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-notifications.php';
 require_once NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-buttons.php';
 require_once NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-repair.php';
 require_once NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-view-model.php';
+require_once NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-ngt-stack.php';
 require_once NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-settings.php';
 require_once NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-local-packages.php';
 require_once NGCPM_PLUGIN_DIR . 'includes/class-ngcpm-ajax.php';

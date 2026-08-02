@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img">
+  <title>05 - Data Architecture</title>
+  <desc>Business SSOT, WordPress options, Companion custom tables, and external integration data stores.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0D7377"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F7FBFC"/>
+  <text x="24" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B2545">05 - Data Architecture</text>
+  <rect x="40" y="80" width="260" height="100" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="170" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#0B2545">Business SSOT JSON</text>
+  <text x="170" y="130" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">nextgentutors-business-profile.json</text>
+  <text x="170" y="150" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#0B2545">ZAR � JHB � roles � ID prefixes</text>
+  <rect x="340" y="80" width="260" height="100" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="470" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#0B2545">WP Options / Users</text>
+  <text x="470" y="135" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#0B2545">roles � provisioning state</text>
+  <text x="470" y="155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#0B2545">orchestrator state � demo flags</text>
+  <rect x="640" y="80" width="280" height="100" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="780" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#0B2545">Companion wp_ngc_*</text>
+  <text x="780" y="135" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#0B2545">bookings � matches � ledger</text>
+  <text x="780" y="155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#0B2545">workflows � outbox � privacy</text>
+  <rect x="80" y="260" width="180" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="170" y="290" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Woo orders</text>
+  <text x="170" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">commerce data</text>
+  <rect x="300" y="260" width="180" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="390" y="290" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">CRM contacts</text>
+  <text x="390" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">FluentCRM</text>
+  <rect x="520" y="260" width="180" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="610" y="290" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Booking store</text>
+  <text x="610" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Amelia if present</text>
+  <rect x="740" y="260" width="180" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="830" y="290" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">ID scheme</text>
+  <text x="830" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">NGT-T / S / P</text>
+  <line x1="300" y1="130" x2="340" y2="130" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="600" y1="130" x2="640" y2="130" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="470" y1="180" x2="170" y2="260" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="180" x2="390" y2="260" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="700" y1="180" x2="610" y2="260" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="780" y1="180" x2="830" y2="260" stroke="#0D7377" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="40" y="400" width="400" height="90" rx="4" fill="#FFFFFF" stroke="#0B2545"/>
+  <text x="50" y="422" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Legend / notes</text>
+  <text x="50" y="442" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Secrets never stored in SSOT JSON or release zips.</text>
+  <text x="50" y="460" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Exact ngc_* table count: verify on target via migrations.</text>
+  <text x="50" y="478" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Demo rows labelled is_demo / demo_scenario_id.</text>
+</svg>

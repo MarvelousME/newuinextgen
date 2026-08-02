@@ -29,8 +29,7 @@ class NGC_AI_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		add_submenu_page(
-			'ngc-operations',
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin',
 			__( 'AI Suite', 'nextgencompanion' ),
 			__( 'AI Suite', 'nextgencompanion' ),
 			'manage_options',

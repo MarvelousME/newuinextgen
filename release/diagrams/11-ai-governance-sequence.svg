@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img">
+  <title>11 - AI Governance Sequence</title>
+  <desc>Optional AI assist with BYOK keys, HMAC callbacks, and ops governance controls.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0D7377"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F7FBFC"/>
+  <text x="24" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B2545">11 - AI Governance Sequence</text>
+  <text x="100" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Ops / AI Ops</text>
+  <text x="300" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">AI Integration</text>
+  <text x="520" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Companion AI</text>
+  <text x="740" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Provider (BYOK)</text>
+  <line x1="100" y1="90" x2="100" y2="400" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="300" y1="90" x2="300" y2="400" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="520" y1="90" x2="520" y2="400" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="740" y1="90" x2="740" y2="400" stroke="#0B2545" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="100" y1="130" x2="300" y2="130" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="200" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">1 configure keys (UI only)</text>
+  <line x1="300" y1="180" x2="520" y2="180" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="410" y="172" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">2 bridge / health</text>
+  <line x1="520" y1="240" x2="740" y2="240" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="630" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">3 model call</text>
+  <line x1="740" y1="300" x2="520" y2="300" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="630" y="292" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">4 response / HMAC cb</text>
+  <line x1="520" y1="360" x2="100" y2="360" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="310" y="352" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">5 audit / agent evaluation gates</text>
+  <rect x="40" y="430" width="620" height="55" rx="4" fill="#FFFFFF" stroke="#0B2545"/>
+  <text x="50" y="450" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Legend: keys never packaged. AI live is optional. Runtime may be PARTIAL on some Docker envs.</text>
+  <text x="50" y="468" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Prompt-injection evaluation suite exists in Companion tests (AGT-001).</text>
+</svg>

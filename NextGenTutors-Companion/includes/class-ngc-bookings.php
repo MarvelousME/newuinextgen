@@ -25,6 +25,26 @@ class NGC_Bookings {
 		global $wpdb;
 		$table = NGC_Database::table( 'bookings' );
 
+		$idem_key = '';
+		if ( ! empty( $data['idempotency_key'] ) && class_exists( 'NGC_Idempotency' ) ) {
+			$idem_key = (string) $data['idempotency_key'];
+			$fp       = NGC_Idempotency::fingerprint(
+				[
+					'student' => (int) ( $data['student_user_id'] ?? 0 ),
+					'tutor'   => (int) ( $data['tutor_user_id'] ?? 0 ),
+					'sched'   => (string) ( $data['scheduled_at'] ?? '' ),
+					'subject' => (string) ( $data['subject'] ?? '' ),
+				]
+			);
+			$begun = NGC_Idempotency::begin( $idem_key, $fp, 'bookings' );
+			if ( is_wp_error( $begun ) ) {
+				return $begun;
+			}
+			if ( 'replay' === ( $begun['status'] ?? '' ) ) {
+				return (int) ( $begun['result']['booking_id'] ?? 0 );
+			}
+		}
+
 		$row = [
 			'uuid'             => class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4(),
 			'match_id'         => (int) ( $data['match_id'] ?? 0 ),
@@ -82,6 +102,10 @@ class NGC_Bookings {
 				'employee_id'     => (string) $row['tutor_user_id'],
 			]
 		);
+
+		if ( $idem_key !== '' && class_exists( 'NGC_Idempotency' ) ) {
+			NGC_Idempotency::commit( $idem_key, [ 'booking_id' => $id ] );
+		}
 
 		return $id;
 	}

@@ -93,6 +93,30 @@ class NGC_Studio_Notifications {
 			return [ 'ok' => true, 'channel' => $channel, 'simulated' => true ];
 		}
 
+		$idem = isset( $context['idempotency_key'] ) ? (string) $context['idempotency_key'] : ( 'notify:' . sanitize_key( (string) $key ) . ':' . md5( wp_json_encode( $context ) ) );
+		if ( class_exists( 'NGC_Idempotency' ) && ! empty( $context['idempotency_key'] ) ) {
+			$once = NGC_Idempotency::once(
+				$idem,
+				static function () use ( $key, $context, $channel, $config ) {
+					return self::dispatch_inner( $key, $context, $channel, $config );
+				},
+				NGC_Idempotency::fingerprint( is_array( $context ) ? $context : [] ),
+				'notify'
+			);
+			return is_array( $once ) ? $once : [ 'ok' => ! is_wp_error( $once ), 'channel' => $channel ];
+		}
+
+		return self::dispatch_inner( $key, $context, $channel, $config );
+	}
+
+	/**
+	 * @param string               $key     Key.
+	 * @param array<string,mixed>  $context Context.
+	 * @param string               $channel Channel.
+	 * @param array<string,mixed>  $config  Config.
+	 * @return array{ok:bool,channel?:string,message?:string}
+	 */
+	private static function dispatch_inner( $key, $context, $channel, $config ) {
 		$result = [ 'ok' => true, 'channel' => $channel ];
 
 		switch ( $channel ) {

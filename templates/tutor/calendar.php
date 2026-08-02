@@ -20,7 +20,10 @@ if ( ! $tutor_id || ! $approved || $suspended || $incomplete ) {
 	return;
 }
 
-$book_url = home_url( '/find-a-tutor?ngc_tutor_id=' . $tutor_id );
+$book_url   = function_exists( 'bi_tutor_booking_url' )
+	? bi_tutor_booking_url( $tutor_id )
+	: home_url( '/find-a-tutor/?ngc_tutor_id=' . $tutor_id );
+$tutor_name = (string) get_the_title( $tutor_id );
 ?>
 <div class="ngt-card ngt-animate bi-tutor-calendar-card">
 	<h2 class="bi-tutor-calendar-card__title"><?php esc_html_e( 'Booking Calendar', 'beyondinfinity' ); ?></h2>
@@ -34,7 +37,8 @@ $book_url = home_url( '/find-a-tutor?ngc_tutor_id=' . $tutor_id );
 			class="ngt-btn ngt-btn--primary bi-book-lesson-trigger"
 			data-bi-booking-drawer="1"
 			data-tutor-id="<?php echo esc_attr( (string) $tutor_id ); ?>"
+			data-tutor-name="<?php echo esc_attr( $tutor_name ); ?>"
 		><?php esc_html_e( 'Book lesson', 'beyondinfinity' ); ?></a>
-		<a href="<?php echo esc_url( home_url( '/contact?ngc_tutor_id=' . (int) $tutor_id ) ); ?>" class="ngt-btn ngt-btn--outline"><?php esc_html_e( 'Request custom time', 'beyondinfinity' ); ?></a>
+		<a href="<?php echo esc_url( home_url( '/contact/?ngc_tutor_id=' . (int) $tutor_id ) ); ?>" class="ngt-btn ngt-btn--outline"><?php esc_html_e( 'Request custom time', 'beyondinfinity' ); ?></a>
 	</div>
 </div>

@@ -79,14 +79,18 @@
 
       restoreForm(form);
 
-      function showStep(n) {
+      function showStep(n, opts) {
+        opts = opts || {};
         [step1, step2].forEach(function (s) {
           var isActive = parseInt(s.getAttribute('data-step'), 10) === n;
           s.classList.toggle('is-active', isActive);
           s.hidden = !isActive;
         });
         syncStepper(root, n);
-        root.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        // Never scroll on initial restore — page loads must start at the top.
+        if (opts.scroll) {
+          root.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        }
       }
 
       function setLoading(on) {
@@ -129,7 +133,7 @@
                   ? 'Ranked by compatibility with your learner\'s needs.'
                   : 'We will match you personally — submit the form below.';
               }
-              showStep(2);
+              showStep(2, { scroll: true });
             } else {
               var msg = (res && res.data && res.data.message) || 'An error occurred. Please try again.';
               if (window.BIDialog) { window.BIDialog.alert({ title: 'Matching', message: msg }); }
@@ -146,13 +150,13 @@
 
       if (restart) {
         restart.addEventListener('click', function () {
-          showStep(1);
+          showStep(1, { scroll: true });
         });
       }
 
       var savedStep = 1;
       try { savedStep = parseInt(sessionStorage.getItem(STORAGE + ':step') || '1', 10); } catch (e) { savedStep = 1; }
-      showStep(savedStep === 2 && out && out.innerHTML.trim() ? 2 : 1);
+      showStep(savedStep === 2 && out && out.innerHTML.trim() ? 2 : 1, { scroll: false });
     });
   });
 })();

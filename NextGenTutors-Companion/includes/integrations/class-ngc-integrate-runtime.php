@@ -86,8 +86,12 @@ class NGC_Integrate_Runtime {
 	 * @return array<string, mixed>
 	 */
 	public static function enrich_workflow_vars( $vars, $workflow ) {
-		$vars['site_name']    = get_bloginfo( 'name' );
-		$vars['support_email'] = get_option( 'admin_email' );
+		$company = class_exists( 'NGC_Business_Profile' ) ? NGC_Business_Profile::get() : [];
+		$vars['site_name']     = (string) ( $company['company_name'] ?? get_bloginfo( 'name' ) );
+		$vars['support_email'] = (string) ( $company['email'] ?? get_option( 'admin_email' ) );
+		if ( ! empty( $company['phone'] ) ) {
+			$vars['support_phone'] = (string) $company['phone'];
+		}
 		return $vars;
 	}
 

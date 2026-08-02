@@ -31,6 +31,7 @@ final class NGC_Fraud_Engine {
 		add_action( 'ngc_workflow_dispatched', [ __CLASS__, 'on_workflow' ], 20, 2 );
 		add_action( 'ngt_automation_event_fired', [ __CLASS__, 'on_hub_event' ], 25, 2 );
 		add_action( 'woocommerce_order_status_refunded', [ __CLASS__, 'on_refund' ], 20, 1 );
+		add_action( 'ngc_fraud_hold_process', [ __CLASS__, 'process_hold' ], 10, 1 );
 	}
 
 	public static function maybe_install() {
@@ -235,6 +236,36 @@ final class NGC_Fraud_Engine {
 		if ( class_exists( 'NGC_Audit' ) ) {
 			NGC_Audit::log( 'fraud_case_created', 'fraud', $id, $data, get_current_user_id() );
 		}
+		if ( class_exists( 'NGC_Platform_Schema' ) ) {
+			global $wpdb;
+			$wpdb->insert(
+				NGC_Platform_Schema::table( 'fraud_evidence' ),
+				[
+					'tenant_id'       => class_exists( 'NGC_Tenant_Context' ) ? NGC_Tenant_Context::id() : 1,
+					'case_id'         => $id,
+					'evidence_type'   => 'signal',
+					'explainability'  => wp_json_encode( $data['evidence'] ?? $data ),
+					'confidence'      => (float) ( $data['score'] ?? 0 ),
+					'meta_json'       => wp_json_encode( $data ),
+					'created_at'      => current_time( 'mysql', true ),
+				],
+				[ '%d', '%d', '%s', '%s', '%f', '%s', '%s' ]
+			);
+		}
+		$action = (string) ( $data['evidence']['recommended_action'] ?? $data['recommended_action'] ?? '' );
+		if ( in_array( $action, [ 'hold_payout', 'hold_booking', 'escalate_compliance' ], true ) && class_exists( 'NGC_Durable_Queue' ) ) {
+			NGC_Durable_Queue::enqueue(
+				NGC_Queue_Worker::QUEUE_FRAUD,
+				[
+					'type'    => 'fraud.hold',
+					'case_id' => $id,
+					'action'  => $action,
+					'entity_type' => (string) ( $data['entity_type'] ?? '' ),
+					'entity_id'   => (int) ( $data['entity_id'] ?? 0 ),
+				],
+				[ 'idempotency_key' => 'fraud-hold:' . $id, 'priority' => 30 ]
+			);
+		}
 		return $id;
 	}
 
@@ -433,5 +464,31 @@ final class NGC_Fraud_Engine {
 			'open' => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} WHERE status = 'open'" ),
 			'high' => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} WHERE status = 'open' AND severity = 'high'" ),
 		];
+	}
+
+	/**
+	 * Process a queued fraud hold (explainability + audit).
+	 *
+	 * @param array<string,mixed> $payload Hold payload.
+	 */
+	public static function process_hold( $payload ) {
+		$case_id = (int) ( $payload['case_id'] ?? 0 );
+		$action  = sanitize_key( (string) ( $payload['action'] ?? 'hold' ) );
+		if ( $case_id && class_exists( 'NGC_Audit' ) ) {
+			NGC_Audit::log(
+				'fraud_hold_processed',
+				'fraud',
+				$case_id,
+				[
+					'action'      => $action,
+					'entity_type' => (string) ( $payload['entity_type'] ?? '' ),
+					'entity_id'   => (int) ( $payload['entity_id'] ?? 0 ),
+				]
+			);
+		}
+		if ( class_exists( 'NGC_Platform_Observability' ) ) {
+			NGC_Platform_Observability::alert( 'fraud_hold', is_array( $payload ) ? $payload : [] );
+		}
+		update_option( 'ngc_fraud_last_hold', is_array( $payload ) ? $payload : [], false );
 	}
 }

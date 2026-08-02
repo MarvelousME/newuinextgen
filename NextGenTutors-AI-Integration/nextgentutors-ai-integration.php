@@ -54,6 +54,7 @@ $ngtai_files = [
 	'includes/class-ngtai-delivery-repository.php',
 	'includes/class-ngtai-result-repository.php',
 	'includes/class-ngtai-outbox-bridge.php',
+	'includes/class-ngtai-intelligence-bridge.php',
 	'includes/class-ngtai-callback-controller.php',
 	'includes/class-ngtai-health.php',
 	'includes/class-ngtai-cron.php',

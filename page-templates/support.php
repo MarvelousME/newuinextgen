@@ -56,8 +56,14 @@ $sla      = get_theme_mod('ngt_support_sla', '2 business hours');
     <h2 id="support-tickets-title" class="section__title">Submit a Support Ticket</h2>
     <p class="section__sub">Describe your issue and we'll get back to you within <?php echo esc_html($sla); ?>.</p>
     <?php
-    if ( function_exists('fluent_support') && shortcode_exists('fluent_support') ) {
-        echo do_shortcode('[fluent_support]');
+    if ( function_exists('fluentSupport') || shortcode_exists('fluent_support_portal') ) {
+        $mailbox_id = (int) get_option( 'ngc_fluent_support_mailbox_id', 0 );
+        $sc = '[fluent_support_portal show_logout="yes"';
+        if ( $mailbox_id > 0 ) {
+            $sc .= ' business_box_id="' . $mailbox_id . '"';
+        }
+        $sc .= ']';
+        echo do_shortcode( $sc ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     } elseif ( shortcode_exists('fluentform') ) {
         // Fallback: FluentForms support form (ID 3)
         echo do_shortcode('[fluentform id="3"]');

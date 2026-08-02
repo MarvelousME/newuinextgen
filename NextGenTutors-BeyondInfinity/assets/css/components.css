@@ -144,9 +144,9 @@
 .bi-tutors-section { overflow: visible; }
 .carousel-3d {
   position: relative;
-  height: 520px;
+  height: 470px;
   perspective: 1600px;
-  margin-top: 24px;
+  margin-top: 8px;
   overflow: visible;
 }
 .carousel-3d__stage {
@@ -262,7 +262,7 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-  margin-top: 24px;
+  margin-top: 8px;
 }
 .carousel-arrow {
   width: 48px;
@@ -715,6 +715,47 @@ a.bi-trust-chip:hover { color: var(--ngt-secondary-dark, #047857); transform: tr
 }
 .bi-timeline__step-title { margin: 4px 0 6px; font-size: 1.05rem; }
 .bi-timeline__step-text { margin: 0; color: var(--ngt-text-2); line-height: 1.55; }
+
+.bi-auth { max-width: 1000px; }
+.bi-register { max-width: 1000px; }
+.bi-copy-flush { margin: 0; }
+.bi-login__error { margin-bottom: 20px; }
+.bi-login__switch { margin: 20px 0 0; color: var(--ngt-text-2); font-size: 0.95rem; }
+.bi-login__forgot-title { margin: 0 0 8px; font-size: 1.15rem; }
+.bi-login__forgot-lead { margin: 0 0 16px; color: var(--ngt-text-2); }
+
+.bi-password-field {
+  position: relative;
+  display: block;
+}
+.bi-password-field input {
+  width: 100%;
+  padding-right: 4.5rem;
+}
+.bi-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: var(--ngt-secondary-dark, #047857);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+.bi-password-toggle:hover,
+.bi-password-toggle:focus-visible {
+  background: var(--ngt-primary-light, #E6F0FA);
+}
+.bi-password-toggle:focus-visible {
+  outline: var(--ngt-focus-ring-width, 2px) solid var(--ngt-focus-ring, #059669);
+  outline-offset: 2px;
+}
 
 .bi-role-selector {
   display: grid;

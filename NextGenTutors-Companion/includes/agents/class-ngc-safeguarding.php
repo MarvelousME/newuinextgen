@@ -344,7 +344,85 @@ final class NGC_Safeguarding {
 		);
 		foreach ( (array) $ids as $id ) {
 			self::escalate( (int) $id, 'sla_breach' );
+			if ( class_exists( 'NGC_Durable_Queue' ) ) {
+				NGC_Durable_Queue::enqueue(
+					NGC_Queue_Worker::QUEUE_SAFEGUARD,
+					[
+						'type'    => 'safeguard.sla',
+						'case_id' => (int) $id,
+						'reason'  => 'sla_breach',
+					],
+					[ 'idempotency_key' => 'sfg-sla:' . (int) $id, 'priority' => 40 ]
+				);
+			}
+			if ( class_exists( 'NGC_Platform_Observability' ) ) {
+				NGC_Platform_Observability::alert( 'safeguarding_sla_breach', [ 'case_id' => (int) $id ] );
+			}
 		}
+	}
+
+	/**
+	 * Attach evidence metadata to a case.
+	 *
+	 * @param int                  $case_id Case.
+	 * @param array<string,mixed>  $data    type, storage_path, checksum, meta.
+	 * @return int|WP_Error
+	 */
+	public static function add_evidence( $case_id, array $data ) {
+		if ( ! self::get( $case_id ) ) {
+			return new WP_Error( 'ngc_sfg_not_found', 'Case not found.' );
+		}
+		global $wpdb;
+		$ok = $wpdb->insert(
+			NGC_Platform_Schema::table( 'safeguarding_evidence' ),
+			[
+				'tenant_id'    => class_exists( 'NGC_Tenant_Context' ) ? NGC_Tenant_Context::id() : 1,
+				'case_id'      => (int) $case_id,
+				'evidence_type'=> sanitize_key( (string) ( $data['type'] ?? 'note' ) ),
+				'storage_path' => (string) ( $data['storage_path'] ?? '' ),
+				'checksum'     => (string) ( $data['checksum'] ?? '' ),
+				'meta_json'    => wp_json_encode( $data['meta'] ?? $data ),
+				'created_by'   => get_current_user_id(),
+				'created_at'   => current_time( 'mysql', true ),
+			],
+			[ '%d', '%d', '%s', '%s', '%s', '%s', '%d', '%s' ]
+		);
+		if ( ! $ok ) {
+			return new WP_Error( 'ngc_sfg_evidence_failed', 'Failed to store evidence.' );
+		}
+		self::append_note( $case_id, 'Evidence attached: ' . sanitize_key( (string) ( $data['type'] ?? 'note' ) ) );
+		return (int) $wpdb->insert_id;
+	}
+
+	/**
+	 * Appeal / reopen a closed case.
+	 *
+	 * @param int    $case_id Case.
+	 * @param string $reason  Appeal reason.
+	 * @return bool|WP_Error
+	 */
+	public static function appeal( $case_id, $reason = '' ) {
+		$case = self::get( $case_id );
+		if ( ! $case ) {
+			return new WP_Error( 'ngc_sfg_not_found', 'Case not found.' );
+		}
+		global $wpdb;
+		$wpdb->update(
+			$wpdb->prefix . 'ngc_safeguarding_cases',
+			[
+				'status'      => 'open',
+				'resolved_at' => null,
+				'updated_at'  => current_time( 'mysql', true ),
+			],
+			[ 'id' => (int) $case_id ],
+			[ '%s', '%s', '%s' ],
+			[ '%d' ]
+		);
+		self::append_note( $case_id, 'Appeal: ' . sanitize_text_field( $reason ) );
+		if ( class_exists( 'NGC_Audit' ) ) {
+			NGC_Audit::log( 'safeguarding_appeal', 'safeguarding', (int) $case_id, [ 'reason' => $reason ], get_current_user_id() );
+		}
+		return true;
 	}
 
 	/**

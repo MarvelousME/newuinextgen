@@ -1,0 +1,18 @@
+/* Enterprise data grid */
+.ngt-admin-grid { background: var(--ngt-admin-table); border-radius: var(--ngt-admin-card-radius); box-shadow: var(--ngt-admin-shadow); padding: 12px; }
+.ngt-admin-grid__toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; align-items: center; }
+.ngt-admin-grid__search { min-width: 220px; }
+.ngt-admin-grid__table-wrap { overflow: auto; max-height: 620px; border: 1px solid #e2e8f0; border-radius: var(--ngt-admin-radius); }
+.ngt-admin-grid__table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ngt-admin-grid__table th, .ngt-admin-grid__table td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+.ngt-admin-grid__table th { position: sticky; top: 0; background: #f8fafc; cursor: pointer; user-select: none; }
+.ngt-admin-grid__table tr.is-selected { background: #eff6ff; }
+.ngt-admin-grid__table tr:hover { background: #f8fafc; }
+.ngt-admin-grid__footer { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+.ngt-admin-grid__meta { margin-right: auto; color: #64748b; font-size: 12px; }
+.ngt-admin-grid__detail {
+  margin-top: 12px; border: 1px solid #e2e8f0; border-radius: var(--ngt-admin-radius); padding: 12px; background: #fff;
+}
+.ngt-admin-grid__col-menu {
+  position: absolute; z-index: 20; background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px; box-shadow: var(--ngt-admin-shadow);
+}

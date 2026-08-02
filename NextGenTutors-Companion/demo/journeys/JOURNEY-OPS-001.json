@@ -1,0 +1,52 @@
+﻿{
+    "id":  "JOURNEY-OPS-001",
+    "name":  "Ops fraud safeguarding and AI policy",
+    "persona":  "demo-admin",
+    "scenario":  "all",
+    "family":  "umbrella",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "open-fraud-case"
+                  },
+                  {
+                      "action":  "open-safeguarding-case"
+                  },
+                  {
+                      "action":  "ai-deny"
+                  },
+                  {
+                      "action":  "ai-approve"
+                  },
+                  {
+                      "action":  "kill-switch"
+                  }
+              ],
+    "expected_events":  [
+                            "fraud.signal.raised",
+                            "safeguarding.alert.raised"
+                        ],
+    "expected_notifications":  [
+                                   "fraud-alert",
+                                   "safeguarding-alert"
+                               ],
+    "expected_integrations":  [
+                                  "crm-parent-sync"
+                              ],
+    "expected_audit_events":  [
+                                  "agent_policy_denied",
+                                  "agent_approval",
+                                  "agent_kill_switch",
+                                  "demo_seed_completed"
+                              ],
+    "covers":  [
+                   "FIN-009"
+               ],
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=JOURNEY-OPS-001"
+                     }
+}

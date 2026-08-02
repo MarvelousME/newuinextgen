@@ -57,19 +57,14 @@ class NGC_Marketplace {
 	 * @return array<string, mixed>
 	 */
 	public static function query_tutors( $args = [] ) {
-		if ( ! post_type_exists( 'tutors' ) ) {
-			return [
-				'items'    => [],
-				'total'    => 0,
-				'page'     => 1,
-				'per_page' => 12,
-				'pages'    => 0,
-			];
-		}
-
 		$page     = max( 1, (int) ( $args['page'] ?? 1 ) );
 		$per_page = max( 1, min( 48, (int) ( $args['per_page'] ?? 12 ) ) );
-		$sort     = sanitize_key( (string) ( $args['sort'] ?? 'rating' ) );
+
+		if ( ! post_type_exists( 'tutors' ) ) {
+			return self::demo_fallback_result( $args, $page, $per_page );
+		}
+
+		$sort = sanitize_key( (string) ( $args['sort'] ?? 'rating' ) );
 
 		$query_args = [
 			'post_type'      => 'tutors',
@@ -188,10 +183,32 @@ class NGC_Marketplace {
 				break;
 		}
 
-		$q = new WP_Query( $query_args );
+		$q     = new WP_Query( $query_args );
 		$items = [];
 		foreach ( $q->posts as $post ) {
 			$items[] = self::format_tutor( $post );
+		}
+
+		// Empty filtered query → retry without filters using demo-visible CPT, then static demo.
+		if ( empty( $items ) && 1 === $page ) {
+			$has_filters = $search || ! empty( $tax_query ) || $format || $min_price || $max_price || ! empty( $args['verified'] );
+			if ( $has_filters ) {
+				$retry = self::query_tutors(
+					[
+						'page'     => 1,
+						'per_page' => $per_page,
+						'sort'     => $sort,
+						'_nofall'  => 1,
+					]
+				);
+				if ( ! empty( $retry['items'] ) && empty( $args['_nofall'] ) ) {
+					$retry['fallback'] = 'broadened';
+					return $retry;
+				}
+			}
+			if ( empty( $args['_nofall'] ) ) {
+				return self::demo_fallback_result( $args, $page, $per_page );
+			}
 		}
 
 		return [
@@ -200,6 +217,84 @@ class NGC_Marketplace {
 			'page'     => $page,
 			'per_page' => $per_page,
 			'pages'    => (int) $q->max_num_pages,
+			'source'   => 'cpt',
+		];
+	}
+
+	/**
+	 * Static / theme demo roster when CPT is empty or errors.
+	 *
+	 * @param array<string, mixed> $args     Original query args.
+	 * @param int                  $page     Page.
+	 * @param int                  $per_page Per page.
+	 * @return array<string, mixed>
+	 */
+	private static function demo_fallback_result( $args, $page, $per_page ) {
+		$items = [];
+		if ( function_exists( 'bi_get_demo_tutors' ) ) {
+			// Force-enable for this call when companion demo seed is allowed.
+			$allow = function_exists( 'bi_demo_content_enabled' ) && bi_demo_content_enabled();
+			if ( ! $allow && class_exists( 'NGC_Tutor_Seeder' ) && NGC_Tutor_Seeder::demo_seed_allowed() ) {
+				add_filter( 'bi_demo_content_enabled', '__return_true' );
+				$items = bi_get_demo_tutors( $per_page );
+				remove_filter( 'bi_demo_content_enabled', '__return_true' );
+			} else {
+				$items = bi_get_demo_tutors( $per_page );
+			}
+		}
+
+		if ( empty( $items ) && class_exists( 'NGC_Tutor_Seeder' ) && NGC_Tutor_Seeder::demo_seed_allowed() ) {
+			// Soft empty — still return structure so UI does not crash.
+			$items = [];
+		}
+
+		// Apply lightweight client-side filters on static demo rows.
+		$subject  = sanitize_title( (string) ( $args['subject'] ?? '' ) );
+		$province = sanitize_title( (string) ( $args['province'] ?? '' ) );
+		$q        = strtolower( sanitize_text_field( (string) ( $args['q'] ?? '' ) ) );
+		if ( $subject || $province || $q ) {
+			$items = array_values(
+				array_filter(
+					$items,
+					static function ( $t ) use ( $subject, $province, $q ) {
+						if ( $subject ) {
+							$hit = false;
+							foreach ( (array) ( $t['subjects'] ?? [] ) as $s ) {
+								if ( sanitize_title( (string) $s ) === $subject ) {
+									$hit = true;
+									break;
+								}
+							}
+							if ( ! $hit ) {
+								return false;
+							}
+						}
+						if ( $province && sanitize_title( (string) ( $t['province'] ?? '' ) ) !== $province ) {
+							return false;
+						}
+						if ( $q ) {
+							$hay = strtolower( (string) ( $t['name'] ?? '' ) . ' ' . implode( ' ', (array) ( $t['subjects'] ?? [] ) ) );
+							if ( false === strpos( $hay, $q ) ) {
+								return false;
+							}
+						}
+						return true;
+					}
+				)
+			);
+		}
+
+		$total = count( $items );
+		$slice = array_slice( $items, ( $page - 1 ) * $per_page, $per_page );
+
+		return [
+			'items'    => $slice,
+			'total'    => $total,
+			'page'     => $page,
+			'per_page' => $per_page,
+			'pages'    => max( 1, (int) ceil( $total / max( 1, $per_page ) ) ),
+			'source'   => 'demo',
+			'fallback' => true,
 		];
 	}
 
@@ -239,6 +334,38 @@ class NGC_Marketplace {
 					'value' => $term->slug,
 					'label' => $term->name,
 				];
+			}
+		}
+
+		// Empty taxonomies → seed filter options from demo roster.
+		if ( ( empty( $opts['subjects'] ) || empty( $opts['provinces'] ) )
+			&& function_exists( 'bi_get_demo_tutors' )
+			&& ( ( function_exists( 'bi_demo_content_enabled' ) && bi_demo_content_enabled() )
+				|| ( class_exists( 'NGC_Tutor_Seeder' ) && NGC_Tutor_Seeder::demo_seed_allowed() ) )
+		) {
+			$seen_s = [];
+			$seen_p = [];
+			$demo   = bi_get_demo_tutors( 12 );
+			if ( empty( $demo ) && class_exists( 'NGC_Tutor_Seeder' ) ) {
+				add_filter( 'bi_demo_content_enabled', '__return_true' );
+				$demo = bi_get_demo_tutors( 12 );
+				remove_filter( 'bi_demo_content_enabled', '__return_true' );
+			}
+			foreach ( $demo as $tutor ) {
+				foreach ( (array) ( $tutor['subjects'] ?? [] ) as $name ) {
+					$slug = sanitize_title( (string) $name );
+					if ( $slug && empty( $seen_s[ $slug ] ) ) {
+						$seen_s[ $slug ]    = true;
+						$opts['subjects'][] = [ 'value' => $slug, 'label' => (string) $name ];
+					}
+				}
+				if ( ! empty( $tutor['province'] ) ) {
+					$slug = sanitize_title( (string) $tutor['province'] );
+					if ( $slug && empty( $seen_p[ $slug ] ) ) {
+						$seen_p[ $slug ]     = true;
+						$opts['provinces'][] = [ 'value' => $slug, 'label' => (string) $tutor['province'] ];
+					}
+				}
 			}
 		}
 
@@ -318,6 +445,16 @@ class NGC_Marketplace {
 			wp_enqueue_script( 'bi-nbi-infinity' );
 		}
 		wp_enqueue_script( 'ngc-marketplace' );
+		$fallback = [];
+		if ( function_exists( 'bi_get_demo_tutors' ) ) {
+			if ( ! bi_demo_content_enabled() && class_exists( 'NGC_Tutor_Seeder' ) && NGC_Tutor_Seeder::demo_seed_allowed() ) {
+				add_filter( 'bi_demo_content_enabled', '__return_true' );
+				$fallback = bi_get_demo_tutors( (int) $atts['per_page'] );
+				remove_filter( 'bi_demo_content_enabled', '__return_true' );
+			} else {
+				$fallback = bi_get_demo_tutors( (int) $atts['per_page'] );
+			}
+		}
 		wp_localize_script(
 			'ngc-marketplace',
 			'ngcMarketplace',
@@ -326,10 +463,13 @@ class NGC_Marketplace {
 				'namespace' => 'ngc/v1',
 				'perPage'   => (int) $atts['per_page'],
 				'nonce'     => wp_create_nonce( 'wp_rest' ),
+				'bookUrl'   => esc_url_raw( home_url( '/find-a-tutor/' ) ),
+				'fallback'  => $fallback,
 				'i18n'      => [
 					'loading'  => __( 'Searching tutors…', 'nextgencompanion' ),
 					'empty'    => __( 'No tutors matched your filters. Try broadening your search or request a personal match.', 'nextgencompanion' ),
 					'error'    => __( 'Could not load tutors. Please try again.', 'nextgencompanion' ),
+					'demo'     => __( 'Showing sample tutors while live profiles load.', 'nextgencompanion' ),
 					'results'  => __( 'tutors found', 'nextgencompanion' ),
 					'filters'  => __( 'Filters', 'nextgencompanion' ),
 					'view'     => __( 'View profile', 'nextgencompanion' ),

@@ -1,0 +1,2326 @@
+{
+  "ok": true,
+  "status": "COMPLETED",
+  "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+  "started_at": "2026-08-02T12:58:25+00:00",
+  "completed_at": "2026-08-02T12:58:58+00:00",
+  "stopped_early": false,
+  "results": {
+    "env-preflight": {
+      "ok": true,
+      "status": "COMPLETED_WITH_WARNINGS",
+      "step": "env-preflight",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:25+00:00",
+      "completed_at": "2026-08-02T12:58:25+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED_WITH_WARNINGS",
+        "message": "wp-content not writable",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "php": "8.2.32",
+          "wp": "7.0.1",
+          "theme": "nextgentutors-beyondinfinity",
+          "timezone": "Africa/Johannesburg",
+          "siteurl": "http://localhost:8900",
+          "home": "http://localhost:8900",
+          "env": "local",
+          "warnings": [
+            "wp-content not writable"
+          ]
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": {
+          "php": "8.2.32",
+          "wp": "7.0.1",
+          "theme": "nextgentutors-beyondinfinity",
+          "timezone": "Africa/Johannesburg",
+          "siteurl": "http://localhost:8900",
+          "home": "http://localhost:8900",
+          "env": "local",
+          "warnings": [
+            "wp-content not writable"
+          ]
+        }
+      }
+    },
+    "backups": {
+      "ok": true,
+      "status": "COMPLETED_WITH_WARNINGS",
+      "step": "backups",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:25+00:00",
+      "completed_at": "2026-08-02T12:58:25+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED_WITH_WARNINGS",
+        "message": "UNVERIFIED \u2014 backup scripts not found adjacent to Companion; use host backup before production.",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "scripts_found": [],
+          "production": false
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "wordpress-baseline": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "wordpress-baseline",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:25+00:00",
+      "completed_at": "2026-08-02T12:58:25+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [
+          {
+            "option": "timezone_string",
+            "to": "Africa/Johannesburg"
+          },
+          {
+            "option": "permalink_structure",
+            "to": "/%postname%/"
+          },
+          {
+            "option": "date_format",
+            "to": "Y-m-d"
+          },
+          {
+            "option": "time_format",
+            "to": "H:i"
+          },
+          {
+            "option": "WPLANG",
+            "to": "en_ZA"
+          }
+        ],
+        "skips": [],
+        "meta": []
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "WordPress baseline applied",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "previous": {
+            "timezone_string": "Africa/Johannesburg",
+            "permalink_structure": "/%postname%/",
+            "date_format": "Y-m-d",
+            "time_format": "H:i"
+          },
+          "current": {
+            "timezone_string": "Africa/Johannesburg",
+            "permalink_structure": "/%postname%/"
+          }
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": {
+          "timezone_string": "Africa/Johannesburg"
+        }
+      }
+    },
+    "theme": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "theme",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:25+00:00",
+      "completed_at": "2026-08-02T12:58:25+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "NextGenTutors-BeyondInfinity active",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "stylesheet": "nextgentutors-beyondinfinity",
+          "name": "NextGenTutors-BeyondInfinity",
+          "version": "1.9.17"
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "first-party-plugins": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "first-party-plugins",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:25+00:00",
+      "completed_at": "2026-08-02T12:58:25+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "First-party plugins active",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "plugins": [
+            {
+              "plugin": "NextGenTutors Companion",
+              "file": "NextGenTutors-Companion/nextgencompanion.php",
+              "installed": true,
+              "active": true,
+              "version": "1.9.5"
+            },
+            {
+              "plugin": "Mission Control",
+              "file": "NextGenTutors-Mission-Control/nextgentutors-mission-control.php",
+              "installed": true,
+              "active": true,
+              "version": "1.0.0"
+            },
+            {
+              "plugin": "Plugin Manager",
+              "file": "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php",
+              "installed": true,
+              "active": true,
+              "version": "1.3.5"
+            },
+            {
+              "plugin": "AI Integration",
+              "file": "NextGenTutors-AI-Integration/nextgentutors-ai-integration.php",
+              "installed": true,
+              "active": true,
+              "version": "1.1.0"
+            },
+            {
+              "plugin": "HTML Importer",
+              "file": "NextGenTutors-Html-Importer/revamp-html-importer.php",
+              "installed": true,
+              "active": true,
+              "version": "1.0.0"
+            }
+          ]
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "third-party-detect": {
+      "ok": true,
+      "status": "COMPLETED_WITH_WARNINGS",
+      "step": "third-party-detect",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:25+00:00",
+      "completed_at": "2026-08-02T12:58:25+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED_WITH_WARNINGS",
+        "message": "Third-party matrix recorded (detect-only; no silent ZIP overwrite).",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "plugins": [
+            {
+              "plugin": "WooCommerce",
+              "file": "woocommerce/woocommerce.php",
+              "installed": true,
+              "active": true,
+              "version": "10.9.4"
+            },
+            {
+              "plugin": "FluentCRM",
+              "file": "fluent-crm/fluent-crm.php",
+              "installed": true,
+              "active": true,
+              "version": "3.1.8"
+            },
+            {
+              "plugin": "Fluent Support",
+              "file": "fluent-support/fluent-support.php",
+              "installed": true,
+              "active": true,
+              "version": "2.3.1"
+            },
+            {
+              "plugin": "FluentSMTP",
+              "file": "fluent-smtp/fluent-smtp.php",
+              "installed": true,
+              "active": true,
+              "version": "2.2.95"
+            },
+            {
+              "plugin": "Elementor",
+              "file": "elementor/elementor.php",
+              "installed": true,
+              "active": true,
+              "version": "4.2.0"
+            },
+            {
+              "plugin": "AutomatorWP",
+              "file": "automatorwp/automatorwp.php",
+              "installed": true,
+              "active": true,
+              "version": "5.7.9.2"
+            },
+            {
+              "plugin": "GamiPress",
+              "file": "gamipress/gamipress.php",
+              "installed": true,
+              "active": true,
+              "version": "7.9.5"
+            },
+            {
+              "plugin": "MasterStudy LMS",
+              "file": "masterstudy-lms-learning-management-system/masterstudy-lms-learning-management-system.php",
+              "installed": true,
+              "active": true,
+              "version": "3.7.37"
+            },
+            {
+              "plugin": "User Role Editor",
+              "file": "user-role-editor/user-role-editor.php",
+              "installed": true,
+              "active": true,
+              "version": "4.65"
+            }
+          ]
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "third-party-install": {
+      "ok": true,
+      "status": "SKIPPED",
+      "step": "third-party-install",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:25+00:00",
+      "completed_at": "2026-08-02T12:58:25+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "SKIPPED",
+        "message": "Install uses Plugin Manager offline-packages or licensed sources only \u2014 never invent download URLs.",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "hint": "wp-admin \u2192 NextGen Plugin Manager / docker/init/install-*.sh"
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "migrations": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "migrations",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:25+00:00",
+      "completed_at": "2026-08-02T12:58:26+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Migrations executed",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "actions": [
+            "ngc_tables",
+            "ngtai_migrate"
+          ]
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "roles": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "roles",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:26+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Roles installed",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "roles": {
+            "parent": true,
+            "parent_guardian": true,
+            "student": true,
+            "tutor": true,
+            "tutor_applicant": true,
+            "ngc_finance": true,
+            "ngc_safeguarding": true,
+            "ngc_support": true,
+            "ngc_operations": true
+          }
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "business-profile": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "business-profile",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "diff": {
+            "changes": [],
+            "conflicts": [],
+            "source": "/var/www/config/nextgentutors-business-profile.json"
+          }
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Business profile applied",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "ok": true,
+          "source": "/var/www/config/nextgentutors-business-profile.json",
+          "company": {
+            "company_name": "NextGenTutors",
+            "legal_name": "Next Gen Tutors",
+            "platform_name": "NextGenTutors",
+            "powered_by": "GET ONLINE NOW",
+            "tagline": "Accessible tutoring marketplace across South Africa",
+            "phone": "0813340625",
+            "whatsapp": "27813340625",
+            "email": "support@nextgentutors.co.za",
+            "admin_email": "admin@nextgentutors.co.za",
+            "notification_email": "marvin.saunders@gmail.com",
+            "website": "https://www.nextgentutors.co.za",
+            "address": "Johannesburg, South Africa",
+            "country": "South Africa",
+            "timezone": "Africa/Johannesburg",
+            "currency": "ZAR",
+            "operating_regions": [
+              "Gauteng",
+              "Western Cape",
+              "KwaZulu-Natal",
+              "Eastern Cape",
+              "Free State",
+              "Limpopo",
+              "Mpumalanga",
+              "North West",
+              "Northern Cape"
+            ],
+            "learning_modes": [
+              "Online",
+              "In Person",
+              "Hybrid"
+            ],
+            "student_levels": [
+              "Grade 1",
+              "Grade 2",
+              "Grade 3",
+              "Grade 4",
+              "Grade 5",
+              "Grade 6",
+              "Grade 7",
+              "Grade 8",
+              "Grade 9",
+              "Grade 10",
+              "Grade 11",
+              "Grade 12",
+              "Tertiary"
+            ],
+            "theme_package": "NextGenTutors-BeyondInfinity"
+          },
+          "theme": "NextGenTutors-BeyondInfinity"
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": {
+          "source": "/var/www/config/nextgentutors-business-profile.json",
+          "theme_package": "NextGenTutors-BeyondInfinity",
+          "applied": true,
+          "hash": "4e15ca1cdddde225fa3062a830440abb",
+          "pending_changes": 0,
+          "conflicts": 0,
+          "phone": "0813340625",
+          "email": "support@nextgentutors.co.za"
+        }
+      }
+    },
+    "ui-library": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "ui-library",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "UI library available",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "class_active": true,
+          "content_path": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "pages": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "pages",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Required pages present",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "synced": false,
+          "pages": {
+            "home": 25,
+            "find-a-tutor": 26,
+            "become-a-tutor": 27,
+            "login": 34,
+            "register": 33,
+            "pricing": 35,
+            "contact": 29,
+            "privacy-policy": 3
+          }
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "menus": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "menus",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Navigation inventory recorded",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "locations": {
+            "primary": 99,
+            "footer-1": 99,
+            "menu-1": 99,
+            "menu-2": 99
+          },
+          "menu_count": 8
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "forms": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "forms",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Page forms registry available",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "class": "NGC_Page_Forms_Registry"
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "crm": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "crm",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "FluentCRM adapter available",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "available": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "email": {
+      "ok": true,
+      "status": "COMPLETED_WITH_WARNINGS",
+      "step": "email",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED_WITH_WARNINGS",
+        "message": "FluentSMTP active \u2014 configure credentials via admin (secrets never packaged).",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "fluent_smtp": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "domain-config": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "domain-config",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Tutor CPT present",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "post_types": [
+            "tutors"
+          ]
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "lms": {
+      "ok": true,
+      "status": "COMPLETED_WITH_WARNINGS",
+      "step": "lms",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED_WITH_WARNINGS",
+        "message": "LMS surface present \u2014 do not fabricate curricula.",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "lms": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "booking": {
+      "ok": true,
+      "status": "COMPLETED_WITH_WARNINGS",
+      "step": "booking",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED_WITH_WARNINGS",
+        "message": "Booking layer present \u2014 rates/windows belong in INPUTS-REQUIRED.",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "amelia": true,
+          "ngc_bookings": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "commerce": {
+      "ok": true,
+      "status": "COMPLETED_WITH_WARNINGS",
+      "step": "commerce",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED_WITH_WARNINGS",
+        "message": "Commerce readiness recorded \u2014 PayFast credentials must be entered in admin; never packaged.",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "woocommerce": true,
+          "payfast_surface": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "products": {
+      "ok": true,
+      "status": "SKIPPED",
+      "step": "products",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "SKIPPED",
+        "message": "Product/price creation blocked until approved pricing is supplied in INPUTS-REQUIRED.md.",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "reason": "no_invented_prices"
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "finance": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "finance",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Finance tables present",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "wallet_ledger": true,
+          "invoices": true,
+          "payouts": true,
+          "earnings": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "workflows": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "workflows",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Workflow runtime present",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "orchestrator": true,
+          "studio": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "gamification": {
+      "ok": true,
+      "status": "COMPLETED_WITH_WARNINGS",
+      "step": "gamification",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED_WITH_WARNINGS",
+        "message": "Gamification surface present \u2014 configure only approved educational outcomes.",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "available": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "analytics": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "analytics",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Platform tracking available",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "class": "NGC_Platform_Tracking"
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "ai-integration": {
+      "ok": true,
+      "status": "COMPLETED_WITH_WARNINGS",
+      "step": "ai-integration",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED_WITH_WARNINGS",
+        "message": "AI Integration active \u2014 BYOK secrets via admin; consequential actions require human approval.",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "ngtai": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "mission-control": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "mission-control",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:27+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Mission Control available",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "active": true
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "demo-journeys": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "demo-journeys",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:27+00:00",
+      "completed_at": "2026-08-02T12:58:57+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Demo seed completed",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "bookings": {
+            "BOOK-001": 61,
+            "BOOK-COMPLETED": 62,
+            "BOOK-PENDING-PAY": 63,
+            "BOOK-ADULT": 64
+          },
+          "seed_version": "14.0.0",
+          "scenario": "all",
+          "errors": [],
+          "journey_catalogue": 29,
+          "catalogue_dir": "/var/www/html/wp-content/plugins/NextGenTutors-Companion/demo/journeys"
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": {
+          "demo": {
+            "ok": true,
+            "failures": [],
+            "checks": {
+              "demo_mode": true,
+              "persona_NGT-DEMO-P0001": true,
+              "persona_NGT-DEMO-P0001_role": true,
+              "persona_NGT-DEMO-P0001_demo_flag": true,
+              "persona_NGT-DEMO-P0002": true,
+              "persona_NGT-DEMO-P0002_role": true,
+              "persona_NGT-DEMO-P0002_demo_flag": true,
+              "persona_NGT-DEMO-P0003": true,
+              "persona_NGT-DEMO-P0003_role": true,
+              "persona_NGT-DEMO-P0003_demo_flag": true,
+              "persona_NGT-DEMO-S0001": true,
+              "persona_NGT-DEMO-S0001_role": true,
+              "persona_NGT-DEMO-S0001_demo_flag": true,
+              "persona_NGT-DEMO-S0002": true,
+              "persona_NGT-DEMO-S0002_role": true,
+              "persona_NGT-DEMO-S0002_demo_flag": true,
+              "persona_NGT-DEMO-S0003": true,
+              "persona_NGT-DEMO-S0003_role": true,
+              "persona_NGT-DEMO-S0003_demo_flag": true,
+              "persona_NGT-DEMO-T0001": true,
+              "persona_NGT-DEMO-T0001_role": true,
+              "persona_NGT-DEMO-T0001_demo_flag": true,
+              "persona_NGT-DEMO-T0002": true,
+              "persona_NGT-DEMO-T0002_role": true,
+              "persona_NGT-DEMO-T0002_demo_flag": true,
+              "persona_NGT-DEMO-T0003": true,
+              "persona_NGT-DEMO-T0003_role": true,
+              "persona_NGT-DEMO-T0003_demo_flag": true,
+              "persona_NGT-DEMO-T0004": true,
+              "persona_NGT-DEMO-T0004_role": true,
+              "persona_NGT-DEMO-T0004_demo_flag": true,
+              "persona_NGT-DEMO-T0005": true,
+              "persona_NGT-DEMO-T0005_role": true,
+              "persona_NGT-DEMO-T0005_demo_flag": true,
+              "persona_NGT-DEMO-T0006": true,
+              "persona_NGT-DEMO-T0006_role": true,
+              "persona_NGT-DEMO-T0006_demo_flag": true,
+              "persona_NGT-DEMO-T0007": true,
+              "persona_NGT-DEMO-T0007_role": true,
+              "persona_NGT-DEMO-T0007_demo_flag": true,
+              "persona_NGT-DEMO-A0001": true,
+              "persona_NGT-DEMO-A0001_role": true,
+              "persona_NGT-DEMO-A0001_demo_flag": true,
+              "persona_NGT-DEMO-F0001": true,
+              "persona_NGT-DEMO-F0001_role": true,
+              "persona_NGT-DEMO-F0001_demo_flag": true,
+              "persona_NGT-DEMO-C0001": true,
+              "persona_NGT-DEMO-C0001_role": true,
+              "persona_NGT-DEMO-C0001_demo_flag": true,
+              "persona_NGT-DEMO-SFG0001": true,
+              "persona_NGT-DEMO-SFG0001_role": true,
+              "persona_NGT-DEMO-SFG0001_demo_flag": true,
+              "persona_NGT-DEMO-SUP0001": true,
+              "persona_NGT-DEMO-SUP0001_role": true,
+              "persona_NGT-DEMO-SUP0001_demo_flag": true,
+              "persona_NGT-DEMO-SEC0001": true,
+              "persona_NGT-DEMO-SEC0001_role": true,
+              "persona_NGT-DEMO-SEC0001_demo_flag": true,
+              "persona_NGT-DEMO-FRD0001": true,
+              "persona_NGT-DEMO-FRD0001_role": true,
+              "persona_NGT-DEMO-FRD0001_demo_flag": true,
+              "persona_NGT-DEMO-AUD0001": true,
+              "persona_NGT-DEMO-AUD0001_role": true,
+              "persona_NGT-DEMO-AUD0001_demo_flag": true,
+              "persona_NGT-DEMO-AI0001": true,
+              "persona_NGT-DEMO-AI0001_role": true,
+              "persona_NGT-DEMO-AI0001_demo_flag": true,
+              "parent_child_link": true,
+              "match_001": true,
+              "booking_confirmed": true,
+              "booking_completed": true,
+              "fraud_case": true,
+              "safeguarding_case": true,
+              "notifications": true,
+              "events_recorded": true,
+              "suspended_flag": true,
+              "crm_sync_verifiable": true,
+              "lms_sync_verifiable": true,
+              "booking_provider_sync_verifiable": true,
+              "crm_sync_status": "VERIFIED",
+              "lms_sync_status": "VERIFIED \u2014 MasterStudy active",
+              "booking_provider_sync_status": "VERIFIED \u2014 direct mode (Amelia Lite / Docker)",
+              "journey_catalogue_count": 29,
+              "journey_catalogue_min": true
+            },
+            "integrations": {
+              "crm": {
+                "active": true,
+                "lists": {
+                  "Tutor": true,
+                  "Parent": true,
+                  "Student": true
+                },
+                "tags": {
+                  "Tutor Applicant": true,
+                  "Tutor Approved": true,
+                  "Tutor Rejected": true,
+                  "Tutor Resubmitted": true,
+                  "Parent Registered": true,
+                  "Parent Enquiry": true,
+                  "Parent Matched": true,
+                  "Parent Paid": true,
+                  "Student Registered": true,
+                  "Child Learner": true,
+                  "LMS Student": true,
+                  "Active Learner": true
+                },
+                "ok": true,
+                "status": "VERIFIED",
+                "adapter": "NGC_Fluentcrm_Adapter",
+                "verifiable": true
+              },
+              "lms": {
+                "active": true,
+                "instructor_role": true,
+                "student_role_exists": true,
+                "ok": true,
+                "status": "VERIFIED \u2014 MasterStudy active",
+                "adapter": "NGC_Masterstudy_Adapter",
+                "verifiable": true
+              },
+              "booking_provider": {
+                "active": true,
+                "api_key": true,
+                "ok": true,
+                "direct": true,
+                "service_id": 1,
+                "status": "VERIFIED \u2014 direct mode (Amelia Lite / Docker)",
+                "adapter": "NGC_Amelia_Adapter",
+                "verifiable": true
+              }
+            },
+            "seed": {
+              "version": "14.0.0",
+              "status": "seeded",
+              "seeded_at": "2026-08-02T12:58:56+00:00",
+              "scenario": "all"
+            }
+          },
+          "seed_version": "14.0.0"
+        }
+      }
+    },
+    "verification": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "verification",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:57+00:00",
+      "completed_at": "2026-08-02T12:58:58+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Verification passed",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "business": {
+            "source": "/var/www/config/nextgentutors-business-profile.json",
+            "theme_package": "NextGenTutors-BeyondInfinity",
+            "applied": true,
+            "hash": "4e15ca1cdddde225fa3062a830440abb",
+            "pending_changes": 0,
+            "conflicts": 0,
+            "phone": "0813340625",
+            "email": "support@nextgentutors.co.za"
+          },
+          "theme_ok": true,
+          "companion": {
+            "tables": {
+              "status": "PASS",
+              "message": "All plugin tables present.",
+              "required": true,
+              "pass": true
+            },
+            "platform_schema": {
+              "status": "PASS",
+              "message": "Platform schema verified.",
+              "required": true,
+              "pass": true
+            },
+            "roles": {
+              "status": "PASS",
+              "message": "Companion roles installed.",
+              "required": true,
+              "pass": true
+            },
+            "shortcodes": {
+              "status": "PASS",
+              "message": "Core shortcodes registered.",
+              "required": true,
+              "pass": true
+            },
+            "rest": {
+              "status": "PASS",
+              "message": "Core REST routes registered.",
+              "required": true,
+              "pass": true
+            },
+            "demo_json": {
+              "status": "PASS",
+              "message": "Demo JSON payloads valid.",
+              "required": false,
+              "pass": true
+            },
+            "tutor_calendar_service": {
+              "status": "PASS",
+              "message": "Tutor calendar service loaded.",
+              "required": true,
+              "pass": true
+            },
+            "tutor_calendar_shortcode": {
+              "status": "PASS",
+              "message": "Tutor calendar shortcode registered.",
+              "required": false,
+              "pass": true
+            },
+            "tutor_calendar_endpoint": {
+              "status": "PASS",
+              "message": "Tutor calendar REST endpoint registered.",
+              "required": true,
+              "pass": true
+            },
+            "cookies": {
+              "status": "PASS",
+              "message": "Consent flow verified via consent_log (7 rows) on local stack.",
+              "required": false,
+              "pass": true
+            },
+            "attribution": {
+              "status": "PASS",
+              "message": "Attribution storage active (1 rows).",
+              "required": true,
+              "pass": true
+            },
+            "tracking_consent": {
+              "status": "PASS",
+              "message": "Consent status: granted (consent_log)",
+              "required": true,
+              "pass": true
+            },
+            "gamification": {
+              "status": "PASS",
+              "message": "NGC_Gamification loaded.",
+              "required": true,
+              "pass": true
+            },
+            "export_engine": {
+              "status": "PASS",
+              "message": "NGC_Export_Engine loaded.",
+              "required": true,
+              "pass": true
+            },
+            "audit_framework": {
+              "status": "PASS",
+              "message": "NGC_Audit_Service loaded.",
+              "required": true,
+              "pass": true
+            },
+            "ai_diagnostics": {
+              "status": "PASS",
+              "message": "NGC_Ai_Diagnostics loaded.",
+              "required": true,
+              "pass": true
+            },
+            "ai_models": {
+              "status": "PASS",
+              "message": "NGC_AI_Models loaded.",
+              "required": true,
+              "pass": true
+            },
+            "ai_agents": {
+              "status": "PASS",
+              "message": "NGC_AI_Agents loaded.",
+              "required": true,
+              "pass": true
+            },
+            "ai_policy": {
+              "status": "PASS",
+              "message": "BIA_Policy loaded.",
+              "required": true,
+              "pass": true
+            },
+            "ai_rest": {
+              "status": "PASS",
+              "message": "NGC_Rest_Ai loaded.",
+              "required": true,
+              "pass": true
+            },
+            "smart_matching": {
+              "status": "PASS",
+              "message": "Smart matching module and shortcode ready.",
+              "required": true,
+              "pass": true
+            },
+            "form_validation": {
+              "status": "PASS",
+              "message": "Form validation assets present.",
+              "required": true,
+              "pass": true
+            },
+            "tutors_cpt": {
+              "status": "PASS",
+              "message": "7 published tutors (3 real, 4 demo).",
+              "required": true,
+              "pass": true
+            },
+            "exception_log": {
+              "status": "PASS",
+              "message": "NGC_Exception_Log loaded.",
+              "required": true,
+              "pass": true
+            },
+            "marketplace": {
+              "status": "PASS",
+              "message": "Marketplace search, filters, and carousel registered.",
+              "required": true,
+              "pass": true
+            },
+            "page_forms_registry": {
+              "status": "PASS",
+              "message": "All mapped pages and shortcodes verified.",
+              "required": true,
+              "pass": true
+            },
+            "matching_source": {
+              "status": "PASS",
+              "message": "Matching uses Tutor CPT as canonical source.",
+              "required": true,
+              "pass": true
+            },
+            "bookings_engine": {
+              "status": "PASS",
+              "message": "Bookings table present (38 rows). E2E booking flow NOT_VERIFIED.",
+              "required": false,
+              "pass": true
+            },
+            "payments_engine": {
+              "status": "PASS",
+              "message": "WooCommerce + PayFast sandbox configured (run scripts/payfast-e2e-docker.php for E2E).",
+              "required": false,
+              "pass": true
+            },
+            "amelia_integration": {
+              "status": "PASS",
+              "message": "VERIFIED \u2014 direct mode (Amelia Lite / Docker)",
+              "required": false,
+              "pass": true
+            },
+            "fluentcrm_integration": {
+              "status": "PASS",
+              "message": "VERIFIED",
+              "required": false,
+              "pass": true
+            },
+            "fluent_support_integration": {
+              "status": "PASS",
+              "message": "VERIFIED",
+              "required": false,
+              "pass": true
+            },
+            "masterstudy_integration": {
+              "status": "PASS",
+              "message": "VERIFIED \u2014 MasterStudy active",
+              "required": false,
+              "pass": true
+            },
+            "gamipress_integration": {
+              "status": "PASS",
+              "message": "GamiPress active; achievement E2E NOT_VERIFIED.",
+              "required": false,
+              "pass": true
+            },
+            "popia_consent_config": {
+              "status": "WARNING",
+              "message": "Consent gate + privacy policy page set; lawful basis requires legal review (SECURITY_REVIEW_REQUIRED).",
+              "required": false,
+              "pass": false
+            },
+            "rate_limiter": {
+              "status": "PASS",
+              "message": "Rate limiter loaded (transients_only). CDN/distributed effectiveness NOT_VERIFIED.",
+              "required": false,
+              "pass": true
+            },
+            "integrate_pack": {
+              "status": "PASS",
+              "message": "Integrate pack OK (28 specs, 56 events, crons active).",
+              "required": true,
+              "pass": true
+            },
+            "version": "1.9.5",
+            "tutor_counts": {
+              "real": 3,
+              "demo": 4,
+              "total": 7
+            },
+            "ok": true
+          },
+          "demo": {
+            "ok": true,
+            "failures": [],
+            "checks": {
+              "demo_mode": true,
+              "persona_NGT-DEMO-P0001": true,
+              "persona_NGT-DEMO-P0001_role": true,
+              "persona_NGT-DEMO-P0001_demo_flag": true,
+              "persona_NGT-DEMO-P0002": true,
+              "persona_NGT-DEMO-P0002_role": true,
+              "persona_NGT-DEMO-P0002_demo_flag": true,
+              "persona_NGT-DEMO-P0003": true,
+              "persona_NGT-DEMO-P0003_role": true,
+              "persona_NGT-DEMO-P0003_demo_flag": true,
+              "persona_NGT-DEMO-S0001": true,
+              "persona_NGT-DEMO-S0001_role": true,
+              "persona_NGT-DEMO-S0001_demo_flag": true,
+              "persona_NGT-DEMO-S0002": true,
+              "persona_NGT-DEMO-S0002_role": true,
+              "persona_NGT-DEMO-S0002_demo_flag": true,
+              "persona_NGT-DEMO-S0003": true,
+              "persona_NGT-DEMO-S0003_role": true,
+              "persona_NGT-DEMO-S0003_demo_flag": true,
+              "persona_NGT-DEMO-T0001": true,
+              "persona_NGT-DEMO-T0001_role": true,
+              "persona_NGT-DEMO-T0001_demo_flag": true,
+              "persona_NGT-DEMO-T0002": true,
+              "persona_NGT-DEMO-T0002_role": true,
+              "persona_NGT-DEMO-T0002_demo_flag": true,
+              "persona_NGT-DEMO-T0003": true,
+              "persona_NGT-DEMO-T0003_role": true,
+              "persona_NGT-DEMO-T0003_demo_flag": true,
+              "persona_NGT-DEMO-T0004": true,
+              "persona_NGT-DEMO-T0004_role": true,
+              "persona_NGT-DEMO-T0004_demo_flag": true,
+              "persona_NGT-DEMO-T0005": true,
+              "persona_NGT-DEMO-T0005_role": true,
+              "persona_NGT-DEMO-T0005_demo_flag": true,
+              "persona_NGT-DEMO-T0006": true,
+              "persona_NGT-DEMO-T0006_role": true,
+              "persona_NGT-DEMO-T0006_demo_flag": true,
+              "persona_NGT-DEMO-T0007": true,
+              "persona_NGT-DEMO-T0007_role": true,
+              "persona_NGT-DEMO-T0007_demo_flag": true,
+              "persona_NGT-DEMO-A0001": true,
+              "persona_NGT-DEMO-A0001_role": true,
+              "persona_NGT-DEMO-A0001_demo_flag": true,
+              "persona_NGT-DEMO-F0001": true,
+              "persona_NGT-DEMO-F0001_role": true,
+              "persona_NGT-DEMO-F0001_demo_flag": true,
+              "persona_NGT-DEMO-C0001": true,
+              "persona_NGT-DEMO-C0001_role": true,
+              "persona_NGT-DEMO-C0001_demo_flag": true,
+              "persona_NGT-DEMO-SFG0001": true,
+              "persona_NGT-DEMO-SFG0001_role": true,
+              "persona_NGT-DEMO-SFG0001_demo_flag": true,
+              "persona_NGT-DEMO-SUP0001": true,
+              "persona_NGT-DEMO-SUP0001_role": true,
+              "persona_NGT-DEMO-SUP0001_demo_flag": true,
+              "persona_NGT-DEMO-SEC0001": true,
+              "persona_NGT-DEMO-SEC0001_role": true,
+              "persona_NGT-DEMO-SEC0001_demo_flag": true,
+              "persona_NGT-DEMO-FRD0001": true,
+              "persona_NGT-DEMO-FRD0001_role": true,
+              "persona_NGT-DEMO-FRD0001_demo_flag": true,
+              "persona_NGT-DEMO-AUD0001": true,
+              "persona_NGT-DEMO-AUD0001_role": true,
+              "persona_NGT-DEMO-AUD0001_demo_flag": true,
+              "persona_NGT-DEMO-AI0001": true,
+              "persona_NGT-DEMO-AI0001_role": true,
+              "persona_NGT-DEMO-AI0001_demo_flag": true,
+              "parent_child_link": true,
+              "match_001": true,
+              "booking_confirmed": true,
+              "booking_completed": true,
+              "fraud_case": true,
+              "safeguarding_case": true,
+              "notifications": true,
+              "events_recorded": true,
+              "suspended_flag": true,
+              "crm_sync_verifiable": true,
+              "lms_sync_verifiable": true,
+              "booking_provider_sync_verifiable": true,
+              "crm_sync_status": "VERIFIED",
+              "lms_sync_status": "VERIFIED \u2014 MasterStudy active",
+              "booking_provider_sync_status": "VERIFIED \u2014 direct mode (Amelia Lite / Docker)",
+              "journey_catalogue_count": 29,
+              "journey_catalogue_min": true
+            },
+            "integrations": {
+              "crm": {
+                "active": true,
+                "lists": {
+                  "Tutor": true,
+                  "Parent": true,
+                  "Student": true
+                },
+                "tags": {
+                  "Tutor Applicant": true,
+                  "Tutor Approved": true,
+                  "Tutor Rejected": true,
+                  "Tutor Resubmitted": true,
+                  "Parent Registered": true,
+                  "Parent Enquiry": true,
+                  "Parent Matched": true,
+                  "Parent Paid": true,
+                  "Student Registered": true,
+                  "Child Learner": true,
+                  "LMS Student": true,
+                  "Active Learner": true
+                },
+                "ok": true,
+                "status": "VERIFIED",
+                "adapter": "NGC_Fluentcrm_Adapter",
+                "verifiable": true
+              },
+              "lms": {
+                "active": true,
+                "instructor_role": true,
+                "student_role_exists": true,
+                "ok": true,
+                "status": "VERIFIED \u2014 MasterStudy active",
+                "adapter": "NGC_Masterstudy_Adapter",
+                "verifiable": true
+              },
+              "booking_provider": {
+                "active": true,
+                "api_key": true,
+                "ok": true,
+                "direct": true,
+                "service_id": 1,
+                "status": "VERIFIED \u2014 direct mode (Amelia Lite / Docker)",
+                "adapter": "NGC_Amelia_Adapter",
+                "verifiable": true
+              }
+            },
+            "seed": {
+              "version": "14.0.0",
+              "status": "seeded",
+              "seeded_at": "2026-08-02T12:58:56+00:00",
+              "scenario": "all"
+            }
+          },
+          "evidence_path": "/var/www/html/wp-content/uploads/ngt-provisioning/verify-20260802-125858.json",
+          "blocking": []
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": {
+          "theme_ok": true,
+          "demo": {
+            "ok": true,
+            "failures": [],
+            "checks": {
+              "demo_mode": true,
+              "persona_NGT-DEMO-P0001": true,
+              "persona_NGT-DEMO-P0001_role": true,
+              "persona_NGT-DEMO-P0001_demo_flag": true,
+              "persona_NGT-DEMO-P0002": true,
+              "persona_NGT-DEMO-P0002_role": true,
+              "persona_NGT-DEMO-P0002_demo_flag": true,
+              "persona_NGT-DEMO-P0003": true,
+              "persona_NGT-DEMO-P0003_role": true,
+              "persona_NGT-DEMO-P0003_demo_flag": true,
+              "persona_NGT-DEMO-S0001": true,
+              "persona_NGT-DEMO-S0001_role": true,
+              "persona_NGT-DEMO-S0001_demo_flag": true,
+              "persona_NGT-DEMO-S0002": true,
+              "persona_NGT-DEMO-S0002_role": true,
+              "persona_NGT-DEMO-S0002_demo_flag": true,
+              "persona_NGT-DEMO-S0003": true,
+              "persona_NGT-DEMO-S0003_role": true,
+              "persona_NGT-DEMO-S0003_demo_flag": true,
+              "persona_NGT-DEMO-T0001": true,
+              "persona_NGT-DEMO-T0001_role": true,
+              "persona_NGT-DEMO-T0001_demo_flag": true,
+              "persona_NGT-DEMO-T0002": true,
+              "persona_NGT-DEMO-T0002_role": true,
+              "persona_NGT-DEMO-T0002_demo_flag": true,
+              "persona_NGT-DEMO-T0003": true,
+              "persona_NGT-DEMO-T0003_role": true,
+              "persona_NGT-DEMO-T0003_demo_flag": true,
+              "persona_NGT-DEMO-T0004": true,
+              "persona_NGT-DEMO-T0004_role": true,
+              "persona_NGT-DEMO-T0004_demo_flag": true,
+              "persona_NGT-DEMO-T0005": true,
+              "persona_NGT-DEMO-T0005_role": true,
+              "persona_NGT-DEMO-T0005_demo_flag": true,
+              "persona_NGT-DEMO-T0006": true,
+              "persona_NGT-DEMO-T0006_role": true,
+              "persona_NGT-DEMO-T0006_demo_flag": true,
+              "persona_NGT-DEMO-T0007": true,
+              "persona_NGT-DEMO-T0007_role": true,
+              "persona_NGT-DEMO-T0007_demo_flag": true,
+              "persona_NGT-DEMO-A0001": true,
+              "persona_NGT-DEMO-A0001_role": true,
+              "persona_NGT-DEMO-A0001_demo_flag": true,
+              "persona_NGT-DEMO-F0001": true,
+              "persona_NGT-DEMO-F0001_role": true,
+              "persona_NGT-DEMO-F0001_demo_flag": true,
+              "persona_NGT-DEMO-C0001": true,
+              "persona_NGT-DEMO-C0001_role": true,
+              "persona_NGT-DEMO-C0001_demo_flag": true,
+              "persona_NGT-DEMO-SFG0001": true,
+              "persona_NGT-DEMO-SFG0001_role": true,
+              "persona_NGT-DEMO-SFG0001_demo_flag": true,
+              "persona_NGT-DEMO-SUP0001": true,
+              "persona_NGT-DEMO-SUP0001_role": true,
+              "persona_NGT-DEMO-SUP0001_demo_flag": true,
+              "persona_NGT-DEMO-SEC0001": true,
+              "persona_NGT-DEMO-SEC0001_role": true,
+              "persona_NGT-DEMO-SEC0001_demo_flag": true,
+              "persona_NGT-DEMO-FRD0001": true,
+              "persona_NGT-DEMO-FRD0001_role": true,
+              "persona_NGT-DEMO-FRD0001_demo_flag": true,
+              "persona_NGT-DEMO-AUD0001": true,
+              "persona_NGT-DEMO-AUD0001_role": true,
+              "persona_NGT-DEMO-AUD0001_demo_flag": true,
+              "persona_NGT-DEMO-AI0001": true,
+              "persona_NGT-DEMO-AI0001_role": true,
+              "persona_NGT-DEMO-AI0001_demo_flag": true,
+              "parent_child_link": true,
+              "match_001": true,
+              "booking_confirmed": true,
+              "booking_completed": true,
+              "fraud_case": true,
+              "safeguarding_case": true,
+              "notifications": true,
+              "events_recorded": true,
+              "suspended_flag": true,
+              "crm_sync_verifiable": true,
+              "lms_sync_verifiable": true,
+              "booking_provider_sync_verifiable": true,
+              "crm_sync_status": "VERIFIED",
+              "lms_sync_status": "VERIFIED \u2014 MasterStudy active",
+              "booking_provider_sync_status": "VERIFIED \u2014 direct mode (Amelia Lite / Docker)",
+              "journey_catalogue_count": 29,
+              "journey_catalogue_min": true
+            },
+            "integrations": {
+              "crm": {
+                "active": true,
+                "lists": {
+                  "Tutor": true,
+                  "Parent": true,
+                  "Student": true
+                },
+                "tags": {
+                  "Tutor Applicant": true,
+                  "Tutor Approved": true,
+                  "Tutor Rejected": true,
+                  "Tutor Resubmitted": true,
+                  "Parent Registered": true,
+                  "Parent Enquiry": true,
+                  "Parent Matched": true,
+                  "Parent Paid": true,
+                  "Student Registered": true,
+                  "Child Learner": true,
+                  "LMS Student": true,
+                  "Active Learner": true
+                },
+                "ok": true,
+                "status": "VERIFIED",
+                "adapter": "NGC_Fluentcrm_Adapter",
+                "verifiable": true
+              },
+              "lms": {
+                "active": true,
+                "instructor_role": true,
+                "student_role_exists": true,
+                "ok": true,
+                "status": "VERIFIED \u2014 MasterStudy active",
+                "adapter": "NGC_Masterstudy_Adapter",
+                "verifiable": true
+              },
+              "booking_provider": {
+                "active": true,
+                "api_key": true,
+                "ok": true,
+                "direct": true,
+                "service_id": 1,
+                "status": "VERIFIED \u2014 direct mode (Amelia Lite / Docker)",
+                "adapter": "NGC_Amelia_Adapter",
+                "verifiable": true
+              }
+            },
+            "seed": {
+              "version": "14.0.0",
+              "status": "seeded",
+              "seeded_at": "2026-08-02T12:58:56+00:00",
+              "scenario": "all"
+            }
+          }
+        }
+      }
+    },
+    "hardening": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "hardening",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:58+00:00",
+      "completed_at": "2026-08-02T12:58:58+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Hardening checks recorded",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "checks": {
+            "wp_debug": true,
+            "https": true,
+            "demo_mode_off": true,
+            "users_can_register": true
+          }
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "packaging": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "packaging",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:58+00:00",
+      "completed_at": "2026-08-02T12:58:58+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Release manifest found (includes Mission Control + ui-library)",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "path": "/var/www/html/wp-content/release/release-manifest.json",
+          "packages": [
+            "NextGenTutors-BeyondInfinity",
+            "NextGenTutors-Companion",
+            "NextGenTutors-AI-Integration",
+            "NextGenTutors-Mission-Control",
+            "NextGenTutors-Plugin-Manager",
+            "NextGenTutors-Html-Importer",
+            "ngt-ui-library"
+          ],
+          "includes_mission_control": true,
+          "includes_ui_library": true,
+          "candidates_scanned": 2
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    },
+    "deployment-docs": {
+      "ok": true,
+      "status": "COMPLETED",
+      "step": "deployment-docs",
+      "version": "1.0.0",
+      "started_at": "2026-08-02T12:58:58+00:00",
+      "completed_at": "2026-08-02T12:58:58+00:00",
+      "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+      "actor_id": 0,
+      "environment": "local",
+      "preflight": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      },
+      "plan": {
+        "creates": [],
+        "updates": [],
+        "skips": [],
+        "meta": {
+          "note": "No planned mutations (verify-only or detect-only step)."
+        }
+      },
+      "apply": {
+        "ok": true,
+        "status": "COMPLETED",
+        "message": "Deployment documentation inventory",
+        "created_ids": [],
+        "updated_ids": [],
+        "previous": [],
+        "evidence": {
+          "docs": {
+            "docs/COMMERCIAL-DEPLOYMENT-GUIDE.md": false,
+            "docs/PRODUCTION-READINESS.md": false,
+            "docs/tutorials/BEYONDINFINITY-SEQUENTIAL-SETUP.md": false,
+            "release/documentation/06-DEPLOYMENT-GUIDE.md": false
+          }
+        }
+      },
+      "verify": {
+        "ok": true,
+        "blocking": [],
+        "warnings": [],
+        "evidence": []
+      }
+    }
+  },
+  "context": {
+    "correlation_id": "3cac6909-c5e3-4b7a-8c9c-e8fab147b8bf",
+    "dry_run": false,
+    "force_safe": true,
+    "allow_demo": true,
+    "environment": "local",
+    "actor_id": 0
+  },
+  "evidence_path": "option:ngc_provisioning_last_report"
+}

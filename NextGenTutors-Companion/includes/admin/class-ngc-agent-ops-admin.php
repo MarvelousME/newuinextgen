@@ -27,8 +27,7 @@ final class NGC_Agent_Ops_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		add_submenu_page(
-			'ngc-operations',
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin',
 			__( 'Agent Operations', 'nextgencompanion' ),
 			__( 'Agent Operations', 'nextgencompanion' ),
 			'manage_options',

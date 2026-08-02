@@ -45,20 +45,37 @@ function bi_nav_menu_groups() {
 }
 
 /**
+ * Bump when public menu groups change so live sites rebuild once.
+ */
+function bi_nav_public_schema_version() {
+	return '2026-07-25-public-v2';
+}
+
+/**
  * Ensure primary nav menu exists and is assigned before render.
  */
 function bi_ensure_primary_nav_menu() {
+	$schema     = bi_nav_public_schema_version();
+	$stored     = (string) get_option( 'bi_nav_public_schema', '' );
+	$force      = ( $stored !== $schema );
 	$locations  = get_theme_mod( 'nav_menu_locations', [] );
 	$primary_id = (int) ( $locations['primary'] ?? 0 );
-	$needs_sync = ! $primary_id;
+	$needs_sync = $force || ! $primary_id;
 
-	if ( $primary_id ) {
-		$items = wp_get_nav_menu_items( $primary_id );
+	if ( ! $needs_sync && $primary_id ) {
+		$items      = wp_get_nav_menu_items( $primary_id );
 		$needs_sync = ! is_array( $items ) || count( $items ) < 1;
 	}
 
 	if ( $needs_sync ) {
-		bi_sync_launch_nav( false );
+		// Schema bumps only rebuild the public primary menu (fast).
+		// Full launch sync (all-pages + footer) stays on theme switch.
+		if ( $force ) {
+			bi_sync_grouped_primary_menu( true );
+		} else {
+			bi_sync_launch_nav( false );
+		}
+		update_option( 'bi_nav_public_schema', $schema, false );
 	}
 }
 
@@ -150,16 +167,10 @@ function bi_nav_page_groups() {
 			'contact', 'support',
 		],
 		__( 'Account', 'beyondinfinity' ) => [
-			'register', 'login', 'parent-checkout', 'thank-you',
-		],
-		__( 'Dashboards', 'beyondinfinity' ) => [
-			'parent-dashboard', 'student-dashboard', 'tutor-dashboard', 'admin-dashboard', 'onboarding',
+			'register', 'login', 'parent-dashboard', 'student-dashboard',
 		],
 		__( 'Legal', 'beyondinfinity' ) => [
 			'privacy-policy', 'terms',
-		],
-		__( 'Admin', 'beyondinfinity' ) => [
-			'wordpress-setup',
 		],
 	];
 }

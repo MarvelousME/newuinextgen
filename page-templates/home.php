@@ -16,19 +16,36 @@ get_header();
 .ngi-kh-mesh{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--mx,70%) var(--my,20%),rgba(40,199,247,.32),transparent 20%),radial-gradient(circle at 20% 72%,rgba(255,183,3,.18),transparent 28%);mix-blend-mode:screen;transition:background .25s ease}.ngi-kinetic-box{position:relative;border:1px solid rgba(255,255,255,.18);background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.04));box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 28px 80px rgba(3,17,38,.22);backdrop-filter:blur(18px);border-radius:32px;overflow:hidden}.ngi-kinetic-box:before{content:"";position:absolute;inset:-1px;background:linear-gradient(130deg,rgba(40,199,247,.38),transparent 30%,rgba(255,183,3,.28));opacity:.45;pointer-events:none}.ngi-kinetic-text span{display:inline-block;will-change:transform,opacity}.ngi-magnetic{position:relative;overflow:hidden}.ngi-magnetic:after{content:"";position:absolute;inset:auto auto -55% -30%;width:90%;height:120%;background:radial-gradient(circle,rgba(255,255,255,.42),transparent 60%);transform:translateX(var(--magx,0)) translateY(var(--magy,0));transition:.18s}.ngi-scroll-divider{height:4px;background:#dce8f8;border-radius:99px;overflow:hidden;margin:0 auto;max-width:1180px}.ngi-scroll-divider span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ngi-cyan),var(--ngi-gold),var(--ngi-green));transition:width .45s ease}.ngi-video-tile{min-height:320px;border-radius:36px;background:radial-gradient(circle at 30% 20%,rgba(40,199,247,.35),transparent 28%),linear-gradient(135deg,#06152e,#123c7c);display:grid;place-items:center;color:white;box-shadow:0 30px 90px rgba(3,17,38,.28);position:relative;overflow:hidden}.ngi-play{width:86px;height:86px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.14);color:white;font-size:30px;display:grid;place-items:center;backdrop-filter:blur(14px)}.ngi-before-after{position:relative;border-radius:32px;overflow:hidden;min-height:330px;box-shadow:var(--ngi-shadow);background:#fff}.ngi-ba-layer{position:absolute;inset:0;display:grid;place-items:center;padding:32px;color:white;font-weight:950;font-size:28px}.ngi-ba-before{background:linear-gradient(135deg,#8a1025,#ff7a1a)}.ngi-ba-after{background:linear-gradient(135deg,#07172f,#28c7f7);clip-path:inset(0 0 0 50%)}.ngi-ba-range{position:absolute;left:8%;right:8%;bottom:22px;width:84%;accent-color:var(--ngi-gold)}.ngi-audio{display:flex;gap:16px;align-items:center;background:white;border:1px solid var(--ngi-line);border-radius:28px;padding:18px;box-shadow:var(--ngi-shadow)}.ngi-audio button{width:48px;height:48px;border-radius:50%;border:0;background:var(--ngi-blue);color:white;font-weight:950}.ngi-audio-bar{height:10px;flex:1;background:#eaf2fb;border-radius:99px;overflow:hidden}.ngi-audio-bar span{display:block;width:42%;height:100%;background:linear-gradient(90deg,var(--ngi-cyan),var(--ngi-green));border-radius:inherit}.ngi-split{display:grid;grid-template-columns:.92fr 1.08fr;gap:34px;align-items:start}.ngi-split-media{position:sticky;top:96px;min-height:480px;border-radius:36px;background:linear-gradient(135deg,#07172f,#123c7c);box-shadow:0 35px 100px rgba(3,17,38,.25);padding:28px;color:white;overflow:hidden}.ngi-split-item{padding:28px;border:1px solid var(--ngi-line);border-radius:28px;background:white;box-shadow:var(--ngi-shadow);margin-bottom:18px}.ngi-cursor-list{display:grid;grid-template-columns:.85fr 1.15fr;gap:22px}.ngi-cursor-item{border:1px solid var(--ngi-line);border-radius:20px;padding:18px;background:white;font-weight:950}.ngi-cursor-item.is-active{border-color:var(--ngi-cyan);box-shadow:0 18px 45px rgba(40,199,247,.14)}.ngi-cursor-preview{min-height:360px;border-radius:34px;background:radial-gradient(circle at var(--rx,50%) var(--ry,50%),rgba(255,183,3,.36),transparent 22%),linear-gradient(135deg,#06152e,#123c7c);display:grid;place-items:center;color:white;padding:28px;box-shadow:0 30px 90px rgba(3,17,38,.24)}.ngi-aura{position:relative;overflow:hidden}.ngi-aura:before,.ngi-aura:after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;filter:blur(34px);opacity:.28;pointer-events:none}.ngi-aura:before{background:var(--ngi-cyan);left:-140px;top:-120px}.ngi-aura:after{background:var(--ngi-gold);right:-150px;bottom:-140px}.ngi-feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}.ngi-video-modal iframe{width:min(920px,92vw);height:min(520px,55vw);border:0;border-radius:24px;background:#000}.ngi-modal-card.ngi-video-modal{max-width:980px;background:#07172f;color:white}.ngi-kh-note{font-size:13px;color:var(--ngi-muted);margin-top:8px}@media(max-width:980px){.ngi-split,.ngi-cursor-list,.ngi-feature-grid{grid-template-columns:1fr}.ngi-split-media{position:relative;top:auto;min-height:280px}.ngi-before-after{min-height:260px}}
 
 </style>
+<style id="ngi-nav-blue-chrome">
+  /* Solid theme-blue homepage nav (no header CTAs) */
+  .ngi-home .ngi-nav{
+    position:sticky;top:0;z-index:20;
+    margin:0 -7vw;padding:16px 7vw;
+    width:calc(100% + 14vw);
+    box-sizing:border-box;
+    background:linear-gradient(180deg,var(--ngi-blue),var(--ngi-midnight));
+    border-bottom:2px solid rgba(40,199,247,.35);
+    box-shadow:0 12px 32px rgba(3,17,38,.28);
+    backdrop-filter:blur(10px);
+  }
+  .ngi-home .ngi-logo{color:#fff}
+  .ngi-home .ngi-logo span{color:var(--ngi-cyan)}
+  .ngi-home .ngi-menu a{color:#dcefff}
+  .ngi-home .ngi-menu a:hover{color:#fff}
+  .ngi-home .ngi-pill-btn{display:none!important}
+</style>
 
 <div class="ngi-home" id="nextgen-home">
-  <button class="ngi-sticky" data-ngi-open type="button">Book Free Assessment</button>
+  <!--<button class="ngi-sticky" data-ngi-open type="button">Book Free Assessment</button>-->
 
   <main class="ngi-hero" aria-label="NextGen Tutors homepage hero">
     <div class="ngi-kh-mesh" aria-hidden="true"></div>
     <div class="ngi-wrap">
       <nav class="ngi-nav" aria-label="Homepage navigation">
-        <a class="ngi-logo" href="#nextgen-home" aria-label="NextGen Tutors home">NextGen<span>Tutors</span></a>
+        <a class="ngi-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" data-ngt-transition data-testid="ngi-home-logo" aria-label="NextGen Tutors home" onclick="return window.NGT_pageTransition ? window.NGT_pageTransition(this.href, event) : true;">NextGen<span>Tutors</span></a>
         <div class="ngi-menu">
           <a href="#subjects">Subjects</a><a href="#journey">How It Works</a><a href="#tutors">Tutors</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
         </div>
-        <button class="ngi-pill-btn" data-ngi-open type="button">Find a Tutor</button>
       </nav>
       <div class="ngi-hero-grid">
         <div>

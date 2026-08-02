@@ -1,118 +1,228 @@
 /* ============================================================
    NextGen Tutors — RTM Chat (Tutors · Staff · Support)
-   Designed for Agora RTM SDK or Firebase Realtime integration.
+   Maps floating Live Chat to Automation Hub RTM REST + SSE.
    ============================================================ */
 (function () {
   "use strict";
   const $ = (s, c) => (c || document).querySelector(s);
   const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
 
-  const CONTACTS = [
-    { id: "admin", name: "Admin Team", role: "Support", online: true, avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200&h=200", lastMsg: "Session logs updated ✓", unread: 2 },
-    { id: "karabo", name: "Karabo Molefe", role: "Tutor", online: true, avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200&h=200", lastMsg: "Available Mon-Thu 9am–5pm", unread: 0 },
-    { id: "lindiwe", name: "Lindiwe Nkosi", role: "Tutor", online: true, avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200&h=200", lastMsg: "Can we reschedule Friday?", unread: 1 },
-    { id: "support", name: "Support Desk", role: "FluentSupport", online: true, avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200&h=200", lastMsg: "Ticket #8843 resolved", unread: 0 },
+  const FALLBACK_CONTACTS = [
+    { id: "support", name: "Support Desk", role: "Support", online: true, avatar: "", lastMsg: "Fluent Support portal available", unread: 0, roomId: 0 },
   ];
 
-  const DEMO_MESSAGES = {
-    admin: [
-      { out: false, text: "Monthly payout run is scheduled for 1 July — R58,200 total.", time: "09:14" },
-      { out: true, text: "Thanks, I'll notify all tutors.", time: "09:16" },
-      { out: false, text: "Session logs updated ✓", time: "09:21" },
-    ],
-    karabo: [
-      { out: false, text: "Hi! I have a slot open Tuesday 14:00 if you need a replacement.", time: "08:30" },
-      { out: true, text: "Great, I'll book that in. Naledi needs extra Maths prep.", time: "08:45" },
-    ],
-  };
+  let rooms = [];
+  let activeRoomId = 0;
+  let sinceId = 0;
+  let sse = null;
+  let pollTimer = null;
 
-  let activeContact = null;
+  function cfg() {
+    return (window.NGT_WP && window.NGT_WP.rtm) || {};
+  }
+
+  function headers() {
+    return {
+      "Content-Type": "application/json",
+      "X-WP-Nonce": cfg().nonce || ""
+    };
+  }
+
+  function escapeHtml(text) {
+    return String(text).replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c]));
+  }
 
   function buildChatPanel() {
+    if ($("#chat-panel")) return;
     const panel = document.createElement("div");
-    panel.className = "chat-panel"; panel.id = "chat-panel";
+    panel.className = "chat-panel";
+    panel.id = "chat-panel";
+    panel.setAttribute("data-testid", "chat-panel");
     panel.innerHTML = `
       <div class="chat-panel__head">
         <div>
           <div class="chat-panel__title">NextGen Chat</div>
-          <div class="chat-panel__sub" id="chat-panel-sub">Tutors · Staff · Support — RTM Only</div>
+          <div class="chat-panel__sub" id="chat-panel-sub">Realtime RTM · Tutors · Staff · Support</div>
         </div>
         <div class="chat-head-actions">
-          <button class="chat-icon-btn chat-icon-btn--call" id="chat-audio-btn" aria-label="Audio call" title="Audio call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 11.5 19.79 19.79 0 0 1 1 2.88 2 2 0 0 1 2.96 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91A16 16 0 0 0 15.91 17.91l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 24 18.92z"/></svg></button>
-          <button class="chat-icon-btn chat-icon-btn--video" id="chat-video-btn" aria-label="Video call" title="Video call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
-          <button class="chat-icon-btn chat-icon-btn--close" id="chat-close-btn" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+          <button type="button" class="chat-icon-btn chat-icon-btn--video" id="chat-video-btn" aria-label="Video call" title="Video call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
+          <button type="button" class="chat-icon-btn chat-icon-btn--close" id="chat-close-btn" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
         </div>
       </div>
       <div class="chat-tabs">
-        <button class="chat-tab is-active" data-tab="contacts">Contacts</button>
-        <button class="chat-tab" data-tab="messages">Messages</button>
+        <button type="button" class="chat-tab is-active" data-tab="contacts">Rooms</button>
+        <button type="button" class="chat-tab" data-tab="messages">Messages</button>
       </div>
       <div id="chat-contacts-list" class="chat-contacts"></div>
       <div id="chat-messages-area" class="chat-messages" style="display:none"></div>
       <div class="chat-compose" id="chat-compose" style="display:none">
         <input type="text" id="chat-input" placeholder="Type a message…" aria-label="Message" />
-        <button id="chat-send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        <button type="button" id="chat-send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
       </div>`;
     document.body.appendChild(panel);
   }
 
   function buildVideoOverlay() {
+    if ($("#video-overlay")) return;
     const ov = document.createElement("div");
-    ov.className = "video-overlay"; ov.id = "video-overlay";
+    ov.className = "video-overlay";
+    ov.id = "video-overlay";
     ov.innerHTML = `
       <div class="video-grid">
-        <div class="video-tile"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600" alt="Karabo" referrerpolicy="no-referrer" /><div class="video-tile__label"><i data-lucide="mic"></i> Karabo Molefe</div></div>
-        <div class="video-tile" style="background:#0c1a2e;display:flex;align-items:center;justify-content:center"><div style="text-align:center;color:rgba(255,255,255,.5)"><div style="font-size:40px;margin-bottom:8px">🎓</div><div style="font-size:13px;font-weight:700">You</div></div><div class="video-tile__label" style="bottom:12px;left:14px;position:absolute"><i data-lucide="mic"></i> You</div></div>
+        <div class="video-tile" style="background:#0c1a2e;display:flex;align-items:center;justify-content:center">
+          <div style="text-align:center;color:rgba(255,255,255,.7)">
+            <div style="font-size:18px;font-weight:800;margin-bottom:8px">Jitsi Meeting</div>
+            <div style="font-size:12px">Opens in a new window for this RTM room</div>
+          </div>
+        </div>
       </div>
       <div class="video-controls">
-        <button class="vc-btn vc-btn--mute" id="vc-mute" title="Mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>
-        <button class="vc-btn vc-btn--video" id="vc-cam" title="Camera off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
-        <button class="vc-btn vc-btn--screen" id="vc-screen" title="Screen share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
-        <button class="vc-btn vc-btn--end" id="vc-end" title="End call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M16.5 8.3A8.38 8.38 0 0 0 12 7c-1.57 0-3.04.46-4.29 1.25"/><path d="m22 22-4.69-4.69"/><path d="M2 2l20 20"/><path d="M10.68 13.31a16 16 0 0 0 2.29 1.9L14 14l2 2a10 10 0 0 0 2.09 1.1l2-2a15.87 15.87 0 0 1-2.35-3.05L16 10.5V8.6A8.59 8.59 0 0 0 12 8C9.8 8 7.8 8.74 6.25 10L4 12a10 10 0 0 0 1.1 2.09l2 2"/></svg></button>
+        <button type="button" class="vc-btn vc-btn--end" id="vc-end" title="End call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M16.5 8.3A8.38 8.38 0 0 0 12 7c-1.57 0-3.04.46-4.29 1.25"/><path d="m22 22-4.69-4.69"/><path d="M2 2l20 20"/></svg></button>
       </div>
-      <p style="color:rgba(255,255,255,.4);font-size:11px;font-weight:700;margin-top:16px;text-transform:uppercase;letter-spacing:.08em" id="vc-timer">00:00</p>`;
+      <p style="color:rgba(255,255,255,.4);font-size:11px;font-weight:700;margin-top:16px;text-transform:uppercase;letter-spacing:.08em" id="vc-timer">RTM Video</p>`;
     document.body.appendChild(ov);
   }
 
-  function renderContacts() {
+  function renderLoginGate() {
     const list = $("#chat-contacts-list");
     if (!list) return;
-    list.innerHTML = CONTACTS.map((c) => `
-      <div class="chat-contact" data-contact="${c.id}">
-        <div class="chat-contact__av">
-          <img src="${c.avatar}" alt="${c.name}" referrerpolicy="no-referrer" />
-          <span class="chat-contact__online${c.online ? "" : " away"}"></span>
+    const login = cfg().loginUrl || "/wp-login.php";
+    list.innerHTML = `
+      <div class="chat-contact" style="cursor:default">
+        <div style="padding:8px 4px">
+          <div class="chat-contact__name">Sign in required</div>
+          <div class="chat-contact__last">Realtime RTM chat needs an account.</div>
+          <a href="${escapeHtml(login)}" class="btn btn--primary" style="display:inline-flex;margin-top:10px;padding:8px 14px;font-size:12px">Log in to chat</a>
         </div>
-        <div style="flex:1;min-width:0">
-          <div class="chat-contact__name">${c.name} ${c.unread ? `<span class="chat-badge">${c.unread}</span>` : ""}</div>
-          <div class="chat-contact__role">${c.role}</div>
-          <div class="chat-contact__last">${c.lastMsg}</div>
-        </div>
-        <div class="chat-contact__time">Now</div>
-      </div>`).join("");
-    $$(".chat-contact").forEach((el) => el.addEventListener("click", () => openConversation(el.dataset.contact)));
+      </div>`;
   }
 
-  function openConversation(id) {
-    const contact = CONTACTS.find((c) => c.id === id);
-    if (!contact) return;
-    activeContact = id;
-    const msgs = DEMO_MESSAGES[id] || [];
+  function renderRooms(listData) {
+    const list = $("#chat-contacts-list");
+    if (!list) return;
+    const items = (listData && listData.length) ? listData : FALLBACK_CONTACTS;
+    list.innerHTML = items.map((c) => `
+      <div class="chat-contact" data-room="${c.roomId || c.id}" data-title="${escapeHtml(c.name || c.title || "Room")}">
+        <div class="chat-contact__av">
+          <div style="width:42px;height:42px;border-radius:50%;background:#0f2744;color:#d4f06a;display:flex;align-items:center;justify-content:center;font-weight:900">${escapeHtml((c.name || c.title || "?").charAt(0))}</div>
+          <span class="chat-contact__online"></span>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div class="chat-contact__name">${escapeHtml(c.name || c.title || "Room")}</div>
+          <div class="chat-contact__role">${escapeHtml(c.slug || c.role || "RTM")}</div>
+          <div class="chat-contact__last">${escapeHtml(c.lastMsg || "Tap to open conversation")}</div>
+        </div>
+      </div>`).join("");
+    $$(".chat-contact[data-room]").forEach((el) => {
+      el.addEventListener("click", () => openRoom(parseInt(el.dataset.room, 10) || 0, el.dataset.title));
+    });
+  }
+
+  function appendMessages(messages, replace) {
+    const area = $("#chat-messages-area");
+    if (!area || !Array.isArray(messages)) return;
+    const me = cfg().userId || 0;
+    if (replace) area.innerHTML = "";
+    messages.forEach((m) => {
+      const id = parseInt(m.id, 10) || 0;
+      if (id > sinceId) sinceId = id;
+      const out = me && String(m.user_id) === String(me);
+      const row = document.createElement("div");
+      row.className = "chat-msg" + (out ? " chat-msg--out" : "");
+      row.innerHTML = `<div class="chat-msg__bubble">${escapeHtml(m.message || "")}</div><div class="chat-msg__time">${escapeHtml(m.display_name || "")} · ${escapeHtml(m.created_at || "")}</div>`;
+      area.appendChild(row);
+    });
+    area.scrollTop = area.scrollHeight;
+  }
+
+  async function loadMessages(roomId) {
+    const rtm = cfg();
+    if (!roomId) return;
+    let url = "";
+    if (rtm.rest) url = `${rtm.rest.replace(/\/$/, "")}/messages/${roomId}`;
+    else if (rtm.messages) url = `${rtm.messages.replace(/\/$/, "")}/${roomId}`;
+    if (!url) return;
+    const r = await fetch(url, { headers: headers(), credentials: "same-origin" }).catch(() => null);
+    if (!r || !r.ok) return;
+    const data = await r.json();
+    const sorted = Array.isArray(data) ? data.slice().reverse() : [];
+    sinceId = 0;
+    appendMessages(sorted, true);
+  }
+
+  function closeStream() {
+    if (sse) { sse.close(); sse = null; }
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+  }
+
+  function openStream(roomId) {
+    closeStream();
+    const rtm = cfg();
+    if (!roomId) return;
+    if (!rtm.sse) {
+      pollTimer = setInterval(() => loadMessages(roomId), 4000);
+      return;
+    }
+    const url = `${rtm.sse}?room_id=${roomId}&since_id=${sinceId}`;
+    try {
+      sse = new EventSource(url, { withCredentials: true });
+      sse.addEventListener("messages", () => loadMessages(roomId));
+      sse.onerror = () => {
+        closeStream();
+        pollTimer = setInterval(() => loadMessages(roomId), 4000);
+      };
+    } catch (e) {
+      pollTimer = setInterval(() => loadMessages(roomId), 4000);
+    }
+  }
+
+  async function openRoom(roomId, title) {
+    if (!cfg().loggedIn) {
+      renderLoginGate();
+      return;
+    }
+    if (!roomId) return;
+    activeRoomId = roomId;
+    sinceId = 0;
     const area = $("#chat-messages-area");
     const compose = $("#chat-compose");
     const sub = $("#chat-panel-sub");
-    if (sub) sub.textContent = contact.name + " · " + contact.role;
+    if (sub) sub.textContent = (title || "Room") + " · RTM live";
     area.style.display = "flex";
     compose.style.display = "flex";
-    // switch tab
     $$(".chat-tab").forEach((t) => t.classList.toggle("is-active", t.dataset.tab === "messages"));
     $("#chat-contacts-list").style.display = "none";
-    area.innerHTML = msgs.map((m) => `
-      <div class="chat-msg${m.out ? " chat-msg--out" : ""}">
-        <div class="chat-msg__bubble">${m.text}</div>
-        <div class="chat-msg__time">${m.time}</div>
-      </div>`).join("");
-    area.scrollTop = area.scrollHeight;
+    await loadMessages(roomId);
+    openStream(roomId);
+  }
+
+  async function loadRooms() {
+    const rtm = cfg();
+    if (!rtm.loggedIn) {
+      renderLoginGate();
+      return;
+    }
+    if (!rtm.rooms && !rtm.rest) {
+      renderRooms([]);
+      return;
+    }
+    const url = rtm.rooms || `${rtm.rest.replace(/\/$/, "")}/rooms`;
+    const res = await fetch(url, { headers: headers(), credentials: "same-origin" }).catch(() => null);
+    if (!res || !res.ok) {
+      renderRooms([]);
+      return;
+    }
+    const data = await res.json();
+    rooms = (Array.isArray(data) ? data : []).map((r) => ({
+      roomId: parseInt(r.id, 10),
+      id: String(r.id),
+      name: r.title || r.slug || ("Room " + r.id),
+      slug: r.slug || "rtm",
+      title: r.title,
+      lastMsg: "Realtime room",
+      online: true
+    }));
+    renderRooms(rooms);
   }
 
   function initTabs() {
@@ -123,82 +233,88 @@
         $("#chat-contacts-list").style.display = "block";
         $("#chat-messages-area").style.display = "none";
         $("#chat-compose").style.display = "none";
-        activeContact = null;
-        if ($("#chat-panel-sub")) $("#chat-panel-sub").textContent = "Tutors · Staff · Support — RTM Only";
+        closeStream();
+        activeRoomId = 0;
+        if ($("#chat-panel-sub")) $("#chat-panel-sub").textContent = "Realtime RTM · Tutors · Staff · Support";
+        loadRooms();
       }
     }));
   }
 
   function initCompose() {
-    const input = $("#chat-input"), send = $("#chat-send");
-    if (!input) return;
-    const doSend = () => {
+    const input = $("#chat-input");
+    const send = $("#chat-send");
+    if (!input || !send) return;
+    const doSend = async () => {
       const txt = input.value.trim();
-      if (!txt) return;
-      const area = $("#chat-messages-area");
-      const msg = document.createElement("div");
-      msg.className = "chat-msg chat-msg--out";
-      msg.innerHTML = `<div class="chat-msg__bubble">${txt}</div><div class="chat-msg__time">${new Date().toLocaleTimeString("en-ZA",{hour:"2-digit",minute:"2-digit"})}</div>`;
-      area.appendChild(msg);
-      area.scrollTop = area.scrollHeight;
+      if (!txt || !activeRoomId) return;
+      const rtm = cfg();
       input.value = "";
-      // Simulate reply
-      setTimeout(() => {
-        const reply = document.createElement("div");
-        reply.className = "chat-msg";
-        reply.innerHTML = `<div class="chat-msg__bubble">Got it, thank you! I'll check and get back to you shortly.</div><div class="chat-msg__time">${new Date().toLocaleTimeString("en-ZA",{hour:"2-digit",minute:"2-digit"})}</div>`;
-        area.appendChild(reply);
-        area.scrollTop = area.scrollHeight;
-      }, 1400);
+      appendMessages([{
+        id: sinceId + 1,
+        user_id: rtm.userId,
+        message: txt,
+        display_name: rtm.userName || "You",
+        created_at: new Date().toLocaleTimeString("en-ZA", { hour: "2-digit", minute: "2-digit" })
+      }], false);
+      if (!rtm.messages && !rtm.rest) return;
+      const url = rtm.messages || `${rtm.rest.replace(/\/$/, "")}/messages`;
+      await fetch(url, {
+        method: "POST",
+        headers: headers(),
+        credentials: "same-origin",
+        body: JSON.stringify({ room_id: activeRoomId, message: txt })
+      }).catch(() => null);
+      loadMessages(activeRoomId);
     };
     send.addEventListener("click", doSend);
     input.addEventListener("keydown", (e) => { if (e.key === "Enter") doSend(); });
   }
 
   function initVideoCall() {
-    let timerInterval, elapsed = 0;
     const overlay = $("#video-overlay");
-    const startCall = () => {
-      overlay.classList.add("is-active");
-      document.body.style.overflow = "hidden";
-      elapsed = 0;
-      timerInterval = setInterval(() => {
-        elapsed++;
-        const m = String(Math.floor(elapsed/60)).padStart(2,"0");
-        const s = String(elapsed%60).padStart(2,"0");
-        const el = $("#vc-timer");
-        if (el) el.textContent = `${m}:${s}`;
-      }, 1000);
-      if (window.lucide) lucide.createIcons();
-    };
-    const endCall = () => {
-      overlay.classList.remove("is-active");
-      document.body.style.overflow = "";
-      clearInterval(timerInterval);
-    };
     const btn = $("#chat-video-btn");
-    if (btn) btn.addEventListener("click", startCall);
     const endBtn = $("#vc-end");
-    if (endBtn) endBtn.addEventListener("click", endCall);
-    overlay.addEventListener("keydown", (e) => { if (e.key === "Escape") endCall(); });
-    const muteBtn = $("#vc-mute");
-    if (muteBtn) muteBtn.addEventListener("click", () => muteBtn.style.background = muteBtn.style.background ? "" : "rgba(239,68,68,.7)");
+    if (btn) {
+      btn.addEventListener("click", () => {
+        if (!activeRoomId) return;
+        window.open(`https://meet.jit.si/NextGenTutors-Room-${activeRoomId}`, "_blank", "noopener");
+        if (overlay) overlay.classList.add("is-active");
+      });
+    }
+    if (endBtn && overlay) {
+      endBtn.addEventListener("click", () => overlay.classList.remove("is-active"));
+    }
   }
 
   function initClose() {
     const closeBtn = $("#chat-close-btn");
-    if (closeBtn) closeBtn.addEventListener("click", () => { const p = $("#chat-panel"); if (p) p.classList.remove("is-open"); });
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        const p = $("#chat-panel");
+        if (p) p.classList.remove("is-open");
+        closeStream();
+      });
+    }
   }
 
   function boot() {
     buildChatPanel();
     buildVideoOverlay();
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => { renderContacts(); initTabs(); initCompose(); initClose(); initVideoCall(); if (window.lucide) lucide.createIcons(); });
-    } else {
-      renderContacts(); initTabs(); initCompose(); initClose(); initVideoCall();
-      if (window.lucide) lucide.createIcons();
-    }
+    const ready = () => {
+      initTabs();
+      initCompose();
+      initClose();
+      initVideoCall();
+      loadRooms();
+      document.addEventListener("ngt:rtm-open", () => {
+        const p = $("#chat-panel");
+        if (p) p.classList.add("is-open");
+        loadRooms();
+      });
+    };
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready);
+    else ready();
   }
   boot();
 })();

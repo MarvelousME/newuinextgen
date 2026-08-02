@@ -13,7 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action( 'wp_enqueue_scripts', 'bi_booking_drawer_assets', 40 );
-add_action( 'wp_footer', 'bi_booking_drawer_markup', 20 );
+// Priority 5 keeps the markup ahead of wp_print_footer_scripts (priority 20).
+add_action( 'wp_footer', 'bi_booking_drawer_markup', 5 );
 
 /**
  * Pages that may surface tutor calendar slots.

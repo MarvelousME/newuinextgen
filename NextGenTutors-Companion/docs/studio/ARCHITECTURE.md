@@ -16,9 +16,26 @@ The Automation Studio is an enterprise visual orchestration platform embedded in
 | Event Bus | `NGC_Studio_Event_Bus` | Routes events to runtime + legacy orchestrator |
 | Simulation | `NGC_Studio_Simulator` | Dry-run + replay |
 | Templates | `NGC_Studio_Templates` | 24 prebuilt tutoring workflows |
+| Source Importer | `NGC_Studio_Importer` | Hub + Integrate + Orchestrator + Templates → Studio rows |
 | Verification | `NGC_Studio_Verification` | Health checks |
-| REST API | `NGC_Rest_Studio` | `ngc/v1/studio/*` CRUD + execute |
+| REST API | `NGC_Rest_Studio` | `ngc/v1/studio/*` CRUD + execute + `/studio/import` |
 | Admin Shell | `NGC_Studio_Admin` | wp-admin mount `#ngc-studio-root` |
+
+## Source import (visible CRUD)
+
+All workflow definitions from other packs are synced into Studio so they appear in the list and can be edited:
+
+| Source | Prefix | Origin |
+|--------|--------|--------|
+| Templates | `tpl_*` | `NGC_Studio_Templates` |
+| Automation Hub | `hub_*` | `workflows.json` / Hub runtime |
+| Integrate + Catalog | `integrate_*` | `integrate/workflow-*.json` + `catalog/` |
+| Orchestrator | `orch_*` | Trigger Manager WF-* keys |
+
+- Auto-sync on `admin_init` / Studio page open (once per `SYNC_VERSION`)
+- Manual: **Import / Sync All Sources** button or `POST /ngc/v1/studio/import`
+- CLI: `wp ngc studio_import [--force]`
+- UI: Create / Read / Update / Delete / Publish / Simulate per workflow (`studio-fallback.js`)
 
 ## Database tables
 
@@ -59,4 +76,4 @@ Fallback: `assets/studio/studio-fallback.js` (no build required)
 
 ## Access
 
-wp-admin → **Automation Studio**
+wp-admin → **NEXT GEN TUTORS → Automation Studio** (`admin.php?page=ngc-automation-studio`)

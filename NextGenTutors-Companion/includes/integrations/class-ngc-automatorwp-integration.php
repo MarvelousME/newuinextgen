@@ -148,6 +148,20 @@ class NGC_AutomatorWP_Integration {
 		if ( ! $event || ! class_exists( 'NGC_Workflows' ) ) {
 			return;
 		}
-		NGC_Workflows::dispatch( $event, is_array( $args ) ? $args : [] );
+		$payload = is_array( $args ) ? $args : [];
+		$should  = apply_filters( 'ngc_automatorwp_should_execute_side_effects', true, $event, $payload );
+		if ( ! $should && class_exists( 'NGC_Workflow_Authority' ) ) {
+			NGC_Workflow_Authority::from_producer(
+				'automatorwp',
+				'hub_event',
+				[
+					'event_key' => $event,
+					'payload'   => $payload,
+					'idempotency_key' => 'awp:' . $event . ':' . md5( wp_json_encode( $payload ) ),
+				]
+			);
+			return;
+		}
+		NGC_Workflows::dispatch( $event, $payload );
 	}
 }

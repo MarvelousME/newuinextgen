@@ -29,6 +29,7 @@ final class NGC_Business_Profile {
 			dirname( NGC_PLUGIN_DIR ) . '/../config/nextgentutors-business-profile.json',
 			dirname( NGC_PLUGIN_DIR, 2 ) . '/config/nextgentutors-business-profile.json',
 			ABSPATH . '../config/nextgentutors-business-profile.json',
+			dirname( ABSPATH ) . '/config/nextgentutors-business-profile.json',
 			NGC_PLUGIN_DIR . 'config/nextgentutors-business-profile.json',
 		];
 		// Docker mount: workspace sibling of plugins.
@@ -209,19 +210,15 @@ final class NGC_Business_Profile {
 			update_option( 'woocommerce_email_from_name', $company['company_name'] );
 		}
 
-		// Theme options bridge (BeyondInfinity).
-		if ( function_exists( 'bi_update_theme_option' ) ) {
-			bi_update_theme_option( 'bi_support_email', $company['email'] );
-			bi_update_theme_option( 'bi_support_phone', $company['phone'] );
-		} else {
-			$mods = get_option( 'theme_mods_nextgentutors-beyondinfinity', [] );
-			if ( ! is_array( $mods ) ) {
-				$mods = [];
-			}
-			$mods['ngt_contact_email'] = $company['email'];
-			$mods['ngt_contact_phone'] = $company['phone'];
-			update_option( 'theme_mods_nextgentutors-beyondinfinity', $mods );
-		}
+		self::apply_theme_bridge( $company, $b );
+
+		/**
+		 * Allow core plugins (AI, Hub, Plugin Manager) to sync branding after SSOT apply.
+		 *
+		 * @param array<string, mixed> $company Company option payload.
+		 * @param array<string, mixed> $b       Raw business JSON block.
+		 */
+		do_action( 'ngc_business_profile_applied', $company, $b );
 
 		$hash = md5( wp_json_encode( $company ) );
 		update_option( self::OPTION_APPLIED_HASH, $hash, false );
@@ -232,6 +229,62 @@ final class NGC_Business_Profile {
 			'company' => $company,
 			'theme'   => 'NextGenTutors-BeyondInfinity',
 		];
+	}
+
+	/**
+	 * Push contact fields into BeyondInfinity theme mods (+ legacy ngt_* keys).
+	 *
+	 * @param array<string, mixed> $company Mapped company option.
+	 * @param array<string, mixed> $b       Business JSON block.
+	 */
+	private static function apply_theme_bridge( array $company, array $b ) {
+		$phone     = (string) ( $company['phone'] ?? '' );
+		$email     = (string) ( $company['email'] ?? '' );
+		$admin     = (string) ( $company['admin_email'] ?? '' );
+		$whatsapp  = preg_replace( '/\D+/', '', (string) ( $company['whatsapp'] ?? '' ) );
+		$area      = trim( (string) ( $b['primary_location'] ?? 'Johannesburg' ) . ' launch, online support nationwide' );
+
+		$writes = [
+			'bi_phone'         => $phone,
+			'bi_email'         => $admin ?: $email,
+			'bi_support_email' => $email,
+			'bi_whatsapp'      => $whatsapp,
+			'bi_service_area'  => $area,
+		];
+
+		if ( function_exists( 'bi_update_theme_option' ) ) {
+			foreach ( $writes as $key => $val ) {
+				bi_update_theme_option( $key, $val );
+			}
+		} else {
+			foreach ( $writes as $key => $val ) {
+				set_theme_mod( $key, $val );
+			}
+		}
+
+		// Legacy page-template theme mods (parallel contact stack).
+		$stylesheet = 'nextgentutors-beyondinfinity';
+		$mods       = get_option( 'theme_mods_' . $stylesheet, [] );
+		if ( ! is_array( $mods ) ) {
+			$mods = [];
+		}
+		$mods['ngt_contact_email']    = $email;
+		$mods['ngt_contact_phone']    = $phone;
+		$mods['ngt_contact_whatsapp'] = $whatsapp;
+		foreach ( $writes as $key => $val ) {
+			$mods[ $key ] = $val;
+		}
+		update_option( 'theme_mods_' . $stylesheet, $mods );
+	}
+
+	/**
+	 * Current applied company option (empty array if unset).
+	 *
+	 * @return array<string, mixed>
+	 */
+	public static function get() {
+		$opt = get_option( self::OPTION_KEY, [] );
+		return is_array( $opt ) ? $opt : [];
 	}
 
 	/**

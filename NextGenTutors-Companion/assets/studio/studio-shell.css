@@ -1,3 +1,45 @@
-.ngc-studio-wrap { margin: 0 0 0 -20px; }
-.ngc-studio-root { min-height: 720px; background: #f6f9ff; }
-.ngc-studio-wrap .notice { margin: 12px 20px 0; }
+.ngc-studio-wrap { margin: 0 0 0 -2px; }
+.ngc-studio-root { min-height: 720px; background: #f1f5f9; }
+.ngc-studio-app { padding: 16px 20px 32px; font-family: system-ui, sans-serif; }
+.ngc-studio-app__header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.ngc-studio-app__header h1 { margin: 0 0 4px; font-size: 22px; }
+.ngc-studio-app__sub { margin: 0; color: #64748b; }
+.ngc-studio-app__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.ngc-studio-status { min-height: 1.4em; color: #0f172a; font-weight: 600; }
+.ngc-studio-layout { display: grid; grid-template-columns: minmax(260px, 320px) 1fr; gap: 16px; margin-top: 12px; }
+@media (max-width: 960px) { .ngc-studio-layout { grid-template-columns: 1fr; } }
+.ngc-studio-list-pane, .ngc-studio-editor-pane {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px;
+}
+.ngc-studio-list-toolbar { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+.ngc-studio-list { max-height: 620px; overflow: auto; display: flex; flex-direction: column; gap: 6px; }
+.ngc-studio-list-item {
+  text-align: left; border: 1px solid #e2e8f0; background: #f8fafc; border-radius: 8px;
+  padding: 10px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px;
+}
+.ngc-studio-list-item.is-active, .ngc-studio-list-item:hover { border-color: #2563eb; background: #eff6ff; }
+.ngc-studio-list-meta { font-size: 11px; color: #64748b; }
+.ngc-studio-editor__meta { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 10px; }
+.ngc-studio-editor__meta label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; }
+.ngc-studio-editor__meta input, .ngc-studio-editor__meta select { min-width: 180px; }
+.ngc-studio-key, .ngc-studio-badge {
+  font-size: 11px; padding: 4px 8px; border-radius: 999px; background: #e2e8f0; align-self: center;
+}
+.ngc-studio-badge { background: #dbeafe; color: #1e40af; text-transform: uppercase; font-weight: 700; }
+.ngc-studio-desc { display: block; margin-bottom: 10px; font-size: 12px; font-weight: 600; }
+.ngc-studio-desc textarea { width: 100%; margin-top: 4px; }
+.ngc-studio-editor__toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.ngc-studio-canvas {
+  display: flex; flex-wrap: wrap; gap: 8px; min-height: 120px; padding: 12px;
+  background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; margin-bottom: 12px;
+}
+.ngc-studio-node {
+  padding: 8px 12px; border-radius: 8px; border: 2px solid #1d4ed8; background: #eff6ff;
+  font-size: 12px; font-weight: 700;
+}
+.ngc-studio-json-label { display: block; font-size: 12px; font-weight: 600; }
+.ngc-studio-json {
+  width: 100%; min-height: 220px; margin-top: 6px; font-family: ui-monospace, monospace; font-size: 12px;
+  background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 10px;
+}
+.ngc-studio-empty { color: #64748b; padding: 24px; text-align: center; }

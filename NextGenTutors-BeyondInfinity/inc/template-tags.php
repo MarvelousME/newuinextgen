@@ -399,6 +399,51 @@ function bi_coverage_band( $taxonomy, $limit = 9 ) {
             $terms = [];
         }
     }
+
+    // Empty taxonomy → build chips from demo roster so the band never blanks.
+    if ( empty( $terms ) && function_exists( 'bi_demo_content_enabled' ) && bi_demo_content_enabled() && function_exists( 'bi_get_demo_tutors' ) ) {
+        $counts = [];
+        foreach ( bi_get_demo_tutors( 12 ) as $tutor ) {
+            if ( 'subject' === $taxonomy ) {
+                foreach ( (array) ( $tutor['subjects'] ?? [] ) as $name ) {
+                    $slug = sanitize_title( (string) $name );
+                    if ( ! $slug ) {
+                        continue;
+                    }
+                    if ( ! isset( $counts[ $slug ] ) ) {
+                        $counts[ $slug ] = [ 'name' => (string) $name, 'count' => 0 ];
+                    }
+                    $counts[ $slug ]['count']++;
+                }
+            } elseif ( ! empty( $tutor['province'] ) ) {
+                $name = (string) $tutor['province'];
+                $slug = sanitize_title( $name );
+                if ( ! isset( $counts[ $slug ] ) ) {
+                    $counts[ $slug ] = [ 'name' => $name, 'count' => 0 ];
+                }
+                $counts[ $slug ]['count']++;
+            }
+        }
+        uasort(
+            $counts,
+            static function ( $a, $b ) {
+                return (int) $b['count'] <=> (int) $a['count'];
+            }
+        );
+        $i = 0;
+        foreach ( $counts as $slug => $row ) {
+            if ( $i >= (int) $limit ) {
+                break;
+            }
+            $terms[] = (object) [
+                'slug'  => $slug,
+                'name'  => $row['name'],
+                'count' => (int) $row['count'],
+            ];
+            $i++;
+        }
+    }
+
     $title = 'subject' === $taxonomy
         ? __( 'Popular subject coverage', 'beyondinfinity' )
         : __( 'Tutor coverage by province', 'beyondinfinity' );
@@ -615,7 +660,7 @@ function bi_sticky_mobile_cta() {
     }
     ?>
     <nav class="bi-sticky-cta ngt-sticky-actions" aria-label="<?php esc_attr_e( 'Quick actions', 'beyondinfinity' ); ?>">
-      <a href="<?php echo esc_url( home_url( '/find-a-tutor/' ) ); ?>" class="ngt-sticky-actions__link ngt-sticky-actions__link--primary"><?php esc_html_e( 'Find', 'beyondinfinity' ); ?></a>
+      <a href="<?php echo esc_url( home_url( '/find-a-tutor/' ) ); ?>" class="ngt-sticky-actions__link ngt-sticky-actions__link--primary"><?php esc_html_e( 'Find a Tutor', 'beyondinfinity' ); ?></a>
       <a href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>" class="ngt-sticky-actions__link"><?php esc_html_e( 'Pricing', 'beyondinfinity' ); ?></a>
       <a href="<?php echo esc_url( $auth_url ); ?>" class="ngt-sticky-actions__link"><?php echo esc_html( $auth_label ); ?></a>
     </nav>
@@ -635,7 +680,7 @@ function bi_whatsapp_fab() {
     }
     $message = bi_get_theme_option( 'bi_whatsapp_message', 'Hi NextGen Tutors, I need help finding a tutor.' );
     ?>
-    <a href="<?php echo esc_url( bi_whatsapp_url( $message ) ); ?>" class="bi-whatsapp-fab" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Chat on WhatsApp', 'beyondinfinity' ); ?>">
+    <a href="<?php echo esc_url( bi_whatsapp_url( $message ) ); ?>" class="bi-whatsapp-fab" data-testid="bi-whatsapp-fab" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Chat on WhatsApp', 'beyondinfinity' ); ?>">
       <?php echo bi_ui_icon( 'whatsapp', 28 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
     </a>
     <?php
@@ -680,6 +725,11 @@ function bi_render_tutor_carousel_card( $tutor ) {
     $link   = $tutor['permalink'] ?? home_url( '/find-a-tutor' );
     $rate   = (int) ( $tutor['hourlyRate'] ?? 0 );
     $rating = number_format( (float) ( $tutor['rating'] ?? 4.8 ), 2 );
+
+    $tutor_post_id = (int) ( $tutor['postId'] ?? 0 );
+    $book_url      = $tutor_post_id && function_exists( 'bi_tutor_booking_url' )
+        ? bi_tutor_booking_url( $tutor_post_id )
+        : home_url( '/find-a-tutor/' );
     ?>
     <div class="tutor-card">
       <div class="tutor-card__photo">
@@ -715,7 +765,15 @@ function bi_render_tutor_carousel_card( $tutor ) {
         <?php endif; ?>
         <div class="tutor-card__btns">
           <a class="ngt-btn ngt-btn--outline ngt-btn--sm" href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'View Profile', 'beyondinfinity' ); ?></a>
-          <a class="ngt-btn ngt-btn--secondary ngt-btn--sm" href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'Book Session', 'beyondinfinity' ); ?></a>
+          <a
+            class="ngt-btn ngt-btn--secondary ngt-btn--sm bi-book-lesson-trigger"
+            href="<?php echo esc_url( $book_url ); ?>"
+            <?php if ( $tutor_post_id ) : ?>
+              data-bi-booking-drawer="1"
+              data-tutor-id="<?php echo esc_attr( (string) $tutor_post_id ); ?>"
+              data-tutor-name="<?php echo esc_attr( (string) $tutor['name'] ); ?>"
+            <?php endif; ?>
+          ><?php esc_html_e( 'Book Session', 'beyondinfinity' ); ?></a>
         </div>
       </div>
     </div>
@@ -911,6 +969,13 @@ function bi_render_tutor_profile( $tutor ) {
     $approved  = ! empty( $tutor['vetted'] ) || ( $tutor_user_id ? ( (bool) get_user_meta( $tutor_user_id, 'ngc_tutor_verified', true ) || (bool) get_user_meta( $tutor_user_id, 'ngt_tutor_verified', true ) ) : false );
     $suspended = $tutor_user_id ? ( (bool) get_user_meta( $tutor_user_id, 'ngc_tutor_suspended', true ) || (bool) get_user_meta( $tutor_user_id, 'ngt_tutor_suspended', true ) ) : false;
     $incomplete = empty( $tutor['bio'] ) || empty( $tutor['subjects'] );
+
+    $profile_book_url = ! empty( $tutor['postId'] ) && function_exists( 'bi_tutor_booking_url' )
+        ? bi_tutor_booking_url( (int) $tutor['postId'] )
+        : home_url( '/find-a-tutor/' );
+    $profile_message_url = ! empty( $tutor['postId'] )
+        ? add_query_arg( 'ngc_tutor_id', (int) $tutor['postId'], home_url( '/contact/' ) )
+        : home_url( '/contact/' );
     ?>
     <section class="bi-profile-hero ngt-hero" style="min-height:auto;padding:64px 0 48px">
       <div class="ngt-hero__bg" style="background:linear-gradient(135deg,var(--ngt-primary),#0a3d6b)"></div>
@@ -940,8 +1005,16 @@ function bi_render_tutor_profile( $tutor ) {
             </div>
           <?php endif; ?>
           <div class="bi-profile-hero__cta">
-            <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="ngt-btn ngt-btn--secondary ngt-btn--lg"><?php esc_html_e( 'Book a Session', 'beyondinfinity' ); ?></a>
-            <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="ngt-btn ngt-btn--outline ngt-btn--lg" style="border-color:#fff;color:#fff"><?php esc_html_e( 'Message Tutor', 'beyondinfinity' ); ?></a>
+            <a
+              href="<?php echo esc_url( $profile_book_url ); ?>"
+              class="ngt-btn ngt-btn--secondary ngt-btn--lg bi-book-lesson-trigger"
+              <?php if ( ! empty( $tutor['postId'] ) ) : ?>
+                data-bi-booking-drawer="1"
+                data-tutor-id="<?php echo esc_attr( (string) (int) $tutor['postId'] ); ?>"
+                data-tutor-name="<?php echo esc_attr( (string) $tutor['name'] ); ?>"
+              <?php endif; ?>
+            ><?php esc_html_e( 'Book a Session', 'beyondinfinity' ); ?></a>
+            <a href="<?php echo esc_url( $profile_message_url ); ?>" class="ngt-btn ngt-btn--outline ngt-btn--lg" style="border-color:#fff;color:#fff"><?php esc_html_e( 'Message Tutor', 'beyondinfinity' ); ?></a>
           </div>
         </div>
       </div>
@@ -970,8 +1043,10 @@ function bi_render_tutor_profile( $tutor ) {
             [ 'title' => __( 'Background Check', 'beyondinfinity' ), 'text' => __( 'Criminal background check cleared via an accredited SA agency.', 'beyondinfinity' ) ],
           ] );
           ?>
+          <div id="book" class="bi-profile-booking">
           <?php
           $calendar_template = trailingslashit( get_stylesheet_directory() ) . 'templates/tutor/calendar.php';
+          $calendar_rendered = false;
           if ( file_exists( $calendar_template ) ) {
               $args = [
                   'tutor_id'   => ! empty( $tutor['postId'] ) ? (int) $tutor['postId'] : (int) $tutor_user_id,
@@ -979,8 +1054,15 @@ function bi_render_tutor_profile( $tutor ) {
                   'suspended'  => $suspended,
                   'incomplete' => $incomplete,
               ];
+              ob_start();
               include $calendar_template;
+              $calendar_html = (string) ob_get_clean();
+              if ( trim( $calendar_html ) ) {
+                  $calendar_rendered = true;
+                  echo $calendar_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+              }
           } elseif ( function_exists( 'ng_ui_component' ) && ! empty( $tutor['postId'] ) ) {
+              $calendar_rendered = true;
               ?>
               <div class="ngt-card ngt-animate" style="padding:28px;margin-top:24px">
                 <h2 style="margin-bottom:16px"><?php esc_html_e( 'Availability', 'beyondinfinity' ); ?></h2>
@@ -988,7 +1070,27 @@ function bi_render_tutor_profile( $tutor ) {
               </div>
               <?php
           }
+
+          // Booking must stay reachable even before this tutor publishes availability.
+          if ( ! $calendar_rendered ) :
+              ?>
+              <div class="ngt-card ngt-animate bi-tutor-booking-fallback" style="padding:28px;margin-top:24px">
+                <h2 style="margin-bottom:12px"><?php esc_html_e( 'Book a Session', 'beyondinfinity' ); ?></h2>
+                <p style="margin:0 0 18px;color:var(--ngt-text-2)"><?php esc_html_e( 'This tutor has no published calendar slots yet. Send a booking request and our matching team will confirm a time within 24 hours.', 'beyondinfinity' ); ?></p>
+                <a
+                  href="<?php echo esc_url( $profile_book_url ); ?>"
+                  class="ngt-btn ngt-btn--primary bi-book-lesson-trigger"
+                  <?php if ( ! empty( $tutor['postId'] ) ) : ?>
+                    data-bi-booking-drawer="1"
+                    data-tutor-id="<?php echo esc_attr( (string) (int) $tutor['postId'] ); ?>"
+                    data-tutor-name="<?php echo esc_attr( (string) $tutor['name'] ); ?>"
+                  <?php endif; ?>
+                ><?php esc_html_e( 'Request a booking', 'beyondinfinity' ); ?></a>
+              </div>
+              <?php
+          endif;
           ?>
+          </div>
         </div>
         <aside class="bi-profile-side">
           <div class="ngt-card ngt-animate" style="padding:28px;margin-bottom:20px">

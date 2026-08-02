@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <nav class="ngt-nav ngt-nav--transparent" role="navigation" aria-label="<?php esc_attr_e( 'Primary Navigation', 'beyondinfinity' ); ?>">
   <div class="ngt-container">
     <div class="ngt-nav__inner">
-      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="ngt-nav__logo">
+      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="ngt-nav__logo" data-ngt-transition data-testid="ngt-nav-logo" aria-label="<?php esc_attr_e( 'NextGen Tutors home', 'beyondinfinity' ); ?>">
         <?php if ( has_custom_logo() ) :
           $logo_id  = get_theme_mod( 'custom_logo' );
           $logo_url = wp_get_attachment_image_url( $logo_id, 'full' );
@@ -27,10 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <?php bi_render_primary_nav_menu(); ?>
 
-      <div class="ngt-nav__cta">
+      <div class="ngt-nav__cta ngt-nav__cta--tools">
         <?php if ( function_exists( 'bi_scheme_toggle_button' ) ) { bi_scheme_toggle_button(); } ?>
-        <a href="<?php echo esc_url( home_url( '/become-a-tutor' ) ); ?>" class="ngt-btn ngt-btn--outline"><?php esc_html_e( 'Become a Tutor', 'beyondinfinity' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/find-a-tutor' ) ); ?>" class="ngt-btn ngt-btn--primary"><?php esc_html_e( 'Find a Tutor', 'beyondinfinity' ); ?></a>
       </div>
 
       <button class="ngt-nav__toggle" aria-label="<?php esc_attr_e( 'Toggle menu', 'beyondinfinity' ); ?>" aria-expanded="false">

@@ -1,26 +1,7 @@
-/* Image Hover Ultimate-style cards — from nextgen-home-image-hover-preview.html */
-.ngi-hover-lab .ngi-hover-toolbar {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 26px;
-}
+/* Image Hover Ultimate-style cards — shine sweep is the fixed homepage mode. */
+.ngi-hover-lab .ngi-hover-toolbar,
 .ngi-hover-control {
-  border: 1px solid var(--ngi-line, #e6edf7);
-  background: #fff;
-  border-radius: 999px;
-  padding: 12px 16px;
-  font-weight: 800;
-  color: var(--ngi-blue, #123c7c);
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-}
-.ngi-hover-control.is-active,
-.ngi-hover-control[aria-pressed="true"] {
-  background: var(--ngi-blue, #123c7c);
-  color: #fff;
-  border-color: var(--ngi-blue, #123c7c);
+  display: none !important;
 }
 .ngi-image-hover-grid {
   display: grid;
@@ -29,6 +10,17 @@
 }
 .ngi-image-hover-card {
   perspective: 1200px;
+}
+.ngi-image-hover-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+.ngi-image-hover-link:focus-visible {
+  outline: 3px solid var(--ngi-gold, #ffb703);
+  outline-offset: 4px;
+  border-radius: 30px;
 }
 .ngi-image-hover-media {
   position: relative;
@@ -76,15 +68,6 @@
   margin: 0;
   line-height: 1.5;
 }
-.ngi-image-hover-overlay a {
-  display: inline-flex;
-  margin-top: 10px;
-  background: var(--ngi-gold, #ffb703);
-  color: #07172f;
-  border-radius: 999px;
-  padding: 10px 13px;
-  font-weight: 800;
-}
 .ngi-hover-mode-zoom .ngi-image-hover-media:hover {
   transform: scale(1.025);
 }
@@ -123,20 +106,22 @@
   left: 130%;
 }
 
-/* Hero video + search panel */
+/* Hero video + search panel — opacity/z driven by cinematic tokens */
 .ngi-hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.28;
+  object-position: center center;
+  opacity: var(--bi-home-hero-video-opacity, 0.28);
   filter: saturate(1.1) contrast(1.05);
-  z-index: 0;
+  z-index: var(--bi-z-hero-video, 0);
   pointer-events: none;
+  transform: translateZ(0);
 }
 .ngi-hero--has-video .ngi-kh-mesh {
-  z-index: 1;
+  z-index: var(--bi-z-hero-scrim, 1);
 }
 .ngi-search-panel {
   background: rgba(255, 255, 255, 0.96);

@@ -10,11 +10,108 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Resolved hero background video URL — local asset first, then Customizer, then CDN fallback.
+ * Cinematic tutoring video map — page slug → filename under assets/videos/.
+ *
+ * @return array<string, string>
+ */
+function bi_tutoring_video_map() {
+	return (array) apply_filters(
+		'bi_tutoring_video_map',
+		[
+			'home'            => 'hero-mother-daughter-online.mp4',
+			'about'           => 'about-learning.mp4',
+			'become-a-tutor'  => 'become-tutor-classroom.mp4',
+			'find-a-tutor'    => 'find-tutor-session.mp4',
+			'our-story'       => 'story-online-class.mp4',
+			'journey'         => 'story-online-class.mp4',
+			'video-story'     => 'story-online-class.mp4',
+		]
+	);
+}
+
+/**
+ * Poster image registry key (bi_theme_image_registry) per page slug.
+ *
+ * @return array<string, string>
+ */
+function bi_tutoring_video_poster_map() {
+	return (array) apply_filters(
+		'bi_tutoring_video_poster_map',
+		[
+			'home'           => 'home_video',
+			'about'          => 'about_feature',
+			'become-a-tutor' => 'become_tutor',
+			'find-a-tutor'   => 'hero_bg',
+			'our-story'      => 'home_video',
+			'journey'        => 'home_video',
+			'video-story'    => 'home_video',
+		]
+	);
+}
+
+/**
+ * Local tutoring video URL for a page slug, or empty when missing.
+ *
+ * @param string $slug Page slug (about, find-a-tutor, …).
+ * @return string
+ */
+function bi_tutoring_video_url( $slug = '' ) {
+	$slug = sanitize_key( (string) $slug );
+	if ( '' === $slug ) {
+		$slug = function_exists( 'bi_page_slug' ) ? bi_page_slug() : '';
+	}
+
+	$map  = bi_tutoring_video_map();
+	$file = isset( $map[ $slug ] ) ? (string) $map[ $slug ] : '';
+	if ( '' === $file ) {
+		return '';
+	}
+
+	$rel  = 'assets/videos/' . ltrim( $file, '/' );
+	$path = BI_DIR . '/' . $rel;
+	if ( ! is_readable( $path ) ) {
+		return '';
+	}
+
+	return esc_url( BI_URI . '/' . $rel );
+}
+
+/**
+ * Poster URL for a cinematic video section.
+ *
+ * @param string $slug Page / section slug.
+ * @return string
+ */
+function bi_tutoring_video_poster_url( $slug = '' ) {
+	$slug = sanitize_key( (string) $slug );
+	if ( '' === $slug ) {
+		$slug = function_exists( 'bi_page_slug' ) ? bi_page_slug() : '';
+	}
+
+	$map = bi_tutoring_video_poster_map();
+	$key = isset( $map[ $slug ] ) ? (string) $map[ $slug ] : 'hero_bg';
+
+	if ( function_exists( 'bi_get_theme_image_url' ) ) {
+		$url = (string) bi_get_theme_image_url( $key );
+		if ( $url ) {
+			return esc_url( $url );
+		}
+	}
+
+	return '';
+}
+
+/**
+ * Resolved hero background video URL — cinematic local first, legacy loop, Customizer, CDN.
  *
  * @return string
  */
 function bi_get_hero_video_url() {
+	$cinematic = bi_tutoring_video_url( 'home' );
+	if ( $cinematic ) {
+		return $cinematic;
+	}
+
 	$local = BI_DIR . '/assets/media/videos/hero-loop.mp4';
 	if ( file_exists( $local ) ) {
 		return esc_url( BI_URI . '/assets/media/videos/hero-loop.mp4' );
@@ -26,6 +123,15 @@ function bi_get_hero_video_url() {
 	}
 
 	return esc_url( 'https://cdn.coverr.co/videos/coverr-student-studying-online-5308/1080p.mp4' );
+}
+
+/**
+ * Homepage hero poster URL.
+ *
+ * @return string
+ */
+function bi_get_hero_video_poster_url() {
+	return bi_tutoring_video_poster_url( 'home' );
 }
 
 /**

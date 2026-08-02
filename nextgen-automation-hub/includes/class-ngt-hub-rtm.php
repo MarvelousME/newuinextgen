@@ -18,21 +18,29 @@ final class NGT_Hub_RTM {
 	}
 
 	public static function enqueue_assets(): void {
+		$force = (bool) apply_filters( 'ngt_enqueue_rtm_assets', false );
 		global $post;
-		if ( ! $post || ! has_shortcode( $post->post_content, 'ngt_rtm' ) ) {
+		$has_shortcode = $post && has_shortcode( (string) $post->post_content, 'ngt_rtm' );
+		if ( ! $force && ! $has_shortcode ) {
 			return;
 		}
 		wp_enqueue_style( 'ngt-hub', NGT_HUB_URL . 'assets/css/ngt-hub.css', [], NGT_Hub::VERSION );
-		wp_enqueue_script( 'ngt-rtm', NGT_HUB_URL . 'assets/js/ngt-rtm.js', [], NGT_Hub::VERSION, true );
-		wp_localize_script(
-			'ngt-rtm',
-			'NGTRTM',
-			[
-				'rest'  => rest_url( 'ngt/v1/rtm' ),
-				'nonce' => wp_create_nonce( 'wp_rest' ),
-				'sse'   => rest_url( 'ngt/v1/rtm/stream' ),
-			]
-		);
+		if ( $has_shortcode ) {
+			wp_enqueue_script( 'ngt-rtm', NGT_HUB_URL . 'assets/js/ngt-rtm.js', [], NGT_Hub::VERSION, true );
+			wp_localize_script(
+				'ngt-rtm',
+				'NGTRTM',
+				[
+					'rest'  => class_exists( 'NGT_Hub_Companion_Delegate', false )
+						? NGT_Hub_Companion_Delegate::rest_url( '/rtm/rooms' )
+						: rest_url( 'ngt/v1/rtm/rooms' ),
+					'nonce' => wp_create_nonce( 'wp_rest' ),
+					'sse'   => class_exists( 'NGT_Hub_Companion_Delegate', false )
+						? NGT_Hub_Companion_Delegate::rest_url( '/rtm/stream' )
+						: rest_url( 'ngt/v1/rtm/stream' ),
+				]
+			);
+		}
 	}
 
 	public static function shortcode(): string {
@@ -71,8 +79,12 @@ final class NGT_Hub_RTM {
 	}
 
 	public static function register_rest(): void {
+		$rtm_ns = class_exists( 'NGT_Hub_Companion_Delegate', false )
+			? NGT_Hub_Companion_Delegate::rest_namespace() . '/rtm'
+			: 'ngt/v1/rtm';
+
 		register_rest_route(
-			'ngt/v1/rtm',
+			$rtm_ns,
 			'/rooms',
 			[
 				'methods'             => WP_REST_Server::READABLE,
@@ -82,7 +94,7 @@ final class NGT_Hub_RTM {
 		);
 
 		register_rest_route(
-			'ngt/v1/rtm',
+			$rtm_ns,
 			'/messages/(?P<room_id>\d+)',
 			[
 				'methods'             => WP_REST_Server::READABLE,
@@ -92,7 +104,7 @@ final class NGT_Hub_RTM {
 		);
 
 		register_rest_route(
-			'ngt/v1/rtm',
+			$rtm_ns,
 			'/messages',
 			[
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -102,7 +114,7 @@ final class NGT_Hub_RTM {
 		);
 
 		register_rest_route(
-			'ngt/v1/rtm',
+			$rtm_ns,
 			'/stream',
 			[
 				'methods'             => WP_REST_Server::READABLE,

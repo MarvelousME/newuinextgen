@@ -29,6 +29,6 @@ bi_hero( __( 'Child Safety Policy', 'beyondinfinity' ), __( 'How NextGen Tutors 
     <h2><?php esc_html_e( 'Reporting Concerns', 'beyondinfinity' ); ?></h2>
     <p><?php printf( esc_html__( 'Report any safeguarding concern immediately to %s or call %s.', 'beyondinfinity' ), '<a href="mailto:' . esc_attr( bi_get_support_email() ) . '">' . esc_html( bi_get_support_email() ) . '</a>', esc_html( bi_get_phone() ) ); ?></p>
 
-    <p style="margin-top:32px"><a href="<?php echo esc_url( home_url( '/safety-guide' ) ); ?>" class="ngt-btn ngt-btn--primary"><?php esc_html_e( 'View Safety Guide', 'beyondinfinity' ); ?></a></p>
+    <p class="bi-mt-lg"><a href="<?php echo esc_url( home_url( '/safety-guide' ) ); ?>" class="ngt-btn ngt-btn--primary"><?php esc_html_e( 'View Safety Guide', 'beyondinfinity' ); ?></a></p>
   </div>
 </section>

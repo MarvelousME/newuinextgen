@@ -28,6 +28,7 @@ class NGCPM_View_Model {
 		return [
 			'scan'            => $scan,
 			'health'          => $health,
+			'ngt_stack'       => NGCPM_NGT_Stack::summary(),
 			'steps'           => NGCPM_Health::setup_steps( $scan, $health ),
 			'logs'            => $readonly ? [] : NGCPM_Logger::recent( $log_limit ),
 			'readonly'        => $readonly,

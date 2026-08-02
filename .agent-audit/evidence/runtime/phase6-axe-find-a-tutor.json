@@ -5,7 +5,7 @@
       "id": "color-contrast",
       "impact": "serious",
       "help": "Elements must meet minimum color contrast ratio thresholds",
-      "nodes": 1
+      "nodes": 2
     },
     {
       "id": "select-name",

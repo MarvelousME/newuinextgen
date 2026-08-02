@@ -187,6 +187,18 @@ class NGC_Studio_Templates {
 	}
 
 	/**
+	 * Public linear graph builder (used by importer + templates).
+	 *
+	 * @param string                           $trigger Trigger key.
+	 * @param array<int, string>               $steps   Step types (include END).
+	 * @param array<string, array<string, mixed>> $configs Per-type config.
+	 * @return array{nodes:array,edges:array}
+	 */
+	public static function build_linear_graph( $trigger, $steps, $configs = [] ) {
+		return self::build_graph( $trigger, $steps, $configs );
+	}
+
+	/**
 	 * @param string                    $trigger Trigger key.
 	 * @param array<int, string>        $steps   Step types.
 	 * @param array<string, array<string, mixed>> $configs Per-type config.

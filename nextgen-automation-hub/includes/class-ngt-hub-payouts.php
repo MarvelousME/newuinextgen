@@ -35,12 +35,20 @@ final class NGT_Hub_Payouts {
 
 	public static function schedule_cron(): void {
 		// FIN-001: Companion owns payout scheduling when present — avoid dual monthly calculation.
-		if ( class_exists( 'NGC_Payout_Scheduler' ) ) {
+		if ( class_exists( 'NGT_Hub_Companion_Delegate', false ) && NGT_Hub_Companion_Delegate::companion_active() ) {
 			self::unschedule_cron();
+			NGT_Hub_Companion_Delegate::log(
+				'info',
+				'Skipped Hub payout cron — Companion owns payouts.',
+				[ 'hook' => self::CRON_HOOK ]
+			);
 			return;
 		}
 		if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
 			wp_schedule_event( strtotime( 'first day of next month 02:00:00' ), 'monthly', self::CRON_HOOK );
+			if ( class_exists( 'NGT_Hub_Companion_Delegate', false ) ) {
+				NGT_Hub_Companion_Delegate::log( 'info', 'Scheduled Hub payout cron (standalone mode).', [ 'hook' => self::CRON_HOOK ] );
+			}
 		}
 	}
 
@@ -52,7 +60,8 @@ final class NGT_Hub_Payouts {
 	}
 
 	public static function run_monthly_calculation(): void {
-		if ( class_exists( 'NGC_Payout_Scheduler' ) ) {
+		if ( class_exists( 'NGT_Hub_Companion_Delegate', false ) && NGT_Hub_Companion_Delegate::companion_active() ) {
+			NGT_Hub_Companion_Delegate::log( 'warning', 'Blocked Hub payout run — Companion is authoritative.' );
 			return;
 		}
 		$period_end   = gmdate( 'Y-m-d', strtotime( 'last day of previous month' ) );

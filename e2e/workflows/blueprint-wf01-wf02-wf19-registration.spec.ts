@@ -3,7 +3,8 @@ import { testEmail, fillNgForm, submitNgForm, expectFormSubmitted, primaryNgForm
 
 test.describe('Blueprint WF-01 Parent Registration', () => {
   test('parent register child form', async ({ page }) => {
-    await page.goto('/register/', { waitUntil: 'domcontentloaded' });
+    // /register/ shows only the role chooser; forms render behind ?role=.
+    await page.goto('/register/?role=parent', { waitUntil: 'domcontentloaded' });
     const form = primaryNgForm(page, 'parent_register');
     await expect(form).toBeVisible();
 
@@ -24,7 +25,7 @@ test.describe('Blueprint WF-01 Parent Registration', () => {
 
 test.describe('Blueprint WF-02 Student Registration', () => {
   test('student self-registration form', async ({ page }) => {
-    await page.goto('/register/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/register/?role=student', { waitUntil: 'domcontentloaded' });
     const form = primaryNgForm(page, 'student_register');
     await expect(form).toBeVisible();
 

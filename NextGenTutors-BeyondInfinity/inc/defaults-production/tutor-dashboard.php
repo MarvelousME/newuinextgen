@@ -17,7 +17,7 @@ bi_hero(
     <?php endif; ?>
     <?php bi_tutor_dashboard_intro(); ?>
     <?php if ( function_exists( 'ng_ui_component' ) && is_user_logged_in() ) : ?>
-      <div class="ngt-animate" style="margin-bottom:24px">
+      <div class="ngt-animate bi-mb-lg">
         <?php ng_ui_component( 'booking-list', [ 'limit' => 5 ] ); ?>
       </div>
     <?php endif; ?>
@@ -33,17 +33,17 @@ bi_hero(
       __( 'Payout status', 'beyondinfinity' ),
     ] );
     ?>
-    <div class="bi-grid-2" style="margin-top:24px">
-      <div class="ngt-card ngt-animate" style="padding:28px">
-        <h3 style="margin-bottom:12px"><?php esc_html_e( 'Quick Actions', 'beyondinfinity' ); ?></h3>
-        <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="bi-grid-2 bi-mt-md">
+      <div class="ngt-card ngt-animate bi-pad-md">
+        <h3 class="bi-mb-sm"><?php esc_html_e( 'Quick Actions', 'beyondinfinity' ); ?></h3>
+        <div class="bi-stack-col">
           <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="ngt-btn ngt-btn--primary ngt-btn--block"><?php esc_html_e( 'Add Session Notes', 'beyondinfinity' ); ?></a>
           <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="ngt-btn ngt-btn--outline ngt-btn--block"><?php esc_html_e( 'Request Availability Change', 'beyondinfinity' ); ?></a>
         </div>
       </div>
-      <div class="ngt-card ngt-animate" style="padding:28px">
-        <h3 style="margin-bottom:12px"><?php esc_html_e( 'Profile', 'beyondinfinity' ); ?></h3>
-        <p style="margin:0 0 16px;color:var(--ngt-text-2)"><?php esc_html_e( 'Keep your profile updated so we can match you with the right students.', 'beyondinfinity' ); ?></p>
+      <div class="ngt-card ngt-animate bi-pad-md">
+        <h3 class="bi-mb-sm"><?php esc_html_e( 'Profile', 'beyondinfinity' ); ?></h3>
+        <p class="bi-mb-md bi-text-muted"><?php esc_html_e( 'Keep your profile updated so we can match you with the right students.', 'beyondinfinity' ); ?></p>
         <a href="<?php echo esc_url( home_url( '/become-a-tutor' ) ); ?>" class="ngt-btn ngt-btn--outline"><?php esc_html_e( 'Update Profile', 'beyondinfinity' ); ?></a>
       </div>
     </div>

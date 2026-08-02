@@ -241,20 +241,6 @@
     e.currentTarget.style.setProperty('--ry', ((e.clientY - b.top) / b.height) * 100 + '%');
   });
 
-  document.querySelectorAll('.ngi-hover-control').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const grid = document.querySelector('[data-ngi-hover-grid]');
-      if (!grid) return;
-      document.querySelectorAll('.ngi-hover-control').forEach((b) => {
-        b.classList.remove('is-active');
-        b.setAttribute('aria-pressed', 'false');
-      });
-      btn.classList.add('is-active');
-      btn.setAttribute('aria-pressed', 'true');
-      grid.className = 'ngi-image-hover-grid ngi-hover-mode-' + btn.dataset.hoverMode;
-    });
-  });
-
   const heroVideo = document.getElementById('ngiHeroVideo');
   document.getElementById('ngiHeroVideoToggle')?.addEventListener('click', () => {
     if (!heroVideo) return;

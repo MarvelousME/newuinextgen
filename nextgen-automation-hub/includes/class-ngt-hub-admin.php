@@ -19,6 +19,9 @@ final class NGT_Hub_Admin {
 	}
 
 	public static function menu(): void {
+		if ( class_exists( 'NGC_Admin_Shell' ) ) {
+			return; // NEXT GEN TUTORS shell owns navigation.
+		}
 		add_menu_page(
 			__( 'NextGen Hub', 'nextgen-automation-hub' ),
 			__( 'NextGen Hub', 'nextgen-automation-hub' ),
@@ -31,7 +34,7 @@ final class NGT_Hub_Admin {
 	}
 
 	public static function enqueue( string $hook ): void {
-		if ( 'toplevel_page_ngt-hub' !== $hook ) {
+		if ( false === strpos( $hook, 'ngt-hub' ) ) {
 			return;
 		}
 		wp_enqueue_style( 'ngt-hub-admin', NGT_HUB_URL . 'assets/css/ngt-hub.css', [], NGT_Hub::VERSION );
@@ -47,6 +50,18 @@ final class NGT_Hub_Admin {
 		?>
 		<div class="wrap ngt-admin">
 			<h1><?php esc_html_e( 'NextGen Automation Hub', 'nextgen-automation-hub' ); ?> <small>v<?php echo esc_html( NGT_Hub::VERSION ); ?></small></h1>
+			<?php
+			$company = class_exists( 'NGC_Business_Profile' ) ? NGC_Business_Profile::get() : [];
+			if ( ! empty( $company['company_name'] ) ) :
+				?>
+				<div class="notice notice-info" data-testid="ngt-hub-business-identity">
+					<p>
+						<strong><?php echo esc_html( (string) $company['company_name'] ); ?></strong>
+						· <?php echo esc_html( (string) ( $company['email'] ?? '' ) ); ?>
+						· <?php echo esc_html( (string) ( $company['phone'] ?? '' ) ); ?>
+					</p>
+				</div>
+			<?php endif; ?>
 
 			<nav class="nav-tab-wrapper">
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=ngt-hub&tab=workflows' ) ); ?>" class="nav-tab <?php echo 'workflows' === $tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Workflows', 'nextgen-automation-hub' ); ?></a>

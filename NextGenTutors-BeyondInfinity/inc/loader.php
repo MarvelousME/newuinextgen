@@ -68,7 +68,7 @@ function bi_loader_print_head_script() {
 }
 
 /**
- * Overlay markup. All five variants ship in the DOM (tiny — pure CSS shapes);
+ * Overlay markup. Variants ship in the DOM (tiny — pure CSS shapes / one canvas);
  * bi-loader.js activates exactly one via data-bi-loader-variant.
  */
 function bi_loader_render_overlay() {
@@ -93,6 +93,18 @@ function bi_loader_render_overlay() {
 				</div>
 			</div>
 			<div class="bi-loader__variant bi-loader__variant--pulse" aria-hidden="true"></div>
+			<div class="bi-loader__variant bi-loader__variant--aurora" aria-hidden="true">
+				<div class="bi-loader__aurora"></div>
+			</div>
+			<div class="bi-loader__variant bi-loader__variant--ring" aria-hidden="true">
+				<div class="bi-loader__ring">
+					<span class="bi-loader__ring-outer"></span>
+					<span class="bi-loader__ring-inner"></span>
+				</div>
+			</div>
+			<div class="bi-loader__variant bi-loader__variant--spark" aria-hidden="true">
+				<div class="bi-loader__spark"><span></span><span></span><span></span></div>
+			</div>
 			<p class="bi-loader__brand">NextGen<span>Tutors</span></p>
 		</div>
 	</div>

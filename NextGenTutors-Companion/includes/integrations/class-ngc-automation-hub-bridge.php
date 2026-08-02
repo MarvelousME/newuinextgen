@@ -44,6 +44,20 @@ class NGC_Automation_Hub_Bridge {
 	 * @param array<string, mixed> $payload   Event payload.
 	 */
 	public static function forward_to_companion( string $event_key, array $payload ): void {
+		$should = apply_filters( 'ngc_hub_should_execute_side_effects', true, $event_key, $payload );
+		if ( ! $should && class_exists( 'NGC_Workflow_Authority' ) ) {
+			NGC_Workflow_Authority::from_producer(
+				'hub',
+				'hub_event',
+				[
+					'event_key' => $event_key,
+					'payload'   => $payload,
+					'idempotency_key' => 'hub:' . $event_key . ':' . md5( wp_json_encode( $payload ) ),
+				]
+			);
+			return;
+		}
+
 		if ( class_exists( 'NGC_Workflows' ) && method_exists( 'NGC_Workflows', 'dispatch' ) ) {
 			NGC_Workflows::dispatch( $event_key, $payload );
 		}
@@ -53,6 +67,7 @@ class NGC_Automation_Hub_Bridge {
 		if ( class_exists( 'NGC_System_Log' ) ) {
 			NGC_System_Log::info(
 				'hub_bridge',
+				'integration',
 				sprintf( 'Forwarded Hub event "%s" to Companion', $event_key ),
 				[ 'payload_keys' => array_keys( $payload ) ]
 			);

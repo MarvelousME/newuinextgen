@@ -16,8 +16,9 @@ final class NGTAI_Migrator {
 
 	/**
 	 * Current database schema version.
+	 * 1.2.0 — adds ngtai_audit (required by NGTAI_Audit::log).
 	 */
-	const DB_VERSION = '1.1.0';
+	const DB_VERSION = '1.2.0';
 
 	/**
 	 * Apply the current schema idempotently.
@@ -31,7 +32,11 @@ final class NGTAI_Migrator {
 			return false;
 		}
 
-		if ( function_exists( 'get_option' ) && self::DB_VERSION === get_option( 'ngtai_db_version', '' ) ) {
+		$current = function_exists( 'get_option' ) ? (string) get_option( 'ngtai_db_version', '' ) : '';
+		// Always ensure critical tables exist even if version option matches (self-heal).
+		$needs_schema = ( self::DB_VERSION !== $current ) || ! self::table_exists( $wpdb->prefix . 'ngtai_audit' );
+
+		if ( ! $needs_schema ) {
 			return true;
 		}
 
@@ -134,6 +139,17 @@ final class NGTAI_Migrator {
 				PRIMARY KEY  (id),
 				UNIQUE KEY idempotency_key_unique (idempotency_key)
 			) {$charset_collate};",
+			"CREATE TABLE {$prefix}audit (
+				id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+				action VARCHAR(191) NOT NULL,
+				detail LONGTEXT NULL,
+				correlation_id VARCHAR(191) NULL,
+				created_at DATETIME NOT NULL,
+				PRIMARY KEY  (id),
+				KEY action_key (action),
+				KEY correlation_id (correlation_id),
+				KEY created_at (created_at)
+			) {$charset_collate};",
 		];
 
 		foreach ( $queries as $query ) {
@@ -146,6 +162,19 @@ final class NGTAI_Migrator {
 		self::log( 'info', 'Database schema migrated.', [ 'version' => self::DB_VERSION ] );
 
 		return true;
+	}
+
+	/**
+	 * @param string $table Full table name.
+	 * @return bool
+	 */
+	private static function table_exists( $table ) {
+		global $wpdb;
+		if ( ! isset( $wpdb ) ) {
+			return false;
+		}
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+		return $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) === $table;
 	}
 
 	/**

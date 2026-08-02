@@ -30,18 +30,23 @@ class NGC_Admin {
 			return;
 		}
 
-		add_menu_page(
-			__( 'NextGenTutors-Companion', 'nextgencompanion' ),
-			__( 'NextGen', 'nextgencompanion' ),
-			'manage_options',
-			'ngc-operations',
-			[ __CLASS__, 'render_dashboard' ],
-			'dashicons-welcome-learn-more',
-			58
-		);
+		// Menus are owned by NGC_Admin_Shell (NEXT GEN TUTORS). Keep page slugs stable.
+		$parent = function_exists( 'ngt_admin_parent' ) ? ngt_admin_parent() : 'ngt-admin';
+		if ( ! class_exists( 'NGC_Admin_Shell' ) ) {
+			add_menu_page(
+				__( 'NextGenTutors-Companion', 'nextgencompanion' ),
+				__( 'NextGen', 'nextgencompanion' ),
+				'manage_options',
+				'ngc-operations',
+				[ __CLASS__, 'render_dashboard' ],
+				'dashicons-welcome-learn-more',
+				58
+			);
+			$parent = 'ngc-operations';
+		}
 
 		add_submenu_page(
-			'ngc-operations',
+			$parent,
 			__( 'Tutor Applications', 'nextgencompanion' ),
 			__( 'Applications', 'nextgencompanion' ),
 			'ngc_review_tutors',
@@ -50,7 +55,7 @@ class NGC_Admin {
 		);
 
 		add_submenu_page(
-			'ngc-operations',
+			$parent,
 			__( 'Matches', 'nextgencompanion' ),
 			__( 'Matches', 'nextgencompanion' ),
 			'ngc_manage_matches',
@@ -59,7 +64,7 @@ class NGC_Admin {
 		);
 
 		add_submenu_page(
-			'ngc-operations',
+			$parent,
 			__( 'Payouts', 'nextgencompanion' ),
 			__( 'Payouts', 'nextgencompanion' ),
 			'ngc_manage_payouts',
@@ -68,7 +73,7 @@ class NGC_Admin {
 		);
 
 		add_submenu_page(
-			'ngc-operations',
+			$parent,
 			__( 'System Health', 'nextgencompanion' ),
 			__( 'Health', 'nextgencompanion' ),
 			'manage_options',
@@ -77,7 +82,7 @@ class NGC_Admin {
 		);
 
 		add_submenu_page(
-			'ngc-operations',
+			$parent,
 			__( 'Errors & Exceptions', 'nextgencompanion' ),
 			__( 'Errors', 'nextgencompanion' ),
 			'manage_options',
@@ -129,49 +134,31 @@ class NGC_Admin {
 
 		if ( isset( $_GET['approve'], $_GET['id'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ?? '' ) ), 'ngc_app_action' ) ) {
 			NGC_Tutor_Lifecycle::approve( (int) $_GET['id'] );
-			echo '<div class="notice notice-success"><p>' . esc_html__( 'Application approved.', 'nextgencompanion' ) . '</p></div>';
+			NGC_Admin_Notifications::push(
+				[
+					'id'       => 'app_ok_' . time(),
+					'title'    => __( 'Application approved', 'nextgencompanion' ),
+					'message'  => __( 'Tutor application approved.', 'nextgencompanion' ),
+					'severity' => 'success',
+					'plugin'   => 'companion',
+					'created'  => time(),
+					'read'     => false,
+				]
+			);
 		}
 		if ( isset( $_GET['reject'], $_GET['id'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ?? '' ) ), 'ngc_app_action' ) ) {
 			NGC_Tutor_Lifecycle::reject( (int) $_GET['id'] );
-			echo '<div class="notice notice-warning"><p>' . esc_html__( 'Application rejected.', 'nextgencompanion' ) . '</p></div>';
 		}
 
-		$apps = NGC_Tutor_Lifecycle::list_applications( 'pending', 100 );
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Pending Tutor Applications', 'nextgencompanion' ); ?></h1>
-			<table class="widefat striped">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th><?php esc_html_e( 'Name', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Email', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Subjects', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Actions', 'nextgencompanion' ); ?></th>
-					</tr>
-				</thead>
-				<tbody>
-				<?php if ( empty( $apps ) ) : ?>
-					<tr><td colspan="5"><?php esc_html_e( 'No pending applications.', 'nextgencompanion' ); ?></td></tr>
-				<?php else : ?>
-					<?php foreach ( $apps as $app ) : ?>
-						<tr>
-							<td><?php echo (int) $app->id; ?></td>
-							<td><?php echo esc_html( $app->full_name ); ?></td>
-							<td><?php echo esc_html( $app->email ); ?></td>
-							<td><?php echo esc_html( $app->subjects ); ?></td>
-							<td>
-								<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=ngc-applications&approve=1&id=' . $app->id ), 'ngc_app_action' ) ); ?>"><?php esc_html_e( 'Approve', 'nextgencompanion' ); ?></a>
-								|
-								<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=ngc-applications&reject=1&id=' . $app->id ), 'ngc_app_action' ) ); ?>"><?php esc_html_e( 'Reject', 'nextgencompanion' ); ?></a>
-							</td>
-						</tr>
-					<?php endforeach; ?>
-				<?php endif; ?>
-				</tbody>
-			</table>
-		</div>
-		<?php
+		NGC_Admin_Layout::render_page(
+			[
+				'title'   => __( 'Tutor Applications', 'nextgencompanion' ),
+				'summary' => __( 'Review, approve, or reject tutor applications using the enterprise data grid.', 'nextgencompanion' ),
+				'content' => static function () {
+					NGC_Admin_Grid::render( 'applications' );
+				},
+			]
+		);
 	}
 
 	/**
@@ -181,37 +168,15 @@ class NGC_Admin {
 		if ( ! current_user_can( 'ngc_manage_matches' ) && ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'Access denied.', 'nextgencompanion' ) );
 		}
-		global $wpdb;
-		$table = NGC_Database::table( 'matches' );
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$rows = $wpdb->get_results( "SELECT * FROM {$table} ORDER BY id DESC LIMIT 50" );
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Tutor Matches', 'nextgencompanion' ); ?></h1>
-			<table class="widefat striped">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th><?php esc_html_e( 'Subject', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Grade', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Status', 'nextgencompanion' ); ?></th>
-						<th><?php esc_html_e( 'Score', 'nextgencompanion' ); ?></th>
-					</tr>
-				</thead>
-				<tbody>
-				<?php foreach ( $rows as $row ) : ?>
-					<tr>
-						<td><?php echo (int) $row->id; ?></td>
-						<td><?php echo esc_html( $row->subject ); ?></td>
-						<td><?php echo esc_html( $row->grade ); ?></td>
-						<td><?php echo esc_html( $row->status ); ?></td>
-						<td><?php echo esc_html( $row->score ); ?></td>
-					</tr>
-				<?php endforeach; ?>
-				</tbody>
-			</table>
-		</div>
-		<?php
+		NGC_Admin_Layout::render_page(
+			[
+				'title'   => __( 'Tutor Matches', 'nextgencompanion' ),
+				'summary' => __( 'Browse and update match records with shared grid, detail panel, and export.', 'nextgencompanion' ),
+				'content' => static function () {
+					NGC_Admin_Grid::render( 'matches' );
+				},
+			]
+		);
 	}
 
 	/**

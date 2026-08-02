@@ -31,8 +31,7 @@ class NGC_System_Log_Admin {
 		if ( ! current_user_can( 'manage_options' ) && ! current_user_can( 'ngc_view_audit' ) ) {
 			return;
 		}
-		add_submenu_page(
-			'ngc-operations',
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin',
 			__( 'System Log', 'nextgencompanion' ),
 			__( 'System Log', 'nextgencompanion' ),
 			'ngc_view_audit',

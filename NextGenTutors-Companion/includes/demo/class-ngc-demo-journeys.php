@@ -15,10 +15,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class NGC_Demo_Journeys {
 
 	/**
+	 * Resolve journey catalogue directory.
+	 *
+	 * Prefer the bundled Companion copy (works in Docker/plugin installs), then
+	 * fall back to the monorepo authoring path `.agent-audit/demo/journeys`.
+	 *
 	 * @return string
 	 */
 	public static function catalogue_dir() {
-		return dirname( NGC_PLUGIN_DIR ) . '/.agent-audit/demo/journeys';
+		$candidates = [
+			trailingslashit( NGC_PLUGIN_DIR ) . 'demo/journeys',
+			trailingslashit( NGC_PLUGIN_DIR ) . 'includes/demo/journeys',
+		];
+
+		// Monorepo: …/NextGenTutors-Companion → sibling .agent-audit (host checkout only).
+		$plugin_root = untrailingslashit( NGC_PLUGIN_DIR );
+		$repo_root   = dirname( $plugin_root );
+		$candidates[] = $repo_root . '/.agent-audit/demo/journeys';
+
+		// Docker/dev: explicit mount or ABSPATH-adjacent audit tree.
+		$candidates[] = WP_CONTENT_DIR . '/.agent-audit/demo/journeys';
+		$candidates[] = dirname( ABSPATH ) . '/.agent-audit/demo/journeys';
+
+		/**
+		 * Filter demo journey catalogue directories.
+		 *
+		 * @param string[] $candidates Candidate absolute paths.
+		 */
+		$candidates = apply_filters( 'ngc_demo_journey_catalogue_dirs', $candidates );
+
+		foreach ( $candidates as $dir ) {
+			if ( is_string( $dir ) && is_dir( $dir ) ) {
+				$json = glob( trailingslashit( $dir ) . '*.json' );
+				if ( ! empty( $json ) ) {
+					return $dir;
+				}
+			}
+		}
+
+		// Default to bundled path even if empty (verifier reports count=0 honestly).
+		return trailingslashit( NGC_PLUGIN_DIR ) . 'demo/journeys';
 	}
 
 	/**

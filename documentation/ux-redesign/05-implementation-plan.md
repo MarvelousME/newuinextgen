@@ -31,7 +31,19 @@
 | Pricing comparison card | `defaults-production/pricing.php` |
 | Version bump | theme 1.9.12 → 1.9.13 |
 
-## 3. File-by-file plan (Phases 2–6)
+## 2d. Phase 7 — Auth paths, loader expansion, inline-style purge (IMPLEMENTED)
+
+| Change | Files |
+|---|---|
+| Login role disambiguation (parent/student/tutor) + forgot-password expectation copy | `inc/defaults-production/login.php` |
+| Role-home helpers; deep-link-safe `login_redirect`; failed-login bounce to themed `/login` | `inc/security.php` |
+| Role-aware login form redirect (theme fallback + Companion) | `inc/shortcodes-fallback.php`, `NextGenTutors-Companion/.../class-ngc-shortcodes.php` |
+| Password visibility toggle | `assets/js/bi-login.js`, enqueue in `functions.php` |
+| Loader variants 6–8 (aurora, ring, spark) | `inc/loader.php`, `assets/css/bi-loader.css`, `assets/js/bi-loader.js` |
+| Utility classes + purge static `style=""` on login/register/support/child-safety/tutor-dashboard | `style.css`, `assets/css/components.css`, defaults-production pages |
+| Version bump | theme 1.9.16 → 1.9.17 |
+
+---
 
 ### Phase 2 — Journeys & conversion (theme + Companion assets only)
 | File | Change |
@@ -107,3 +119,4 @@ Performance targets (post-deploy): Lighthouse ≥95 / CLS <0.1 / LCP <2.5s on ho
 | **4 Role UX** ✅ | dashboard variants, command palette, dark mode, app-status | lint + validate.php + snapshots green (verified 2026-07-21) |
 | **5 Performance** ✅ | orphans, motion-pack, dashboard single-source, GSAP gate, critical tokens | lint + validate.php + snapshots green (verified 2026-07-21); live Lighthouse pending post-deploy |
 | **6 CRO** ✅ | trust injection, sticky CTAs, coverage bands, shared counter contract | lint + validate.php + snapshots green (verified 2026-07-21); live conversion click-count/mobile/reduced-motion audit pending deployment |
+| **7 Auth & polish** ✅ | login role paths, password toggle + failed-login recovery, loader +3 variants (8 total), inline-style purge on auth/support/dashboard shells | PHP lint green (2026-07-25); Playwright login-role live check pending Docker |

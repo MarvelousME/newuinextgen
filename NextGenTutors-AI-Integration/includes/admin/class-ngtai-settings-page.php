@@ -54,6 +54,14 @@ final class NGTAI_Settings_Page {
 			$message = ! empty( $result['ok'] ) ? __( 'Connection succeeded.', 'nextgentutors-ai-integration' ) : sprintf( __( 'Connection failed (HTTP %d).', 'nextgentutors-ai-integration' ), (int) ( $result['status'] ?? 0 ) );
 		}
 		echo '<div class="wrap ngtai-admin"><h1>' . esc_html__( 'AI Integration Settings', 'nextgentutors-ai-integration' ) . '</h1>';
+		$company = class_exists( 'NGC_Business_Profile' ) ? NGC_Business_Profile::get() : [];
+		if ( ! empty( $company['company_name'] ) ) {
+			echo '<div class="notice notice-info" data-testid="ngtai-business-identity"><p><strong>'
+				. esc_html( (string) $company['company_name'] ) . '</strong> · '
+				. esc_html( (string) ( $company['email'] ?? '' ) ) . ' · '
+				. esc_html( (string) ( $company['phone'] ?? '' ) )
+				. '</p></div>';
+		}
 		if ( $message ) {
 			echo '<div class="notice notice-info"><p>' . esc_html( $message ) . '</p></div>';
 		}

@@ -26,7 +26,7 @@ class NGC_UI_Library_Admin {
 	 * Register submenu under NGC operations.
 	 */
 	public static function menu() {
-		$parent = menu_page_url( 'ngc-operations', false ) ? 'ngc-operations' : 'ngc-companion';
+		$parent = function_exists( 'ngt_admin_parent' ) ? ngt_admin_parent() : 'ngt-admin';
 		add_submenu_page(
 			$parent,
 			__( 'UI Library Import', 'nextgencompanion' ),

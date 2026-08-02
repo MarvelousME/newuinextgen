@@ -102,6 +102,10 @@
   .ngt-nav__cta {
     display: none;
   }
+  .ngt-nav__cta--tools {
+    display: flex;
+    margin-left: auto;
+  }
 
   /* Adjust toggle button position for mobile */
   .ngt-nav {

@@ -46,11 +46,33 @@
   --ngt-duration-base: var(--ngt-duration, 250ms);
 
   /* Z-index scale */
+  --ngt-z-base: 0;
+  --ngt-z-raised: 2;
+  --ngt-z-sticky: 40;
   --ngt-z-nav: 100;
   --ngt-z-drawer: 700;
   --ngt-z-modal: 800;
   --ngt-z-toast: 900;
   --ngt-z-loader: 1000;
+  --ngt-z-hero-poster: 0;
+  --ngt-z-hero-video: 1;
+  --ngt-z-hero-scrim: 2;
+  --ngt-z-hero-content: 3;
+
+  /* Cinematic hero (aliases consumed by bi-cinematic-hero.css) */
+  --ngt-hero-video-opacity: 0.42;
+  --ngt-hero-video-fade: 700ms;
+  --ngt-hero-min-height: 100svh;
+  --bi-hero-min-height: var(--ngt-hero-min-height);
+  --bi-hero-video-opacity: var(--ngt-hero-video-opacity);
+  --bi-hero-video-fade: var(--ngt-hero-video-fade);
+  --bi-z-hero-poster: var(--ngt-z-hero-poster);
+  --bi-z-hero-video: var(--ngt-z-hero-video);
+  --bi-z-hero-scrim: var(--ngt-z-hero-scrim);
+  --bi-z-hero-content: var(--ngt-z-hero-content);
+  --bi-glass-bg: var(--ngt-glass-surface-dark, rgba(15, 26, 47, 0.28));
+  --bi-glass-border: rgba(255, 255, 255, 0.22);
+  --bi-glass-blur: var(--ngt-blur-glass, 14px);
 
   /* Layout */
   --ngt-grid-gap: clamp(16px, 2vw, 24px);

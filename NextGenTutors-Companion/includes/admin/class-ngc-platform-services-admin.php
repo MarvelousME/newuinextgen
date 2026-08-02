@@ -32,10 +32,10 @@ class NGC_Platform_Services_Admin {
 			return;
 		}
 
-		add_submenu_page( 'ngc-operations', __( 'Gamification', 'nextgencompanion' ), __( 'Gamification', 'nextgencompanion' ), 'manage_options', 'ngc-gamification', [ __CLASS__, 'render_gamification' ] );
-		add_submenu_page( 'ngc-operations', __( 'Export Engine', 'nextgencompanion' ), __( 'Exports', 'nextgencompanion' ), 'manage_options', 'ngc-exports', [ __CLASS__, 'render_exports' ] );
-		add_submenu_page( 'ngc-operations', __( 'Audit Log', 'nextgencompanion' ), __( 'Audit Log', 'nextgencompanion' ), 'ngc_view_audit', 'ngc-audit', [ __CLASS__, 'render_audit' ] );
-		add_submenu_page( 'ngc-operations', __( 'AI Diagnostics', 'nextgencompanion' ), __( 'AI Diagnostics', 'nextgencompanion' ), 'manage_options', 'ngc-ai-diagnostics', [ __CLASS__, 'render_diagnostics' ] );
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin', __( 'Gamification', 'nextgencompanion' ), __( 'Gamification', 'nextgencompanion' ), 'manage_options', 'ngc-gamification', [ __CLASS__, 'render_gamification' ] );
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin', __( 'Export Engine', 'nextgencompanion' ), __( 'Exports', 'nextgencompanion' ), 'manage_options', 'ngc-exports', [ __CLASS__, 'render_exports' ] );
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin', __( 'Audit Log', 'nextgencompanion' ), __( 'Audit Log', 'nextgencompanion' ), 'ngc_view_audit', 'ngc-audit', [ __CLASS__, 'render_audit' ] );
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin', __( 'AI Diagnostics', 'nextgencompanion' ), __( 'AI Diagnostics', 'nextgencompanion' ), 'manage_options', 'ngc-ai-diagnostics', [ __CLASS__, 'render_diagnostics' ] );
 	}
 
 	/**

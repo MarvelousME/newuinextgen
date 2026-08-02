@@ -1,0 +1,286 @@
+/**
+ * Cinematic full-bleed video heroes + story bands.
+ * Tokens: --bi-hero-* / --ngt-hero-* (see tokens.css + unified.css)
+ *
+ * !important usage (documented):
+ * - None required in this file. Specificity + cascade only.
+ */
+
+/* ---- Shared cinematic video layer ---- */
+.ng-page-hero__video,
+.ngi-hero-video,
+.bi-cinematic-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  border: 0;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: opacity;
+  opacity: 0;
+  transition: opacity var(--bi-hero-video-fade, 700ms) var(--ease-smooth, var(--ngt-ease-out, cubic-bezier(0.4, 0, 0.2, 1)));
+  z-index: var(--bi-z-hero-video, 1);
+}
+
+.ng-page-hero__video.is-ready,
+.ngi-hero-video.is-ready,
+.bi-cinematic-video.is-ready {
+  opacity: var(--bi-hero-video-opacity, 0.42);
+}
+
+.ng-page-hero__video.is-deferred,
+.ngi-hero-video.is-deferred,
+.bi-cinematic-video.is-deferred {
+  display: none;
+}
+
+/* ---- Interior page hero (cinematic) ---- */
+.ng-page-hero.ng-page-hero--cinematic {
+  min-height: var(--bi-hero-min-height, min(100svh, 720px));
+  min-height: var(--bi-hero-min-height-fallback, min(100vh, 720px));
+  align-items: center;
+  /* Nav clearance comes from ngt-wp-bridge; keep only a tight content rhythm here */
+  padding-top: 0;
+  padding-bottom: clamp(2rem, 5vh, 3.5rem);
+  margin-top: 0;
+}
+
+.ng-page-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: var(--bi-z-hero-scrim, 2);
+  pointer-events: none;
+  background:
+    var(--bi-hero-scrim-brand, linear-gradient(135deg, rgba(9, 39, 70, 0.72) 0%, rgba(19, 68, 119, 0.45) 48%, rgba(9, 39, 70, 0.78) 100%)),
+    var(--bi-hero-scrim-vignette, radial-gradient(ellipse at center, transparent 42%, rgba(4, 16, 32, 0.55) 100%));
+}
+
+.ng-page-hero--has-video .ng-page-hero__mesh {
+  opacity: 0.55;
+}
+
+.ng-page-hero--has-video .ng-page-hero__photo {
+  opacity: var(--bi-hero-poster-opacity, 0.55);
+  z-index: var(--bi-z-hero-poster, 0);
+  filter: saturate(1.05);
+}
+
+.ng-page-hero.bi-cinematic--ready .ng-page-hero__photo {
+  opacity: var(--bi-hero-poster-under-video, 0.18);
+}
+
+.ng-page-hero.bi-cinematic--poster-only .ng-page-hero__photo {
+  opacity: 0.55;
+}
+
+.ng-page-hero--cinematic .ng-page-hero__inner {
+  z-index: var(--bi-z-hero-content, 3);
+  width: 100%;
+}
+
+.ng-page-hero--cinematic .ng-page-hero__title {
+  text-shadow: 0 2px 24px rgba(4, 16, 32, 0.45);
+  max-width: 18ch;
+}
+
+.ng-page-hero--cinematic .ng-page-hero__subtitle {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 12px rgba(4, 16, 32, 0.4);
+}
+
+.ng-page-hero--cinematic .ng-page-hero__copy {
+  animation: bi-hero-rise 780ms var(--ease-expo, cubic-bezier(0.19, 1, 0.22, 1)) both;
+}
+
+.ng-page-hero--cinematic .ng-page-hero__actions .ng-btn {
+  transition:
+    transform 0.2s var(--ease-spring, cubic-bezier(0.175, 0.885, 0.32, 1.275)),
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.ng-page-hero--cinematic .ng-page-hero__actions .ng-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(174, 206, 97, 0.35);
+}
+
+.ng-page-hero--cinematic .ng-page-hero__stat {
+  background: var(--bi-glass-bg, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--bi-glass-border, rgba(255, 255, 255, 0.22));
+  backdrop-filter: blur(var(--bi-glass-blur, 14px));
+  -webkit-backdrop-filter: blur(var(--bi-glass-blur, 14px));
+}
+
+@keyframes bi-hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ---- Homepage kinetic hero ---- */
+.ngi-hero.ngi-hero--cinematic {
+  min-height: var(--bi-hero-min-height, min(100svh, 820px));
+  min-height: var(--bi-hero-min-height-fallback, min(100vh, 820px));
+}
+
+.ngi-hero.ngi-hero--cinematic .ngi-hero-video {
+  opacity: 0;
+  filter: saturate(1.08) contrast(1.04);
+  z-index: var(--bi-z-hero-video, 0);
+}
+
+.ngi-hero.ngi-hero--cinematic .ngi-hero-video.is-ready {
+  opacity: var(--bi-home-hero-video-opacity, 0.38);
+}
+
+.ngi-hero.ngi-hero--cinematic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: var(--bi-z-hero-scrim, 1);
+  pointer-events: none;
+  background:
+    linear-gradient(105deg, rgba(7, 28, 52, 0.82) 0%, rgba(9, 39, 70, 0.55) 42%, rgba(7, 28, 52, 0.35) 72%, rgba(7, 28, 52, 0.55) 100%),
+    radial-gradient(ellipse at 70% 30%, transparent 30%, rgba(4, 16, 32, 0.5) 100%);
+}
+
+.ngi-hero.ngi-hero--cinematic .ngi-wrap,
+.ngi-hero.ngi-hero--cinematic .ngi-kh-mesh,
+.ngi-hero.ngi-hero--cinematic .ngi-shape {
+  position: relative;
+  z-index: var(--bi-z-hero-content, 2);
+}
+
+.ngi-hero.ngi-hero--cinematic .ngi-kh-mesh {
+  position: absolute;
+  z-index: var(--bi-z-hero-scrim, 1);
+}
+
+/* ---- Story / journey cinematic band ---- */
+.bi-cinematic-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(320px, 52vh, 560px);
+  color: #fff;
+  border-radius: 0;
+}
+
+.bi-cinematic-band__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bi-cinematic-band__poster {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.bi-cinematic-band__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgba(9, 39, 70, 0.88) 0%, rgba(9, 39, 70, 0.55) 48%, rgba(9, 39, 70, 0.35) 100%),
+    radial-gradient(ellipse at center, transparent 40%, rgba(4, 16, 32, 0.45) 100%);
+  pointer-events: none;
+}
+
+.bi-cinematic-band__inner {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+}
+
+@media (min-width: 900px) {
+  .bi-cinematic-band__inner {
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+
+.bi-cinematic-band .ngi-split-item,
+.bi-cinematic-band article {
+  background: var(--bi-glass-bg, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--bi-glass-border, rgba(255, 255, 255, 0.16));
+  backdrop-filter: blur(var(--bi-glass-blur, 12px));
+  -webkit-backdrop-filter: blur(var(--bi-glass-blur, 12px));
+  border-radius: var(--r-lg, 24px);
+  padding: 1.25rem 1.35rem;
+}
+
+.bi-cinematic-band h3,
+.bi-cinematic-band .bi-cinematic-band__title {
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+
+.bi-cinematic-band p {
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .ng-page-hero__video,
+  .ngi-hero-video,
+  .bi-cinematic-video {
+    display: none !important; /* Justified: hide decorative motion media for a11y preference */
+  }
+
+  .ng-page-hero--cinematic .ng-page-hero__copy {
+    animation: none;
+  }
+
+  .ng-page-hero--has-video .ng-page-hero__photo,
+  .bi-cinematic-band__poster {
+    opacity: 0.65;
+  }
+}
+
+/* ---- Responsive tightening ---- */
+@media (max-width: 760px) {
+  .ng-page-hero.ng-page-hero--cinematic {
+    min-height: min(100svh, 640px);
+    align-items: flex-end;
+    padding-top: 0;
+  }
+
+  .ng-page-hero--cinematic .ng-page-hero__title {
+    max-width: none;
+    font-size: clamp(1.85rem, 8vw, 2.4rem);
+  }
+
+  .ngi-hero.ngi-hero--cinematic {
+    min-height: min(100svh, 720px);
+  }
+
+  .bi-cinematic-band__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1920px) {
+  .ng-page-hero--cinematic .ng-page-hero__inner,
+  .ngi-hero--cinematic .ngi-wrap {
+    max-width: 1400px;
+  }
+}

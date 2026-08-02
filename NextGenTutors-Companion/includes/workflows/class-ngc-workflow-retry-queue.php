@@ -23,6 +23,26 @@ class NGC_Workflow_Retry_Queue {
 	 * @param string               $error    Error message.
 	 */
 	public static function enqueue( $workflow, $context, $step, $error ) {
+		// Prefer durable queue when platform kernel is available.
+		if ( class_exists( 'NGC_Durable_Queue' ) && class_exists( 'NGC_Platform' ) && ! ( '1' === (string) get_option( NGC_Platform::OPTION_KILL_SWITCH, '' ) ) ) {
+			NGC_Durable_Queue::enqueue(
+				NGC_Queue_Worker::QUEUE_WORKFLOW,
+				[
+					'type'     => 'workflow.execute',
+					'action'   => 'retry_workflow',
+					'workflow' => sanitize_key( (string) $workflow ),
+					'step'     => sanitize_key( (string) $step ),
+					'context'  => $context,
+					'error'    => sanitize_text_field( (string) $error ),
+				],
+				[
+					'idempotency_key' => 'retry:' . sanitize_key( (string) $workflow ) . ':' . md5( wp_json_encode( $context ) . $step ),
+					'priority'        => 90,
+					'delay_seconds'   => HOUR_IN_SECONDS,
+				]
+			);
+		}
+
 		$queue = self::all();
 		$queue[] = [
 			'id'         => wp_generate_uuid4(),

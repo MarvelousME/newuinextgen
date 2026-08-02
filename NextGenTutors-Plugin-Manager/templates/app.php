@@ -38,7 +38,11 @@ $pct              = (int) ( $health['readiness_percent'] ?? 0 );
 $overall          = (string) ( $health['overall_status'] ?? 'NOT_READY' );
 $security_score   = NGCPM_UI::security_score( $health );
 $pipeline         = NGCPM_UI::pipeline_nodes( $scan );
+$company          = class_exists( 'NGC_Business_Profile' ) ? NGC_Business_Profile::get() : [];
+$brand_name       = (string) ( $company['company_name'] ?? 'NextGenTutors' );
+$brand_byline     = (string) ( $company['powered_by'] ?? 'GET ONLINE NOW' );
 $verify_rows      = NGCPM_UI::verification_rows( $scan );
+$ngt_stack        = $ngt_stack ?? ( class_exists( 'NGCPM_NGT_Stack' ) ? NGCPM_NGT_Stack::summary() : [ 'rows' => [] ] );
 $health_cats      = NGCPM_UI::health_categories( $scan, $health );
 $settings_url     = admin_url( 'admin.php?page=' . NGCPM_ADMIN_PAGE . '-settings' );
 $integrations_ok  = (int) ( $health['required_ready'] ?? 0 );
@@ -87,11 +91,11 @@ $nav_sections = [
 	<div class="ngcpm-scrim" data-ngcpm-scrim hidden></div>
 
 	<aside class="ngcpm-sidebar" id="ngcpm-sidebar" aria-label="<?php esc_attr_e( 'Main navigation', 'nextgentutors-plugin-manager' ); ?>">
-		<div class="ngcpm-sidebar__brand">
+		<div class="ngcpm-sidebar__brand" data-testid="ngcpm-business-identity">
 			<span class="ngcpm-sidebar__logo" aria-hidden="true"><?php echo NGCPM_UI::icon( 'puzzle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<div>
-				<strong>NextGenTutors</strong>
-				<span class="ngcpm-sidebar__byline"><?php esc_html_e( 'GET ONLINE NOW', 'nextgentutors-plugin-manager' ); ?></span>
+				<strong data-testid="ngcpm-company-name"><?php echo esc_html( $brand_name ); ?></strong>
+				<span class="ngcpm-sidebar__byline" data-testid="ngcpm-powered-by"><?php echo esc_html( $brand_byline ); ?></span>
 			</div>
 		</div>
 		<nav class="ngcpm-sidebar__nav">
@@ -141,7 +145,7 @@ $nav_sections = [
 			<section class="ngcpm-view is-active" id="ngcpm-view-dashboard" data-view="dashboard">
 				<header class="ngcpm-hero">
 					<div class="ngcpm-hero__content">
-						<p class="ngcpm-eyebrow"><?php esc_html_e( 'NextGenTutors Plugin Manager · GET ONLINE NOW', 'nextgentutors-plugin-manager' ); ?></p>
+						<p class="ngcpm-eyebrow" data-testid="ngcpm-hero-eyebrow"><?php echo esc_html( $brand_name . ' Plugin Manager · ' . $brand_byline ); ?></p>
 						<h1 class="ngcpm-display ngcpm-readiness-title"><?php esc_html_e( 'System Readiness', 'nextgentutors-plugin-manager' ); ?></h1>
 						<p class="ngcpm-hero__meta">
 							<?php
@@ -209,6 +213,35 @@ $nav_sections = [
 						</button>
 					<?php endforeach; ?>
 				</div>
+
+				<?php if ( ! empty( $ngt_stack['rows'] ) ) : ?>
+				<section class="ngcpm-panel" data-testid="ngcpm-ngt-stack">
+					<h2 class="ngcpm-panel__title"><?php esc_html_e( 'NextGen first-party stack', 'nextgentutors-plugin-manager' ); ?></h2>
+					<p class="ngcpm-panel__hint">
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=ngtmc-mission-control' ) ); ?>"><?php esc_html_e( 'Open Mission Control', 'nextgentutors-plugin-manager' ); ?></a>
+					</p>
+					<div class="ngcpm-table-wrap">
+						<table class="ngcpm-table">
+							<thead>
+								<tr>
+									<th><?php esc_html_e( 'Package', 'nextgentutors-plugin-manager' ); ?></th>
+									<th><?php esc_html_e( 'Status', 'nextgentutors-plugin-manager' ); ?></th>
+									<th><?php esc_html_e( 'Version', 'nextgentutors-plugin-manager' ); ?></th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ( (array) $ngt_stack['rows'] as $row ) : ?>
+									<tr>
+										<td><?php echo esc_html( (string) ( $row['label'] ?? '' ) ); ?></td>
+										<td><span class="ngcpm-badge ngcpm-badge--<?php echo esc_attr( strtolower( (string) ( $row['status'] ?? 'optional' ) ) ); ?>"><?php echo esc_html( (string) ( $row['status'] ?? '' ) ); ?></span></td>
+										<td><?php echo esc_html( (string) ( $row['version'] ?? '—' ) ); ?></td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+				</section>
+				<?php endif; ?>
 
 				<div class="ngcpm-split">
 					<section class="ngcpm-panel">

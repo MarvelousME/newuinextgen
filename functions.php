@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'BI_VERSION', '1.9.16' );
+define( 'BI_VERSION', '1.9.17' );
 define( 'BI_DIR', get_stylesheet_directory() );
 define( 'BI_URI', get_stylesheet_directory_uri() );
 if ( ! defined( 'NGT_URI' ) ) {
@@ -127,8 +127,10 @@ function bi_enqueue_assets() {
             wp_enqueue_style( 'bi-kinetic-tokens', BI_URI . '/assets/css/kinetic-tokens.css', [ 'bi-style' ], BI_VERSION );
             wp_enqueue_style( 'bi-kinetic-home', BI_URI . '/assets/css/kinetic-home.css', [ 'bi-kinetic-tokens' ], BI_VERSION );
             wp_enqueue_style( 'bi-kinetic-image-hover', BI_URI . '/assets/css/kinetic-image-hover.css', [ 'bi-kinetic-home' ], BI_VERSION );
+            wp_enqueue_style( 'bi-cinematic-hero', BI_URI . '/assets/css/bi-cinematic-hero.css', [ 'bi-kinetic-image-hover' ], BI_VERSION );
             wp_enqueue_script( 'bi-focus-trap', BI_URI . '/assets/js/bi-focus-trap.js', [], BI_VERSION, true );
             wp_enqueue_script( 'bi-kinetic-home', BI_URI . '/assets/js/kinetic-home.js', [ 'bi-focus-trap' ], BI_VERSION, true );
+            wp_enqueue_script( 'bi-cinematic-video', BI_URI . '/assets/js/bi-cinematic-video.js', [], BI_VERSION, true );
             $layout_max = (int) apply_filters( 'ngt_content_width', 1280 );
             if ( $layout_max < 960 ) {
                 $layout_max = 1280;
@@ -161,6 +163,10 @@ function bi_enqueue_assets() {
         wp_enqueue_style( 'bi-ngc-forms', BI_URI . '/assets/css/ngc-forms.css', [ 'bi-style' ], BI_VERSION );
         wp_enqueue_style( 'bi-ngc-validation', BI_URI . '/assets/css/ngc-validation.css', [ 'bi-ngc-forms' ], BI_VERSION );
         wp_enqueue_script( 'bi-ngc-validation', BI_URI . '/assets/js/ngc-validation.js', [], BI_VERSION, true );
+    }
+
+    if ( is_page( 'login' ) && ! bi_is_builder_edit_mode() ) {
+        wp_enqueue_script( 'bi-login', BI_URI . '/assets/js/bi-login.js', [], BI_VERSION, true );
     }
 
     if ( defined( 'NGC_PLUGIN_URL' ) && defined( 'NGC_VERSION' ) ) {
@@ -208,6 +214,22 @@ function bi_page_needs_carousel_assets() {
 }
 
 function bi_is_builder_edit_mode() {
+    // Request-level signals — available before Elementor finishes booting
+    // (template_include and early enqueue hooks).
+    if ( isset( $_GET['elementor-preview'] ) || isset( $_GET['elementor_library'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        return true;
+    }
+    if ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        return true;
+    }
+    if ( isset( $_POST['action'] ) && in_array( (string) $_POST['action'], [ 'elementor_ajax', 'elementor_save' ], true ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        return true;
+    }
+    // REST / app editor bootstrap
+    if ( defined( 'REST_REQUEST' ) && REST_REQUEST && isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) $_SERVER['REQUEST_URI'], '/elementor/' ) ) {
+        return true;
+    }
+
     if ( bi_elementor_active() && class_exists( '\Elementor\Plugin' ) ) {
         $plugin = \Elementor\Plugin::instance();
         if ( isset( $plugin->editor ) && method_exists( $plugin->editor, 'is_edit_mode' ) && $plugin->editor->is_edit_mode() ) {

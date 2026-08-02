@@ -58,7 +58,76 @@
 
   /* Layout */
   --maxw: 1240px;
-  --nav-h: 132px;
+  --nav-h: 88px;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Borders */
+  --border-subtle: 1px solid rgba(9, 39, 70, 0.08);
+  --border-strong: 1px solid rgba(9, 39, 70, 0.16);
+
+  /* Opacity */
+  --opacity-muted: 0.64;
+  --opacity-soft: 0.88;
+
+  /* Motion durations */
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+  --dur-hero: 700ms;
+
+  /* Z-index layers */
+  --z-base: 0;
+  --z-raised: 2;
+  --z-sticky: 40;
+  --z-nav: 100;
+  --z-drawer: 700;
+  --z-modal: 800;
+  --z-toast: 900;
+  --z-loader: 1000;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-bg-strong: rgba(255, 255, 255, 0.16);
+  --glass-border: rgba(255, 255, 255, 0.22);
+  --glass-blur: 14px;
+
+  /* Cinematic hero video */
+  --bi-hero-min-height: 100svh;
+  --bi-hero-min-height-fallback: 100vh;
+  --bi-hero-video-opacity: 0.42;
+  --bi-home-hero-video-opacity: 0.38;
+  --bi-hero-poster-opacity: 0.55;
+  --bi-hero-poster-under-video: 0.18;
+  --bi-hero-video-fade: var(--dur-hero);
+  --bi-hero-scrim-brand: linear-gradient(135deg, rgba(9, 39, 70, 0.72) 0%, rgba(19, 68, 119, 0.45) 48%, rgba(9, 39, 70, 0.78) 100%);
+  --bi-hero-scrim-vignette: radial-gradient(ellipse at center, transparent 42%, rgba(4, 16, 32, 0.55) 100%);
+  --bi-z-hero-poster: 0;
+  --bi-z-hero-video: 1;
+  --bi-z-hero-scrim: 2;
+  --bi-z-hero-content: 3;
+  --bi-glass-bg: var(--glass-bg);
+  --bi-glass-border: var(--glass-border);
+  --bi-glass-blur: var(--glass-blur);
+
+  /* Breakpoints (reference only — media queries still use px) */
+  --bp-xs: 320px;
+  --bp-sm: 375px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+  --bp-2xl: 1440px;
+  --bp-3xl: 1920px;
 }
 
 * { box-sizing: border-box; }
@@ -78,7 +147,9 @@ body {
   overflow-x: hidden;
 }
 
-/* Lenis */
+/* Lenis
+   !important justified: Lenis must defeat UA/theme `scroll-behavior:smooth`
+   which fights its virtual scroll and causes jank. */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
@@ -239,6 +310,8 @@ p { margin: 0; }
 .reveal-ready [data-reveal-x],
 .reveal-ready [data-reveal-scale] { /* JS will animate */ }
 
+/* Reduced-motion: force reveal content visible even if JS already set
+   inline opacity/transform — !important required to beat inline styles. */
 @media (prefers-reduced-motion: reduce) {
   [data-reveal], [data-reveal-x], [data-reveal-scale] { opacity: 1 !important; transform: none !important; }
 }

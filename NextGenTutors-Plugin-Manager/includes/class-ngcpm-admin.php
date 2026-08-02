@@ -27,6 +27,9 @@ class NGCPM_Admin {
 	 * Register admin menu.
 	 */
 	public static function menu() {
+		if ( class_exists( 'NGC_Admin_Shell' ) ) {
+			return; // NEXT GEN TUTORS shell owns navigation (catalog registers callbacks).
+		}
 		add_menu_page(
 			__( 'NextGenTutors Plugin Manager', 'nextgentutors-plugin-manager' ),
 			__( 'NextGenTutors Plugins', 'nextgentutors-plugin-manager' ),

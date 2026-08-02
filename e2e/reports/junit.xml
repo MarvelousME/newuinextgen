@@ -1,0 +1,578 @@
+<testsuites id="" name="" tests="72" failures="3" skipped="2" errors="6" time="4058.820766">
+<testsuite name="blueprint-wf01-wf02-wf19-registration.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="4" failures="2" skipped="0" time="280.383" errors="1">
+<testcase name="Blueprint WF-01 Parent Registration › parent register child form" classname="blueprint-wf01-wf02-wf19-registration.spec.ts" time="124.153">
+<system-err>
+<![CDATA[
+Warning: attachment ..\test-results\blueprint-wf01-wf02-wf19-r-e8846--parent-register-child-form-chrome\test-failed-1.png is missing
+Warning: attachment ..\test-results\blueprint-wf01-wf02-wf19-r-e8846--parent-register-child-form-chrome\error-context.md is missing
+Warning: attachment ..\test-results\blueprint-wf01-wf02-wf19-r-e8846--parent-register-child-form-chrome\trace.zip is missing]]>
+</system-err>
+<error message="Test timeout of 120000ms exceeded." type="Error">
+<![CDATA[  [chrome] › blueprint-wf01-wf02-wf19-registration.spec.ts:5:7 › Blueprint WF-01 Parent Registration › parent register child form 
+
+    Test timeout of 120000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\blueprint-wf01-wf02-wf19-r-e8846--parent-register-child-form-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\test-results\blueprint-wf01-wf02-wf19-r-e8846--parent-register-child-form-chrome\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\blueprint-wf01-wf02-wf19-r-e8846--parent-register-child-form-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\blueprint-wf01-wf02-wf19-r-e8846--parent-register-child-form-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
+</testcase>
+<testcase name="Blueprint WF-02 Student Registration › student self-registration form" classname="blueprint-wf01-wf02-wf19-registration.spec.ts" time="76.843">
+</testcase>
+<testcase name="Blueprint WF-19 Support › contact support form" classname="blueprint-wf01-wf02-wf19-registration.spec.ts" time="46.282">
+<system-err>
+<![CDATA[
+Warning: attachment ..\test-results\blueprint-wf01-wf02-wf19-r-b5c9e-upport-contact-support-form-chrome\test-failed-1.png is missing
+Warning: attachment ..\test-results\blueprint-wf01-wf02-wf19-r-b5c9e-upport-contact-support-form-chrome\error-context.md is missing
+Warning: attachment ..\test-results\blueprint-wf01-wf02-wf19-r-b5c9e-upport-contact-support-form-chrome\trace.zip is missing]]>
+</system-err>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  [chrome] › blueprint-wf01-wf02-wf19-registration.spec.ts:47:7 › Blueprint WF-19 Support › contact support form 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('form.bi-ngc-form, form.ngc-form').filter({ has: locator('input[name="ngc_form_id"]') }).filter({ hasNot: locator('.ngc-match-form') }).filter({ has: locator('input[name="ngc_form_id"][value="contact_support"]') }).first()
+    Expected: visible
+    Timeout: 30000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 30000ms
+      - waiting for locator('form.bi-ngc-form, form.ngc-form').filter({ has: locator('input[name="ngc_form_id"]') }).filter({ hasNot: locator('.ngc-match-form') }).filter({ has: locator('input[name="ngc_form_id"][value="contact_support"]') }).first()
+
+
+      48 |     await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
+      49 |     const form = primaryNgForm(page, 'contact_support');
+    > 50 |     await expect(form).toBeVisible({ timeout: 30_000 });
+         |                        ^
+      51 |
+      52 |     await fillNgForm(
+      53 |       page,
+        at C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\blueprint-wf01-wf02-wf19-registration.spec.ts:50:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\blueprint-wf01-wf02-wf19-r-b5c9e-upport-contact-support-form-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\test-results\blueprint-wf01-wf02-wf19-r-b5c9e-upport-contact-support-form-chrome\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\blueprint-wf01-wf02-wf19-r-b5c9e-upport-contact-support-form-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\blueprint-wf01-wf02-wf19-r-b5c9e-upport-contact-support-form-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+<testcase name="Blueprint WF-19 Support › login page renders sign-in form" classname="blueprint-wf01-wf02-wf19-registration.spec.ts" time="33.105">
+<system-err>
+<![CDATA[
+Warning: attachment ..\test-results\blueprint-wf01-wf02-wf19-r-fe43d-n-page-renders-sign-in-form-chrome\test-failed-1.png is missing
+Warning: attachment ..\test-results\blueprint-wf01-wf02-wf19-r-fe43d-n-page-renders-sign-in-form-chrome\error-context.md is missing
+Warning: attachment ..\test-results\blueprint-wf01-wf02-wf19-r-fe43d-n-page-renders-sign-in-form-chrome\trace.zip is missing]]>
+</system-err>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  [chrome] › blueprint-wf01-wf02-wf19-registration.spec.ts:66:7 › Blueprint WF-19 Support › login page renders sign-in form 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('#ngc-loginform, #loginform, form[name="loginform"]')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 15000ms
+      - waiting for locator('#ngc-loginform, #loginform, form[name="loginform"]')
+
+        at C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\blueprint-wf01-wf02-wf19-registration.spec.ts:77:97
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\blueprint-wf01-wf02-wf19-r-fe43d-n-page-renders-sign-in-form-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\test-results\blueprint-wf01-wf02-wf19-r-fe43d-n-page-renders-sign-in-form-chrome\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\blueprint-wf01-wf02-wf19-r-fe43d-n-page-renders-sign-in-form-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\blueprint-wf01-wf02-wf19-r-fe43d-n-page-renders-sign-in-form-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="blueprint-wf03-tutor-registration.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="1" failures="0" skipped="0" time="66.429" errors="0">
+<testcase name="Blueprint WF-03 Tutor Registration › become-a-tutor form — fill all fields and submit" classname="blueprint-wf03-tutor-registration.spec.ts" time="66.429">
+</testcase>
+</testsuite>
+<testsuite name="blueprint-wf07-wf10-booking-payment.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="2" failures="0" skipped="0" time="153.524" errors="1">
+<testcase name="Blueprint WF-07 Tutor Matching › find-a-tutor form — parent assessment request" classname="blueprint-wf07-wf10-booking-payment.spec.ts" time="64.421">
+</testcase>
+<testcase name="Blueprint WF-10 Booking › homepage booking modal — open assessment CTA" classname="blueprint-wf07-wf10-booking-payment.spec.ts" time="89.103">
+<system-err>
+<![CDATA[
+Warning: attachment ..\test-results\blueprint-wf07-wf10-bookin-8c138-modal-—-open-assessment-CTA-chrome\test-failed-1.png is missing
+Warning: attachment ..\test-results\blueprint-wf07-wf10-bookin-8c138-modal-—-open-assessment-CTA-chrome\error-context.md is missing
+Warning: attachment ..\test-results\blueprint-wf07-wf10-bookin-8c138-modal-—-open-assessment-CTA-chrome\trace.zip is missing]]>
+</system-err>
+<error message="locator.click: Timeout 30000ms exceeded." type="TimeoutError">
+<![CDATA[  [chrome] › blueprint-wf07-wf10-booking-payment.spec.ts:36:7 › Blueprint WF-10 Booking › homepage booking modal — open assessment CTA 
+
+    TimeoutError: locator.click: Timeout 30000ms exceeded.
+    Call log:
+      - waiting for locator('[data-ngi-open]:not(.ngi-sticky), [data-ngt-open-booking], .ngi-btn').first()
+        - locator resolved to <a href="http://localhost:8900/find-a-tutor" class="ngi-btn ngi-btn-primary ngi-magnetic">Find My Tutor</a>
+      - attempting click action
+        - scrolling into view if needed
+        - done scrolling
+        - forcing action
+        - performing click action
+        - click action done
+        - waiting for scheduled navigations to finish
+
+
+       at ..\helpers.ts:157
+
+      155 |
+      156 | /** Marketing / auth pages used by full-system headed verification. */
+    > 157 | export const PUBLIC_SYSTEM_PAGES: Array<{
+          |             ^
+      158 |   path: string;
+      159 |   name: string;
+      160 |   mustMatch: RegExp;
+        at openHomeBookingModal (C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\helpers.ts:157:13)
+        at C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\blueprint-wf07-wf10-booking-payment.spec.ts:36:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\blueprint-wf07-wf10-bookin-8c138-modal-—-open-assessment-CTA-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\test-results\blueprint-wf07-wf10-bookin-8c138-modal-—-open-assessment-CTA-chrome\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\blueprint-wf07-wf10-bookin-8c138-modal-—-open-assessment-CTA-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\blueprint-wf07-wf10-bookin-8c138-modal-—-open-assessment-CTA-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="blueprint-wf08-wf12-wf14-ops.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="6" failures="0" skipped="0" time="50.912" errors="0">
+<testcase name="Blueprint WF-08 Manual Matching › REST matches list requires authentication" classname="blueprint-wf08-wf12-wf14-ops.spec.ts" time="9.561">
+</testcase>
+<testcase name="Blueprint WF-08 Manual Matching › REST match assign route is registered" classname="blueprint-wf08-wf12-wf14-ops.spec.ts" time="7.494">
+</testcase>
+<testcase name="Blueprint WF-08 Manual Matching › smart match endpoint responds" classname="blueprint-wf08-wf12-wf14-ops.spec.ts" time="8.095">
+</testcase>
+<testcase name="Blueprint WF-12 Invoices &amp; WF-14 Cancellation › REST invoices list requires authentication" classname="blueprint-wf08-wf12-wf14-ops.spec.ts" time="9.528">
+</testcase>
+<testcase name="Blueprint WF-12 Invoices &amp; WF-14 Cancellation › REST bookings status transition requires authentication" classname="blueprint-wf08-wf12-wf14-ops.spec.ts" time="8.498">
+</testcase>
+<testcase name="Blueprint WF-12 Invoices &amp; WF-14 Cancellation › UI library verify endpoint requires admin" classname="blueprint-wf08-wf12-wf14-ops.spec.ts" time="7.736">
+</testcase>
+</testsuite>
+<testsuite name="blueprint-wf11-payment.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="3" failures="0" skipped="0" time="26.635" errors="0">
+<testcase name="Blueprint WF-11 Payment Workflow › REST wallet requires authentication" classname="blueprint-wf11-payment.spec.ts" time="7.875">
+</testcase>
+<testcase name="Blueprint WF-11 Payment Workflow › REST invoices list requires authentication" classname="blueprint-wf11-payment.spec.ts" time="8.554">
+</testcase>
+<testcase name="Blueprint WF-11 Payment Workflow › WooCommerce storefront responds or returns expected fallback" classname="blueprint-wf11-payment.spec.ts" time="10.206">
+</testcase>
+</testsuite>
+<testsuite name="blueprint-wf25-dashboards.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="11" failures="0" skipped="0" time="448.359" errors="0">
+<testcase name="Blueprint WF-25 Dashboard Workflow › login page exposes dashboard entry route" classname="blueprint-wf25-dashboards.spec.ts" time="34.407">
+</testcase>
+<testcase name="Blueprint WF-25 Dashboard Workflow › REST student dashboard requires authentication" classname="blueprint-wf25-dashboards.spec.ts" time="9.229">
+</testcase>
+<testcase name="Blueprint WF-25 Dashboard Workflow › REST parent dashboard requires authentication" classname="blueprint-wf25-dashboards.spec.ts" time="9.552">
+</testcase>
+<testcase name="Blueprint WF-25 Dashboard Workflow › REST tutor dashboard requires authentication" classname="blueprint-wf25-dashboards.spec.ts" time="8.175">
+</testcase>
+<testcase name="Blueprint WF-25 Dashboard Workflow › REST admin dashboard requires admin" classname="blueprint-wf25-dashboards.spec.ts" time="8.337">
+</testcase>
+<testcase name="Blueprint WF-25 Dashboard Workflow › parent-dashboard route is reachable (auth gate or shell)" classname="blueprint-wf25-dashboards.spec.ts" time="46.254">
+</testcase>
+<testcase name="Seeded demo dashboards (headed) › demo parent lands on parent-dashboard with live shell" classname="blueprint-wf25-dashboards.spec.ts" time="65.213">
+</testcase>
+<testcase name="Seeded demo dashboards (headed) › demo tutor lands on tutor-dashboard with live shell" classname="blueprint-wf25-dashboards.spec.ts" time="53.956">
+</testcase>
+<testcase name="Seeded demo dashboards (headed) › demo student lands on student-dashboard with live shell" classname="blueprint-wf25-dashboards.spec.ts" time="46.356">
+</testcase>
+<testcase name="Seeded demo dashboards (headed) › admin dashboard shell after wp-admin login" classname="blueprint-wf25-dashboards.spec.ts" time="119.339">
+</testcase>
+<testcase name="Seeded demo dashboards (headed) › parent dashboard shows seeded booking signals" classname="blueprint-wf25-dashboards.spec.ts" time="47.541">
+</testcase>
+</testsuite>
+<testsuite name="business-details.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="9" failures="0" skipped="0" time="531.442" errors="1">
+<testcase name="Business details — public display › footer shows applied phone, support email, and service area" classname="business-details.spec.ts" time="30.033">
+</testcase>
+<testcase name="Business details — public display › WhatsApp FAB points at business WhatsApp number" classname="business-details.spec.ts" time="27.857">
+</testcase>
+<testcase name="Business details — public display › contact page card shows business phone and support email" classname="business-details.spec.ts" time="28.776">
+</testcase>
+<testcase name="Business details — admin core plugins › Companion Business Profile shows saved company fields" classname="business-details.spec.ts" time="112.368">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\business-details-Business--ef151--shows-saved-company-fields-chrome\error-context.md]]
+]]>
+</system-out>
+<system-err>
+<![CDATA[
+Warning: attachment ..\test-results\business-details-Business--ef151--shows-saved-company-fields-chrome\trace.zip is missing]]>
+</system-err>
+<error message="locator.click: Timeout 30000ms exceeded." type="TimeoutError">
+<![CDATA[  [chrome] › business-details.spec.ts:77:7 › Business details — admin core plugins › Companion Business Profile shows saved company fields 
+
+    TimeoutError: locator.click: Timeout 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('ngc-business-profile-apply')
+        - locator resolved to <button type="submit" class="button button-primary" data-testid="ngc-business-profile-apply">↵⇆⇆⇆⇆⇆Re-apply business profile⇆⇆⇆⇆</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - performing click action
+        - click action done
+        - waiting for scheduled navigations to finish
+
+
+      86 |     const apply = page.getByTestId('ngc-business-profile-apply');
+      87 |     await apply.click();
+    > 88 |     await page.waitForURL(/ngc-business-profile/, { timeout: 120_000 });
+         |                 ^
+      89 |     await expect(page.getByTestId('ngc-business-profile-flash')).toContainText(/applied/i, {
+      90 |       timeout: 60_000,
+      91 |     });
+        at C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\business-details.spec.ts:88:17
+
+    Error Context: ..\test-results\business-details-Business--ef151--shows-saved-company-fields-chrome\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\business-details-Business--ef151--shows-saved-company-fields-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\business-details-Business--ef151--shows-saved-company-fields-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
+</testcase>
+<testcase name="Business details — admin core plugins › WordPress general settings match business identity" classname="business-details.spec.ts" time="74.399">
+</testcase>
+<testcase name="Business details — admin core plugins › AI Integration settings show business identity banner" classname="business-details.spec.ts" time="77.687">
+</testcase>
+<testcase name="Business details — admin core plugins › Automation Hub shows business identity" classname="business-details.spec.ts" time="69.235">
+</testcase>
+<testcase name="Business details — admin core plugins › Plugin Manager shows company name and powered-by" classname="business-details.spec.ts" time="68.369">
+</testcase>
+<testcase name="Business details — admin core plugins › public footer still matches after admin re-apply" classname="business-details.spec.ts" time="42.718">
+</testcase>
+</testsuite>
+<testsuite name="login-role-paths.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="3" failures="0" skipped="0" time="163.222" errors="0">
+<testcase name="Login role paths › login shows continue-as role cards before the form" classname="login-role-paths.spec.ts" time="72.029">
+</testcase>
+<testcase name="Login role paths › selecting parent opens the sign-in form with password toggle" classname="login-role-paths.spec.ts" time="55.626">
+</testcase>
+<testcase name="Login role paths › failed login shows recoverable error guidance" classname="login-role-paths.spec.ts" time="35.567">
+</testcase>
+</testsuite>
+<testsuite name="mission-control.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="5" failures="0" skipped="0" time="488.772" errors="0">
+<testcase name="Mission Control master panel › status tab shows orchestrator shell and plugin matrix" classname="mission-control.spec.ts" time="65.138">
+</testcase>
+<testcase name="Mission Control master panel › configure tab can run identity configure" classname="mission-control.spec.ts" time="123.17">
+</testcase>
+<testcase name="Mission Control master panel › overrides tab saves maintenance + contact force fields" classname="mission-control.spec.ts" time="128.412">
+</testcase>
+<testcase name="Mission Control master panel › control map links to specialist consoles" classname="mission-control.spec.ts" time="76.882">
+</testcase>
+<testcase name="Mission Control master panel › intelligence tab loads live dashboard shell" classname="mission-control.spec.ts" time="95.17">
+</testcase>
+</testsuite>
+<testsuite name="phase14-demo-walkthrough.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="5" failures="0" skipped="1" time="653.879" errors="1">
+<testcase name="Phase 14 Relational Demo Walkthrough › Section 0–2: admin enables demo mode, seeds, and verifies" classname="phase14-demo-walkthrough.spec.ts" time="208.561">
+</testcase>
+<testcase name="Phase 14 Relational Demo Walkthrough › Section 3: parent persona real login" classname="phase14-demo-walkthrough.spec.ts" time="49.451">
+</testcase>
+<testcase name="Phase 14 Relational Demo Walkthrough › Section 3b: tutor persona real login" classname="phase14-demo-walkthrough.spec.ts" time="20.022">
+</testcase>
+<testcase name="Phase 14 Relational Demo Walkthrough › Sections 4–6: booking graph, ops cases, journeys + evidence" classname="phase14-demo-walkthrough.spec.ts" time="375.845">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\test-failed-3.png]]
+
+[[ATTACHMENT|..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\test-failed-2.png]]
+
+[[ATTACHMENT|..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\test-failed-4.png]]
+
+[[ATTACHMENT|..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\error-context.md]]
+
+[[ATTACHMENT|..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\trace.zip]]
+]]>
+</system-out>
+<error message="Test timeout of 360000ms exceeded." type="Error">
+<![CDATA[  [chrome] › phase14-demo-walkthrough.spec.ts:183:7 › Phase 14 Relational Demo Walkthrough › Sections 4–6: booking graph, ops cases, journeys + evidence 
+
+    Test timeout of 360000ms exceeded.
+
+    Error: page.waitForResponse: Test timeout of 360000ms exceeded.
+
+      59 |
+      60 |   // Each action is its own <form>; click the submit button and wait for flash after redirect.
+    > 61 |   await Promise.all([
+         |                      ^
+      62 |     page.waitForResponse(
+      63 |       (res) => {
+      64 |         if (!res.url().includes('admin-post.php') || res.request().method() !== 'POST') {
+        at submitDemoOp (C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\phase14-demo-walkthrough.spec.ts:61:27)
+        at C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\phase14-demo-walkthrough.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\test-failed-4.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\phase14-demo-walkthrough-P-9b27f-ops-cases-journeys-evidence-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
+</testcase>
+<testcase name="Phase 14 Relational Demo Walkthrough › Section 7: reset + reseed still verifies" classname="phase14-demo-walkthrough.spec.ts">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="system-verification.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="19" failures="0" skipped="1" time="811.042" errors="2">
+<testcase name="System verification — public › 01 site is reachable" classname="system-verification.spec.ts" time="34.422">
+</testcase>
+<testcase name="System verification — public › 02 public page: Home" classname="system-verification.spec.ts" time="26.472">
+</testcase>
+<testcase name="System verification — public › 02 public page: About" classname="system-verification.spec.ts" time="24.749">
+</testcase>
+<testcase name="System verification — public › 02 public page: Find a Tutor" classname="system-verification.spec.ts" time="28.899">
+</testcase>
+<testcase name="System verification — public › 02 public page: Become a Tutor" classname="system-verification.spec.ts" time="28.247">
+</testcase>
+<testcase name="System verification — public › 02 public page: Pricing" classname="system-verification.spec.ts" time="26.388">
+</testcase>
+<testcase name="System verification — public › 02 public page: Login" classname="system-verification.spec.ts" time="25.92">
+</testcase>
+<testcase name="System verification — public › 02 public page: Register" classname="system-verification.spec.ts" time="29.808">
+</testcase>
+<testcase name="System verification — public › 02 public page: Contact" classname="system-verification.spec.ts" time="33.808">
+</testcase>
+<testcase name="System verification — public › 02 public page: Guarantee" classname="system-verification.spec.ts" time="24.756">
+</testcase>
+<testcase name="System verification — public › 03 homepage landmarks and primary CTA" classname="system-verification.spec.ts" time="29.293">
+</testcase>
+<testcase name="System verification — public › 04 booking / match CTA opens or remains actionable" classname="system-verification.spec.ts" time="93.412">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\system-verification-System-ab9c0-opens-or-remains-actionable-chrome\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\system-verification-System-ab9c0-opens-or-remains-actionable-chrome\error-context.md]]
+
+[[ATTACHMENT|..\test-results\system-verification-System-ab9c0-opens-or-remains-actionable-chrome\error-context.md]]
+]]>
+</system-out>
+<system-err>
+<![CDATA[
+Warning: attachment ..\test-results\system-verification-System-ab9c0-opens-or-remains-actionable-chrome\trace.zip is missing]]>
+</system-err>
+<error message="locator.click: Timeout 30000ms exceeded." type="TimeoutError">
+<![CDATA[  [chrome] › system-verification.spec.ts:114:7 › System verification — public › 04 booking / match CTA opens or remains actionable 
+
+    TimeoutError: locator.click: Timeout 30000ms exceeded.
+    Call log:
+      - waiting for locator('[data-ngi-open]:not(.ngi-sticky), [data-ngt-open-booking], .ngi-btn').first()
+        - locator resolved to <a href="http://localhost:8900/find-a-tutor" class="ngi-btn ngi-btn-primary ngi-magnetic">Find My Tutor</a>
+      - attempting click action
+        - scrolling into view if needed
+        - done scrolling
+        - forcing action
+        - performing click action
+        - click action done
+        - waiting for scheduled navigations to finish
+
+
+       at ..\helpers.ts:157
+
+      155 |
+      156 | /** Marketing / auth pages used by full-system headed verification. */
+    > 157 | export const PUBLIC_SYSTEM_PAGES: Array<{
+          |             ^
+      158 |   path: string;
+      159 |   name: string;
+      160 |   mustMatch: RegExp;
+        at openHomeBookingModal (C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\helpers.ts:157:13)
+        at C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\system-verification.spec.ts:112:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\system-verification-System-ab9c0-opens-or-remains-actionable-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\test-results\system-verification-System-ab9c0-opens-or-remains-actionable-chrome\error-context.md
+
+    Error Context: ..\test-results\system-verification-System-ab9c0-opens-or-remains-actionable-chrome\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\system-verification-System-ab9c0-opens-or-remains-actionable-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\system-verification-System-ab9c0-opens-or-remains-actionable-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
+</testcase>
+<testcase name="System verification — public › 05 login role cards and parent form" classname="system-verification.spec.ts" time="59.91">
+</testcase>
+<testcase name="System verification — public › 06 register and find-a-tutor intake forms present" classname="system-verification.spec.ts" time="82.311">
+</testcase>
+<testcase name="System verification — public › 07 tutor archive / profile browse" classname="system-verification.spec.ts" time="27.107">
+</testcase>
+<testcase name="System verification — public › 08 axe serious/critical scan on home (record only)" classname="system-verification.spec.ts" time="34.792">
+</testcase>
+<testcase name="System verification — admin › 09 wp-admin login and Companion surfaces" classname="system-verification.spec.ts" time="90.053">
+</testcase>
+<testcase name="System verification — admin › 10 demo control verify when available" classname="system-verification.spec.ts" time="110.695">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\system-verification-System-8a445-ntrol-verify-when-available-chrome\error-context.md]]
+
+[[ATTACHMENT|..\test-results\system-verification-System-8a445-ntrol-verify-when-available-chrome\error-context.md]]
+
+[[ATTACHMENT|..\test-results\system-verification-System-8a445-ntrol-verify-when-available-chrome\trace.zip]]
+]]>
+</system-out>
+<error message="locator.click: Timeout 30000ms exceeded." type="TimeoutError">
+<![CDATA[  [chrome] › system-verification.spec.ts:213:7 › System verification — admin › 10 demo control verify when available 
+
+    TimeoutError: locator.click: Timeout 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('ngc-demo-verify-btn')
+        - locator resolved to <button type="submit" class="button " data-testid="ngc-demo-verify-btn">Verify</button>
+      - attempting click action
+        - scrolling into view if needed
+        - done scrolling
+        - forcing action
+        - performing click action
+        - click action done
+        - waiting for scheduled navigations to finish
+
+
+      235 |       const verify = page.getByTestId('ngc-demo-verify');
+      236 |       if (await verify.isVisible().catch(() => false)) {
+    > 237 |         const text = (await verify.textContent())?.trim() || '';
+          |                       ^
+      238 |         expect(text).toMatch(/PASS|FAIL/i);
+      239 |         record('demo.verify', 'pass', text);
+      240 |       } else {
+        at C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\system-verification.spec.ts:237:23
+
+    Error Context: ..\test-results\system-verification-System-8a445-ntrol-verify-when-available-chrome\error-context.md
+
+    Error Context: ..\test-results\system-verification-System-8a445-ntrol-verify-when-available-chrome\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\system-verification-System-8a445-ntrol-verify-when-available-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\system-verification-System-8a445-ntrol-verify-when-available-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
+</testcase>
+<testcase name="System verification — admin › 11 logout cleanup" classname="system-verification.spec.ts">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="unified-admin.spec.ts" timestamp="2026-08-02T13:00:24.023Z" hostname="chrome" tests="4" failures="1" skipped="0" time="313.637" errors="0">
+<testcase name="Unified NEXT GEN TUTORS admin › sidebar has single NEXT GEN TUTORS parent and no legacy top-levels" classname="unified-admin.spec.ts" time="85.821">
+</testcase>
+<testcase name="Unified NEXT GEN TUTORS admin › Mission Control opens under unified shell with breadcrumbs + search" classname="unified-admin.spec.ts" time="70.653">
+</testcase>
+<testcase name="Unified NEXT GEN TUTORS admin › admin search finds Mission Control" classname="unified-admin.spec.ts" time="93.797">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\unified-admin-Unified-NEXT-69b19-earch-finds-Mission-Control-chrome\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\unified-admin-Unified-NEXT-69b19-earch-finds-Mission-Control-chrome\error-context.md]]
+
+[[ATTACHMENT|..\test-results\unified-admin-Unified-NEXT-69b19-earch-finds-Mission-Control-chrome\trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  [chrome] › unified-admin.spec.ts:48:7 › Unified NEXT GEN TUTORS admin › admin search finds Mission Control 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('#ngt-admin-search-results a').first()
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 15000ms
+      - waiting for locator('#ngt-admin-search-results a').first()
+
+
+      67 | });
+      68 |
+        at C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\unified-admin.spec.ts:69:82
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\unified-admin-Unified-NEXT-69b19-earch-finds-Mission-Control-chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\test-results\unified-admin-Unified-NEXT-69b19-earch-finds-Mission-Control-chrome\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\unified-admin-Unified-NEXT-69b19-earch-finds-Mission-Control-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\unified-admin-Unified-NEXT-69b19-earch-finds-Mission-Control-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+<testcase name="Unified NEXT GEN TUTORS admin › legacy page slugs still resolve under shell" classname="unified-admin.spec.ts" time="63.366">
+</testcase>
+</testsuite>
+</testsuites>

@@ -28,6 +28,7 @@ class NGC_Core_Loader {
 		'BIA_Policy',
 		'NGC_Amelia_Adapter',
 		'NGC_Fluentcrm_Adapter',
+		'NGC_FluentSupport_Adapter',
 		'NGC_Masterstudy_Adapter',
 		'NGC_Gamipress_Adapter',
 		'NGC_Tutor_Cpt_Source',

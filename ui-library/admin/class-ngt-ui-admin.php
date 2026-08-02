@@ -26,19 +26,9 @@ if ( ! class_exists( 'NGT_UI_Admin' ) ) {
 				return;
 			}
 
-			global $menu;
-			$has_ngc = false;
-			if ( is_array( $menu ) ) {
-				foreach ( $menu as $item ) {
-					if ( isset( $item[2] ) && 'ngc-operations' === $item[2] ) {
-						$has_ngc = true;
-						break;
-					}
-				}
-			}
-
-			$parent = $has_ngc ? 'ngc-operations' : 'ngt-ui-library';
-			if ( ! $has_ngc ) {
+			$parent = function_exists( 'ngt_admin_parent' ) ? ngt_admin_parent() : 'ngt-admin';
+			if ( ! class_exists( 'NGC_Admin_Shell' ) ) {
+				$parent = 'ngt-ui-library';
 				add_menu_page(
 					__( 'NGT UI Library', 'ngt-ui' ),
 					__( 'UI Library', 'ngt-ui' ),

@@ -53,6 +53,7 @@ function ngc_autoload( $class ) {
 		NGC_PLUGIN_DIR . 'includes/studio/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/shortcodes/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/admin/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/admin/framework/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/gamification/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/export/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/audit/' . $relative,
@@ -61,6 +62,9 @@ function ngc_autoload( $class ) {
 		NGC_PLUGIN_DIR . 'includes/agents/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/cli/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/demo/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/provisioning/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/intelligence/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/platform/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/ui-library/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/ui-library/providers/' . $relative,
 	];
@@ -81,6 +85,7 @@ if ( ! NGC_Loader::boot() ) {
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once NGC_PLUGIN_DIR . 'includes/cli/class-ngc-cli.php';
 	require_once NGC_PLUGIN_DIR . 'includes/cli/class-ngc-system-cli.php';
+	require_once NGC_PLUGIN_DIR . 'includes/cli/class-ngc-platform-cli.php';
 }
 
 /**

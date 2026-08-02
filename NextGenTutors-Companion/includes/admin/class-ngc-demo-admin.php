@@ -30,8 +30,7 @@ final class NGC_Demo_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		add_submenu_page(
-			'ngc-platform',
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin',
 			__( 'Demo Control Centre', 'nextgencompanion' ),
 			__( 'Demo Control Centre', 'nextgencompanion' ),
 			'manage_options',

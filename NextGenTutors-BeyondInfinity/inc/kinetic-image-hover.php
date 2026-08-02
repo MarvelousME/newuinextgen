@@ -13,36 +13,33 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array<int, array<string, string>>
  */
 function bi_kinetic_image_hover_cards() {
-    $find    = home_url( '/find-a-tutor' );
-    $become  = home_url( '/become-a-tutor' );
-    $register = home_url( '/register' );
+    $find     = home_url( '/find-a-tutor/' );
+    $become   = home_url( '/become-a-tutor/' );
+    $register = home_url( '/register/' );
 
     return apply_filters(
         'bi_kinetic_image_hover_cards',
         [
             [
                 'key'    => 'hover_parent',
-                'kicker' => __( 'Parent Journey', 'beyondinfinity' ),
-                'title'  => __( 'Find the right tutor faster', 'beyondinfinity' ),
-                'copy'   => __( 'Search by subject, grade, province, learning format and availability.', 'beyondinfinity' ),
+                'kicker' => __( 'For parents', 'beyondinfinity' ),
+                'title'  => __( 'Match a vetted tutor to your child’s goals', 'beyondinfinity' ),
+                'copy'   => __( 'Filter by CAPS, IEB or Cambridge, grade, province and lesson format — then book with confidence.', 'beyondinfinity' ),
                 'url'    => $find,
-                'cta'    => __( 'Find a Tutor', 'beyondinfinity' ),
             ],
             [
                 'key'    => 'hover_tutor',
-                'kicker' => __( 'Tutor Journey', 'beyondinfinity' ),
-                'title'  => __( 'Apply and teach with confidence', 'beyondinfinity' ),
-                'copy'   => __( 'Showcase skills, availability, subjects, experience and lesson formats.', 'beyondinfinity' ),
+                'kicker' => __( 'For tutors', 'beyondinfinity' ),
+                'title'  => __( 'Teach on a trusted SA tutoring network', 'beyondinfinity' ),
+                'copy'   => __( 'Share your subjects, rates and availability. We handle matching, bookings and parent communication.', 'beyondinfinity' ),
                 'url'    => $become,
-                'cta'    => __( 'Become a Tutor', 'beyondinfinity' ),
             ],
             [
                 'key'    => 'hover_online',
-                'kicker' => __( 'Online Learning', 'beyondinfinity' ),
-                'title'  => __( 'Book online or hybrid support', 'beyondinfinity' ),
-                'copy'   => __( 'Make every lesson trackable with booking, CRM and dashboard touchpoints.', 'beyondinfinity' ),
+                'kicker' => __( 'Online & hybrid', 'beyondinfinity' ),
+                'title'  => __( 'Learn online, in person, or both', 'beyondinfinity' ),
+                'copy'   => __( 'Flexible sessions with progress tracking in your dashboard — wherever your learner works best.', 'beyondinfinity' ),
                 'url'    => $register,
-                'cta'    => __( 'Register Now', 'beyondinfinity' ),
             ],
         ]
     );
@@ -54,16 +51,15 @@ function bi_kinetic_image_hover_cards() {
  * @return string
  */
 function bi_kinetic_hover_mode() {
-    $mode = sanitize_key( (string) bi_get_theme_option( 'home_image_hover_mode', 'zoom' ) );
-    $allowed = [ 'zoom', 'slide', 'flip', 'blur', 'shine' ];
-    return in_array( $mode, $allowed, true ) ? $mode : 'zoom';
+    // Discovery cards always use shine sweep (mode picker removed from the homepage).
+    return 'shine';
 }
 
 /**
  * Render hero advanced search panel (preview pattern).
  */
 function bi_kinetic_hero_search_panel() {
-    $find = home_url( '/find-a-tutor' );
+    $find = home_url( '/find-a-tutor/' );
     ?>
     <div class="ngi-visual ngi-visual--search" data-kh-ambient-visual>
       <div class="ngi-glow" aria-hidden="true"></div>
@@ -82,27 +78,11 @@ function bi_kinetic_render_image_hover_section() {
     <section class="ngi-section ngi-alt ngi-hover-lab" id="image-hover">
       <div class="ngi-wrap">
         <div class="ngi-section-head ngi-reveal">
-          <div class="ngi-eyebrow"><?php esc_html_e( 'Discovery cards', 'beyondinfinity' ); ?></div>
-          <h2 class="ngi-heading"><?php esc_html_e( 'Premium tutor journeys with interactive hover.', 'beyondinfinity' ); ?></h2>
-          <p class="ngi-subtitle"><?php esc_html_e( 'Preview hover modes for parent, tutor and online learning pathways.', 'beyondinfinity' ); ?></p>
+          <div class="ngi-eyebrow"><?php esc_html_e( 'Choose your path', 'beyondinfinity' ); ?></div>
+          <h2 class="ngi-heading"><?php esc_html_e( 'Whether you need a tutor, want to teach, or prefer online lessons.', 'beyondinfinity' ); ?></h2>
+          <p class="ngi-subtitle"><?php esc_html_e( 'Explore parent matching, tutor applications and flexible online learning — each card opens the right next step.', 'beyondinfinity' ); ?></p>
         </div>
-        <div class="ngi-hover-toolbar ngi-reveal" role="group" aria-label="<?php esc_attr_e( 'Image hover effect controls', 'beyondinfinity' ); ?>">
-          <?php
-          $modes = [
-              'zoom'  => __( 'Zoom Overlay', 'beyondinfinity' ),
-              'slide' => __( 'Slide Caption', 'beyondinfinity' ),
-              'flip'  => __( 'Flip Card', 'beyondinfinity' ),
-              'blur'  => __( 'Blur Focus', 'beyondinfinity' ),
-              'shine' => __( 'Shine Sweep', 'beyondinfinity' ),
-          ];
-          foreach ( $modes as $slug => $label ) :
-              ?>
-            <button class="ngi-hover-control<?php echo $mode === $slug ? ' is-active' : ''; ?>" type="button" data-hover-mode="<?php echo esc_attr( $slug ); ?>" aria-pressed="<?php echo $mode === $slug ? 'true' : 'false'; ?>">
-              <?php echo esc_html( $label ); ?>
-            </button>
-          <?php endforeach; ?>
-        </div>
-        <div class="ngi-image-hover-grid ngi-hover-mode-<?php echo esc_attr( $mode ); ?>" data-ngi-hover-grid>
+        <div class="ngi-image-hover-grid ngi-hover-mode-<?php echo esc_attr( $mode ); ?>" data-ngi-hover-grid data-hover-mode="<?php echo esc_attr( $mode ); ?>">
           <?php foreach ( $cards as $card ) :
               $img = function_exists( 'bi_get_theme_image_url' ) ? bi_get_theme_image_url( $card['key'] ) : '';
               if ( ! $img ) {
@@ -110,14 +90,15 @@ function bi_kinetic_render_image_hover_section() {
               }
               ?>
             <article class="ngi-image-hover-card ngi-reveal">
-              <div class="ngi-image-hover-media" style="--ngi-img:url('<?php echo esc_url( $img ); ?>')">
-                <div class="ngi-image-hover-overlay">
-                  <span class="ngi-hover-kicker"><?php echo esc_html( $card['kicker'] ); ?></span>
-                  <h3><?php echo esc_html( $card['title'] ); ?></h3>
-                  <p><?php echo esc_html( $card['copy'] ); ?></p>
-                  <a href="<?php echo esc_url( $card['url'] ); ?>"><?php echo esc_html( $card['cta'] ); ?></a>
+              <a class="ngi-image-hover-link" href="<?php echo esc_url( $card['url'] ); ?>">
+                <div class="ngi-image-hover-media" style="--ngi-img:url('<?php echo esc_url( $img ); ?>')">
+                  <div class="ngi-image-hover-overlay">
+                    <span class="ngi-hover-kicker"><?php echo esc_html( $card['kicker'] ); ?></span>
+                    <h3><?php echo esc_html( $card['title'] ); ?></h3>
+                    <p><?php echo esc_html( $card['copy'] ); ?></p>
+                  </div>
                 </div>
-              </div>
+              </a>
             </article>
           <?php endforeach; ?>
         </div>

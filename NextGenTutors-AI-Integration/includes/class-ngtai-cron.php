@@ -48,7 +48,9 @@ final class NGTAI_Cron {
 
 	public static function flush() {
 		if ( class_exists( 'NGTAI_Outbox_Bridge' ) ) {
-			NGTAI_Outbox_Bridge::dispatch_batch();
+			$stats = NGTAI_Outbox_Bridge::dispatch_batch();
+			$stats['sent'] = (int) ( $stats['delivered'] ?? 0 );
+			do_action( 'ngtai_outbox_flush_complete', $stats );
 		}
 	}
 

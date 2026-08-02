@@ -181,6 +181,14 @@ function bi_elementor_theme_location_handled() {
     if ( ! function_exists( 'elementor_theme_do_location' ) ) {
         return false;
     }
+    // Prefer kinetic theme home over Theme Builder front_page when the page is not Elementor-built.
+    if ( is_front_page()
+        && function_exists( 'bi_use_kinetic_home' )
+        && bi_use_kinetic_home()
+        && ! bi_is_elementor_built( bi_get_current_page_id() )
+    ) {
+        return false;
+    }
     if ( is_front_page() && elementor_theme_do_location( 'front_page' ) ) {
         return true;
     }
@@ -188,6 +196,36 @@ function bi_elementor_theme_location_handled() {
         return true;
     }
     return false;
+}
+
+/**
+ * Keep kinetic marketing home on the theme front-page.php — Elementor's
+ * header-footer/canvas page templates otherwise swallow an empty shell.
+ * Never override while Elementor/WPBakery editor or preview is active.
+ */
+add_filter( 'template_include', 'bi_prefer_kinetic_front_page_template', 99 );
+function bi_prefer_kinetic_front_page_template( $template ) {
+    if ( ! is_front_page() ) {
+        return $template;
+    }
+    if ( function_exists( 'bi_is_builder_edit_mode' ) && bi_is_builder_edit_mode() ) {
+        return $template;
+    }
+    // Honour Elementor canvas / header-footer page templates on the live site.
+    if ( function_exists( 'bi_is_elementor_canvas_template' ) && bi_is_elementor_canvas_template() ) {
+        return $template;
+    }
+    if ( ! function_exists( 'bi_use_kinetic_home' ) || ! bi_use_kinetic_home() ) {
+        return $template;
+    }
+    if ( function_exists( 'bi_should_show_theme_fallback' ) && ! bi_should_show_theme_fallback() ) {
+        return $template;
+    }
+    $front = trailingslashit( get_stylesheet_directory() ) . 'front-page.php';
+    if ( file_exists( $front ) ) {
+        return $front;
+    }
+    return $template;
 }
 
 /**
@@ -264,15 +302,80 @@ function bi_builder_shortcode_support() {
 }
 
 /**
- * Prevent theme JS conflicts in builder preview.
+ * Prevent theme JS/CSS conflicts in Elementor editor + preview iframe.
  */
 add_action( 'elementor/editor/before_enqueue_scripts', 'bi_elementor_editor_compat' );
+add_action( 'elementor/preview/enqueue_styles', 'bi_elementor_editor_compat' );
 function bi_elementor_editor_compat() {
-    wp_dequeue_script( 'bi-main' );
+    $handles = [
+        'bi-main',
+        'bi-kinetic-home',
+        'bi-cinematic-video',
+        'bi-loader',
+        'bi-ngt-floating',
+        'bi-ngt-chat',
+        'bi-3d',
+        'nbi-infinity',
+        'bi-page-composer',
+    ];
+    foreach ( $handles as $handle ) {
+        wp_dequeue_script( $handle );
+    }
 }
 
 add_action( 'vc_backend_editor_enqueue_js_css', 'bi_vc_backend_dequeue_theme_js' );
 add_action( 'vc_frontend_editor_enqueue_js_css', 'bi_vc_backend_dequeue_theme_js' );
 function bi_vc_backend_dequeue_theme_js() {
     wp_dequeue_script( 'bi-main' );
+}
+
+/**
+ * Elementor only prints elementorFrontendConfig when it rendered page content
+ * (`_has_elementor_in_page`). Addons (Animation Addons, Fluent Forms, ShopBuild,
+ * Hello Elementor) still enqueue frontend.min.js on kinetic/theme pages, which
+ * then throws ReferenceError. Print the config whenever that handle is queued.
+ */
+add_action( 'wp_footer', 'bi_ensure_elementor_frontend_config', 5 );
+function bi_ensure_elementor_frontend_config() {
+    if ( ! class_exists( '\Elementor\Plugin' ) ) {
+        return;
+    }
+
+    $queued = wp_script_is( 'elementor-frontend', 'enqueued' )
+        || wp_script_is( 'elementor-frontend', 'registered' );
+    if ( ! $queued ) {
+        return;
+    }
+
+    $frontend = \Elementor\Plugin::$instance->frontend ?? null;
+    if ( ! $frontend ) {
+        return;
+    }
+
+    // Elementor's own wp_footer (priority 10) will print config when it rendered content.
+    if ( method_exists( $frontend, 'has_elementor_in_page' ) && $frontend->has_elementor_in_page() ) {
+        return;
+    }
+
+    $scripts = wp_scripts();
+    $before  = $scripts->get_data( 'elementor-frontend', 'before' );
+    $extra   = $scripts->get_data( 'elementor-frontend', 'data' );
+    $has_cfg = ( is_array( $before ) && implode( '', $before ) && false !== strpos( implode( '', $before ), 'elementorFrontendConfig' ) )
+        || ( is_string( $extra ) && false !== strpos( $extra , 'elementorFrontendConfig' ) );
+    if ( $has_cfg ) {
+        return;
+    }
+
+    if ( ! wp_script_is( 'elementor-frontend', 'enqueued' ) ) {
+        wp_enqueue_script( 'elementor-frontend' );
+    }
+
+    if ( method_exists( $frontend, 'enqueue_scripts' ) ) {
+        $frontend->enqueue_scripts();
+        return;
+    }
+
+    if ( method_exists( $frontend, 'print_config' ) ) {
+        $frontend->print_config( 'elementor-frontend' );
+    }
 }

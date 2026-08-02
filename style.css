@@ -1,16 +1,16 @@
 /*
- Theme Name: NextGenTutors-BeyondInfinity
- Theme URI: https://www.nextgentutors.co.za
- Description: BeyondInfinity theme for NextGen Tutors — accessible tutoring across South Africa. Child of Hello Elementor.
- Author: NextGen Tutors
- Author URI: https://www.nextgentutors.co.za
- Template: hello-elementor
- Version: 1.9.16
- License: GNU General Public License v2 or later
- License URI: http://www.gnu.org/licenses/gpl-2.0.html
- Text Domain: beyondinfinity
- Tags: education, tutoring, elementor, south-africa
- */
+Theme Name: NextGenTutors-BeyondInfinity
+Theme URI: https://www.nextgentutors.co.za
+Description: BeyondInfinity theme for NextGen Tutors - accessible tutoring across South Africa. Child of Hello Elementor.
+Author: NextGen Tutors
+Author URI: https://www.nextgentutors.co.za
+Template: hello-elementor
+Version: 1.9.17
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: beyondinfinity
+Tags: education, tutoring, elementor, south-africa
+*/
 
 /* ============================================================
    BEYONDINFINITY / NEXTGEN TUTORS - DESIGN SYSTEM
@@ -934,6 +934,10 @@ a:hover {
   text-decoration: none;
   transition: box-shadow 0.2s ease, opacity 0.2s ease;
 }
+/* Hide duplicate when the sticky float dock already includes WhatsApp */
+body.has-float-dock .bi-whatsapp-fab {
+  display: none !important; /* Justified: duplicate FAB conflicts with dock WhatsApp */
+}
 .bi-whatsapp-fab:hover {
   transform: none;
   box-shadow: 0 10px 28px rgba(37, 211, 102, 0.55);
@@ -998,6 +1002,31 @@ a:hover {
 .bi-center { text-align: center; }
 .bi-reassurance { margin-top: 32px; padding: 28px; background: var(--ngt-primary-light); }
 .bi-surface-card { padding: 28px; background: var(--ngt-surface); margin-top: 32px; }
+
+/* Utility replacements for purged inline styles (Phase 7) */
+.bi-mt-sm { margin-top: 18px; }
+.bi-mt-md { margin-top: 24px; }
+.bi-mt-lg { margin-top: 32px; }
+.bi-mb-xs { margin-bottom: 8px; }
+.bi-mb-sm { margin-bottom: 12px; }
+.bi-mb-md { margin-bottom: 16px; }
+.bi-mb-lg { margin-bottom: 24px; }
+.bi-pad-sm { padding: 20px; }
+.bi-pad-md { padding: 28px; }
+.bi-pad-lg { padding: 32px; }
+.bi-pad-xl { padding: 40px; }
+.bi-pad-hero { padding: 48px; }
+.bi-text-muted { color: var(--ngt-text-2); }
+.bi-text-muted-3 { color: var(--ngt-text-3); margin: 0; }
+.bi-icon-lg { font-size: 2rem; margin-bottom: 12px; }
+.bi-card-link { text-decoration: none; color: inherit; }
+.bi-faq { padding: 20px; margin-bottom: 12px; }
+.bi-faq summary { font-weight: 700; cursor: pointer; }
+.bi-faq p { margin: 12px 0 0; color: var(--ngt-text-2); }
+.bi-stack-col { display: flex; flex-direction: column; gap: 10px; }
+.bi-actions-center { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.bi-cat-icon { font-size: 1.75rem; }
+.bi-cat-desc { margin: 8px 0 0; font-size: .875rem; color: var(--ngt-text-2); }
 
 @media (max-width: 900px) {
   .bi-contact-grid { grid-template-columns: 1fr !important; }

@@ -30,8 +30,7 @@ class NGC_Page_Forms_Registry_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		add_submenu_page(
-			'ngc-operations',
+		add_submenu_page( function_exists('ngt_admin_parent') ? ngt_admin_parent() : 'ngt-admin',
 			__( 'Page & Form Registry', 'nextgencompanion' ),
 			__( 'Page Registry', 'nextgencompanion' ),
 			'manage_options',

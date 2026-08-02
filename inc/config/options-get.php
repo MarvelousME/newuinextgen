@@ -69,6 +69,25 @@ function bi_get_theme_option( $name, $defa = '', $post_id = 0 ) {
     return apply_filters( "bi_theme_option_{$name}", apply_filters( 'bi_theme_option', $rez, $name, $post_id ), $post_id );
 }
 
+/**
+ * Persist a theme option (Customizer / theme_mod) and refresh in-memory cache.
+ *
+ * @param string $name  Option key (e.g. bi_phone).
+ * @param mixed  $value Value to store.
+ * @return bool
+ */
+function bi_update_theme_option( $name, $value ) {
+	$name = (string) $name;
+	if ( '' === $name ) {
+		return false;
+	}
+	set_theme_mod( $name, $value );
+	if ( function_exists( 'bi_storage_set_array2' ) ) {
+		bi_storage_set_array2( 'options', $name, 'val', $value );
+	}
+	return true;
+}
+
 function bi_theme_option_is_on( $name, $post_id = 0 ) {
     $val = bi_get_theme_option( $name, 0, $post_id );
     if ( is_numeric( $val ) ) {

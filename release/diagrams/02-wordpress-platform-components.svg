@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img">
+  <title>02 - WordPress Platform Components</title>
+  <desc>BeyondInfinity theme, Companion domain, and first-party side plugins on WordPress.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0D7377"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F7FBFC"/>
+  <text x="24" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B2545">02 - WordPress Platform Components</text>
+  <rect x="40" y="80" width="200" height="260" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="140" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#0B2545">BeyondInfinity</text>
+  <text x="140" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#5A6A7A">Theme v1.9.17</text>
+  <text x="140" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B2545">Templates � tokens</text>
+  <text x="140" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B2545">Kinetic UI � pages</text>
+  <text x="140" y="210" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B2545">Presentation only</text>
+  <rect x="300" y="80" width="240" height="120" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="420" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#0B2545">Companion</text>
+  <text x="420" y="135" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#5A6A7A">Domain v1.9.5</text>
+  <text x="420" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B2545">ngc/v1 � wp_ngc_* � CLI</text>
+  <rect x="300" y="220" width="240" height="55" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="420" y="252" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Setup Wizard + Provisioning</text>
+  <rect x="300" y="295" width="240" height="45" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="420" y="322" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">UI Library bridge</text>
+  <rect x="590" y="80" width="170" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="675" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Mission Control</text>
+  <rect x="590" y="150" width="170" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="675" y="180" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Plugin Manager</text>
+  <rect x="590" y="220" width="170" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="675" y="250" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">AI Integration</text>
+  <rect x="590" y="290" width="170" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="675" y="320" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">HTML Importer</text>
+  <rect x="800" y="160" width="130" height="90" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="1.5"/>
+  <text x="865" y="195" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">WP Core</text>
+  <text x="865" y="215" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">+ Hello Elementor</text>
+  <line x1="240" y1="180" x2="300" y2="140" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="250" y="150" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#14919B">consume</text>
+  <line x1="540" y1="120" x2="590" y2="105" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="540" y1="140" x2="590" y2="175" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="540" y1="160" x2="590" y2="245" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="760" y1="200" x2="800" y2="200" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <rect x="40" y="420" width="240" height="70" rx="4" fill="#FFFFFF" stroke="#0B2545"/>
+  <text x="50" y="440" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Legend</text>
+  <rect x="50" y="450" width="16" height="12" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="72" y="460" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">First-party package</text>
+  <line x1="50" y1="478" x2="80" y2="478" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="88" y="481" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Dependency / API</text>
+</svg>

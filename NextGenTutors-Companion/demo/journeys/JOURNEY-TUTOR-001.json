@@ -1,0 +1,49 @@
+﻿{
+    "id":  "JOURNEY-TUTOR-001",
+    "name":  "Tutor application through approval",
+    "persona":  "demo-tutor-applicant",
+    "scenario":  "all",
+    "family":  "umbrella",
+    "executable":  true,
+    "preconditions":  [
+                          "demo environment active"
+                      ],
+    "steps":  [
+                  {
+                      "action":  "submit-application"
+                  },
+                  {
+                      "action":  "admin-review"
+                  },
+                  {
+                      "action":  "approve-tutor"
+                  },
+                  {
+                      "action":  "sync-integrations"
+                  }
+              ],
+    "expected_events":  [
+                            "tutor.application.submitted",
+                            "tutor.approved"
+                        ],
+    "expected_notifications":  [
+                                   "tutor-application-received",
+                                   "tutor-approved"
+                               ],
+    "expected_integrations":  [
+                                  "crm-parent-sync",
+                                  "lms-student-sync",
+                                  "booking-sync"
+                              ],
+    "expected_audit_events":  [
+                                  "tutor_approved",
+                                  "demo_seed_completed"
+                              ],
+    "covers":  [
+                   "MATCH-007"
+               ],
+    "verification":  {
+                         "automated_test":  "NGC_Demo_Journeys::run",
+                         "method":  "wp ngc demo_run_journey --id=JOURNEY-TUTOR-001"
+                     }
+}

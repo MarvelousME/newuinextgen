@@ -44,6 +44,15 @@ final class NGT_Hub_Workflows {
 	}
 
 	public static function schedule_health_cron(): void {
+		if ( class_exists( 'NGT_Hub_Companion_Delegate', false ) && NGT_Hub_Companion_Delegate::companion_active() ) {
+			self::unschedule_health_cron();
+			NGT_Hub_Companion_Delegate::log(
+				'info',
+				'Skipped Hub health cron — Companion ngc_daily_health_check owns diagnostics.',
+				[ 'hook' => self::HEALTH_CRON ]
+			);
+			return;
+		}
 		if ( ! wp_next_scheduled( self::HEALTH_CRON ) ) {
 			wp_schedule_event( time(), 'daily', self::HEALTH_CRON );
 		}
@@ -57,6 +66,10 @@ final class NGT_Hub_Workflows {
 	}
 
 	public static function run_health_check(): void {
+		if ( class_exists( 'NGT_Hub_Companion_Delegate', false ) && NGT_Hub_Companion_Delegate::companion_active() ) {
+			NGT_Hub_Companion_Delegate::log( 'warning', 'Blocked Hub health cron run — Companion owns diagnostics.' );
+			return;
+		}
 		NGT_Hub::fire_event(
 			'ngt.daily.health_check',
 			'system',

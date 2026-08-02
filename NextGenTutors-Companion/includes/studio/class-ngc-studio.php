@@ -22,6 +22,7 @@ class NGC_Studio {
 		NGC_Studio_Runtime::init();
 		add_action( 'admin_init', [ __CLASS__, 'maybe_upgrade_tables' ] );
 		add_action( 'init', [ __CLASS__, 'maybe_seed_templates' ], 20 );
+		add_action( 'admin_init', [ 'NGC_Studio_Importer', 'maybe_auto_sync' ], 30 );
 	}
 
 	/**
@@ -67,6 +68,10 @@ class NGC_Studio {
 		}
 		if ( ! NGC_Studio_Repository::list_dashboards() ) {
 			NGC_Studio_Dashboards::seed_defaults();
+		}
+		// Ensure Hub/Integrate/Orchestrator appear even after initial template seed.
+		if ( class_exists( 'NGC_Studio_Importer' ) ) {
+			NGC_Studio_Importer::maybe_auto_sync();
 		}
 	}
 

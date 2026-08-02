@@ -70,6 +70,26 @@ class NGC_Workflow_Orchestrator {
 	public static function run( $workflow, $context, $is_retry = false ) {
 		$workflow = strtoupper( sanitize_key( $workflow ) );
 		$context  = apply_filters( 'ngc_workflow_context', $context, $workflow );
+
+		$should = apply_filters( 'ngc_orchestrator_should_execute_side_effects', true, $workflow, $context );
+		if ( ! $should && ! $is_retry && class_exists( 'NGC_Workflow_Authority' ) ) {
+			$mid = NGC_Workflow_Authority::from_producer(
+				'orchestrator',
+				'orchestrator_run',
+				[
+					'workflow' => $workflow,
+					'context'  => $context,
+					'idempotency_key' => 'orch:' . $workflow . ':' . md5( wp_json_encode( $context ) ),
+				]
+			);
+			return [
+				'ok'         => ! is_wp_error( $mid ),
+				'queued'     => true,
+				'message_id' => is_wp_error( $mid ) ? '' : $mid,
+				'message'    => is_wp_error( $mid ) ? $mid->get_error_message() : __( 'Queued via workflow authority.', 'nextgencompanion' ),
+			];
+		}
+
 		$run_id   = self::log_run_start( $workflow, $context );
 
 		if ( class_exists( 'NGC_Amelia_Bootstrap' ) ) {

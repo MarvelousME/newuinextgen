@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img">
+  <title>06 - Event and Workflow Architecture</title>
+  <desc>Domain events, outbox, workflow orchestrator, and external automation adapters.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0D7377"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F7FBFC"/>
+  <text x="24" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B2545">06 - Event and Workflow Architecture</text>
+  <rect x="40" y="100" width="180" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="130" y="130" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Domain action</text>
+  <text x="130" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">book � match � pay</text>
+  <rect x="280" y="100" width="200" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="380" y="130" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Domain Event Bridge</text>
+  <text x="380" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">envelope + outbox</text>
+  <rect x="540" y="100" width="200" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="640" y="130" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Workflow Orchestrator</text>
+  <text x="640" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">NGC_Workflow_*</text>
+  <rect x="780" y="100" width="140" height="70" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="850" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Studio</text>
+  <rect x="80" y="280" width="160" height="60" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="160" y="315" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Notifications</text>
+  <rect x="280" y="280" width="160" height="60" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="360" y="315" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">CRM / SMTP</text>
+  <rect x="480" y="280" width="160" height="60" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="560" y="315" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">AutomatorWP</text>
+  <rect x="680" y="280" width="200" height="60" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="780" y="315" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0B2545">Provisioning / system CLI</text>
+  <line x1="220" y1="135" x2="280" y2="135" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="480" y1="135" x2="540" y2="135" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="740" y1="135" x2="780" y2="135" stroke="#0D7377" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="380" y1="170" x2="160" y2="280" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="420" y1="170" x2="360" y2="280" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="640" y1="170" x2="560" y2="280" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="700" y1="170" x2="780" y2="280" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <rect x="40" y="400" width="420" height="80" rx="4" fill="#FFFFFF" stroke="#0B2545"/>
+  <text x="50" y="422" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Legend</text>
+  <text x="50" y="442" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Demo mode sandboxes notifications; external payouts blocked.</text>
+  <text x="50" y="460" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">EVT-001: domain events wired through envelope (backlog FIXED).</text>
+</svg>

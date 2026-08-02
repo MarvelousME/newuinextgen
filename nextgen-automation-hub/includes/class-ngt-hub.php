@@ -34,6 +34,7 @@ final class NGT_Hub {
 
 	private static function load_includes(): void {
 		$files = [
+			'class-ngt-hub-companion-delegate.php',
 			'class-ngt-hub-database.php',
 			'class-ngt-hub-security.php',
 			'class-ngt-hub-data-model.php',
@@ -51,6 +52,7 @@ final class NGT_Hub {
 			'class-ngt-hub-rest.php',
 			'class-ngt-hub-admin.php',
 			'class-ngt-hub-integrations.php',
+			'class-ngt-hub-intelligence-bridge.php',
 		];
 
 		foreach ( $files as $file ) {
@@ -60,6 +62,8 @@ final class NGT_Hub {
 
 	public static function boot(): void {
 		load_plugin_textdomain( 'nextgen-automation-hub', false, dirname( plugin_basename( NGT_HUB_FILE ) ) . '/languages' );
+
+		NGT_Hub_Companion_Delegate::sync_delegation();
 
 		NGT_Hub_Database::maybe_upgrade();
 		NGT_Hub_Data_Model::register_hooks();

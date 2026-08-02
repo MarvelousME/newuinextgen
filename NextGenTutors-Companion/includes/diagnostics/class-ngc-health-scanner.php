@@ -15,6 +15,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 class NGC_Health_Scanner {
 
 	/**
+	 * Lightweight health snapshot for cron + Mission Control.
+	 *
+	 * @return array<string, mixed>
+	 */
+	public static function quick_scan() {
+		$db  = self::database_health();
+		$api = self::api_health();
+
+		return [
+			'ok'          => ! empty( $db['ok'] ) && ! empty( $api['ok'] ),
+			'plugin'      => self::plugin_health(),
+			'theme'       => self::theme_health(),
+			'database'    => $db,
+			'api'         => $api,
+			'pages'       => self::pages_health(),
+			'features'    => self::platform_features_health(),
+			'scanned_at'  => gmdate( 'c' ),
+		];
+	}
+
+	/**
 	 * Run full health scan across all subsystems.
 	 *
 	 * @return array<string, mixed>

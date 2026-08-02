@@ -22,6 +22,22 @@ function bi_home_default_path() {
 function bi_render_page_template( $default_callback ) {
     $post_id = bi_get_current_page_id();
 
+    // Elementor editor / preview: always render the page loop so the canvas mounts.
+    if ( function_exists( 'bi_is_builder_edit_mode' ) && bi_is_builder_edit_mode() ) {
+        if ( bi_is_elementor_canvas_template( $post_id ) ) {
+            bi_ensure_page_in_loop( $post_id );
+            while ( have_posts() ) {
+                the_post();
+                the_content();
+            }
+            return;
+        }
+        get_header();
+        bi_render_builder_content();
+        get_footer();
+        return;
+    }
+
     if ( bi_is_elementor_canvas_template( $post_id ) ) {
         bi_ensure_page_in_loop( $post_id );
         while ( have_posts() ) {
@@ -76,11 +92,34 @@ function bi_render_theme_default( $default_callback ) {
 function bi_should_show_theme_fallback( $post_id = 0 ) {
     $post_id = $post_id ?: bi_get_current_page_id();
 
+    // Elementor / WPBakery editor & preview must receive a normal builder shell.
+    if ( function_exists( 'bi_is_builder_edit_mode' ) && bi_is_builder_edit_mode() ) {
+        return false;
+    }
+
     if ( $post_id && bi_theme_option_is_on( 'force_theme_default', $post_id ) ) {
         return true;
     }
 
     if ( ! $post_id ) {
+        return true;
+    }
+
+    // Kinetic marketing home: prefer theme production defaults unless the page has
+    // real Elementor document sections (empty Theme Builder / edit-mode stubs excluded).
+    if ( function_exists( 'bi_use_kinetic_home' ) && bi_use_kinetic_home() ) {
+        if ( function_exists( 'bi_is_wpbakery_built' ) && bi_is_wpbakery_built( $post_id ) ) {
+            return false;
+        }
+        if ( function_exists( 'bi_is_elementor_built' ) && bi_is_elementor_built( $post_id ) ) {
+            $data = get_post_meta( $post_id, '_elementor_data', true );
+            if ( is_string( $data ) ) {
+                $data = json_decode( $data, true );
+            }
+            if ( is_array( $data ) && count( $data ) > 0 ) {
+                return false;
+            }
+        }
         return true;
     }
 

@@ -42,7 +42,7 @@ Hover → `--ngt-duration-fast`; Active → scale(.98); Focus → `--ngt-focus-r
 
 ## 5. Page transition specification
 
-### 5.1 First-load loader (implemented Phase 1 — `inc/loader.php`, `bi-loader.css`, `bi-loader.js`)
+### 5.1 First-load loader (implemented Phase 1 / extended Phase 7 — `inc/loader.php`, `bi-loader.css`, `bi-loader.js`)
 - Fixed full-viewport overlay painted before content (no CLS — content layout is untouched beneath it).
 - **Rotating branded experiences**, chosen per navigation (random, avoiding immediate repeats via sessionStorage):
   1. **Constellation** — knowledge nodes connecting (canvas, ≤60 points)
@@ -50,6 +50,9 @@ Hover → `--ngt-duration-fast`; Active → scale(.98); Focus → `--ngt-focus-r
   3. **Gradient wave** — brand navy→emerald→amber sweep
   4. **Knowledge nodes** — pulsing node grid (CSS only)
   5. **Logo pulse** — wordmark scale/opacity breathe (CSS only)
+  6. **Aurora** — soft brand light sweep panel (CSS only) — Phase 7
+  7. **Dual ring** — concentric emerald/amber progress rings (CSS only) — Phase 7
+  8. **Spark** — three bouncing brand dots (CSS only) — Phase 7
 - Exit: overlay fades 400ms `--ngt-ease-out` on `window.load` (or 2.5s failsafe), then removed from DOM; `aria-hidden`, `role="status"`, "Loading" for AT.
 - **Reduced motion:** static brand mark + fade only.
 - Never flashes: shows only if page not already loaded from bfcache; skips on subsequent same-session views (sessionStorage flag) to keep repeat navigation instant.

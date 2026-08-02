@@ -13,15 +13,15 @@ bi_hero(
 <section class="ngt-section">
   <div class="ngt-container">
     <div class="bi-become-grid">
-      <div class="ngt-card bi-contact-card ngt-animate" style="padding:32px;background:linear-gradient(135deg,var(--ngt-primary-dark),var(--ngt-primary));color:#fff">
+      <div class="ngt-card bi-contact-card ngt-animate" data-testid="bi-contact-card" style="padding:32px;background:linear-gradient(135deg,var(--ngt-primary-dark),var(--ngt-primary));color:#fff">
         <h2 style="color:#fff;margin-bottom:16px"><?php esc_html_e( 'Contact Details', 'beyondinfinity' ); ?></h2>
         <ul class="bi-bullets" style="color:rgba(255,255,255,.9)">
-          <li><span><?php esc_html_e( 'Phone:', 'beyondinfinity' ); ?></span> <?php echo esc_html( bi_get_phone() ); ?></li>
-          <li><span><?php esc_html_e( 'Support:', 'beyondinfinity' ); ?></span> <?php echo esc_html( bi_get_support_email() ); ?></li>
-          <li><span><?php esc_html_e( 'Service area:', 'beyondinfinity' ); ?></span> <?php echo esc_html( bi_get_service_area() ); ?></li>
+          <li data-testid="bi-contact-phone"><span><?php esc_html_e( 'Phone:', 'beyondinfinity' ); ?></span> <?php echo esc_html( bi_get_phone() ); ?></li>
+          <li data-testid="bi-contact-email"><span><?php esc_html_e( 'Support:', 'beyondinfinity' ); ?></span> <?php echo esc_html( bi_get_support_email() ); ?></li>
+          <li data-testid="bi-contact-service-area"><span><?php esc_html_e( 'Service area:', 'beyondinfinity' ); ?></span> <?php echo esc_html( bi_get_service_area() ); ?></li>
           <li><span><?php esc_html_e( 'Hours:', 'beyondinfinity' ); ?></span> <?php esc_html_e( 'Mon–Fri 08:00–18:00 SAST', 'beyondinfinity' ); ?></li>
         </ul>
-        <a href="<?php echo esc_url( bi_whatsapp_url() ); ?>" class="ngt-btn ngt-btn--white" style="margin-top:20px" target="_blank" rel="noopener"><?php esc_html_e( 'WhatsApp Us', 'beyondinfinity' ); ?></a>
+        <a href="<?php echo esc_url( bi_whatsapp_url() ); ?>" class="ngt-btn ngt-btn--white" data-testid="bi-contact-whatsapp" style="margin-top:20px" target="_blank" rel="noopener"><?php esc_html_e( 'WhatsApp Us', 'beyondinfinity' ); ?></a>
       </div>
       <div>
         <?php bi_shortcode_block( '[ngc_contact_support_form]', __( 'Send a Message', 'beyondinfinity' ) ); ?>

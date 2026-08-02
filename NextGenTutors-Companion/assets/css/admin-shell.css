@@ -1,0 +1,230 @@
+/* NEXT GEN TUTORS v1.0 — unified admin shell (token-driven) */
+
+body.ngt-admin-screen #wpcontent {
+  background: var(--ngt-admin-bg);
+  font-family: var(--ngt-admin-font);
+  font-size: var(--ngt-admin-font-size);
+  color: var(--ngt-admin-fg);
+}
+
+body.ngt-admin-screen.ngt-density-compact {
+  --ngt-admin-spacing: 10px;
+  --ngt-admin-font-size: 13px;
+}
+
+.ngt-admin-chrome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 20px 0 calc(var(--ngt-admin-sidebar-width) + 12px);
+  padding: 10px 14px;
+  background: var(--ngt-admin-sidebar);
+  color: var(--ngt-admin-sidebar-text);
+  border-radius: var(--ngt-admin-radius);
+}
+
+.ngt-admin-breadcrumb {
+  font-size: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.ngt-admin-breadcrumb a {
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.ngt-admin-breadcrumb a:hover,
+.ngt-admin-breadcrumb a:focus {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.ngt-admin-breadcrumb__current {
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+.ngt-admin-chrome__actions {
+  position: relative;
+  min-width: min(320px, 100%);
+}
+
+.ngt-admin-search {
+  width: 100%;
+  border: 1px solid #334155;
+  background: var(--ngt-admin-hover);
+  color: #f1f5f9;
+  border-radius: var(--ngt-admin-radius);
+  padding: 8px 12px;
+}
+
+.ngt-admin-search:focus {
+  border-color: var(--ngt-admin-active);
+  outline: 2px solid var(--ngt-admin-primary);
+  outline-offset: 1px;
+}
+
+.ngt-admin-search-results {
+  position: absolute;
+  z-index: 100000;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--ngt-admin-card);
+  color: var(--ngt-admin-fg);
+  border: 1px solid #cbd5e1;
+  border-radius: var(--ngt-admin-radius);
+  box-shadow: var(--ngt-admin-shadow);
+  max-height: 320px;
+  overflow: auto;
+}
+
+.ngt-admin-search-results a {
+  display: block;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: var(--ngt-admin-fg);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.ngt-admin-search-results a:hover,
+.ngt-admin-search-results a:focus {
+  background: #eff6ff;
+}
+
+.ngt-admin-search-results .ngt-admin-search-meta {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.ngt-admin-page { max-width: 1400px; }
+.ngt-admin-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px 0;
+}
+.ngt-admin-page-header h1 { margin: 0; letter-spacing: -0.02em; }
+.ngt-admin-page-header__summary { margin: 6px 0 0; color: #64748b; }
+
+.ngt-admin-tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.ngt-admin-tabs__item, .ngt-admin-tabs button {
+  border: 0; background: transparent; padding: 8px 12px; border-radius: 999px; cursor: pointer; color: var(--ngt-admin-fg);
+}
+.ngt-admin-tabs__item.is-active, .ngt-admin-tabs button.is-active {
+  background: var(--ngt-admin-primary); color: #fff;
+}
+
+.ngt-admin-card {
+  background: var(--ngt-admin-card);
+  border-radius: var(--ngt-admin-card-radius);
+  box-shadow: var(--ngt-admin-shadow);
+  padding: var(--ngt-admin-spacing);
+  margin-bottom: var(--ngt-admin-spacing);
+}
+.ngt-admin-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px; background: #dbeafe; color: #1e40af; font-size: 11px; font-weight: 700;
+}
+.ngt-admin-badge.is-success { background: #dcfce7; color: #166534; }
+.ngt-admin-btn, .ngt-admin-screen .button-primary {
+  background: var(--ngt-admin-button) !important;
+  border-color: var(--ngt-admin-button) !important;
+}
+.ngt-admin-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; font-size: 12px; font-weight: 600; }
+.ngt-admin-field input, .ngt-admin-field select, .ngt-admin-field textarea {
+  font-weight: 400; padding: 8px; border-radius: var(--ngt-admin-radius); border: 1px solid #cbd5e1; background: var(--ngt-admin-form);
+}
+
+/* Capability sidebar */
+.ngt-admin-nav {
+  position: fixed;
+  top: 32px;
+  left: 160px;
+  width: var(--ngt-admin-sidebar-width);
+  bottom: 0;
+  z-index: 1000;
+  background: var(--ngt-admin-sidebar);
+  color: var(--ngt-admin-sidebar-text);
+  overflow: auto;
+  padding: 12px;
+  border-right: 1px solid #1e293b;
+}
+body.folded .ngt-admin-nav { left: 36px; }
+.ngt-admin-nav__brand {
+  font-weight: 800; font-size: 13px; letter-spacing: 0.04em; margin-bottom: 12px; text-transform: uppercase;
+}
+.ngt-admin-nav__tree details { margin-bottom: 6px; }
+.ngt-admin-nav__tree summary {
+  cursor: pointer; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.85;
+}
+.ngt-admin-nav__item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 6px 8px; border-radius: 6px; color: inherit; text-decoration: none; font-size: 13px;
+}
+.ngt-admin-nav__item:hover, .ngt-admin-nav__item.is-active { background: var(--ngt-admin-hover); }
+.ngt-admin-nav__item.is-placeholder { opacity: 0.55; cursor: default; }
+.ngt-admin-nav__item .badge { background: var(--ngt-admin-error); color: #fff; border-radius: 999px; padding: 0 6px; font-size: 10px; }
+.ngt-admin-nav__footer { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.ngt-admin-nav__footer .button-link { color: #93c5fd; }
+.ngt-admin-nav.is-edit .ngt-admin-nav__item { cursor: grab; }
+body.ngt-admin-screen #wpbody { margin-left: var(--ngt-admin-sidebar-width); }
+
+/* Notification centre */
+.ngt-notif-fab {
+  position: fixed; right: 24px; bottom: 24px; z-index: 100100;
+  width: 56px; height: 56px; border-radius: 999px; border: 0;
+  background: var(--ngt-admin-primary); color: #fff; box-shadow: var(--ngt-admin-shadow); cursor: pointer;
+}
+.ngt-notif-fab__count {
+  position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; border-radius: 999px;
+  background: var(--ngt-admin-error); font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;
+}
+.ngt-notif-fab__count[data-count="0"] { display: none; }
+.ngt-notif-drawer {
+  position: fixed; right: 24px; bottom: 92px; width: min(420px, calc(100vw - 32px)); max-height: min(70vh, 560px);
+  background: var(--ngt-admin-card); color: var(--ngt-admin-fg); border-radius: var(--ngt-admin-card-radius);
+  box-shadow: var(--ngt-admin-shadow); z-index: 100101; display: none; flex-direction: column; overflow: hidden;
+}
+.ngt-notif-drawer.is-open {
+  display: flex;
+}
+.ngt-notif-drawer[hidden] {
+  display: none !important;
+}
+.ngt-notif-drawer header { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-bottom: 1px solid #e2e8f0; }
+.ngt-notif-drawer h2 { margin: 0; font-size: 16px; }
+.ngt-notif-toolbar { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #e2e8f0; }
+.ngt-notif-list { overflow: auto; padding: 8px; }
+.ngt-notif-item { border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+.ngt-notif-item.is-unread { border-color: var(--ngt-admin-primary); background: #eff6ff; }
+.ngt-notif-item__sev { font-size: 10px; text-transform: uppercase; font-weight: 700; color: #64748b; }
+
+/* Theme designer */
+.ngt-theme-designer { display: grid; grid-template-columns: minmax(240px, 360px) 1fr; gap: 16px; }
+.ngt-theme-field { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 12px; }
+.ngt-admin-component-lib { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+
+/* Kinetic motion */
+[data-ngt-motion] {
+  transition: transform var(--ngt-admin-motion-ms) var(--ngt-admin-motion-ease), opacity var(--ngt-admin-motion-ms) var(--ngt-admin-motion-ease);
+}
+[data-ngt-motion].is-enter {
+  transform: scale(calc(1 + (0.3 * var(--ngt-admin-motion))));
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-ngt-motion], .ngt-notif-fab { transition: none !important; transform: none !important; }
+}
+
+@media (max-width: 960px) {
+  .ngt-admin-nav { display: none; }
+  body.ngt-admin-screen #wpbody { margin-left: 0; }
+  .ngt-admin-chrome { margin-left: 0; }
+  .ngt-theme-designer { grid-template-columns: 1fr; }
+}

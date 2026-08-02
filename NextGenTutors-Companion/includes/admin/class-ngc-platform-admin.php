@@ -80,16 +80,19 @@ class NGC_Platform_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		$parent = 'ngc-platform';
-		add_menu_page(
-			__( 'Platform Layer', 'nextgencompanion' ),
-			__( 'Platform', 'nextgencompanion' ),
-			'manage_options',
-			$parent,
-			[ __CLASS__, 'render_data_source_verification' ],
-			'dashicons-database-view',
-			56
-		);
+		$parent = function_exists( 'ngt_admin_parent' ) ? ngt_admin_parent() : 'ngt-admin';
+		if ( ! class_exists( 'NGC_Admin_Shell' ) ) {
+			$parent = 'ngc-platform';
+			add_menu_page(
+				__( 'Platform Layer', 'nextgencompanion' ),
+				__( 'Platform', 'nextgencompanion' ),
+				'manage_options',
+				$parent,
+				[ __CLASS__, 'render_data_source_verification' ],
+				'dashicons-database-view',
+				56
+			);
+		}
 
 		$pages = [
 			[ 'ngc-platform-verify', __( 'Data Source Verification', 'nextgencompanion' ), 'render_data_source_verification' ],

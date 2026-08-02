@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="580" viewBox="0 0 960 580" role="img">
+  <title>03 - Plugin Interoperability</title>
+  <desc>How first-party and third-party plugins interact with Companion domain services.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0D7377"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#F7FBFC"/>
+  <text x="24" y="36" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B2545">03 - Plugin Interoperability</text>
+  <rect x="360" y="200" width="220" height="90" rx="6" fill="#E6F3F4" stroke="#0B2545" stroke-width="2"/>
+  <text x="470" y="240" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#0B2545">Companion Hub</text>
+  <text x="470" y="262" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#5A6A7A">adapters � events � REST</text>
+  <rect x="40" y="80" width="150" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="115" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">WooCommerce</text>
+  <rect x="210" y="80" width="150" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="285" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">PayFast GW</text>
+  <rect x="380" y="80" width="150" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="455" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">FluentCRM</text>
+  <rect x="550" y="80" width="150" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="625" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">FluentSMTP</text>
+  <rect x="720" y="80" width="180" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="810" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">Amelia / LMS / Gami</text>
+  <rect x="40" y="400" width="160" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="120" y="430" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">AI Integration</text>
+  <rect x="230" y="400" width="160" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="310" y="430" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">Mission Control</text>
+  <rect x="420" y="400" width="160" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="500" y="430" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">Plugin Manager</text>
+  <rect x="610" y="400" width="160" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="690" y="430" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">AutomatorWP</text>
+  <rect x="790" y="400" width="140" height="50" rx="6" fill="#E6F3F4" stroke="#0B2545"/>
+  <text x="860" y="430" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0B2545">Elementor</text>
+  <line x1="115" y1="130" x2="400" y2="200" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="285" y1="130" x2="420" y2="200" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="455" y1="130" x2="470" y2="200" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="625" y1="130" x2="520" y2="200" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="810" y1="130" x2="560" y2="200" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="420" y1="290" x2="120" y2="400" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="450" y1="290" x2="310" y2="400" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="500" y1="290" x2="500" y2="400" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="540" y1="290" x2="690" y2="400" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="560" y1="290" x2="860" y2="400" stroke="#0D7377" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <rect x="40" y="480" width="320" height="60" rx="4" fill="#FFFFFF" stroke="#0B2545"/>
+  <text x="50" y="500" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#0B2545">Legend</text>
+  <text x="50" y="520" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Top row = third-party fleet � Bottom = first-party / builders</text>
+  <text x="50" y="536" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5A6A7A">Amelia / PayFast may be PARTIAL if zips not installed</text>
+</svg>
