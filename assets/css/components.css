@@ -156,10 +156,16 @@
   overflow: visible;
 }
 .tutor-card3d {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: 320px;
   max-width: 90vw;
   height: 460px;
+  margin: 0;
   will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 .tutor-card {
   background: #fff;
@@ -323,6 +329,8 @@
 .bi-dash-hero__img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
 .bi-dash-hero__title { font-weight: 700; font-size: 1.05rem; color: var(--ngt-text); }
 .bi-dash-hero__meta { font-size: 0.85rem; color: var(--ngt-text-2); margin-top: 2px; }
+.bi-dash-hero__join { display: inline-flex; margin-top: 12px; }
+.bi-dash-session__join { margin-left: auto; margin-right: 10px; flex-shrink: 0; }
 .bi-dash-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 20px; }
 .bi-dash-learners { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 16px; }
 .bi-dash-learners__chip {

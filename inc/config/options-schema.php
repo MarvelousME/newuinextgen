@@ -210,6 +210,13 @@ function bi_options_create() {
             'type'    => 'checkbox',
             'section' => 'bi_section_home',
         ],
+        'home_section_narrative' => [
+            'title'   => __( 'Tutoring story (3D scroll imagery)', 'beyondinfinity' ),
+            'desc'    => __( 'Informal online-tutoring narrative with Unsplash imagery and 3D scroll motion.', 'beyondinfinity' ),
+            'std'     => 1,
+            'type'    => 'checkbox',
+            'section' => 'bi_section_home',
+        ],
         'home_section_highlights' => [
             'title'   => __( 'Platform highlights', 'beyondinfinity' ),
             'std'     => 1,

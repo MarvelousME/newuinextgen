@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sticky UI — Header + FAB</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+          },
+          transitionDuration: {
+            sticky: '300ms',
+          },
+          zIndex: {
+            content: '0',
+            fab: '30',
+            header: '40',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Instant collapse — no transition when closing FAB items */
+    .fab-item {
+      transition-property: opacity, transform;
+      transition-duration: 300ms;
+      transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fab-item.is-collapsing {
+      transition-duration: 0ms !important;
+    }
+    /* Prefer-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .fab-item,
+      #sticky-header,
+      #mobile-nav {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+  <!-- ========== STICKY HEADER (z-40) ========== -->
+  <header
+    id="sticky-header"
+    class="fixed top-0 inset-x-0 z-header transition-shadow duration-sticky"
+    role="banner"
+  >
+    <div class="bg-gradient-to-r from-brand-800 via-brand-600 to-sky-500 text-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="flex h-16 items-center justify-between gap-4">
+          <!-- Brand -->
+          <a href="#top" class="flex items-center gap-2 min-h-[48px] shrink-0 font-semibold tracking-tight">
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/25" aria-hidden="true">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/>
+              </svg>
+            </span>
+            <span class="text-lg">Sticky<span class="font-light opacity-90">UI</span></span>
+          </a>
+
+          <!-- Desktop nav -->
+          <nav class="hidden md:flex items-center gap-1" aria-label="Primary">
+            <a href="#features" class="rounded-lg px-3 py-2 text-sm font-medium text-white/90 hover:bg-white/10 hover:text-white min-h-[48px] inline-flex items-center">Features</a>
+            <a href="#docs" class="rounded-lg px-3 py-2 text-sm font-medium text-white/90 hover:bg-white/10 hover:text-white min-h-[48px] inline-flex items-center">Docs</a>
+            <a href="#pricing" class="rounded-lg px-3 py-2 text-sm font-medium text-white/90 hover:bg-white/10 hover:text-white min-h-[48px] inline-flex items-center">Pricing</a>
+            <a href="#contact" class="ml-1 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-brand-700 shadow-sm hover:bg-brand-50 min-h-[48px] inline-flex items-center">Get started</a>
+          </nav>
+
+          <!-- Mobile menu button -->
+          <button
+            id="mobile-menu-btn"
+            type="button"
+            class="md:hidden inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/20 hover:bg-white/15"
+            aria-controls="mobile-nav"
+            aria-expanded="false"
+            aria-label="Open menu"
+          >
+            <svg id="icon-menu" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <svg id="icon-close" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile nav panel -->
+      <div
+        id="mobile-nav"
+        class="md:hidden overflow-hidden max-h-0 opacity-0 transition-all duration-sticky border-t border-white/10"
+        hidden
+      >
+        <nav class="mx-auto max-w-6xl px-4 py-3 flex flex-col gap-1" aria-label="Mobile">
+          <a href="#features" class="mobile-nav-link rounded-lg px-3 py-3 text-base font-medium text-white/95 hover:bg-white/10 min-h-[48px] inline-flex items-center">Features</a>
+          <a href="#docs" class="mobile-nav-link rounded-lg px-3 py-3 text-base font-medium text-white/95 hover:bg-white/10 min-h-[48px] inline-flex items-center">Docs</a>
+          <a href="#pricing" class="mobile-nav-link rounded-lg px-3 py-3 text-base font-medium text-white/95 hover:bg-white/10 min-h-[48px] inline-flex items-center">Pricing</a>
+          <a href="#contact" class="mobile-nav-link mt-1 rounded-xl bg-white px-4 py-3 text-base font-semibold text-brand-700 min-h-[48px] inline-flex items-center justify-center">Get started</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== PAGE CONTENT (z-0) ========== -->
+  <main id="top" class="relative z-content pt-16">
+    <section class="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
+      <p class="text-sm font-semibold uppercase tracking-wider text-brand-600">Demo</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 max-w-2xl">
+        Sticky header + collapsible FAB
+      </h1>
+      <p class="mt-4 text-lg text-slate-600 max-w-2xl">
+        Scroll the page — the header and floating action menu stay fixed.
+        Tap the home icon to expand four gradient actions with a staggered reveal.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#features" class="inline-flex min-h-[48px] items-center rounded-xl bg-brand-600 px-5 py-3 text-white font-semibold shadow-lg shadow-brand-600/25 hover:bg-brand-700">Explore features</a>
+        <a href="#docs" class="inline-flex min-h-[48px] items-center rounded-xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-700 hover:bg-slate-50">Read the spec</a>
+      </div>
+    </section>
+
+    <section id="features" class="bg-white border-y border-slate-200">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 py-16 grid sm:grid-cols-3 gap-8">
+        <article>
+          <h2 class="text-lg font-semibold text-slate-900">Scroll persistence</h2>
+          <p class="mt-2 text-slate-600">Header and FAB use <code class="text-sm bg-slate-100 px-1 rounded">position: fixed</code> and remain visible at all scroll positions.</p>
+        </article>
+        <article>
+          <h2 class="text-lg font-semibold text-slate-900">Z-layering</h2>
+          <p class="mt-2 text-slate-600">Header <strong>z-40</strong>, FAB <strong>z-30</strong>, content <strong>z-0</strong> — never collide.</p>
+        </article>
+        <article>
+          <h2 class="text-lg font-semibold text-slate-900">Staggered FAB</h2>
+          <p class="mt-2 text-slate-600">Open delays 0 / 50 / 100 / 150&nbsp;ms. Collapse is instant. Transitions are 300&nbsp;ms.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Tall scroll filler -->
+    <section id="docs" class="mx-auto max-w-6xl px-4 sm:px-6 py-16 space-y-6">
+      <h2 class="text-2xl font-bold">Scroll test content</h2>
+      <p class="text-slate-600">Keep scrolling to verify sticky behavior. The FAB stays bottom-right; the header stays top.</p>
+      <div class="space-y-4">
+        <div class="h-40 rounded-2xl bg-gradient-to-br from-brand-100 to-sky-50 border border-brand-100"></div>
+        <div class="h-40 rounded-2xl bg-gradient-to-br from-violet-100 to-fuchsia-50 border border-violet-100"></div>
+        <div class="h-40 rounded-2xl bg-gradient-to-br from-emerald-100 to-teal-50 border border-emerald-100"></div>
+        <div class="h-40 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-50 border border-amber-100"></div>
+        <div class="h-40 rounded-2xl bg-gradient-to-br from-rose-100 to-pink-50 border border-rose-100"></div>
+        <div class="h-40 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-50 border border-slate-200"></div>
+      </div>
+    </section>
+
+    <section id="pricing" class="bg-slate-900 text-white py-20">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 text-center">
+        <h2 class="text-3xl font-bold">Pricing placeholder</h2>
+        <p class="mt-3 text-slate-300 max-w-xl mx-auto">Demo section for in-page nav anchors. Both header links and FAB actions can deep-link here.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="mx-auto max-w-6xl px-4 sm:px-6 py-20">
+      <h2 class="text-2xl font-bold">Contact</h2>
+      <p class="mt-2 text-slate-600 max-w-xl">End of page — header and FAB should still be fixed and interactive.</p>
+    </section>
+
+    <footer class="border-t border-slate-200 py-8 text-center text-sm text-slate-500">
+      Sticky UI demo · Tailwind CDN · vanilla JS · see <code class="bg-slate-100 px-1 rounded">STICKY_UI_PROMPT.md</code>
+    </footer>
+  </main>
+
+  <!-- ========== FAB CLUSTER (z-30) ========== -->
+  <div
+    id="fab-root"
+    class="fixed bottom-6 right-6 z-fab flex flex-col-reverse items-center gap-3"
+    role="group"
+    aria-label="Quick actions"
+  >
+    <!-- Toggle (home) -->
+    <button
+      id="fab-toggle"
+      type="button"
+      class="relative flex h-14 w-14 min-h-[48px] min-w-[48px] items-center justify-center rounded-full bg-gradient-to-br from-brand-600 to-sky-500 text-white shadow-xl shadow-brand-600/40 ring-4 ring-white hover:scale-105 active:scale-95 transition-transform duration-sticky"
+      aria-expanded="false"
+      aria-controls="fab-menu"
+      aria-label="Open quick actions"
+    >
+      <svg id="fab-icon-home" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/>
+      </svg>
+      <svg id="fab-icon-x" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+
+    <!-- Actions (above toggle via flex-col-reverse) -->
+    <div id="fab-menu" class="flex flex-col-reverse items-center gap-3" hidden>
+      <!-- order in DOM = visual bottom→top because flex-col-reverse; stagger index 0 is closest to toggle -->
+      <a
+        href="#contact"
+        data-fab-index="0"
+        class="fab-item pointer-events-none opacity-0 translate-y-3 flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-400 text-white shadow-lg"
+        aria-label="Contact"
+        title="Contact"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+      </a>
+      <a
+        href="#pricing"
+        data-fab-index="1"
+        class="fab-item pointer-events-none opacity-0 translate-y-3 flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-lg"
+        aria-label="Pricing"
+        title="Pricing"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M8 8h5.5a2.5 2.5 0 0 1 0 5H8h6a2.5 2.5 0 0 1 0 5H8"/></svg>
+      </a>
+      <a
+        href="#docs"
+        data-fab-index="2"
+        class="fab-item pointer-events-none opacity-0 translate-y-3 flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-lg"
+        aria-label="Docs"
+        title="Docs"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 4h11a2 2 0 0 1 2 2v14l-3-2-3 2-3-2-3 2V6a2 2 0 0 1 2-2z"/></svg>
+      </a>
+      <a
+        href="#features"
+        data-fab-index="3"
+        class="fab-item pointer-events-none opacity-0 translate-y-3 flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-full bg-gradient-to-br from-rose-500 to-pink-500 text-white shadow-lg"
+        aria-label="Features"
+        title="Features"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l2.2 6.6H21l-5.4 4 2.1 6.4L12 16.8 6.3 20l2.1-6.4L3 9.6h6.8z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /** @type {{ scrolled: boolean, fabOpen: boolean, mobileOpen: boolean, timers: number[] }} */
+      var state = {
+        scrolled: false,
+        fabOpen: false,
+        mobileOpen: false,
+        timers: [],
+      };
+
+      var STAGGER_MS = [0, 50, 100, 150];
+      var TRANSITION_MS = 300;
+
+      var header = document.getElementById('sticky-header');
+      var mobileBtn = document.getElementById('mobile-menu-btn');
+      var mobileNav = document.getElementById('mobile-nav');
+      var iconMenu = document.getElementById('icon-menu');
+      var iconClose = document.getElementById('icon-close');
+      var fabToggle = document.getElementById('fab-toggle');
+      var fabMenu = document.getElementById('fab-menu');
+      var fabItems = Array.prototype.slice.call(document.querySelectorAll('.fab-item'));
+      var fabIconHome = document.getElementById('fab-icon-home');
+      var fabIconX = document.getElementById('fab-icon-x');
+
+      function clearFabTimers() {
+        state.timers.forEach(function (id) { clearTimeout(id); });
+        state.timers = [];
+      }
+
+      function setScrolled(next) {
+        if (state.scrolled === next) return;
+        state.scrolled = next;
+        if (next) {
+          header.classList.add('shadow-lg', 'shadow-brand-900/25');
+        } else {
+          header.classList.remove('shadow-lg', 'shadow-brand-900/25');
+        }
+      }
+
+      function setMobileOpen(next) {
+        state.mobileOpen = next;
+        mobileBtn.setAttribute('aria-expanded', next ? 'true' : 'false');
+        mobileBtn.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
+        iconMenu.classList.toggle('hidden', next);
+        iconClose.classList.toggle('hidden', !next);
+
+        if (next) {
+          mobileNav.hidden = false;
+          // force reflow then expand
+          void mobileNav.offsetHeight;
+          mobileNav.classList.remove('max-h-0', 'opacity-0');
+          mobileNav.classList.add('max-h-80', 'opacity-100');
+        } else {
+          mobileNav.classList.add('max-h-0', 'opacity-0');
+          mobileNav.classList.remove('max-h-80', 'opacity-100');
+          window.setTimeout(function () {
+            if (!state.mobileOpen) mobileNav.hidden = true;
+          }, TRANSITION_MS);
+        }
+      }
+
+      function showFabItem(el) {
+        el.classList.remove('is-collapsing', 'opacity-0', 'translate-y-3', 'pointer-events-none');
+        el.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      }
+
+      function hideFabItemInstant(el) {
+        el.classList.add('is-collapsing');
+        el.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        el.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+        // allow next open to animate again
+        void el.offsetHeight;
+        el.classList.remove('is-collapsing');
+      }
+
+      function setFabOpen(next) {
+        clearFabTimers();
+        state.fabOpen = next;
+        fabToggle.setAttribute('aria-expanded', next ? 'true' : 'false');
+        fabToggle.setAttribute('aria-label', next ? 'Close quick actions' : 'Open quick actions');
+        fabIconHome.classList.toggle('hidden', next);
+        fabIconX.classList.toggle('hidden', !next);
+
+        if (next) {
+          fabMenu.hidden = false;
+          fabItems.forEach(function (el) {
+            var idx = parseInt(el.getAttribute('data-fab-index'), 10) || 0;
+            var delay = STAGGER_MS[idx] != null ? STAGGER_MS[idx] : idx * 50;
+            var tid = window.setTimeout(function () {
+              showFabItem(el);
+            }, delay);
+            state.timers.push(tid);
+          });
+        } else {
+          // Instant collapse
+          fabItems.forEach(hideFabItemInstant);
+          fabMenu.hidden = true;
+        }
+      }
+
+      // Scroll → header shadow
+      function onScroll() {
+        setScrolled(window.scrollY > 8);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Mobile nav
+      mobileBtn.addEventListener('click', function () {
+        setMobileOpen(!state.mobileOpen);
+      });
+      Array.prototype.forEach.call(document.querySelectorAll('.mobile-nav-link'), function (link) {
+        link.addEventListener('click', function () {
+          setMobileOpen(false);
+        });
+      });
+
+      // FAB toggle
+      fabToggle.addEventListener('click', function () {
+        setFabOpen(!state.fabOpen);
+      });
+
+      // Close FAB after choosing an action
+      fabItems.forEach(function (el) {
+        el.addEventListener('click', function () {
+          setFabOpen(false);
+        });
+      });
+
+      // Esc closes overlays
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        if (state.fabOpen) setFabOpen(false);
+        if (state.mobileOpen) setMobileOpen(false);
+      });
+
+      // Click outside FAB closes it
+      document.addEventListener('click', function (e) {
+        if (!state.fabOpen) return;
+        var root = document.getElementById('fab-root');
+        if (root && !root.contains(e.target)) setFabOpen(false);
+      });
+    })();
+  </script>
+</body>
+</html>

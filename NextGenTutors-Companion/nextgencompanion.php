@@ -3,7 +3,7 @@
  * Plugin Name:       NextGenTutors-Companion
  * Plugin URI:        https://beyondinfinity.co.za/
  * Description:       Business logic, data layer, REST API, workflows, and multi-model BYOK AI suite for NextGen Tutors (BeyondInfinity theme).
- * Version:           1.9.5
+ * Version:           1.9.17
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            BeyondInfinity
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NGC_VERSION', '1.9.5' );
+define( 'NGC_VERSION', '1.9.17' );
 define( 'NGC_PLUGIN_FILE', __FILE__ );
 define( 'NGC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NGC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -297,6 +297,9 @@ add_action( 'admin_post_ngc_switch_theme', 'ngc_handle_theme_switch' );
  * Render the floating theme switch (admins only) on every front-end page.
  */
 function ngc_render_theme_switch_button() {
+	// Public “Switch to Agntix” floating control removed from the website.
+	return;
+
 	if ( is_admin() || ! current_user_can( 'switch_themes' ) ) {
 		return;
 	}
@@ -339,4 +342,5 @@ function ngc_render_theme_switch_button() {
 	</a>
 	<?php
 }
-add_action( 'wp_footer', 'ngc_render_theme_switch_button', 90 );
+// Theme switch floating button disabled — keep handler for admin tooling only.
+// add_action( 'wp_footer', 'ngc_render_theme_switch_button', 90 );

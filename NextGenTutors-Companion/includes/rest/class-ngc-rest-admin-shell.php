@@ -42,6 +42,11 @@ final class NGC_Rest_Admin_Shell {
 			[ 'methods' => 'GET', 'callback' => [ __CLASS__, 'notif_list' ], 'permission_callback' => $auth ],
 			[ 'methods' => 'POST', 'callback' => [ __CLASS__, 'notif_mutate' ], 'permission_callback' => $auth ],
 		] );
+		register_rest_route( $ns, '/admin/cockpit', [
+			'methods'             => 'GET',
+			'callback'            => [ __CLASS__, 'cockpit' ],
+			'permission_callback' => $auth,
+		] );
 		register_rest_route( $ns, '/admin/prefs', [
 			[ 'methods' => 'GET', 'callback' => [ __CLASS__, 'prefs_get' ], 'permission_callback' => $auth ],
 			[ 'methods' => 'POST', 'callback' => [ __CLASS__, 'prefs_save' ], 'permission_callback' => $auth ],
@@ -127,6 +132,18 @@ final class NGC_Rest_Admin_Shell {
 	/** @return WP_REST_Response */
 	public static function notif_list() {
 		return new WP_REST_Response( [ 'items' => NGC_Admin_Notifications::list_items() ], 200 );
+	}
+
+	/**
+	 * Orchestration Cockpit live snapshot.
+	 *
+	 * @return WP_REST_Response
+	 */
+	public static function cockpit() {
+		$snap = class_exists( 'NGC_Observability_Service' )
+			? NGC_Observability_Service::cockpit_snapshot()
+			: [ 'error' => 'observability_unavailable' ];
+		return new WP_REST_Response( $snap, 200 );
 	}
 
 	/**

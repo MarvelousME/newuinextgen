@@ -93,12 +93,39 @@ add_action( 'wp_enqueue_scripts', 'bi_ngt_enqueue_assets', 12 );
  * Enqueue NGT CSS/JS design system.
  */
 function bi_ngt_enqueue_assets() {
-	if ( ! bi_ngt_skin_enabled() ) {
+	if ( is_admin() ) {
 		return;
 	}
 
 	$uri = bi_ngt_assets_uri();
 	$ver = BI_VERSION;
+
+	// Always load float-dock CSS so the right rail + back-to-top work site-wide.
+	$float_css = bi_ngt_assets_dir() . '/css/floating.css';
+	if ( file_exists( $float_css ) ) {
+		wp_enqueue_style( 'bi-ngt-floating', $uri . '/css/floating.css', [ 'bi-style' ], $ver );
+	}
+
+	// Sticky header + FAB (sole CSS enqueue — after floating.css).
+	wp_enqueue_style(
+		'bi-sticky-ui',
+		BI_URI . '/assets/css/bi-sticky-ui.css',
+		file_exists( $float_css ) ? [ 'bi-nav-menu', 'bi-ngt-floating' ] : [ 'bi-nav-menu' ],
+		$ver
+	);
+	wp_enqueue_script(
+		'bi-sticky-ui',
+		BI_URI . '/assets/js/bi-sticky-ui.js',
+		[ 'bi-nav-menu' ],
+		$ver,
+		true
+	);
+
+	if ( ! bi_ngt_skin_enabled() ) {
+		wp_enqueue_script( 'bi-ngt-wp-bridge', BI_URI . '/assets/js/ngt-wp-bridge.js', [], $ver, true );
+		wp_enqueue_script( 'bi-ngt-floating', $uri . '/js/floating.js', [ 'bi-ngt-wp-bridge' ], $ver, true );
+		return;
+	}
 
 	wp_enqueue_style(
 		'bi-ngt-fonts',
@@ -112,7 +139,6 @@ function bi_ngt_enqueue_assets() {
 		'bi-ngt-components' => [ 'file' => 'css/components.css', 'deps' => [ 'bi-ngt-tokens' ] ],
 		'bi-ngt-pages'      => [ 'file' => 'css/pages.css', 'deps' => [ 'bi-ngt-components' ] ],
 		'bi-ngt-content'    => [ 'file' => 'css/content.css', 'deps' => [ 'bi-ngt-pages' ] ],
-		'bi-ngt-floating'   => [ 'file' => 'css/floating.css', 'deps' => [ 'bi-ngt-content' ] ],
 		'bi-ngt-bridge'     => [ 'file' => '../css/ngt-wp-bridge.css', 'deps' => [ 'bi-ngt-floating', 'bi-style' ] ],
 	];
 
@@ -177,12 +203,10 @@ function bi_ngt_enqueue_assets() {
 		$deps[] = $handle;
 	}
 
-	$skip_floating = bi_is_dashboard_page();
-	if ( ! $skip_floating ) {
-		wp_enqueue_script( 'bi-ngt-floating', $uri . '/js/floating.js', [ 'bi-ngt-wp-bridge' ], $ver, true );
-		if ( file_exists( bi_ngt_assets_dir() . '/js/chat.js' ) ) {
-			wp_enqueue_script( 'bi-ngt-chat', $uri . '/js/chat.js', [ 'bi-ngt-floating' ], $ver, true );
-		}
+	// Float dock (back-to-top + right rail) on every front-end page.
+	wp_enqueue_script( 'bi-ngt-floating', $uri . '/js/floating.js', [ 'bi-ngt-wp-bridge' ], $ver, true );
+	if ( file_exists( bi_ngt_assets_dir() . '/js/chat.js' ) ) {
+		wp_enqueue_script( 'bi-ngt-chat', $uri . '/js/chat.js', [ 'bi-ngt-floating' ], $ver, true );
 	}
 
 	wp_localize_script(

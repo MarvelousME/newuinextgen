@@ -36,6 +36,12 @@ class NGC_Tutor_Lifecycle {
 			'updated_at' => current_time( 'mysql', true ),
 		];
 
+		// Live DBs may have a UNIQUE uuid column added by later migrations.
+		$col = $wpdb->get_results( "SHOW COLUMNS FROM {$table} LIKE 'uuid'" );
+		if ( ! empty( $col ) ) {
+			$row['uuid'] = class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4();
+		}
+
 		$inserted = $wpdb->insert( $table, $row );
 		if ( ! $inserted ) {
 			return new WP_Error( 'ngc_apply_failed', __( 'Could not submit application.', 'nextgencompanion' ) );

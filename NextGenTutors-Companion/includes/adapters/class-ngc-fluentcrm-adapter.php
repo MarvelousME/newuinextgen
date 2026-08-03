@@ -15,7 +15,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class NGC_Fluentcrm_Adapter extends NGC_Adapter_Base {
 
 	/** @var string[] */
-	const LISTS = [ 'Tutor', 'Parent', 'Student' ];
+	const LISTS = [
+		'Tutor',
+		'Parent',
+		'Student',
+		'Tutor Leads',
+		'Active Customers',
+		'Marketing Opt-In',
+	];
+
+	/** Stable FluentCRM list slug for recruitment leads. */
+	const TUTOR_LEADS_LIST_SLUG = 'tutor-leads';
 
 	/** @var string[] */
 	const TAGS = [
@@ -25,13 +35,60 @@ class NGC_Fluentcrm_Adapter extends NGC_Adapter_Base {
 		'Tutor Resubmitted',
 		'Parent Registered',
 		'Parent Enquiry',
+		'Prospective Parent',
 		'Parent Matched',
 		'Parent Paid',
 		'Student Registered',
 		'Child Learner',
 		'LMS Student',
 		'Active Learner',
+		'POPIA Consented',
+		'POPIA Withdrawn',
+		'Do Not Market',
+		'Marketing Opt-In',
+		'Engaged Customer',
+		'Loyal Customer',
+		'Needs Support',
+		'Satisfied',
+		'Advocate',
+		'Verified Tutor',
+		'Ready for Bookings',
+		'Pending Review',
+		// Tutor recruitment pipeline (stable titles → sanitize_title slugs).
+		'Tutor Lead',
+		'Tutor Lead — New',
+		'Tutor Lead — Qualified',
+		'Tutor Lead — Contact Approved',
+		'Tutor Lead — Contacted',
+		'Tutor Lead — Replied',
+		'Tutor Lead — Interested',
+		'Tutor Lead — Nurture',
+		'Tutor Lead — Application Started',
+		'Tutor Lead — Applied',
+		'Tutor Lead — Not Interested',
+		'Tutor Lead — Do Not Contact',
+		'Tutor Lead — Human Review',
 	];
+
+	/**
+	 * POPIA / tutoring custom fields (from Create-FluentCRM-Custom-Fields.xlsx).
+	 *
+	 * @return array<int, array{label:string,slug:string,type:string}>
+	 */
+	public static function custom_field_defs() {
+		return [
+			[ 'label' => 'POPIA Consent Given', 'slug' => 'popia_consent_given', 'type' => 'checkbox' ],
+			[ 'label' => 'Consent Timestamp', 'slug' => 'popia_consent_date', 'type' => 'date' ],
+			[ 'label' => 'Consent IP Address', 'slug' => 'popia_consent_ip', 'type' => 'text' ],
+			[ 'label' => 'Consent Version', 'slug' => 'popia_consent_version', 'type' => 'text' ],
+			[ 'label' => 'Data Processing Purpose', 'slug' => 'popia_processing_purpose', 'type' => 'select-multi' ],
+			// Used by FluentCRM-Automation-JSON-Export parent nurture / rating conditions.
+			[ 'label' => 'Sessions Count', 'slug' => 'sessions_count', 'type' => 'number' ],
+			[ 'label' => 'Last Session Date', 'slug' => 'last_session_date', 'type' => 'date' ],
+			[ 'label' => 'Latest Rating', 'slug' => 'latest_rating', 'type' => 'number' ],
+			[ 'label' => 'Verification Status', 'slug' => 'verification_status', 'type' => 'text' ],
+		];
+	}
 
 	/**
 	 * @return string
@@ -173,23 +230,31 @@ class NGC_Fluentcrm_Adapter extends NGC_Adapter_Base {
 		$lists = (array) ( $payload['lists'] ?? [] );
 		$tags  = (array) ( $payload['tags'] ?? [] );
 		$detach_tags = (array) ( $payload['detach_tags'] ?? [] );
-
-		$data = [
-			'email'      => $email,
-			'first_name' => $payload['first_name'] ?? '',
-			'last_name'  => $payload['last_name'] ?? '',
-			'phone'      => $payload['phone'] ?? '',
-			'status'     => 'subscribed',
-			'lists'      => $lists,
-			'tags'       => $tags,
-			'detach_tags'=> $detach_tags,
-			'custom_values' => [
+		$custom      = array_merge(
+			[
 				'ngc_role'            => $payload['role'] ?? '',
 				'ngc_workflow_source' => $payload['workflow'] ?? '',
 				'ngc_workflow_status' => $payload['workflow_status'] ?? '',
 				'ngc_tutor_status'    => $payload['tutor_status'] ?? '',
 			],
+			(array) ( $payload['custom_fields'] ?? [] ),
+			(array) ( $payload['custom_values'] ?? [] )
+		);
+
+		$data = [
+			'email'         => $email,
+			'first_name'    => $payload['first_name'] ?? '',
+			'last_name'     => $payload['last_name'] ?? '',
+			'phone'         => $payload['phone'] ?? '',
+			'status'        => 'subscribed',
+			'lists'         => $lists,
+			'tags'          => $tags,
+			'detach_tags'   => $detach_tags,
+			'custom_values' => $custom,
 		];
+		if ( ! empty( $payload['detach_lists'] ) ) {
+			$data['detach_lists'] = (array) $payload['detach_lists'];
+		}
 
 		try {
 			$api      = FluentCrmApi( 'contacts' );
@@ -258,6 +323,141 @@ class NGC_Fluentcrm_Adapter extends NGC_Adapter_Base {
 		foreach ( self::TAGS as $tag ) {
 			$this->ensure_tag( $tag );
 		}
+		$this->ensure_custom_fields();
+	}
+
+	/**
+	 * Ensure POPIA custom contact fields exist (xlsx field catalogue).
+	 */
+	public function ensure_custom_fields() {
+		if ( ! $this->is_available() ) {
+			return;
+		}
+		foreach ( self::custom_field_defs() as $field ) {
+			$this->ensure_custom_field( $field['slug'], $field['label'], $field['type'] );
+		}
+	}
+
+	/**
+	 * @param string $slug  Field slug/key.
+	 * @param string $label Field label.
+	 * @param string $type  Field type.
+	 * @return bool
+	 */
+	private function ensure_custom_field( $slug, $label, $type = 'text' ) {
+		$slug  = sanitize_key( $slug );
+		$label = sanitize_text_field( $label );
+		if ( ! $slug || ! $label ) {
+			return false;
+		}
+
+		try {
+			if ( class_exists( '\FluentCrm\App\Models\CustomContactField' ) ) {
+				$existing = \FluentCrm\App\Models\CustomContactField::where( 'slug', $slug )->first();
+				if ( $existing ) {
+					return true;
+				}
+				\FluentCrm\App\Models\CustomContactField::create(
+					[
+						'label'  => $label,
+						'slug'   => $slug,
+						'type'   => $type,
+						'group'  => 'NextGen POPIA',
+					]
+				);
+				return true;
+			}
+		} catch ( Throwable $e ) {
+			error_log( 'NGC FluentCRM custom field bootstrap skipped: ' . $e->getMessage() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
+
+		// Option-based registry fallback (FluentCRM stores field meta in options on some versions).
+		$registry = get_option( 'ngc_fluentcrm_custom_fields', [] );
+		if ( ! is_array( $registry ) ) {
+			$registry = [];
+		}
+		$registry[ $slug ] = [
+			'label' => $label,
+			'type'  => $type,
+		];
+		update_option( 'ngc_fluentcrm_custom_fields', $registry, false );
+		return true;
+	}
+
+	/**
+	 * Idempotent upsert of a tutor recruitment lead into FluentCRM list `tutor-leads`.
+	 *
+	 * @param array<string, mixed> $lead Lead record from NGC_Tutor_Leads.
+	 * @return array<string, mixed>|WP_Error
+	 */
+	public static function upsert_tutor_lead( array $lead ) {
+		$adapter = new self();
+		if ( ! $adapter->is_available() ) {
+			return new WP_Error( 'ngc_fluentcrm_unavailable', __( 'FluentCRM is not active or tables are missing.', 'nextgencompanion' ) );
+		}
+
+		$email = sanitize_email( (string) ( $lead['public_email'] ?? '' ) );
+		if ( ! $email || ! is_email( $email ) ) {
+			return new WP_Error( 'ngc_fluentcrm_no_email', __( 'Tutor lead has no usable public email for CRM sync.', 'nextgencompanion' ) );
+		}
+
+		if ( 'do_not_contact' === ( $lead['contactability'] ?? '' ) || 'suppressed' === ( $lead['suppression_status'] ?? '' ) ) {
+			return new WP_Error( 'ngc_fluentcrm_suppressed', __( 'Suppressed leads are not synced to FluentCRM outreach lists.', 'nextgencompanion' ) );
+		}
+
+		$adapter->bootstrap_assets();
+
+		$name  = trim( (string) ( $lead['display_name'] ?? '' ) );
+		$parts = preg_split( '/\s+/', $name, 2 );
+		$first = $parts[0] ?? '';
+		$last  = $parts[1] ?? '';
+
+		$stage_tag = 'Tutor Lead — New';
+		$outreach  = sanitize_key( (string) ( $lead['outreach_status'] ?? 'none' ) );
+		$stage_map = [
+			'qualified'            => 'Tutor Lead — Qualified',
+			'contact_approved'     => 'Tutor Lead — Contact Approved',
+			'contacted'            => 'Tutor Lead — Contacted',
+			'replied'              => 'Tutor Lead — Replied',
+			'interested'           => 'Tutor Lead — Interested',
+			'nurture'              => 'Tutor Lead — Nurture',
+			'application_started'  => 'Tutor Lead — Application Started',
+			'applied'              => 'Tutor Lead — Applied',
+			'not_interested'       => 'Tutor Lead — Not Interested',
+			'human_review'         => 'Tutor Lead — Human Review',
+		];
+		if ( isset( $stage_map[ $outreach ] ) ) {
+			$stage_tag = $stage_map[ $outreach ];
+		}
+
+		$result = $adapter->create_or_update(
+			'upsert_tutor_lead',
+			[
+				'email'      => $email,
+				'first_name' => $first,
+				'last_name'  => $last,
+				'phone'      => (string) ( $lead['public_phone'] ?? '' ),
+				'lists'      => [ 'Tutor Leads' ],
+				'tags'       => [ 'Tutor Lead', $stage_tag ],
+				'role'       => 'tutor_lead',
+				'workflow'   => 'tutor_lead_sync',
+				'workflow_status' => $outreach,
+			]
+		);
+
+		if ( empty( $result['ok'] ) ) {
+			$code = (string) ( $result['code'] ?? 'crm_sync_failed' );
+			$msg  = (string) ( $result['message'] ?? __( 'FluentCRM tutor-lead sync failed.', 'nextgencompanion' ) );
+			return new WP_Error( $code, $msg, $result );
+		}
+
+		return [
+			'contact_id' => (int) ( $result['id'] ?? 0 ),
+			'email'      => $email,
+			'list'       => self::TUTOR_LEADS_LIST_SLUG,
+			'tags'       => [ 'Tutor Lead', $stage_tag ],
+			'raw'        => $result,
+		];
 	}
 
 	/**

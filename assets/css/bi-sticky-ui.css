@@ -1,0 +1,203 @@
+/**
+ * Sticky UI — fixed header (z-40) + collapsible FAB dock (z-30).
+ * WhatsApp persists outside the collapsible menu.
+ * Panel open/close transforms stay in floating.css — this file only positions/z-indexes panels.
+ */
+
+:root {
+  --bi-z-content: 0;
+  --bi-z-fab: 30;
+  --bi-z-header: 40;
+  --bi-sticky-transition: 300ms;
+}
+
+/* ========== HEADER — always fixed (sole sticky chrome) ========== */
+.ngt-nav,
+.ngt-nav--transparent,
+.ngt-nav--minimal,
+.ngt-nav--default {
+  position: fixed !important; /* Justified: sticky chrome must outlive ancestor transforms */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--bi-z-header) !important;
+  width: 100%;
+  transition:
+    box-shadow var(--bi-sticky-transition) ease,
+    background var(--bi-sticky-transition) ease,
+    height 0.3s ease;
+}
+
+.ngt-nav.ngt-nav--scrolled,
+.ngt-nav.is-solid,
+.ngt-nav.ngt-nav--solid {
+  box-shadow: 0 12px 32px rgba(7, 23, 47, 0.28);
+}
+
+body.bi-ngt-skin .ngt-nav {
+  z-index: var(--bi-z-header) !important;
+}
+
+@media (max-width: 1099px) {
+  .ngt-nav {
+    position: fixed !important;
+    z-index: var(--bi-z-header) !important;
+  }
+
+  .ngt-nav__menu {
+    z-index: calc(var(--bi-z-header) + 10);
+  }
+}
+
+body.admin-bar .ngt-nav,
+body.admin-bar .ngt-nav--transparent,
+body.admin-bar .ngt-nav--minimal {
+  top: 32px;
+}
+
+@media (max-width: 782px) {
+  body.admin-bar .ngt-nav,
+  body.admin-bar .ngt-nav--transparent,
+  body.admin-bar .ngt-nav--minimal {
+    top: 46px;
+  }
+}
+
+/* ========== FAB DOCK ========== */
+.float-dock,
+body.has-float-dock .float-dock {
+  position: fixed !important;
+  right: max(1.25rem, env(safe-area-inset-right, 0px));
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+  top: auto;
+  left: auto;
+  transform: none;
+  z-index: var(--bi-z-fab) !important;
+  display: flex !important;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.75rem;
+  width: auto;
+  pointer-events: none;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.float-dock > * {
+  pointer-events: auto;
+}
+
+.float-dock__actions {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.fdock-btn {
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.fdock-btn--toggle {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  background: linear-gradient(135deg, #1a5594 0%, #28c7f7 100%);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.2),
+    0 12px 28px rgba(26, 85, 148, 0.4);
+  z-index: 1;
+}
+
+.fdock-btn--toggle[aria-expanded="true"] {
+  background: linear-gradient(135deg, #092746 0%, #1a5594 100%);
+}
+
+.fdock-btn--toggle .fdock-icon-x {
+  display: none;
+}
+
+.fdock-btn--toggle[aria-expanded="true"] .fdock-icon-home {
+  display: none;
+}
+
+.fdock-btn--toggle[aria-expanded="true"] .fdock-icon-x {
+  display: block;
+}
+
+/* Always-visible WhatsApp (outside collapsible menu) */
+.float-dock__persist {
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
+
+.float-dock__item {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition-property: opacity, transform;
+  transition-duration: var(--bi-sticky-transition);
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.float-dock__item.is-collapsing {
+  transition-duration: 0ms !important;
+}
+
+.float-dock.is-open .float-dock__item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Panels: position + z only — transforms/opacity owned by floating.css */
+body.has-float-dock .chat-panel,
+body.has-float-dock .support-panel,
+body.has-float-dock .ngc-match-panel {
+  right: calc(20px + 56px + 16px);
+  top: auto;
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+  z-index: calc(var(--bi-z-fab) + 20);
+}
+
+@media (max-width: 600px) {
+  .float-dock,
+  body.has-float-dock .float-dock {
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    gap: 0.625rem;
+  }
+
+  .fdock-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .fdock-btn--toggle {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    min-height: 52px;
+  }
+
+  body.has-float-dock .chat-panel,
+  body.has-float-dock .support-panel,
+  body.has-float-dock .ngc-match-panel {
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ngt-nav,
+  .float-dock__item {
+    transition: none !important;
+  }
+}

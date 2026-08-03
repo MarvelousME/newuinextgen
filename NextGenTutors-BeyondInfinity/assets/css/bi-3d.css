@@ -228,22 +228,29 @@
 .ngi-section--tutors-3d .ngi-section-head {
   position: relative;
   z-index: 5;
-  margin-bottom: 0;
-  padding-bottom: 20px;
+  /* Keep heading clear of the 3D stage (cards use translateY(-50%) and scale up). */
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  padding-bottom: 0.75rem;
 }
 
 .bi-carousel-3d-shell {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: min(1800px, 100vw);
-  margin: 0 auto;
-  padding: 0 clamp(1.5rem, 6vw, 5rem) 0;
+  margin-inline: auto;
+  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.5rem, 6vw, 5rem) 0;
   overflow: visible;
   box-sizing: border-box;
 }
 
 .bi-carousel-3d--kinetic {
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
   overflow: visible;
 }
 
@@ -270,17 +277,24 @@
 
 .ngi-section--tutors-3d .carousel-3d {
   height: 470px;
+  width: 100%;
   perspective: 2200px;
-  margin-top: 0;
+  margin-top: clamp(0.75rem, 2vw, 1.5rem);
   margin-bottom: 0;
+  margin-inline: auto;
   overflow: visible;
 }
 
 .ngi-section--tutors-3d .tutor-card3d {
+  position: absolute;
+  left: 50%;
   width: min(320px, 86vw);
 }
 
 .ngi-section--tutors-3d .carousel-3d__stage {
+  left: 0;
+  right: 0;
+  margin-inline: auto;
   transition: transform 0.35s ease-out;
   overflow: visible;
 }
@@ -288,12 +302,15 @@
 .ngi-section--tutors-3d .bi-carousel-nav--kinetic {
   position: relative;
   z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   margin-top: 0.35rem;
   padding-top: 0;
   padding-bottom: 0.5rem;
   max-width: min(1600px, 98vw);
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline: auto;
 }
 
 .bi-carousel-nav--kinetic .carousel-arrow {

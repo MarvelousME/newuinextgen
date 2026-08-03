@@ -29,6 +29,7 @@ class NGC_Workflow_Orchestrator {
 				'email'       => new NGC_Email_Adapter(),
 				'audit'       => new NGC_Audit_Adapter(),
 				'verification'=> new NGC_Verification_Adapter(),
+				'jitsi'       => new NGC_Jitsi_Meeting_Adapter(),
 			];
 		}
 		return self::$adapters;
@@ -203,6 +204,8 @@ class NGC_Workflow_Orchestrator {
 		$mapped['tutor_status'] = 'approved';
 		$mapped['approval_status'] = 'approved';
 		$mapped['dashboard_url'] = home_url( '/tutor-dashboard' );
+		$mapped['payout_rate']   = (string) ( $context['payout_rate'] ?? get_option( 'ngc_default_tutor_rate', 'R320' ) );
+		$mapped['kb_url']        = home_url( '/support/' );
 
 		$user_id = (int) ( $context['user_id'] ?? 0 );
 		if ( $user_id ) {

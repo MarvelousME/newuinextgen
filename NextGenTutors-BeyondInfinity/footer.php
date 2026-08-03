@@ -17,6 +17,9 @@ if ( ! $bi_elementor_footer ) {
     get_template_part( 'templates/footer/' . $footer_style );
 }
 
+if ( function_exists( 'bi_float_dock' ) ) {
+    bi_float_dock();
+}
 bi_whatsapp_fab();
 bi_sticky_mobile_cta();
 wp_footer();

@@ -18,7 +18,7 @@ $tutor_share  = 100 - $platform_fee;
     <div class="bat-hero__inner">
       <div class="bat-hero__copy">
         <span class="badge badge--lime">Earn on Your Terms</span>
-        <h1 id="bat-hero-title">Share Your Knowledge.<br>Build Your Income.</h1>
+        <h1 id="bat-hero-title" data-bi-slide-title>Share Your Knowledge.<br>Build Your Income.</h1>
         <p>Join over 50,000 tutors across South Africa teaching online and in-person on NextGen Tutors. Set your own rates, choose your subjects, work when you want.</p>
         <div class="bat-hero__stats">
           <div class="stat-pill"><strong>R320–R500</strong><span>avg hourly rate</span></div>

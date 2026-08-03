@@ -347,7 +347,30 @@ function bi_enqueue_motion_assets() {
         BI_VERSION
     );
 
+    // "Slide" title reveal (Anime.js) — scroll-into-view on page/section titles.
+    wp_enqueue_style(
+        'bi-slide-title',
+        BI_URI . '/assets/css/bi-slide-title.css',
+        [ 'bi-style', 'bi-motion-pack' ],
+        BI_VERSION
+    );
+
     if ( bi_motion_enabled() ) {
         wp_enqueue_script( 'bi-motion', BI_URI . '/assets/js/motion.js', [], BI_VERSION, true );
+
+        wp_enqueue_script(
+            'animejs',
+            BI_URI . '/assets/vendor/anime.min.js',
+            [],
+            '3.2.2',
+            true
+        );
+        wp_enqueue_script(
+            'bi-slide-title',
+            BI_URI . '/assets/js/bi-slide-title.js',
+            [ 'animejs' ],
+            BI_VERSION,
+            true
+        );
     }
 }

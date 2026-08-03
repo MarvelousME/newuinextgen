@@ -16,8 +16,8 @@
     },
     {
       "name": "create_jitsi_lesson_room",
-      "status": "definition_only",
-      "handler": "manual_or_connector"
+      "status": "implemented",
+      "handler": "NGC_Meetings::ensure_for_booking / NGC_Jitsi_Meeting_Adapter"
     },
     {
       "name": "notify_parent",
@@ -47,5 +47,5 @@
     "GamiPress"
   ],
   "import_mode": "definition_record",
-  "notes": "Imported as editable workflow definition. Map to AutomatorWP/FluentCRM actions where available."
+  "notes": "Jitsi lesson rooms are created on booking.confirmed via NGC_Meetings. Map remaining notify actions to AutomatorWP/FluentCRM where available."
 }

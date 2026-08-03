@@ -127,13 +127,18 @@ function bi_ngc_render_form( $form_id, $title, $fields, $values = [] ) {
         <div class="ngc-field-group ngt-form-group">
           <label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_html( $field['label'] ); ?></label>
           <?php if ( 'textarea' === ( $field['type'] ?? 'text' ) ) : ?>
-            <textarea id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $fname ); ?>" rows="<?php echo esc_attr( (string) ( $field['rows'] ?? 4 ) ); ?>" <?php echo $rules ? 'data-validate="' . esc_attr( $rules ) . '"' : ''; ?> <?php echo ! empty( $field['required'] ) ? 'required aria-required="true"' : ''; ?>><?php echo esc_textarea( $fval ); ?></textarea>
+            <textarea id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $fname ); ?>" rows="<?php echo esc_attr( (string) ( $field['rows'] ?? 4 ) ); ?>" class="ngc-wysiwyg" <?php echo $rules ? 'data-validate="' . esc_attr( $rules ) . '"' : ''; ?> <?php echo ! empty( $field['required'] ) ? 'required aria-required="true"' : ''; ?>><?php echo esc_textarea( $fval ); ?></textarea>
           <?php elseif ( 'select' === ( $field['type'] ?? '' ) ) : ?>
             <select id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $fname ); ?>" <?php echo $rules ? 'data-validate="' . esc_attr( $rules ) . '"' : ''; ?> <?php echo ! empty( $field['required'] ) ? 'required aria-required="true"' : ''; ?>>
               <?php foreach ( (array) ( $field['options'] ?? [] ) as $value => $label ) : ?>
                 <option value="<?php echo esc_attr( (string) $value ); ?>" <?php selected( $fval, (string) $value ); ?>><?php echo esc_html( $label ); ?></option>
               <?php endforeach; ?>
             </select>
+          <?php elseif ( 'checkbox' === ( $field['type'] ?? '' ) ) : ?>
+            <label class="bi-ngc-form__check" for="<?php echo esc_attr( $field['id'] ); ?>" style="display:flex;gap:10px;align-items:flex-start;font-weight:400">
+              <input type="checkbox" id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $fname ); ?>" value="1" <?php checked( $fval, '1' ); ?> <?php echo $rules ? 'data-validate="' . esc_attr( $rules ) . '"' : ''; ?> <?php echo ! empty( $field['required'] ) ? 'required aria-required="true"' : ''; ?> />
+              <span><?php echo esc_html( (string) ( $field['check_label'] ?? $field['label'] ) ); ?></span>
+            </label>
           <?php else : ?>
             <input type="<?php echo esc_attr( $field['type'] ?? 'text' ); ?>" id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $fname ); ?>" value="<?php echo esc_attr( $fval ); ?>" <?php echo $rules ? 'data-validate="' . esc_attr( $rules ) . '"' : ''; ?> <?php echo ! empty( $field['required'] ) ? 'required aria-required="true"' : ''; ?> />
           <?php endif; ?>
@@ -218,13 +223,51 @@ function bi_ngc_form_find_tutor() {
         $values['notes'] = implode( "\n", $notes );
     }
 
+    // Schema aligned with IMPORTANT/find-tutor-form.json (parent intake + POPIA).
+    $grade_opts = [
+        ''          => __( 'Select…', 'beyondinfinity' ),
+        'Primary (R-7)' => __( 'Primary (R-7)', 'beyondinfinity' ),
+        'High School (8-12)' => __( 'High School (8-12)', 'beyondinfinity' ),
+        'Tertiary'  => __( 'Tertiary', 'beyondinfinity' ),
+    ];
+    $subject_opts = [
+        ''                   => __( 'Select…', 'beyondinfinity' ),
+        'Mathematics'        => __( 'Mathematics', 'beyondinfinity' ),
+        'Physical Science'   => __( 'Physical Science', 'beyondinfinity' ),
+        'Accounting'         => __( 'Accounting', 'beyondinfinity' ),
+        'English'            => __( 'English', 'beyondinfinity' ),
+        'Life Sciences'      => __( 'Life Sciences', 'beyondinfinity' ),
+        'Tertiary Support'   => __( 'Tertiary Support', 'beyondinfinity' ),
+    ];
+    $province_opts = [
+        ''               => __( 'Select…', 'beyondinfinity' ),
+        'Gauteng'        => __( 'Gauteng', 'beyondinfinity' ),
+        'Western Cape'   => __( 'Western Cape', 'beyondinfinity' ),
+        'KZN'            => __( 'KZN', 'beyondinfinity' ),
+        'Eastern Cape'   => __( 'Eastern Cape', 'beyondinfinity' ),
+        'Free State'     => __( 'Free State', 'beyondinfinity' ),
+        'Limpopo'        => __( 'Limpopo', 'beyondinfinity' ),
+        'Mpumalanga'     => __( 'Mpumalanga', 'beyondinfinity' ),
+        'North West'     => __( 'North West', 'beyondinfinity' ),
+        'Northern Cape'  => __( 'Northern Cape', 'beyondinfinity' ),
+    ];
+
     return bi_ngc_render_form( 'find_tutor', '', array_merge( $lead, [
         [ 'id' => 'bi-ngc-parent-name', 'name' => 'parent_name', 'label' => __( 'Parent / guardian name', 'beyondinfinity' ), 'required' => true ],
         [ 'id' => 'bi-ngc-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'beyondinfinity' ), 'required' => true ],
-        [ 'id' => 'bi-ngc-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'Phone', 'beyondinfinity' ), 'required' => true ],
-        [ 'id' => 'bi-ngc-grade', 'name' => 'grade', 'type' => 'select', 'label' => __( 'Learner grade', 'beyondinfinity' ), 'options' => [ '' => __( 'Select…', 'beyondinfinity' ), 'primary' => __( 'Primary', 'beyondinfinity' ), 'high' => __( 'High school', 'beyondinfinity' ), 'matric' => __( 'Matric', 'beyondinfinity' ) ], 'required' => true ],
-        [ 'id' => 'bi-ngc-subject', 'name' => 'subject', 'label' => __( 'Subject needed', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'WhatsApp / phone', 'beyondinfinity' ), 'required' => true ],
+        [ 'id' => 'bi-ngc-grade', 'name' => 'grade', 'type' => 'select', 'label' => __( 'Learner grade', 'beyondinfinity' ), 'options' => $grade_opts, 'required' => true ],
+        [ 'id' => 'bi-ngc-subject', 'name' => 'subject', 'type' => 'select', 'label' => __( 'Subject needed', 'beyondinfinity' ), 'options' => $subject_opts, 'required' => true ],
+        [ 'id' => 'bi-ngc-province', 'name' => 'province', 'type' => 'select', 'label' => __( 'Province', 'beyondinfinity' ), 'options' => $province_opts, 'required' => true ],
         [ 'id' => 'bi-ngc-notes', 'name' => 'notes', 'type' => 'textarea', 'label' => __( 'Additional details', 'beyondinfinity' ) ],
+        [
+            'id'           => 'bi-ngc-popia',
+            'name'         => 'popia_consent',
+            'type'         => 'checkbox',
+            'label'        => __( 'POPIA consent', 'beyondinfinity' ),
+            'check_label'  => __( 'I consent to data processing per POPIA.', 'beyondinfinity' ),
+            'required'     => true,
+        ],
     ] ), $values );
 }
 

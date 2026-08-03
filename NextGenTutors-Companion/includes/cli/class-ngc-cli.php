@@ -183,6 +183,125 @@ class NGC_CLI {
 	}
 
 	/**
+	 * Ensure FluentCRM lists, tags, and POPIA custom fields exist.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc fluentcrm_bootstrap
+	 */
+	public function fluentcrm_bootstrap() {
+		if ( ! class_exists( 'NGC_Fluentcrm_Adapter' ) ) {
+			WP_CLI::error( 'FluentCRM adapter unavailable.' );
+		}
+		$adapter = new NGC_Fluentcrm_Adapter();
+		if ( ! $adapter->is_available() ) {
+			WP_CLI::error( 'FluentCRM is not active or tables are missing.' );
+		}
+		$adapter->bootstrap_assets();
+		$defs = NGC_Fluentcrm_Adapter::custom_field_defs();
+		WP_CLI::success( sprintf( 'FluentCRM lists/tags/custom fields bootstrapped (%d field defs).', count( $defs ) ) );
+	}
+
+	/**
+	 * Import contacts from CSV into WordPress users + FluentCRM.
+	 *
+	 * ## OPTIONS
+	 *
+	 * <file>
+	 * : Path to CSV (columns: Email, First Name, Last Name, Phone, Tags).
+	 *
+	 * [--role=<role>]
+	 * : WP role for new users.
+	 * ---
+	 * default: subscriber
+	 * ---
+	 *
+	 * [--list=<list>]
+	 * : FluentCRM list title.
+	 * ---
+	 * default: Active Customers
+	 * ---
+	 *
+	 * [--dry-run]
+	 * : Preview without writing.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc import_contacts contacts.csv
+	 *     wp ngc import_contacts contacts.csv --role=parent --list="Active Customers"
+	 *
+	 * @param array<int, string>   $args       Positional.
+	 * @param array<string, mixed> $assoc_args Flags.
+	 */
+	public function import_contacts( $args, $assoc_args ) {
+		$file = $args[0] ?? '';
+		if ( ! $file || ! file_exists( $file ) ) {
+			WP_CLI::error( 'CSV file not found: ' . $file );
+		}
+		$role     = sanitize_key( (string) ( $assoc_args['role'] ?? 'subscriber' ) );
+		$list     = sanitize_text_field( (string) ( $assoc_args['list'] ?? 'Active Customers' ) );
+		$dry_run  = isset( $assoc_args['dry-run'] );
+		$fp       = fopen( $file, 'r' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+		if ( ! $fp ) {
+			WP_CLI::error( 'Unable to open CSV.' );
+		}
+		$header  = fgetcsv( $fp );
+		$count   = 0;
+		$skipped = 0;
+		while ( ( $row = fgetcsv( $fp ) ) !== false ) {
+			if ( ! $header || count( $header ) !== count( $row ) ) {
+				++$skipped;
+				continue;
+			}
+			$data  = array_combine( $header, $row );
+			$email = sanitize_email( (string) ( $data['Email'] ?? $data['email'] ?? '' ) );
+			if ( ! is_email( $email ) ) {
+				++$skipped;
+				continue;
+			}
+			if ( $dry_run ) {
+				++$count;
+				continue;
+			}
+			$user_id = email_exists( $email );
+			if ( ! $user_id ) {
+				$user_id = wp_create_user( $email, wp_generate_password( 16, true ), $email );
+				if ( is_wp_error( $user_id ) ) {
+					++$skipped;
+					continue;
+				}
+				$wp_user = new WP_User( $user_id );
+				$wp_user->set_role( $role );
+				update_user_meta( $user_id, 'first_name', sanitize_text_field( (string) ( $data['First Name'] ?? $data['first_name'] ?? '' ) ) );
+				update_user_meta( $user_id, 'last_name', sanitize_text_field( (string) ( $data['Last Name'] ?? $data['last_name'] ?? '' ) ) );
+				update_user_meta( $user_id, 'phone', sanitize_text_field( (string) ( $data['Phone'] ?? $data['phone'] ?? '' ) ) );
+			}
+			if ( class_exists( 'NGC_Fluentcrm_Adapter' ) ) {
+				$tags = [];
+				if ( ! empty( $data['Tags'] ) ) {
+					$tags = array_map( 'trim', explode( ',', (string) $data['Tags'] ) );
+				}
+				$adapter = new NGC_Fluentcrm_Adapter();
+				$adapter->create_or_update(
+					'sync',
+					[
+						'email'      => $email,
+						'first_name' => sanitize_text_field( (string) ( $data['First Name'] ?? get_user_meta( $user_id, 'first_name', true ) ) ),
+						'last_name'  => sanitize_text_field( (string) ( $data['Last Name'] ?? get_user_meta( $user_id, 'last_name', true ) ) ),
+						'phone'      => sanitize_text_field( (string) ( $data['Phone'] ?? get_user_meta( $user_id, 'phone', true ) ) ),
+						'user_id'    => (int) $user_id,
+						'lists'      => [ $list ],
+						'tags'       => $tags,
+					]
+				);
+			}
+			++$count;
+		}
+		fclose( $fp ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+		WP_CLI::success( sprintf( 'Imported %d contacts. Skipped %d. Dry-run=%s', $count, $skipped, $dry_run ? 'yes' : 'no' ) );
+	}
+
+	/**
 	 * Import WooCommerce products from integrate CSV.
 	 *
 	 * ## OPTIONS

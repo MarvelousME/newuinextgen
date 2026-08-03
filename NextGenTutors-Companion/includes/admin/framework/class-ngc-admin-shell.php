@@ -120,6 +120,11 @@ final class NGC_Admin_Shell {
 		wp_enqueue_script( 'ngt-admin-motion', NGC_PLUGIN_URL . 'assets/js/admin-motion.js', [ 'ngt-admin-shell' ], $ver, true );
 		wp_enqueue_script( 'ngt-admin-theme-designer', NGC_PLUGIN_URL . 'assets/js/admin-theme-designer.js', [ 'ngt-admin-shell' ], $ver, true );
 
+		// Grid Open → responsive modal available on every NGT admin screen.
+		if ( class_exists( 'NGC_Admin_Grid' ) ) {
+			NGC_Admin_Grid::enqueue();
+		}
+
 		$page = isset( $_GET['page'] ) ? sanitize_key( (string) $_GET['page'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$search_index = [];
 		if ( class_exists( 'NGC_Admin_Registry' ) ) {

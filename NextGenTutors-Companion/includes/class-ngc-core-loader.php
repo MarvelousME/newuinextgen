@@ -27,6 +27,7 @@ class NGC_Core_Loader {
 		'NGC_AI_Chat',
 		'BIA_Policy',
 		'NGC_Amelia_Adapter',
+		'NGC_Jitsi_Meeting_Adapter',
 		'NGC_Fluentcrm_Adapter',
 		'NGC_FluentSupport_Adapter',
 		'NGC_Masterstudy_Adapter',

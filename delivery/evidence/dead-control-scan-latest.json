@@ -1,0 +1,59 @@
+{
+    "generated_at": "2026-08-03T00:24:07+00:00",
+    "scan_root": "NextGenTutors-Companion/includes/admin",
+    "patterns": [
+        "href_hash",
+        "javascript_void",
+        "render_placeholder",
+        "coming_soon"
+    ],
+    "files_scanned": 38,
+    "files_with_hits": 3,
+    "total_hits": 4,
+    "hits_by_kind": {
+        "href_hash": 0,
+        "javascript_void": 0,
+        "render_placeholder": 2,
+        "coming_soon": 2
+    },
+    "findings": [
+        {
+            "file": "NextGenTutors-Companion/includes/admin/framework/class-ngc-admin-layout.php",
+            "hits": [
+                {
+                    "kind": "render_placeholder",
+                    "line": 127,
+                    "snippet": "public static function render_placeholder() {"
+                },
+                {
+                    "kind": "coming_soon",
+                    "line": 130,
+                    "snippet": "$title  = $screen['title'] ?? __( 'Coming soon', 'nextgencompanion' );"
+                }
+            ],
+            "count": 2
+        },
+        {
+            "file": "NextGenTutors-Companion/includes/admin/framework/class-ngc-admin-nav-ui.php",
+            "hits": [
+                {
+                    "kind": "coming_soon",
+                    "line": 49,
+                    "snippet": "'coming'    => __( 'Coming soon', 'nextgencompanion' ),"
+                }
+            ],
+            "count": 1
+        },
+        {
+            "file": "NextGenTutors-Companion/includes/admin/framework/class-ngc-admin-navigation.php",
+            "hits": [
+                {
+                    "kind": "render_placeholder",
+                    "line": 74,
+                    "snippet": "$cb = [ 'NGC_Admin_Layout', 'render_placeholder' ];"
+                }
+            ],
+            "count": 1
+        }
+    ]
+}

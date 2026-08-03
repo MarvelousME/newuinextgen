@@ -1,0 +1,29 @@
+.nuapi-wrap{max-width:1200px}
+.nuapi-sub{color:#646970;font-size:14px;margin-top:-6px}
+.nuapi-stat-row{display:flex;gap:16px;align-items:center;margin:20px 0;flex-wrap:wrap}
+.nuapi-stat{background:#fff;border:1px solid #dcdcde;border-radius:6px;padding:14px 20px;min-width:160px}
+.nuapi-stat strong{display:block;font-size:26px;color:#092746}
+.nuapi-stat span{font-size:11px;color:#646970;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.nuapi-stat--ok strong{color:#008a20}
+.nuapi-stat--warn strong{color:#b45f06}
+.nuapi-table{margin-top:10px}
+.nuapi-badge{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 9px;border-radius:99px}
+.nuapi-badge--ok{background:#e6f4ea;color:#1e7e34}
+.nuapi-badge--warn{background:#fff3cd;color:#8a6100}
+.nuapi-badge--none{background:#f0f0f1;color:#787c82}
+.nuapi-ns-list{font-family:monospace;font-size:11px;color:#646970;margin-top:3px}
+.nuapi-card{background:#fff;border:1px solid #dcdcde;border-radius:6px;padding:20px;margin:16px 0;max-width:780px}
+.nuapi-key-form{display:flex;gap:10px;align-items:center}
+.nuapi-key-form input[type=text]{flex:1}
+.nuapi-key-reveal{margin-top:14px;background:#092746;color:#aece61;padding:14px;border-radius:6px;font-family:monospace;font-size:13px;word-break:break-all;white-space:pre-wrap}
+.nuapi-console-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+#nuapi-console-body{width:100%;height:100px;font-family:monospace;font-size:12.5px;margin-bottom:10px}
+.nuapi-console-response{background:#0b1220;color:#aece61;padding:14px;border-radius:6px;max-height:360px;overflow:auto;font-size:12.5px;white-space:pre-wrap}
+.nuapi-switch{position:relative;display:inline-block;width:40px;height:22px}
+.nuapi-switch input{opacity:0;width:0;height:0}
+.nuapi-switch span{position:absolute;cursor:pointer;inset:0;background:#ccc;border-radius:22px;transition:.2s}
+.nuapi-switch span:before{content:"";position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+.nuapi-switch input:checked+span{background:#008a20}
+.nuapi-switch--warn input:checked+span{background:#b45f06}
+.nuapi-switch input:checked+span:before{transform:translateX(18px)}
+.nuapi-switch input:disabled+span{opacity:.4;cursor:not-allowed}

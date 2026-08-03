@@ -1,0 +1,232 @@
+[
+  {
+    "name": "NextGen Tutors — Parent Welcome & Booking Nurturing",
+    "status": "published",
+    "trigger": {
+      "id": "contact_added_to_list",
+      "settings": {
+        "list_id": "1",
+        "list_title": "Active Customers"
+      }
+    },
+    "steps": [
+      {
+        "id": 1,
+        "type": "action",
+        "action_type": "send_email",
+        "settings": {
+          "email_id": "welcome_parent_email_id",
+          "subject": "Welcome to NextGen Tutors, {{contact.first_name}}!",
+          "body": "Thanks for joining. Your learning journey starts now."
+        },
+        "delay": { "unit": "seconds", "duration": 0 }
+      },
+      {
+        "id": 2,
+        "type": "wait",
+        "settings": { "unit": "days", "duration": 3 }
+      },
+      {
+        "id": 3,
+        "type": "condition",
+        "settings": {
+          "conditions": [
+            { "field": "custom.sessions_count", "operator": "equal", "value": 0 }
+          ],
+          "true_branch": [
+            {
+              "id": 4,
+              "type": "action",
+              "action_type": "send_email",
+              "settings": {
+                "email_id": "no_booking_reminder_email_id",
+                "subject": "3 Verified Tutors Ready for {{contact.first_name}}",
+                "body": "Here are top-rated tutors matching your subject needs..."
+              },
+              "delay": { "unit": "seconds", "duration": 0 }
+            }
+          ],
+          "false_branch": [
+            {
+              "id": 5,
+              "type": "action",
+              "action_type": "add_tag",
+              "settings": { "tags": ["Engaged Customer"] }
+            }
+          ]
+        }
+      },
+      {
+        "id": 6,
+        "type": "wait",
+        "settings": { "unit": "days", "duration": 7 }
+      },
+      {
+        "id": 7,
+        "type": "condition",
+        "settings": {
+          "conditions": [
+            { "field": "custom.popia_consent_given", "operator": "equal", "value": true }
+          ],
+          "true_branch": [
+            {
+              "id": 8,
+              "type": "action",
+              "action_type": "add_tag",
+              "settings": { "tags": ["Loyal Customer"] }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "NextGen Tutors — Post-Session Rating & Quality Control",
+    "status": "published",
+    "trigger": {
+      "id": "contact_updated",
+      "settings": {
+        "field": "custom.last_session_date",
+        "operator": "changed"
+      }
+    },
+    "steps": [
+      {
+        "id": 1,
+        "type": "wait",
+        "settings": { "unit": "hours", "duration": 2 }
+      },
+      {
+        "id": 2,
+        "type": "action",
+        "action_type": "send_email",
+        "settings": {
+          "email_id": "rating_request_email_id",
+          "subject": "How was your session with your tutor?",
+          "body": "Rate your recent session and help us improve: {{contact.rating_link}}"
+        },
+        "delay": { "unit": "seconds", "duration": 0 }
+      },
+      {
+        "id": 3,
+        "type": "condition",
+        "settings": {
+          "conditions": [
+            { "field": "custom.latest_rating", "operator": "less_than", "value": 4.0 }
+          ],
+          "true_branch": [
+            {
+              "id": 4,
+              "type": "action",
+              "action_type": "add_tag",
+              "settings": { "tags": ["Needs Support"] }
+            },
+            {
+              "id": 5,
+              "type": "action",
+              "action_type": "send_email",
+              "settings": {
+                "email_id": "quality_alert_email_id",
+                "subject": "We're here to make it right",
+                "body": "We noticed feedback from your recent session. Our team is reviewing it..."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": 6,
+        "type": "condition",
+        "settings": {
+          "conditions": [
+            { "field": "custom.latest_rating", "operator": "equal", "value": 5 }
+          ],
+          "true_branch": [
+            {
+              "id": 7,
+              "type": "action",
+              "action_type": "add_tag",
+              "settings": { "tags": ["Satisfied", "Advocate"] }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "NextGen Tutors — Tutor Verification & Onboarding",
+    "status": "published",
+    "trigger": {
+      "id": "contact_added_to_list",
+      "settings": {
+        "list_id": "2",
+        "list_title": "Tutor Applicants"
+      }
+    },
+    "steps": [
+      {
+        "id": 1,
+        "type": "action",
+        "action_type": "send_email",
+        "settings": {
+          "email_id": "tutor_application_received_id",
+          "subject": "Application Received — Next Steps for {{contact.first_name}}",
+          "body": "Thank you for applying. We review profiles within 48 hours."
+        },
+        "delay": { "unit": "seconds", "duration": 0 }
+      },
+      {
+        "id": 2,
+        "type": "wait",
+        "settings": { "unit": "hours", "duration": 48 }
+      },
+      {
+        "id": 3,
+        "type": "condition",
+        "settings": {
+          "conditions": [
+            { "field": "custom.verification_status", "operator": "equal", "value": "approved" }
+          ],
+          "true_branch": [
+            {
+              "id": 4,
+              "type": "action",
+              "action_type": "remove_list",
+              "settings": { "list_ids": ["2"] }
+            },
+            {
+              "id": 5,
+              "type": "action",
+              "action_type": "add_list",
+              "settings": { "list_ids": ["3"] }
+            },
+            {
+              "id": 6,
+              "type": "action",
+              "action_type": "add_tag",
+              "settings": { "tags": ["Verified Tutor", "Ready for Bookings"] }
+            },
+            {
+              "id": 7,
+              "type": "action",
+              "action_type": "send_email",
+              "settings": {
+                "email_id": "tutor_welcome_approved_id",
+                "subject": "You're Verified! Welcome to NextGen Tutors",
+                "body": "Your profile is live. Set your availability in Amelia and start earning."
+              }
+            }
+          ],
+          "false_branch": [
+            {
+              "id": 8,
+              "type": "action",
+              "action_type": "add_tag",
+              "settings": { "tags": ["Pending Review"] }
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

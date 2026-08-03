@@ -302,17 +302,17 @@ class NGC_Section_CMS {
 	public static function default_content( $section_key ) {
 		$defaults = [
 			'hero' => [
-				'badge'       => __( 'Premium online, in-person and hybrid tutoring', 'nextgencompanion' ),
-				'title'       => __( 'Your Tutor. Your Pace.', 'nextgencompanion' ),
-				'title_accent'=> __( 'Your Results.', 'nextgencompanion' ),
-				'lead'        => __( 'Connect with background-checked tutors for CAPS, IEB and Cambridge — online or in-person, from Grade 1 to varsity.', 'nextgencompanion' ),
+				'badge'       => __( 'South Africa\'s most trusted online tutoring platform', 'nextgencompanion' ),
+				'title'       => __( 'Find your perfect match.', 'nextgencompanion' ),
+				'title_accent'=> __( 'Learn at your pace.', 'nextgencompanion' ),
+				'lead'        => __( 'Verified tutors for CAPS, IEB and Cambridge — live online lessons, or meet in person. First lesson risk-free for eligible packages.', 'nextgencompanion' ),
 				'cta_primary' => __( 'Find My Tutor', 'nextgencompanion' ),
 				'cta_secondary'=> __( 'Become a Tutor', 'nextgencompanion' ),
 			],
 			'trust_bar' => [
-				'eyebrow'  => __( 'Trusted learning ecosystem', 'nextgencompanion' ),
-				'heading'  => __( 'Everything for confident learners.', 'nextgencompanion' ),
-				'subtitle' => __( 'Registration, tutor matching, booking, CRM follow-up, payment status, dashboards and verification — built for South African families.', 'nextgencompanion' ),
+				'eyebrow'  => __( 'Why families stick with us', 'nextgencompanion' ),
+				'heading'  => __( 'From "we\'re stuck" to "we\'ve got this."', 'nextgencompanion' ),
+				'subtitle' => __( 'Match with verified tutors, book live lessons, and watch grades climb — without the corporate jargon.', 'nextgencompanion' ),
 				'items'    => [
 					__( 'Background-checked tutors', 'nextgencompanion' ),
 					__( 'CAPS, IEB & Cambridge', 'nextgencompanion' ),
@@ -320,49 +320,49 @@ class NGC_Section_CMS {
 				],
 			],
 			'how_it_works' => [
-				'eyebrow' => __( 'Learner journey', 'nextgencompanion' ),
-				'title'   => __( 'A clear path from assessment to measurable improvement.', 'nextgencompanion' ),
+				'eyebrow' => __( 'How it works', 'nextgencompanion' ),
+				'title'   => __( 'Search → match → book → learn. That\'s it.', 'nextgencompanion' ),
 				'steps'   => [
-					[ 'title' => __( 'Assessment', 'nextgencompanion' ), 'copy' => __( 'Identify gaps.', 'nextgencompanion' ) ],
-					[ 'title' => __( 'Tutor Match', 'nextgencompanion' ), 'copy' => __( 'Assign fit.', 'nextgencompanion' ) ],
-					[ 'title' => __( 'Learning Plan', 'nextgencompanion' ), 'copy' => __( 'Set goals.', 'nextgencompanion' ) ],
-					[ 'title' => __( 'Weekly Lessons', 'nextgencompanion' ), 'copy' => __( 'Track work.', 'nextgencompanion' ) ],
-					[ 'title' => __( 'Reports', 'nextgencompanion' ), 'copy' => __( 'Show progress.', 'nextgencompanion' ) ],
+					[ 'title' => __( 'Search', 'nextgencompanion' ), 'copy' => __( 'Pick subject & grade.', 'nextgencompanion' ) ],
+					[ 'title' => __( 'Match', 'nextgencompanion' ), 'copy' => __( 'Meet verified tutors.', 'nextgencompanion' ) ],
+					[ 'title' => __( 'Book', 'nextgencompanion' ), 'copy' => __( 'Choose a slot & pay.', 'nextgencompanion' ) ],
+					[ 'title' => __( 'Learn live', 'nextgencompanion' ), 'copy' => __( 'Audio, video, whiteboard.', 'nextgencompanion' ) ],
+					[ 'title' => __( 'Progress', 'nextgencompanion' ), 'copy' => __( 'Parents see the wins.', 'nextgencompanion' ) ],
 				],
 			],
 			'learning_modes' => [
 				'eyebrow' => __( 'Learning pathways', 'nextgencompanion' ),
-				'title'   => __( 'Interactive discovery for every role.', 'nextgencompanion' ),
+				'title'   => __( 'Whether you\'re a parent, learner or tutor — there\'s a clear path.', 'nextgencompanion' ),
 				'modes'   => [
-					[ 'title' => __( 'Parent Journey', 'nextgencompanion' ), 'copy' => __( 'Book assessment, match tutor, track progress and manage payments.', 'nextgencompanion' ) ],
-					[ 'title' => __( 'Student Journey', 'nextgencompanion' ), 'copy' => __( 'View lessons, subjects, achievements and personal progress.', 'nextgencompanion' ) ],
-					[ 'title' => __( 'Tutor Journey', 'nextgencompanion' ), 'copy' => __( 'Manage bookings, learners, availability, reviews and earnings.', 'nextgencompanion' ) ],
-					[ 'title' => __( 'Admin Journey', 'nextgencompanion' ), 'copy' => __( 'Monitor CRM, workflows, bookings and platform health.', 'nextgencompanion' ) ],
+					[ 'title' => __( 'Parents', 'nextgencompanion' ), 'copy' => __( 'Book an assessment, match a tutor, track progress and manage payments.', 'nextgencompanion' ) ],
+					[ 'title' => __( 'Students', 'nextgencompanion' ), 'copy' => __( 'See lessons, subjects, wins and what\'s due next.', 'nextgencompanion' ) ],
+					[ 'title' => __( 'Tutors', 'nextgencompanion' ), 'copy' => __( 'Manage bookings, learners, availability, reviews and earnings.', 'nextgencompanion' ) ],
+					[ 'title' => __( 'Admins', 'nextgencompanion' ), 'copy' => __( 'Keep CRM, workflows, bookings and platform health on track.', 'nextgencompanion' ) ],
 				],
 			],
 			'subject_explorer' => [
 				'eyebrow' => __( 'Subject explorer', 'nextgencompanion' ),
-				'title'   => __( 'Click a subject and watch the learning plan adapt.', 'nextgencompanion' ),
-				'subtitle'=> __( 'Every track is mapped to CAPS, IEB and Cambridge outcomes.', 'nextgencompanion' ),
+				'title'   => __( 'Pick a subject — we\'ll show how help actually looks.', 'nextgencompanion' ),
+				'subtitle'=> __( 'Every track maps to CAPS, IEB and Cambridge outcomes.', 'nextgencompanion' ),
 			],
 			'featured_tutors' => [
 				'eyebrow'  => __( 'Featured tutors', 'nextgencompanion' ),
-				'title'    => __( 'Expert tutors.', 'nextgencompanion' ),
+				'title'    => __( 'Tutors families actually recommend.', 'nextgencompanion' ),
 				'subtitle' => __( 'Verified educators from our directory — CAPS, IEB and Cambridge support.', 'nextgencompanion' ),
 			],
 			'success_stories' => [
 				'eyebrow'  => __( 'Happy clients · real marks', 'nextgencompanion' ),
-				'title'    => __( 'The Joy of Achievement', 'nextgencompanion' ),
+				'title'    => __( 'The joy of achievement', 'nextgencompanion' ),
 				'subtitle' => __( 'Stories from families who found the right tutor.', 'nextgencompanion' ),
 			],
 			'trust_safety' => [
 				'eyebrow' => __( 'Before / After', 'nextgencompanion' ),
-				'title'   => __( 'Show the transformation parents want to see.', 'nextgencompanion' ),
+				'title'   => __( 'The turnaround parents hope for.', 'nextgencompanion' ),
 				'copy'    => __( 'Every tutor passes ID verification, credential checks and background screening.', 'nextgencompanion' ),
 			],
 			'pricing' => [
 				'eyebrow' => __( 'Transparent pricing', 'nextgencompanion' ),
-				'title'   => __( 'Flat Monthly Packages.', 'nextgencompanion' ),
+				'title'   => __( 'Simple monthly packages.', 'nextgencompanion' ),
 				'subtitle'=> __( 'Flexible online, in-person and tertiary options with commitment discounts.', 'nextgencompanion' ),
 				'rates'   => [
 					'rate_online'    => 320,
@@ -372,7 +372,7 @@ class NGC_Section_CMS {
 			],
 			'faq' => [
 				'eyebrow' => __( 'Questions', 'nextgencompanion' ),
-				'title'   => __( 'Common Questions', 'nextgencompanion' ),
+				'title'   => __( 'Stuff parents usually ask', 'nextgencompanion' ),
 				'items'   => [
 					[
 						'q' => __( 'Can parents track progress?', 'nextgencompanion' ),
@@ -388,7 +388,7 @@ class NGC_Section_CMS {
 				'title'         => __( 'Ready to find your tutor?', 'nextgencompanion' ),
 				'subtitle'      => __( 'Book a free assessment — no commitment.', 'nextgencompanion' ),
 				'button_text'   => __( 'Book Free Assessment', 'nextgencompanion' ),
-				'become_title'  => __( 'Want to Become a Tutor?', 'nextgencompanion' ),
+				'become_title'  => __( 'Want to become a tutor?', 'nextgencompanion' ),
 				'become_button' => __( 'Apply to Teach', 'nextgencompanion' ),
 				'guarantee_line'=> __( 'Love the lesson — or your first hour is on us.', 'nextgencompanion' ),
 			],

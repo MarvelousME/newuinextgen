@@ -1,0 +1,1 @@
+ngt-agent-gateway listening on 127.0.0.1:8787 mode=official-a2a-js-sdk

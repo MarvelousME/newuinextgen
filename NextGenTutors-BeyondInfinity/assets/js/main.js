@@ -45,13 +45,7 @@
   });
   }
 
-  /* Sticky nav */
-  var nav = document.querySelector('.ngt-nav');
-  if (nav) {
-    window.addEventListener('scroll', function() {
-      nav.classList.toggle('ngt-nav--scrolled', window.scrollY > 50);
-    }, { passive: true });
-  }
+  /* Sticky nav owned by bi-sticky-ui.js — do not add a second scroll listener here. */
 
   /* Tutor filter AJAX */
   var filterForm = document.querySelector('#ngt-tutor-filter');

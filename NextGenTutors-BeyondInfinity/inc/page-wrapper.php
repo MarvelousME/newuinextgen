@@ -143,7 +143,7 @@ function bi_render_generic_page() {
             post_class( 'ngt-card bi-generic-page' );
             echo ' style="padding:40px">';
             if ( bi_should_show_page_title( $post_id ) ) {
-                echo '<h1 class="entry-title">' . esc_html( get_the_title() ) . '</h1>';
+                echo '<h1 class="entry-title" data-bi-slide-title>' . esc_html( get_the_title() ) . '</h1>';
             }
             echo '<div class="entry-content">';
             the_content();

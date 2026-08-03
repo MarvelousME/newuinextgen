@@ -237,7 +237,7 @@ class NGC_Studio_Forms {
 		$id    = 'ngc-sf-' . $name;
 
 		if ( in_array( $type, [ 'textarea', 'richtext', 'address' ], true ) ) {
-			return '<label for="' . esc_attr( $id ) . '">' . $label . '</label><textarea id="' . esc_attr( $id ) . '" name="' . esc_attr( $name ) . '"' . $req . '></textarea>';
+			return '<label for="' . esc_attr( $id ) . '">' . $label . '</label><textarea id="' . esc_attr( $id ) . '" name="' . esc_attr( $name ) . '" rows="4" class="ngc-wysiwyg"' . $req . '></textarea>';
 		}
 		if ( in_array( $type, [ 'select', 'grade_selector', 'subject_selector', 'location_selector' ], true ) ) {
 			$opts = (array) ( $field['options'] ?? [] );

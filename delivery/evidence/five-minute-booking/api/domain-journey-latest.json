@@ -1,0 +1,203 @@
+{
+    "run_id": "NGT-E2E-20260803T020155",
+    "generated_at_utc": "2026-08-03T02:01:55+00:00",
+    "timezone": "Africa/Johannesburg",
+    "now_local": "2026-08-03T04:01:55+02:00",
+    "target_start": "2026-08-03T04:06:55+02:00",
+    "scheduled_start": "2026-08-03T04:06:00+02:00",
+    "slot_constraint": "aligned_to_minute_boundary_min_5m_ahead",
+    "base_url": "http://localhost:8890/",
+    "preflight": {
+        "home_url": "http://localhost:8890/",
+        "timezone": "Africa/Johannesburg",
+        "wp_time": "2026-08-03 04:01:55",
+        "woocommerce": true,
+        "currency": "ZAR",
+        "companion": "1.9.5",
+        "fluentcrm": true,
+        "amelia": true,
+        "masterstudy": true,
+        "payfast": {
+            "enabled": "yes",
+            "title": "PayFast",
+            "description": "Pay securely with PayFast (sandbox).",
+            "sandbox": "yes"
+        },
+        "gateway": {
+            "ok": true,
+            "service": "ngt-agent-gateway",
+            "version": "1.0.0",
+            "a2a_mode": "official-a2a-js-sdk",
+            "a2a_sdk_loaded": true,
+            "agent_card": "ngt.firstparty.diagnostics",
+            "kill_switch": false
+        },
+        "payfast_testmode": true
+    },
+    "phases": {
+        "preflight_woocommerce": {
+            "status": "PASS"
+        },
+        "preflight": {
+            "status": "PASS",
+            "checks": [
+                "home_url",
+                "timezone",
+                "wp_time",
+                "woocommerce",
+                "currency",
+                "companion",
+                "fluentcrm",
+                "amelia",
+                "masterstudy",
+                "payfast",
+                "gateway",
+                "payfast_testmode"
+            ]
+        },
+        "tutor_registration": {
+            "status": "pending",
+            "application_id": 17,
+            "public_before_approve": true,
+            "user": {
+                "id": 280,
+                "login_prefix": "tutor_60803t",
+                "email_domain": "example.test",
+                "roles": [
+                    "subscriber"
+                ],
+                "display": "E2E Tutor 020155"
+            }
+        },
+        "tutor_approval": {
+            "status": "PASS",
+            "roles": [
+                "subscriber"
+            ],
+            "cpt_count": 0,
+            "cpt_status": null,
+            "cpt_id": 0,
+            "reapprove": "idempotent_or_ok"
+        },
+        "parent_registration": {
+            "status": "PASS",
+            "user": {
+                "id": 281,
+                "login_prefix": "parentngte2e",
+                "email_domain": "example.test",
+                "roles": [
+                    "parent"
+                ],
+                "display": "E2E Parent 020155"
+            }
+        },
+        "guardian_child": {
+            "status": "PASS",
+            "child_id": 42,
+            "student_user_id": 282,
+            "parent_matches": true,
+            "cross_family_false": true,
+            "public_child": false
+        },
+        "tutor_discovery": {
+            "status": "PARTIAL",
+            "cpt_published": false,
+            "cpt_id": 0,
+            "marketplace_n": 6
+        },
+        "five_minute_booking": {
+            "status": "requested",
+            "booking_id": 159,
+            "scheduled_at": "2026-08-03 02:06:00",
+            "duplicate_safe": true
+        },
+        "sandbox_payment": {
+            "status": "PASS",
+            "order_id": 57644,
+            "order_status": "processing",
+            "testmode": true,
+            "method": "ngc_payfast_sandbox_payment_complete",
+            "note": "Sandbox payment_complete only; no live funds."
+        },
+        "parent_dashboard_data": {
+            "status": "PASS",
+            "matched_booking": true
+        },
+        "student_dashboard_data": {
+            "status": "PASS",
+            "matched_via_student_id": true
+        },
+        "tutor_dashboard_data": {
+            "status": "PASS",
+            "matched_booking": true
+        },
+        "real_time_meeting": {
+            "status": "BLOCKED",
+            "join_url_present": false
+        },
+        "unauthorized_meeting_rejected": {
+            "status": "PASS",
+            "note": "No meeting credentials exist to leak; unauthenticated join N/A \u2014 treated as fail-closed for missing meeting product"
+        },
+        "attendance_completion": {
+            "status": "completed",
+            "duplicate_complete": "accepted_idempotent",
+            "meeting_independent": true,
+            "note": "Completion via booking status; live join attendance NOT RUN"
+        },
+        "child_safety_isolation": {
+            "status": "PASS"
+        },
+        "negative_unauth_booking_view": {
+            "status": "PASS",
+            "can_view": false
+        }
+    },
+    "correlation": {
+        "tutor_user_id": 280,
+        "application_id": 17,
+        "parent_user_id": 281,
+        "child_learner_id": 42,
+        "student_user_id": 282,
+        "unrelated_parent_user_id": 283,
+        "booking_id": 159,
+        "order_id": 57644,
+        "run_id": "NGT-E2E-20260803T020155"
+    },
+    "verdicts": {
+        "preflight_woocommerce": "PASS",
+        "preflight": "PASS",
+        "tutor_registration": "PASS",
+        "tutor_approval": "PASS",
+        "parent_registration": "PASS",
+        "guardian_child": "PASS",
+        "tutor_discovery": "PARTIAL",
+        "five_minute_booking": "PASS",
+        "sandbox_payment": "PASS",
+        "parent_dashboard_data": "PASS",
+        "student_dashboard_data": "PASS",
+        "tutor_dashboard_data": "PASS",
+        "real_time_meeting": "BLOCKED",
+        "unauthorized_meeting_rejected": "PASS",
+        "attendance_completion": "PASS",
+        "child_safety_isolation": "PASS",
+        "negative_unauth_booking_view": "PASS"
+    },
+    "defects": [],
+    "meeting": {
+        "owner": "MISSING",
+        "join_url_field": false,
+        "status": "BLOCKED",
+        "note": "No Zoom/Jitsi/meeting join adapter in Companion domain; attendance is booking-status derived.",
+        "session_row_keys": [
+            "peerName",
+            "peerImage",
+            "subject",
+            "createdAt",
+            "status",
+            "statusLabel",
+            "attendance"
+        ]
+    },
+    "overall": "BLOCKED"
+}

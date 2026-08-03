@@ -39,18 +39,86 @@
 .ngi-dashitem b { display: block; margin-top: 4px; font-size: 15px; }
 .ngi-stars { display: flex; gap: 3px; margin-bottom: 12px; color: #ffb800; }
 .ngi-star { font-size: 1rem; line-height: 1; }
+
+/* Infinite single-row testimonials marquee */
+.ngi-testimonials-marquee {
+  position: relative;
+  width: 100%;
+  margin-top: 8px;
+}
+.ngi-testimonials-marquee__viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.ngi-testimonials-marquee__track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 22px;
+  width: max-content;
+  animation: ngi-testimonial-marquee 42s linear infinite;
+  will-change: transform;
+}
+.ngi-testimonials-marquee:hover .ngi-testimonials-marquee__track,
+.ngi-testimonials-marquee:focus-within .ngi-testimonials-marquee__track {
+  animation-play-state: paused;
+}
 .ngi-testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
-.ngi-testimonial { display: flex; flex-direction: column; gap: 12px; }
-.ngi-testimonial__head { display: flex; align-items: center; gap: 14px; }
+.ngi-testimonial {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 0 0 min(340px, 82vw);
+  max-width: 360px;
+  padding: 24px 26px;
+  border-left: 0;
+}
+.ngi-testimonial__quote {
+  font-style: italic;
+  line-height: 1.7;
+  margin: 0;
+  color: var(--ngi-text);
+  border-left: 3px solid rgba(18, 60, 124, 0.18);
+  padding-left: 14px;
+}
+.ngi-testimonial__head { display: flex; align-items: center; gap: 14px; margin-top: auto; }
 .ngi-testimonial__avatar {
   width: 48px; height: 48px; border-radius: 50%;
   background: linear-gradient(135deg, var(--ngi-blue), var(--ngi-cyan));
   color: #fff; font-weight: 800; font-size: 14px;
   display: grid; place-items: center; flex-shrink: 0;
+  object-fit: cover;
 }
-.ngi-testimonial__quote { font-style: italic; line-height: 1.7; margin: 0; color: var(--ngi-text); }
+.ngi-testimonial__avatar--photo {
+  display: block;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 14px rgba(18, 60, 124, 0.18);
+  background: #dbe7f5;
+}
 .ngi-testimonial__author { font-weight: 800; font-size: 15px; }
 .ngi-testimonial__role { font-size: 13px; color: var(--ngi-muted); }
+
+@keyframes ngi-testimonial-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ngi-testimonials-marquee__track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+  }
+  .ngi-testimonials-marquee__track .ngi-testimonial[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .ngi-testimonial { flex-basis: min(300px, 88vw); padding: 20px; }
+  .ngi-testimonials-marquee__track { animation-duration: 32s; gap: 14px; }
+}
 .ngi-tutor-rating { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 14px; margin: 8px 0; color: var(--ngi-blue); }
 .ngi-avatar img { width: 74px; height: 74px; border-radius: 24px; object-fit: cover; border: 1px solid rgba(255,255,255,.28); }
 .ngi-modal-card label { display: block; font-weight: 700; font-size: 14px; margin: 12px 0 6px; color: var(--ngi-text); }

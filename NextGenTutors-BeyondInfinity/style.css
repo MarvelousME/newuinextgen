@@ -5,7 +5,7 @@ Description: BeyondInfinity theme for NextGen Tutors - accessible tutoring acros
 Author: NextGen Tutors
 Author URI: https://www.nextgentutors.co.za
 Template: hello-elementor
-Version: 1.9.17
+Version: 1.9.28
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: beyondinfinity
@@ -342,11 +342,17 @@ a:hover {
   background: rgba(255,255,255,0.95);
   border-bottom: 1px solid var(--ngt-border-light);
   padding: 1rem 0;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1000;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1900;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  display: block;
+  visibility: visible;
+  opacity: 1;
 }
 
 .ngt-nav__inner {
@@ -980,8 +986,7 @@ body.has-float-dock .bi-whatsapp-fab {
 .ngt-sticky-actions__link:hover { color: var(--ngt-secondary-dark); }
 .ngt-sticky-actions__link--primary:hover { color: #fff; background: var(--ngt-primary-dark); }
 
-/* Nav responsive (moved from header inline) */
-.ngt-nav--scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+/* Nav scrolled shadow owned by bi-sticky-ui.css */
 .ngt-nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
 .ngt-nav__cta { display: flex; gap: 12px; align-items: center; }
 #ngt-become-btn { display: none; }

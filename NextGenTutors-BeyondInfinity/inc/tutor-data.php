@@ -745,24 +745,42 @@ function bi_get_featured_testimonials() {
             'role'   => 'IEB Matric · Parent of Lethabo',
             'quote'  => 'Pure Mathematics went from 54% to a distinction in final IEB Matric — recorded sessions were a lifesaver for revision.',
             'stars'  => 5,
+            'avatar' => 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=160&h=160&q=80',
         ],
         [
             'author' => 'Hennie Swart',
             'role'   => 'Parent · Johannesburg',
             'quote'  => 'ID and police-clearance vetting meant we could trust our tutor completely. NextGen made finding safe at-home support effortless.',
             'stars'  => 5,
+            'avatar' => 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=160&h=160&q=80',
         ],
         [
             'author' => 'Brian Woods',
             'role'   => 'Grade 11 Learner',
             'quote'  => 'I used to think tutoring meant you were behind. Now every session is genuinely interesting and my marks show it.',
             'stars'  => 5,
+            'avatar' => 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=160&h=160&q=80',
         ],
         [
-            'author' => 'Nomsa D.',
+            'author' => 'Nomsa Dlamini',
             'role'   => 'Parent · Gauteng',
             'quote'  => 'We finally found a tutor who explained maths in a way my daughter understood. Her confidence returned within weeks.',
             'stars'  => 5,
+            'avatar' => 'https://images.unsplash.com/photo-1589156280159-27698a01f33d?auto=format&fit=crop&w=160&h=160&q=80',
+        ],
+        [
+            'author' => 'Thandiwe Mokoena',
+            'role'   => 'Parent · Durban',
+            'quote'  => 'CAPS-aligned sessions and WhatsApp follow-ups kept my son accountable. We saw Physical Sciences climb two symbols in a term.',
+            'stars'  => 5,
+            'avatar' => 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=160&h=160&q=80',
+        ],
+        [
+            'author' => 'Johan van der Berg',
+            'role'   => 'Parent · Cape Town',
+            'quote'  => 'Transparent Rand pricing and SACE-verified tutors made switching from agency tutoring an easy decision for our family.',
+            'stars'  => 5,
+            'avatar' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=160&h=160&q=80',
         ],
     ];
 

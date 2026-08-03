@@ -1,0 +1,119 @@
+/**
+ * Slide-reveal titles + 3D hover — uniform across frontend.
+ */
+
+:root {
+  --bi-slide-title-accent: #28c7f7;
+  --bi-slide-tilt-max: 9deg;
+  --bi-slide-lift: 14px;
+}
+
+.bi-slide-title {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  overflow: visible;
+  perspective: 900px;
+  perspective-origin: 50% 50%;
+  cursor: default;
+  transform-style: preserve-3d;
+}
+
+.bi-slide-title.is-pending .bi-slide-title__text {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transform: translate3d(-28px, 0, 0);
+}
+
+.bi-slide-title__viewport {
+  display: block;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.bi-slide-title__text {
+  display: inline-block;
+  max-width: 100%;
+  will-change: transform, opacity, clip-path;
+  clip-path: inset(0 100% 0 0);
+  transform: translate3d(-28px, 0, 0);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 0.22s ease,
+    filter 0.22s ease;
+}
+
+/* Hide any legacy underline nodes */
+.bi-slide-title__line {
+  display: none !important;
+}
+
+/* Section / content titles — brand cyan accent (sitewide) */
+.bi-slide-title--accent,
+body .ng-page-heading__title.bi-slide-title--accent,
+body .entry-title.bi-slide-title--accent,
+body .ngi-heading.bi-slide-title--accent,
+body .section__title.bi-slide-title--accent,
+body .bi-cinematic-band__title.bi-slide-title--accent,
+body.bi-kinetic-surface .ng-page-heading__title.bi-slide-title--accent,
+body.bi-kinetic-surface .entry-title.bi-slide-title--accent,
+body.bi-kinetic-surface .ngi-heading.bi-slide-title--accent {
+  color: var(--bi-slide-title-accent);
+}
+
+.bi-slide-title--on-dark {
+  color: inherit;
+}
+
+.bi-slide-title.is-revealed .bi-slide-title__text {
+  clip-path: inset(0 0% 0 0);
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+/* 3D hover — lift + depth shadow (pointer tilt applied via JS vars) */
+.bi-slide-title.is-revealed:hover .bi-slide-title__text,
+.bi-slide-title.is-revealed.is-tilting .bi-slide-title__text {
+  transform:
+    perspective(900px)
+    rotateX(var(--bi-tilt-x, -6deg))
+    rotateY(var(--bi-tilt-y, 6deg))
+    translateZ(var(--bi-slide-lift))
+    scale(1.02);
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.04),
+    0 8px 18px rgba(15, 23, 42, 0.14),
+    0 18px 36px rgba(40, 199, 247, 0.22);
+}
+
+.bi-slide-title--on-dark.is-revealed:hover .bi-slide-title__text,
+.bi-slide-title--on-dark.is-revealed.is-tilting .bi-slide-title__text {
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.18),
+    0 12px 28px rgba(0, 0, 0, 0.35),
+    0 0 24px rgba(40, 199, 247, 0.28);
+}
+
+@media (hover: none) {
+  .bi-slide-title.is-revealed:hover .bi-slide-title__text,
+  .bi-slide-title.is-revealed.is-tilting .bi-slide-title__text {
+    transform: none;
+    text-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bi-slide-title__text {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .bi-slide-title .bi-slide-title__text {
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+  }
+}

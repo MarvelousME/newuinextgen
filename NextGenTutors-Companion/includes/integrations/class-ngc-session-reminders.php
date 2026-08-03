@@ -228,6 +228,13 @@ class NGC_Session_Reminders {
 			]
 		);
 
+		if ( empty( $context['join_url'] ) && (int) $row->booking_id > 0 && class_exists( 'NGC_Meetings' ) ) {
+			$ensured = NGC_Meetings::ensure_for_booking( (int) $row->booking_id );
+			if ( ! is_wp_error( $ensured ) && ! empty( $ensured['join_url'] ) ) {
+				$context['join_url'] = (string) $ensured['join_url'];
+			}
+		}
+
 		$sent = false;
 		if ( class_exists( 'NGC_Email_Adapter' ) ) {
 			$email  = new NGC_Email_Adapter();

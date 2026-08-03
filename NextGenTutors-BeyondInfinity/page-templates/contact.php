@@ -17,9 +17,11 @@ $maps_url = get_theme_mod('ngt_contact_maps_url', 'https://maps.google.com');
 <!-- HERO -->
 <section class="contact-hero section" aria-labelledby="contact-hero-title">
   <div class="container contact-hero__inner">
-    <span class="badge badge--lime">Get in Touch</span>
-    <h1 id="contact-hero-title">We're Here to Help</h1>
-    <p>Questions about tutoring, your account, or the platform? Reach out — we typically respond within 2 hours during business hours.</p>
+    <div class="contact-hero__copy">
+      <span class="badge badge--lime"><?php esc_html_e( 'Get in Touch', 'beyondinfinity' ); ?></span>
+      <h1 id="contact-hero-title" data-bi-slide-title><?php esc_html_e( "We're Here to Help", 'beyondinfinity' ); ?></h1>
+      <p><?php esc_html_e( "We're here to help with any questions about tutoring. Questions about your account or the platform? We typically respond within one business day.", 'beyondinfinity' ); ?></p>
+    </div>
   </div>
 </section>
 

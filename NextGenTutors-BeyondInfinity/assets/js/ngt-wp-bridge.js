@@ -58,19 +58,9 @@
     }
   }
 
-  /* NGT nav scroll solid state on theme header */
+  /* Nav scroll solid state owned by bi-sticky-ui.js (single listener). */
   function initNavScroll() {
-    var nav = $('.ngt-nav');
-    if (!nav) return;
-    var onScroll = function () {
-      if (window.scrollY > 40) {
-        nav.classList.add('is-solid', 'ngt-nav--solid');
-      } else {
-        nav.classList.remove('is-solid', 'ngt-nav--solid');
-      }
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    /* no-op — kept so older call sites remain safe */
   }
 
   /* Rewrite img src for bundled logos in imported HTML content */

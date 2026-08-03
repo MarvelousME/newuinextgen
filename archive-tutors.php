@@ -17,7 +17,7 @@ if ( function_exists( 'bi_page_open' ) ) {
   <div class="ng-container">
     <header class="ng-page-heading">
       <p class="ng-page-heading__eyebrow"><?php esc_html_e( 'Tutor marketplace', 'beyondinfinity' ); ?></p>
-      <h1 class="ng-page-heading__title"><?php esc_html_e( 'Find Your Tutor', 'beyondinfinity' ); ?></h1>
+      <h1 class="ng-page-heading__title" data-bi-slide-title><?php esc_html_e( 'Find Your Tutor', 'beyondinfinity' ); ?></h1>
       <p class="ng-page-heading__subtitle"><?php esc_html_e( 'Filter by subject, grade, province, format and price — results update instantly.', 'beyondinfinity' ); ?></p>
     </header>
     <?php

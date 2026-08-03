@@ -185,7 +185,7 @@ function bi_render_kinetic_tutors_3d( $args = [] ) {
       <div class="ngi-wrap ngi-wrap--wide">
         <div class="ngi-section-head ngi-reveal">
           <div class="ngi-eyebrow"><?php echo esc_html( $args['eyebrow'] ); ?></div>
-          <h2 class="ngi-heading"><?php echo esc_html( $args['title'] ); ?></h2>
+          <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $args['title'] ); ?></h2>
           <?php if ( $args['subtitle'] ) : ?>
             <p class="ngi-subtitle"><?php echo esc_html( $args['subtitle'] ); ?></p>
           <?php endif; ?>

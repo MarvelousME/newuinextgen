@@ -66,6 +66,23 @@ class NGC_Rest_Bookings {
 				'permission_callback' => [ __CLASS__, 'can_mutate' ],
 			]
 		);
+
+		register_rest_route(
+			NGC_Rest::NAMESPACE,
+			'/bookings/(?P<id>\d+)/join',
+			[
+				[
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ __CLASS__, 'join' ],
+					'permission_callback' => [ __CLASS__, 'can_view' ],
+				],
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ __CLASS__, 'join' ],
+					'permission_callback' => [ __CLASS__, 'can_view' ],
+				],
+			]
+		);
 	}
 
 	/**
@@ -233,5 +250,57 @@ class NGC_Rest_Bookings {
 			return NGC_Rest::error_response( $result );
 		}
 		return new WP_REST_Response( [ 'booking' => NGC_Bookings::get( (int) $request['id'] ) ], 200 );
+	}
+
+	/**
+	 * Start / join an online A/V lesson for an authorized party.
+	 *
+	 * @param WP_REST_Request $request Request.
+	 * @return WP_REST_Response
+	 */
+	public static function join( $request ) {
+		$booking_id = (int) $request['id'];
+		$booking    = NGC_Bookings::get( $booking_id );
+		if ( ! $booking ) {
+			return NGC_Rest::error_response( new WP_Error( 'ngc_not_found', __( 'Booking not found.', 'nextgencompanion' ), [ 'status' => 404 ] ) );
+		}
+		if ( ! class_exists( 'NGC_Meetings' ) || ! NGC_Meetings::can_join_status( $booking ) ) {
+			return NGC_Rest::error_response(
+				new WP_Error(
+					'ngc_meeting_not_joinable',
+					__( 'This lesson is not available to join right now.', 'nextgencompanion' ),
+					[ 'status' => 409 ]
+				)
+			);
+		}
+
+		$url = NGC_Meetings::join_url_for_user( $booking_id, get_current_user_id() );
+		if ( is_wp_error( $url ) ) {
+			return NGC_Rest::error_response( $url );
+		}
+
+		$meeting = NGC_Bookings::get_meeting_meta( $booking_id );
+		NGC_Audit::log(
+			'lesson_join',
+			'booking',
+			$booking_id,
+			[
+				'provider' => $meeting['provider'] ?? 'jitsi',
+				'room'     => $meeting['room'] ?? '',
+			],
+			get_current_user_id()
+		);
+
+		return new WP_REST_Response(
+			[
+				'booking_id' => $booking_id,
+				'join_url'   => $url,
+				'joinUrl'    => $url,
+				'provider'   => (string) ( $meeting['provider'] ?? 'jitsi' ),
+				'room'       => (string) ( $meeting['room'] ?? '' ),
+				'audio_video'=> true,
+			],
+			200
+		);
 	}
 }

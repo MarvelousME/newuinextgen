@@ -19,6 +19,7 @@ function bi_home_sections_registry() {
             'trust'       => 'home_section_trust',
             'subjects'    => 'home_section_subjects',
             'journey'     => 'home_section_journey',
+            'narrative'   => 'home_section_narrative',
             'highlights'  => 'home_section_highlights',
             'proof'       => 'home_section_proof',
             'video'       => 'home_section_video',

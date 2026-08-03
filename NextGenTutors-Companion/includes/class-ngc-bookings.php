@@ -170,6 +170,23 @@ class NGC_Bookings {
 
 		NGC_Audit::log( 'booking_' . $status, 'booking', $booking_id, [ 'from' => $booking->status ], $actor_id );
 
+		if ( 'confirmed' === $status ) {
+			$meeting = class_exists( 'NGC_Meetings' )
+				? NGC_Meetings::ensure_for_booking( $booking_id, [ 'user_id' => (int) $actor_id ] )
+				: null;
+			$join_url = ( ! is_wp_error( $meeting ) && is_array( $meeting ) ) ? (string) ( $meeting['join_url'] ?? '' ) : '';
+			$ctx      = [
+				'booking_id'      => (string) $booking_id,
+				'student_user_id' => (string) $booking->student_user_id,
+				'tutor_user_id'   => (string) $booking->tutor_user_id,
+				'join_url'        => $join_url,
+				'session_start'   => (string) ( $booking->scheduled_at ?? '' ),
+				'subject'         => (string) ( $booking->subject ?? '' ),
+			];
+			NGC_Workflows::dispatch( 'booking.confirmed', $ctx );
+			do_action( 'ngc_booking_confirmed', $booking_id, $ctx );
+		}
+
 		if ( 'completed' === $status ) {
 			NGC_Workflows::dispatch(
 				'lesson.completed',
@@ -351,6 +368,42 @@ class NGC_Bookings {
 	}
 
 	/**
+	 * Recent bookings as associative rows for admin listings.
+	 *
+	 * @param int $limit Max rows.
+	 * @return array<int, array<string, mixed>>
+	 */
+	public static function recent( $limit = 25 ) {
+		$rows = self::query( [ 'limit' => max( 1, (int) $limit ) ] );
+		$out  = [];
+		foreach ( (array) $rows as $row ) {
+			$out[] = [
+				'id'         => (int) ( $row->id ?? 0 ),
+				'booking_id' => (int) ( $row->id ?? 0 ),
+				'status'     => (string) ( $row->status ?? '' ),
+				'subject'    => (string) ( $row->subject ?? '' ),
+				'starts_at'  => (string) ( $row->scheduled_at ?? '' ),
+				'created_at' => (string) ( $row->created_at ?? '' ),
+				'student_user_id' => (int) ( $row->student_user_id ?? 0 ),
+				'tutor_user_id'   => (int) ( $row->tutor_user_id ?? 0 ),
+				'duration_minutes' => (int) ( $row->duration_minutes ?? 0 ),
+			];
+		}
+		return $out;
+	}
+
+	/**
+	 * List bookings (alias of query with admin-friendly defaults).
+	 *
+	 * @param array<string, mixed> $args Query args (limit, status, …).
+	 * @return array<int, array<string, mixed>>
+	 */
+	public static function list( $args = [] ) {
+		$limit = isset( $args['limit'] ) ? (int) $args['limit'] : 25;
+		return self::recent( $limit > 0 ? $limit : 25 );
+	}
+
+	/**
 	 * @param int                  $booking_id Booking ID.
 	 * @param array<string, mixed> $data       Update data.
 	 * @return true|WP_Error
@@ -461,6 +514,70 @@ class NGC_Bookings {
 	}
 
 	/**
+	 * Decode booking meta JSON.
+	 *
+	 * @param object|int $booking Booking row or ID.
+	 * @return array<string, mixed>
+	 */
+	public static function get_meta( $booking ) {
+		if ( is_numeric( $booking ) ) {
+			$booking = self::get( (int) $booking );
+		}
+		if ( ! $booking ) {
+			return [];
+		}
+		$meta = json_decode( (string) ( $booking->meta ?? '' ), true );
+		return is_array( $meta ) ? $meta : [];
+	}
+
+	/**
+	 * Merge-patch booking meta.
+	 *
+	 * @param int                  $booking_id Booking ID.
+	 * @param array<string, mixed> $patch      Meta patch (shallow merge).
+	 * @return bool
+	 */
+	public static function update_meta( $booking_id, $patch ) {
+		global $wpdb;
+		$booking_id = (int) $booking_id;
+		$booking    = self::get( $booking_id );
+		if ( ! $booking ) {
+			return false;
+		}
+		$meta = array_merge( self::get_meta( $booking ), is_array( $patch ) ? $patch : [] );
+		$table = NGC_Database::table( 'bookings' );
+		return false !== $wpdb->update(
+			$table,
+			[
+				'meta'       => wp_json_encode( $meta ),
+				'updated_at' => current_time( 'mysql', true ),
+			],
+			[ 'id' => $booking_id ],
+			[ '%s', '%s' ],
+			[ '%d' ]
+		);
+	}
+
+	/**
+	 * @param int $booking_id Booking ID.
+	 * @return array<string, mixed>
+	 */
+	public static function get_meeting_meta( $booking_id ) {
+		$meta = self::get_meta( $booking_id );
+		$m    = $meta['meeting'] ?? [];
+		return is_array( $m ) ? $m : [];
+	}
+
+	/**
+	 * @param int                  $booking_id Booking ID.
+	 * @param array<string, mixed> $meeting    Meeting payload.
+	 * @return bool
+	 */
+	public static function set_meeting_meta( $booking_id, $meeting ) {
+		return self::update_meta( $booking_id, [ 'meeting' => $meeting ] );
+	}
+
+	/**
 	 * Format booking for dashboard session row.
 	 *
 	 * @param object $booking Row.
@@ -477,17 +594,58 @@ class NGC_Bookings {
 		} else {
 			$peer_id = (int) $booking->student_user_id;
 		}
-		$peer    = get_user_by( 'id', $peer_id );
-		$avatar  = $peer ? get_avatar_url( $peer->ID ) : '';
+		$peer   = get_user_by( 'id', $peer_id );
+		$avatar = $peer ? get_avatar_url( $peer->ID ) : '';
+
+		$can_join = class_exists( 'NGC_Meetings' ) && NGC_Meetings::can_join_status( $booking );
+		$join_url = '';
+		$provider = '';
+		$room     = '';
+		$meeting  = self::get_meeting_meta( (int) $booking->id );
+
+		if ( $can_join && class_exists( 'NGC_Meetings' ) ) {
+			if ( empty( $meeting['join_url'] ) ) {
+				$ensured = NGC_Meetings::ensure_for_booking( (int) $booking->id, [ 'user_id' => (int) $viewer ] );
+				if ( ! is_wp_error( $ensured ) && is_array( $ensured ) ) {
+					$join_url = (string) ( $ensured['join_url'] ?? '' );
+					$provider = (string) ( $ensured['provider'] ?? 'jitsi' );
+					$room     = (string) ( $ensured['room'] ?? '' );
+					$meeting  = self::get_meeting_meta( (int) $booking->id );
+				}
+			} else {
+				$join_url = (string) $meeting['join_url'];
+				$provider = (string) ( $meeting['provider'] ?? 'jitsi' );
+				$room     = (string) ( $meeting['room'] ?? '' );
+			}
+
+			if ( $room === '' && ! empty( $meeting['room'] ) ) {
+				$room = (string) $meeting['room'];
+			}
+
+			if ( $join_url && $room && (int) $viewer > 0 && class_exists( 'NGC_Jitsi_Meeting_Adapter' ) && ( $provider === 'jitsi' || $provider === '' ) ) {
+				$user = get_userdata( (int) $viewer );
+				if ( $user ) {
+					$join_url = NGC_Jitsi_Meeting_Adapter::join_url_for_room( $room, $user->display_name );
+					$provider = 'jitsi';
+				}
+			}
+		}
 
 		return [
-			'peerName'     => $peer ? $peer->display_name : __( 'Unknown', 'nextgencompanion' ),
-			'peerImage'    => $avatar,
-			'subject'      => $booking->subject,
-			'createdAt'    => $booking->scheduled_at ?: $booking->created_at,
-			'status'       => $booking->status,
-			'statusLabel'  => ucfirst( $booking->status ),
-			'attendance'   => $booking->status,
+			'id'              => (int) $booking->id,
+			'bookingId'       => (int) $booking->id,
+			'peerName'        => $peer ? $peer->display_name : __( 'Unknown', 'nextgencompanion' ),
+			'peerImage'       => $avatar,
+			'subject'         => $booking->subject,
+			'createdAt'       => $booking->scheduled_at ?: $booking->created_at,
+			'status'          => $booking->status,
+			'statusLabel'     => ucfirst( $booking->status ),
+			'attendance'      => $booking->status,
+			'joinUrl'         => $join_url,
+			'join_url'        => $join_url,
+			'meetingUrl'      => $join_url,
+			'canJoin'         => $can_join && $join_url !== '',
+			'meetingProvider' => $provider ?: ( $join_url ? 'jitsi' : '' ),
 		];
 	}
 

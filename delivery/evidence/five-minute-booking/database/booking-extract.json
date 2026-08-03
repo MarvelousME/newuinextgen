@@ -1,0 +1,9 @@
+{
+    "booking_id": 159,
+    "status": "completed",
+    "subject": "Mathematics",
+    "scheduled_at": "2026-08-03 02:06:00",
+    "order_id": 0,
+    "amount": 320,
+    "currency": "ZAR"
+}

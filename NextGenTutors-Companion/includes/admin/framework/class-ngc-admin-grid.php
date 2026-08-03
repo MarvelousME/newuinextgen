@@ -18,6 +18,11 @@ final class NGC_Admin_Grid {
 	 * Enqueue grid assets when needed.
 	 */
 	public static function enqueue() {
+		static $done = false;
+		if ( $done ) {
+			return;
+		}
+		$done = true;
 		wp_enqueue_style( 'ngt-admin-grid', NGC_PLUGIN_URL . 'assets/css/admin-grid.css', [ 'ngt-admin-tokens' ], NGC_VERSION );
 		wp_enqueue_script( 'ngt-admin-grid', NGC_PLUGIN_URL . 'assets/js/admin-grid.js', [ 'ngt-admin-shell' ], NGC_VERSION, true );
 		wp_localize_script(

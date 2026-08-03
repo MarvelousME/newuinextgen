@@ -98,7 +98,7 @@ $sla      = get_theme_mod('ngt_support_sla', '2 business hours');
             </div>
             <div class="form-field">
               <label for="sf-message">Message <span aria-hidden="true">*</span></label>
-              <textarea id="sf-message" name="message" rows="6" required></textarea>
+              <textarea id="sf-message" name="message" rows="6" class="ngc-wysiwyg" required></textarea>
             </div>
             <div class="form-field form-field--booking-ref">
               <label for="sf-ref">Booking reference (if applicable)</label>

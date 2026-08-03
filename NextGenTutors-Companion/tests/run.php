@@ -607,7 +607,7 @@ ngc_test_assert( 'entity registry has applications', null !== NGC_Admin_Entity_R
 ngc_test_assert( 'entity registry has matches', null !== NGC_Admin_Entity_Registry::get( 'matches' ) );
 ngc_test_assert( 'entity registry has safeguarding', null !== NGC_Admin_Entity_Registry::get( 'safeguarding_cases' ) );
 ngc_test_assert( 'theme designer screen registered', null !== NGC_Admin_Registry::get_screen( 'ngt-admin-theme-designer' ) );
-ngc_test_assert( 'education placeholder registered', null !== NGC_Admin_Registry::get_screen( 'ngt-edu-students' ) );
+ngc_test_assert( 'education students screen registered', null !== NGC_Admin_Registry::get_screen( 'ngt-edu-students' ) );
 
 NGC_Admin_Registry::register_screen(
 	[

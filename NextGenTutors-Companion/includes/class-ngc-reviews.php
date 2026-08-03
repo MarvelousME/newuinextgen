@@ -292,6 +292,55 @@ class NGC_Reviews {
 	}
 
 	/**
+	 * Total published (or all) review rows.
+	 *
+	 * @return int
+	 */
+	public static function count() {
+		global $wpdb;
+		if ( ! class_exists( 'NGC_Database' ) ) {
+			return 0;
+		}
+		$table = NGC_Database::table( 'reviews' );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$exists = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) );
+		if ( ! $exists ) {
+			return 0;
+		}
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" );
+	}
+
+	/**
+	 * Recent review rows for admin listings.
+	 *
+	 * @param int $limit Max rows.
+	 * @return array<int, array<string, mixed>>
+	 */
+	public static function recent( $limit = 25 ) {
+		global $wpdb;
+		if ( ! class_exists( 'NGC_Database' ) ) {
+			return [];
+		}
+		$table = NGC_Database::table( 'reviews' );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$exists = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) );
+		if ( ! $exists ) {
+			return [];
+		}
+		$limit = max( 1, min( 100, (int) $limit ) );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT id, booking_id, parent_user_id, tutor_user_id, rating, comment, status, created_at FROM {$table} ORDER BY id DESC LIMIT %d",
+				$limit
+			),
+			ARRAY_A
+		);
+		return is_array( $rows ) ? $rows : [];
+	}
+
+	/**
 	 * Hook registration.
 	 */
 	public static function init() {

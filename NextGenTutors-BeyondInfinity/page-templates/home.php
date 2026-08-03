@@ -49,9 +49,9 @@ get_header();
       </nav>
       <div class="ngi-hero-grid">
         <div>
-          <div class="ngi-badge ngi-reveal" data-kh-motion="fade-up">⚡ Premium online, in-person and hybrid tutoring</div>
-          <h1 class="ngi-title ngi-reveal" data-kh-animated-typography>Bridging academic gaps with <span class="ngi-accent">world-class tutors</span>.</h1>
-          <p class="ngi-lead ngi-reveal">A conversion-focused learning marketplace for parents, students and tutors across South Africa — with progress tracking, verified tutor matching, booking journeys and CRM-ready follow-up.</p>
+          <div class="ngi-badge ngi-reveal" data-kh-motion="fade-up">⚡ South Africa’s most trusted online tutoring</div>
+          <h1 class="ngi-title ngi-reveal" data-bi-slide-title data-kh-animated-typography>Find your perfect match. <span class="ngi-accent">Learn at your pace.</span></h1>
+          <p class="ngi-lead ngi-reveal">Verified tutors for CAPS, IEB and Cambridge — live online lessons, or meet in person. Built for South African families who want progress without the jargon.</p>
           <div class="ngi-actions ngi-reveal">
             <button class="ngi-btn ngi-btn-primary" data-ngi-open type="button">Find My Tutor</button>
             <a class="ngi-btn ngi-btn-secondary" href="#tutors">Become a Tutor</a>
@@ -94,7 +94,7 @@ get_header();
 
   <section class="ngi-section" id="trust">
     <div class="ngi-wrap">
-      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Trusted learning ecosystem</div><h2 class="ngi-heading">Everything parents need to move from worry to progress.</h2><p class="ngi-subtitle">Designed for NextGenCompanion workflows: registration, tutor matching, booking, CRM follow-up, payment status, dashboards and verification.</p></div>
+      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Trusted learning ecosystem</div><h2 class="ngi-heading" data-bi-slide-title>Everything parents need to move from worry to progress.</h2><p class="ngi-subtitle">Designed for NextGenCompanion workflows: registration, tutor matching, booking, CRM follow-up, payment status, dashboards and verification.</p></div>
       <div class="ngi-card-grid">
         <article class="ngi-card ngi-reveal"><div class="ngi-icon">🧭</div><h3>Guided tutor matching</h3><p>Parents select subjects, grade, province and learning format, then move into the correct registration and CRM journey.</p></article>
         <article class="ngi-card ngi-reveal"><div class="ngi-icon">🧑‍🏫</div><h3>Verified tutor profiles</h3><p>Showcase tutor credentials, subjects, availability, reviews and booking CTAs with a premium marketplace feel.</p></article>
@@ -106,7 +106,7 @@ get_header();
 
   <section class="ngi-section ngi-alt" id="subjects">
     <div class="ngi-wrap">
-      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Subject explorer</div><h2 class="ngi-heading">Click a subject and watch the learning plan adapt.</h2><p class="ngi-subtitle">A KineticHub-inspired interactive content area for a modern tutoring homepage.</p></div>
+      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Subject explorer</div><h2 class="ngi-heading" data-bi-slide-title>Click a subject and watch the learning plan adapt.</h2><p class="ngi-subtitle">A KineticHub-inspired interactive content area for a modern tutoring homepage.</p></div>
       <div class="ngi-subject-shell">
         <div class="ngi-subject-tabs ngi-reveal">
           <button class="ngi-tab is-active" type="button" data-title="Mathematics" data-body="Maths rescue plans, weekly tutoring, exam preparation, homework support and parent progress reports." data-bullets="Grade 1–12|Exam technique|Weekly progress|Homework rescue">Mathematics <span>→</span></button>
@@ -121,7 +121,7 @@ get_header();
 
   <section class="ngi-section" id="journey">
     <div class="ngi-wrap">
-      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Learner journey</div><h2 class="ngi-heading">A clear path from assessment to measurable improvement.</h2></div>
+      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Learner journey</div><h2 class="ngi-heading" data-bi-slide-title>A clear path from assessment to measurable improvement.</h2></div>
       <div class="ngi-steps">
         <div class="ngi-step ngi-reveal"><div class="ngi-num">1</div><b>Assessment</b><p>Identify gaps.</p></div><div class="ngi-step ngi-reveal"><div class="ngi-num">2</div><b>Tutor Match</b><p>Assign fit.</p></div><div class="ngi-step ngi-reveal"><div class="ngi-num">3</div><b>Learning Plan</b><p>Set goals.</p></div><div class="ngi-step ngi-reveal"><div class="ngi-num">4</div><b>Weekly Lessons</b><p>Track work.</p></div><div class="ngi-step ngi-reveal"><div class="ngi-num">5</div><b>Reports</b><p>Show progress.</p></div>
       </div>
@@ -135,7 +135,7 @@ get_header();
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow">KineticHub Free layer</div>
-        <h2 class="ngi-heading ngi-kinetic-text">Motion blocks that make the page feel alive.</h2>
+        <h2 class="ngi-heading ngi-kinetic-text" data-bi-slide-title>Motion blocks that make the page feel alive.</h2>
         <p class="ngi-subtitle">This section maps every enabled KineticHub Free feature into a WordPress-friendly homepage pattern: kinetic boxes, animated typography, magnetic CTAs, marquee, video, split scroll, cursor reveal, audio and before/after proof.</p>
       </div>
       <div class="ngi-feature-grid">
@@ -149,7 +149,7 @@ get_header();
 
   <section class="ngi-section ngi-alt" id="learning-proof">
     <div class="ngi-wrap">
-      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Before / After</div><h2 class="ngi-heading">Show the transformation parents want to see.</h2><p class="ngi-subtitle">Accessible comparison slider for “before tutoring” vs “after structured support”.</p></div>
+      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Before / After</div><h2 class="ngi-heading" data-bi-slide-title>Show the transformation parents want to see.</h2><p class="ngi-subtitle">Accessible comparison slider for “before tutoring” vs “after structured support”.</p></div>
       <div class="ngi-before-after ngi-reveal" aria-label="Before and after progress comparison">
         <div class="ngi-ba-layer ngi-ba-before">Before: Confused, behind, anxious</div>
         <div class="ngi-ba-layer ngi-ba-after" id="ngiBaAfter">After: Confident, supported, improving</div>
@@ -175,7 +175,7 @@ get_header();
 
   <section class="ngi-section ngi-alt" id="cursor-reveal">
     <div class="ngi-wrap">
-      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Cursor Reveal</div><h2 class="ngi-heading">Interactive discovery for learning pathways.</h2></div>
+      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Cursor Reveal</div><h2 class="ngi-heading" data-bi-slide-title>Interactive discovery for learning pathways.</h2></div>
       <div class="ngi-cursor-list ngi-reveal">
         <div>
           <button class="ngi-cursor-item is-active" type="button" data-title="Parent Journey" data-copy="Book assessment, match tutor, track progress and manage payments.">Parent Journey</button>
@@ -190,7 +190,7 @@ get_header();
 
   <section class="ngi-section ngi-alt" id="tutors">
     <div class="ngi-wrap">
-      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Featured tutors</div><h2 class="ngi-heading">Premium marketplace cards ready for real tutor data.</h2><p class="ngi-subtitle">Use these as static homepage highlights or replace with NextGenCompanion tutor directory output.</p></div>
+      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Featured tutors</div><h2 class="ngi-heading" data-bi-slide-title>Premium marketplace cards ready for real tutor data.</h2><p class="ngi-subtitle">Use these as static homepage highlights or replace with NextGenCompanion tutor directory output.</p></div>
       <div class="ngi-tutor-grid">
         <article class="ngi-card ngi-tutor ngi-reveal"><div class="ngi-tutor-visual"><div class="ngi-avatar">MS</div></div><div class="ngi-tutor-body"><h3>Marvin Saunders</h3><p>Senior Technology, Maths and Coding tutor based in KwaZulu-Natal.</p><div class="ngi-tagline"><span class="ngi-tag">Maths</span><span class="ngi-tag">IT</span><span class="ngi-tag">Coding</span></div><button class="ngi-btn ngi-btn-primary" data-ngi-open type="button">Book Marvin</button></div></article>
         <article class="ngi-card ngi-tutor ngi-reveal"><div class="ngi-tutor-visual"><div class="ngi-avatar">NT</div></div><div class="ngi-tutor-body"><h3>Nandi Tutor</h3><p>Physical Science and Mathematics support for high-school learners.</p><div class="ngi-tagline"><span class="ngi-tag">Science</span><span class="ngi-tag">Maths</span><span class="ngi-tag">Online</span></div><button class="ngi-btn ngi-btn-primary" data-ngi-open type="button">Book Nandi</button></div></article>
@@ -201,7 +201,7 @@ get_header();
 
   <section class="ngi-section" id="pricing">
     <div class="ngi-wrap">
-      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Simple packages</div><h2 class="ngi-heading">Flexible learning options for every family.</h2></div>
+      <div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Simple packages</div><h2 class="ngi-heading" data-bi-slide-title>Flexible learning options for every family.</h2></div>
       <div class="ngi-pricing">
         <article class="ngi-card ngi-price ngi-reveal"><h3>Online Boost</h3><strong>R320</strong><p>per hour</p><ul><li>Online tutoring</li><li>Homework support</li><li>Progress notes</li></ul><button class="ngi-btn ngi-btn-primary" data-ngi-open type="button">Start Online</button></article>
         <article class="ngi-card ngi-price is-featured ngi-reveal"><h3>Hybrid Growth</h3><strong>R350</strong><p>per hour</p><ul><li>Online + in-person</li><li>Priority matching</li><li>Parent reporting</li></ul><button class="ngi-btn ngi-btn-primary" data-ngi-open type="button">Choose Hybrid</button></article>
@@ -211,7 +211,7 @@ get_header();
   </section>
 
   <section class="ngi-section ngi-alt" id="faq">
-    <div class="ngi-wrap"><div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Questions</div><h2 class="ngi-heading">Built for trust before parents click.</h2></div><div class="ngi-faq ngi-reveal">
+    <div class="ngi-wrap"><div class="ngi-section-head ngi-reveal"><div class="ngi-eyebrow">Questions</div><h2 class="ngi-heading" data-bi-slide-title>Built for trust before parents click.</h2></div><div class="ngi-faq ngi-reveal">
       <div class="ngi-faq-item"><button class="ngi-faq-q" type="button">Can parents track progress? <span>+</span></button><div class="ngi-faq-a"><p>Yes. The dashboard design highlights attendance, homework, upcoming lessons, tutor notes and progress reports.</p></div></div>
       <div class="ngi-faq-item"><button class="ngi-faq-q" type="button">Does this work with KineticHub Free? <span>+</span></button><div class="ngi-faq-a"><p>Yes. The page uses motion-ready containers and Gutenberg-friendly sections. You can recreate key sections with KineticHub Free blocks, then use this PHP template as the theme-level homepage.</p></div></div>
       <div class="ngi-faq-item"><button class="ngi-faq-q" type="button">Can this connect to Amelia bookings? <span>+</span></button><div class="ngi-faq-a"><p>The CTAs are designed to connect to Amelia or NextGenCompanion booking flows. The modal includes a safe fallback.</p></div></div>

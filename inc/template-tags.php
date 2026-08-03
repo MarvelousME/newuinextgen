@@ -246,7 +246,7 @@ function bi_hero( $title, $subtitle = '', $class = '' ) {
       <div class="<?php echo esc_attr( $bg_class ); ?>"<?php if ( $bg_url ) : ?> style="background-image:url(<?php echo esc_url( $bg_url ); ?>)"<?php if ( function_exists( 'bi_motion_enabled' ) && bi_motion_enabled() ) : ?> data-parallax-rate="0.3"<?php endif; ?><?php endif; ?> aria-hidden="true"></div>
       <div class="ngt-container bi-hero__inner">
         <div class="ngt-hero__content bi-hero__content"<?php if ( function_exists( 'bi_motion_enabled' ) && bi_motion_enabled() ) : ?> data-bi-motion="slide-up"<?php endif; ?>>
-          <h1 class="bi-hero__title"><?php echo esc_html( $title ); ?></h1>
+          <h1 class="bi-hero__title" data-bi-slide-title><?php echo esc_html( $title ); ?></h1>
           <?php if ( $subtitle ) : ?>
             <p class="bi-hero__subtitle"><?php echo esc_html( $subtitle ); ?></p>
           <?php endif; ?>
@@ -668,6 +668,10 @@ function bi_sticky_mobile_cta() {
 }
 
 function bi_whatsapp_fab() {
+    // Superseded by the always-on right-hand float dock (includes WhatsApp).
+    if ( apply_filters( 'bi_use_float_dock', true ) ) {
+        return;
+    }
     $post_id = is_singular() ? get_queried_object_id() : 0;
     if ( bi_theme_option_is_on( 'hide_whatsapp_fab', $post_id ) ) {
         return;
@@ -683,6 +687,66 @@ function bi_whatsapp_fab() {
     <a href="<?php echo esc_url( bi_whatsapp_url( $message ) ); ?>" class="bi-whatsapp-fab" data-testid="bi-whatsapp-fab" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Chat on WhatsApp', 'beyondinfinity' ); ?>">
       <?php echo bi_ui_icon( 'whatsapp', 28 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
     </a>
+    <?php
+}
+
+/**
+ * Mark body when the global float dock is enabled.
+ *
+ * @param string[] $classes Body classes.
+ * @return string[]
+ */
+function bi_float_dock_body_class( $classes ) {
+    if ( apply_filters( 'bi_use_float_dock', true ) ) {
+        $classes[] = 'has-float-dock';
+    }
+    return $classes;
+}
+add_filter( 'body_class', 'bi_float_dock_body_class' );
+
+/**
+ * Always-on right-hand floating dock: back-to-top, match, support, chat, WhatsApp.
+ */
+function bi_float_dock() {
+    if ( is_admin() || bi_is_elementor_canvas_template() || bi_is_builder_edit_mode() ) {
+        return;
+    }
+    if ( ! apply_filters( 'bi_use_float_dock', true ) ) {
+        return;
+    }
+
+    $wa_message = bi_get_theme_option( 'bi_whatsapp_message', 'Hi NextGen Tutors, I need help' );
+    $wa_url     = function_exists( 'bi_whatsapp_url' ) ? bi_whatsapp_url( $wa_message ) : 'https://wa.me/27813340625';
+    $find_url   = home_url( '/find-a-tutor/' );
+    ?>
+    <div class="float-dock float-dock--sticky-fab" id="float-dock" data-testid="float-dock" role="group" aria-label="<?php esc_attr_e( 'Quick actions', 'beyondinfinity' ); ?>">
+      <button type="button" class="fdock-btn fdock-btn--toggle" id="fab-toggle" aria-expanded="false" aria-controls="fab-menu" aria-label="<?php esc_attr_e( 'Open quick actions', 'beyondinfinity' ); ?>">
+        <svg class="fdock-icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
+        <svg class="fdock-icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <a class="fdock-btn fdock-btn--wa float-dock__persist" href="<?php echo esc_url( $wa_url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'WhatsApp', 'beyondinfinity' ); ?>" title="<?php esc_attr_e( 'WhatsApp', 'beyondinfinity' ); ?>" data-testid="wa-dock-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        <span class="fdock-tooltip"><?php esc_html_e( 'WhatsApp', 'beyondinfinity' ); ?></span>
+      </a>
+      <div class="float-dock__actions" id="fab-menu" hidden>
+        <button type="button" class="fdock-btn fdock-btn--top float-dock__item" id="back-to-top" data-fab-index="0" aria-label="<?php esc_attr_e( 'Back to top', 'beyondinfinity' ); ?>" title="<?php esc_attr_e( 'Back to top', 'beyondinfinity' ); ?>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+          <span class="fdock-tooltip"><?php esc_html_e( 'Back to top', 'beyondinfinity' ); ?></span>
+        </button>
+        <a class="fdock-btn fdock-btn--match has-pulse float-dock__item" id="match-dock-btn" data-fab-index="1" href="<?php echo esc_url( $find_url ); ?>" aria-label="<?php esc_attr_e( 'Find a tutor match', 'beyondinfinity' ); ?>" title="<?php esc_attr_e( 'Match Tutor', 'beyondinfinity' ); ?>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.8 5.7 21l2.3-7.2-6-4.6h7.6z"/></svg>
+          <span class="fdock-tooltip"><?php esc_html_e( 'Match Tutor', 'beyondinfinity' ); ?></span>
+        </a>
+        <button type="button" class="fdock-btn fdock-btn--support float-dock__item" id="support-dock-btn" data-fab-index="2" aria-label="<?php esc_attr_e( 'Support', 'beyondinfinity' ); ?>" title="<?php esc_attr_e( 'Support Centre', 'beyondinfinity' ); ?>" data-testid="support-dock-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          <span class="fdock-tooltip"><?php esc_html_e( 'Support', 'beyondinfinity' ); ?></span>
+        </button>
+        <button type="button" class="fdock-btn fdock-btn--livechat float-dock__item" id="chat-dock-btn" data-fab-index="3" aria-label="<?php esc_attr_e( 'Live Chat', 'beyondinfinity' ); ?>" title="<?php esc_attr_e( 'Live Chat', 'beyondinfinity' ); ?>" data-testid="chat-dock-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span class="fdock-tooltip"><?php esc_html_e( 'Live Chat', 'beyondinfinity' ); ?></span>
+        </button>
+      </div>
+    </div>
     <?php
 }
 

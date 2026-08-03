@@ -77,6 +77,9 @@ class NGC_UI_Booking_Data_Provider extends NGC_UI_Data_Provider {
 			'createdAt'   => $row['createdAt'] ?? '',
 			'status'      => $row['status'] ?? '',
 			'statusLabel' => $row['statusLabel'] ?? '',
+			'bookingId'   => $row['bookingId'] ?? $row['id'] ?? 0,
+			'joinUrl'     => $row['joinUrl'] ?? '',
+			'canJoin'     => ! empty( $row['canJoin'] ),
 		];
 	}
 

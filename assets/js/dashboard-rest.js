@@ -54,12 +54,18 @@
   }
 
   function sessionRow(s) {
+    var join = s.canJoin && (s.joinUrl || s.join_url)
+      ? '<a class="bi-dash-session__join ngt-btn ngt-btn--sm ngt-btn--primary" href="' + esc(s.joinUrl || s.join_url) + '" target="_blank" rel="noopener noreferrer">' +
+        esc("Join lesson") +
+        "</a>"
+      : "";
     return (
       '<div class="bi-dash-session">' +
       (s.peerImage ? '<img src="' + esc(s.peerImage) + '" alt="" class="bi-dash-session__img" loading="lazy" />' : "") +
       '<div class="bi-dash-session__body"><div class="bi-dash-session__title">' +
       esc(s.peerName) + " · " + esc(s.subject) +
       '</div><div class="bi-dash-session__meta">' + esc(fmtDate(s.createdAt)) + "</div></div>" +
+      join +
       '<span class="bi-dash-session__status">' + esc(s.statusLabel || s.attendance || "") + "</span></div>"
     );
   }
@@ -74,6 +80,11 @@
    */
   function nextSessionHero(s) {
     if (!s) return "";
+    var join = s.canJoin && (s.joinUrl || s.join_url)
+      ? '<a class="bi-dash-hero__join ngt-btn ngt-btn--primary" href="' + esc(s.joinUrl || s.join_url) + '" target="_blank" rel="noopener noreferrer">' +
+        esc("Join audio + video lesson") +
+        "</a>"
+      : "";
     return (
       '<div class="bi-dash-hero ngt-card">' +
       '<div class="bi-dash-hero__eyebrow">' + esc("Next session") + "</div>" +
@@ -82,6 +93,7 @@
       '<div class="bi-dash-hero__body">' +
       '<div class="bi-dash-hero__title">' + esc(s.peerName) + " · " + esc(s.subject) + "</div>" +
       '<div class="bi-dash-hero__meta">' + esc(fmtDate(s.createdAt)) + (s.statusLabel ? " · " + esc(s.statusLabel) : "") + "</div>" +
+      join +
       "</div></div></div>"
     );
   }

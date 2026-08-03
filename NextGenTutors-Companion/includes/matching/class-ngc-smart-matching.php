@@ -276,7 +276,7 @@ class NGC_Smart_Matching {
 					</div>
 					<div class="ngc-field-group">
 						<label for="<?php echo esc_attr( $id_prefix ); ?>-needs"><?php esc_html_e( 'Specific needs (optional)', 'nextgencompanion' ); ?></label>
-						<textarea id="<?php echo esc_attr( $id_prefix ); ?>-needs" name="needs" rows="3" data-validate="no-script"></textarea>
+						<textarea id="<?php echo esc_attr( $id_prefix ); ?>-needs" name="needs" rows="3" class="ngc-wysiwyg" data-validate="no-script"></textarea>
 					</div>
 					<button type="submit" class="ngc-btn ngc-btn-accent ngc-match-submit">
 						<span class="ngc-btn-label"><?php esc_html_e( 'Find My Tutor', 'nextgencompanion' ); ?></span>

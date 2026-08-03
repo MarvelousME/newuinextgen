@@ -117,7 +117,7 @@ function bi_page_heading( $title, $subtitle = '', $eyebrow = '' ) {
 	if ( $eyebrow ) {
 		echo '<p class="ng-page-heading__eyebrow">' . esc_html( $eyebrow ) . '</p>';
 	}
-	echo '<h2 class="ng-page-heading__title">' . esc_html( $title ) . '</h2>';
+	echo '<h2 class="ng-page-heading__title" data-bi-slide-title>' . esc_html( $title ) . '</h2>';
 	if ( $subtitle ) {
 		echo '<p class="ng-page-heading__subtitle">' . esc_html( $subtitle ) . '</p>';
 	}
@@ -214,7 +214,7 @@ function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
 			<div class="ng-page-hero__scrim" aria-hidden="true"></div>
 			<div class="ng-container ng-page-hero__inner">
 				<div class="ng-page-hero__copy ng-reveal" data-bi-motion="slide-up">
-					<h1 id="ng-page-hero-title" class="ng-page-hero__title"><?php echo esc_html( $title ); ?></h1>
+					<h1 id="ng-page-hero-title" class="ng-page-hero__title" data-bi-slide-title><?php echo esc_html( $title ); ?></h1>
 					<?php if ( $subtitle ) : ?>
 						<p class="ng-page-hero__subtitle"><?php echo esc_html( $subtitle ); ?></p>
 					<?php endif; ?>
@@ -274,7 +274,7 @@ function bi_page_render_footer_band( $slug = '' ) {
 	<section class="ng-page-footer-band ng-reveal" aria-label="<?php esc_attr_e( 'Get started', 'beyondinfinity' ); ?>">
 		<div class="ng-container ng-page-footer-band__inner">
 			<div>
-				<h2 class="ng-page-footer-band__title"><?php esc_html_e( 'Ready to find the right tutor?', 'beyondinfinity' ); ?></h2>
+				<h2 class="ng-page-footer-band__title" data-bi-slide-title><?php esc_html_e( 'Ready to find the right tutor?', 'beyondinfinity' ); ?></h2>
 				<p class="ng-page-footer-band__text"><?php esc_html_e( 'Vetted educators, transparent pricing, and a risk-free first lesson.', 'beyondinfinity' ); ?></p>
 			</div>
 			<div class="ng-page-footer-band__actions">

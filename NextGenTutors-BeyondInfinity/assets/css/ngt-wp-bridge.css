@@ -9,22 +9,25 @@ body.bi-ngt-skin {
   font-family: var(--font-sans, "Open Sans", system-ui, sans-serif);
 }
 
-/* Theme nav — solid theme blue chrome (no header CTAs) */
+/* Theme nav — solid theme blue chrome (no header CTAs); always pinned */
 body.bi-ngt-skin .ngt-nav {
-  position: fixed;
+  position: fixed !important;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: var(--bi-z-header, 40);
   height: var(--nav-h, 88px);
-  display: flex;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   align-items: center;
   transition: background 0.35s var(--ease-smooth, ease), box-shadow 0.35s, height 0.3s;
   border-bottom: 3px solid rgba(174, 206, 97, 0.55);
   background: var(--blue, #1a5594);
   background: linear-gradient(180deg, var(--blue, #1a5594) 0%, var(--navy, #092746) 100%);
-  box-shadow: 0 10px 28px rgba(7, 23, 47, 0.28);
+  box-shadow: none;
   color: #fff;
+  pointer-events: auto;
 }
 
 body.bi-ngt-skin .ngt-nav.is-solid,
@@ -34,7 +37,7 @@ body.bi-ngt-skin .ngt-nav.ngt-nav--transparent {
   background: linear-gradient(180deg, var(--blue, #1a5594) 0%, var(--navy, #092746) 100%);
   backdrop-filter: none;
   border-bottom-color: rgba(174, 206, 97, 0.65);
-  box-shadow: 0 10px 28px rgba(7, 23, 47, 0.28);
+  box-shadow: 0 12px 32px rgba(7, 23, 47, 0.28);
   height: 72px;
 }
 

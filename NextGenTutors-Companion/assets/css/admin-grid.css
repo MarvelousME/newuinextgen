@@ -1,4 +1,4 @@
-/* Enterprise data grid */
+/* Enterprise data grid + responsive Open modal */
 .ngt-admin-grid { background: var(--ngt-admin-table); border-radius: var(--ngt-admin-card-radius); box-shadow: var(--ngt-admin-shadow); padding: 12px; }
 .ngt-admin-grid__toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; align-items: center; }
 .ngt-admin-grid__search { min-width: 220px; }
@@ -10,9 +10,145 @@
 .ngt-admin-grid__table tr:hover { background: #f8fafc; }
 .ngt-admin-grid__footer { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
 .ngt-admin-grid__meta { margin-right: auto; color: #64748b; font-size: 12px; }
-.ngt-admin-grid__detail {
-  margin-top: 12px; border: 1px solid #e2e8f0; border-radius: var(--ngt-admin-radius); padding: 12px; background: #fff;
-}
+.ngt-admin-grid__detail { display: none !important; }
 .ngt-admin-grid__col-menu {
   position: absolute; z-index: 20; background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px; box-shadow: var(--ngt-admin-shadow);
+}
+
+.ngt-grid-open {
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none !important;
+  color: #1d4ed8;
+}
+.ngt-grid-open:hover,
+.ngt-grid-open:focus-visible {
+  color: #1e3a8a;
+  text-decoration: underline;
+}
+
+/* Responsive record modal (shared) */
+.ngt-grid-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  box-sizing: border-box;
+}
+.ngt-grid-modal.is-open {
+  display: flex;
+}
+.ngt-grid-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(2px);
+}
+.ngt-grid-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(920px, 100%);
+  max-height: min(88vh, 900px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.28);
+  overflow: hidden;
+}
+.ngt-grid-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+.ngt-grid-modal__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  flex: 1;
+  line-height: 1.3;
+  word-break: break-word;
+}
+.ngt-grid-modal__close {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: #e2e8f0;
+  color: #0f172a;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.ngt-grid-modal__close:hover,
+.ngt-grid-modal__close:focus-visible {
+  background: #cbd5e1;
+}
+.ngt-grid-modal__body {
+  padding: 16px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+.ngt-grid-modal__body .ngt-admin-field {
+  display: block;
+  margin-bottom: 12px;
+}
+.ngt-grid-modal__body .ngt-admin-field span {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #334155;
+}
+.ngt-grid-modal__body input,
+.ngt-grid-modal__body select,
+.ngt-grid-modal__body textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.ngt-grid-modal__frame {
+  width: 100%;
+  min-height: 60vh;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+}
+.ngt-grid-modal__loading {
+  color: #64748b;
+  padding: 24px 8px;
+  text-align: center;
+}
+
+html.ngt-grid-modal-open,
+html.ngt-grid-modal-open body {
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .ngt-grid-modal {
+    padding: 0;
+    align-items: stretch;
+  }
+  .ngt-grid-modal__panel {
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+  .ngt-grid-modal__body {
+    padding: 14px;
+  }
+  .ngt-grid-modal__frame {
+    min-height: calc(100vh - 72px);
+  }
 }

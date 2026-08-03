@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'BI_VERSION', '1.9.17' );
+define( 'BI_VERSION', '1.9.28' );
 define( 'BI_DIR', get_stylesheet_directory() );
 define( 'BI_URI', get_stylesheet_directory_uri() );
 if ( ! defined( 'NGT_URI' ) ) {
@@ -18,6 +18,7 @@ if ( ! defined( 'NGT_DIR' ) ) {
 }
 
 require_once BI_DIR . '/inc/helpers.php';
+require_once BI_DIR . '/inc/brand-content.php';
 require_once BI_DIR . '/inc/companion.php';
 require_once BI_DIR . '/inc/security.php';
 require_once BI_DIR . '/inc/shortcodes-fallback.php';
@@ -87,6 +88,7 @@ function bi_enqueue_assets() {
 
     wp_enqueue_style( 'bi-style', get_stylesheet_uri(), $deps, BI_VERSION );
     wp_enqueue_style( 'bi-components', BI_URI . '/assets/css/components.css', [ 'bi-style' ], BI_VERSION );
+    wp_enqueue_style( 'bi-hero-brand', BI_URI . '/assets/css/bi-hero-brand.css', [ 'bi-components' ], BI_VERSION );
     wp_enqueue_style( 'bi-sections', BI_URI . '/assets/css/sections.css', [ 'bi-style' ], BI_VERSION );
     wp_enqueue_style( 'bi-nav-menu', BI_URI . '/assets/css/nav-menu.css', [ 'bi-style' ], BI_VERSION );
     wp_enqueue_style( 'bi-ngt-toast', BI_URI . '/assets/css/ngt-toast.css', [ 'bi-style' ], BI_VERSION );

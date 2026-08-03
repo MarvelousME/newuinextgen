@@ -8,8 +8,8 @@
 | **Stack** | WordPress 6.7+ · PHP 8.2+ · MySQL 8.0 |
 | **Theme** | BeyondInfinity (`BI_VERSION` 1.9.9) — workspace root |
 | **Core plugin** | NextGenTutors-Companion (`NGC_VERSION` 1.9.0) |
-| **Local dev** | Docker @ http://localhost:8900 |
-| **Last doc refresh** | 2026-07-13 |
+| **Local dev** | Docker @ http://localhost:8890 (+ Agent Gateway :8787) |
+| **Last doc refresh** | 2026-08-03 |
 
 ---
 
@@ -23,6 +23,9 @@
 | **Commercial deploy** | [COMMERCIAL-DEPLOYMENT-GUIDE.md](COMMERCIAL-DEPLOYMENT-GUIDE.md) | Licensed deployment, environments, go-live |
 | **Production ops** | [PRODUCTION-READINESS.md](PRODUCTION-READINESS.md) | Enterprise checklist, SLOs, sign-off |
 | **Developers** | [DEVELOPER-GUIDE.md](DEVELOPER-GUIDE.md) | Onboarding, contracts, extension points |
+| **Agentic / MCP** | [GUIDES/AGENTIC-HOW-TO-USE.md](GUIDES/AGENTIC-HOW-TO-USE.md) | Control plane, tools, gateway, Docker :8890 |
+| **Free MCP config** | [GUIDES/MCP-SERVERS-FREE-CONFIG.md](GUIDES/MCP-SERVERS-FREE-CONFIG.md) | Cursor vs product MCP inventory |
+| **Codemaps** | [CODEMAPS/INDEX.md](CODEMAPS/INDEX.md) | Architecture maps from code |
 | **Architects** | [../ARCHITECTURE.md](../ARCHITECTURE.md) | SOLID package boundaries (repo root) |
 | **Operators** | [tutorials/OPERATOR-TUTORIALS.md](tutorials/OPERATOR-TUTORIALS.md) | Plugin Manager, Docker, fleet install |
 | **End users** | [tutorials/user-manuals.md](tutorials/user-manuals.md) | Parent, tutor, admin, finance, support manuals |

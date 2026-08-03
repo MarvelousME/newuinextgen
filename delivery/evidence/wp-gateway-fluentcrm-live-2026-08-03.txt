@@ -1,0 +1,8 @@
+﻿WP_URL=http://localhost:8890
+WP_HOME=200 WP_ADMIN=200 WP_REST=200
+WP_CORE=7.0.1
+GATEWAY=http://host.docker.internal:8787
+HEALTH_OK mode=official-a2a-js-sdk
+TASK_OK status=completed
+LEAD_OK + CRM_OK contact=21 CRM_RESYNC_OK contact=21
+AGENTIC_SMOKE=11/11 pages HTTP 200

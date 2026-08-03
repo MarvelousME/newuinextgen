@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head><meta charset="UTF-8"><title>Rate Session</title></head>
+<body style="margin:0;padding:0;background-color:#f4f6f8;font-family:sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f8;">
+        <tr><td align="center" style="padding: 20px 0;">
+            <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:8px;overflow:hidden;">
+                <tr>
+                    <td align="center" style="background-color:#ffffff;border-bottom:4px solid #0066cc;padding: 20px;">
+                        <h1 style="color:#0f172a;margin:0;font-size:22px;">Rate Your Session</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 30px 40px;">
+                        <p style="color:#334155;line-height:1.6;margin:0 0 20px;">
+                            Hi {{contact.first_name}}, hope {{contact.child_name}} had a great session with {{contact.custom.tutor_name}}!
+                        </p>
+                        <p style="color:#334155;line-height:1.6;margin:0 0 20px;">
+                            Your feedback helps us maintain high standards and rewards our best tutors. It only takes 1 minute.
+                        </p>
+                        <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 24px 0;">
+                            <tr><td align="center" style="background-color:#00c896;border-radius:6px;"><a href="{{contact.custom.rating_link}}" style="display:inline-block;padding:12px 28px;color:#0f172a;font-weight:600;text-decoration:none;">⭐ Rate This Session</a></td></tr>
+                        </table>
+                        <p style="color:#64748b;font-size:13px;text-align:center;margin:20px 0;">
+                            ⚡ Rating 5 stars? You'll unlock exclusive progress reports!<br>
+                            😞 Rating < 3 stars? Our support team will contact you immediately.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#f8fafc;padding: 24px 40px;border-top:1px solid #e2e8f0;">
+                        <p style="color:#94a3b8;font-size:12px;margin:0;">
+                            <strong>Privacy:</strong> Your rating is anonymous to the tutor until published. <a href="{{contact.unsubscribe_url}}" style="color:#64748b;">Unsubscribe</a>
+                        </p>
+                        <p style="color:#94a3b8;font-size:12px;margin:10px 0 0;">NextGen Tutors (Pty) Ltd | www.nextgentutors.co.za</p>
+                    </td>
+                </tr>
+            </table>
+        </td></tr>
+    </table>
+</body>
+</html>

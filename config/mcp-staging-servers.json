@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "environment": "staging",
+  "note": "Product-runtime MCP inventory for Docker :8890. Cursor IDE MCPs are separate (.cursor/mcp.json).",
+  "servers": [
+    {
+      "id": "ngt_firstparty_gateway",
+      "display_name": "NGT First-Party Gateway MCP",
+      "description": "Controlled allowlist via Agent Gateway (ping, business.profile.get, health.summary). danger.shell is discoverable but never executable.",
+      "environment": "staging",
+      "enabled": true,
+      "ownership": "first_party",
+      "transport": "streamable_http",
+      "endpoint": "http://agent-gateway:8787/health",
+      "auth_type": "hmac",
+      "allow_local": true,
+      "allowed_tools": ["ping", "business.profile.get", "health.summary"],
+      "denied_tools": ["danger.shell", "shell.unrestricted", "agent.secret.exfiltrate"],
+      "allowed_resources": ["ngt://business-profile"],
+      "allowed_prompts": ["draft_social_post"],
+      "data_classifications": ["public", "internal"],
+      "require_tls": false,
+      "approval_policy": "human",
+      "capabilities_approved": true,
+      "discovered_capabilities": {
+        "tools": [
+          { "name": "ping", "description": "Non-mutating health ping" },
+          { "name": "business.profile.get", "description": "Read business profile summary" },
+          { "name": "health.summary", "description": "Gateway health summary" },
+          { "name": "danger.shell", "description": "MUST remain denied" }
+        ],
+        "resources": [{ "uri": "ngt://business-profile", "name": "Business profile" }],
+        "prompts": [{ "name": "draft_social_post" }]
+      },
+      "kill_switch": false
+    }
+  ],
+  "cursor_only_do_not_register_in_wp": [
+    "filesystem",
+    "memory",
+    "sequentialthinking",
+    "playwright",
+    "github-official",
+    "deepwiki",
+    "brave",
+    "ai-dev-jobs"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Find a Tutor (Intake)",
+  "fields": [
+    {"name":"full_name","type":"text","label":"Parent/Guardian Name","required":true},
+    {"name":"student_grade","type":"select","label":"Learner Grade","options":["Primary (R-7)","High School (8-12)","Tertiary"],"required":true},
+    {"name":"subject","type":"select","label":"Subject Needed","options":["Mathematics","Physical Science","Accounting","English","Life Sciences","Tertiary Support"],"required":true},
+    {"name":"province","type":"select","label":"Province","options":["Gauteng","Western Cape","KZN","Eastern Cape","Free State","Limpopo","Mpumalanga","North West","Northern Cape"],"required":true},
+    {"name":"email","type":"email","label":"Email","required":true},
+    {"name":"phone","type":"tel","label":"WhatsApp/Phone","required":true},
+    {"name":"popia_consent","type":"checkbox","label":"I consent to data processing per POPIA.","required":true}
+  ],
+  "settings": {
+    "email_notifications": [{"to":"admin","subject":"New Tutor Inquiry"}],
+    "crm_integration": {"list":"Tutor Applicants","tags":["Lead","Prospective Parent"]}
+  }
+}

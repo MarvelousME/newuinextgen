@@ -1,0 +1,106 @@
+{
+  "name": "NextGen Tutors — Zoom Recording Sync & POPIA Compliance",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zoom-recording",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "zoom-webhook",
+      "name": "Zoom Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "zoom-recording"
+    },
+    {
+      "parameters": {
+        "jsCode": "const secret = process.env.ZOOM_WEBHOOK_SECRET;\nconst rawBody = $input.item.json.body;\nconst signature = $input.item.json.headers['x-zm-signature'];\n\nif (!signature) throw new Error('Missing Zoom signature');\nconst expected = crypto.createHmac('sha256', secret).update(rawBody).digest('hex');\nif (!crypto.timingSafeEqual(Buffer.from(signature, 'hex'), Buffer.from(expected, 'hex'))) throw new Error('Invalid Zoom HMAC');\n\nreturn { json: JSON.parse(rawBody) };"
+      },
+      "id": "verify-zoom-sig",
+      "name": "Verify Zoom v2 Signature",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [{ "value1": "={{ $json.event }}", "operation": "isEqual", "value2": "recording.completed" }]
+        }
+      },
+      "id": "filter-event",
+      "name": "Is Recording Completed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.WP_API_URL }}/wp-json/ngt/v1/zoom/register-recording",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Authorization", "value": "Bearer {{ $env.WP_API_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"zoom_uuid\": \"{{ $json.payload.object.uuid }}\",\n  \"recording_url\": \"{{ $json.payload.object.recording_files[0].download_url }}\",\n  \"start_time\": \"{{ $json.payload.object.start_time }}\"\n}"
+      },
+      "id": "store-in-wp",
+      "name": "Store Recording in WordPress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "return { json: { ...$input.first().json, popia_deletion_scheduled: true, deletion_date: new Date(Date.now() + 30*24*60*60*1000).toISOString() } };"
+      },
+      "id": "mark-popia-scheduled",
+      "name": "Log POPIA 30-Day Deletion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [1050, 200]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@nextgentutors.co.za",
+        "toEmail": "={{ $json.payload.object.host_id ? 'tutor@nextgentutors.co.za' : 'parent@nextgentutors.co.za' }}",
+        "subject": "Session Recording Available — NextGen Tutors",
+        "html": "<p>Your recent tutoring session recording is now available.<br><br><a href='{{ $json.payload.object.recording_files[0].download_url }}' style='background:#0066cc;color:white;padding:10px 15px;text-decoration:none;border-radius:4px'>Download Recording</a><br><br><strong>POPIA Notice:</strong> This recording will be automatically deleted in 30 days per our data retention policy.<br><br>NextGen Tutors Team</p>"
+      },
+      "id": "notify-users",
+      "name": "Send Recording Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [1250, 200]
+    },
+    {
+      "parameters": {},
+      "id": "zoom-response",
+      "name": "Return 200 OK to Zoom",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1450, 200]
+    }
+  ],
+  "connections": {
+    "Zoom Webhook Trigger": { "main": [[{ "node": "Verify Zoom v2 Signature", "type": "main", "index": 0 }]] },
+    "Verify Zoom v2 Signature": { "main": [[{ "node": "Is Recording Completed?", "type": "main", "index": 0 }]] },
+    "Is Recording Completed?": { 
+      "main": [
+        [{ "node": "Store Recording in WordPress", "type": "main", "index": 0 }],
+        []
+      ] 
+    },
+    "Store Recording in WordPress": { "main": [[{ "node": "Log POPIA 30-Day Deletion", "type": "main", "index": 0 }]] },
+    "Log POPIA 30-Day Deletion": { "main": [[{ "node": "Send Recording Notification", "type": "main", "index": 0 }]] },
+    "Send Recording

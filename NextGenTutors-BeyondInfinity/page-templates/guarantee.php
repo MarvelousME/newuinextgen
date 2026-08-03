@@ -9,12 +9,9 @@ get_template_part('template-parts/nav');
 
 <section class="guar-hero section" aria-labelledby="guar-hero-title">
   <div class="container guar-hero__inner">
-    <div class="guar-hero__seal" aria-hidden="true">
-      <i data-lucide="shield-check"></i>
-    </div>
     <div class="guar-hero__copy">
       <span class="badge badge--lime">Our Promise</span>
-      <h1 id="guar-hero-title">The NextGen Tutors<br>No-Surprise Guarantee</h1>
+      <h1 id="guar-hero-title" data-bi-slide-title>The NextGen Tutors<br>No-Surprise Guarantee</h1>
       <p>We guarantee the quality of every tutoring session booked through our platform. If you're not satisfied — for any reason — we will make it right.</p>
       <a href="<?php echo esc_url(ngt_get_page_url('find_tutor')); ?>" class="btn btn--lime btn--lg">Find a Tutor</a>
     </div>
@@ -24,7 +21,7 @@ get_template_part('template-parts/nav');
 <!-- WHAT WE GUARANTEE -->
 <section class="guar-coverage section" aria-labelledby="guar-cov-title">
   <div class="container">
-    <h2 id="guar-cov-title" class="section__title">What We Cover</h2>
+    <h2 id="guar-cov-title" class="section__title" data-bi-slide-title>What We Cover</h2>
     <p class="section__sub">Our guarantee applies to every session booked and paid through the NextGen Tutors platform.</p>
     <ul class="guar-cards" role="list">
       <?php

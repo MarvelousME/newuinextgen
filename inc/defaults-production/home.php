@@ -125,7 +125,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
 <?php return; endif; ?>
 
 <div class="ngi-home" id="nextgen-home">
-  <button class="ngi-sticky" data-ngi-open type="button"><?php esc_html_e( 'Book Free Assessment', 'beyondinfinity' ); ?></button>
+  <?php /* Floating Book CTA removed — right-hand float dock covers global actions. */ ?>
 
   <?php if ( bi_home_section_enabled( 'hero' ) ) : ?>
   <section class="ngi-hero ngi-hero--theme ngi-hero--cinematic<?php echo function_exists( 'bi_get_hero_video_url' ) && bi_get_hero_video_url() ? ' ngi-hero--has-video' : ''; ?>" aria-label="<?php esc_attr_e( 'NextGen Tutors homepage hero', 'beyondinfinity' ); ?>">
@@ -243,7 +243,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_trust['eyebrow'] ?? __( 'Trusted learning ecosystem', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_trust['heading'] ?? __( 'Everything parents need to move from worry to progress.', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_trust['heading'] ?? __( 'Everything parents need to move from worry to progress.', 'beyondinfinity' ) ); ?></h2>
         <p class="ngi-subtitle"><?php echo esc_html( $cms_trust['subtitle'] ?? __( 'Registration, tutor matching, booking, CRM follow-up, payment status, dashboards and verification — built for South African families.', 'beyondinfinity' ) ); ?></p>
       </div>
       <div class="ngi-card-grid">
@@ -293,7 +293,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_subjects['eyebrow'] ?? __( 'Subject explorer', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_subjects['title'] ?? __( 'Click a subject and watch the learning plan adapt.', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_subjects['title'] ?? __( 'Click a subject and watch the learning plan adapt.', 'beyondinfinity' ) ); ?></h2>
         <p class="ngi-subtitle"><?php echo esc_html( $cms_subjects['subtitle'] ?? __( 'Every track is mapped to CAPS, IEB and Cambridge outcomes.', 'beyondinfinity' ) ); ?></p>
       </div>
       <div class="ngi-subject-shell">
@@ -329,7 +329,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_journey['eyebrow'] ?? __( 'Learner journey', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_journey['title'] ?? __( 'A clear path from assessment to measurable improvement.', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_journey['title'] ?? __( 'A clear path from assessment to measurable improvement.', 'beyondinfinity' ) ); ?></h2>
       </div>
       <div class="ngi-steps">
         <?php
@@ -361,6 +361,10 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   </section>
   <?php endif; ?>
 
+  <?php if ( bi_home_section_enabled( 'narrative' ) && function_exists( 'bi_render_tutoring_narrative_scroll' ) ) : ?>
+    <?php bi_render_tutoring_narrative_scroll(); ?>
+  <?php endif; ?>
+
   <div class="ngi-scroll-divider" aria-hidden="true"><span id="ngiScrollDivider"></span></div>
 
   <?php if ( bi_home_section_enabled( 'highlights' ) ) : ?>
@@ -368,7 +372,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php esc_html_e( 'Why families choose us', 'beyondinfinity' ); ?></div>
-        <h2 class="ngi-heading ngi-kinetic-text"><?php esc_html_e( 'Clear proof, safer matching, better first lessons.', 'beyondinfinity' ); ?></h2>
+        <h2 class="ngi-heading ngi-kinetic-text" data-bi-slide-title><?php esc_html_e( 'Clear proof, safer matching, better first lessons.', 'beyondinfinity' ); ?></h2>
         <p class="ngi-subtitle"><?php esc_html_e( 'From vetted tutors to parent dashboards and a first-lesson guarantee — every step is built for confidence.', 'beyondinfinity' ); ?></p>
       </div>
       <div class="ngi-feature-grid">
@@ -406,7 +410,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_proof['eyebrow'] ?? __( 'Before / After', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_proof['title'] ?? __( 'Show the transformation parents want to see.', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_proof['title'] ?? __( 'Show the transformation parents want to see.', 'beyondinfinity' ) ); ?></h2>
       </div>
       <div class="ngi-before-after ngi-reveal" aria-label="<?php esc_attr_e( 'Before and after progress comparison', 'beyondinfinity' ); ?>">
         <div class="ngi-ba-layer ngi-ba-before"><?php esc_html_e( 'Before: Confused, behind, anxious', 'beyondinfinity' ); ?></div>
@@ -472,7 +476,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_pathways['eyebrow'] ?? __( 'Learning pathways', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_pathways['title'] ?? __( 'Interactive discovery for every role.', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_pathways['title'] ?? __( 'Interactive discovery for every role.', 'beyondinfinity' ) ); ?></h2>
       </div>
       <?php
         $pathways_3d = function_exists( 'bi_3d_enabled' ) && bi_3d_enabled();
@@ -531,7 +535,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_tutors['eyebrow'] ?? __( 'Featured tutors', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_tutors['title'] ?? __( 'Vetted educators ready to book.', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_tutors['title'] ?? __( 'Vetted educators ready to book.', 'beyondinfinity' ) ); ?></h2>
       </div>
       <?php ng_ui_component( 'tutor-card', [ 'limit' => 6 ] ); ?>
     </div>
@@ -548,7 +552,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_tutors['eyebrow'] ?? __( 'Featured tutors', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_tutors['title'] ?? __( 'Vetted educators ready to book.', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_tutors['title'] ?? __( 'Vetted educators ready to book.', 'beyondinfinity' ) ); ?></h2>
         <p class="ngi-subtitle"><?php echo esc_html( $cms_tutors['subtitle'] ?? __( 'Verified tutors from our directory — CAPS, IEB and Cambridge support.', 'beyondinfinity' ) ); ?></p>
       </div>
       <div class="ngi-tutor-grid">
@@ -592,7 +596,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_pricing['eyebrow'] ?? __( 'Transparent pricing', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_pricing['title'] ?? __( 'Flat Monthly Packages.', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_pricing['title'] ?? __( 'Flat Monthly Packages.', 'beyondinfinity' ) ); ?></h2>
         <?php if ( ! empty( $cms_pricing['subtitle'] ) ) : ?>
           <p class="ngi-subtitle"><?php echo esc_html( $cms_pricing['subtitle'] ); ?></p>
         <?php endif; ?>
@@ -647,26 +651,48 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_reviews['eyebrow'] ?? __( 'Happy clients · real marks', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_reviews['title'] ?? __( 'The Joy of Achievement', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_reviews['title'] ?? __( 'The Joy of Achievement', 'beyondinfinity' ) ); ?></h2>
         <p class="ngi-subtitle"><?php echo esc_html( $cms_reviews['subtitle'] ?? bi_testimonials_source_label() ); ?></p>
         <?php if ( bi_testimonials_use_demo_data() ) : ?>
           <p class="ngi-demo-note" role="note"><?php esc_html_e( 'Demo stories — replace with verified reviews from your testimonial directory after launch.', 'beyondinfinity' ); ?></p>
         <?php endif; ?>
       </div>
-      <div class="ngi-testimonials">
-        <?php foreach ( bi_get_featured_testimonials() as $t ) : ?>
-          <article class="ngi-card ngi-testimonial ngi-reveal">
-            <?php bi_kinetic_stars( $t['stars'] ); ?>
-            <blockquote class="ngi-testimonial__quote">"<?php echo esc_html( $t['quote'] ); ?>"</blockquote>
-            <div class="ngi-testimonial__head">
-              <div class="ngi-testimonial__avatar" aria-hidden="true"><?php echo esc_html( bi_kinetic_initials( $t['author'] ) ); ?></div>
-              <div>
-                <div class="ngi-testimonial__author"><?php echo esc_html( $t['author'] ); ?></div>
-                <div class="ngi-testimonial__role"><?php echo esc_html( $t['role'] ); ?></div>
-              </div>
-            </div>
-          </article>
-        <?php endforeach; ?>
+      <div class="ngi-testimonials-marquee" data-bi-testimonial-marquee>
+        <div class="ngi-testimonials-marquee__viewport">
+          <div class="ngi-testimonials-marquee__track">
+            <?php
+            $testimonials = bi_get_featured_testimonials();
+            // Duplicate once for a seamless infinite loop.
+            $loop_items = array_merge( $testimonials, $testimonials );
+            foreach ( $loop_items as $i => $t ) :
+              $avatar = ! empty( $t['avatar'] ) ? (string) $t['avatar'] : '';
+              ?>
+              <article class="ngi-card ngi-testimonial"<?php echo $i >= count( $testimonials ) ? ' aria-hidden="true"' : ''; ?>>
+                <?php bi_kinetic_stars( $t['stars'] ); ?>
+                <blockquote class="ngi-testimonial__quote">"<?php echo esc_html( $t['quote'] ); ?>"</blockquote>
+                <div class="ngi-testimonial__head">
+                  <?php if ( $avatar ) : ?>
+                    <img
+                      class="ngi-testimonial__avatar ngi-testimonial__avatar--photo"
+                      src="<?php echo esc_url( $avatar ); ?>"
+                      alt=""
+                      width="48"
+                      height="48"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  <?php else : ?>
+                    <div class="ngi-testimonial__avatar" aria-hidden="true"><?php echo esc_html( bi_kinetic_initials( $t['author'] ) ); ?></div>
+                  <?php endif; ?>
+                  <div>
+                    <div class="ngi-testimonial__author"><?php echo esc_html( $t['author'] ); ?></div>
+                    <div class="ngi-testimonial__role"><?php echo esc_html( $t['role'] ); ?></div>
+                  </div>
+                </div>
+              </article>
+            <?php endforeach; ?>
+          </div>
+        </div>
       </div>
       <div style="text-align:center;margin-top:32px" class="ngi-reveal">
         <a class="ngi-btn ngi-btn-primary" href="<?php echo esc_url( $find_url ); ?>"><?php esc_html_e( 'Find a Tutor Like These Families', 'beyondinfinity' ); ?></a>
@@ -685,7 +711,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_faq_meta['eyebrow'] ?? __( 'Questions', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading"><?php echo esc_html( $cms_faq_meta['title'] ?? __( 'Common Questions', 'beyondinfinity' ) ); ?></h2>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_faq_meta['title'] ?? __( 'Common Questions', 'beyondinfinity' ) ); ?></h2>
       </div>
       <div class="ngi-faq ngi-reveal">
         <?php foreach ( $faqs as $faq ) : ?>

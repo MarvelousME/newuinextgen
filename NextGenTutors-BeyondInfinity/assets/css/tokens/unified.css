@@ -49,7 +49,10 @@
   --ngt-z-base: 0;
   --ngt-z-raised: 2;
   --ngt-z-sticky: 40;
-  --ngt-z-nav: 100;
+  --ngt-z-nav: 40;
+  --bi-z-content: 0;
+  --bi-z-fab: 30;
+  --bi-z-header: 40;
   --ngt-z-drawer: 700;
   --ngt-z-modal: 800;
   --ngt-z-toast: 900;

@@ -1,0 +1,49 @@
+﻿{
+    "run_id":  "NGT-E2E-20260803T020155",
+    "scheduled_start":  "2026-08-03T04:06:00+02:00",
+    "meeting":  {
+                    "owner":  "MISSING",
+                    "join_url_field":  false,
+                    "status":  "BLOCKED",
+                    "note":  "No Zoom/Jitsi/meeting join adapter in Companion domain; attendance is booking-status derived.",
+                    "session_row_keys":  [
+                                             "peerName",
+                                             "peerImage",
+                                             "subject",
+                                             "createdAt",
+                                             "status",
+                                             "statusLabel",
+                                             "attendance"
+                                         ]
+                },
+    "verdicts":  {
+                     "preflight_woocommerce":  "PASS",
+                     "preflight":  "PASS",
+                     "tutor_registration":  "PASS",
+                     "tutor_approval":  "PASS",
+                     "parent_registration":  "PASS",
+                     "guardian_child":  "PASS",
+                     "tutor_discovery":  "PARTIAL",
+                     "five_minute_booking":  "PASS",
+                     "sandbox_payment":  "PASS",
+                     "parent_dashboard_data":  "PASS",
+                     "student_dashboard_data":  "PASS",
+                     "tutor_dashboard_data":  "PASS",
+                     "real_time_meeting":  "BLOCKED",
+                     "unauthorized_meeting_rejected":  "PASS",
+                     "attendance_completion":  "PASS",
+                     "child_safety_isolation":  "PASS",
+                     "negative_unauth_booking_view":  "PASS"
+                 },
+    "correlation":  {
+                        "student_user_id":  282,
+                        "parent_user_id":  281,
+                        "booking_id":  159,
+                        "order_id":  57644,
+                        "child_learner_id":  42,
+                        "tutor_user_id":  280
+                    },
+    "slot_constraint":  "aligned_to_minute_boundary_min_5m_ahead",
+    "now_local":  "2026-08-03T04:01:55+02:00",
+    "target_start":  "2026-08-03T04:06:55+02:00"
+}

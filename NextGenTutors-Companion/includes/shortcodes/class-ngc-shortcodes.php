@@ -60,11 +60,27 @@ class NGC_Shortcodes {
 			'ngc_tutor_dashboard'            => 'dashboard',
 			'ngc_admin_dashboard'            => 'dashboard',
 			'nextgen_tutor_calendar'         => 'tutor_calendar',
+			'ngc_popia_consent'              => 'popia_consent',
 		];
 
 		foreach ( $map as $tag => $method ) {
 			add_shortcode( $tag, [ __CLASS__, $method ] );
 		}
+	}
+
+	/**
+	 * POPIA consent block for registration / booking forms.
+	 *
+	 * @return string
+	 */
+	public static function popia_consent() {
+		if ( class_exists( 'NGC_Operational_Layouts' ) ) {
+			$html = NGC_Operational_Layouts::consent_form_html();
+			if ( $html ) {
+				return $html;
+			}
+		}
+		return '<div class="ngt-popia-consent"><p>' . esc_html__( 'By continuing you consent to POPIA-compliant processing of your personal information for tutoring services.', 'nextgencompanion' ) . '</p></div>';
 	}
 
 	/**
@@ -74,16 +90,71 @@ class NGC_Shortcodes {
 		if ( function_exists( 'bi_ngc_form_find_tutor' ) ) {
 			return bi_ngc_form_find_tutor();
 		}
+		// Fallback mirrors IMPORTANT/find-tutor-form.json when theme helper is absent.
 		return self::render_form(
 			'find_tutor',
 			'',
 			[
 				[ 'id' => 'ngc-parent-name', 'name' => 'parent_name', 'label' => __( 'Parent / guardian name', 'nextgencompanion' ), 'required' => true ],
 				[ 'id' => 'ngc-email', 'name' => 'email', 'type' => 'email', 'label' => __( 'Email', 'nextgencompanion' ), 'required' => true ],
-				[ 'id' => 'ngc-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'Phone', 'nextgencompanion' ), 'required' => true ],
-				[ 'id' => 'ngc-grade', 'name' => 'grade', 'label' => __( 'Learner grade', 'nextgencompanion' ), 'required' => true ],
-				[ 'id' => 'ngc-subject', 'name' => 'subject', 'label' => __( 'Subject needed', 'nextgencompanion' ), 'required' => true ],
+				[ 'id' => 'ngc-phone', 'name' => 'phone', 'type' => 'tel', 'label' => __( 'WhatsApp / phone', 'nextgencompanion' ), 'required' => true ],
+				[
+					'id'       => 'ngc-grade',
+					'name'     => 'grade',
+					'type'     => 'select',
+					'label'    => __( 'Learner grade', 'nextgencompanion' ),
+					'required' => true,
+					'options'  => [
+						''                   => __( 'Select…', 'nextgencompanion' ),
+						'Primary (R-7)'      => __( 'Primary (R-7)', 'nextgencompanion' ),
+						'High School (8-12)' => __( 'High School (8-12)', 'nextgencompanion' ),
+						'Tertiary'           => __( 'Tertiary', 'nextgencompanion' ),
+					],
+				],
+				[
+					'id'       => 'ngc-subject',
+					'name'     => 'subject',
+					'type'     => 'select',
+					'label'    => __( 'Subject needed', 'nextgencompanion' ),
+					'required' => true,
+					'options'  => [
+						''                 => __( 'Select…', 'nextgencompanion' ),
+						'Mathematics'      => __( 'Mathematics', 'nextgencompanion' ),
+						'Physical Science' => __( 'Physical Science', 'nextgencompanion' ),
+						'Accounting'       => __( 'Accounting', 'nextgencompanion' ),
+						'English'          => __( 'English', 'nextgencompanion' ),
+						'Life Sciences'    => __( 'Life Sciences', 'nextgencompanion' ),
+						'Tertiary Support' => __( 'Tertiary Support', 'nextgencompanion' ),
+					],
+				],
+				[
+					'id'       => 'ngc-province',
+					'name'     => 'province',
+					'type'     => 'select',
+					'label'    => __( 'Province', 'nextgencompanion' ),
+					'required' => true,
+					'options'  => [
+						''              => __( 'Select…', 'nextgencompanion' ),
+						'Gauteng'       => __( 'Gauteng', 'nextgencompanion' ),
+						'Western Cape'  => __( 'Western Cape', 'nextgencompanion' ),
+						'KZN'           => __( 'KZN', 'nextgencompanion' ),
+						'Eastern Cape'  => __( 'Eastern Cape', 'nextgencompanion' ),
+						'Free State'    => __( 'Free State', 'nextgencompanion' ),
+						'Limpopo'       => __( 'Limpopo', 'nextgencompanion' ),
+						'Mpumalanga'    => __( 'Mpumalanga', 'nextgencompanion' ),
+						'North West'    => __( 'North West', 'nextgencompanion' ),
+						'Northern Cape' => __( 'Northern Cape', 'nextgencompanion' ),
+					],
+				],
 				[ 'id' => 'ngc-notes', 'name' => 'notes', 'type' => 'textarea', 'label' => __( 'Additional details', 'nextgencompanion' ) ],
+				[
+					'id'          => 'ngc-popia',
+					'name'        => 'popia_consent',
+					'type'        => 'checkbox',
+					'label'       => __( 'POPIA consent', 'nextgencompanion' ),
+					'check_label' => __( 'I consent to data processing per POPIA.', 'nextgencompanion' ),
+					'required'    => true,
+				],
 			]
 		);
 	}
@@ -427,9 +498,22 @@ class NGC_Shortcodes {
 			<?php endif; ?>
 			<?php foreach ( $fields as $field ) : ?>
 				<div class="ngc-field-group ngt-form-group">
-					<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_html( $field['label'] ); ?></label>
+					<?php if ( 'checkbox' !== ( $field['type'] ?? '' ) ) : ?>
+						<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_html( $field['label'] ); ?></label>
+					<?php endif; ?>
 					<?php if ( 'textarea' === ( $field['type'] ?? 'text' ) ) : ?>
-						<textarea id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['name'] ); ?>" rows="4" <?php echo ! empty( $field['required'] ) ? 'required' : ''; ?>></textarea>
+						<textarea id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['name'] ); ?>" rows="4" class="ngc-wysiwyg" <?php echo ! empty( $field['required'] ) ? 'required' : ''; ?>></textarea>
+					<?php elseif ( 'select' === ( $field['type'] ?? '' ) ) : ?>
+						<select id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['name'] ); ?>" <?php echo ! empty( $field['required'] ) ? 'required' : ''; ?>>
+							<?php foreach ( (array) ( $field['options'] ?? [] ) as $value => $label ) : ?>
+								<option value="<?php echo esc_attr( (string) $value ); ?>"><?php echo esc_html( (string) $label ); ?></option>
+							<?php endforeach; ?>
+						</select>
+					<?php elseif ( 'checkbox' === ( $field['type'] ?? '' ) ) : ?>
+						<label for="<?php echo esc_attr( $field['id'] ); ?>" style="display:flex;gap:10px;align-items:flex-start;font-weight:400">
+							<input type="checkbox" id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['name'] ); ?>" value="1" <?php echo ! empty( $field['required'] ) ? 'required' : ''; ?> />
+							<span><?php echo esc_html( (string) ( $field['check_label'] ?? $field['label'] ) ); ?></span>
+						</label>
 					<?php else : ?>
 						<input type="<?php echo esc_attr( $field['type'] ?? 'text' ); ?>" id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['name'] ); ?>" <?php echo ! empty( $field['required'] ) ? 'required' : ''; ?> />
 					<?php endif; ?>
@@ -469,6 +553,10 @@ class NGC_Shortcodes {
 			$payload[ sanitize_key( $key ) ] = is_array( $value )
 				? array_map( 'sanitize_text_field', wp_unslash( $value ) )
 				: sanitize_textarea_field( wp_unslash( $value ) );
+		}
+
+		if ( 'find_tutor' === $form_id && empty( $payload['popia_consent'] ) ) {
+			wp_die( esc_html__( 'POPIA consent is required to submit a tutor enquiry.', 'nextgencompanion' ), 400 );
 		}
 
 		$queue = get_option( 'ngc_form_queue', [] );
