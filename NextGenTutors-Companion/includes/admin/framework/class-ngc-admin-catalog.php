@@ -482,6 +482,14 @@ final class NGC_Admin_Catalog {
 				'callback' => [ 'NGC_Studio_Admin', 'render_app' ],
 			],
 			[
+				'slug'     => 'ngc-visual-builder',
+				'title'    => __( 'Visual Builder', 'nextgencompanion' ),
+				'module'   => 'content',
+				'category' => 'content',
+				'order'    => 79,
+				'callback' => [ 'NGC_Builder_Admin', 'render_app' ],
+			],
+			[
 				'slug'         => 'ngt-hub',
 				'title'        => __( 'Automation Hub', 'nextgencompanion' ),
 				'module'       => 'automation',

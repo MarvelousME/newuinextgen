@@ -72,20 +72,9 @@
     });
   }
 
-  /* Back to top in floating dock */
+  /* Back-to-top owned by floating.js (scroll reveal + single click). */
   function initBackToTop() {
-    var btn = $('#back-to-top');
-    if (!btn) return;
-    window.addEventListener('scroll', function () {
-      btn.classList.toggle('is-visible', window.scrollY > 500);
-    }, { passive: true });
-    btn.addEventListener('click', function () {
-      if (window.NGT_LENIS && typeof window.NGT_LENIS.scrollTo === 'function') {
-        window.NGT_LENIS.scrollTo(0, { duration: 1.1 });
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
+    /* no-op — kept so older call sites remain safe */
   }
 
   /* WhatsApp link from theme option */

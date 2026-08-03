@@ -58,9 +58,11 @@
   background: #0f2744;
   color: #fff;
   border-color: #aecf61;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-  visibility: visible !important;
+}
+/* Scroll gate — only meaningful once FAB item is revealed */
+.float-dock.is-open .fdock-btn--top.float-dock__item.is-revealed:not(.is-visible) {
+  opacity: 0.4;
+  pointer-events: none;
 }
 .fdock-btn--wa { background: #25D366; color: #fff; border-color: #128C7E; }
 .fdock-btn--livechat { background: #1a5594; color: #fff; border-color: #0d3a6b; }

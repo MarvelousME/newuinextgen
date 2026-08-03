@@ -149,10 +149,21 @@
     document.body.appendChild(el);
   }
 
+  /**
+   * Sole owner of #back-to-top — scroll reveal + single click handler.
+   * Do not re-init from ngt-wp-bridge.js.
+   */
   function initBackToTop() {
     const btn = $("#back-to-top");
-    if (!btn) return;
-    btn.classList.add("is-visible");
+    if (!btn || btn.getAttribute("data-bi-btt-ready") === "1") return;
+    btn.setAttribute("data-bi-btt-ready", "1");
+
+    const sync = () => {
+      btn.classList.toggle("is-visible", window.scrollY > 500);
+    };
+    window.addEventListener("scroll", sync, { passive: true });
+    sync();
+
     btn.addEventListener("click", () => {
       if (window.NGT_LENIS && typeof window.NGT_LENIS.scrollTo === "function") {
         window.NGT_LENIS.scrollTo(0, { duration: 1.1 });

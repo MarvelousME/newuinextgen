@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nextgentutors.co.za/schemas/ngc-builder-document-v1.json",
+  "title": "NGC Visual Builder Document",
+  "type": "object",
+  "required": ["schemaVersion", "id", "kind", "rootId", "nodes"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "id": { "type": "string", "minLength": 1 },
+    "kind": {
+      "type": "string",
+      "enum": ["page", "template", "header", "footer", "popup", "mega_menu", "reusable"]
+    },
+    "wpPostId": { "type": ["integer", "null"] },
+    "slot": { "type": "string", "default": "main" },
+    "breakpoints": {
+      "type": "object",
+      "properties": {
+        "base": { "type": "integer" },
+        "tablet": { "type": "integer" },
+        "mobile": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "tokensRef": { "type": "string", "default": "global" },
+    "rootId": { "type": "string" },
+    "nodes": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/node" }
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "pageKey": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "tokenOrValue": {
+      "oneOf": [
+        { "type": "string", "pattern": "^token:" },
+        {
+          "type": "object",
+          "properties": {
+            "unit": { "type": "string" },
+            "value": { "type": ["number", "string"] }
+          },
+          "required": ["value"]
+        },
+        { "type": ["string", "number", "boolean", "null"] }
+      ]
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": [
+            "container",
+            "theme.section",
+            "ui.component",
+            "primitive",
+            "dynamic",
+            "chrome"
+          ]
+        },
+        "tag": { "type": "string" },
+        "name": { "type": "string" },
+        "component": { "type": "string" },
+        "children": { "type": "array", "items": { "type": "string" } },
+        "layout": { "type": "object", "additionalProperties": true },
+        "style": { "type": "object", "additionalProperties": true },
+        "props": { "type": "object", "additionalProperties": true },
+        "bindings": { "type": "object", "additionalProperties": true },
+        "interactions": { "type": "array", "items": { "type": "object" } },
+        "visibility": { "type": "object", "additionalProperties": true },
+        "responsive": { "type": "object", "additionalProperties": true },
+        "contentRef": {
+          "type": "object",
+          "properties": {
+            "pageKey": { "type": "string" },
+            "sectionKey": { "type": "string" }
+          }
+        },
+        "classes": { "type": "array", "items": { "type": "string" } },
+        "customCss": { "type": "string" },
+        "customJs": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  }
+}

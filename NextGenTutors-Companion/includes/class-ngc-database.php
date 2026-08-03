@@ -64,6 +64,8 @@ class NGC_Database {
 			'studio_dashboards'  => $wpdb->prefix . 'ngc_studio_dashboards',
 			'child_learners'     => $wpdb->prefix . 'ngc_child_learners',
 			'page_sections'      => $wpdb->prefix . 'ngc_page_sections',
+			'builder_documents'  => $wpdb->prefix . 'ngc_builder_documents',
+			'builder_revisions'  => $wpdb->prefix . 'ngc_builder_revisions',
 			'system_log'         => $wpdb->prefix . 'ngc_system_log',
 			'intel_events'       => $wpdb->prefix . 'ngc_intel_events',
 			'intel_kpi_hourly'   => $wpdb->prefix . 'ngc_intel_kpi_hourly',
@@ -916,6 +918,38 @@ class NGC_Database {
 			UNIQUE KEY page_section (page_key, section_key),
 			UNIQUE KEY uuid (uuid),
 			KEY page_key (page_key)
+		) $charset;";
+
+		$sql[] = "CREATE TABLE {$t['builder_documents']} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			document_key varchar(64) NOT NULL DEFAULT '',
+			kind varchar(32) NOT NULL DEFAULT 'page',
+			title varchar(191) NOT NULL DEFAULT '',
+			wp_post_id bigint(20) unsigned NULL,
+			status varchar(20) NOT NULL DEFAULT 'draft',
+			schema_version int(11) unsigned NOT NULL DEFAULT 1,
+			document_json longtext NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			updated_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			published_at datetime NULL,
+			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (id),
+			UNIQUE KEY document_key (document_key),
+			KEY kind_status (kind, status),
+			KEY wp_post_id (wp_post_id)
+		) $charset;";
+
+		$sql[] = "CREATE TABLE {$t['builder_revisions']} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			document_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			version int(11) unsigned NOT NULL DEFAULT 1,
+			document_json longtext NULL,
+			compiled_json longtext NULL,
+			published_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			published_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (id),
+			KEY document_version (document_id, version)
 		) $charset;";
 
 		foreach ( $sql as $statement ) {

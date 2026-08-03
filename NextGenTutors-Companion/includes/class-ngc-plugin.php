@@ -68,6 +68,8 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Studio_Dashboards',
 		'NGC_Studio_Stream',
 		'NGC_Studio_Admin',
+		'NGC_Visual_Builder',
+		'NGC_Builder_Admin',
 		'NGC_Tutor_Calendar_Service',
 		'NGC_Fluentcrm',
 		'NGC_Fluent_Support',

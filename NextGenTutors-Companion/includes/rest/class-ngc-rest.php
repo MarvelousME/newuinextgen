@@ -44,6 +44,7 @@ class NGC_Rest {
 		}
 		NGC_Rest_Ai::register();
 		NGC_Rest_Studio::register();
+		NGC_Rest_Builder::register();
 		NGC_Rest_Section_Cms::register();
 		NGC_Rest_Marketplace::register();
 		NGC_Rest_Page_Forms_Registry::register();
