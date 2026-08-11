@@ -1,0 +1,234 @@
+{
+  "generatedAt": "2026-08-11T00:00:13.142Z",
+  "nodes": [
+    {
+      "id": "ai-integration",
+      "name": "NextGenTutors AI Integration",
+      "version": "1.0.0",
+      "provides": [
+        "ai.transport.dispatch",
+        "ai.policy.gate"
+      ],
+      "consumes": [
+        "companion.rest.query"
+      ]
+    },
+    {
+      "id": "beyondinfinity",
+      "name": "NextGenTutors BeyondInfinity Theme",
+      "version": "1.0.0",
+      "provides": [
+        "theme.render.page",
+        "theme.shortcode.consume"
+      ],
+      "consumes": [
+        "companion.rest.query",
+        "companion.shortcode.render"
+      ]
+    },
+    {
+      "id": "bridge-memory-tencentdb",
+      "name": "TencentDB Agent Memory Provider",
+      "version": "1.0.0",
+      "provides": [
+        "memory.health",
+        "memory.write",
+        "memory.search",
+        "memory.retrieve",
+        "memory.forget",
+        "memory.correct",
+        "memory.list",
+        "memory.chat.write",
+        "memory.chat.search",
+        "memory.persona.get",
+        "memory.persona.update"
+      ],
+      "consumes": []
+    },
+    {
+      "id": "bridge-talent-intelligence",
+      "name": "NextGenTutors Talent Intelligence",
+      "version": "1.0.0",
+      "provides": [
+        "talent.health",
+        "talent.match.evaluate",
+        "talent.match.explain",
+        "talent.rank",
+        "talent.skills.extract",
+        "talent.profile.extract",
+        "talent.skill_gap.analyze",
+        "talent.requirement.evaluate"
+      ],
+      "consumes": []
+    },
+    {
+      "id": "companion",
+      "name": "NextGenTutors Companion",
+      "version": "1.9.19",
+      "provides": [
+        "companion.rest.query",
+        "companion.rest.command",
+        "companion.shortcode.render",
+        "booking.create",
+        "payment.authorize",
+        "agent.execute",
+        "notification.send",
+        "platform.capability.invoke"
+      ],
+      "consumes": [
+        "ai.transport.dispatch",
+        "memory.retrieve",
+        "memory.write",
+        "memory.health",
+        "talent.match.evaluate",
+        "talent.match.explain",
+        "talent.rank",
+        "talent.health"
+      ]
+    },
+    {
+      "id": "html-importer",
+      "name": "NextGenTutors Html Importer",
+      "version": "1.0.0",
+      "provides": [
+        "content.html.import"
+      ],
+      "consumes": []
+    },
+    {
+      "id": "plugin-manager",
+      "name": "NextGenTutors Plugin Manager",
+      "version": "1.0.0",
+      "provides": [
+        "ops.plugin.install",
+        "ops.plugin.health"
+      ],
+      "consumes": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "ai-integration",
+      "to": "wordpress",
+      "kind": "required"
+    },
+    {
+      "from": "ai-integration",
+      "to": "companion",
+      "kind": "optional"
+    },
+    {
+      "from": "beyondinfinity",
+      "to": "wordpress",
+      "kind": "required"
+    },
+    {
+      "from": "beyondinfinity",
+      "to": "companion",
+      "kind": "optional"
+    },
+    {
+      "from": "bridge-memory-tencentdb",
+      "to": "wordpress",
+      "kind": "required"
+    },
+    {
+      "from": "bridge-memory-tencentdb",
+      "to": "companion",
+      "kind": "optional"
+    },
+    {
+      "from": "bridge-talent-intelligence",
+      "to": "wordpress",
+      "kind": "required"
+    },
+    {
+      "from": "bridge-talent-intelligence",
+      "to": "companion",
+      "kind": "required"
+    },
+    {
+      "from": "companion",
+      "to": "wordpress",
+      "kind": "required"
+    },
+    {
+      "from": "companion",
+      "to": "woocommerce",
+      "kind": "optional"
+    },
+    {
+      "from": "companion",
+      "to": "ai-integration",
+      "kind": "optional"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-memory-tencentdb",
+      "kind": "optional"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-talent-intelligence",
+      "kind": "optional"
+    },
+    {
+      "from": "html-importer",
+      "to": "wordpress",
+      "kind": "required"
+    },
+    {
+      "from": "plugin-manager",
+      "to": "wordpress",
+      "kind": "required"
+    },
+    {
+      "from": "beyondinfinity",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.shortcode.render"
+    },
+    {
+      "from": "beyondinfinity",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.rest.query"
+    },
+    {
+      "from": "companion",
+      "to": "ai-integration",
+      "kind": "contract",
+      "capability": "ai.transport.dispatch"
+    },
+    {
+      "from": "ai-integration",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.rest.query"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-memory-tencentdb",
+      "kind": "contract",
+      "capability": "memory.retrieve"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-memory-tencentdb",
+      "kind": "contract",
+      "capability": "memory.write"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-talent-intelligence",
+      "kind": "contract",
+      "capability": "talent.match.evaluate"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-talent-intelligence",
+      "kind": "contract",
+      "capability": "talent.rank"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "id": "ngc-domain-events.v1",
+  "title": "Companion domain events",
+  "version": "1.0.0",
+  "notification": { "type": "object" },
+  "ack": { "type": "object" }
+}

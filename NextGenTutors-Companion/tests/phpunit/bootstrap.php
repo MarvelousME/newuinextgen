@@ -74,3 +74,101 @@ foreach ( array( 'custom-folder/custom.php', 'legacy/legacy.php', 'vendor/ngt-co
 }
 
 require_once $root . '/includes/diagnostics/class-ngc-legacy-plugin-guard.php';
+require_once $root . '/includes/session/class-ngc-session-states.php';
+require_once $root . '/includes/integrations/class-ngc-product-provisioner.php';
+require_once $root . '/includes/integrations/class-ngc-woocommerce-catalog.php';
+require_once $root . '/includes/memory/interface-ngc-memory-provider.php';
+require_once $root . '/includes/memory/class-ngc-memory-settings.php';
+require_once $root . '/includes/memory/class-ngc-memory-noop-provider.php';
+require_once $root . '/includes/memory/class-ngc-memory-service.php';
+
+if ( ! isset( $GLOBALS['ngc_test_options'] ) ) {
+	$GLOBALS['ngc_test_options'] = [];
+}
+
+if ( ! function_exists( 'get_option' ) ) {
+	/**
+	 * @param string $key Option key.
+	 * @param mixed  $default Default.
+	 * @return mixed
+	 */
+	function get_option( $key, $default = false ) {
+		return array_key_exists( $key, $GLOBALS['ngc_test_options'] ) ? $GLOBALS['ngc_test_options'][ $key ] : $default;
+	}
+}
+
+if ( ! function_exists( 'update_option' ) ) {
+	/**
+	 * @param string $key Option key.
+	 * @param mixed  $value Value.
+	 * @param bool   $autoload Autoload.
+	 * @return bool
+	 */
+	function update_option( $key, $value, $autoload = true ) {
+		unset( $autoload );
+		$GLOBALS['ngc_test_options'][ $key ] = $value;
+		return true;
+	}
+}
+
+if ( ! function_exists( 'sanitize_key' ) ) {
+	function sanitize_key( $key ) {
+		$key = strtolower( (string) $key );
+		return preg_replace( '/[^a-z0-9_\-]/', '', $key );
+	}
+}
+
+if ( ! function_exists( 'sanitize_title' ) ) {
+	function sanitize_title( $title ) {
+		$title = strtolower( (string) $title );
+		$title = preg_replace( '/[^a-z0-9]+/', '-', $title );
+		return trim( $title, '-' );
+	}
+}
+
+if ( ! function_exists( 'trailingslashit' ) ) {
+	function trailingslashit( $string ) {
+		return rtrim( (string) $string, '/\\' ) . '/';
+	}
+}
+
+if ( ! function_exists( 'wp_json_encode' ) ) {
+	function wp_json_encode( $data, $options = 0, $depth = 512 ) {
+		return json_encode( $data, $options, $depth );
+	}
+}
+
+if ( ! class_exists( 'WP_Error' ) ) {
+	/**
+	 * Minimal WP_Error stub for unit tests.
+	 */
+	class WP_Error {
+		/** @var string */
+		private $code;
+		/** @var string */
+		private $message;
+		/** @var mixed */
+		private $data;
+		public function __construct( $code = '', $message = '', $data = '' ) {
+			$this->code    = (string) $code;
+			$this->message = (string) $message;
+			$this->data    = $data;
+		}
+		public function get_error_message() {
+			return $this->message;
+		}
+		public function get_error_code() {
+			return $this->code;
+		}
+	}
+}
+
+if ( ! function_exists( 'is_wp_error' ) ) {
+	function is_wp_error( $thing ) {
+		return $thing instanceof WP_Error;
+	}
+}
+
+if ( ! defined( 'NGC_PLUGIN_DIR' ) ) {
+	define( 'NGC_PLUGIN_DIR', $root . '/' );
+}

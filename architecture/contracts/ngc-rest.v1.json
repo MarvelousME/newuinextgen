@@ -1,0 +1,24 @@
+{
+  "id": "ngc-rest.v1",
+  "title": "Companion REST / shortcode sacred contract",
+  "version": "1.0.0",
+  "namespace": "ngc/v1",
+  "protocols": ["rest", "shortcode"],
+  "notes": "Theme and external consumers use shortcodes and REST only — never Companion includes.",
+  "configuration": {
+    "type": "object"
+  },
+  "query": { "type": "object" },
+  "command": { "type": "object" },
+  "response": { "type": "object" },
+  "shortcode": { "type": "object" },
+  "html": { "type": "string" },
+  "bookingCreate": { "type": "object" },
+  "booking": { "type": "object" },
+  "paymentAuthorize": { "type": "object" },
+  "payment": { "type": "object" },
+  "agentExecute": { "type": "object" },
+  "agentResult": { "type": "object" },
+  "capabilityInvoke": { "type": "object" },
+  "capabilityResult": { "type": "object" }
+}

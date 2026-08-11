@@ -1,0 +1,19 @@
+# Optional Talent NLP similarity sidecar — internal only, no Streamlit.
+#
+#   docker compose --profile talent -f docker-compose.yml -f talent/docker-compose.talent.yml up -d
+
+services:
+  talent-nlp:
+    build:
+      context: ../services/ngt-talent-intelligence
+      dockerfile: Dockerfile
+    profiles: ["talent"]
+    restart: unless-stopped
+    ports:
+      - "${TALENT_NLP_HOST_PORT:-8090}:8090"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s

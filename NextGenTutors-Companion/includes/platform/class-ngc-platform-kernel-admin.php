@@ -106,7 +106,81 @@ final class NGC_Platform_Kernel_Admin {
 				<?php wp_nonce_field( 'ngc_worm_export' ); ?>
 				<button class="button">WORM export</button>
 			</form>
+
+			<p><a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=ngc-memory-center' ) ); ?>"><?php esc_html_e( 'Open Memory Center', 'nextgencompanion' ); ?></a>
+			<?php if ( class_exists( 'NGC_Memory_Settings' ) ) : ?>
+				— <?php echo NGC_Memory_Settings::is_active() ? esc_html__( 'memory active', 'nextgencompanion' ) : esc_html__( 'memory off (safe default)', 'nextgencompanion' ); ?>
+			<?php endif; ?>
+			</p>
+
+			<?php self::render_rad_architecture(); ?>
 		</div>
+		<?php
+	}
+
+	/**
+	 * Read-only RAD architecture panel (subsystems + capabilities + gate score).
+	 */
+	private static function render_rad_architecture() {
+		$subs = class_exists( 'NGC_Subsystem_Registry' ) ? NGC_Subsystem_Registry::all() : [];
+		$caps = class_exists( 'NGC_Capability_Registry' ) ? NGC_Capability_Registry::all() : [];
+		$errs = class_exists( 'NGC_Subsystem_Registry' ) ? NGC_Subsystem_Registry::errors() : [];
+		$snap = class_exists( 'NGC_Subsystem_Registry' ) ? NGC_Subsystem_Registry::snapshot() : [];
+		$gate = [];
+		$gate_file = ( class_exists( 'NGC_Subsystem_Registry' ) ? NGC_Subsystem_Registry::architecture_root() : '' ) . '/reports/gate-report.json';
+		if ( $gate_file && is_readable( $gate_file ) ) {
+			$decoded = json_decode( (string) file_get_contents( $gate_file ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			if ( is_array( $decoded ) ) {
+				$gate = $decoded;
+			}
+		}
+		?>
+		<hr />
+		<h2>RAD Architecture (Subsystems)</h2>
+		<p>Root: <code><?php echo esc_html( (string) ( $snap['root'] ?? '' ) ); ?></code>
+			| Subsystems: <?php echo (int) count( $subs ); ?>
+			| Capabilities: <?php echo (int) count( $caps ); ?>
+			| Gate: <strong><?php echo ! empty( $gate['ok'] ) ? 'PASS' : ( $gate ? 'FAIL' : 'N/A' ); ?></strong>
+		</p>
+		<?php if ( $errs ) : ?>
+			<div class="notice notice-warning"><p><?php echo esc_html( implode( '; ', $errs ) ); ?></p></div>
+		<?php endif; ?>
+		<table class="widefat striped">
+			<thead><tr><th>ID</th><th>Name</th><th>Version</th><th>Provides</th><th>Consumes</th></tr></thead>
+			<tbody>
+			<?php if ( empty( $subs ) ) : ?>
+				<tr><td colspan="5">No manifests registered</td></tr>
+			<?php else : ?>
+				<?php foreach ( $subs as $id => $m ) : ?>
+					<tr>
+						<td><code><?php echo esc_html( $id ); ?></code></td>
+						<td><?php echo esc_html( (string) ( $m['system']['name'] ?? '' ) ); ?></td>
+						<td><?php echo esc_html( (string) ( $m['system']['version'] ?? '' ) ); ?></td>
+						<td><?php echo esc_html( implode( ', ', (array) ( $m['capabilities']['provides'] ?? [] ) ) ); ?></td>
+						<td><?php echo esc_html( implode( ', ', (array) ( $m['capabilities']['consumes'] ?? [] ) ) ); ?></td>
+					</tr>
+				<?php endforeach; ?>
+			<?php endif; ?>
+			</tbody>
+		</table>
+		<h3>Capabilities</h3>
+		<table class="widefat striped">
+			<thead><tr><th>Capability</th><th>Provider</th><th>Protocol</th><th>Permissions</th></tr></thead>
+			<tbody>
+			<?php if ( empty( $caps ) ) : ?>
+				<tr><td colspan="4">None</td></tr>
+			<?php else : ?>
+				<?php foreach ( $caps as $cid => $cap ) : ?>
+					<tr>
+						<td><code><?php echo esc_html( $cid ); ?></code></td>
+						<td><?php echo esc_html( (string) ( $cap['provider'] ?? '' ) ); ?></td>
+						<td><?php echo esc_html( (string) ( $cap['protocol'] ?? '' ) ); ?></td>
+						<td><?php echo esc_html( implode( ', ', (array) ( $cap['requiredPermissions'] ?? [] ) ) ); ?></td>
+					</tr>
+				<?php endforeach; ?>
+			<?php endif; ?>
+			</tbody>
+		</table>
 		<?php
 	}
 

@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-08-10T21:12:40.762Z",
+  "mode": "BROWNFIELD",
+  "packages": [
+    {
+      "id": "beyondinfinity",
+      "folder": "NextGenTutors-BeyondInfinity",
+      "exists": true,
+      "entrypoints": [
+        "functions.php",
+        "style.css"
+      ]
+    },
+    {
+      "id": "companion",
+      "folder": "NextGenTutors-Companion",
+      "exists": true,
+      "entrypoints": [
+        "nextgencompanion.php"
+      ]
+    },
+    {
+      "id": "ai-integration",
+      "folder": "NextGenTutors-AI-Integration",
+      "exists": true,
+      "entrypoints": [
+        "nextgentutors-ai-integration.php"
+      ]
+    },
+    {
+      "id": "html-importer",
+      "folder": "NextGenTutors-Html-Importer",
+      "exists": true,
+      "entrypoints": [
+        "revamp-html-importer.php"
+      ]
+    },
+    {
+      "id": "plugin-manager",
+      "folder": "NextGenTutors-Plugin-Manager",
+      "exists": true,
+      "entrypoints": [
+        "NextGenTutors-Plugin-Manager.php"
+      ]
+    }
+  ],
+  "auditFeeds": [
+    {
+      "path": ".agent-audit/01-repository-inventory.md",
+      "exists": true
+    },
+    {
+      "path": ".agent-audit/02-architecture-current-state.md",
+      "exists": true
+    },
+    {
+      "path": ".agent-audit/11-functional-capability-matrix.md",
+      "exists": true
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "exists": true
+    }
+  ],
+  "architectureDirs": {
+    "manifests": true,
+    "capabilities": true,
+    "dependencyRules": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "generatedAt": "2026-08-11T00:18:13.568Z",
+  "ok": true,
+  "stats": {
+    "manifests": 7,
+    "capabilities": 34,
+    "errors": 0,
+    "warnings": 0
+  },
+  "findings": []
+}

@@ -1,0 +1,69 @@
+{
+  "bridgeManifestVersion": "1.0",
+  "system": {
+    "id": "ai-integration",
+    "name": "NextGenTutors AI Integration",
+    "version": "1.0.0",
+    "description": "Transport/security/governance bridge for approved AI integrations. No Companion domain ownership.",
+    "owner": "platform-ai-governance"
+  },
+  "runtime": {
+    "type": "wordpress-plugin",
+    "entrypoint": "nextgentutors-ai-integration.php",
+    "path": "NextGenTutors-AI-Integration"
+  },
+  "lifecycle": {
+    "installable": true,
+    "enableable": true,
+    "disableable": true,
+    "upgradeable": true,
+    "rollbackSupported": true
+  },
+  "capabilities": {
+    "provides": [
+      "ai.transport.dispatch",
+      "ai.policy.gate"
+    ],
+    "consumes": [
+      "companion.rest.query"
+    ]
+  },
+  "contracts": {
+    "rest": [
+      "architecture/contracts/ai-transport.v1.json"
+    ],
+    "grpc": [],
+    "events": [],
+    "commands": [
+      "architecture/contracts/ai-transport.v1.json"
+    ],
+    "queries": []
+  },
+  "permissions": {
+    "required": [],
+    "optional": ["manage_options"]
+  },
+  "data": {
+    "owns": ["ai_integration_transport_logs"],
+    "reads": ["companion.agent_projections"]
+  },
+  "dependencies": {
+    "required": ["wordpress"],
+    "optional": ["companion"]
+  },
+  "health": {
+    "readiness": "ai-integration:policy_gate",
+    "liveness": "plugin:active:NextGenTutors-AI-Integration"
+  },
+  "observability": {
+    "logs": "redacted transport logs",
+    "metrics": "dispatch counts",
+    "traces": "request idempotency keys"
+  },
+  "configuration": {
+    "schema": "architecture/contracts/ai-transport.v1.json#/configuration"
+  },
+  "compatibility": {
+    "minimumPlatformVersion": "1.0.0"
+  }
+}

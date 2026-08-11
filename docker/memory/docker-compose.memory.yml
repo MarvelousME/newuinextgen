@@ -1,0 +1,28 @@
+# Optional Memory Core — profile: memory
+# NOT multi-node HA (SQLite default). Proxy intentionally omitted.
+#
+#   docker compose --profile memory -f docker-compose.yml -f memory/docker-compose.memory.yml up -d
+
+services:
+  memory-core:
+    image: ${MEMORY_CORE_IMAGE:-agentmemory/memory-core:latest}
+    profiles: ["memory"]
+    restart: unless-stopped
+    ports:
+      - "${MEMORY_CORE_HOST_PORT:-8420}:8420"
+    environment:
+      TDAI_GATEWAY_API_KEY: ${TDAI_GATEWAY_API_KEY:-}
+      MEMORY_LLM_API_KEY: ${MEMORY_LLM_API_KEY:-}
+      MEMORY_LLM_BASE_URL: ${MEMORY_LLM_BASE_URL:-}
+      TDAI_DATA_DIR: /data
+    volumes:
+      - memory_core_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8420/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  memory_core_data:

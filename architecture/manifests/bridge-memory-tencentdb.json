@@ -1,0 +1,93 @@
+{
+  "bridgeManifestVersion": "1.0",
+  "system": {
+    "id": "bridge-memory-tencentdb",
+    "name": "TencentDB Agent Memory Provider",
+    "version": "1.0.0",
+    "description": "Replaceable Bridge memory provider adapting TencentDB Agent Memory Core (L0–L3). Proxy is NOT used as Bridge LLM gateway. Skills/Wiki/CodeGraph gated off by default.",
+    "owner": "platform-ai-governance"
+  },
+  "runtime": {
+    "type": "service",
+    "entrypoint": "docker/memory",
+    "path": "docker/memory"
+  },
+  "lifecycle": {
+    "installable": true,
+    "enableable": true,
+    "disableable": true,
+    "upgradeable": true,
+    "rollbackSupported": true
+  },
+  "capabilities": {
+    "provides": [
+      "memory.health",
+      "memory.write",
+      "memory.search",
+      "memory.retrieve",
+      "memory.forget",
+      "memory.correct",
+      "memory.list",
+      "memory.chat.write",
+      "memory.chat.search",
+      "memory.persona.get",
+      "memory.persona.update"
+    ],
+    "consumes": []
+  },
+  "contracts": {
+    "rest": [
+      "architecture/contracts/memory.v1.json"
+    ],
+    "grpc": [],
+    "events": [],
+    "commands": [
+      "architecture/contracts/memory.v1.json"
+    ],
+    "queries": [
+      "architecture/contracts/memory.v1.json"
+    ]
+  },
+  "permissions": {
+    "required": [
+      "ngc_manage_platform"
+    ],
+    "optional": [
+      "bia_ai_use"
+    ]
+  },
+  "data": {
+    "owns": [
+      "wp_ngc_memory_identity_map",
+      "tencent_memory_core_volumes"
+    ],
+    "reads": [
+      "bridge.tenant",
+      "bridge.user",
+      "bridge.agent"
+    ]
+  },
+  "dependencies": {
+    "required": [
+      "wordpress"
+    ],
+    "optional": [
+      "companion"
+    ]
+  },
+  "health": {
+    "readiness": "memory.health",
+    "liveness": "memory.mode!=DISABLED"
+  },
+  "observability": {
+    "logs": "NGC_Memory_Service / structured",
+    "metrics": "memory_retrieve_total memory_write_total memory_degraded_total",
+    "traces": "correlation via NGC_Platform_Observability"
+  },
+  "configuration": {
+    "schema": "architecture/contracts/memory.v1.json#/configuration"
+  },
+  "compatibility": {
+    "minimumPlatformVersion": "1.0.0"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "rad-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portable Rapid Application Development platform kit — seven-pillar architecture enforcement",
+  "type": "module",
+  "bin": {
+    "rad-discover": "./cli/discover.mjs",
+    "rad-validate": "./cli/validate.mjs",
+    "rad-graph": "./cli/graph.mjs",
+    "rad-gate": "./cli/gate.mjs",
+    "rad-evidence": "./cli/evidence.mjs"
+  },
+  "scripts": {
+    "discover": "node cli/discover.mjs",
+    "validate": "node cli/validate.mjs",
+    "graph": "node cli/graph.mjs",
+    "gate": "node cli/gate.mjs",
+    "evidence": "node cli/evidence.mjs",
+    "test:gate-fail": "node cli/gate.mjs --fixtures"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -34,6 +34,9 @@ final class NGC_Platform {
 		NGC_Worm_Export::init();
 		NGC_Authz_Matrix::init();
 		NGC_Platform_Observability::init();
+		NGC_Subsystem_Registry::init();
+		NGC_Capability_Registry::init();
+		NGC_Policy_Bridge::init();
 		NGC_Platform_Kernel_Admin::init();
 
 		if ( ! get_option( self::OPTION_AUTHORITY, null ) ) {

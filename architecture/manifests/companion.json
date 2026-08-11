@@ -1,0 +1,86 @@
+{
+  "bridgeManifestVersion": "1.0",
+  "system": {
+    "id": "companion",
+    "name": "NextGenTutors Companion",
+    "version": "1.9.19",
+    "description": "Domain plugin: data layer, REST ngc/v1, workflows, bookings, payments, AI suite, integrations, platform kernel.",
+    "owner": "platform-domain"
+  },
+  "runtime": {
+    "type": "wordpress-plugin",
+    "entrypoint": "nextgencompanion.php",
+    "path": "NextGenTutors-Companion"
+  },
+  "lifecycle": {
+    "installable": true,
+    "enableable": true,
+    "disableable": true,
+    "upgradeable": true,
+    "rollbackSupported": true
+  },
+  "capabilities": {
+    "provides": [
+      "companion.rest.query",
+      "companion.rest.command",
+      "companion.shortcode.render",
+      "booking.create",
+      "payment.authorize",
+      "agent.execute",
+      "notification.send",
+      "platform.capability.invoke"
+    ],
+    "consumes": [
+      "ai.transport.dispatch",
+      "memory.retrieve",
+      "memory.write",
+      "memory.health",
+      "talent.match.evaluate",
+      "talent.match.explain",
+      "talent.rank",
+      "talent.health"
+    ]
+  },
+  "contracts": {
+    "rest": [
+      "architecture/contracts/ngc-rest.v1.json"
+    ],
+    "grpc": [],
+    "events": [
+      "architecture/contracts/ngc-domain-events.v1.json"
+    ],
+    "commands": [
+      "architecture/contracts/ngc-rest.v1.json"
+    ],
+    "queries": [
+      "architecture/contracts/ngc-rest.v1.json"
+    ]
+  },
+  "permissions": {
+    "required": ["ngc_manage_platform"],
+    "optional": ["manage_woocommerce", "manage_options"]
+  },
+  "data": {
+    "owns": ["ngc_*", "wp_posts:ngc_tutor"],
+    "reads": ["wp_users", "wp_usermeta"]
+  },
+  "dependencies": {
+    "required": ["wordpress"],
+    "optional": ["woocommerce", "ai-integration", "bridge-memory-tencentdb", "bridge-talent-intelligence"]
+  },
+  "health": {
+    "readiness": "ngc/v1/platform/health",
+    "liveness": "plugin:active:NextGenTutors-Companion"
+  },
+  "observability": {
+    "logs": "NGC_Platform_Observability / NGC_System_Log",
+    "metrics": "NGC_Metrics",
+    "traces": "correlation ids on REST + queue"
+  },
+  "configuration": {
+    "schema": "architecture/contracts/ngc-rest.v1.json#/configuration"
+  },
+  "compatibility": {
+    "minimumPlatformVersion": "1.0.0"
+  }
+}

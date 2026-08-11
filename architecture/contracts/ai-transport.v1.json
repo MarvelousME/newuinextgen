@@ -1,0 +1,10 @@
+{
+  "id": "ai-transport.v1",
+  "title": "AI Integration transport contract",
+  "version": "1.0.0",
+  "configuration": { "type": "object" },
+  "dispatch": { "type": "object" },
+  "result": { "type": "object" },
+  "policy": { "type": "object" },
+  "decision": { "type": "object" }
+}

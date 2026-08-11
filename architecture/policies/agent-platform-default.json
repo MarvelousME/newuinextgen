@@ -1,0 +1,8 @@
+{
+  "packId": "agent-platform-default",
+  "version": "1.0.0",
+  "defaultDecision": "DENY",
+  "bridge": "NGC_Policy_Bridge",
+  "engines": ["NGC_Agent_Policy_Engine", "NGC_Authz_Matrix"],
+  "notes": "Privileged capability invokes must pass policy bridge; do not scatter authz in services."
+}

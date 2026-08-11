@@ -1,0 +1,10 @@
+{
+  "id": "plugin-manager.v1",
+  "title": "Plugin Manager ops contract",
+  "version": "1.0.0",
+  "configuration": { "type": "object" },
+  "install": { "type": "object" },
+  "result": { "type": "object" },
+  "healthQuery": { "type": "object" },
+  "health": { "type": "object" }
+}

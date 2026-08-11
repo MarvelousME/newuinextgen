@@ -39,6 +39,25 @@ final class NGC_AI_Chat {
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}
+
+		// Optional async memory write — never fails the chat response.
+		if ( class_exists( 'NGC_Memory_Service' ) && NGC_Memory_Settings::write_allowed() ) {
+			NGC_Memory_Service::write_safe(
+				[
+					'bridge_user_id'  => (string) get_current_user_id(),
+					'bridge_agent_id' => (string) ( $agent['id'] ?? $agent_id ),
+					'session_id'      => (string) ( $agent['id'] ?? $agent_id ) . ':' . get_current_user_id(),
+					'messages'        => [
+						[ 'role' => 'user', 'content' => (string) $message ],
+						[ 'role' => 'assistant', 'content' => (string) $result['content'] ],
+					],
+					'text'            => (string) $message,
+					'async'           => true,
+					'tutoring_data'   => ! empty( $agent['tutoring'] ),
+				]
+			);
+		}
+
 		return [
 			'agent'   => $agent['name'],
 			'content' => (string) $result['content'],
@@ -126,6 +145,21 @@ final class NGC_AI_Chat {
 		$boundary = 'You operate strictly within the NextGen Tutors WordPress platform. '
 			. 'Do not claim to take actions outside it. Do not request or output personal data about minors.';
 		$system   = trim( (string) ( $agent['rules'] ?? '' ) ) . "\n\n" . $boundary;
+
+		// Optional labeled memory context — empty on DISABLED/DEGRADED/timeout.
+		if ( class_exists( 'NGC_Memory_Service' ) && NGC_Memory_Settings::retrieve_allowed() ) {
+			$mem = NGC_Memory_Service::retrieve_safe(
+				[
+					'query'           => (string) $message,
+					'bridge_user_id'  => (string) get_current_user_id(),
+					'bridge_agent_id' => (string) ( $agent['id'] ?? '' ),
+				]
+			);
+			$ctx = trim( (string) ( $mem['context_text'] ?? '' ) );
+			if ( '' !== $ctx ) {
+				$system .= "\n\n[Retrieved memory — optional context; may be incomplete]\n" . $ctx;
+			}
+		}
 
 		$messages = [ [ 'role' => 'system', 'content' => $system ] ];
 		foreach ( $history as $turn ) {

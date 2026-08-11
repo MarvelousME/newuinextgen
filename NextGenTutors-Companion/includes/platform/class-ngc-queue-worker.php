@@ -174,6 +174,16 @@ final class NGC_Queue_Worker {
 				return true;
 			case 'recon.run':
 				return NGC_Reconciliation::run( $payload );
+			case 'memory.ingest':
+				if ( class_exists( 'NGC_Memory_Ingestion_Worker' ) ) {
+					return NGC_Memory_Ingestion_Worker::handle( true, $payload, null );
+				}
+				return true;
+			case 'talent.evaluate':
+				if ( class_exists( 'NGC_Talent_Ingestion_Worker' ) ) {
+					return NGC_Talent_Ingestion_Worker::handle( true, $payload, null );
+				}
+				return true;
 			case 'noop':
 				return true;
 			default:

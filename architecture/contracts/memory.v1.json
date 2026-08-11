@@ -1,0 +1,33 @@
+{
+  "id": "memory.v1",
+  "title": "Bridge memory capability contract",
+  "version": "1.0.0",
+  "configuration": {
+    "type": "object",
+    "properties": {
+      "enabled": { "type": "boolean" },
+      "mode": { "type": "string" },
+      "core_base_url": { "type": "string" },
+      "proxy_enabled": { "type": "boolean", "const": false }
+    }
+  },
+  "healthQuery": { "type": "object" },
+  "health": { "type": "object" },
+  "write": { "type": "object" },
+  "writeResult": { "type": "object" },
+  "search": { "type": "object" },
+  "searchResult": { "type": "object" },
+  "retrieve": { "type": "object" },
+  "retrieveResult": { "type": "object" },
+  "forget": { "type": "object" },
+  "forgetResult": { "type": "object" },
+  "correct": { "type": "object" },
+  "correctResult": { "type": "object" },
+  "list": { "type": "object" },
+  "listResult": { "type": "object" },
+  "chatWrite": { "type": "object" },
+  "chatSearch": { "type": "object" },
+  "personaGet": { "type": "object" },
+  "personaUpdate": { "type": "object" },
+  "persona": { "type": "object" }
+}

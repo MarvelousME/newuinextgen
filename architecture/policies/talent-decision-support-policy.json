@@ -1,0 +1,13 @@
+{
+  "packId": "talent-decision-support-policy",
+  "version": "1.0.0",
+  "defaultDecision": "DENY",
+  "rules": {
+    "auto_approve_tutor": "forbidden",
+    "auto_reject_tutor": "forbidden",
+    "protected_traits_in_score": "forbidden",
+    "safeguarding_via_nlp": "forbidden",
+    "streamlit_production_ui": "forbidden"
+  },
+  "notes": "Talent Intelligence is decision support only. Humans retain tutor approval authority."
+}

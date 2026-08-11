@@ -1,0 +1,31 @@
+{
+  "id": "talent.v1",
+  "title": "Talent Intelligence capability contract",
+  "version": "1.0.0",
+  "configuration": {
+    "type": "object",
+    "properties": {
+      "enabled": { "type": "boolean" },
+      "mode": { "type": "string" },
+      "rank_find_tutor": { "type": "boolean" },
+      "nlp_sidecar_enabled": { "type": "boolean" },
+      "auto_approve_forbidden": { "type": "boolean", "const": true }
+    }
+  },
+  "healthQuery": { "type": "object" },
+  "health": { "type": "object" },
+  "evaluate": { "type": "object" },
+  "evaluateResult": { "type": "object" },
+  "explain": { "type": "object" },
+  "explainResult": { "type": "object" },
+  "rank": { "type": "object" },
+  "rankResult": { "type": "object" },
+  "extractSkills": { "type": "object" },
+  "extractSkillsResult": { "type": "object" },
+  "extractProfile": { "type": "object" },
+  "extractProfileResult": { "type": "object" },
+  "skillGap": { "type": "object" },
+  "skillGapResult": { "type": "object" },
+  "requirement": { "type": "object" },
+  "requirementResult": { "type": "object" }
+}

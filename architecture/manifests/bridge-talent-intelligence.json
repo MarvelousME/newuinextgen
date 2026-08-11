@@ -1,0 +1,73 @@
+{
+  "bridgeManifestVersion": "1.0",
+  "system": {
+    "id": "bridge-talent-intelligence",
+    "name": "NextGenTutors Talent Intelligence",
+    "version": "1.0.0",
+    "description": "Explainable tutor suitability decision-support. Inspired by TalentMatch-AI concepts; Streamlit not used. Never auto-approves tutors.",
+    "owner": "platform-domain"
+  },
+  "runtime": {
+    "type": "wordpress-plugin",
+    "entrypoint": "NextGenTutors-Companion/includes/talent",
+    "path": "NextGenTutors-Companion/includes/talent"
+  },
+  "lifecycle": {
+    "installable": true,
+    "enableable": true,
+    "disableable": true,
+    "upgradeable": true,
+    "rollbackSupported": true
+  },
+  "capabilities": {
+    "provides": [
+      "talent.health",
+      "talent.match.evaluate",
+      "talent.match.explain",
+      "talent.rank",
+      "talent.skills.extract",
+      "talent.profile.extract",
+      "talent.skill_gap.analyze",
+      "talent.requirement.evaluate"
+    ],
+    "consumes": []
+  },
+  "contracts": {
+    "rest": ["architecture/contracts/talent.v1.json"],
+    "grpc": [],
+    "events": [],
+    "commands": ["architecture/contracts/talent.v1.json"],
+    "queries": ["architecture/contracts/talent.v1.json"]
+  },
+  "permissions": {
+    "required": ["ngc_manage_matches"],
+    "optional": ["ngc_manage_platform", "manage_options"]
+  },
+  "data": {
+    "owns": [
+      "wp_ngc_talent_evaluations",
+      "wp_ngc_talent_evaluation_components",
+      "wp_ngc_talent_requirement_profiles"
+    ],
+    "reads": ["wp_ngc_tutor_applications", "wp_posts:tutors", "wp_users"]
+  },
+  "dependencies": {
+    "required": ["wordpress", "companion"],
+    "optional": []
+  },
+  "health": {
+    "readiness": "talent.health",
+    "liveness": "talent.enabled!=false"
+  },
+  "observability": {
+    "logs": "NGC_Talent_Service",
+    "metrics": "talent_evaluate_total talent_rank_total talent_degraded_total",
+    "traces": "correlation via NGC_Platform_Observability"
+  },
+  "configuration": {
+    "schema": "architecture/contracts/talent.v1.json#/configuration"
+  },
+  "compatibility": {
+    "minimumPlatformVersion": "1.0.0"
+  }
+}

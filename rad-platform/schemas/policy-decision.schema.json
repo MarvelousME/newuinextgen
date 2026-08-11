@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nextgentutors.local/schemas/policy-decision.schema.json",
+  "title": "Policy Decision Record",
+  "type": "object",
+  "required": ["actor", "actorType", "capability", "operation", "decision", "policyVersion"],
+  "additionalProperties": true,
+  "properties": {
+    "actor": { "type": "string" },
+    "actorType": {
+      "type": "string",
+      "enum": ["human", "service", "machine", "agent"]
+    },
+    "tenant": { "type": ["string", "integer", "null"] },
+    "capability": { "type": "string" },
+    "resource": { "type": "string" },
+    "operation": { "type": "string" },
+    "context": { "type": "object" },
+    "environment": { "type": "string" },
+    "policyVersion": { "type": "string" },
+    "decision": {
+      "type": "string",
+      "enum": ["ALLOW", "DENY", "CHALLENGE", "REQUIRE_APPROVAL", "ALLOW_WITH_LIMITS", "ESCALATE"]
+    }
+  }
+}

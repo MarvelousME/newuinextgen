@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-08-11T00:00:13.163Z",
+  "verdict": "PARTIALLY COMPLIANT",
+  "gateOk": true,
+  "pillars": {
+    "Subsystem Manifest": "PASS",
+    "Capability Registry": "PASS",
+    "Policy Engine": "PASS",
+    "Integration Fabric": "PASS",
+    "Conformance Suite": "PASS",
+    "Dependency Graph": "PASS",
+    "Control Plane": "PASS"
+  },
+  "mvpLimitations": [
+    "Connection/Workflow designers deferred",
+    "Hub duplication debt remains",
+    "Not all domain services wrapped as capabilities",
+    "Secrets manager (ARCH-012) not fully externalized"
+  ],
+  "stats": {
+    "manifests": 7,
+    "capabilities": 34,
+    "errors": 0,
+    "warnings": 0
+  },
+  "findings": []
+}

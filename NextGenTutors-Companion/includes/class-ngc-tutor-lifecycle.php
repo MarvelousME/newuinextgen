@@ -65,6 +65,14 @@ class NGC_Tutor_Lifecycle {
 			)
 		);
 
+		/**
+		 * Fires after a tutor application is stored (Talent Intelligence may evaluate asynchronously).
+		 *
+		 * @param int                  $id  Application id.
+		 * @param array<string,mixed>  $row Application row.
+		 */
+		do_action( 'ngc_tutor_application_submitted', $id, $row );
+
 		return $id;
 	}
 

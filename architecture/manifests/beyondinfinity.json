@@ -1,0 +1,68 @@
+{
+  "bridgeManifestVersion": "1.0",
+  "system": {
+    "id": "beyondinfinity",
+    "name": "NextGenTutors BeyondInfinity Theme",
+    "version": "1.0.0",
+    "description": "Presentation layer: templates, design tokens, shortcode containers, theme workflows fallback.",
+    "owner": "platform-frontend"
+  },
+  "runtime": {
+    "type": "wordpress-theme",
+    "entrypoint": "functions.php",
+    "path": "NextGenTutors-BeyondInfinity"
+  },
+  "lifecycle": {
+    "installable": true,
+    "enableable": true,
+    "disableable": true,
+    "upgradeable": true,
+    "rollbackSupported": true
+  },
+  "capabilities": {
+    "provides": [
+      "theme.render.page",
+      "theme.shortcode.consume"
+    ],
+    "consumes": [
+      "companion.rest.query",
+      "companion.shortcode.render"
+    ]
+  },
+  "contracts": {
+    "rest": [],
+    "grpc": [],
+    "events": [],
+    "commands": [],
+    "queries": [
+      "architecture/contracts/theme-presentation.v1.json"
+    ]
+  },
+  "permissions": {
+    "required": [],
+    "optional": ["edit_theme_options"]
+  },
+  "data": {
+    "owns": ["wp_posts:page_templates", "theme_mods"],
+    "reads": ["companion.public_projections"]
+  },
+  "dependencies": {
+    "required": ["wordpress"],
+    "optional": ["companion"]
+  },
+  "health": {
+    "readiness": "theme:stylesheet_active",
+    "liveness": "theme:functions_loaded"
+  },
+  "observability": {
+    "logs": "wp-debug / NGC bridge logs",
+    "metrics": "none-native",
+    "traces": "correlation via ngt-wp-bridge when present"
+  },
+  "configuration": {
+    "schema": "architecture/contracts/theme-presentation.v1.json#/configuration"
+  },
+  "compatibility": {
+    "minimumPlatformVersion": "1.0.0"
+  }
+}

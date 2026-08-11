@@ -1,0 +1,8 @@
+{
+  "id": "theme-presentation.v1",
+  "title": "BeyondInfinity presentation contract",
+  "version": "1.0.0",
+  "configuration": { "type": "object" },
+  "input": { "type": "object" },
+  "output": { "type": "object" }
+}

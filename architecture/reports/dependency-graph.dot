@@ -1,0 +1,33 @@
+digraph RAD {
+  rankdir=LR;
+  "ai-integration" [label="ai-integration\n1.0.0"];
+  "beyondinfinity" [label="beyondinfinity\n1.0.0"];
+  "bridge-memory-tencentdb" [label="bridge-memory-tencentdb\n1.0.0"];
+  "bridge-talent-intelligence" [label="bridge-talent-intelligence\n1.0.0"];
+  "companion" [label="companion\n1.9.19"];
+  "html-importer" [label="html-importer\n1.0.0"];
+  "plugin-manager" [label="plugin-manager\n1.0.0"];
+  "ai-integration" -> "wordpress" [label="required"];
+  "ai-integration" -> "companion" [label="optional"];
+  "beyondinfinity" -> "wordpress" [label="required"];
+  "beyondinfinity" -> "companion" [label="optional"];
+  "bridge-memory-tencentdb" -> "wordpress" [label="required"];
+  "bridge-memory-tencentdb" -> "companion" [label="optional"];
+  "bridge-talent-intelligence" -> "wordpress" [label="required"];
+  "bridge-talent-intelligence" -> "companion" [label="required"];
+  "companion" -> "wordpress" [label="required"];
+  "companion" -> "woocommerce" [label="optional"];
+  "companion" -> "ai-integration" [label="optional"];
+  "companion" -> "bridge-memory-tencentdb" [label="optional"];
+  "companion" -> "bridge-talent-intelligence" [label="optional"];
+  "html-importer" -> "wordpress" [label="required"];
+  "plugin-manager" -> "wordpress" [label="required"];
+  "beyondinfinity" -> "companion" [label="contract"];
+  "beyondinfinity" -> "companion" [label="contract"];
+  "companion" -> "ai-integration" [label="contract"];
+  "ai-integration" -> "companion" [label="contract"];
+  "companion" -> "bridge-memory-tencentdb" [label="contract"];
+  "companion" -> "bridge-memory-tencentdb" [label="contract"];
+  "companion" -> "bridge-talent-intelligence" [label="contract"];
+  "companion" -> "bridge-talent-intelligence" [label="contract"];
+}

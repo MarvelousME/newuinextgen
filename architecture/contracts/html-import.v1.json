@@ -1,0 +1,8 @@
+{
+  "id": "html-import.v1",
+  "title": "HTML importer contract",
+  "version": "1.0.0",
+  "configuration": { "type": "object" },
+  "import": { "type": "object" },
+  "result": { "type": "object" }
+}

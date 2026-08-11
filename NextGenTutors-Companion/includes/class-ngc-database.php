@@ -22,6 +22,7 @@ class NGC_Database {
 		return [
 			'matches'            => $wpdb->prefix . 'ngc_matches',
 			'bookings'           => $wpdb->prefix . 'ngc_bookings',
+			'sessions'           => $wpdb->prefix . 'ngc_sessions',
 			'invoices'           => $wpdb->prefix . 'ngc_invoices',
 			'wallet_ledger'      => $wpdb->prefix . 'ngc_wallet_ledger',
 			'payouts'            => $wpdb->prefix . 'ngc_payouts',
@@ -70,6 +71,10 @@ class NGC_Database {
 			'intel_events'       => $wpdb->prefix . 'ngc_intel_events',
 			'intel_kpi_hourly'   => $wpdb->prefix . 'ngc_intel_kpi_hourly',
 			'intel_notifications'=> $wpdb->prefix . 'ngc_intel_notifications',
+			'memory_identity_map'=> $wpdb->prefix . 'ngc_memory_identity_map',
+			'talent_evaluations' => $wpdb->prefix . 'ngc_talent_evaluations',
+			'talent_evaluation_components' => $wpdb->prefix . 'ngc_talent_evaluation_components',
+			'talent_requirement_profiles' => $wpdb->prefix . 'ngc_talent_requirement_profiles',
 		];
 	}
 
@@ -138,6 +143,55 @@ class NGC_Database {
 			KEY status (status),
 			KEY scheduled_at (scheduled_at),
 			UNIQUE KEY amelia_booking_id (amelia_booking_id)
+		) $charset;";
+
+		$sql[] = "CREATE TABLE {$t['sessions']} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			session_uuid varchar(64) NOT NULL DEFAULT '',
+			correlation_id varchar(64) NOT NULL DEFAULT '',
+			idempotency_key varchar(191) NOT NULL DEFAULT '',
+			booking_provider varchar(32) NOT NULL DEFAULT 'ngc',
+			booking_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			order_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			order_item_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			product_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			student_user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			parent_user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			tutor_user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			subject_id varchar(64) NOT NULL DEFAULT '',
+			subject_name varchar(191) NOT NULL DEFAULT '',
+			masterstudy_course_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			masterstudy_lesson_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			meeting_provider varchar(32) NOT NULL DEFAULT '',
+			meeting_id varchar(191) NOT NULL DEFAULT '',
+			meeting_url_reference varchar(512) NOT NULL DEFAULT '',
+			scheduled_start datetime NULL,
+			scheduled_end datetime NULL,
+			timezone varchar(64) NOT NULL DEFAULT 'Africa/Johannesburg',
+			status varchar(32) NOT NULL DEFAULT 'draft',
+			payment_status varchar(32) NOT NULL DEFAULT 'unpaid',
+			booking_status varchar(32) NOT NULL DEFAULT '',
+			lesson_status varchar(32) NOT NULL DEFAULT '',
+			meeting_status varchar(32) NOT NULL DEFAULT '',
+			student_joined_at datetime NULL,
+			tutor_joined_at datetime NULL,
+			started_at datetime NULL,
+			completed_at datetime NULL,
+			cancelled_at datetime NULL,
+			version int(11) NOT NULL DEFAULT 1,
+			meta longtext NULL,
+			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY  (id),
+			UNIQUE KEY session_uuid (session_uuid),
+			UNIQUE KEY idempotency_key (idempotency_key),
+			KEY correlation_id (correlation_id),
+			KEY booking_id (booking_id),
+			KEY order_id (order_id),
+			KEY student_user_id (student_user_id),
+			KEY tutor_user_id (tutor_user_id),
+			KEY status (status),
+			KEY scheduled_start (scheduled_start)
 		) $charset;";
 
 		$sql[] = "CREATE TABLE {$t['invoices']} (
@@ -952,6 +1006,24 @@ class NGC_Database {
 			KEY document_version (document_id, version)
 		) $charset;";
 
+		if ( ! empty( $t['memory_identity_map'] ) ) {
+			$sql[] = "CREATE TABLE {$t['memory_identity_map']} (
+				id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+				bridge_type varchar(32) NOT NULL DEFAULT '',
+				bridge_id varchar(191) NOT NULL DEFAULT '',
+				tenant_id varchar(64) NOT NULL DEFAULT '1',
+				provider varchar(32) NOT NULL DEFAULT 'tencentdb',
+				remote_id varchar(191) NOT NULL DEFAULT '',
+				remote_meta longtext NULL,
+				created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY (id),
+				UNIQUE KEY provider_bridge (provider, bridge_type, bridge_id, tenant_id),
+				KEY tenant_id (tenant_id),
+				KEY remote_id (remote_id)
+			) $charset;";
+		}
+
 		foreach ( $sql as $statement ) {
 			dbDelta( $statement );
 		}
@@ -1074,6 +1146,110 @@ class NGC_Database {
 			$format[] = '%s';
 		}
 		return $wpdb->insert( $table, $data, $format );
+	}
+
+	/**
+	 * Ensure talent intelligence tables on existing installs.
+	 */
+	public static function ensure_talent_tables() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		$charset = $wpdb->get_charset_collate();
+		$t = self::table_names();
+
+		if ( ! empty( $t['talent_evaluations'] ) ) {
+			dbDelta(
+				"CREATE TABLE {$t['talent_evaluations']} (
+					id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+					uuid char(36) NOT NULL DEFAULT '',
+					tenant_id varchar(64) NOT NULL DEFAULT '1',
+					candidate_type varchar(32) NOT NULL DEFAULT 'application',
+					candidate_id varchar(191) NOT NULL DEFAULT '',
+					requirement_id varchar(191) NOT NULL DEFAULT '',
+					score decimal(8,2) NULL,
+					recommendation varchar(64) NOT NULL DEFAULT '',
+					model_version varchar(64) NOT NULL DEFAULT '',
+					weight_config_version varchar(64) NOT NULL DEFAULT '',
+					input_snapshot_hash varchar(96) NOT NULL DEFAULT '',
+					result_json longtext NULL,
+					idempotency_key varchar(191) NOT NULL DEFAULT '',
+					correlation_id varchar(64) NOT NULL DEFAULT '',
+					created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+					created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+					updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+					PRIMARY KEY (id),
+					UNIQUE KEY uuid (uuid),
+					UNIQUE KEY idempotency_key (idempotency_key),
+					KEY candidate (candidate_type, candidate_id),
+					KEY created_at (created_at)
+				) {$charset};"
+			);
+		}
+		if ( ! empty( $t['talent_evaluation_components'] ) ) {
+			dbDelta(
+				"CREATE TABLE {$t['talent_evaluation_components']} (
+					id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+					evaluation_id bigint(20) unsigned NOT NULL DEFAULT 0,
+					component_key varchar(64) NOT NULL DEFAULT '',
+					score decimal(8,2) NULL,
+					weight decimal(8,4) NULL,
+					status varchar(32) NOT NULL DEFAULT '',
+					meta_json longtext NULL,
+					PRIMARY KEY (id),
+					KEY evaluation_id (evaluation_id),
+					KEY component_key (component_key)
+				) {$charset};"
+			);
+		}
+		if ( ! empty( $t['talent_requirement_profiles'] ) ) {
+			dbDelta(
+				"CREATE TABLE {$t['talent_requirement_profiles']} (
+					id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+					profile_key varchar(64) NOT NULL DEFAULT '',
+					title varchar(191) NOT NULL DEFAULT '',
+					profile_json longtext NULL,
+					version varchar(32) NOT NULL DEFAULT '1',
+					created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+					updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+					PRIMARY KEY (id),
+					UNIQUE KEY profile_key (profile_key)
+				) {$charset};"
+			);
+		}
+	}
+
+	/**
+	 * Ensure memory identity map exists on already-installed sites.
+	 */
+	public static function ensure_memory_identity_map() {
+		global $wpdb;
+		$table = self::table( 'memory_identity_map' );
+		if ( ! $table ) {
+			return;
+		}
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$exists = $wpdb->get_var( "SHOW TABLES LIKE '{$table}'" );
+		if ( $exists ) {
+			return;
+		}
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		$charset = $wpdb->get_charset_collate();
+		$sql     = "CREATE TABLE {$table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			bridge_type varchar(32) NOT NULL DEFAULT '',
+			bridge_id varchar(191) NOT NULL DEFAULT '',
+			tenant_id varchar(64) NOT NULL DEFAULT '1',
+			provider varchar(32) NOT NULL DEFAULT 'tencentdb',
+			remote_id varchar(191) NOT NULL DEFAULT '',
+			remote_meta longtext NULL,
+			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (id),
+			UNIQUE KEY provider_bridge (provider, bridge_type, bridge_id, tenant_id),
+			KEY tenant_id (tenant_id),
+			KEY remote_id (remote_id)
+		) {$charset};";
+		dbDelta( $sql );
 	}
 
 	/**

@@ -1,0 +1,13 @@
+{
+  "packId": "memory-write-policy",
+  "version": "1.0.0",
+  "defaultDecision": "DENY",
+  "rules": {
+    "FORBIDDEN": "never_persist",
+    "SENSITIVE": "deny_long_term_unless_admin",
+    "minor_linked": "deny_long_term_by_default",
+    "credentials": "never_persist",
+    "proxy_as_llm_gateway": "forbidden"
+  },
+  "notes": "Long-term memory on tutoring/PII requires explicit policy approval. Proxy must not route Bridge model traffic."
+}

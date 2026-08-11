@@ -189,6 +189,49 @@ class NGC_Marketplace {
 			$items[] = self::format_tutor( $post );
 		}
 
+		// Optional Talent Intelligence re-rank AFTER hard filters (never expands ineligible set).
+		if ( ! empty( $items ) && class_exists( 'NGC_Talent_Settings' ) && NGC_Talent_Settings::rank_find_tutor_allowed() && class_exists( 'NGC_Talent_Service' ) ) {
+			$requirements = [
+				'subjects' => array_filter( [ sanitize_text_field( (string) ( $args['subject'] ?? '' ) ) ] ),
+				'grades'   => array_filter( [ sanitize_text_field( (string) ( $args['grade'] ?? '' ) ) ] ),
+				'province' => sanitize_text_field( (string) ( $args['province'] ?? '' ) ),
+				'location' => sanitize_text_field( (string) ( $args['province'] ?? '' ) ),
+				'deliveryModes' => array_filter( [ sanitize_text_field( (string) ( $args['format'] ?? '' ) ) ] ),
+			];
+			// Skip expensive re-rank when the request has no ranking signal (preserve CPT order).
+			if ( class_exists( 'NGC_Talent_Profile_Helper' ) && NGC_Talent_Profile_Helper::has_ranking_signal( $requirements ) ) {
+			$candidates = [];
+			foreach ( $items as $item ) {
+				$candidates[] = [
+					'id'       => $item['id'] ?? 0,
+					'_item'    => $item,
+					'subjects' => (array) ( $item['subjects'] ?? [] ),
+					'grades'   => (array) ( $item['grades'] ?? [] ),
+					'province' => (string) ( $item['province'] ?? '' ),
+					'location' => (string) ( $item['province'] ?? '' ),
+					'deliveryModes' => array_filter( [ (string) ( $item['format'] ?? $item['learning_format'] ?? '' ) ] ),
+					'bio'      => (string) ( $item['bio'] ?? $item['excerpt'] ?? '' ),
+				];
+			}
+			$ranked = NGC_Talent_Service::rank_safe( $candidates, $requirements );
+			if ( ! empty( $ranked['ranked'] ) && is_array( $ranked['ranked'] ) ) {
+				$new_items = [];
+				foreach ( $ranked['ranked'] as $row ) {
+					$base = $row['_item'] ?? null;
+					if ( ! is_array( $base ) ) {
+						continue;
+					}
+					$base['talentScore'] = $row['talentScore'] ?? null;
+					$base['talentRecommendation'] = $row['talentRecommendation'] ?? null;
+					$new_items[] = $base;
+				}
+				if ( $new_items ) {
+					$items = $new_items;
+				}
+			}
+			}
+		}
+
 		// Empty filtered query → retry without filters using demo-visible CPT, then static demo.
 		if ( empty( $items ) && 1 === $page ) {
 			$has_filters = $search || ! empty( $tax_query ) || $format || $min_price || $max_price || ! empty( $args['verified'] );

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nextgentutors.local/schemas/connection.schema.json",
+  "title": "Capability Connection",
+  "type": "object",
+  "required": [
+    "connectionId",
+    "consumer",
+    "provider",
+    "capability",
+    "contractVersion",
+    "enabled"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "connectionId": { "type": "string" },
+    "consumer": { "type": "string" },
+    "provider": { "type": "string" },
+    "capability": { "type": "string" },
+    "contractVersion": { "type": "string" },
+    "authentication": { "type": "string" },
+    "authorization": { "type": "string" },
+    "tenantScope": { "type": "string" },
+    "timeout": { "type": "integer", "minimum": 0 },
+    "retryPolicy": { "type": "string" },
+    "circuitBreaker": { "type": "string" },
+    "idempotency": { "type": "boolean" },
+    "transformation": { "type": "string" },
+    "enabled": { "type": "boolean" }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "bridgeManifestVersion": "1.0",
+  "system": {
+    "id": "html-importer",
+    "name": "NextGenTutors Html Importer",
+    "version": "1.0.0",
+    "description": "Ops content migration: static HTML to WP pages. No runtime business logic; never touches ngc_* tables.",
+    "owner": "platform-ops"
+  },
+  "runtime": {
+    "type": "wordpress-plugin",
+    "entrypoint": "revamp-html-importer.php",
+    "path": "NextGenTutors-Html-Importer"
+  },
+  "lifecycle": {
+    "installable": true,
+    "enableable": true,
+    "disableable": true,
+    "upgradeable": true,
+    "rollbackSupported": true
+  },
+  "capabilities": {
+    "provides": [
+      "content.html.import"
+    ],
+    "consumes": []
+  },
+  "contracts": {
+    "rest": [],
+    "grpc": [],
+    "events": [],
+    "commands": [
+      "architecture/contracts/html-import.v1.json"
+    ],
+    "queries": []
+  },
+  "permissions": {
+    "required": ["edit_pages"],
+    "optional": ["manage_options"]
+  },
+  "data": {
+    "owns": ["wp_posts:imported_pages"],
+    "reads": ["filesystem:html_sources"]
+  },
+  "dependencies": {
+    "required": ["wordpress"],
+    "optional": []
+  },
+  "health": {
+    "readiness": "html-importer:admin_loaded",
+    "liveness": "plugin:active:NextGenTutors-Html-Importer"
+  },
+  "observability": {
+    "logs": "import run logs",
+    "metrics": "pages_imported",
+    "traces": "none"
+  },
+  "configuration": {
+    "schema": "architecture/contracts/html-import.v1.json#/configuration"
+  },
+  "compatibility": {
+    "minimumPlatformVersion": "1.0.0"
+  }
+}

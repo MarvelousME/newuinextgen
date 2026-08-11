@@ -1,0 +1,206 @@
+# ARCH-001 — Registered contracts only
+id: ARCH-001
+severity: high
+rule: Subsystems MUST communicate through registered contracts.
+check:
+  type: package_boundary
+  description: Cross-package PHP requires/use of another package internals must match declared dependency-rules allow edges.
+
+---
+# ARCH-002 — Data ownership
+id: ARCH-002
+severity: critical
+rule: Subsystems MUST NOT modify another subsystem's owned datastore.
+check:
+  type: data_ownership
+  description: Theme and non-owner packages must not write ngc_* tables or Companion schema.
+
+---
+# ARCH-003 — Capability mapping
+id: ARCH-003
+severity: high
+rule: Every cross-subsystem operation MUST map to a capability.
+check:
+  type: capability_coverage
+  description: Manifest consumes[] must resolve to registered capabilities.
+
+---
+# ARCH-004 — Authz on capabilities
+id: ARCH-004
+severity: high
+rule: Every capability MUST declare authorization requirements.
+check:
+  type: capability_schema
+  field: requiredPermissions
+
+---
+# ARCH-005 — Correlation context
+id: ARCH-005
+severity: medium
+rule: Every distributed transaction MUST carry correlation context.
+check:
+  type: advisory
+  description: Enforced at integration fabric; advisory in static gate.
+
+---
+# ARCH-006 — Auditable privileged changes
+id: ARCH-006
+severity: high
+rule: Every privileged state change MUST be auditable.
+check:
+  type: advisory
+
+---
+# ARCH-007 — Idempotency
+id: ARCH-007
+severity: high
+rule: Retryable state-changing operations MUST be idempotent.
+check:
+  type: advisory
+
+---
+# ARCH-008 — Async recovery
+id: ARCH-008
+severity: high
+rule: Critical asynchronous operations MUST implement recovery.
+check:
+  type: advisory
+
+---
+# ARCH-009 — Health/readiness
+id: ARCH-009
+severity: medium
+rule: Production subsystems MUST expose health/readiness.
+check:
+  type: manifest_field
+  fields: [health.readiness, health.liveness]
+
+---
+# ARCH-010 — Graceful shutdown
+id: ARCH-010
+severity: medium
+rule: Production subsystems MUST support graceful shutdown.
+check:
+  type: advisory
+
+---
+# ARCH-011 — Contract versioning
+id: ARCH-011
+severity: high
+rule: Breaking contract changes MUST create a new version.
+check:
+  type: advisory
+
+---
+# ARCH-012 — Secrets external
+id: ARCH-012
+severity: critical
+rule: Secrets MUST be externally managed.
+check:
+  type: advisory
+
+---
+# ARCH-013 — No env hardcoding
+id: ARCH-013
+severity: medium
+rule: Environment-specific values MUST NOT be embedded in source.
+check:
+  type: advisory
+
+---
+# ARCH-014 — Tenant deny default
+id: ARCH-014
+severity: high
+rule: Tenant isolation MUST default to DENY.
+check:
+  type: advisory
+
+---
+# ARCH-015 — Agent least privilege
+id: ARCH-015
+severity: high
+rule: Agents MUST follow least privilege.
+check:
+  type: advisory
+
+---
+# ARCH-016 — Conformance
+id: ARCH-016
+severity: high
+rule: Production subsystems MUST pass conformance tests.
+check:
+  type: gate_pass
+
+---
+# ARCH-017 — Policy layer
+id: ARCH-017
+severity: critical
+rule: Privileged operations MUST NOT bypass the policy layer.
+check:
+  type: advisory
+
+---
+# ARCH-018 — Registered connections
+id: ARCH-018
+severity: high
+rule: Connections MUST be registered and discoverable.
+check:
+  type: package_boundary
+
+---
+# ARCH-019 — Dependency graph
+id: ARCH-019
+severity: medium
+rule: Dependencies MUST be represented in the dependency graph.
+check:
+  type: manifest_dependencies
+
+---
+# ARCH-020 — No auto-permissions on install
+id: ARCH-020
+severity: high
+rule: Installing a subsystem MUST NOT automatically grant permissions.
+check:
+  type: advisory
+
+---
+# ARCH-021 — Domain vs infrastructure
+id: ARCH-021
+severity: high
+rule: Domain layers MUST NOT depend on infrastructure.
+check:
+  type: vendor_denylist
+  paths: ["**/Domain/**", "**/domain/**"]
+
+---
+# ARCH-022 — No direct vendor SDKs in application
+id: ARCH-022
+severity: high
+rule: Application layers MUST NOT depend directly on vendor implementations.
+check:
+  type: vendor_denylist
+  denylist: ["Stripe\\", "Aws\\Sdk", "PayFast\\Client"]
+
+---
+# ARCH-023 — Controllers thin
+id: ARCH-023
+severity: medium
+rule: Controllers MUST NOT contain domain/business logic.
+check:
+  type: advisory
+
+---
+# ARCH-024 — No cross-subsystem implementation refs
+id: ARCH-024
+severity: high
+rule: Cross-subsystem dependencies MUST NOT reference implementation classes.
+check:
+  type: package_boundary
+
+---
+# ARCH-025 — No shared dumping ground
+id: ARCH-025
+severity: medium
+rule: Shared libraries MUST NOT become dumping grounds for unrelated functionality.
+check:
+  type: advisory

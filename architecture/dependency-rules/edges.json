@@ -1,0 +1,76 @@
+{
+  "allow": [
+    {
+      "from": "beyondinfinity",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.shortcode.render",
+      "note": "Theme consumes shortcodes/REST only — not Companion includes"
+    },
+    {
+      "from": "beyondinfinity",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.rest.query"
+    },
+    {
+      "from": "companion",
+      "to": "ai-integration",
+      "kind": "contract",
+      "capability": "ai.transport.dispatch"
+    },
+    {
+      "from": "ai-integration",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.rest.query",
+      "note": "Read-only companion projections for transport context"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-memory-tencentdb",
+      "kind": "contract",
+      "capability": "memory.retrieve",
+      "note": "Optional memory enrichment; must not be transaction-critical"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-memory-tencentdb",
+      "kind": "contract",
+      "capability": "memory.write"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-talent-intelligence",
+      "kind": "contract",
+      "capability": "talent.match.evaluate",
+      "note": "Optional decision-support; must not auto-approve tutors"
+    },
+    {
+      "from": "companion",
+      "to": "bridge-talent-intelligence",
+      "kind": "contract",
+      "capability": "talent.rank"
+    }
+  ],
+  "deny": [
+    {
+      "from": "beyondinfinity",
+      "to": "companion",
+      "kind": "implementation",
+      "note": "No require of NextGenTutors-Companion/includes"
+    },
+    {
+      "from": "html-importer",
+      "to": "companion",
+      "kind": "data",
+      "note": "Must not write ngc_* tables"
+    },
+    {
+      "from": "plugin-manager",
+      "to": "companion",
+      "kind": "implementation",
+      "note": "Orchestrates WP plugins via WP-CLI/filesystem only"
+    }
+  ]
+}

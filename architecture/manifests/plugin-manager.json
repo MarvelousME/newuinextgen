@@ -1,0 +1,67 @@
+{
+  "bridgeManifestVersion": "1.0",
+  "system": {
+    "id": "plugin-manager",
+    "name": "NextGenTutors Plugin Manager",
+    "version": "1.0.0",
+    "description": "Operator console: install/activate stack plugins, health, offline zips. Does not own tutor data.",
+    "owner": "platform-ops"
+  },
+  "runtime": {
+    "type": "wordpress-plugin",
+    "entrypoint": "NextGenTutors-Plugin-Manager.php",
+    "path": "NextGenTutors-Plugin-Manager"
+  },
+  "lifecycle": {
+    "installable": true,
+    "enableable": true,
+    "disableable": true,
+    "upgradeable": true,
+    "rollbackSupported": true
+  },
+  "capabilities": {
+    "provides": [
+      "ops.plugin.install",
+      "ops.plugin.health"
+    ],
+    "consumes": []
+  },
+  "contracts": {
+    "rest": [],
+    "grpc": [],
+    "events": [],
+    "commands": [
+      "architecture/contracts/plugin-manager.v1.json"
+    ],
+    "queries": [
+      "architecture/contracts/plugin-manager.v1.json"
+    ]
+  },
+  "permissions": {
+    "required": ["activate_plugins"],
+    "optional": ["manage_options"]
+  },
+  "data": {
+    "owns": ["options:ngcpm_*"],
+    "reads": ["filesystem:plugins"]
+  },
+  "dependencies": {
+    "required": ["wordpress"],
+    "optional": []
+  },
+  "health": {
+    "readiness": "plugin-manager:registry",
+    "liveness": "plugin:active:NextGenTutors-Plugin-Manager"
+  },
+  "observability": {
+    "logs": "ops console logs",
+    "metrics": "plugin_health",
+    "traces": "none"
+  },
+  "configuration": {
+    "schema": "architecture/contracts/plugin-manager.v1.json#/configuration"
+  },
+  "compatibility": {
+    "minimumPlatformVersion": "1.0.0"
+  }
+}

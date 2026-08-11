@@ -1,0 +1,33 @@
+---
+description: RAD Platform seven-pillar architecture governance (discover→gate→evidence)
+alwaysApply: true
+---
+
+# RAD Platform Ecosystem
+
+Architecture governance for this repository is defined by the portable kit:
+
+- `rad-platform/agent/MASTER-ARCHITECTURE-PROMPT.md`
+- `rad-platform/agent/RAD-LOOP.md`
+- `rad-platform/README.md`
+
+## Mandatory behaviour
+
+1. Treat the repo as **BROWNFIELD** unless inventing a truly new package.
+2. Before substantial architecture or cross-package work, follow the RAD loop: **discover → design → implement → gate → evidence**.
+3. Subsystems communicate only through **registered capabilities/contracts** — never Companion/theme/plugin internals across package boundaries.
+4. Default security posture for privileged cross-boundary ops is **DENY** until policy allows (`NGC_Policy_Bridge` / `NGC_Agent_Policy_Engine` / `NGC_Authz_Matrix`).
+5. Reuse existing adapters, registries, and services; do not create parallel implementations.
+6. Before claiming work complete, run:
+
+```bash
+node rad-platform/cli/gate.mjs
+```
+
+If the gate fails, fix or document BLOCKED with evidence. Do not claim PRODUCTION READY without gate + runtime evidence.
+
+7. This rule **complements** `.agent-audit/AUTONOMOUS-CODING-AGENT-MASTER-DIRECTIVE.md` (Phase 14 demo, security, finance). It does not replace it.
+
+## Sacred packages
+
+See `ARCHITECTURE.md`: BeyondInfinity, Companion, AI-Integration, Html-Importer, Plugin-Manager.

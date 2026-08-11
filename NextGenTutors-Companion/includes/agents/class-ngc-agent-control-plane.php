@@ -216,6 +216,27 @@ final class NGC_Agent_Control_Plane {
 			]
 		);
 
+		// RAD: observe capability-shaped actions via policy bridge (does not replace agent policy catalogue).
+		if ( class_exists( 'NGC_Policy_Bridge' ) && class_exists( 'NGC_Capability_Registry' ) && NGC_Capability_Registry::has( $action_id ) ) {
+			$bridged = NGC_Policy_Bridge::decide(
+				$action_id,
+				[
+					'actor_type'     => 'agent',
+					'actor'          => $agent_id,
+					'agent_id'       => $agent_id,
+					'autonomy_level' => $autonomy,
+					'environment'    => self::environment(),
+					'actor_user_id'  => get_current_user_id(),
+					'policy_action'  => $action_id,
+				]
+			);
+			do_action( 'ngc_rad_capability_policy_observed', $action_id, $bridged, $decision );
+			if ( NGC_Policy_Bridge::DENY === ( $bridged['decision'] ?? '' ) && NGC_Agent_Policy_Engine::DENY !== ( $decision['decision'] ?? '' ) ) {
+				// Capability registry is stricter: fail closed.
+				return new WP_Error( 'ngc_policy_deny', $bridged['reason'] ?? __( 'Denied by capability policy', 'nextgencompanion' ), [ 'status' => 403 ] );
+			}
+		}
+
 		if ( NGC_Agent_Policy_Engine::DENY === $decision['decision'] ) {
 			return new WP_Error( 'ngc_policy_deny', $decision['reason'], [ 'status' => 403 ] );
 		}
