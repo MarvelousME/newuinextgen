@@ -25,6 +25,8 @@ vendor/
 **/vendor/
 dist/
 build/
+!NextGenTutors-BeyondMeasure/build/
+!NextGenTutors-BeyondMeasure/build/**
 *.min.map
 NextGenTutors-Companion/build-src/
 build-src/
