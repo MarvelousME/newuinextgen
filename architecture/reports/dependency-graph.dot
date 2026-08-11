@@ -1,6 +1,7 @@
 digraph RAD {
   rankdir=LR;
   "ai-integration" [label="ai-integration\n1.0.0"];
+  "beyond-measure" [label="beyond-measure\n1.0.0"];
   "beyondinfinity" [label="beyondinfinity\n1.0.0"];
   "bridge-memory-tencentdb" [label="bridge-memory-tencentdb\n1.0.0"];
   "bridge-talent-intelligence" [label="bridge-talent-intelligence\n1.0.0"];
@@ -9,6 +10,8 @@ digraph RAD {
   "plugin-manager" [label="plugin-manager\n1.0.0"];
   "ai-integration" -> "wordpress" [label="required"];
   "ai-integration" -> "companion" [label="optional"];
+  "beyond-measure" -> "wordpress" [label="required"];
+  "beyond-measure" -> "companion" [label="optional"];
   "beyondinfinity" -> "wordpress" [label="required"];
   "beyondinfinity" -> "companion" [label="optional"];
   "bridge-memory-tencentdb" -> "wordpress" [label="required"];
@@ -30,4 +33,8 @@ digraph RAD {
   "companion" -> "bridge-memory-tencentdb" [label="contract"];
   "companion" -> "bridge-talent-intelligence" [label="contract"];
   "companion" -> "bridge-talent-intelligence" [label="contract"];
+  "beyond-measure" -> "companion" [label="contract"];
+  "beyond-measure" -> "companion" [label="contract"];
+  "beyond-measure" -> "bridge-talent-intelligence" [label="contract"];
+  "companion" -> "beyond-measure" [label="contract"];
 }

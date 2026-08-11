@@ -1,6 +1,6 @@
 # FINAL-ARCHITECTURE-COMPLIANCE-REPORT
 
-Generated: 2026-08-11T00:00:13.163Z
+Generated: 2026-08-11T01:57:33.600Z
 
 ## Executive verdict
 
@@ -8,7 +8,7 @@ Generated: 2026-08-11T00:00:13.163Z
 PARTIALLY COMPLIANT
 ```
 
-Gate: PASS | Manifests: 7 | Capabilities: 34 | Errors: 0
+Gate: PASS | Manifests: 8 | Capabilities: 39 | Errors: 0
 
 ### MVP limitations (explicit)
 

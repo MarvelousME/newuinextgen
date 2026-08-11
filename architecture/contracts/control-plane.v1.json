@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "architecture/contracts/control-plane.v1.json",
+  "title": "NextGenTutors Control Plane API v1",
+  "type": "object",
+  "definitions": {
+    "empty": { "type": "object" },
+    "envelope": {
+      "type": "object",
+      "required": ["data", "meta"],
+      "properties": {
+        "data": {},
+        "meta": {
+          "type": "object",
+          "properties": {
+            "requestId": { "type": "string" },
+            "timestamp": { "type": "string" },
+            "version": { "type": "string" }
+          }
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "required": ["error"],
+      "properties": {
+        "error": {
+          "type": "object",
+          "required": ["code", "message", "requestId"],
+          "properties": {
+            "code": { "type": "string" },
+            "message": { "type": "string" },
+            "requestId": { "type": "string" }
+          }
+        }
+      }
+    },
+    "health": {
+      "type": "object",
+      "properties": {
+        "level": { "type": "string", "enum": ["operational", "degraded", "critical"] },
+        "score": { "type": "integer" }
+      }
+    },
+    "accessMatrix": {
+      "type": "object",
+      "properties": {
+        "roles": { "type": "array" },
+        "capabilities": { "type": "array" },
+        "matrix": { "type": "object" }
+      }
+    },
+    "resourceQuery": {
+      "type": "object",
+      "properties": {
+        "resourceId": { "type": "string" },
+        "page": { "type": "integer" },
+        "perPage": { "type": "integer" }
+      }
+    }
+  }
+}

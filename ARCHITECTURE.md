@@ -1,6 +1,6 @@
 # NextGenTutors — Solution Architecture
 
-One product, **five deployable packages**. Each package has a single responsibility; cross-package contracts are explicit and versioned.
+One product, **six deployable packages** (plus ops consoles). Each package has a single responsibility; cross-package contracts are explicit and versioned.
 
 ## Packages (canonical source only)
 
@@ -8,6 +8,7 @@ One product, **five deployable packages**. Each package has a single responsibil
 |---------|--------|----------------|----------------|
 | **BeyondInfinity** | `NextGenTutors-BeyondInfinity/` | `themes/nextgentutors-beyondinfinity` | Presentation: templates, design tokens, page defaults, theme workflows (fallback), `[bi_*]` / consumed `[ngc_*]` |
 | **Companion** | `NextGenTutors-Companion/` | `plugins/NextGenTutors-Companion` | Domain: data layer, CPTs, `[ngc_*]` shortcodes, `ngc/v1` REST, matching, bookings, AI suite, integrations |
+| **Beyond Measure** | `NextGenTutors-BeyondMeasure/` | `plugins/NextGenTutors-BeyondMeasure` | Control Plane admin OS: React SPA in `wp-admin`, RBAC matrix, metadata-driven CRUD, health/audit; does **not** own domain scoring/payments |
 | **AI-Integration** | `NextGenTutors-AI-Integration/` | `plugins/NextGenTutors-AI-Integration` | Transport/security/governance bridge for approved AI integrations. No Companion domain ownership and no direct LLM or model runtime. |
 | **Html-Importer** | `NextGenTutors-Html-Importer/` | `plugins/NextGenTutors-Html-Importer` | One-time / ops: static HTML → WP pages (dry-run, rollback). No runtime business logic. |
 | **Plugin-Manager** | `NextGenTutors-Plugin-Manager/` | `plugins/NextGenTutors-Plugin-Manager` | Operator console: install/activate stack plugins, health, offline zips. Does not own tutor data. |
@@ -91,6 +92,7 @@ All mounts point at **canonical folders** at repo root:
 ```yaml
 ../NextGenTutors-BeyondInfinity  → themes/nextgentutors-beyondinfinity
 ../NextGenTutors-Companion       → plugins/NextGenTutors-Companion
+../NextGenTutors-BeyondMeasure   → plugins/NextGenTutors-BeyondMeasure
 ../NextGenTutors-AI-Integration  → plugins/NextGenTutors-AI-Integration
 ../NextGenTutors-Html-Importer   → plugins/NextGenTutors-Html-Importer
 ../NextGenTutors-Plugin-Manager  → plugins/NextGenTutors-Plugin-Manager

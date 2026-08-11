@@ -97,6 +97,7 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Memory_Admin',
 		'NGC_Talent_Service',
 		'NGC_Talent_Admin',
+		'NGC_Control_Plane_Bridge',
 		'NGC_Platform_Services_Admin',
 		'NGC_UI_Library',
 		'NGC_UI_Library_Admin',

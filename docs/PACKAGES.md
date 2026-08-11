@@ -12,7 +12,8 @@ Complete reference for all deployable packages in the monorepo.
 newuinextgen/                          ← monorepo root
 ├── (theme files)                      ← BeyondInfinity theme
 ├── NextGenTutors-Companion/           ← domain plugin
-├── NextGenTutors-Mission-Control/     ← ops control plane
+├── NextGenTutors-BeyondMeasure/       ← Control Plane admin OS (Beyond Measure)
+├── NextGenTutors-Mission-Control/     ← ops control plane (coexists; strangler)
 ├── NextGenTutors-Plugin-Manager/      ← fleet operator console
 ├── NextGenTutors-Html-Importer/       ← HTML migration tool
 ├── ui-library/                        ← shared Magic UI (deploy separately)

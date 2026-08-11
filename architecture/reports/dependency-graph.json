@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-11T00:00:13.142Z",
+  "generatedAt": "2026-08-11T01:57:33.587Z",
   "nodes": [
     {
       "id": "ai-integration",
@@ -11,6 +11,28 @@
       ],
       "consumes": [
         "companion.rest.query"
+      ]
+    },
+    {
+      "id": "beyond-measure",
+      "name": "NextGenTutors Beyond Measure",
+      "version": "1.0.0",
+      "provides": [
+        "control.plane.admin",
+        "control.plane.nav",
+        "control.plane.health.aggregate",
+        "control.plane.access.matrix",
+        "control.plane.crud.runtime"
+      ],
+      "consumes": [
+        "companion.rest.query",
+        "companion.rest.command",
+        "talent.match.evaluate",
+        "talent.match.explain",
+        "talent.rank",
+        "talent.health",
+        "memory.health",
+        "platform.capability.invoke"
       ]
     },
     {
@@ -114,6 +136,16 @@
     },
     {
       "from": "ai-integration",
+      "to": "companion",
+      "kind": "optional"
+    },
+    {
+      "from": "beyond-measure",
+      "to": "wordpress",
+      "kind": "required"
+    },
+    {
+      "from": "beyond-measure",
       "to": "companion",
       "kind": "optional"
     },
@@ -229,6 +261,30 @@
       "to": "bridge-talent-intelligence",
       "kind": "contract",
       "capability": "talent.rank"
+    },
+    {
+      "from": "beyond-measure",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.rest.query"
+    },
+    {
+      "from": "beyond-measure",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.rest.command"
+    },
+    {
+      "from": "beyond-measure",
+      "to": "bridge-talent-intelligence",
+      "kind": "contract",
+      "capability": "talent.match.explain"
+    },
+    {
+      "from": "companion",
+      "to": "beyond-measure",
+      "kind": "contract",
+      "capability": "control.plane.admin"
     }
   ]
 }

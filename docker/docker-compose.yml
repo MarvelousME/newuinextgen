@@ -90,6 +90,7 @@ services:
       - ../nextgen-automation-hub:/var/www/html/wp-content/plugins/nextgen-automation-hub
       - ../NextGenTutors-Plugin-Manager:/var/www/html/wp-content/plugins/NextGenTutors-Plugin-Manager
       - ../NextGenTutors-Mission-Control:/var/www/html/wp-content/plugins/NextGenTutors-Mission-Control
+      - ../NextGenTutors-BeyondMeasure:/var/www/html/wp-content/plugins/NextGenTutors-BeyondMeasure
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer
       - ../content/_extracted/nextgen-command-center-v1.0:/var/www/html/wp-content/plugins/nextgen-command-center
       - ../content/_extracted/nextgen-completion-suite:/var/www/html/wp-content/plugins/nextgen-completion-suite
@@ -143,6 +144,7 @@ services:
       - ../nextgen-automation-hub:/var/www/html/wp-content/plugins/nextgen-automation-hub
       - ../NextGenTutors-Plugin-Manager:/var/www/html/wp-content/plugins/NextGenTutors-Plugin-Manager
       - ../NextGenTutors-Mission-Control:/var/www/html/wp-content/plugins/NextGenTutors-Mission-Control
+      - ../NextGenTutors-BeyondMeasure:/var/www/html/wp-content/plugins/NextGenTutors-BeyondMeasure
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer
       - ../content/_extracted/nextgen-command-center-v1.0:/var/www/html/wp-content/plugins/nextgen-command-center
       - ../content/_extracted/nextgen-completion-suite:/var/www/html/wp-content/plugins/nextgen-completion-suite

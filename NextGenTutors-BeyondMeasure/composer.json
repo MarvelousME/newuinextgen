@@ -1,0 +1,25 @@
+{
+  "name": "nextgentutors/beyond-measure",
+  "description": "NextGenTutors Beyond Measure — Control Plane",
+  "type": "wordpress-plugin",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "NGTBM\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "NGTBM\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6"
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
+}

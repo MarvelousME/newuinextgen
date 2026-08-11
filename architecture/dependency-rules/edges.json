@@ -51,9 +51,42 @@
       "to": "bridge-talent-intelligence",
       "kind": "contract",
       "capability": "talent.rank"
+    },
+    {
+      "from": "beyond-measure",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.rest.query",
+      "note": "Control Plane admin facade — REST only, no Companion includes"
+    },
+    {
+      "from": "beyond-measure",
+      "to": "companion",
+      "kind": "contract",
+      "capability": "companion.rest.command"
+    },
+    {
+      "from": "beyond-measure",
+      "to": "bridge-talent-intelligence",
+      "kind": "contract",
+      "capability": "talent.match.explain",
+      "note": "Talent workstation explain via Companion REST proxy"
+    },
+    {
+      "from": "companion",
+      "to": "beyond-measure",
+      "kind": "contract",
+      "capability": "control.plane.admin",
+      "note": "Companion registers subsystems into Control Plane via public action"
     }
   ],
   "deny": [
+    {
+      "from": "beyond-measure",
+      "to": "companion",
+      "kind": "implementation",
+      "note": "No require of NextGenTutors-Companion/includes"
+    },
     {
       "from": "beyondinfinity",
       "to": "companion",

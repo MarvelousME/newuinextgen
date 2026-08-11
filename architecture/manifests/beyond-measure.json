@@ -1,0 +1,79 @@
+{
+  "bridgeManifestVersion": "1.0",
+  "system": {
+    "id": "beyond-measure",
+    "name": "NextGenTutors Beyond Measure",
+    "version": "1.0.0",
+    "description": "Control Plane admin OS: React SPA in wp-admin; WP remains auth, RBAC, REST, orchestration and persistence authority. Subsystems own business logic.",
+    "owner": "platform-control-plane"
+  },
+  "runtime": {
+    "type": "wordpress-plugin",
+    "entrypoint": "nextgentutors-beyond-measure.php",
+    "path": "NextGenTutors-BeyondMeasure"
+  },
+  "lifecycle": {
+    "installable": true,
+    "enableable": true,
+    "disableable": true,
+    "upgradeable": true,
+    "rollbackSupported": true
+  },
+  "capabilities": {
+    "provides": [
+      "control.plane.admin",
+      "control.plane.nav",
+      "control.plane.health.aggregate",
+      "control.plane.access.matrix",
+      "control.plane.crud.runtime"
+    ],
+    "consumes": [
+      "companion.rest.query",
+      "companion.rest.command",
+      "talent.match.evaluate",
+      "talent.match.explain",
+      "talent.rank",
+      "talent.health",
+      "memory.health",
+      "platform.capability.invoke"
+    ]
+  },
+  "contracts": {
+    "rest": ["architecture/contracts/control-plane.v1.json"],
+    "grpc": [],
+    "events": [],
+    "commands": ["architecture/contracts/control-plane.v1.json"],
+    "queries": ["architecture/contracts/control-plane.v1.json"]
+  },
+  "permissions": {
+    "required": ["ngt_cp_access"],
+    "optional": ["manage_options", "ngt_health_read", "ngt_access_matrix_read"]
+  },
+  "data": {
+    "owns": [
+      "wp_ngtbm_notifications",
+      "wp_ngtbm_config_revisions",
+      "wp_ngtbm_audit"
+    ],
+    "reads": []
+  },
+  "dependencies": {
+    "required": ["wordpress"],
+    "optional": ["companion"]
+  },
+  "health": {
+    "readiness": "control.plane.health.aggregate",
+    "liveness": "beyond-measure.enabled!=false"
+  },
+  "observability": {
+    "logs": "NGTBM_AuditLog",
+    "metrics": "ngtbm_metric_*",
+    "traces": "correlation via requestId envelope meta"
+  },
+  "configuration": {
+    "schema": "architecture/contracts/control-plane.v1.json#/empty"
+  },
+  "compatibility": {
+    "minimumPlatformVersion": "1.0.0"
+  }
+}
