@@ -70,8 +70,21 @@ class NGC_Parent_Checkout {
 			return new WP_Error( 'woocommerce_inactive', __( 'WooCommerce is not active.', 'nextgencompanion' ) );
 		}
 
-		$product_id  = (int) ( $args['product_id'] ?? self::ensure_product() );
-		$product     = $product_id ? wc_get_product( $product_id ) : null;
+		$args       = self::hydrate_args_from_booking( $args );
+		$product_id = (int) ( $args['product_id'] ?? 0 );
+		if ( ! $product_id && class_exists( 'NGC_Product_Provisioner' ) ) {
+			$product_id = NGC_Product_Provisioner::resolve_for_booking(
+				[
+					'duration_minutes' => (int) ( $args['duration_minutes'] ?? 60 ),
+					'package_type'     => (string) ( $args['package_type'] ?? 'single' ),
+					'subject'          => (string) ( $args['subject'] ?? '' ),
+				]
+			);
+		}
+		if ( ! $product_id ) {
+			$product_id = self::ensure_product();
+		}
+		$product = $product_id ? wc_get_product( $product_id ) : null;
 		if ( ! $product ) {
 			return new WP_Error( 'product_missing', __( 'Lesson product is not configured.', 'nextgencompanion' ) );
 		}
@@ -88,6 +101,21 @@ class NGC_Parent_Checkout {
 		}
 
 		$order->add_product( $product, max( 1, (int) ( $args['qty'] ?? 1 ) ) );
+		foreach ( $order->get_items() as $item_id => $item ) {
+			if ( ! is_object( $item ) || ! method_exists( $item, 'update_meta_data' ) ) {
+				continue;
+			}
+			$item->update_meta_data( '_ngt_booking_id', $booking_id );
+			$item->update_meta_data( '_ngt_tutor_user_id', (int) ( $args['tutor_user_id'] ?? 0 ) );
+			$item->update_meta_data( '_ngt_student_user_id', (int) ( $args['student_user_id'] ?? 0 ) );
+			$item->update_meta_data( '_ngt_parent_user_id', $user_id );
+			$item->update_meta_data( '_ngt_subject', sanitize_text_field( (string) ( $args['subject'] ?? '' ) ) );
+			$item->update_meta_data( '_ngt_duration_minutes', (int) ( $args['duration_minutes'] ?? 60 ) );
+			$item->update_meta_data( '_ngt_product_id', $product_id );
+			$item->update_meta_data( '_ngt_scheduled_start', sanitize_text_field( (string) ( $args['scheduled_start'] ?? '' ) ) );
+			$item->save();
+			break;
+		}
 		$order->set_billing_first_name( $first );
 		$order->set_billing_last_name( $last );
 		if ( $email ) {
@@ -173,6 +201,39 @@ class NGC_Parent_Checkout {
 	}
 
 	/**
+	 * Fill tutor/student/subject/duration from booking when only booking_id is supplied.
+	 *
+	 * @param array<string, mixed> $args Args.
+	 * @return array<string, mixed>
+	 */
+	private static function hydrate_args_from_booking( $args ) {
+		$booking_id = (int) ( $args['booking_id'] ?? 0 );
+		if ( $booking_id <= 0 || ! class_exists( 'NGC_Bookings' ) ) {
+			return $args;
+		}
+		$booking = NGC_Bookings::get( $booking_id );
+		if ( ! $booking ) {
+			return $args;
+		}
+		if ( empty( $args['tutor_user_id'] ) ) {
+			$args['tutor_user_id'] = (int) $booking->tutor_user_id;
+		}
+		if ( empty( $args['student_user_id'] ) ) {
+			$args['student_user_id'] = (int) $booking->student_user_id;
+		}
+		if ( empty( $args['subject'] ) ) {
+			$args['subject'] = (string) $booking->subject;
+		}
+		if ( empty( $args['duration_minutes'] ) ) {
+			$args['duration_minutes'] = (int) ( $booking->duration_minutes ?: 60 );
+		}
+		if ( empty( $args['scheduled_start'] ) && ! empty( $booking->scheduled_at ) ) {
+			$args['scheduled_start'] = (string) $booking->scheduled_at;
+		}
+		return $args;
+	}
+
+	/**
 	 * REST: POST /ngc/v1/checkout/parent
 	 */
 	public static function register_rest() {
@@ -182,9 +243,12 @@ class NGC_Parent_Checkout {
 			[
 				'methods'             => 'POST',
 				'callback'            => [ __CLASS__, 'rest_create_checkout' ],
-				'permission_callback' => '__return_true',
+				'permission_callback' => static function () {
+					return is_user_logged_in();
+				},
 				'args'                => [
 					'booking_id' => [ 'type' => 'integer', 'default' => 0 ],
+					'product_id' => [ 'type' => 'integer', 'default' => 0 ],
 					'email'      => [ 'type' => 'string' ],
 					'first_name' => [ 'type' => 'string' ],
 					'last_name'  => [ 'type' => 'string' ],
@@ -198,10 +262,41 @@ class NGC_Parent_Checkout {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public static function rest_create_checkout( $request ) {
+		$user_id    = get_current_user_id();
+		$booking_id = (int) $request->get_param( 'booking_id' );
+		if ( $booking_id > 0 && class_exists( 'NGC_Bookings' ) ) {
+			$booking = NGC_Bookings::get( $booking_id );
+			if ( ! $booking ) {
+				return new WP_Error( 'booking_missing', __( 'Booking not found.', 'nextgencompanion' ), [ 'status' => 404 ] );
+			}
+			$student_id = (int) $booking->student_user_id;
+			$allowed    = user_can( $user_id, 'manage_options' ) || $user_id === $student_id;
+			if ( ! $allowed && $student_id > 0 ) {
+				// Parent of the learner (via matches / child-learner meta).
+				$parent_of = (int) get_user_meta( $student_id, 'ngc_parent_user_id', true );
+				if ( ! $parent_of ) {
+					$parent_of = (int) get_user_meta( $student_id, 'ngt_parent_user_id', true );
+				}
+				$allowed = $user_id === $parent_of;
+			}
+			if ( ! $allowed && method_exists( 'NGC_Bookings', 'query_for_parent' ) ) {
+				foreach ( NGC_Bookings::query_for_parent( $user_id, 100 ) as $row ) {
+					if ( (int) $row->id === $booking_id ) {
+						$allowed = true;
+						break;
+					}
+				}
+			}
+			if ( ! $allowed ) {
+				return new WP_Error( 'checkout_forbidden', __( 'You cannot pay for this booking.', 'nextgencompanion' ), [ 'status' => 403 ] );
+			}
+		}
+
 		$order = self::create_order(
 			[
-				'user_id'    => get_current_user_id(),
-				'booking_id' => (int) $request->get_param( 'booking_id' ),
+				'user_id'    => $user_id,
+				'booking_id' => $booking_id,
+				'product_id' => (int) $request->get_param( 'product_id' ),
 				'email'      => (string) $request->get_param( 'email' ),
 				'first_name' => (string) $request->get_param( 'first_name' ),
 				'last_name'  => (string) $request->get_param( 'last_name' ),

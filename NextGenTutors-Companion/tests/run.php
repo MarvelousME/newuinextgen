@@ -14,6 +14,12 @@ $passed = 0;
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', $root . '/tests-stub/' );
 }
+if ( ! defined( 'NGC_PLUGIN_DIR' ) ) {
+	define( 'NGC_PLUGIN_DIR', $root . '/' );
+}
+if ( ! defined( 'WP_CONTENT_DIR' ) ) {
+	define( 'WP_CONTENT_DIR', dirname( $root ) );
+}
 
 function ngc_test_assert( $label, $ok ) {
 	global $errors, $passed;
@@ -64,6 +70,16 @@ if ( ! function_exists( 'apply_filters' ) ) {
 	function apply_filters( $hook, $value ) {
 		unset( $hook );
 		return $value;
+	}
+}
+if ( ! function_exists( 'trailingslashit' ) ) {
+	function trailingslashit( $string ) {
+		return rtrim( (string) $string, '/\\' ) . '/';
+	}
+}
+if ( ! function_exists( 'untrailingslashit' ) ) {
+	function untrailingslashit( $string ) {
+		return rtrim( (string) $string, '/\\' );
 	}
 }
 
@@ -586,6 +602,7 @@ ngc_test_assert( 'admin catalog has mission-control module', null !== NGC_Admin_
 ngc_test_assert( 'admin catalog has mission control screen', null !== NGC_Admin_Registry::get_screen( 'ngtmc-mission-control' ) );
 ngc_test_assert( 'admin parent helper', 'ngt-admin' === ngt_admin_parent() );
 ngc_test_assert( 'admin catalog screen count', count( NGC_Admin_Registry::screens() ) >= 20 );
+ngc_test_assert( 'admin catalog screen definitions file', count( NGC_Admin_Catalog::screen_definitions() ) >= 20 );
 
 require_once $root . '/includes/admin/framework/class-ngc-platform-version.php';
 require_once $root . '/includes/admin/framework/class-ngc-admin-theme.php';

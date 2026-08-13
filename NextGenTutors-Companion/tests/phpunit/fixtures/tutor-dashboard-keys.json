@@ -1,0 +1,5 @@
+{
+  "data": ["user", "kpis", "application", "recentSessions", "nextSession"],
+  "kpis": ["monthEarnings", "sessionsMonth", "averageRating", "pendingPayout"],
+  "application": ["status", "reviewNotes", "submittedAt", "updatedAt"]
+}

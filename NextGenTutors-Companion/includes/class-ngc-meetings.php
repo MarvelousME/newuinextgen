@@ -136,6 +136,7 @@ class NGC_Meetings {
 			return false;
 		}
 		$status = sanitize_key( (string) $booking->status );
-		return in_array( $status, [ 'requested', 'confirmed' ], true );
+		// Commerce gate: join only after confirmation (payment settle → confirmed).
+		return 'confirmed' === $status;
 	}
 }

@@ -67,6 +67,7 @@ function ngc_autoload( $class ) {
 		NGC_PLUGIN_DIR . 'includes/intelligence/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/platform/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/session/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/database/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/memory/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/talent/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/ui-library/' . $relative,
