@@ -35,7 +35,9 @@ if ( ! function_exists( 'get_plugin_data' ) ) {
 	 */
 	function get_plugin_data( $file, $markup = true, $translate = true ) {
 		unset( $markup, $translate );
-		$relative = str_replace( '\\', '/', str_replace( WP_PLUGIN_DIR . '/', '', wp_normalize_path( $file ) ) );
+		$normalized_file = wp_normalize_path( (string) $file );
+		$plugin_root     = rtrim( wp_normalize_path( WP_PLUGIN_DIR ), '/' ) . '/';
+		$relative        = str_replace( $plugin_root, '', $normalized_file );
 		$map      = array(
 			'custom-folder/custom.php' => array(
 				'Name'       => 'Custom Legacy',
@@ -77,6 +79,7 @@ require_once $root . '/includes/diagnostics/class-ngc-legacy-plugin-guard.php';
 require_once $root . '/includes/session/class-ngc-session-states.php';
 require_once $root . '/includes/integrations/class-ngc-product-provisioner.php';
 require_once $root . '/includes/integrations/class-ngc-woocommerce-catalog.php';
+require_once $root . '/includes/integrations/class-ngc-payout-export.php';
 require_once $root . '/includes/memory/interface-ngc-memory-provider.php';
 require_once $root . '/includes/memory/class-ngc-memory-settings.php';
 require_once $root . '/includes/memory/class-ngc-memory-noop-provider.php';
@@ -111,6 +114,31 @@ if ( ! function_exists( 'update_option' ) ) {
 	}
 }
 
+if ( ! function_exists( '__' ) ) {
+	function __( $text, $domain = null ) {
+		unset( $domain );
+		return $text;
+	}
+}
+
+if ( ! function_exists( 'sanitize_textarea_field' ) ) {
+	function sanitize_textarea_field( $str ) {
+		return trim( strip_tags( (string) $str ) );
+	}
+}
+
+if ( ! function_exists( 'wp_unslash' ) ) {
+	function wp_unslash( $value ) {
+		return $value;
+	}
+}
+
+if ( ! function_exists( 'current_time' ) ) {
+	function current_time( $type, $gmt = 0 ) {
+		unset( $type, $gmt );
+		return '2026-08-13 18:00:00';
+	}
+}
 if ( ! function_exists( 'sanitize_key' ) ) {
 	function sanitize_key( $key ) {
 		$key = strtolower( (string) $key );
@@ -171,4 +199,8 @@ if ( ! function_exists( 'is_wp_error' ) ) {
 
 if ( ! defined( 'NGC_PLUGIN_DIR' ) ) {
 	define( 'NGC_PLUGIN_DIR', $root . '/' );
+}
+
+if ( ! defined( 'WP_CONTENT_DIR' ) ) {
+	define( 'WP_CONTENT_DIR', dirname( $root ) );
 }

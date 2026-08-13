@@ -20,6 +20,7 @@ class TalentSettingsTest extends TestCase {
 				'interface-ngc-talent-intelligence-provider.php',
 				'class-ngc-talent-settings.php',
 				'class-ngc-talent-fairness.php',
+				'class-ngc-talent-profile-helper.php',
 				'class-ngc-talent-noop-provider.php',
 				'class-ngc-talent-bridge-rules-provider.php',
 				'class-ngc-talent-service.php',
