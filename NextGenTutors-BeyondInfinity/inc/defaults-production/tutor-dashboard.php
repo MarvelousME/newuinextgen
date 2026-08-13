@@ -16,7 +16,7 @@ bi_hero(
       <?php bi_nbi_bento_shell( 'tutor' ); ?>
     <?php endif; ?>
     <?php bi_tutor_dashboard_intro(); ?>
-    <?php if ( function_exists( 'ng_ui_component' ) && is_user_logged_in() ) : ?>
+    <?php if ( function_exists( 'ng_ui_component' ) && is_user_logged_in() && ! bi_dashboard_rest_available() ) : ?>
       <div class="ngt-animate bi-mb-lg">
         <?php ng_ui_component( 'booking-list', [ 'limit' => 5 ] ); ?>
       </div>
@@ -33,7 +33,8 @@ bi_hero(
       __( 'Payout status', 'beyondinfinity' ),
     ] );
     ?>
-    <div class="bi-grid-2 bi-mt-md">
+    <?php if ( ! bi_dashboard_rest_available() ) : ?>
+    <div class="bi-grid-2 bi-mt-md bi-dash-legacy-chrome">
       <div class="ngt-card ngt-animate bi-pad-md">
         <h3 class="bi-mb-sm"><?php esc_html_e( 'Quick Actions', 'beyondinfinity' ); ?></h3>
         <div class="bi-stack-col">
@@ -47,5 +48,6 @@ bi_hero(
         <a href="<?php echo esc_url( home_url( '/become-a-tutor' ) ); ?>" class="ngt-btn ngt-btn--outline"><?php esc_html_e( 'Update Profile', 'beyondinfinity' ); ?></a>
       </div>
     </div>
+    <?php endif; ?>
   </div>
 </section>

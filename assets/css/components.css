@@ -301,6 +301,8 @@
 .bi-dashboard-rest__loading,
 .bi-dashboard-rest__empty { color: var(--ngt-text-3); text-align: center; padding: 24px; }
 .bi-dashboard-rest__error { color: #b91c1c; padding: 16px; border-radius: 8px; background: #fef2f2; }
+.bi-dashboard-rest__error .bi-dash-retry { margin-top: 12px; }
+.bi-dash-join-error { color: #b91c1c; font-size: 0.85rem; margin: 8px 0 0; }
 .bi-dashboard-rest__heading { margin: 0 0 20px; font-size: 1.35rem; }
 .bi-dashboard-rest__toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
 .bi-dash-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
@@ -330,6 +332,13 @@
 .bi-dash-hero__title { font-weight: 700; font-size: 1.05rem; color: var(--ngt-text); }
 .bi-dash-hero__meta { font-size: 0.85rem; color: var(--ngt-text-2); margin-top: 2px; }
 .bi-dash-hero__join { display: inline-flex; margin-top: 12px; }
+.bi-dash-hero--empty .bi-dashboard-rest__empty { padding: 4px 0 12px; text-align: left; }
+.ngt-section:has(.bi-dashboard-rest) .ng-ui-booking-list,
+.bi-builder-article:has(.bi-dashboard-rest) .ng-ui-booking-list,
+.ngt-section:has(.bi-dashboard-rest) .bi-dash-legacy-chrome,
+.bi-builder-article:has(.bi-dashboard-rest) .bi-dash-legacy-chrome {
+  display: none;
+}
 .bi-dash-session__join { margin-left: auto; margin-right: 10px; flex-shrink: 0; }
 .bi-dash-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 20px; }
 .bi-dash-learners { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 16px; }

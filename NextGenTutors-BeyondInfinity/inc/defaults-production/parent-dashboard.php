@@ -13,7 +13,7 @@ bi_hero( __( 'Parent Dashboard', 'beyondinfinity' ), __( 'Welcome to your family
       <?php bi_nbi_bento_shell( 'parent' ); ?>
     <?php endif; ?>
     <?php bi_learner_dashboard_intro( 'parent' ); ?>
-    <?php if ( function_exists( 'ng_ui_component' ) && is_user_logged_in() ) : ?>
+    <?php if ( function_exists( 'ng_ui_component' ) && is_user_logged_in() && ! bi_dashboard_rest_available() ) : ?>
       <div class="ngt-animate" style="margin-bottom:24px">
         <?php ng_ui_component( 'booking-list', [ 'limit' => 5 ] ); ?>
       </div>

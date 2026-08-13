@@ -138,9 +138,16 @@ class NGC_Rest {
 		if ( is_array( $data ) && isset( $data['status'] ) ) {
 			$http_status = (int) $data['status'];
 		}
-		return new WP_REST_Response(
-			[ 'error' => $error->get_error_message(), 'code' => $error->get_error_code() ],
-			$http_status
-		);
+		$body = [
+			'error' => $error->get_error_message(),
+			'code'  => $error->get_error_code(),
+		];
+		if ( is_array( $data ) && ! empty( $data['window'] ) && is_array( $data['window'] ) ) {
+			$body['window'] = $data['window'];
+			if ( ! empty( $data['window']['reason'] ) ) {
+				$body['reason'] = (string) $data['window']['reason'];
+			}
+		}
+		return new WP_REST_Response( $body, $http_status );
 	}
 }

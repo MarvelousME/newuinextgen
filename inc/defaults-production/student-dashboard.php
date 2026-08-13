@@ -15,7 +15,9 @@ bi_hero( __( 'Student Dashboard', 'beyondinfinity' ), __( 'This is your learning
     <?php bi_learner_dashboard_intro( 'student' ); ?>
     <?php if ( function_exists( 'ng_ui_component' ) && is_user_logged_in() ) : ?>
       <div class="ngt-animate" style="margin-bottom:24px">
-        <?php ng_ui_component( 'booking-list', [ 'limit' => 5 ] ); ?>
+        <?php if ( ! bi_dashboard_rest_available() ) : ?>
+          <?php ng_ui_component( 'booking-list', [ 'limit' => 5 ] ); ?>
+        <?php endif; ?>
         <?php ng_ui_component( 'achievement-badge', [ 'limit' => 8 ] ); ?>
       </div>
     <?php endif; ?>
