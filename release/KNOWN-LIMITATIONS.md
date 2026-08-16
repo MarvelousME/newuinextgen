@@ -1,19 +1,7 @@
-# Known Limitations — BI 1.9.17 / NGC 1.9.5
+# Known Limitations — release pointer
 
-**Full document:** [documentation/13-KNOWN-LIMITATIONS.md](documentation/13-KNOWN-LIMITATIONS.md)
+**Authoritative file:** [../KNOWN-LIMITATIONS.md](../KNOWN-LIMITATIONS.md) (updated 2026-08-16).
 
-**Generated:** 2026-08-02 · **PDF:** pending pandoc/wkhtmltopdf (Markdown authoritative).
+Do not claim enterprise-grade or unqualified production readiness from this pack alone.
 
-## Headline gaps
-
-| Item | Status |
-|------|--------|
-| Phase 14 demo | COMPLETE WITH LIMITATIONS |
-| Production deploy / live host proof | NOT AUTHORIZED / UNVERIFIED |
-| PayFast · SMTP · AI secrets & live config | OPEN (INPUTS-REQUIRED) |
-| Pricing, fees, legal address, safeguarding contacts | OPEN — do not invent |
-| Backup step | Awareness only; operator must prove restore |
-| PDF manuals | Not produced yet |
-| A11Y audit | OPEN |
-
-Do not claim unqualified production readiness from this release pack alone.
+Human gates still open: GitHub billing, POPIA counsel (SEC-01), public PayFast ITN, restore drill, IN-018 contacts, IN-020 deploy auth.

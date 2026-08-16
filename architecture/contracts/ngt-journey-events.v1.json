@@ -1,0 +1,27 @@
+{
+  "id": "ngt-journey-events.v1",
+  "title": "NextGenTutors canonical journey events",
+  "version": "1.0.0",
+  "events": [
+    "PaymentCaptured",
+    "BookingConfirmed",
+    "BookingRequested",
+    "SessionCompleted",
+    "SessionReminderDue24Hours",
+    "SessionReminderDue1Hour",
+    "RatingSubmitted",
+    "PaymentFailed",
+    "TutorApplicationSubmitted",
+    "TutorVerified",
+    "TutorRejected",
+    "TutorOnboardingCompleted",
+    "TutorPayoutCycleStarted",
+    "SessionNoShowDetected",
+    "ReferralRegistered",
+    "SafetyFlagRaised",
+    "SafetyCaseCreated",
+    "SafetySlaBreached"
+  ],
+  "authority": "NGC_Workflow_Authority",
+  "aliasesOwner": "NGC_Journey_Events"
+}

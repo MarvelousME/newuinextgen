@@ -27,7 +27,7 @@ docker compose --profile setup run --rm --entrypoint sh wpcli /setup/apply-defau
 if ($LASTEXITCODE -ne 0) { Write-Host 'WARN: apply-defaults reported issues' }
 
 $envFile = Join-Path $here '.env'
-$wpPort = '8900'
+$wpPort = '8890'
 if (Test-Path $envFile) {
     Get-Content $envFile | ForEach-Object {
         if ($_ -match '^\s*WP_PORT=(.+)$') { $wpPort = $Matches[1].Trim() }

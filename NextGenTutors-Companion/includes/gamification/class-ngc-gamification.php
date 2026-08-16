@@ -22,6 +22,7 @@ class NGC_Gamification {
 		add_action( 'ngc_tutor_approved', [ __CLASS__, 'on_tutor_approved' ] );
 		add_action( 'ngc_review_submitted', [ __CLASS__, 'on_review_submitted' ] );
 		add_action( 'ngc_lesson_completed', [ __CLASS__, 'on_lesson_completed' ] );
+		add_action( 'ngc_booking_completed', [ __CLASS__, 'on_session_completed' ], 20, 2 );
 		add_action( 'ngc_payment_received', [ __CLASS__, 'on_payment' ] );
 		add_action( 'user_register', [ __CLASS__, 'on_user_register' ], 20, 1 );
 		add_action( 'admin_init', [ __CLASS__, 'ensure_gamipress_types' ] );
@@ -44,12 +45,18 @@ class NGC_Gamification {
 			'ngt.tutor.approved'              => [ 'tutor_approval', 'tutor' ],
 			'ngt.parent_register.submitted'   => [ 'parent_registration', 'parent' ],
 			'ngt.student_register.submitted'  => [ 'student_registration', 'student' ],
+			// LMS-only lessons — booking sessions awarded via ngc_booking_completed (Student 50 / Tutor 25).
 			'ngt.lesson.completed'            => [ 'lesson_completion', 'student' ],
 			'ngt.review.submitted'            => [ 'review_submission', 'student' ],
 			'ngt.payment.received'            => [ 'payment_completion', 'parent' ],
 			'ngt.match.accepted'              => [ 'booking_completion', 'student' ],
 		];
 		if ( ! isset( $map[ $event ] ) ) {
+			return;
+		}
+		$vars = is_array( $vars ) ? $vars : [];
+		// Avoid double award when booking completion already fires ngc_booking_completed.
+		if ( 'ngt.lesson.completed' === $event && ! empty( $vars['booking_id'] ) ) {
 			return;
 		}
 		$user_id = (int) ( $vars['user_id'] ?? $vars['tutor_user_id'] ?? $vars['student_user_id'] ?? $vars['parent_user_id'] ?? 0 );
@@ -75,7 +82,71 @@ class NGC_Gamification {
 	public static function on_review_submitted( $vars ) {
 		$user_id = (int) ( $vars['user_id'] ?? $vars['student_user_id'] ?? 0 );
 		if ( $user_id ) {
-			self::process_event( $user_id, 'review_submission', $vars );
+			self::process_event( $user_id, 'review_submission', is_array( $vars ) ? $vars : [] );
+		}
+		$tutor_id = (int) ( $vars['tutor_user_id'] ?? $vars['tutor_id'] ?? 0 );
+		if ( $tutor_id && class_exists( 'NGC_Gamification_Milestones' ) ) {
+			NGC_Gamification_Milestones::tutor_rating_milestones( $tutor_id );
+		}
+	}
+
+	/**
+	 * Session completed — Student 50 / Tutor 25 (Match to GamiPress map).
+	 *
+	 * @param int                  $booking_id Booking ID.
+	 * @param array<string, mixed> $context    Context.
+	 */
+	public static function on_session_completed( $booking_id, $context = [] ) {
+		$context = is_array( $context ) ? $context : [];
+		$booking = $context['booking'] ?? null;
+		$student = (int) ( $context['student_user_id'] ?? $context['user_id'] ?? 0 );
+		$tutor   = (int) ( $context['tutor_user_id'] ?? $context['tutor_id'] ?? 0 );
+		$subject = (string) ( $context['subject'] ?? '' );
+
+		if ( is_object( $booking ) ) {
+			$student = $student ?: (int) ( $booking->student_user_id ?? $booking->parent_user_id ?? 0 );
+			$tutor   = $tutor ?: (int) ( $booking->tutor_user_id ?? 0 );
+			$subject = $subject ?: (string) ( $booking->subject ?? '' );
+		}
+		if ( ( ! $student || ! $tutor ) && $booking_id && class_exists( 'NGC_Bookings' ) ) {
+			$row = NGC_Bookings::get( (int) $booking_id );
+			if ( $row ) {
+				$student = $student ?: (int) ( $row->student_user_id ?? $row->parent_user_id ?? 0 );
+				$tutor   = $tutor ?: (int) ( $row->tutor_user_id ?? 0 );
+				$subject = $subject ?: (string) ( $row->subject ?? '' );
+			}
+		}
+
+		$booking_id = (int) $booking_id;
+		if ( $booking_id > 0 ) {
+			$flag = 'ngc_session_gami_' . $booking_id;
+			if ( get_transient( $flag ) ) {
+				return;
+			}
+			set_transient( $flag, 1, WEEK_IN_SECONDS );
+		}
+
+		if ( $student > 0 ) {
+			self::process_event(
+				$student,
+				'session_completed',
+				[
+					'booking_id'      => $booking_id,
+					'student_user_id' => $student,
+					'subject'         => $subject,
+				]
+			);
+		}
+		if ( $tutor > 0 ) {
+			self::process_event(
+				$tutor,
+				'session_completed_tutor',
+				[
+					'booking_id'     => $booking_id,
+					'tutor_user_id'  => $tutor,
+					'subject'        => $subject,
+				]
+			);
 		}
 	}
 
@@ -83,11 +154,14 @@ class NGC_Gamification {
 	 * @param array<string, mixed> $vars Variables.
 	 */
 	public static function on_lesson_completed( $vars ) {
-		foreach ( [ 'student_user_id', 'tutor_user_id' ] as $key ) {
-			$uid = (int) ( $vars[ $key ] ?? 0 );
-			if ( $uid ) {
-				self::process_event( $uid, 'lesson_completion', $vars );
-			}
+		$vars = is_array( $vars ) ? $vars : [];
+		// Booking sessions are owned by on_session_completed (Student 50 / Tutor 25).
+		if ( ! empty( $vars['booking_id'] ) ) {
+			return;
+		}
+		$uid = (int) ( $vars['student_user_id'] ?? $vars['user_id'] ?? 0 );
+		if ( $uid ) {
+			self::process_event( $uid, 'lesson_completion', $vars );
 		}
 	}
 

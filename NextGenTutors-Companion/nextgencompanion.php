@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NGC_VERSION', '1.9.19' );
+define( 'NGC_VERSION', '1.9.20' );
 define( 'NGC_PLUGIN_FILE', __FILE__ );
 define( 'NGC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NGC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -70,6 +70,8 @@ function ngc_autoload( $class ) {
 		NGC_PLUGIN_DIR . 'includes/database/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/memory/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/talent/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/journeys/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/ports/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/ui-library/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/ui-library/providers/' . $relative,
 	];

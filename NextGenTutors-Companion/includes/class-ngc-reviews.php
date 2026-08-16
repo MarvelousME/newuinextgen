@@ -177,6 +177,21 @@ class NGC_Reviews {
 			return new WP_Error( 'ngc_no_payout', __( 'No pending earnings.', 'nextgencompanion' ) );
 		}
 
+		/**
+		 * Filter payout amount before insert (business rules: minimum, fee).
+		 *
+		 * @param float $amount   Amount.
+		 * @param int   $tutor_id Tutor user ID.
+		 */
+		$filtered = apply_filters( 'ngc_payout_create_amount', (float) $amount, (int) $tutor_id );
+		if ( is_wp_error( $filtered ) ) {
+			return $filtered;
+		}
+		$amount = (float) $filtered;
+		if ( $amount <= 0 ) {
+			return new WP_Error( 'ngc_no_payout', __( 'No pending earnings.', 'nextgencompanion' ) );
+		}
+
 		$payout_table = NGC_Database::table( 'payouts' );
 		$wpdb->insert(
 			$payout_table,

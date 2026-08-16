@@ -29,11 +29,24 @@ class NGC_Tutor_Seeder {
 	 * @return bool
 	 */
 	public static function demo_seed_allowed() {
-		if ( apply_filters( 'ngc_allow_demo_tutor_seed', null ) === true ) {
-			return true;
+		if ( class_exists( 'NGC_Demo_Env' ) && NGC_Demo_Env::is_production_environment() ) {
+			return false;
+		}
+		$env_flag = getenv( 'NGC_ALLOW_DEMO_SEED' );
+		if ( is_string( $env_flag ) && in_array( strtolower( trim( $env_flag ) ), [ '0', 'false', 'no', 'off' ], true ) ) {
+			return false;
 		}
 		if ( apply_filters( 'ngc_allow_demo_tutor_seed', null ) === false ) {
 			return false;
+		}
+		if ( apply_filters( 'ngc_demo_seed_allowed', null ) === false ) {
+			return false;
+		}
+		if ( class_exists( 'NGC_Demo_Env' ) && NGC_Demo_Env::seed_allowed() ) {
+			return true;
+		}
+		if ( apply_filters( 'ngc_allow_demo_tutor_seed', null ) === true ) {
+			return true;
 		}
 		if ( defined( 'NGC_ALLOW_DEMO_SEED' ) && NGC_ALLOW_DEMO_SEED ) {
 			return true;

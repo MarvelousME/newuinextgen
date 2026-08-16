@@ -16,7 +16,7 @@ $root = Split-Path -Parent $PSScriptRoot
 $e2e = Join-Path $root 'e2e'
 
 if (-not $env:BASE_URL) {
-    $env:BASE_URL = 'http://localhost:8900'
+    $env:BASE_URL = 'http://localhost:8890'
 }
 
 $mode = if ($Headed) { 'HEADED (visible Chrome)' } else { 'headless' }
