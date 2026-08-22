@@ -71,37 +71,46 @@ function bi_kinetic_initials( $name ) {
 }
 
 /**
- * Subject tabs for kinetic explorer (from BI tracks + extras).
+ * Subject tabs for kinetic explorer (Companion CMS when available).
  *
- * @return array<int, array{slug:string,title:string,body:string,bullets:array<int,string>}>
+ * @return array<int, array{slug:string,title:string,body:string,bullets:array<int,string>,url?:string}>
  */
 function bi_kinetic_subject_tabs() {
-    return [
-        [
-            'slug'    => 'mathematics',
-            'title'   => __( 'Mathematics', 'beyondinfinity' ),
-            'body'    => __( 'CAPS & IEB Pure Maths from Grade 1–12, Matric exam prep, homework rescue and weekly progress reports for parents.', 'beyondinfinity' ),
-            'bullets' => [ __( 'Grade 1–12', 'beyondinfinity' ), __( 'Exam technique', 'beyondinfinity' ), __( 'Weekly progress', 'beyondinfinity' ), __( 'Homework rescue', 'beyondinfinity' ) ],
-        ],
-        [
-            'slug'    => 'physical-science',
-            'title'   => __( 'Physical Science', 'beyondinfinity' ),
-            'body'    => __( 'Physics and chemistry with practical understanding, problem-solving drills and Matric confidence building.', 'beyondinfinity' ),
-            'bullets' => [ __( 'Physics', 'beyondinfinity' ), __( 'Chemistry', 'beyondinfinity' ), __( 'Problem solving', 'beyondinfinity' ), __( 'Matric prep', 'beyondinfinity' ) ],
-        ],
-        [
-            'slug'    => 'english',
-            'title'   => __( 'English HL', 'beyondinfinity' ),
-            'body'    => __( 'Essays, literature, comprehension and grammar coaching aligned to IEB and CAPS outcomes.', 'beyondinfinity' ),
-            'bullets' => [ __( 'Comprehension', 'beyondinfinity' ), __( 'Essay writing', 'beyondinfinity' ), __( 'Grammar', 'beyondinfinity' ), __( 'Literature', 'beyondinfinity' ) ],
-        ],
-        [
-            'slug'    => 'programming',
-            'title'   => __( 'Programming', 'beyondinfinity' ),
-            'body'    => __( 'Python, IT/CAT projects and logic foundations for school, college and portfolio building.', 'beyondinfinity' ),
-            'bullets' => [ __( 'Python basics', 'beyondinfinity' ), __( 'Web projects', 'beyondinfinity' ), __( 'Logic', 'beyondinfinity' ), __( 'Portfolio support', 'beyondinfinity' ) ],
-        ],
-    ];
+	if ( class_exists( 'NGC_Subjects_CMS' ) ) {
+		$cms = NGC_Subjects_CMS::tabs_for_theme();
+		if ( $cms ) {
+			return apply_filters( 'bi_kinetic_subject_tabs', $cms );
+		}
+	}
+
+	$fallback = [
+		[
+			'slug'    => 'mathematics',
+			'title'   => __( 'Mathematics', 'beyondinfinity' ),
+			'body'    => __( 'CAPS & IEB Pure Maths from Grade 1–12, Matric exam prep, homework rescue and weekly progress reports for parents.', 'beyondinfinity' ),
+			'bullets' => [ __( 'Grade 1–12', 'beyondinfinity' ), __( 'Exam technique', 'beyondinfinity' ), __( 'Weekly progress', 'beyondinfinity' ), __( 'Homework rescue', 'beyondinfinity' ) ],
+		],
+		[
+			'slug'    => 'physical-science',
+			'title'   => __( 'Physical Science', 'beyondinfinity' ),
+			'body'    => __( 'Physics and chemistry with practical understanding, problem-solving drills and Matric confidence building.', 'beyondinfinity' ),
+			'bullets' => [ __( 'Physics', 'beyondinfinity' ), __( 'Chemistry', 'beyondinfinity' ), __( 'Problem solving', 'beyondinfinity' ), __( 'Matric prep', 'beyondinfinity' ) ],
+		],
+		[
+			'slug'    => 'english',
+			'title'   => __( 'English HL', 'beyondinfinity' ),
+			'body'    => __( 'Essays, literature, comprehension and grammar coaching aligned to IEB and CAPS outcomes.', 'beyondinfinity' ),
+			'bullets' => [ __( 'Comprehension', 'beyondinfinity' ), __( 'Essay writing', 'beyondinfinity' ), __( 'Grammar', 'beyondinfinity' ), __( 'Literature', 'beyondinfinity' ) ],
+		],
+		[
+			'slug'    => 'programming',
+			'title'   => __( 'Programming', 'beyondinfinity' ),
+			'body'    => __( 'Python, IT/CAT projects and logic foundations for school, college and portfolio building.', 'beyondinfinity' ),
+			'bullets' => [ __( 'Python basics', 'beyondinfinity' ), __( 'Web projects', 'beyondinfinity' ), __( 'Logic', 'beyondinfinity' ), __( 'Portfolio support', 'beyondinfinity' ) ],
+		],
+	];
+
+	return apply_filters( 'bi_kinetic_subject_tabs', $fallback );
 }
 
 /**

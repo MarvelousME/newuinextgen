@@ -17,6 +17,8 @@ final class NGC_Authz_Matrix {
 	/**
 	 * Capability map by logical role.
 	 *
+	 * SSOT pack: architecture/policies/authz-matrix.json (must match this array).
+	 *
 	 * @return array<string,string[]>
 	 */
 	public static function matrix() {
@@ -31,6 +33,67 @@ final class NGC_Authz_Matrix {
 			'Affiliate'   => [ 'ngc_view_affiliate', 'read' ],
 			'Franchise'   => [ 'ngc_view_franchise', 'ngc_view_finance' ],
 			'SuperAdmin'  => [ 'manage_options', 'ngc_manage_platform', 'ngc_manage_safeguarding', 'ngc_manage_fraud', 'ngc_view_finance', 'ngc_manage_payouts', 'ngc_view_ledger' ],
+		];
+	}
+
+	/**
+	 * Privileged caps — deny by default unless the actor holds the cap.
+	 *
+	 * @return string[]
+	 */
+	public static function privileged_capabilities() {
+		return [
+			'manage_options',
+			'ngc_manage_platform',
+			'ngc_manage_safeguarding',
+			'ngc_manage_fraud',
+			'ngc_view_finance',
+			'ngc_manage_payouts',
+			'ngc_view_ledger',
+		];
+	}
+
+	/**
+	 * @param string $capability Cap.
+	 * @return bool
+	 */
+	public static function is_privileged( $capability ) {
+		return in_array( (string) $capability, self::privileged_capabilities(), true );
+	}
+
+	/**
+	 * Whether a logical role is granted a capability in the published matrix.
+	 *
+	 * @param string $logical Logical role key.
+	 * @param string $capability Cap.
+	 * @return bool
+	 */
+	public static function role_allows( $logical, $capability ) {
+		$caps = self::matrix()[ (string) $logical ] ?? [];
+		return in_array( (string) $capability, $caps, true );
+	}
+
+	/**
+	 * Unauthenticated REST routes (SEC-03) — throttled, never privileged data.
+	 *
+	 * @return array<int,array<string,string>>
+	 */
+	public static function public_routes() {
+		return [
+			[
+				'method'  => 'POST',
+				'route'   => '/ngc/v1/support/tickets',
+				'auth'    => 'none',
+				'control' => 'ip_throttle',
+				'sec'     => 'SEC-03',
+			],
+			[
+				'method'  => 'GET',
+				'route'   => '/ngc/v1/support/status',
+				'auth'    => 'none',
+				'control' => 'none',
+				'sec'     => 'SEC-03',
+			],
 		];
 	}
 
@@ -100,7 +163,15 @@ final class NGC_Authz_Matrix {
 	 * @return bool
 	 */
 	public static function can( $capability, $resource = '', $resource_id = 0 ) {
-		$user_id = get_current_user_id();
+		$user_id    = (int) get_current_user_id();
+		$capability = (string) $capability;
+		if ( $user_id < 1 && self::is_privileged( $capability ) ) {
+			self::audit( 0, $resource, $resource_id, $capability, 'deny', 'unauthenticated' );
+			if ( class_exists( 'NGC_Metrics' ) ) {
+				NGC_Metrics::inc( 'authz_decisions_total', 1, [ 'decision' => 'deny' ] );
+			}
+			return false;
+		}
 		$allowed = user_can( $user_id, $capability ) || user_can( $user_id, 'manage_options' );
 		self::audit( $user_id, $resource, $resource_id, $capability, $allowed ? 'allow' : 'deny' );
 		if ( class_exists( 'NGC_Metrics' ) ) {

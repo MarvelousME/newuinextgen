@@ -1,12 +1,15 @@
 <?php
 /**
- * Default site footer.
+ * Default site footer — reference chrome columns restyled for BeyondInfinity.
+ *
+ * Source: nextgen-tutors-theme assets/js/chrome.js buildFooter()
+ * Contact values use live theme helpers (not demo placeholders).
  *
  * @package BeyondInfinity
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 ?>
 <footer class="ngt-footer">
@@ -14,47 +17,29 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="ngt-footer__grid">
       <div class="ngt-footer__brand">
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="bi-footer-logo">
-          <div class="bi-logo-mark" aria-hidden="true">NG</div>
+          <?php if ( function_exists( 'bi_ngt_default_logo_url' ) && file_exists( BI_DIR . '/assets/ngt/img/logo.png' ) ) : ?>
+            <img class="bi-footer-logo__img" src="<?php echo esc_url( bi_ngt_default_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="48" height="48" />
+          <?php else : ?>
+            <div class="bi-logo-mark" aria-hidden="true">NG</div>
+          <?php endif; ?>
           <span class="bi-footer-logo__text">NextGen<span>Tutors</span></span>
         </a>
-        <p><?php esc_html_e( 'Accessible one-on-one academic support for learners across all 9 provinces — Grade 1 to tertiary, online, in-person, and hybrid.', 'beyondinfinity' ); ?></p>
+        <p><?php esc_html_e( "South Africa's premier online tutoring platform, connecting Grade 1–12 and varsity students with verified, SACE-registered tutors across all nine provinces.", 'beyondinfinity' ); ?></p>
+        <p class="bi-footer-chip" aria-hidden="true"><?php esc_html_e( 'Proudly South African', 'beyondinfinity' ); ?></p>
       </div>
 
       <div>
-        <h4 class="ngt-footer__heading"><?php esc_html_e( 'Quick Links', 'beyondinfinity' ); ?></h4>
-        <ul class="ngt-footer__links">
-          <?php
-          $links = [
-            'Find a Tutor'   => '/find-a-tutor',
-            'Become a Tutor' => '/become-a-tutor',
-            'Pricing'        => '/pricing',
-            'Guarantee'      => '/guarantee',
-            'Blog'           => '/blog',
-            'About'          => '/about',
-            'Tutor Vetting'  => '/tutor-vetting',
-            'Safety Guide'   => '/safety-guide',
-            'Support'        => '/support',
-            'Contact'        => '/contact',
-          ];
-          foreach ( $links as $label => $url ) {
-            echo '<li><a href="' . esc_url( home_url( $url ) ) . '">' . esc_html( $label ) . '</a></li>';
-          }
-          ?>
-        </ul>
+        <h4 class="ngt-footer__heading"><?php esc_html_e( 'Explore', 'beyondinfinity' ); ?></h4>
+        <?php bi_render_footer_link_list( 'explore' ); ?>
       </div>
 
       <div>
-        <h4 class="ngt-footer__heading"><?php esc_html_e( 'For Families & Tutors', 'beyondinfinity' ); ?></h4>
-        <ul class="ngt-footer__links">
-          <li><a href="<?php echo esc_url( home_url( '/register' ) ); ?>"><?php esc_html_e( 'Register', 'beyondinfinity' ); ?></a></li>
-          <li><a href="<?php echo esc_url( home_url( '/login' ) ); ?>"><?php esc_html_e( 'Login', 'beyondinfinity' ); ?></a></li>
-          <li><a href="<?php echo esc_url( home_url( '/find-a-tutor' ) ); ?>"><?php esc_html_e( 'Request a Tutor', 'beyondinfinity' ); ?></a></li>
-          <li><a href="<?php echo esc_url( home_url( '/become-a-tutor' ) ); ?>"><?php esc_html_e( 'Apply as Tutor', 'beyondinfinity' ); ?></a></li>
-        </ul>
+        <h4 class="ngt-footer__heading"><?php esc_html_e( 'Company', 'beyondinfinity' ); ?></h4>
+        <?php bi_render_footer_link_list( 'company' ); ?>
       </div>
 
       <div>
-        <h4 class="ngt-footer__heading"><?php esc_html_e( 'Contact', 'beyondinfinity' ); ?></h4>
+        <h4 class="ngt-footer__heading"><?php esc_html_e( 'Get In Touch', 'beyondinfinity' ); ?></h4>
         <ul class="ngt-footer__links bi-footer-contact" data-testid="bi-footer-contact">
           <li class="bi-footer-contact__item">
             <span class="bi-footer-contact__icon" aria-hidden="true"><?php echo bi_ui_icon( 'phone', 18 ); // phpcs:ignore ?></span>
@@ -73,12 +58,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
     <div class="ngt-footer__bottom">
-      <p>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All rights reserved.', 'beyondinfinity' ); ?></p>
-      <div class="bi-footer-legal">
-        <a href="<?php echo esc_url( home_url( '/privacy-policy' ) ); ?>"><?php esc_html_e( 'Privacy Policy', 'beyondinfinity' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/terms' ) ); ?>"><?php esc_html_e( 'Terms of Service', 'beyondinfinity' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/child-safety' ) ); ?>"><?php esc_html_e( 'Child Safety', 'beyondinfinity' ); ?></a>
-      </div>
+      <p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All rights reserved.', 'beyondinfinity' ); ?></p>
+      <?php bi_render_footer_legal(); ?>
     </div>
   </div>
 </footer>

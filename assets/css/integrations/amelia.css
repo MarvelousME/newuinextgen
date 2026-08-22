@@ -1,0 +1,69 @@
+/**
+ * Amelia Booking — frontend normalized to BeyondInfinity tokens.
+ */
+
+#amelia-app,
+#amelia-container,
+.amelia-app-booking {
+  font-family: var(--ngt-font-family-body);
+  color: var(--ngt-color-text-primary);
+}
+
+#amelia-app .el-button--primary,
+#amelia-app .am-button.am-button--primary,
+.amelia-app-booking .am-button--primary {
+  background-color: var(--ngt-button-primary-bg);
+  border-color: var(--ngt-button-primary-bg);
+  color: var(--ngt-button-primary-text);
+  border-radius: var(--ngt-button-radius);
+  font-weight: var(--ngt-font-weight-semibold);
+}
+
+#amelia-app .el-button--primary:hover,
+#amelia-app .am-button.am-button--primary:hover {
+  background-color: var(--ngt-button-primary-bg-hover);
+  border-color: var(--ngt-button-primary-bg-hover);
+  color: var(--ngt-button-primary-text);
+}
+
+#amelia-app .el-input__inner,
+#amelia-app .el-textarea__inner,
+#amelia-app .el-select .el-input__inner,
+.amelia-app-booking input,
+.amelia-app-booking select,
+.amelia-app-booking textarea {
+  font-family: var(--ngt-font-family-body);
+  color: var(--ngt-form-control-text);
+  background: var(--ngt-form-control-bg);
+  border: 1px solid var(--ngt-form-control-border);
+  border-radius: var(--ngt-form-control-radius);
+}
+
+#amelia-app .el-input__inner:focus,
+#amelia-app .el-textarea__inner:focus {
+  border-color: var(--ngt-form-control-focus);
+  outline: var(--ngt-focus-ring-width) solid var(--ngt-focus-ring);
+  outline-offset: var(--ngt-focus-ring-offset);
+}
+
+#amelia-app .am-heading,
+#amelia-app .am-category-name,
+#amelia-app .am-service-name {
+  font-family: var(--ngt-font-family-display);
+  color: var(--ngt-color-text-primary);
+}
+
+#amelia-app .am-selected-date,
+#amelia-app .am-time-slot.selected {
+  background: var(--ngt-color-brand-secondary);
+  border-color: var(--ngt-color-brand-secondary);
+  color: var(--ngt-color-text-inverse);
+}
+
+#amelia-app .am-card,
+#amelia-app .am-panel {
+  background: var(--ngt-card-bg);
+  border: 1px solid var(--ngt-card-border);
+  border-radius: var(--ngt-card-radius);
+  box-shadow: var(--ngt-card-shadow);
+}

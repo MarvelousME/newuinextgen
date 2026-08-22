@@ -1,0 +1,389 @@
+[
+    {
+        "name": "woocommerce_active",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "sessions_class",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "orchestrator_class",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "product_provisioner",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "products_provisioned",
+        "result": "PASS",
+        "detail": {
+            "created": 0,
+            "updated": 16,
+            "skipped": 0,
+            "errors": [],
+            "products": [
+                {
+                    "action": "updated",
+                    "product_id": 57658,
+                    "key": "ngt-online-1hr",
+                    "sku": "NGT-ONLINE-1HR"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57659,
+                    "key": "ngt-inperson-1hr",
+                    "sku": "NGT-INPERSON-1HR"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57660,
+                    "key": "ngt-tertiary-1hr",
+                    "sku": "NGT-TERTIARY-1HR"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57661,
+                    "key": "ngt-online-4-1to3",
+                    "sku": "NGT-ONLINE-4-1TO3"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57662,
+                    "key": "ngt-online-8-1to3",
+                    "sku": "NGT-ONLINE-8-1TO3"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57663,
+                    "key": "ngt-online-4-3to12",
+                    "sku": "NGT-ONLINE-4-3TO12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57664,
+                    "key": "ngt-online-8-3to12",
+                    "sku": "NGT-ONLINE-8-3TO12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57665,
+                    "key": "ngt-inperson-4-1to3",
+                    "sku": "NGT-INPERSON-4-1TO3"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57666,
+                    "key": "ngt-inperson-8-1to3",
+                    "sku": "NGT-INPERSON-8-1TO3"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57667,
+                    "key": "ngt-inperson-4-3to12",
+                    "sku": "NGT-INPERSON-4-3TO12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57668,
+                    "key": "ngt-inperson-8-3to12",
+                    "sku": "NGT-INPERSON-8-3TO12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57669,
+                    "key": "ngt-tertiary-4",
+                    "sku": "NGT-TERTIARY-4"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57670,
+                    "key": "ngt-tertiary-8",
+                    "sku": "NGT-TERTIARY-8"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57671,
+                    "key": "ngt-highfreq-12",
+                    "sku": "NGT-HIGHFREQ-12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57672,
+                    "key": "ngt-highfreq-16",
+                    "sku": "NGT-HIGHFREQ-16"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57673,
+                    "key": "ngt-highfreq-20",
+                    "sku": "NGT-HIGHFREQ-20"
+                }
+            ]
+        }
+    },
+    {
+        "name": "resolve_online_1hr",
+        "result": "PASS",
+        "detail": 57658
+    },
+    {
+        "name": "product_has_ngt_key",
+        "result": "PASS",
+        "detail": "ngt-online-1hr"
+    },
+    {
+        "name": "provision_idempotent",
+        "result": "PASS",
+        "detail": {
+            "created": 0,
+            "updated": 16,
+            "skipped": 0,
+            "errors": [],
+            "products": [
+                {
+                    "action": "updated",
+                    "product_id": 57658,
+                    "key": "ngt-online-1hr",
+                    "sku": "NGT-ONLINE-1HR"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57659,
+                    "key": "ngt-inperson-1hr",
+                    "sku": "NGT-INPERSON-1HR"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57660,
+                    "key": "ngt-tertiary-1hr",
+                    "sku": "NGT-TERTIARY-1HR"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57661,
+                    "key": "ngt-online-4-1to3",
+                    "sku": "NGT-ONLINE-4-1TO3"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57662,
+                    "key": "ngt-online-8-1to3",
+                    "sku": "NGT-ONLINE-8-1TO3"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57663,
+                    "key": "ngt-online-4-3to12",
+                    "sku": "NGT-ONLINE-4-3TO12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57664,
+                    "key": "ngt-online-8-3to12",
+                    "sku": "NGT-ONLINE-8-3TO12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57665,
+                    "key": "ngt-inperson-4-1to3",
+                    "sku": "NGT-INPERSON-4-1TO3"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57666,
+                    "key": "ngt-inperson-8-1to3",
+                    "sku": "NGT-INPERSON-8-1TO3"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57667,
+                    "key": "ngt-inperson-4-3to12",
+                    "sku": "NGT-INPERSON-4-3TO12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57668,
+                    "key": "ngt-inperson-8-3to12",
+                    "sku": "NGT-INPERSON-8-3TO12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57669,
+                    "key": "ngt-tertiary-4",
+                    "sku": "NGT-TERTIARY-4"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57670,
+                    "key": "ngt-tertiary-8",
+                    "sku": "NGT-TERTIARY-8"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57671,
+                    "key": "ngt-highfreq-12",
+                    "sku": "NGT-HIGHFREQ-12"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57672,
+                    "key": "ngt-highfreq-16",
+                    "sku": "NGT-HIGHFREQ-16"
+                },
+                {
+                    "action": "updated",
+                    "product_id": 57673,
+                    "key": "ngt-highfreq-20",
+                    "sku": "NGT-HIGHFREQ-20"
+                }
+            ]
+        }
+    },
+    {
+        "name": "demo_parent",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "demo_child",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "demo_tutor",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "booking_created",
+        "result": "PASS",
+        "detail": 176
+    },
+    {
+        "name": "order_created",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "order_item_ngt_meta",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "order_booking_meta",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "price_integrity",
+        "result": "PASS",
+        "detail": {
+            "total": "320.00",
+            "line": 320
+        }
+    },
+    {
+        "name": "session_pre_provision",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "order_paid_or_processing",
+        "result": "PASS",
+        "detail": "processing"
+    },
+    {
+        "name": "ensure_provisioned_ok",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "session_row",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "session_paid",
+        "result": "PASS",
+        "detail": "paid"
+    },
+    {
+        "name": "session_ready_or_later",
+        "result": "PASS",
+        "detail": "ready"
+    },
+    {
+        "name": "correlation_present",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "duplicate_session_suppressed",
+        "result": "PASS",
+        "detail": 1
+    },
+    {
+        "name": "replay_safe",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "join_window_evaluated",
+        "result": "PASS",
+        "detail": {
+            "allowed": false,
+            "reason": "too_early",
+            "opens_at": "2026-08-12T23:02:47+00:00"
+        }
+    },
+    {
+        "name": "launch_blocked_outside_window",
+        "result": "PASS",
+        "detail": {
+            "allowed": false,
+            "reason": "too_early",
+            "opens_at": "2026-08-12T23:02:47+00:00"
+        }
+    },
+    {
+        "name": "demo_adult",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "adult_booking",
+        "result": "PASS",
+        "detail": 177
+    },
+    {
+        "name": "adult_order",
+        "result": "PASS",
+        "detail": ""
+    },
+    {
+        "name": "adult_is_payer_and_learner",
+        "result": "PASS",
+        "detail": {
+            "student": 246,
+            "parent": 246,
+            "order": 57720,
+            "status": "paid"
+        }
+    },
+    {
+        "name": "refund_session_terminal",
+        "result": "PASS",
+        "detail": "refunded\/refunded"
+    },
+    {
+        "name": "invoice_generated",
+        "result": "PASS",
+        "detail": 39
+    }
+]

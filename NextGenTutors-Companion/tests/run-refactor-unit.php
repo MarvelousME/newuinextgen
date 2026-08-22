@@ -87,6 +87,29 @@ rassert( 'null session after upsert is error', is_wp_error( $missing ) && 'ngc_s
 $catalog_src = (string) file_get_contents( $root . '/includes/admin/framework/class-ngc-admin-catalog.php' );
 rassert( 'screens loaded with require', false !== strpos( $catalog_src, "require __DIR__ . '/screens.php'" ) && false === strpos( $catalog_src, "require_once __DIR__ . '/screens.php'" ) );
 
+$co_src = (string) file_get_contents( $root . '/includes/integrations/class-ngc-parent-checkout.php' );
+rassert( 'checkout redirects before header', false !== strpos( $co_src, 'maybe_redirect_payfast' ) );
+rassert( 'payfast hosts allowlisted', false !== strpos( $co_src, 'sandbox.payfast.co.za' ) );
+rassert( 'checkout does not wp_safe_redirect to payfast', false === strpos( $co_src, "wp_safe_redirect( \$result['redirect'] )" ) );
+rassert( 'checkout posts hosted payfast form', false !== strpos( $co_src, 'emit_payfast_post' ) );
+
+require_once $root . '/includes/integrations/class-ngc-payfast-itn.php';
+$pf_itn = (string) file_get_contents( $root . '/includes/integrations/class-ngc-payfast-itn.php' );
+rassert( 'payfast signature uses urlencode', false !== strpos( $pf_itn, 'urlencode( trim( (string) $val ) )' ) && false === strpos( $pf_itn, 'rawurlencode' ) );
+$pf_sig = NGC_PayFast_Itn::generate_signature(
+	[
+		'name_first' => 'Thandi Molefe',
+		'amount'     => '320.00',
+	],
+	'jt7NOE43FZPn'
+);
+$pf_expect = md5( 'name_first=' . urlencode( 'Thandi Molefe' ) . '&amount=320.00&passphrase=' . urlencode( 'jt7NOE43FZPn' ) );
+rassert( 'payfast signature spaces are plus', $pf_expect === $pf_sig && false !== strpos( urlencode( 'Thandi Molefe' ), '+' ) );
+
+$gw_src = (string) file_get_contents( $root . '/includes/integrations/class-ngc-payfast-gateway.php' );
+rassert( 'payfast does not add_query_arg payload', false === strpos( $gw_src, 'add_query_arg( $data, $url )' ) );
+rassert( 'payfast query uses rfc1738', false !== strpos( $gw_src, 'PHP_QUERY_RFC1738' ) );
+
 $tag_dir = dirname( $root ) . '/NextGenTutors-BeyondInfinity/inc/tags';
 $fns     = [];
 foreach ( glob( $tag_dir . '/*.php' ) as $file ) {

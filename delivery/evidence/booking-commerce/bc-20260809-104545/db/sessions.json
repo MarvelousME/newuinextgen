@@ -1,0 +1,40 @@
+[
+    {
+        "id": "17",
+        "session_uuid": "d5e0b8b5-6bbc-4c3b-b0e5-cf3444ab1535",
+        "correlation_id": "NGT-SES-20260809-41CE5DF5",
+        "booking_id": "176",
+        "order_id": "57718",
+        "product_id": "57658",
+        "student_user_id": "247",
+        "parent_user_id": "243",
+        "tutor_user_id": "250",
+        "subject_name": "Mathematics",
+        "masterstudy_course_id": "57675",
+        "masterstudy_lesson_id": "57719",
+        "meeting_provider": "jitsi",
+        "meeting_id": "NextGenTutors-Lesson-ff65c560-4040-425b-b40c-4a2f2cbbc43d",
+        "status": "ready",
+        "payment_status": "paid",
+        "scheduled_start": "2026-08-12 23:07:47"
+    },
+    {
+        "id": "18",
+        "session_uuid": "5c23865b-51b0-4b51-8afe-c51233be275c",
+        "correlation_id": "NGT-SES-20260809-254A84BC",
+        "booking_id": "177",
+        "order_id": "57720",
+        "product_id": "57658",
+        "student_user_id": "246",
+        "parent_user_id": "246",
+        "tutor_user_id": "250",
+        "subject_name": "English",
+        "masterstudy_course_id": "57683",
+        "masterstudy_lesson_id": "57721",
+        "meeting_provider": "jitsi",
+        "meeting_id": "NextGenTutors-Lesson-4e8a9526-fd05-4a0d-89d3-82427196bda2",
+        "status": "ready",
+        "payment_status": "paid",
+        "scheduled_start": "2026-08-19 19:39:07"
+    }
+]

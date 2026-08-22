@@ -1,108 +1,105 @@
 /**
- * NextGen UI Library — normalized design tokens (--ng-*)
- * Updated for BeyondInfinity v1.9.3 Redesign
- * Maps new design system to legacy NGT tokens.
+ * NextGen UI Library — alias-only bridge to BeyondInfinity Brand Style Kit.
+ * Authoritative colours live on html[data-bi-skin] (--ngt-*). Do not hard-code hex here.
  */
 :root {
-  /* Brand — aligned with new design system */
-  --ng-color-primary: #0F1A2F;
-  --ng-color-primary-dark: #0B1524;
-  --ng-color-primary-light: #E6F0FA;
-  --ng-color-secondary: #059669;
-  --ng-color-secondary-dark: #047857;
-  --ng-color-secondary-light: #D1FAE5;
-  --ng-color-accent: #FF9F0A;
-  --ng-color-accent-dark: #E68900;
-  --ng-color-accent-light: #FFEBCC;
+  --ng-color-primary: var(--ngt-primary, #07172f);
+  --ng-color-primary-dark: var(--ngt-primary-dark, #031126);
+  --ng-color-primary-light: var(--ngt-primary-light, #e8f4ff);
+  --ng-color-secondary: var(--ngt-secondary, #28c7f7);
+  --ng-color-secondary-dark: var(--ngt-secondary-dark, #1aa8d4);
+  --ng-color-secondary-light: var(--ngt-secondary-light, #d6f4ff);
+  --ng-color-accent: var(--ngt-accent, #ffb703);
+  --ng-color-accent-dark: var(--ngt-accent-dark, #e6a502);
+  --ng-color-accent-light: var(--ngt-accent-light, #fff3d6);
 
-  /* Legacy aliases for backward compatibility */
-  --navy: #0F1A2F;
-  --blue: #1d4ed8;
-  --lime: #059669;
-  --lime-bright: #10B981;
-  --amber: #FF9F0A;
-  --ink: #1E293B;
-  --slate-500: #64748B;
-  --slate-200: #E2E8F0;
-  --cream: #F8FAFC;
-  --white: #FFFFFF;
-  --slate-50: #F1F5F9;
+  --navy: var(--ngt-color-brand-primary, var(--ngt-primary, #07172f));
+  --blue: var(--ngt-primary-light, #e8f4ff);
+  --lime: var(--ngt-color-brand-secondary, var(--ngt-secondary, #28c7f7));
+  --lime-bright: var(--ngt-success, #10b981);
+  --lime-soft: var(--ngt-secondary-light, #d6f4ff);
+  --lime-deep: var(--ngt-secondary-dark, #1aa8d4);
+  --amber: var(--ngt-color-brand-accent, var(--ngt-accent, #ffb703));
+  --amber-deep: var(--ngt-accent-dark, #e6a502);
+  --ink: var(--ngt-color-text-primary, var(--ngt-text, #10213f));
+  --slate-500: var(--ngt-text-2, #687386);
+  --slate-200: var(--ngt-border, #e6edf7);
+  --cream: var(--ngt-color-bg-page, var(--ngt-bg, #f5f8ff));
+  --white: var(--ngt-surface, #fff);
+  --slate-50: var(--ngt-surface-2, #f1f5f9);
 
-  /* Status */
-  --ng-color-success: #10B981;
-  --ng-color-success-bg: #D1FAE5;
-  --ng-color-warning: #F59E0B;
-  --ng-color-error: #EF4444;
+  --ng-color-success: var(--ngt-success, #10b981);
+  --ng-color-success-bg: var(--ngt-success-bg, #d1fae5);
+  --ng-color-warning: var(--ngt-warning, #f59e0b);
+  --ng-color-error: var(--ngt-error, #ef4444);
 
-  /* Neutrals */
-  --ng-color-ink: #1E293B;
-  --ng-color-muted: #64748B;
-  --ng-color-border: #E2E8F0;
-  --ng-color-bg: #F8FAFC;
-  --ng-color-surface: #FFFFFF;
-  --ng-color-surface-elevated: #F1F5F9;
-  --ng-color-text-2: #64748B;
-  --ng-color-text-3: #94A3B8;
+  --ng-color-ink: var(--ngt-color-text-primary, var(--ngt-text, #10213f));
+  --ng-color-muted: var(--ngt-color-text-secondary, var(--ngt-text-2, #687386));
+  --ng-color-border: var(--ngt-color-border, var(--ngt-border, #e6edf7));
+  --ng-color-bg: var(--ngt-color-bg-page, var(--ngt-bg, #f5f8ff));
+  --ng-color-surface: var(--ngt-color-bg-elevated, var(--ngt-surface, #fff));
+  --ng-color-surface-elevated: var(--ngt-color-bg-subtle, var(--ngt-surface-2, #f1f5f9));
+  --ng-color-text-2: var(--ngt-text-2, #687386);
+  --ng-color-text-3: var(--ngt-text-3, #94a3b8);
 
-  /* Typography */
-  --ng-font-heading: "Sora", system-ui, -apple-system, sans-serif;
-  --ng-font-body: "Inter", system-ui, -apple-system, sans-serif;
-  --ng-font-serif: "Georgia", serif;
+  --ng-font-heading: var(--ngt-font-family-display, var(--ngt-font-display, "Sora", system-ui, sans-serif));
+  --ng-font-body: var(--ngt-font-family-body, var(--ngt-font-body, "Inter", system-ui, sans-serif));
+  --ng-font-serif: Georgia, serif;
 
-  --ng-text-xs: 0.75rem;
-  --ng-text-sm: 0.875rem;
-  --ng-text-base: 1rem;
-  --ng-text-lg: 1.125rem;
-  --ng-text-xl: 1.25rem;
-  --ng-text-2xl: 1.5rem;
-  --ng-text-3xl: 2rem;
-  --ng-text-4xl: clamp(2rem, 4vw, 3rem);
+  --ng-text-xs: var(--ngt-text-xs, 0.75rem);
+  --ng-text-sm: var(--ngt-text-sm, 0.875rem);
+  --ng-text-base: var(--ngt-text-base, 1rem);
+  --ng-text-lg: var(--ngt-text-lg, 1.125rem);
+  --ng-text-xl: var(--ngt-text-xl, 1.25rem);
+  --ng-text-2xl: var(--ngt-text-2xl, 1.5rem);
+  --ng-text-3xl: var(--ngt-text-3xl, 2rem);
+  --ng-text-4xl: var(--ngt-type-display-lg, clamp(2rem, 4vw, 3rem));
 
   --ng-leading-tight: 1.15;
   --ng-leading-normal: 1.6;
-  --ng-weight-medium: 500;
-  --ng-weight-semibold: 600;
-  --ng-weight-bold: 700;
+  --ng-weight-medium: var(--ngt-font-weight-medium, 500);
+  --ng-weight-semibold: var(--ngt-font-weight-semibold, 600);
+  --ng-weight-bold: var(--ngt-font-weight-bold, 700);
   --ng-weight-extrabold: 800;
 
-  /* Spacing — 8px baseline */
-  --ng-space-1: 4px;
-  --ng-space-2: 8px;
-  --ng-space-3: 12px;
-  --ng-space-4: 16px;
-  --ng-space-5: 20px;
-  --ng-space-6: 24px;
-  --ng-space-8: 32px;
-  --ng-space-10: 40px;
-  --ng-space-12: 48px;
-  --ng-space-16: 64px;
+  --ng-space-1: var(--ngt-space-2, 4px);
+  --ng-space-2: var(--ngt-space-3, 8px);
+  --ng-space-3: var(--ngt-space-4, 12px);
+  --ng-space-4: var(--ngt-space-5, 16px);
+  --ng-space-5: var(--ngt-space-6, 20px);
+  --ng-space-6: var(--ngt-space-7, 24px);
+  --ng-space-8: var(--ngt-space-8, 32px);
+  --ng-space-10: var(--ngt-space-9, 40px);
+  --ng-space-12: var(--ngt-space-10, 48px);
+  --ng-space-16: var(--ngt-space-11, 64px);
 
-  /* Radius */
-  --ng-radius-sm: 6px;
-  --ng-radius-md: 10px;
-  --ng-radius-lg: 16px;
-  --ng-radius-xl: 24px;
-  --ng-radius-pill: 999px;
+  --ng-radius-sm: var(--ngt-radius-sm, 6px);
+  --ng-radius-md: var(--ngt-radius-md, 10px);
+  --ng-radius-lg: var(--ngt-radius-lg, 16px);
+  --ng-radius-xl: var(--ngt-radius-xl, 24px);
+  --ng-radius-pill: var(--ngt-radius-pill, 999px);
 
-  /* Shadows */
-  --ng-shadow-sm: 0 2px 8px rgba(15, 26, 47, 0.06);
-  --ng-shadow-card: 0 8px 24px rgba(15, 26, 47, 0.08);
-  --ng-shadow-lg: 0 20px 40px rgba(15, 26, 47, 0.12);
-  --ng-shadow-xl: 0 24px 48px rgba(15, 26, 47, 0.16);
+  --ng-shadow-sm: var(--ngt-shadow-sm);
+  --ng-shadow-card: var(--ngt-shadow-md);
+  --ng-shadow-lg: var(--ngt-shadow-lg);
+  --ng-shadow-xl: var(--ngt-shadow-xl);
 
-  /* Motion */
-  --ng-duration-fast: 150ms;
-  --ng-duration-normal: 280ms;
-  --ng-duration-slow: 480ms;
-  --ng-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --ng-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ng-duration-fast: var(--ngt-duration-fast, 150ms);
+  --ng-duration-normal: var(--ngt-duration-normal, 250ms);
+  --ng-duration-slow: var(--ngt-duration-slow, 400ms);
+  --ng-ease-spring: var(--ngt-ease-emphasized, cubic-bezier(0.34, 1.56, 0.64, 1));
+  --ng-ease-smooth: var(--ngt-ease-standard, cubic-bezier(0, 0, 0.2, 1));
 
-  /* Layout */
-  --ng-container: 1280px;
+  --ng-container: var(--ngt-container-default, 1280px);
   --ng-breakpoint-sm: 640px;
   --ng-breakpoint-md: 768px;
   --ng-breakpoint-lg: 1024px;
   --ng-breakpoint-xl: 1280px;
+
+  --nbi-canvas: var(--ngt-color-brand-primary, var(--ngt-primary));
+  --nbi-aurora-stop-indigo: var(--ngt-primary-dark);
+  --nbi-aurora-stop-violet: var(--ngt-accent);
+  --nbi-aurora-stop-teal: var(--ngt-secondary);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -111,12 +108,4 @@
     --ng-duration-normal: 0ms;
     --ng-duration-slow: 0ms;
   }
-}
-
-/* Beyond-Infinity extensions */
-:root {
-  --nbi-canvas: #0F1A2F;
-  --nbi-aurora-stop-indigo: #1e1b4b;
-  --nbi-aurora-stop-violet: #7c3aed;
-  --nbi-aurora-stop-teal: #06b6d4;
 }

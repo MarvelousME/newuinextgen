@@ -1,0 +1,103 @@
+{
+  "noncePresent": true,
+  "dash": {
+    "status": 200,
+    "body": {
+      "success": true,
+      "data": {
+        "user": {
+          "id": 246,
+          "displayName": "Sipho Dlamini",
+          "email": "demo.student.adult@nextgen.local"
+        },
+        "kpis": {
+          "sessionsCompleted": 0,
+          "avgRatingGiven": null,
+          "accountBalance": 0,
+          "achievementCount": 0
+        },
+        "recentSessions": [
+          {
+            "id": 154,
+            "bookingId": 154,
+            "peerName": "Pieter Botha",
+            "peerImage": "https://secure.gravatar.com/avatar/31076a18757d8f882e797da032e816291bfa4a50f63f0c46637637fff8de204d?s=96&d=mm&r=g",
+            "subject": "English",
+            "createdAt": "2026-08-03 18:31:31",
+            "status": "confirmed",
+            "statusLabel": "Confirmed",
+            "attendance": "confirmed",
+            "joinUrl": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName=\"Sipho%20Dlamini\"",
+            "join_url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName=\"Sipho%20Dlamini\"",
+            "meetingUrl": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName=\"Sipho%20Dlamini\"",
+            "canJoin": true,
+            "meetingProvider": "jitsi"
+          }
+        ],
+        "nextSession": {
+          "id": 154,
+          "bookingId": 154,
+          "peerName": "Pieter Botha",
+          "peerImage": "https://secure.gravatar.com/avatar/31076a18757d8f882e797da032e816291bfa4a50f63f0c46637637fff8de204d?s=96&d=mm&r=g",
+          "subject": "English",
+          "createdAt": "2026-08-03 18:31:31",
+          "status": "confirmed",
+          "statusLabel": "Confirmed",
+          "attendance": "confirmed",
+          "joinUrl": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName=\"Sipho%20Dlamini\"",
+          "join_url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName=\"Sipho%20Dlamini\"",
+          "meetingUrl": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName=\"Sipho%20Dlamini\"",
+          "canJoin": true,
+          "meetingProvider": "jitsi"
+        },
+        "charts": {
+          "attendance": {
+            "type": "bar",
+            "labels": [
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug"
+            ],
+            "data": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "label": "Completed lessons"
+          },
+          "progress": {
+            "type": "line",
+            "labels": [
+              "Mar 2026",
+              "Apr 2026",
+              "May 2026",
+              "Jun 2026",
+              "Jul 2026",
+              "Aug 2026"
+            ],
+            "data": [
+              62,
+              65,
+              68,
+              71,
+              74,
+              77
+            ],
+            "label": "Progress score"
+          }
+        }
+      },
+      "meta": {
+        "source": "real",
+        "retrieved_at": "2026-08-09T07:23:00+00:00"
+      }
+    },
+    "hadNonce": true
+  }
+}

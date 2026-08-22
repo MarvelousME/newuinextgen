@@ -5,8 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 bi_hero(
-    __( 'Share your knowledge, earn income', 'beyondinfinity' ),
-    __( "Join South Africa's most trusted tutoring platform. Flexible hours, competitive rates, verified students.", 'beyondinfinity' )
+    __( 'Share Your Knowledge. Build Your Income.', 'beyondinfinity' ),
+    __( 'Join tutors across South Africa teaching online and in-person on NextGen Tutors. Set your own rates, choose your subjects, work when you want — with vetted students and reliable payouts.', 'beyondinfinity' )
 );
 $marketing_kpis = bi_real_marketing_kpis();
 $policy_sla     = bi_policy_sla_labels();
@@ -141,15 +141,14 @@ $step_items = ! empty( $become['steps'] )
 		array_keys( $become['steps'] )
 	)
 	: [
-		[ 'title' => __( 'Apply online', 'beyondinfinity' ), 'text' => __( 'Submit subjects, qualifications and availability.', 'beyondinfinity' ) ],
-		[ 'title' => __( 'Vetting & clearance', 'beyondinfinity' ), 'text' => __( 'ID, qualifications and police clearance reviewed manually.', 'beyondinfinity' ) ],
-		[ 'title' => __( 'Go live', 'beyondinfinity' ), 'text' => __( 'Approved tutors appear in search and receive matches.', 'beyondinfinity' ) ],
-		[ 'title' => __( 'Teach & earn', 'beyondinfinity' ), 'text' => __( 'Confirm sessions and receive reliable platform payouts.', 'beyondinfinity' ) ],
+		[ 'title' => __( 'Apply Online', 'beyondinfinity' ), 'text' => __( 'Complete the application. Tell us your subjects, qualifications, and availability. Takes about 5 minutes.', 'beyondinfinity' ) ],
+		[ 'title' => __( 'Vetting & Approval', 'beyondinfinity' ), 'text' => __( 'We verify your ID, qualifications, and conduct a background check. Most tutors are approved within 48 hours.', 'beyondinfinity' ) ],
+		[ 'title' => __( 'Start Teaching', 'beyondinfinity' ), 'text' => __( 'Your profile goes live. Students book directly. You get paid on the platform payout schedule to your bank account.', 'beyondinfinity' ) ],
 	];
 
 bi_steps(
     $step_items,
-    __( 'How to get started', 'beyondinfinity' ),
-    __( 'Simple process to becoming a verified NextGen tutor.', 'beyondinfinity' )
+    __( 'How It Works', 'beyondinfinity' ),
+    __( 'From application to earning in simple steps.', 'beyondinfinity' )
 );
 ?>

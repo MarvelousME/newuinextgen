@@ -153,7 +153,7 @@ class NGC_Popia_Consent {
 			<label for="ngc_popia_consent">
 				<input type="checkbox" id="ngc_popia_consent" name="ngc_popia_consent" value="1" required>
 				<span>
-					<?php esc_html_e( 'I explicitly consent to NextGen Tutors processing my personal information and session recordings per POPIA. Data is retained for service duration then minimised.', 'nextgencompanion' ); ?>
+					<?php esc_html_e( 'I explicitly consent to NextGen Tutors processing my personal information per POPIA. Data is retained for service duration then minimised. Product session recording is not offered.', 'nextgencompanion' ); ?>
 					<a href="<?php echo $privacy; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Privacy Policy', 'nextgencompanion' ); ?></a>.
 				</span>
 			</label>

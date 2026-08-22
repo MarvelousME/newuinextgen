@@ -254,7 +254,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
       <article class="price-card" data-reveal>
         <span class="price-tag">Online Classroom</span>
         <h3 class="price-name">Grade 1–12 Online</h3>
-        <p class="price-desc">Digital whiteboards, past-paper training and instant recording vaults of the full CAPS syllabus.</p>
+        <p class="price-desc">Digital whiteboards, past-paper training and live online lessons across the CAPS syllabus.</p>
         <div class="price-amount"><span class="r">R</span><span class="n">320</span><span class="per">/ hour</span></div>
         <ul class="price-feats">
           <li><i data-lucide="check-circle-2"></i> CAPS / IEB / Cambridge syllabi</li>

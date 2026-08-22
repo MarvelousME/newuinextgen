@@ -1,0 +1,112 @@
+/**
+ * Canonical tutor marketplace card — .ngt-card--tutor
+ */
+
+.ngt-card--tutor,
+.ngt-tutor-card.tutor-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ngt-space-4);
+  padding: var(--ngt-card-padding);
+  background: var(--ngt-card-bg);
+  border: 1px solid var(--ngt-card-border);
+  border-radius: var(--ngt-card-radius);
+  box-shadow: var(--ngt-card-shadow);
+  transition: transform var(--ngt-duration-normal) var(--ngt-ease-standard),
+    box-shadow var(--ngt-duration-normal) var(--ngt-ease-standard);
+}
+
+.ngt-card--tutor__top,
+.ngt-tutor-top {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ngt-space-4);
+}
+
+.ngt-card--tutor__avatar,
+.ngt-tutor-avatar,
+.ngt-tutor-card__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--ngt-color-border);
+}
+
+.ngt-card--tutor__name,
+.ngt-tutor-name,
+.ngt-tutor-card__name {
+  font-family: var(--ngt-font-family-display);
+  font-size: var(--ngt-type-h4);
+  font-weight: var(--ngt-font-weight-bold);
+  color: var(--ngt-color-text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.ngt-card--tutor__meta,
+.ngt-tutor-loc {
+  font-size: var(--ngt-type-body-sm);
+  color: var(--ngt-color-text-muted);
+}
+
+.ngt-card--tutor__subjects,
+.ngt-tutor-subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ngt-space-2);
+}
+
+.ngt-chip,
+.ngt-card--tutor .ngt-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--ngt-radius-pill);
+  font-size: var(--ngt-type-caption);
+  font-weight: var(--ngt-font-weight-semibold);
+  background: var(--ngt-secondary-light, rgba(40, 199, 247, 0.12));
+  color: var(--ngt-color-brand-primary);
+  border: 1px solid var(--ngt-color-border);
+}
+
+.ngt-card--tutor__bio,
+.ngt-tutor-bio {
+  font-size: var(--ngt-type-body-sm);
+  color: var(--ngt-color-text-secondary);
+  margin: 0;
+  line-height: 1.55;
+}
+
+.ngt-card--tutor__foot,
+.ngt-tutor-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ngt-space-4);
+  margin-top: auto;
+  padding-top: var(--ngt-space-3);
+  border-top: 1px solid var(--ngt-color-border);
+}
+
+.ngt-card--tutor__rate,
+.ngt-tutor-rate .ngt-rate-amount,
+.ngt-tutor-card__price {
+  font-weight: var(--ngt-font-weight-bold);
+  color: var(--ngt-color-brand-primary);
+}
+
+.ngt-vetted,
+.ngt-card--tutor__verified {
+  margin-left: auto;
+  font-size: var(--ngt-type-caption);
+  font-weight: var(--ngt-font-weight-semibold);
+  color: var(--ngt-color-success);
+}
+
+.ngt-card--tutor .ngt-btn,
+.ngt-tutor-cta {
+  width: 100%;
+  margin-top: var(--ngt-space-2);
+}

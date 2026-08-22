@@ -28,6 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <?php bi_render_primary_nav_menu(); ?>
 
       <div class="ngt-nav__cta ngt-nav__cta--tools">
+        <?php if ( function_exists( 'bi_render_header_sign_in_cta' ) ) { bi_render_header_sign_in_cta(); } ?>
         <?php if ( function_exists( 'bi_scheme_toggle_button' ) ) { bi_scheme_toggle_button(); } ?>
       </div>
 

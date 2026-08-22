@@ -1,0 +1,13 @@
+{
+  "bookingId": 154,
+  "studentRoom": "NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9",
+  "tutorRoom": "NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9",
+  "sameRoom": true,
+  "studentSame": true,
+  "LOCAL_TRACK_ACTIVE": true,
+  "REMOTE_TRACK_RECEIVED": "PARTIAL_OR_PASS",
+  "remoteTiles": 1,
+  "MEDIA_TRACK_VERIFIED": true,
+  "HUMAN_AUDIO_AUDIBILITY_VERIFIED": false,
+  "HUMAN_VIDEO_QUALITY_VERIFIED": false
+}

@@ -94,7 +94,7 @@ class NGC_Achievement_Engine {
 		}
 		update_user_meta( $user_id, 'ngc_achievement_count', (int) get_user_meta( $user_id, 'ngc_achievement_count', true ) + 1 );
 
-		if ( class_exists( 'NGC_Gamipress_Adapter' ) ) {
+		if ( class_exists( 'NGC_Gamipress_Adapter' ) && NGC_Gamipress_Adapter::is_active() ) {
 			$gp_slug = sanitize_title( (string) ( $def['slug'] ?? $achievement_key ) );
 			NGC_Gamipress_Adapter::award_achievement( $user_id, $gp_slug );
 		}

@@ -58,7 +58,8 @@ function bi_is_elementor_built( $post_id = 0 ) {
 }
 
 /**
- * Elementor page has saved builder data (not just empty editor meta).
+ * Elementor page has saved builder data with at least one renderable widget.
+ * Empty section/container stubs (common after abandoned edits) do not count.
  */
 function bi_elementor_has_content( $post_id ) {
     $data = get_post_meta( $post_id, '_elementor_data', true );
@@ -68,7 +69,31 @@ function bi_elementor_has_content( $post_id ) {
     if ( is_string( $data ) ) {
         $data = json_decode( $data, true );
     }
-    return is_array( $data ) && ! empty( $data );
+    if ( ! is_array( $data ) || empty( $data ) ) {
+        return false;
+    }
+    return bi_elementor_document_has_widget( $data );
+}
+
+/**
+ * Recursively detect a real Elementor widget (not empty section/column shells).
+ *
+ * @param array<int, mixed> $nodes Elementor document nodes.
+ */
+function bi_elementor_document_has_widget( array $nodes ) {
+    foreach ( $nodes as $node ) {
+        if ( ! is_array( $node ) ) {
+            continue;
+        }
+        $el_type = isset( $node['elType'] ) ? (string) $node['elType'] : '';
+        if ( 'widget' === $el_type ) {
+            return true;
+        }
+        if ( ! empty( $node['elements'] ) && is_array( $node['elements'] ) && bi_elementor_document_has_widget( $node['elements'] ) ) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -107,15 +132,22 @@ function bi_page_uses_builder( $post_id = 0 ) {
 
 /**
  * Non-empty block editor / classic content (not auto-generated).
+ * Prototype sync markers (`<!-- bi-prototype:{slug} -->`) are not real content.
  */
 function bi_page_has_editor_content( $post_id ) {
     $post = get_post( $post_id );
     if ( ! $post ) {
         return false;
     }
-    $content = trim( $post->post_content );
+    $content = trim( (string) $post->post_content );
     if ( '' === $content ) {
         return false;
+    }
+    if ( preg_match( '/<!--\s*bi-prototype:[a-z0-9\-]+\s*-->/i', $content ) ) {
+        $without_marker = trim( preg_replace( '/<!--\s*bi-prototype:[a-z0-9\-]+\s*-->/i', '', $content ) );
+        if ( '' === $without_marker || '' === trim( wp_strip_all_tags( $without_marker ) ) ) {
+            return false;
+        }
     }
     return (bool) strlen( trim( wp_strip_all_tags( $content ) ) );
 }
@@ -199,11 +231,20 @@ function bi_elementor_theme_location_handled() {
 }
 
 /**
- * Keep kinetic marketing home on the theme front-page.php — Elementor's
- * header-footer/canvas page templates otherwise swallow an empty shell.
- * Never override while Elementor/WPBakery editor or preview is active.
+ * Keep kinetic marketing home on the theme front-page.php.
+ *
+ * CRITICAL: Do not yield to Hello Elementor / Elementor page.php when
+ * `_elementor_edit_mode` is set but the document has no renderable widgets
+ * (or only a `<!-- bi-prototype:home -->` marker). That path prints the
+ * marker between header/footer with no `<main>` and no kinetic sections.
+ *
+ * Always route kinetic live views through front-page.php so
+ * `bi_should_show_theme_fallback()` / `bi_render_page_template()` own the body.
+ * Canvas templates and builder edit/preview remain untouched.
+ *
+ * Priority 9999 beats Elementor's page-template swap (~100–1000).
  */
-add_filter( 'template_include', 'bi_prefer_kinetic_front_page_template', 99 );
+add_filter( 'template_include', 'bi_prefer_kinetic_front_page_template', 9999 );
 function bi_prefer_kinetic_front_page_template( $template ) {
     if ( ! is_front_page() ) {
         return $template;
@@ -216,10 +257,17 @@ function bi_prefer_kinetic_front_page_template( $template ) {
         return $template;
     }
     if ( ! function_exists( 'bi_use_kinetic_home' ) || ! bi_use_kinetic_home() ) {
-        return $template;
-    }
-    if ( function_exists( 'bi_should_show_theme_fallback' ) && ! bi_should_show_theme_fallback() ) {
-        return $template;
+        // Still reclaim the shell when WP content is only a prototype sync marker.
+        $post_id = function_exists( 'bi_get_current_page_id' ) ? bi_get_current_page_id() : (int) get_option( 'page_on_front' );
+        if ( ! $post_id || ( function_exists( 'bi_page_has_editor_content' ) && bi_page_has_editor_content( $post_id ) ) ) {
+            return $template;
+        }
+        if ( function_exists( 'bi_is_elementor_built' ) && bi_is_elementor_built( $post_id ) ) {
+            return $template;
+        }
+        if ( function_exists( 'bi_is_wpbakery_built' ) && bi_is_wpbakery_built( $post_id ) ) {
+            return $template;
+        }
     }
     $front = trailingslashit( get_stylesheet_directory() ) . 'front-page.php';
     if ( file_exists( $front ) ) {

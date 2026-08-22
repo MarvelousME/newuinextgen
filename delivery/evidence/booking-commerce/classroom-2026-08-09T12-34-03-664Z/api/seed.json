@@ -1,0 +1,32 @@
+{
+  "booking_id": 185,
+  "order_id": 57746,
+  "session_id": 27,
+  "correlation": "NGT-SES-20260809-4FCA0011",
+  "window": {
+    "allowed": true,
+    "reason": "within_window",
+    "opens_at": "2026-08-09T12:26:57+00:00",
+    "closes_at": "2026-08-09T13:01:57+00:00"
+  },
+  "launch": {
+    "session_id": 27,
+    "session_uuid": "a1bda932-3f2e-4f36-bf97-2caa6cbc7f15",
+    "correlation_id": "NGT-SES-20260809-4FCA0011",
+    "role": "student",
+    "player_url": "http://localhost:8890/courses/nextgen-tutors-mathematics/?lesson_id=57747",
+    "meeting_url": "https://meet.jit.si/NextGenTutors-Lesson-e38320ee-fe35-45c8-ad93-4c4bdabd5fb8#userInfo.displayName=\"Lerato%20Molefe\"",
+    "classroom_url": "http://localhost:8890/?ngt_classroom=27",
+    "launch_url": "http://localhost:8890/?ngt_classroom=27",
+    "window": {
+      "allowed": true,
+      "reason": "within_window",
+      "opens_at": "2026-08-09T12:26:57+00:00",
+      "closes_at": "2026-08-09T13:01:57+00:00"
+    }
+  },
+  "classroom_url": "http://localhost:8890/?ngt_classroom=27",
+  "ms_course": 57675,
+  "ms_lesson": 57747,
+  "meeting_id": "NextGenTutors-Lesson-e38320ee-fe35-45c8-ad93-4c4bdabd5fb8"
+}

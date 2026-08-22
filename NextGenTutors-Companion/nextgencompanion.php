@@ -3,7 +3,7 @@
  * Plugin Name:       NextGenTutors-Companion
  * Plugin URI:        https://beyondinfinity.co.za/
  * Description:       Business logic, data layer, REST API, workflows, and multi-model BYOK AI suite for NextGen Tutors (BeyondInfinity theme).
- * Version:           1.9.19
+ * Version:           1.9.20
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            BeyondInfinity

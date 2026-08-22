@@ -34,8 +34,15 @@ function bi_pages_registry() {
         'guarantee'         => [ 'template' => 'page-guarantee.php', 'default' => 'guarantee.php', 'source' => 'guarantee.html', 'type' => 'public' ],
         'register'          => [ 'template' => 'page-register.php', 'default' => 'register.php', 'source' => 'register (md)', 'shortcodes' => [ 'ngc_parent_register_child_form', 'ngc_student_register_form' ], 'type' => 'auth' ],
         'login'             => [ 'template' => 'page-login.php', 'default' => 'login.php', 'source' => 'login (md)', 'shortcodes' => [ 'ngc_login_form', 'ngc_forgot_password_form' ], 'type' => 'auth' ],
-        'pricing'           => [ 'template' => 'page-pricing.php', 'default' => 'pricing.php', 'source' => 'pricing.html', 'type' => 'public' ],
-        'parent-checkout'   => [
+		'pricing'           => [ 'template' => 'page-pricing.php', 'default' => 'pricing.php', 'source' => 'pricing.html', 'type' => 'public' ],
+		'subjects'          => [
+			'template' => 'page-subject.php',
+			'default'  => 'subject.php',
+			'source'   => '—',
+			'type'     => 'public',
+			'note'     => 'Hub + child pages synced from NGC_Subjects_CMS',
+		],
+		'parent-checkout'   => [
             'template'   => 'page-parent-checkout.php',
             'default'    => 'parent-checkout.php',
             'source'     => '—',

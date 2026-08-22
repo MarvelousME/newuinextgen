@@ -1,0 +1,70 @@
+/**
+ * Gutenberg / Block Editor adapter — bridges theme.json presets to live CSS vars.
+ */
+
+.editor-styles-wrapper,
+.block-editor-writing-flow {
+  font-family: var(--ngt-font-family-body);
+  color: var(--ngt-color-text-primary);
+  background: var(--ngt-color-bg-page);
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6,
+.block-editor-block-list__layout .wp-block-heading {
+  font-family: var(--ngt-font-family-display);
+  color: var(--ngt-color-text-primary);
+}
+
+.wp-block-button__link,
+.editor-styles-wrapper .wp-block-button__link {
+  background: var(--ngt-button-primary-bg);
+  color: var(--ngt-button-primary-text);
+  border-radius: var(--ngt-button-radius);
+  font-weight: var(--ngt-font-weight-semibold);
+  padding: var(--ngt-button-padding-y) var(--ngt-button-padding-x);
+  text-decoration: none;
+}
+
+.wp-block-button__link:hover,
+.editor-styles-wrapper .wp-block-button__link:hover {
+  background: var(--ngt-button-primary-bg-hover);
+  color: var(--ngt-button-primary-text);
+}
+
+.wp-block-group.is-style-card,
+.wp-block-group.ngt-card {
+  background: var(--ngt-card-bg);
+  border: 1px solid var(--ngt-card-border);
+  border-radius: var(--ngt-card-radius);
+  box-shadow: var(--ngt-card-shadow);
+  padding: var(--ngt-card-padding);
+}
+
+.wp-block-cover .wp-block-cover__inner-container {
+  max-width: var(--ngt-container-default);
+}
+
+.wp-block-post-content,
+.entry-content {
+  max-width: var(--ngt-container-default);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--ngt-container-gutter);
+  padding-right: var(--ngt-container-gutter);
+}
+
+/* Map WP preset CSS vars to BeyondInfinity tokens on frontend */
+:root {
+  --wp--preset--color--brand-primary: var(--ngt-color-brand-primary);
+  --wp--preset--color--brand-secondary: var(--ngt-color-brand-secondary);
+  --wp--preset--color--brand-accent: var(--ngt-color-brand-accent);
+  --wp--preset--color--text-primary: var(--ngt-color-text-primary);
+  --wp--preset--color--text-secondary: var(--ngt-color-text-secondary);
+  --wp--preset--color--bg-page: var(--ngt-color-bg-page);
+  --wp--preset--color--bg-elevated: var(--ngt-color-bg-elevated);
+}

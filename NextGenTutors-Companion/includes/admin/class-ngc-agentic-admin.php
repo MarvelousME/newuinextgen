@@ -156,6 +156,7 @@ final class NGC_Agentic_Admin {
 		self::flash();
 		?>
 		<div class="ngt-admin-card">
+			<p><strong><?php esc_html_e( 'Staging:', 'nextgencompanion' ); ?></strong> <?php esc_html_e( 'Discover calls the Agent Gateway JSON-RPC initialize / tools/list. Discovered tools stay unapproved (approved=false) until a human reviews the allowlist. Do not treat this screen as production enablement.', 'nextgencompanion' ); ?></p>
 			<p><strong><?php esc_html_e( 'Policy:', 'nextgencompanion' ); ?></strong> <?php esc_html_e( 'No unverified public MCP servers are enabled by default. HTTPS required. Private/metadata endpoints blocked unless explicitly approved for local debug.', 'nextgencompanion' ); ?></p>
 		</div>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="ngt-admin-card" style="padding:16px;margin:16px 0">
@@ -190,7 +191,7 @@ final class NGC_Agentic_Admin {
 			</tbody>
 		</table>
 		<?php
-		self::page( __( 'MCP Servers', 'nextgencompanion' ), __( 'Dynamic MCP registry with SSRF guards and capability approval.', 'nextgencompanion' ), ob_get_clean() );
+		self::page( __( 'MCP Servers', 'nextgencompanion' ), __( 'Staging MCP registry: live discover via Agent Gateway, SSRF guards, capability approval required to enable.', 'nextgencompanion' ), ob_get_clean() );
 	}
 
 	/**

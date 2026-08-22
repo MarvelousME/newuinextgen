@@ -24,10 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </ul>
     <div class="ngt-footer__bottom">
       <p>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>.</p>
-      <div class="bi-footer-legal">
-        <a href="<?php echo esc_url( home_url( '/support' ) ); ?>"><?php esc_html_e( 'Support', 'beyondinfinity' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/privacy-policy' ) ); ?>"><?php esc_html_e( 'Privacy', 'beyondinfinity' ); ?></a>
-      </div>
+      <?php bi_render_footer_legal( true ); ?>
     </div>
   </div>
 </footer>

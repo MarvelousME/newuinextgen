@@ -108,11 +108,11 @@ class NGC_PayFast_Gateway extends WC_Payment_Gateway {
 		$order->update_status( 'pending', __( 'Awaiting PayFast payment.', 'nextgencompanion' ) );
 
 		$data = $this->build_payment_data( $order );
-		$url  = $this->process_url();
+		$url  = $this->get_process_url();
 
 		return [
 			'result'   => 'success',
-			'redirect' => add_query_arg( $data, $url ),
+			'redirect' => $url . '?' . http_build_query( $data, '', '&', PHP_QUERY_RFC1738 ),
 		];
 	}
 
@@ -121,10 +121,24 @@ class NGC_PayFast_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @return string
 	 */
-	private function process_url() {
-		return $this->sandbox
-			? 'https://sandbox.payfast.co.za/eng/process'
-			: 'https://www.payfast.co.za/eng/process';
+	public function get_process_url() {
+		$live = false === $this->sandbox;
+		if ( function_exists( 'apply_filters' ) ) {
+			$live = (bool) apply_filters( 'ngc_payfast_live_mode', $live );
+		}
+		return $live
+			? 'https://www.payfast.co.za/eng/process'
+			: 'https://sandbox.payfast.co.za/eng/process';
+	}
+
+	/**
+	 * Signed payload for hosted checkout (GET or POST). Empty values omitted.
+	 *
+	 * @param WC_Order $order Order.
+	 * @return array<string, string>
+	 */
+	public function get_payment_data( $order ) {
+		return $this->build_payment_data( $order );
 	}
 
 	/**
@@ -135,22 +149,27 @@ class NGC_PayFast_Gateway extends WC_Payment_Gateway {
 	 */
 	private function build_payment_data( $order ) {
 		$data = [
-			'merchant_id'  => $this->merchant_id,
-			'merchant_key' => $this->merchant_key,
-			'return_url'   => $this->get_return_url( $order ),
-			'cancel_url'   => $order->get_cancel_order_url_raw(),
-			'notify_url'   => WC()->api_request_url( 'ngc_payfast_itn' ),
-			'name_first'   => $order->get_billing_first_name(),
-			'name_last'    => $order->get_billing_last_name(),
-			'email_address'=> $order->get_billing_email(),
-			'm_payment_id' => (string) $order->get_id(),
-			'amount'       => number_format( (float) $order->get_total(), 2, '.', '' ),
-			'item_name'    => sprintf(
+			'merchant_id'   => $this->merchant_id,
+			'merchant_key'  => $this->merchant_key,
+			'return_url'    => $this->get_return_url( $order ),
+			'cancel_url'    => $order->get_cancel_order_url_raw(),
+			'notify_url'    => WC()->api_request_url( 'ngc_payfast_itn' ),
+			'name_first'    => $order->get_billing_first_name(),
+			'name_last'     => $order->get_billing_last_name(),
+			'email_address' => $order->get_billing_email(),
+			'm_payment_id'  => (string) $order->get_id(),
+			'amount'        => number_format( (float) $order->get_total(), 2, '.', '' ),
+			'item_name'     => sprintf(
 				/* translators: %s: order number */
 				__( 'Order %s', 'nextgencompanion' ),
 				$order->get_order_number()
 			),
 		];
+		foreach ( $data as $key => $val ) {
+			if ( '' === trim( (string) $val ) ) {
+				unset( $data[ $key ] );
+			}
+		}
 
 		$data['signature'] = NGC_PayFast_Itn::generate_signature( $data, $this->passphrase );
 		return $data;

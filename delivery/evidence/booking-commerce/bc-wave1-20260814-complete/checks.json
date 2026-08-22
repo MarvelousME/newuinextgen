@@ -1,0 +1,51 @@
+{
+  "run_id": "bc-wave1-20260814-complete",
+  "at": "2026-08-13T23:48:00Z",
+  "base_url": "http://localhost:8890",
+  "recording_claim": "WAIVED",
+  "popia": "SECURITY_REVIEW_REQUIRED",
+  "playwright": "NOT_INSTALLED",
+  "docker_cli": "HUNG_ON_WINDOWS",
+  "checks": [
+    {
+      "name": "parent_checkout_payfast_form",
+      "result": "PASS",
+      "detail": "/parent-checkout/?booking_id=185 shows Pay for a lesson + Pay with PayFast (theme fallback). No longer chrome-only."
+    },
+    {
+      "name": "payfast_hosted_sandbox",
+      "result": "PASS",
+      "detail": "POST hosted form to sandbox.payfast.co.za; Order 59525 R 320.00; wallet Complete Payment; PayFast: Your payment was successful; return_url /checkout-2/order-received/59525/"
+    },
+    {
+      "name": "payfast_itn_localhost",
+      "result": "BLOCKED",
+      "detail": "notify_url is http://localhost:8890/wc-api/ngc_payfast_itn/ — PayFast cannot reach loopback, so ITN settlement of 59525 was not observed this run."
+    },
+    {
+      "name": "fresh_in_window_session",
+      "result": "PASS",
+      "detail": "Demo Control Centre Seed in-window classroom (manage_options + NGC_ALLOW_DEMO_SEED) → session 31 booking 189 order 59526 paid within_window."
+    },
+    {
+      "name": "launch_in_window",
+      "result": "PASS",
+      "detail": "POST /wp-json/ngc/v1/sessions/31/launch 200; reason=within_window; launch_url=/?ngt_classroom=31; meeting_url=meet.jit.si/NextGenTutors-Lesson-3c2343db-f580-4f3a-bb83-766026e302ac"
+    },
+    {
+      "name": "classroom_page",
+      "result": "PASS",
+      "detail": "GET /?ngt_classroom=31 200 NextGen Tutors — Lesson classroom; Enter live meeting visible; correlation NGT-SES-20260813-367F761E"
+    },
+    {
+      "name": "anonymous_launch_denied",
+      "result": "PASS",
+      "detail": "POST /wp-json/ngc/v1/sessions/31/launch without auth 401"
+    },
+    {
+      "name": "github_actions_wave0",
+      "result": "BLOCKED",
+      "detail": "PR #1 GitHub account locked due to billing."
+    }
+  ]
+}

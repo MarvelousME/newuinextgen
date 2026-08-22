@@ -69,6 +69,11 @@ body.bi-ngt-skin .ngt-nav__cta--tools .ngt-btn--primary {
   display: none !important;
 }
 
+/* Reference chrome retains Sign In (Get Started removed). */
+body.bi-ngt-skin .ngt-nav__cta--tools .ngt-nav__signin {
+  display: inline-flex !important;
+}
+
 body.bi-ngt-skin .ngt-nav__toggle {
   color: #fff;
   border-color: rgba(255, 255, 255, 0.35);
@@ -188,6 +193,31 @@ body.bi-ngt-skin .bi-theme-content [data-reveal-x] {
 
   body.bi-ngt-skin .ngt-nav__logo img {
     height: 44px;
+  }
+
+  body.bi-ngt-skin .ngt-nav__menu {
+    background: #092746 !important;
+    color: #fff !important;
+  }
+
+  body.bi-ngt-skin .ngt-nav__menu .menu-item > a,
+  body.bi-ngt-skin .ngt-nav__menu .ngt-nav__link,
+  body.bi-ngt-skin .ngt-nav__menu .ngt-nav__dropdown-trigger,
+  body.bi-ngt-skin .ngt-nav__menu .sub-menu a,
+  body.bi-ngt-skin .ngt-nav__menu .ngt-nav__sublink {
+    color: #fff !important;
+  }
+
+  body.bi-ngt-skin .ngt-nav__menu .menu-item > a:hover,
+  body.bi-ngt-skin .ngt-nav__menu .current-menu-item > a,
+  body.bi-ngt-skin .ngt-nav__menu .current_page_item > a,
+  body.bi-ngt-skin .ngt-nav__menu .sub-menu a:hover {
+    color: var(--lime, #aece61);
+  }
+
+  body.bi-ngt-skin header.nav#nav,
+  body.bi-ngt-skin #drawer.drawer {
+    display: none !important;
   }
 
   body.bi-ngt-skin .bi-theme-content,

@@ -63,7 +63,6 @@
         <nav class="nav__links" aria-label="Primary">${links}</nav>
         <div class="nav__cta">
           <a class="btn btn--ghost" href="dashboard.html" data-internal>Sign In</a>
-          <a class="btn btn--lime btn--shine" href="find-a-tutor.html" data-internal>Get Started</a>
         </div>
         <button class="nav__burger" id="burger" aria-label="Open menu">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -84,7 +83,7 @@
       ${NAV_LINKS.filter((l) => l.type !== "dropdown").map((l) => `<a class="drawer__link" href="${l.href}" data-internal>${l.label}</a>`).join("")}
       <div class="drawer__sub-label">Compliance</div>
       ${NAV_LINKS.find((l) => l.type === "dropdown").items.map((item) => `<a class="drawer__sub-link" href="${item.href}" data-internal>${item.label}</a>`).join("")}
-      <a class="btn btn--lime btn--block" href="find-a-tutor.html" data-internal style="margin-top:20px">Get Started Today</a>`;
+      <a class="btn btn--ghost btn--block" href="login.html" data-internal style="margin-top:20px">Sign In</a>`;
     document.body.appendChild(drawer);
   }
 
@@ -160,6 +159,7 @@
   let lenis = null;
   function initNav() {
     const nav = $("#nav");
+    if (!nav) return;
     const onScroll = () => {
       if (window.scrollY > 30) { nav.classList.add("is-solid"); nav.classList.remove("nav--transparent"); }
       else { nav.classList.remove("is-solid"); nav.classList.add("nav--transparent"); }
@@ -183,9 +183,12 @@
     });
 
     const drawer = $("#drawer");
-    $("#burger").addEventListener("click", () => { drawer.classList.add("is-open"); if (lenis) lenis.stop(); });
+    const burger = $("#burger");
+    const drawerClose = $("#drawer-close");
+    if (!drawer || !burger || !drawerClose) return;
+    burger.addEventListener("click", () => { drawer.classList.add("is-open"); if (lenis) lenis.stop(); });
     const close = () => { drawer.classList.remove("is-open"); if (lenis) lenis.start(); };
-    $("#drawer-close").addEventListener("click", close);
+    drawerClose.addEventListener("click", close);
     window.__ngtCloseDrawer = close;
   }
 
@@ -298,8 +301,11 @@
 
   /* ---------- Boot chrome ---------- */
   function boot() {
-    buildNav();
-    buildFooter();
+    const wpOwnsChrome = !!document.querySelector('.ngt-nav, footer.ngt-footer');
+    if (!wpOwnsChrome) {
+      buildNav();
+      buildFooter();
+    }
     buildTransition();
     if (window.lucide) lucide.createIcons();
     if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);

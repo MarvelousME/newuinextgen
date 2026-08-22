@@ -455,6 +455,9 @@ function bi_sticky_mobile_cta() {
     if ( bi_is_elementor_canvas_template() || bi_is_builder_edit_mode() ) {
         return;
     }
+    if ( function_exists( 'bi_uses_marketing_header_chrome' ) && bi_uses_marketing_header_chrome() ) {
+        return;
+    }
 
     $auth_url   = home_url( '/login/' );
     $auth_label = __( 'Login', 'beyondinfinity' );

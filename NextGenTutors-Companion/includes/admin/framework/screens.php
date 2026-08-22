@@ -615,7 +615,7 @@ return [
 				'callback' => [ 'NGC_Agentic_Admin', 'render_sources' ],
 				'keywords' => [ 'compliance', 'sources', 'scraping policy' ],
 			],
-			// Education drill-down — live WP data (no placeholder shell)
+			// Education drill-down — WP directories only (grades/certs wait on LMS contract)
 			[
 				'slug'     => 'ngt-edu-students',
 				'title'    => __( 'Students', 'nextgencompanion' ),

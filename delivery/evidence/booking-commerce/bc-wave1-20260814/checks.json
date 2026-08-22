@@ -1,0 +1,63 @@
+{
+  "run_id": "bc-wave1-20260814",
+  "at": "2026-08-13T23:12:00Z",
+  "base_url": "http://localhost:8890",
+  "persona": {
+    "email": "demo.parent@nextgen.local",
+    "wp_user_id": 243,
+    "display_name": "Thandi Molefe"
+  },
+  "recording_claim": "WAIVED",
+  "checks": [
+    {
+      "name": "wp_rest_up",
+      "result": "PASS",
+      "detail": "GET /wp-json/ 200; namespaces include ngc/v1, wc/v3"
+    },
+    {
+      "name": "parent_login",
+      "result": "PASS",
+      "detail": "wp-login.php → /wp-admin/profile.php as demo.parent"
+    },
+    {
+      "name": "dashboard_parent_real",
+      "result": "PASS",
+      "detail": "GET /wp-json/ngc/v1/dashboard/parent 200; meta.source=real; nextSession booking 185 session 27 confirmed"
+    },
+    {
+      "name": "join_window_too_late",
+      "result": "PASS",
+      "detail": "POST /wp-json/ngc/v1/sessions/27/launch 409 ngc_join_window reason=too_late closes_at=2026-08-09T13:01:57+00:00"
+    },
+    {
+      "name": "anonymous_launch_denied",
+      "result": "PASS",
+      "detail": "POST launch without nonce 401 rest_forbidden"
+    },
+    {
+      "name": "no_meeting_url_on_dashboard",
+      "result": "PASS",
+      "detail": "dashboard HTML has no meet.jit.si; REST joinUrl/meetingUrl empty"
+    },
+    {
+      "name": "parent_dashboard_ui",
+      "result": "PASS",
+      "detail": "Welcome back Thandi Molefe; next session Pieter Botha Mathematics Confirmed; Join hidden because too_late"
+    },
+    {
+      "name": "parent_checkout_payfast_form",
+      "result": "FAIL",
+      "detail": "/parent-checkout/ 200 but chrome-only; no PayFast fields. /checkout/ and /cart/ 200 empty cart chrome."
+    },
+    {
+      "name": "fresh_in_window_session",
+      "result": "BLOCKED",
+      "detail": "Windows Docker CLI hung; cannot wp eval-file booking-commerce-e2e-docker.php or seed-classroom-join-window.php. Existing sessions are past join window."
+    },
+    {
+      "name": "github_actions_wave0",
+      "result": "BLOCKED",
+      "detail": "PR #1 RAD gate not started: GitHub account locked due to billing."
+    }
+  ]
+}

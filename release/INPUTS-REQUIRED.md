@@ -41,6 +41,8 @@
 | IN-018 | Safeguarding | Policy | Escalation contacts | Child safety | contacts | Yes | Compliance | — | Sensitive | OPEN |
 | IN-019 | CRM | FluentCRM | Production send permission | Marketing | boolean | Yes | Ops | false until approved | No | OPEN |
 | IN-020 | Hosting | Coolify/host | Production deploy authorization | Release | boolean | Yes | Operator | NO until explicit | No | OPEN |
+| IN-021 | Hosting | Compose overlay | `WP_ENVIRONMENT_TYPE=production` via `docker-compose.production.yml` | Blocks demo seed even if old wp-config has `NGC_ALLOW_DEMO_SEED` true | env | Yes | Operator | production | No | OPEN |
+| IN-022 | Agent Gateway | Host `.env` | `NGT_GATEWAY_SHARED_SECRET` (no staging default) | Cross-service HMAC | secret | Yes | Operator | — | Yes | OPEN |
 
 ## Safe known values (already in SSOT)
 
@@ -58,4 +60,5 @@
 3. Configure FluentSMTP; never send production CRM campaigns during dry-run.  
 4. Supply approved pricing (IN-008) before product seed.  
 5. Confirm backup + restore proof.  
-6. Explicit production deployment authorization (IN-020).
+6. Explicit production deployment authorization (IN-020).  
+7. Public host: `docker compose -f docker-compose.yml -f docker-compose.production.yml` and set `NGT_GATEWAY_SHARED_SECRET` (IN-021, IN-022). Never leave `NGC_ALLOW_DEMO_SEED` true.

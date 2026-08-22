@@ -1,0 +1,29 @@
+{
+  "run_id": "bc-wave1-20260814-complete",
+  "payfast": {
+    "persona": "demo.parent@nextgen.local",
+    "booking_id": 185,
+    "order_id": 59525,
+    "amount_zar": "320.00",
+    "sandbox_host": "sandbox.payfast.co.za",
+    "hosted_result": "successful",
+    "return_url": "http://localhost:8890/checkout-2/order-received/59525/?key=wc_order_MLwgjqt2hr0y7",
+    "itn": "not_observed_localhost"
+  },
+  "join": {
+    "seed": "NGC_Demo_Seeder::seed_classroom_join_window via Demo Control Centre",
+    "booking_id": 189,
+    "session_id": 31,
+    "order_id": 59526,
+    "correlation_id": "NGT-SES-20260813-367F761E",
+    "window": {
+      "allowed": true,
+      "reason": "within_window",
+      "opens_at": "2026-08-13T23:41:13+00:00",
+      "closes_at": "2026-08-14T00:16:13+00:00"
+    },
+    "launch_http": 200,
+    "classroom_url": "http://localhost:8890/?ngt_classroom=31",
+    "meeting_provider": "jitsi"
+  }
+}

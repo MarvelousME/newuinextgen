@@ -1,0 +1,72 @@
+[
+  {
+    "type": "log",
+    "text": "JQMIGRATE: Migrate is installed, version 3.4.1",
+    "url": "http://localhost:8890/wp-login.php"
+  },
+  {
+    "type": "log",
+    "text": "JQMIGRATE: Migrate is installed, version 3.4.1",
+    "url": "http://localhost:8890/wp-admin/profile.php"
+  },
+  {
+    "type": "error",
+    "text": "❌ [Amelia MCP] Registration failed: TypeError: Failed to construct 'URL': Invalid URL\n    at DS (http://localhost:8890/wp-content/plugins/ameliabooking/redesign/dist/amelia-angie.js?ver=9.5.1:173:7462)\n    at Cu (http://localhost:8890/wp-content/plugins/ameliabooking/redesign/dist/amelia-angie.js?ver=9.5.1:173:8006)\n    at http://localhost:8890/wp-content/plugins/ameliabooking/redesign/dist/amelia-angie.js?ver=9.5.1:173:8649",
+    "url": "http://localhost:8890/wp-admin/profile.php"
+  },
+  {
+    "type": "verbose",
+    "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"username\"): (More info: https://goo.gl/9p2vKq) %o",
+    "url": "http://localhost:8890/wp-admin/profile.php"
+  },
+  {
+    "type": "log",
+    "text": "JQMIGRATE: Migrate is installed, version 3.4.1",
+    "url": "http://localhost:8890/tutor-dashboard/"
+  },
+  {
+    "type": "log",
+    "text": "JQMIGRATE: Migrate is installed, version 3.4.1",
+    "url": "http://localhost:8890/tutor-dashboard/"
+  },
+  {
+    "type": "info",
+    "text": "2026-08-09T07:26:17.048Z [INFO] [rtc:RTCUtils] onUserMediaSuccess",
+    "url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName="
+  },
+  {
+    "type": "debug",
+    "text": "2026-08-09T07:26:17.069Z [DEBUG] [app:conference-web] (TIME) createInitialLocalTracks finished: 8285.20000000298 ",
+    "url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName="
+  },
+  {
+    "type": "info",
+    "text": "2026-08-09T07:26:17.101Z [INFO] [app:settings] switched local audio input device to: default",
+    "url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName="
+  },
+  {
+    "type": "info",
+    "text": "2026-08-09T07:26:17.108Z [INFO] [app:face-landmarks] <Tte.startDetection>:  Worker has not been initialized",
+    "url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName="
+  },
+  {
+    "type": "info",
+    "text": "2026-08-09T07:26:17.121Z [INFO] [app:settings] switched local video device to: 6e85c08e6a7fd0952f4f812dbb98fd790f65a971e0ecde3420ff82f6695952ca",
+    "url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName="
+  },
+  {
+    "type": "debug",
+    "text": "2026-08-09T07:26:17.125Z [DEBUG] [app:conference-web] Resolving the initialGUM promise! (prejoinVisible=true)",
+    "url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName="
+  },
+  {
+    "type": "debug",
+    "text": "2026-08-09T07:26:17.125Z [DEBUG] [app:conference-web] Clear the initialGUM promise! (prejoinVisible=true)",
+    "url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName="
+  },
+  {
+    "type": "info",
+    "text": "2026-08-09T07:26:46.324Z [INFO] [app:base-app] <PressureObserver.<anonymous>>:  Compute pressure state changed: [{\"source\":\"cpu\",\"state\":\"fair\",\"ownContributionEstimate\":0.0071087790636338785,\"time\":37540.29999999702}]",
+    "url": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName="
+  }
+]

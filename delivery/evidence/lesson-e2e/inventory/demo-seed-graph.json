@@ -1,0 +1,34 @@
+{
+  "rawLength": 2535,
+  "preview": "{\n    \"seed_version\": \"14.0.0\",\n    \"scenario\": \"all\",\n    \"started_at\": \"2026-08-09T07:20:50+00:00\",\n    \"users\": {\n        \"NGT-DEMO-P0001\": 243,\n        \"NGT-DEMO-P0002\": 244,\n        \"NGT-DEMO-P0003\": 245,\n        \"NGT-DEMO-S0001\": 246,\n        \"NGT-DEMO-S0002\": 247,\n        \"NGT-DEMO-S0003\": 248,\n        \"NGT-DEMO-T0001\": 249,\n        \"NGT-DEMO-T0002\": 250,\n        \"NGT-DEMO-T0003\": 251,\n        \"NGT-DEMO-T0004\": 252,\n        \"NGT-DEMO-T0005\": 253,\n        \"NGT-DEMO-T0006\": 254,\n        \"NGT-DEMO-T0007\": 255,\n        \"NGT-DEMO-A0001\": 256,\n        \"NGT-DEMO-F0001\": 257,\n        \"NGT-DEMO-C0001\": 258,\n        \"NGT-DEMO-SFG0001\": 259,\n        \"NGT-DEMO-SUP0001\": 260,\n        \"NGT-DEMO-SEC0001\": 261,\n        \"NGT-DEMO-FRD0001\": 262,\n        \"NGT-DEMO-AUD0001\": 263,\n        \"NGT-DEMO-AI0001\": 264\n    },\n    \"children\": {\n        \"NGT-DEMO-S0002\": 34,\n        \"NGT-DEMO-S0003\": 35\n    },\n    \"matches\": {\n        \"MATCH-001\": 63,\n        \"MATCH-002\": 64,\n        \"MATCH-004\": 65,\n        \"MATCH-006\": {\n            \"excluded_tutor\": \"NGT-DEMO-T0004\",\n            \"reason\": \"suspended\"\n        },\n        \"MATCH-007\": 66\n    },\n    \"bookings\": {\n        \"BOOK-001\": 151,\n        \"BOOK-COMPLETED\": 152,\n        \"BOOK-PENDING-PAY\": 153,\n        \"BOOK-ADULT\": 154\n    },\n    \"reviews\": {\n        \"REV-001\": 0\n    },\n    \"wallet\": {\n        \"topup\": 2000\n    },\n    \"fraud\": {\n        \"signal\": 1518,\n        \"case\": 934\n    },\n    \"safeguarding\": {\n        \"case\": 102\n    },\n    \"agents\": {\n        \"AI-008\": {\n            \"decision\": \"REQUIRE_APPROVAL\",\n            \"reason\": \"ok\",\n            \"policy_id\": \"finance.refund.execute\",\n            \"requires_approval\": true,\n            \"approver_roles\": [\n                \"administrator\",\n                \"ngc_finance\"\n            ]\n        },\n        \"AI-010-paused\": true,\n        \"AI-010-resumed\": true\n    },\n    \"notifications\": 162,\n    \"events\": [\n        \"match.accepted:63\",\n        \"match.proposed:64\",\n        \"booking.confirmed:151\",\n        \"lesson.completed:152\",\n        \"TutorApplicationSubmitted\",\n        \"TutorResubmissionRequested\",\n        \"TutorApproved\",\n        \"FraudSignalRaised:934\",\n        \"SecurityAlert:new_device\",\n        \"SafeguardingAlertRaised:102\",\n        \"consent-recorded\"\n    ],\n    \"errors\": [],\n    \"finished_at\": \"2026-08-09T07:21:34+00:00\",\n    \"duration_ms\": 43762,\n    \"clock\": {\n        \"now\": 1786260094,\n        \"today\": \"2026-08-09\",\n        \"offset\": 0,\n        \"frozen\": 0,\n        \"iso\": \"2026-08-09T07:21:34+00:00\"\n    }\n}",
+  "bookings": {
+    "BOOK-001": 151,
+    "BOOK-COMPLETED": 152,
+    "BOOK-PENDING-PAY": 153,
+    "BOOK-ADULT": 154
+  },
+  "users": {
+    "NGT-DEMO-P0001": 243,
+    "NGT-DEMO-P0002": 244,
+    "NGT-DEMO-P0003": 245,
+    "NGT-DEMO-S0001": 246,
+    "NGT-DEMO-S0002": 247,
+    "NGT-DEMO-S0003": 248,
+    "NGT-DEMO-T0001": 249,
+    "NGT-DEMO-T0002": 250,
+    "NGT-DEMO-T0003": 251,
+    "NGT-DEMO-T0004": 252,
+    "NGT-DEMO-T0005": 253,
+    "NGT-DEMO-T0006": 254,
+    "NGT-DEMO-T0007": 255,
+    "NGT-DEMO-A0001": 256,
+    "NGT-DEMO-F0001": 257,
+    "NGT-DEMO-C0001": 258,
+    "NGT-DEMO-SFG0001": 259,
+    "NGT-DEMO-SUP0001": 260,
+    "NGT-DEMO-SEC0001": 261,
+    "NGT-DEMO-FRD0001": 262,
+    "NGT-DEMO-AUD0001": 263,
+    "NGT-DEMO-AI0001": 264
+  }
+}

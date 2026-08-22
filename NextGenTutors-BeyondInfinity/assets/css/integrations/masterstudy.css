@@ -1,0 +1,72 @@
+/**
+ * MasterStudy LMS — frontend normalized to BeyondInfinity tokens.
+ */
+
+.stm-lms-wrapper,
+.masterstudy,
+.stm_archive_product,
+.stm_course_single_page {
+  font-family: var(--ngt-font-family-body);
+  color: var(--ngt-color-text-primary);
+}
+
+.stm-lms-wrapper h1,
+.stm-lms-wrapper h2,
+.stm-lms-wrapper h3,
+.masterstudy-course-card__title,
+.stm-courses .stm-courses__single--title {
+  font-family: var(--ngt-font-family-display);
+  color: var(--ngt-color-text-primary);
+}
+
+.stm-lms-wrapper .btn,
+.stm-lms-wrapper .button,
+.stm-lms-buy-button,
+.masterstudy-button,
+.stm-button {
+  font-family: var(--ngt-font-family-body);
+  font-weight: var(--ngt-font-weight-semibold);
+  background: var(--ngt-button-primary-bg);
+  color: var(--ngt-button-primary-text);
+  border-radius: var(--ngt-button-radius);
+  border: none;
+}
+
+.stm-lms-wrapper .btn:hover,
+.stm-lms-wrapper .button:hover,
+.stm-lms-buy-button:hover {
+  background: var(--ngt-button-primary-bg-hover);
+  color: var(--ngt-button-primary-text);
+}
+
+.stm-courses__single,
+.masterstudy-course-card,
+.stm_lms_course__image,
+.stm-course-item {
+  background: var(--ngt-card-bg);
+  border: 1px solid var(--ngt-card-border);
+  border-radius: var(--ngt-card-radius);
+  box-shadow: var(--ngt-card-shadow);
+}
+
+.stm-lms-wrapper input[type="text"],
+.stm-lms-wrapper input[type="email"],
+.stm-lms-wrapper input[type="password"],
+.stm-lms-wrapper select,
+.stm-lms-wrapper textarea {
+  background: var(--ngt-form-control-bg);
+  border: 1px solid var(--ngt-form-control-border);
+  border-radius: var(--ngt-form-control-radius);
+  color: var(--ngt-form-control-text);
+}
+
+.stm-lms-user-account,
+.stm-lms-wrapper .stm-lms-nav {
+  background: var(--ngt-color-bg-elevated);
+  border-color: var(--ngt-color-border);
+}
+
+.stm-lms-wrapper .progress-bar,
+.stm-lms-wrapper .masterstudy-progress-bar__fill {
+  background: var(--ngt-color-brand-secondary);
+}

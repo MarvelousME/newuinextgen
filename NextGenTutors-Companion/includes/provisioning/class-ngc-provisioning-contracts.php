@@ -190,6 +190,12 @@ final class NGC_Provision_Context {
 	 * @return string
 	 */
 	public static function detect_environment() {
+		if ( class_exists( 'NGC_Demo_Env' ) && NGC_Demo_Env::is_production_environment() ) {
+			return 'production';
+		}
+		if ( function_exists( 'wp_get_environment_type' ) && 'production' === wp_get_environment_type() ) {
+			return 'production';
+		}
 		$host = wp_parse_url( home_url(), PHP_URL_HOST );
 		if ( in_array( $host, [ 'localhost', '127.0.0.1' ], true ) || ( is_string( $host ) && str_ends_with( $host, '.local' ) ) ) {
 			return 'local';

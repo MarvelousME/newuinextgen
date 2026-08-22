@@ -42,7 +42,7 @@ get_header();
     <div class="ngi-kh-mesh" aria-hidden="true"></div>
     <div class="ngi-wrap">
       <nav class="ngi-nav" aria-label="Homepage navigation">
-        <a class="ngi-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" data-ngt-transition data-testid="ngi-home-logo" aria-label="NextGen Tutors home" onclick="return window.NGT_pageTransition ? window.NGT_pageTransition(this.href, event) : true;">NextGen<span>Tutors</span></a>
+        <a class="ngi-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" data-ngt-transition data-testid="ngi-home-logo" aria-label="NextGen Tutors home">NextGen<span>Tutors</span></a>
         <div class="ngi-menu">
           <a href="#subjects">Subjects</a><a href="#journey">How It Works</a><a href="#tutors">Tutors</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
         </div>

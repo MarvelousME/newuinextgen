@@ -4,9 +4,9 @@
       "C:\\Users\\marvi\\AppData\\Local\\Volta\\tools\\image\\node\\24.18.0\\node.exe",
       "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\node_modules\\@playwright\\test\\cli.js",
       "test",
+      "workflows/tc-21-26-security.spec.ts",
       "--headed",
-      "--workers=1",
-      "workflows/five-minute-booking-journey.spec.ts"
+      "--workers=1"
     ],
     "configFile": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\playwright.config.ts",
     "rootDir": "C:/Users/marvi/Downloads/wetransfer_newuinextgen_2026-07-07_1929/newuinextgen/e2e/workflows",
@@ -22,7 +22,7 @@
     "metadata": {
       "evidenceRoot": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\reports\\evidence",
       "baseURL": "http://localhost:8890",
-      "generatedAt": "2026-08-03T02:07:37.565Z",
+      "generatedAt": "2026-08-16T10:30:10.321Z",
       "actualWorkers": 1
     },
     "preserveOutput": "always",
@@ -34,7 +34,7 @@
         "metadata": {
           "evidenceRoot": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\reports\\evidence",
           "baseURL": "http://localhost:8890",
-          "generatedAt": "2026-08-03T02:07:37.565Z",
+          "generatedAt": "2026-08-16T10:30:10.321Z",
           "actualWorkers": 1
         },
         "id": "chrome",
@@ -87,365 +87,260 @@
   },
   "suites": [
     {
-      "title": "five-minute-booking-journey.spec.ts",
-      "file": "five-minute-booking-journey.spec.ts",
+      "title": "tc-21-26-security.spec.ts",
+      "file": "tc-21-26-security.spec.ts",
       "column": 0,
       "line": 0,
-      "specs": [],
-      "suites": [
+      "specs": [
         {
-          "title": "Five-minute journey — headed UI + correlation",
-          "file": "five-minute-booking-journey.spec.ts",
-          "line": 35,
-          "column": 6,
-          "specs": [
+          "title": "TC-21 SQL injection inputs sanitized on contact/find forms",
+          "ok": false,
+          "tags": [],
+          "tests": [
             {
-              "title": "01 preflight pages on :8890",
-              "ok": true,
-              "tags": [],
-              "tests": [
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome",
+              "projectName": "chrome",
+              "results": [
                 {
-                  "timeout": 300000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chrome",
-                  "projectName": "chrome",
-                  "results": [
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1,
+                  "error": {
+                    "message": "TimeoutError: apiRequestContext.get: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:8890/\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m  - ← 301 Moved Permanently\u001b[22m\n\u001b[2m    - date: Sun, 16 Aug 2026 10:30:43 GMT\u001b[22m\n\u001b[2m    - server: Apache/2.4.62 (Debian)\u001b[22m\n\u001b[2m    - x-powered-by: PHP/8.2.28\u001b[22m\n\u001b[2m    - permissions-policy: private-state-token-redemption=(self \"https://www.google.com\" \"https://www.gstatic.com\" \"https://recaptcha.net\" \"https://challenges.cloudflare.com\" \"https://hcaptcha.com\"), private-state-token-issuance=(self \"https://www.google.com\" \"https://www.gstatic.com\" \"https://recaptcha.net\" \"https://challenges.cloudflare.com\" \"https://hcaptcha.com\")\u001b[22m\n\u001b[2m    - x-redirect-by: WordPress\u001b[22m\n\u001b[2m    - location: http://localhost:8890/\u001b[22m\n\u001b[2m    - content-length: 0\u001b[22m\n\u001b[2m    - keep-alive: timeout=5, max=100\u001b[22m\n\u001b[2m    - connection: Keep-Alive\u001b[22m\n\u001b[2m    - content-type: text/html; charset=UTF-8\u001b[22m\n\u001b[2m  - → GET http://localhost:8890/\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n",
+                    "stack": "TimeoutError: apiRequestContext.get: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:8890/\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m  - ← 301 Moved Permanently\u001b[22m\n\u001b[2m    - date: Sun, 16 Aug 2026 10:30:43 GMT\u001b[22m\n\u001b[2m    - server: Apache/2.4.62 (Debian)\u001b[22m\n\u001b[2m    - x-powered-by: PHP/8.2.28\u001b[22m\n\u001b[2m    - permissions-policy: private-state-token-redemption=(self \"https://www.google.com\" \"https://www.gstatic.com\" \"https://recaptcha.net\" \"https://challenges.cloudflare.com\" \"https://hcaptcha.com\"), private-state-token-issuance=(self \"https://www.google.com\" \"https://www.gstatic.com\" \"https://recaptcha.net\" \"https://challenges.cloudflare.com\" \"https://hcaptcha.com\")\u001b[22m\n\u001b[2m    - x-redirect-by: WordPress\u001b[22m\n\u001b[2m    - location: http://localhost:8890/\u001b[22m\n\u001b[2m    - content-length: 0\u001b[22m\n\u001b[2m    - keep-alive: timeout=5, max=100\u001b[22m\n\u001b[2m    - connection: Keep-Alive\u001b[22m\n\u001b[2m    - content-type: text/html; charset=UTF-8\u001b[22m\n\u001b[2m  - → GET http://localhost:8890/\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\n    at ensureSiteUp (C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\helpers\\tc-matrix.ts:69:33)\n    at C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\workflows\\tc-21-26-security.spec.ts:29:3",
+                    "location": {
+                      "file": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\helpers\\tc-matrix.ts",
+                      "column": 33,
+                      "line": 69
+                    },
+                    "snippet": "   at ..\\helpers\\tc-matrix.ts:69\n\n  67 |   for (const base of [...new Set(candidates)]) {\n  68 |     try {\n> 69 |       const res = await request.get(base.replace(/\\/$/, '') + '/', {\n     |                                 ^\n  70 |         maxRedirects: 5,\n  71 |         timeout: 30_000,\n  72 |       });"
+                  },
+                  "errors": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 60951,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-03T02:07:38.217Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-68909--01-preflight-pages-on-8890-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-68909--01-preflight-pages-on-8890-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-68909--01-preflight-pages-on-8890-chrome\\trace.zip"
-                        }
-                      ]
+                      "location": {
+                        "file": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\helpers\\tc-matrix.ts",
+                        "column": 33,
+                        "line": 69
+                      },
+                      "message": "TimeoutError: apiRequestContext.get: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:8890/\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m  - ← 301 Moved Permanently\u001b[22m\n\u001b[2m    - date: Sun, 16 Aug 2026 10:30:43 GMT\u001b[22m\n\u001b[2m    - server: Apache/2.4.62 (Debian)\u001b[22m\n\u001b[2m    - x-powered-by: PHP/8.2.28\u001b[22m\n\u001b[2m    - permissions-policy: private-state-token-redemption=(self \"https://www.google.com\" \"https://www.gstatic.com\" \"https://recaptcha.net\" \"https://challenges.cloudflare.com\" \"https://hcaptcha.com\"), private-state-token-issuance=(self \"https://www.google.com\" \"https://www.gstatic.com\" \"https://recaptcha.net\" \"https://challenges.cloudflare.com\" \"https://hcaptcha.com\")\u001b[22m\n\u001b[2m    - x-redirect-by: WordPress\u001b[22m\n\u001b[2m    - location: http://localhost:8890/\u001b[22m\n\u001b[2m    - content-length: 0\u001b[22m\n\u001b[2m    - keep-alive: timeout=5, max=100\u001b[22m\n\u001b[2m    - connection: Keep-Alive\u001b[22m\n\u001b[2m    - content-type: text/html; charset=UTF-8\u001b[22m\n\u001b[2m  - → GET http://localhost:8890/\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\n\n   at ..\\helpers\\tc-matrix.ts:69\n\n  67 |   for (const base of [...new Set(candidates)]) {\n  68 |     try {\n> 69 |       const res = await request.get(base.replace(/\\/$/, '') + '/', {\n     |                                 ^\n  70 |         maxRedirects: 5,\n  71 |         timeout: 30_000,\n  72 |       });\n    at ensureSiteUp (C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\helpers\\tc-matrix.ts:69:33)\n    at C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\workflows\\tc-21-26-security.spec.ts:29:3"
                     }
                   ],
-                  "status": "expected"
-                }
-              ],
-              "id": "0aa318cf87987a6c4b38-676e3cd44481281b8a86",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 37,
-              "column": 7
-            },
-            {
-              "title": "02 public tutor registration form submits",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 300000,
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-16T10:30:13.104Z",
                   "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chrome",
-                  "projectName": "chrome",
-                  "results": [
+                  "attachments": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 49069,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-03T02:08:41.197Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-43dbb-r-registration-form-submits-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-43dbb-r-registration-form-submits-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-43dbb-r-registration-form-submits-chrome\\trace.zip"
-                        }
-                      ]
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\tc-21-26-security-TC-21-SQ-b555f-tized-on-contact-find-forms-chrome\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\tc-21-26-security-TC-21-SQ-b555f-tized-on-contact-find-forms-chrome\\trace.zip"
                     }
                   ],
-                  "status": "expected"
+                  "errorLocation": {
+                    "file": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\helpers\\tc-matrix.ts",
+                    "column": 33,
+                    "line": 69
+                  }
                 }
               ],
-              "id": "0aa318cf87987a6c4b38-b8ea3eb2e0b76e7025e1",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 52,
-              "column": 7
-            },
-            {
-              "title": "03 parent registration form submits",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 300000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chrome",
-                  "projectName": "chrome",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 90387,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-03T02:09:31.607Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-ed55d-t-registration-form-submits-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-ed55d-t-registration-form-submits-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-ed55d-t-registration-form-submits-chrome\\trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "0aa318cf87987a6c4b38-8a1acda78f099084e67d",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 76,
-              "column": 7
-            },
-            {
-              "title": "04 find-a-tutor marketplace shows bookable cards",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 300000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chrome",
-                  "projectName": "chrome",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 32775,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-03T02:11:03.887Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-e3cfd-tplace-shows-bookable-cards-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-e3cfd-tplace-shows-bookable-cards-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-e3cfd-tplace-shows-bookable-cards-chrome\\trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "0aa318cf87987a6c4b38-b23f9e9a5ce6632cb631",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 120,
-              "column": 7
-            },
-            {
-              "title": "05 domain correlation evidence present",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 300000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chrome",
-                  "projectName": "chrome",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 8,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-03T02:11:37.689Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-f77fb-orrelation-evidence-present-chrome\\trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "0aa318cf87987a6c4b38-63dc3679bd8e8a2817e9",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 129,
-              "column": 7
-            },
-            {
-              "title": "06 admin surfaces reachable after login",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 300000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chrome",
-                  "projectName": "chrome",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 62792,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-03T02:11:37.723Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-9caf2-faces-reachable-after-login-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-9caf2-faces-reachable-after-login-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-9caf2-faces-reachable-after-login-chrome\\trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "0aa318cf87987a6c4b38-7577f5feb4fd6eb874ee",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 153,
-              "column": 7
-            },
-            {
-              "title": "07 unauthorized visitor cannot see meeting secrets",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 300000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chrome",
-                  "projectName": "chrome",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 23264,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-03T02:12:42.981Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-c4c52--cannot-see-meeting-secrets-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-c4c52--cannot-see-meeting-secrets-chrome\\trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "0aa318cf87987a6c4b38-a361aa3791414aad6693",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 167,
-              "column": 7
+              "status": "unexpected"
             }
-          ]
+          ],
+          "id": "59bd1101f89bcd77312e-4a03bbddcfd0282d3323",
+          "file": "tc-21-26-security.spec.ts",
+          "line": 32,
+          "column": 5
+        },
+        {
+          "title": "TC-22 XSS payloads escaped in form fields",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome",
+              "projectName": "chrome",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-16T10:31:14.352Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "59bd1101f89bcd77312e-ee1b6d2bf27483806e59",
+          "file": "tc-21-26-security.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "TC-23 Dashboard REST requires auth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome",
+              "projectName": "chrome",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-16T10:31:14.353Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "59bd1101f89bcd77312e-744ba449920b938bb750",
+          "file": "tc-21-26-security.spec.ts",
+          "line": 90,
+          "column": 5
+        },
+        {
+          "title": "TC-24 CSRF — form without nonce rejected or inert",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome",
+              "projectName": "chrome",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-16T10:31:14.353Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "59bd1101f89bcd77312e-4bf59e09694d91f1417b",
+          "file": "tc-21-26-security.spec.ts",
+          "line": 103,
+          "column": 5
+        },
+        {
+          "title": "TC-25 Role escalation denied",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome",
+              "projectName": "chrome",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-16T10:31:14.354Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "59bd1101f89bcd77312e-9d196248c1122730c0ac",
+          "file": "tc-21-26-security.spec.ts",
+          "line": 128,
+          "column": 5
+        },
+        {
+          "title": "TC-26 POPIA consent gate for under-18",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome",
+              "projectName": "chrome",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-16T10:31:14.354Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "59bd1101f89bcd77312e-e1ba31794e2fb4f132b8",
+          "file": "tc-21-26-security.spec.ts",
+          "line": 146,
+          "column": 5
         }
       ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-03T02:07:37.569Z",
-    "duration": 330036.057,
-    "expected": 7,
-    "skipped": 0,
-    "unexpected": 0,
+    "startTime": "2026-08-16T10:30:10.332Z",
+    "duration": 64202.15700000001,
+    "expected": 0,
+    "skipped": 5,
+    "unexpected": 1,
     "flaky": 0
   }
 }

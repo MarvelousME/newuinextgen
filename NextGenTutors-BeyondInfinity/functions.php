@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'BI_VERSION', '1.9.28' );
+define( 'BI_VERSION', '1.9.34' );
 define( 'BI_DIR', get_stylesheet_directory() );
 define( 'BI_URI', get_stylesheet_directory_uri() );
 if ( ! defined( 'NGT_URI' ) ) {
@@ -39,6 +39,7 @@ require_once BI_DIR . '/inc/nav-menu.php';
 require_once BI_DIR . '/inc/tutoring-imagery.php';
 require_once BI_DIR . '/inc/page-builders.php';
 require_once BI_DIR . '/inc/page-wrapper.php';
+require_once BI_DIR . '/inc/elementor-native.php';
 require_once BI_DIR . '/inc/page-composer.php';
 require_once BI_DIR . '/inc/builder-host.php';
 require_once BI_DIR . '/inc/layout-manager.php';
@@ -53,6 +54,7 @@ require_once BI_DIR . '/inc/production-content.php';
 require_once BI_DIR . '/inc/prototype-live-data.php';
 require_once BI_DIR . '/inc/admin.php';
 require_once BI_DIR . '/inc/admin-beyondinfinity.php';
+require_once BI_DIR . '/inc/brand-style-kit.php';
 require_once BI_DIR . '/inc/kinetic-home.php';
 require_once BI_DIR . '/inc/kinetic-surface.php';
 require_once BI_DIR . '/inc/kinetic-image-hover.php';
@@ -263,8 +265,10 @@ function bi_theme_setup() {
     add_theme_support( 'responsive-embeds' );
     add_theme_support( 'editor-styles' );
     register_nav_menus( [
-        'primary'  => __( 'Primary Navigation', 'beyondinfinity' ),
-        'footer-1' => __( 'Footer Column 1', 'beyondinfinity' ),
+        'primary'        => __( 'Primary Navigation', 'beyondinfinity' ),
+        'footer-explore' => __( 'Footer Explore', 'beyondinfinity' ),
+        'footer-company' => __( 'Footer Company', 'beyondinfinity' ),
+        'footer-1'       => __( 'Footer Legal', 'beyondinfinity' ),
     ] );
 }
 

@@ -117,7 +117,7 @@ bi_hero(
           'left'  => [
             'title' => __( 'Online', 'beyondinfinity' ),
             'items' => [
-              __( 'Digital whiteboards & session recordings', 'beyondinfinity' ),
+              __( 'Live lessons — digital whiteboards; parents may observe. Product session recording is not offered.', 'beyondinfinity' ),
               __( 'CAPS / IEB / Cambridge coverage', 'beyondinfinity' ),
               sprintf( __( 'From %s / hour', 'beyondinfinity' ), $rate_online ),
             ],

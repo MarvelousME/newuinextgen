@@ -1,0 +1,90 @@
+/**
+ * Elementor Pro adapter — maps builder output to BeyondInfinity semantic tokens.
+ * Use semantic classes (.ngt-*) in widgets; this file adapts Elementor defaults.
+ */
+
+.elementor-kit,
+.bi-elementor-page {
+  --e-global-color-primary: var(--ngt-color-brand-primary);
+  --e-global-color-secondary: var(--ngt-color-brand-secondary);
+  --e-global-color-text: var(--ngt-color-text-primary);
+  --e-global-color-accent: var(--ngt-color-brand-accent);
+}
+
+.elementor-widget-heading .elementor-heading-title {
+  font-family: var(--ngt-font-family-display);
+  color: var(--ngt-color-text-primary);
+  line-height: 1.2;
+}
+
+.elementor-widget-text-editor {
+  font-family: var(--ngt-font-family-body);
+  color: var(--ngt-color-text-secondary);
+}
+
+.elementor-button,
+.elementor-button.elementor-size-sm,
+.elementor-button.elementor-size-md,
+.elementor-button.elementor-size-lg {
+  font-family: var(--ngt-font-family-body);
+  font-weight: var(--ngt-font-weight-semibold);
+  border-radius: var(--ngt-button-radius);
+  transition: background-color var(--ngt-duration-normal) var(--ngt-ease-standard),
+    color var(--ngt-duration-normal) var(--ngt-ease-standard),
+    border-color var(--ngt-duration-normal) var(--ngt-ease-standard);
+}
+
+.elementor-button.elementor-button-link,
+.elementor-button.elementor-size-md {
+  background-color: var(--ngt-button-primary-bg);
+  color: var(--ngt-button-primary-text);
+}
+
+.elementor-button.elementor-button-link:hover,
+.elementor-button.elementor-size-md:hover {
+  background-color: var(--ngt-button-primary-bg-hover);
+  color: var(--ngt-button-primary-text);
+}
+
+.elementor-field-group input,
+.elementor-field-group textarea,
+.elementor-field-group select {
+  font-family: var(--ngt-font-family-body);
+  color: var(--ngt-form-control-text);
+  background: var(--ngt-form-control-bg);
+  border: 1px solid var(--ngt-form-control-border);
+  border-radius: var(--ngt-form-control-radius);
+}
+
+.elementor-field-group input:focus,
+.elementor-field-group textarea:focus,
+.elementor-field-group select:focus {
+  border-color: var(--ngt-form-control-focus);
+  outline: var(--ngt-focus-ring-width) solid var(--ngt-focus-ring);
+  outline-offset: var(--ngt-focus-ring-offset);
+}
+
+/* Modern flex/grid containers */
+.e-con,
+.e-con-inner {
+  --container-max-width: var(--ngt-container-default);
+}
+
+.elementor-section.elementor-section-boxed > .elementor-container {
+  max-width: var(--ngt-container-default);
+}
+
+.elementor-section.elementor-section-full_width .e-con-inner {
+  padding-left: var(--ngt-container-gutter);
+  padding-right: var(--ngt-container-gutter);
+}
+
+/* Cards inside Elementor inherit theme contract */
+.elementor .ngt-card,
+.elementor .ngt-card--tutor,
+.elementor .ngt-pricing-card {
+  background: var(--ngt-card-bg);
+  border: 1px solid var(--ngt-card-border);
+  border-radius: var(--ngt-card-radius);
+  box-shadow: var(--ngt-card-shadow);
+}

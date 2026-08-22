@@ -123,7 +123,11 @@ class NGC_Page_Forms_Registry {
 	}
 
 	/**
-	 * Force theme production defaults + inject shortcodes on intake pages.
+	 * Ensure intake pages have registry shortcodes available.
+	 *
+	 * Elementor-native policy: never wipe `_elementor_*` and never force theme
+	 * default when a page already has a renderable Elementor document. Forms remain
+	 * available via shortcodes / NextGen Elementor widgets.
 	 *
 	 * @param bool $force_repair Append shortcodes even when post_content exists.
 	 * @return array<string, mixed>
@@ -142,24 +146,60 @@ class NGC_Page_Forms_Registry {
 				continue;
 			}
 
-			$meta = get_post_meta( $page->ID, 'bi_options', true );
-			if ( ! is_array( $meta ) ) {
-				$meta = [];
+			$page_id = (int) $page->ID;
+			$elementor_built = self::page_has_elementor_widgets( $page_id );
+
+			// Commerce-critical pages may still prefer theme PHP shells.
+			$theme_only = in_array( $slug, [ 'parent-checkout', 'thank-you', 'checkout', 'cart' ], true );
+
+			if ( $theme_only && ! $elementor_built ) {
+				$meta = get_post_meta( $page_id, 'bi_options', true );
+				if ( ! is_array( $meta ) ) {
+					$meta = [];
+				}
+				$meta['force_theme_default'] = 1;
+				update_post_meta( $page_id, 'bi_options', $meta );
+			} elseif ( $elementor_built ) {
+				// Clear stale force flags so Elementor remains the presentation authority.
+				$meta = get_post_meta( $page_id, 'bi_options', true );
+				if ( is_array( $meta ) && ! empty( $meta['force_theme_default'] ) ) {
+					unset( $meta['force_theme_default'] );
+					update_post_meta( $page_id, 'bi_options', $meta );
+				}
 			}
-			$meta['force_theme_default'] = 1;
-			update_post_meta( $page->ID, 'bi_options', $meta );
 
-			delete_post_meta( $page->ID, '_elementor_edit_mode' );
-			delete_post_meta( $page->ID, '_elementor_data' );
-			delete_post_meta( $page->ID, '_elementor_version' );
-
-			$results[ $slug ] = [ 'ok' => true, 'page_id' => (int) $page->ID, 'forced_theme_default' => true ];
+			$results[ $slug ] = [
+				'ok'                   => true,
+				'page_id'              => $page_id,
+				'elementor_preserved'  => $elementor_built,
+				'forced_theme_default' => $theme_only && ! $elementor_built,
+			];
 		}
 
 		$repair = self::repair( '', $force_repair );
 		$results['_repair'] = $repair;
 
 		return $results;
+	}
+
+	/**
+	 * Whether a page has a widget-bearing Elementor document.
+	 *
+	 * @param int $page_id Page ID.
+	 * @return bool
+	 */
+	private static function page_has_elementor_widgets( $page_id ) {
+		if ( function_exists( 'bi_is_elementor_built' ) ) {
+			return (bool) bi_is_elementor_built( $page_id );
+		}
+		$data = get_post_meta( $page_id, '_elementor_data', true );
+		if ( empty( $data ) ) {
+			return false;
+		}
+		if ( is_string( $data ) ) {
+			$data = json_decode( $data, true );
+		}
+		return is_array( $data ) && ! empty( $data );
 	}
 
 	/**

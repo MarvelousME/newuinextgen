@@ -1,0 +1,26 @@
+{
+  "TEST_RANDOM_SEED": 20260809,
+  "selectionCriteria": [
+    "status in confirmed|requested",
+    "prefer canJoin + joinUrl",
+    "seeded RNG among top-scored",
+    "seed-graph BOOK-ADULT / BOOK-001"
+  ],
+  "selected": {
+    "bookingId": 154,
+    "status": "confirmed",
+    "subject": "English",
+    "studentEmail": "demo.student.adult@nextgen.local",
+    "tutorEmail": "demo.tutor.online@nextgen.local",
+    "studentPath": "/student-dashboard/",
+    "tutorPath": "/tutor-dashboard/",
+    "source": "seed-graph:BOOK-ADULT",
+    "canJoin": true
+  },
+  "rejectedSample": [
+    {
+      "id": 151,
+      "reason": "not_selected_by_seeded_rng"
+    }
+  ]
+}

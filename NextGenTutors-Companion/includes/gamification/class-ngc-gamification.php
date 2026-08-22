@@ -80,9 +80,10 @@ class NGC_Gamification {
 	 * @param array<string, mixed> $vars Variables.
 	 */
 	public static function on_review_submitted( $vars ) {
-		$user_id = (int) ( $vars['user_id'] ?? $vars['student_user_id'] ?? 0 );
+		$vars    = is_array( $vars ) ? $vars : [];
+		$user_id = (int) ( $vars['user_id'] ?? $vars['student_user_id'] ?? $vars['parent_user_id'] ?? 0 );
 		if ( $user_id ) {
-			self::process_event( $user_id, 'review_submission', is_array( $vars ) ? $vars : [] );
+			self::process_event( $user_id, 'review_submission', $vars );
 		}
 		$tutor_id = (int) ( $vars['tutor_user_id'] ?? $vars['tutor_id'] ?? 0 );
 		if ( $tutor_id && class_exists( 'NGC_Gamification_Milestones' ) ) {
@@ -202,8 +203,10 @@ class NGC_Gamification {
 		$awarded = NGC_Scoring_Engine::award_event( $user_id, $event_key, $context );
 		NGC_Achievement_Engine::check_event_achievements( $user_id, $event_key, $context );
 
-		foreach ( $awarded as $point_type => $amount ) {
-			NGC_Gamipress_Adapter::award_points( $user_id, $point_type, $amount, $event_key );
+		if ( class_exists( 'NGC_Gamipress_Adapter' ) && NGC_Gamipress_Adapter::is_active() ) {
+			foreach ( $awarded as $point_type => $amount ) {
+				NGC_Gamipress_Adapter::award_points( $user_id, $point_type, $amount, $event_key );
+			}
 		}
 
 		NGC_Audit::log( 'gamification_event', 'user', $user_id, [
@@ -287,7 +290,7 @@ class NGC_Gamification {
 	 * Ensure GamiPress point types.
 	 */
 	public static function ensure_gamipress_types() {
-		if ( current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( 'manage_options' ) && class_exists( 'NGC_Gamipress_Adapter' ) && NGC_Gamipress_Adapter::is_active() ) {
 			NGC_Gamipress_Adapter::ensure_point_types();
 		}
 	}

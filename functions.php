@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'BI_VERSION', '1.9.17' );
+define( 'BI_VERSION', '1.9.28' );
 define( 'BI_DIR', get_stylesheet_directory() );
 define( 'BI_URI', get_stylesheet_directory_uri() );
 if ( ! defined( 'NGT_URI' ) ) {
@@ -18,6 +18,7 @@ if ( ! defined( 'NGT_DIR' ) ) {
 }
 
 require_once BI_DIR . '/inc/helpers.php';
+require_once BI_DIR . '/inc/brand-content.php';
 require_once BI_DIR . '/inc/companion.php';
 require_once BI_DIR . '/inc/security.php';
 require_once BI_DIR . '/inc/shortcodes-fallback.php';
@@ -39,6 +40,7 @@ require_once BI_DIR . '/inc/tutoring-imagery.php';
 require_once BI_DIR . '/inc/page-builders.php';
 require_once BI_DIR . '/inc/page-wrapper.php';
 require_once BI_DIR . '/inc/page-composer.php';
+require_once BI_DIR . '/inc/builder-host.php';
 require_once BI_DIR . '/inc/layout-manager.php';
 require_once BI_DIR . '/inc/customizer.php';
 require_once BI_DIR . '/inc/seo.php';
@@ -51,6 +53,7 @@ require_once BI_DIR . '/inc/production-content.php';
 require_once BI_DIR . '/inc/prototype-live-data.php';
 require_once BI_DIR . '/inc/admin.php';
 require_once BI_DIR . '/inc/admin-beyondinfinity.php';
+require_once BI_DIR . '/inc/brand-style-kit.php';
 require_once BI_DIR . '/inc/kinetic-home.php';
 require_once BI_DIR . '/inc/kinetic-surface.php';
 require_once BI_DIR . '/inc/kinetic-image-hover.php';
@@ -87,10 +90,18 @@ function bi_enqueue_assets() {
 
     wp_enqueue_style( 'bi-style', get_stylesheet_uri(), $deps, BI_VERSION );
     wp_enqueue_style( 'bi-components', BI_URI . '/assets/css/components.css', [ 'bi-style' ], BI_VERSION );
+    wp_enqueue_style( 'bi-hero-brand', BI_URI . '/assets/css/bi-hero-brand.css', [ 'bi-components' ], BI_VERSION );
     wp_enqueue_style( 'bi-sections', BI_URI . '/assets/css/sections.css', [ 'bi-style' ], BI_VERSION );
     wp_enqueue_style( 'bi-nav-menu', BI_URI . '/assets/css/nav-menu.css', [ 'bi-style' ], BI_VERSION );
     wp_enqueue_style( 'bi-ngt-toast', BI_URI . '/assets/css/ngt-toast.css', [ 'bi-style' ], BI_VERSION );
     wp_enqueue_style( 'bi-page-builders', BI_URI . '/assets/css/page-builders.css', [ 'bi-style' ], BI_VERSION );
+    wp_enqueue_style( 'bi-integration-elementor', BI_URI . '/assets/css/integrations/elementor.css', [ 'bi-page-builders', 'bi-tokens-brand' ], BI_VERSION );
+    wp_enqueue_style( 'bi-integration-gutenberg', BI_URI . '/assets/css/integrations/gutenberg.css', [ 'bi-page-builders', 'bi-tokens-brand' ], BI_VERSION );
+    wp_enqueue_style( 'bi-integration-wpbakery', BI_URI . '/assets/css/integrations/wpbakery.css', [ 'bi-page-builders', 'bi-tokens-brand' ], BI_VERSION );
+    wp_enqueue_style( 'bi-accessibility', BI_URI . '/assets/css/accessibility.css', [ 'bi-components' ], BI_VERSION );
+    if ( class_exists( 'WooCommerce' ) ) {
+        wp_enqueue_style( 'bi-integration-woocommerce', BI_URI . '/assets/css/integrations/woocommerce.css', [ 'bi-components', 'bi-tokens-brand' ], BI_VERSION );
+    }
     wp_enqueue_style( 'bi-nextgen-beyond-infinity-ui', BI_URI . '/assets/css/nextgen-beyond-infinity-ui.css', [ 'bi-style', 'bi-components', 'bi-page-builders' ], BI_VERSION );
     wp_enqueue_script( 'bi-nextgen-beyond-infinity-ui', BI_URI . '/assets/js/nextgen-beyond-infinity-ui.js', [], BI_VERSION, true );
 
@@ -260,8 +271,10 @@ function bi_theme_setup() {
     add_theme_support( 'responsive-embeds' );
     add_theme_support( 'editor-styles' );
     register_nav_menus( [
-        'primary'  => __( 'Primary Navigation', 'beyondinfinity' ),
-        'footer-1' => __( 'Footer Column 1', 'beyondinfinity' ),
+        'primary'        => __( 'Primary Navigation', 'beyondinfinity' ),
+        'footer-explore' => __( 'Footer Explore', 'beyondinfinity' ),
+        'footer-company' => __( 'Footer Company', 'beyondinfinity' ),
+        'footer-1'       => __( 'Footer Legal', 'beyondinfinity' ),
     ] );
 }
 

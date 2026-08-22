@@ -18,6 +18,9 @@ class NGC_Platform_Demo {
 	 * @return bool
 	 */
 	public static function is_enabled() {
+		if ( class_exists( 'NGC_Demo_Env' ) && NGC_Demo_Env::is_production_environment() ) {
+			return false;
+		}
 		return '1' === (string) get_option( 'ngc_demo_mode_enabled', '0' );
 	}
 

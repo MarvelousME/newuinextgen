@@ -1,0 +1,26 @@
+{
+  "TEST_RANDOM_SEED": 20260809,
+  "population": 2,
+  "candidates": [
+    {
+      "bookingId": 154,
+      "status": "confirmed",
+      "subject": "English",
+      "source": "seed-graph:BOOK-ADULT",
+      "canJoin": true,
+      "hasJoinUrl": false,
+      "studentEmail": "demo.student.adult@nextgen.local",
+      "tutorEmail": "demo.tutor.online@nextgen.local"
+    },
+    {
+      "bookingId": 151,
+      "status": "confirmed",
+      "subject": "Mathematics",
+      "source": "seed-graph:BOOK-001",
+      "canJoin": true,
+      "hasJoinUrl": false,
+      "studentEmail": "demo.parent@nextgen.local",
+      "tutorEmail": "demo.tutor.approved@nextgen.local"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "productMediaRecorder": false,
+  "productCloudRecordingApi": false,
+  "jitsiUiRecordButtonVisible": false,
+  "verdict": "UNVERIFIED",
+  "reason": "NextGen Companion has no lesson recording start/stop/persist implementation. Jitsi public UI recording (if present) is third-party and not booking-bound storage.",
+  "nextAction": "Implement NGC recording adapter (or document Jitsi recording as unsupported for compliance) then re-run 10s capture + ffprobe."
+}

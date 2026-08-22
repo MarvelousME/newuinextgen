@@ -33,6 +33,27 @@ class NGC_UI_Subject_Data_Provider extends NGC_UI_Data_Provider {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function list( $args = [] ) {
+		if ( class_exists( 'NGC_Subjects_CMS' ) ) {
+			$limit = (int) ( $args['limit'] ?? 50 );
+			$rows  = [];
+			foreach ( NGC_Subjects_CMS::enabled() as $row ) {
+				$rows[] = [
+					'id'    => (string) ( $row['slug'] ?? '' ),
+					'slug'  => (string) ( $row['slug'] ?? '' ),
+					'name'  => (string) ( $row['title'] ?? '' ),
+					'desc'  => (string) ( $row['desc'] ?? $row['body'] ?? '' ),
+					'count' => null,
+					'url'   => NGC_Subjects_CMS::public_url( $row ),
+				];
+				if ( count( $rows ) >= $limit ) {
+					break;
+				}
+			}
+			if ( $rows ) {
+				return $rows;
+			}
+		}
+
 		if ( taxonomy_exists( 'subject' ) ) {
 			$terms = get_terms(
 				[
@@ -61,9 +82,10 @@ class NGC_UI_Subject_Data_Provider extends NGC_UI_Data_Provider {
 			return array_map(
 				static function ( $row ) {
 					return [
-						'slug' => sanitize_title( $row['name'] ),
+						'slug' => $row['slug'] ?? sanitize_title( $row['name'] ),
 						'name' => $row['name'],
 						'desc' => $row['desc'],
+						'url'  => $row['url'] ?? '',
 					];
 				},
 				bi_get_subject_tracks()
@@ -79,10 +101,15 @@ class NGC_UI_Subject_Data_Provider extends NGC_UI_Data_Provider {
 	 * @return array<string, mixed>
 	 */
 	public function map_to_component( $row, $component ) {
+		$slug = $row['slug'] ?? '';
+		$url  = $row['url'] ?? '';
+		if ( ! $url && $slug ) {
+			$url = home_url( '/subjects/' . $slug . '/' );
+		}
 		return [
 			'title' => $row['name'] ?? '',
 			'desc'  => $row['desc'] ?? '',
-			'url'   => home_url( '/subjects/' . ( $row['slug'] ?? '' ) . '/' ),
+			'url'   => $url,
 			'count' => $row['count'] ?? null,
 		];
 	}
@@ -93,6 +120,7 @@ class NGC_UI_Subject_Data_Provider extends NGC_UI_Data_Provider {
 	public function verify_source() {
 		return [
 			'provider' => $this->get_key(),
+			'cms'      => 'NGC_Subjects_CMS',
 			'taxonomy' => 'subject',
 			'fallback' => 'bi_get_subject_tracks (demo only)',
 		];

@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
         <li><i data-lucide="check"></i> <span><b>Encrypted sessions</b> — end-to-end encrypted video &amp; audio</span></li>
         <li><i data-lucide="check"></i> <span><b>Secure payments</b> — PCI-compliant processing via trusted SA providers</span></li>
         <li><i data-lucide="check"></i> <span><b>POPIA compliant</b> — full protection of personal information</span></li>
-        <li><i data-lucide="check"></i> <span><b>Optional recording</b> — session recording for parent review, with consent</span></li>
+        <li><i data-lucide="check"></i> <span><b>Live observation</b> — parents may join as a silent observer. Product session recording is not offered</span></li>
       </ul>
     </div>
   </div>
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
       <p class="lead shead__sub">We believe parents should always be able to see, observe and control how tutoring happens.</p>
     </div>
     <div class="values-grid">
-      <article class="value-card" data-reveal><span class="value-card__e">📊</span><h3 class="value-card__t">Dashboard Access</h3><p class="value-card__d">View complete session history, tutor feedback, progress reports, attendance and any session recordings.</p></article>
+      <article class="value-card" data-reveal><span class="value-card__e">📊</span><h3 class="value-card__t">Dashboard Access</h3><p class="value-card__d">View complete session history, tutor feedback, progress reports and attendance.</p></article>
       <article class="value-card" data-reveal><span class="value-card__e">👀</span><h3 class="value-card__t">Real-Time Features</h3><p class="value-card__d">Join any session as a silent observer, get start/end notifications, instant flagged-content alerts and direct tutor messaging.</p></article>
       <article class="value-card" data-reveal><span class="value-card__e">🎛️</span><h3 class="value-card__t">Control Options</h3><p class="value-card__d">Approve or decline tutors, set scheduling parameters, define acceptable topics, and pause or cancel anytime.</p></article>
     </div>
@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
     </div>
     <div class="values-grid">
       <article class="value-card" data-reveal><span class="value-card__e">🤖</span><h3 class="value-card__t">AI Moderation</h3><p class="value-card__d">Automated systems flag concerning interactions in real time for human review.</p></article>
-      <article class="value-card" data-reveal><span class="value-card__e">🔍</span><h3 class="value-card__t">Quality Audits</h3><p class="value-card__d">Our team conducts random reviews of session recordings to uphold standards.</p></article>
+      <article class="value-card" data-reveal><span class="value-card__e">🔍</span><h3 class="value-card__t">Quality Audits</h3><p class="value-card__d">Our team reviews safeguarding reports and session notes to uphold standards.</p></article>
       <article class="value-card" data-reveal><span class="value-card__e">🆘</span><h3 class="value-card__t">24/7 Response Team</h3><p class="value-card__d">A dedicated safety team responds to every report within two hours, day or night.</p></article>
     </div>
   </div>
@@ -91,7 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
     </div>
     <div class="faq" id="faq">
       <div class="faq-item"><button class="faq-q">How do you verify tutor identities? <span class="faq-q__ico"><i data-lucide="plus"></i></span></button><div class="faq-a"><div class="faq-a__inner">We require South African ID documents, verified through official channels. Every tutor passes a comprehensive criminal background check conducted by accredited SA screening agencies.</div></div></div>
-      <div class="faq-item"><button class="faq-q">Can I monitor my child's sessions? <span class="faq-q__ico"><i data-lucide="plus"></i></span></button><div class="faq-a"><div class="faq-a__inner">Yes. Parents can join any session as a silent observer, view session recordings, and receive detailed session notes after each meeting.</div></div></div>
+      <div class="faq-item"><button class="faq-q">Can I monitor my child's sessions? <span class="faq-q__ico"><i data-lucide="plus"></i></span></button><div class="faq-a"><div class="faq-a__inner">Yes. Parents can join any session as a silent observer and receive detailed session notes after each meeting.</div></div></div>
       <div class="faq-item"><button class="faq-q">What happens if I have a safety concern? <span class="faq-q__ico"><i data-lucide="plus"></i></span></button><div class="faq-a"><div class="faq-a__inner">Our dedicated safety team responds to all reports within two hours. Use the in-app report button, email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f784969192838eb799928f83909299838283988584d99498d98d96">[email&#160;protected]</a>, or call our 24/7 hotline.</div></div></div>
       <div class="faq-item"><button class="faq-q">Are sessions recorded? <span class="faq-q__ico"><i data-lucide="plus"></i></span></button><div class="faq-a"><div class="faq-a__inner">Session recording is optional and disabled by default. Parents can enable it in their dashboard. All recordings are encrypted and stored securely.</div></div></div>
       <div class="faq-item"><button class="faq-q">How do you protect my child's data? <span class="faq-q__ico"><i data-lucide="plus"></i></span></button><div class="faq-a"><div class="faq-a__inner">We're fully POPIA compliant. Your data is encrypted, access-controlled and never shared with third parties without consent. You can request complete data deletion at any time.</div></div></div>

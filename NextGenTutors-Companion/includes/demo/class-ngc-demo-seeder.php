@@ -696,6 +696,168 @@ final class NGC_Demo_Seeder {
 	}
 
 	/**
+	 * Force a paid session into the open join window (demo / local only).
+	 *
+	 * @return array<string, mixed>|WP_Error
+	 */
+	public static function seed_classroom_join_window() {
+		if ( NGC_Demo_Env::is_production_environment() ) {
+			return new WP_Error( 'ngc_demo_blocked', 'Demo classroom seed is forbidden in production.' );
+		}
+		if ( NGC_Demo_Env::seed_allowed() ) {
+			NGC_Demo_Env::set_demo_mode( true );
+		}
+		$gate = NGC_Demo_Env::assert_demo_ops_allowed();
+		if ( is_wp_error( $gate ) ) {
+			return $gate;
+		}
+
+		$parent = get_user_by( 'email', 'demo.parent@nextgen.local' );
+		$child  = get_user_by( 'email', 'demo.child.a@nextgen.local' );
+		$tutor  = get_user_by( 'email', 'demo.tutor.online@nextgen.local' );
+		if ( ! $tutor ) {
+			$tutor = get_user_by( 'email', 'demo.tutor.approved@nextgen.local' );
+		}
+		if ( ! $parent || ! $child || ! $tutor ) {
+			return new WP_Error( 'ngc_demo_users', 'Missing demo parent/child/tutor users.' );
+		}
+
+		$booking_id = 0;
+		$last_err   = '';
+		for ( $i = 0; $i < 12; $i++ ) {
+			$slot    = gmdate( 'Y-m-d H:i:s', time() + ( ( 14 + $i ) * 86400 ) + ( wp_rand( 1, 800 ) * 60 ) );
+			$created = NGC_Bookings::create(
+				[
+					'student_user_id'  => (int) $child->ID,
+					'tutor_user_id'    => (int) $tutor->ID,
+					'subject'          => 'Mathematics',
+					'scheduled_at'     => $slot,
+					'duration_minutes' => 60,
+					'meta'             => [ 'demo_scenario_id' => 'CLASSROOM-JOIN-WINDOW', 'is_demo' => 1 ],
+				]
+			);
+			if ( ! is_wp_error( $created ) && (int) $created > 0 ) {
+				$booking_id = (int) $created;
+				break;
+			}
+			$last_err = is_wp_error( $created ) ? $created->get_error_message() : 'unknown';
+		}
+		if ( ! $booking_id ) {
+			$rows = NGC_Bookings::query(
+				[
+					'student_user_id' => (int) $child->ID,
+					'tutor_user_id'   => (int) $tutor->ID,
+					'limit'           => 5,
+				]
+			);
+			foreach ( $rows as $row ) {
+				if ( in_array( $row->status, [ 'requested', 'confirmed' ], true ) ) {
+					$booking_id = (int) $row->id;
+					break;
+				}
+			}
+		}
+		if ( ! $booking_id ) {
+			return new WP_Error( 'ngc_demo_booking', 'Could not create or reuse a booking: ' . $last_err );
+		}
+
+		$session  = NGC_Sessions::get_by_booking( $booking_id );
+		$order_id = 0;
+		if ( ! $session ) {
+			$order = NGC_Parent_Checkout::create_order(
+				[
+					'user_id'    => (int) $parent->ID,
+					'booking_id' => $booking_id,
+					'email'      => $parent->user_email,
+					'first_name' => 'Demo',
+					'last_name'  => 'Parent',
+				]
+			);
+			if ( is_wp_error( $order ) ) {
+				return $order;
+			}
+			$order->payment_complete();
+			NGC_Payments::settle_order( $order->get_id() );
+			$ensured = NGC_Session_Orchestrator::ensure_provisioned(
+				[
+					'booking_id' => $booking_id,
+					'order_id'   => (int) $order->get_id(),
+					'source'     => 'classroom_seed',
+				]
+			);
+			if ( is_wp_error( $ensured ) ) {
+				return $ensured;
+			}
+			$session  = NGC_Sessions::get_by_booking( $booking_id );
+			$order_id = (int) $order->get_id();
+		} else {
+			$order_id = (int) $session->order_id;
+			if ( $order_id <= 0 || 'paid' !== (string) $session->payment_status ) {
+				$order = NGC_Parent_Checkout::create_order(
+					[
+						'user_id'    => (int) $parent->ID,
+						'booking_id' => $booking_id,
+						'email'      => $parent->user_email,
+						'first_name' => 'Demo',
+						'last_name'  => 'Parent',
+					]
+				);
+				if ( ! is_wp_error( $order ) ) {
+					$order->payment_complete();
+					NGC_Payments::settle_order( $order->get_id() );
+					$order_id = (int) $order->get_id();
+					NGC_Session_Orchestrator::ensure_provisioned(
+						[
+							'booking_id' => $booking_id,
+							'order_id'   => $order_id,
+							'source'     => 'classroom_seed_repay',
+						]
+					);
+					$session = NGC_Sessions::get_by_booking( $booking_id );
+				}
+			}
+		}
+
+		if ( ! $session ) {
+			return new WP_Error( 'ngc_demo_session', 'Session missing after provision.' );
+		}
+
+		NGC_Sessions::update(
+			(int) $session->id,
+			[
+				'scheduled_start' => gmdate( 'Y-m-d H:i:s', time() - 60 ),
+				'scheduled_end'   => gmdate( 'Y-m-d H:i:s', time() + 3500 ),
+				'status'          => 'ready',
+				'payment_status'  => 'paid',
+			]
+		);
+		if ( method_exists( 'NGC_Bookings', 'transition' ) ) {
+			NGC_Bookings::transition( $booking_id, 'confirmed' );
+		}
+		$session = NGC_Sessions::get( (int) $session->id );
+		$window  = NGC_Session_Orchestrator::join_window_status( $session );
+		$auth    = NGC_Session_Orchestrator::authorize_launch( (int) $session->id, (int) $child->ID );
+		$out     = [
+			'booking_id'    => $booking_id,
+			'order_id'      => $order_id,
+			'session_id'    => (int) $session->id,
+			'correlation'   => $session->correlation_id,
+			'window'        => $window,
+			'launch'        => is_wp_error( $auth ) ? [ 'error' => $auth->get_error_message(), 'code' => $auth->get_error_code() ] : $auth,
+			'classroom_url' => class_exists( 'NGC_Session_Classroom' ) ? NGC_Session_Classroom::url( (int) $session->id ) : '',
+			'ms_course'     => (int) $session->masterstudy_course_id,
+			'ms_lesson'     => (int) $session->masterstudy_lesson_id,
+			'meeting_id'    => (string) $session->meeting_id,
+		];
+		$dir = NGC_PLUGIN_DIR . 'evidence/booking-commerce/classroom-seed';
+		if ( ! is_dir( $dir ) ) {
+			wp_mkdir_p( $dir );
+		}
+		file_put_contents( $dir . '/latest.json', wp_json_encode( $out, JSON_PRETTY_PRINT ) );
+		return $out;
+	}
+
+	/**
 	 * @return array<string, mixed>
 	 */
 	public static function status() {

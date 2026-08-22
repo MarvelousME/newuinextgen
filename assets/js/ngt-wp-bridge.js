@@ -147,6 +147,36 @@
     window.setTimeout(function () { window.location.href = href; }, 700);
   }
 
+  /**
+   * Logo / brand click: replay the spiral page intro, then land on home.
+   */
+  function navigateViaIntro(href) {
+    var target = href || cfg.homeUrl || '/';
+    var goHome = function () {
+      var path = sameOriginPath(target) || '/';
+      var here = (window.location.pathname || '/').replace(/\/$/, '') || '/';
+      var dest = path.split('#')[0].split('?')[0].replace(/\/$/, '') || '/';
+      if (dest === here) {
+        try {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (e) {
+          window.scrollTo(0, 0);
+        }
+        return;
+      }
+      window.location.href = target;
+    };
+
+    if (typeof window.NGT_playIntro === 'function') {
+      var started = window.NGT_playIntro({
+        markEntered: true,
+        onComplete: goHome,
+      });
+      if (started) return;
+    }
+    navigateWithTransition(target);
+  }
+
   window.NGT_pageTransition = function (href, evt) {
     if (evt && (evt.metaKey || evt.ctrlKey || evt.shiftKey || evt.altKey || evt.button === 1)) {
       return true;
@@ -156,12 +186,6 @@
     var path = sameOriginPath(target);
     if (!path) {
       window.location.href = target;
-      return false;
-    }
-    // Same page (home): still play a short wipe then scroll/reload home.
-    if (path === window.location.pathname + window.location.search + window.location.hash
-        || (path.replace(/\/$/, '') === window.location.pathname.replace(/\/$/, '') && !window.location.hash)) {
-      navigateWithTransition(cfg.homeUrl || target);
       return false;
     }
     navigateWithTransition(target);
@@ -200,6 +224,11 @@
       var href = a.getAttribute('href') || '';
       if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
       e.preventDefault();
+      // Logo / brand mark: same spiral intro as first home load.
+      if (a.classList.contains('ngt-nav__logo') || a.classList.contains('ngi-logo') || a.getAttribute('data-testid') === 'ngt-nav-logo') {
+        navigateViaIntro(a.href || cfg.homeUrl || '/');
+        return;
+      }
       window.NGT_pageTransition(a.href, e);
     });
   }

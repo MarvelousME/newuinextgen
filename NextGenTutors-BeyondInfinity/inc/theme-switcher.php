@@ -79,6 +79,47 @@ function bi_enqueue_unified_tokens() {
 	wp_register_style( 'bi-tokens-unified', false, [ 'bi-tokens-base' ], BI_VERSION );
 	wp_enqueue_style( 'bi-tokens-unified' );
 	wp_add_inline_style( 'bi-tokens-unified', (string) file_get_contents( $file ) );
+
+	$brand = BI_DIR . '/assets/css/tokens/brand-semantic.css';
+	if ( file_exists( $brand ) ) {
+		wp_enqueue_style(
+			'bi-tokens-brand',
+			BI_URI . '/assets/css/tokens/brand-semantic.css',
+			[ 'bi-tokens-unified' ],
+			BI_VERSION
+		);
+	}
+
+	bi_enqueue_brand_integrations();
+}
+
+/**
+ * Builder adapters + accessibility — after token layers (priority 60).
+ */
+function bi_enqueue_brand_integrations() {
+	if ( is_admin() || bi_is_builder_edit_mode() ) {
+		return;
+	}
+
+	$deps = [ 'bi-page-builders', 'bi-tokens-brand' ];
+	wp_enqueue_style( 'bi-integration-elementor', BI_URI . '/assets/css/integrations/elementor.css', $deps, BI_VERSION );
+	wp_enqueue_style( 'bi-integration-gutenberg', BI_URI . '/assets/css/integrations/gutenberg.css', $deps, BI_VERSION );
+	wp_enqueue_style( 'bi-integration-wpbakery', BI_URI . '/assets/css/integrations/wpbakery.css', $deps, BI_VERSION );
+	wp_enqueue_style( 'bi-accessibility', BI_URI . '/assets/css/accessibility.css', [ 'bi-components', 'bi-tokens-brand' ], BI_VERSION );
+
+	if ( class_exists( 'WooCommerce' ) ) {
+		wp_enqueue_style( 'bi-integration-woocommerce', BI_URI . '/assets/css/integrations/woocommerce.css', [ 'bi-components', 'bi-tokens-brand' ], BI_VERSION );
+	}
+
+	if ( defined( 'AMELIA_VERSION' ) || class_exists( 'AmeliaBooking\Infrastructure\Common\Container' ) ) {
+		wp_enqueue_style( 'bi-integration-amelia', BI_URI . '/assets/css/integrations/amelia.css', [ 'bi-components', 'bi-tokens-brand' ], BI_VERSION );
+	}
+
+	if ( defined( 'STM_LMS_VERSION' ) || class_exists( 'MasterStudy\Lms\Plugin' ) ) {
+		wp_enqueue_style( 'bi-integration-masterstudy', BI_URI . '/assets/css/integrations/masterstudy.css', [ 'bi-components', 'bi-tokens-brand' ], BI_VERSION );
+	}
+
+	wp_enqueue_style( 'bi-component-tutor-card', BI_URI . '/assets/css/components/tutor-card.css', [ 'bi-components', 'bi-tokens-brand' ], BI_VERSION );
 }
 
 /**

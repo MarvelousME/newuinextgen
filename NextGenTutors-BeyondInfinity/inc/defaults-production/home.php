@@ -157,14 +157,14 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
             <span><?php echo $cms_hero_badge ? esc_html( $cms_hero_badge ) : esc_html__( 'Premium online, in-person and hybrid tutoring', 'beyondinfinity' ); ?></span>
           </div>
           <h1 class="ngi-title ngi-reveal">
-            <?php echo $cms_hero_title ? esc_html( $cms_hero_title ) : esc_html__( 'Your Tutor. Your Pace.', 'beyondinfinity' ); ?>
-            <span class="ngi-accent"><?php echo $cms_hero_accent ? esc_html( $cms_hero_accent ) : esc_html__( 'Your Results.', 'beyondinfinity' ); ?></span>
+            <?php echo $cms_hero_title ? esc_html( $cms_hero_title ) : esc_html__( "South Africa's Most Trusted", 'beyondinfinity' ); ?>
+            <span class="ngi-accent"><?php echo $cms_hero_accent ? esc_html( $cms_hero_accent ) : esc_html__( 'Tutors', 'beyondinfinity' ); ?></span>
           </h1>
           <p class="ngi-lead ngi-reveal">
-            <?php echo $cms_hero_lead ? esc_html( $cms_hero_lead ) : esc_html__( 'Connect with background-checked tutors for CAPS, IEB and Cambridge — online or in-person, from Grade 1 to varsity.', 'beyondinfinity' ); ?>
+            <?php echo $cms_hero_lead ? esc_html( $cms_hero_lead ) : esc_html__( 'Grade 1–12 & varsity tutoring — SACE-registered, background-checked educators across all nine provinces. Online, in-person, or hybrid.', 'beyondinfinity' ); ?>
           </p>
           <div class="ngi-actions ngi-reveal">
-            <a class="ngi-btn ngi-btn-primary ngi-magnetic" href="<?php echo esc_url( $find_url ); ?>"><?php esc_html_e( 'Find My Tutor', 'beyondinfinity' ); ?></a>
+            <a class="ngi-btn ngi-btn-primary ngi-magnetic" href="<?php echo esc_url( $find_url ); ?>"><?php esc_html_e( 'Find a Tutor', 'beyondinfinity' ); ?></a>
             <a class="ngi-btn ngi-btn-secondary" href="<?php echo esc_url( $become_url ); ?>"><?php esc_html_e( 'Become a Tutor', 'beyondinfinity' ); ?></a>
           </div>
           <div class="ngi-stats ngi-reveal" aria-label="<?php esc_attr_e( 'Platform statistics', 'beyondinfinity' ); ?>">
@@ -292,17 +292,23 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <section class="ngi-section ngi-alt" id="subjects">
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
-        <div class="ngi-eyebrow"><?php echo esc_html( $cms_subjects['eyebrow'] ?? __( 'Subject explorer', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_subjects['title'] ?? __( 'Click a subject and watch the learning plan adapt.', 'beyondinfinity' ) ); ?></h2>
+        <div class="ngi-eyebrow"><?php echo esc_html( $cms_subjects['eyebrow'] ?? __( 'Every Subject Covered', 'beyondinfinity' ) ); ?></div>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_subjects['title'] ?? __( 'What Would You Like to Learn?', 'beyondinfinity' ) ); ?></h2>
         <p class="ngi-subtitle"><?php echo esc_html( $cms_subjects['subtitle'] ?? __( 'Every track is mapped to CAPS, IEB and Cambridge outcomes.', 'beyondinfinity' ) ); ?></p>
       </div>
       <div class="ngi-subject-shell">
         <div class="ngi-subject-tabs ngi-reveal" role="tablist" aria-label="<?php esc_attr_e( 'Subjects', 'beyondinfinity' ); ?>">
           <?php foreach ( $subject_tabs as $i => $tab ) : ?>
+            <?php
+            $tab_find = ! empty( $tab['url'] )
+              ? (string) $tab['url']
+              : add_query_arg( 'subject', (string) ( $tab['slug'] ?? '' ), $find_url );
+            ?>
             <button class="ngi-tab<?php echo 0 === $i ? ' is-active' : ''; ?>" type="button" role="tab" aria-selected="<?php echo 0 === $i ? 'true' : 'false'; ?>"
               data-title="<?php echo esc_attr( $tab['title'] ); ?>"
               data-body="<?php echo esc_attr( $tab['body'] ); ?>"
-              data-bullets="<?php echo esc_attr( implode( '|', $tab['bullets'] ) ); ?>">
+              data-bullets="<?php echo esc_attr( implode( '|', $tab['bullets'] ) ); ?>"
+              data-url="<?php echo esc_url( $tab_find ); ?>">
               <?php echo esc_html( $tab['title'] ); ?> <span aria-hidden="true">→</span>
             </button>
           <?php endforeach; ?>
@@ -316,7 +322,12 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
             <?php endforeach; ?>
           </div>
           <div style="margin-top:26px">
-            <a class="ngi-btn ngi-btn-primary" href="<?php echo esc_url( $find_url ); ?>"><?php esc_html_e( 'Get Subject Help', 'beyondinfinity' ); ?></a>
+            <?php
+            $first_find = ! empty( $first_tab['url'] )
+              ? (string) $first_tab['url']
+              : add_query_arg( 'subject', (string) ( $first_tab['slug'] ?? '' ), $find_url );
+            ?>
+            <a class="ngi-btn ngi-btn-primary" id="ngiSubjectCta" href="<?php echo esc_url( $first_find ); ?>"><?php esc_html_e( 'Get Subject Help', 'beyondinfinity' ); ?></a>
           </div>
         </div>
       </div>
@@ -328,8 +339,8 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <section class="ngi-section" id="journey">
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
-        <div class="ngi-eyebrow"><?php echo esc_html( $cms_journey['eyebrow'] ?? __( 'Learner journey', 'beyondinfinity' ) ); ?></div>
-        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_journey['title'] ?? __( 'A clear path from assessment to measurable improvement.', 'beyondinfinity' ) ); ?></h2>
+        <div class="ngi-eyebrow"><?php echo esc_html( $cms_journey['eyebrow'] ?? __( 'Simple. Safe. Effective.', 'beyondinfinity' ) ); ?></div>
+        <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_journey['title'] ?? __( 'How NextGen Works', 'beyondinfinity' ) ); ?></h2>
       </div>
       <div class="ngi-steps">
         <?php
@@ -341,11 +352,9 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
         }
         if ( ! $steps ) {
             $steps = [
-                [ __( 'Assessment', 'beyondinfinity' ), __( 'Identify gaps.', 'beyondinfinity' ) ],
-                [ __( 'Tutor Match', 'beyondinfinity' ), __( 'Assign fit.', 'beyondinfinity' ) ],
-                [ __( 'Learning Plan', 'beyondinfinity' ), __( 'Set goals.', 'beyondinfinity' ) ],
-                [ __( 'Weekly Lessons', 'beyondinfinity' ), __( 'Track work.', 'beyondinfinity' ) ],
-                [ __( 'Reports', 'beyondinfinity' ), __( 'Show progress.', 'beyondinfinity' ) ],
+                [ __( 'Find Your Tutor', 'beyondinfinity' ), __( 'Filter by subject, format, grade and budget. Every tutor is SACE-registered, ID-verified and background-checked.', 'beyondinfinity' ) ],
+                [ __( 'Match & Book', 'beyondinfinity' ), __( 'Request a match or book a slot. Pay securely in ZAR — confirmation unlocks your lesson session.', 'beyondinfinity' ) ],
+                [ __( 'Start Learning', 'beyondinfinity' ), __( 'Join online or in-person. Track progress in your dashboard. First-lesson guarantee applies where eligible.', 'beyondinfinity' ) ],
             ];
         }
         foreach ( $steps as $i => $step ) :
