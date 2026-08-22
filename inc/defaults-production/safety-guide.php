@@ -21,7 +21,7 @@ bi_hero(
       __( 'Encrypted sessions — end-to-end encrypted video and audio', 'beyondinfinity' ),
       __( 'Secure payments — PCI-compliant processing via trusted SA providers', 'beyondinfinity' ),
       __( 'POPIA compliant — full protection of personal information', 'beyondinfinity' ),
-      __( 'Optional recording — session recording for parent review, with consent', 'beyondinfinity' ),
+      __( 'Live observation — parents may join as a silent observer. Product session recording is not offered.', 'beyondinfinity' ),
     ] );
     ?>
   </div>
@@ -35,7 +35,7 @@ bi_hero(
     </div>
     <?php
     bi_value_cards( [
-      [ 'icon' => 'chart', 'title' => __( 'Dashboard Access', 'beyondinfinity' ), 'text' => __( 'View session history, tutor feedback, progress reports, attendance and recordings.', 'beyondinfinity' ) ],
+      [ 'icon' => 'chart', 'title' => __( 'Dashboard Access', 'beyondinfinity' ), 'text' => __( 'View session history, tutor feedback, progress reports and attendance.', 'beyondinfinity' ) ],
       [ 'icon' => 'users', 'title' => __( 'Real-Time Features', 'beyondinfinity' ), 'text' => __( 'Join sessions as a silent observer, get start/end notifications and direct tutor messaging.', 'beyondinfinity' ) ],
       [ 'icon' => 'layout', 'title' => __( 'Control Options', 'beyondinfinity' ), 'text' => __( 'Approve or decline tutors, set scheduling parameters and pause or cancel anytime.', 'beyondinfinity' ) ],
     ] );
@@ -49,7 +49,7 @@ bi_hero(
     <?php
     bi_value_cards( [
       [ 'icon' => 'shield', 'title' => __( 'AI Moderation', 'beyondinfinity' ), 'text' => __( 'Automated systems flag concerning interactions in real time for human review.', 'beyondinfinity' ) ],
-      [ 'icon' => 'clipboard', 'title' => __( 'Quality Audits', 'beyondinfinity' ), 'text' => __( 'Our team conducts random reviews of session recordings to uphold standards.', 'beyondinfinity' ) ],
+      [ 'icon' => 'clipboard', 'title' => __( 'Quality Audits', 'beyondinfinity' ), 'text' => __( 'Our team reviews safeguarding reports and session notes to uphold standards.', 'beyondinfinity' ) ],
       [ 'icon' => 'phone', 'title' => __( '24/7 Response Team', 'beyondinfinity' ), 'text' => __( 'A dedicated safety team responds to every report within two hours, day or night.', 'beyondinfinity' ) ],
     ] );
     ?>
@@ -82,7 +82,7 @@ bi_hero(
       ],
       [
         'q' => __( 'Can I monitor my child\'s sessions?', 'beyondinfinity' ),
-        'a' => __( 'Yes. Parents can join any session as a silent observer, view session recordings, and receive detailed session notes after each meeting.', 'beyondinfinity' ),
+        'a' => __( 'Yes. Parents can join any session as a silent observer and receive detailed session notes after each meeting.', 'beyondinfinity' ),
       ],
       [
         'q' => __( 'What happens if I have a safety concern?', 'beyondinfinity' ),
@@ -90,7 +90,7 @@ bi_hero(
       ],
       [
         'q' => __( 'Are sessions recorded?', 'beyondinfinity' ),
-        'a' => __( 'Session recording is optional and disabled by default. Parents can enable it in their dashboard. All recordings are encrypted and stored securely.', 'beyondinfinity' ),
+        'a' => __( 'No. Product session recording is not offered. Parents may join live lessons as a silent observer.', 'beyondinfinity' ),
       ],
       [
         'q' => __( 'How do you protect my child\'s data?', 'beyondinfinity' ),

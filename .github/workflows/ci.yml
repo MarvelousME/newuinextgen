@@ -18,9 +18,49 @@ on:
       - '**.md'
 
 jobs:
+  rad-architecture-gate:
+    name: RAD architecture gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate manifests and capabilities
+        run: node rad-platform/cli/validate.mjs
+
+      - name: Prove invalid fixtures fail
+        run: node rad-platform/cli/gate.mjs --fixtures
+
+      - name: Run architecture fitness gate
+        run: node rad-platform/cli/gate.mjs
+
+      - name: Theme asset parity
+        run: node scripts/check-asset-parity.mjs
+
+      - name: Production integrity invariants
+        run: node scripts/check-prod-integrity.mjs
+
+      - name: Emit dependency graph + evidence
+        run: |
+          node rad-platform/cli/graph.mjs
+          node rad-platform/cli/evidence.mjs
+
+      - name: Upload architecture reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rad-architecture-reports
+          path: architecture/reports/
+          if-no-files-found: ignore
+
   php-unit:
     name: PHP unit tests
     runs-on: ubuntu-latest
+    needs: rad-architecture-gate
     steps:
       - uses: actions/checkout@v4
 
@@ -29,6 +69,12 @@ jobs:
         with:
           php-version: '8.2'
           coverage: none
+
+      - name: Run session + refactor characterization tests
+        run: |
+          php NextGenTutors-Companion/tests/run-session-unit.php
+          php NextGenTutors-Companion/tests/run-refactor-unit.php
+          php NextGenTutors-Companion/tests/run-prod-integrity-unit.php
 
       - name: Run lightweight test runner
         run: php NextGenTutors-Companion/tests/run.php
@@ -66,17 +112,22 @@ jobs:
         working-directory: docker
         run: docker compose up -d
 
-      - name: Wait for WordPress
+      - name: Wait for WordPress (WP_PORT from docker/.env)
+        working-directory: docker
         run: |
+          set -e
+          WP_PORT=$(grep -E '^\s*WP_PORT=' .env | head -1 | cut -d= -f2 | tr -d '[:space:]')
+          WP_PORT=${WP_PORT:-8890}
+          echo "Waiting on http://localhost:${WP_PORT}/"
           for i in $(seq 1 60); do
-            if curl -sf http://localhost:8900/ >/dev/null; then
-              echo "WordPress is up"
+            if curl -sf "http://localhost:${WP_PORT}/" >/dev/null; then
+              echo "WordPress is up on :${WP_PORT}"
               exit 0
             fi
             sleep 5
           done
-          echo "WordPress did not become ready in time"
-          docker compose -f docker/docker-compose.yml logs wordpress
+          echo "WordPress did not become ready on :${WP_PORT}"
+          docker compose logs wordpress
           exit 1
 
       - name: Bootstrap WordPress
@@ -120,8 +171,12 @@ jobs:
         working-directory: e2e
         env:
           CI: true
-          BASE_URL: http://127.0.0.1:8900
-        run: npx playwright test
+        run: |
+          WP_PORT=$(grep -E '^\s*WP_PORT=' ../docker/.env | head -1 | cut -d= -f2 | tr -d '[:space:]')
+          WP_PORT=${WP_PORT:-8890}
+          export BASE_URL="http://127.0.0.1:${WP_PORT}"
+          echo "BASE_URL=${BASE_URL}"
+          npx playwright test
 
       - name: Upload Playwright report on failure
         if: failure()

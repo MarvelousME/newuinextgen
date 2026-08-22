@@ -99,6 +99,12 @@ class NGC_Core_Loader {
 	 * @return bool
 	 */
 	public static function local_stack() {
+		if ( class_exists( 'NGC_Demo_Env' ) && NGC_Demo_Env::is_production_environment() ) {
+			return false;
+		}
+		if ( class_exists( 'NGC_Demo_Env' ) && NGC_Demo_Env::seed_allowed() ) {
+			return true;
+		}
 		if ( defined( 'NGC_ALLOW_DEMO_SEED' ) && NGC_ALLOW_DEMO_SEED ) {
 			return true;
 		}

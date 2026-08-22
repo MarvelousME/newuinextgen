@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $brand = function_exists( 'bi_brand_content' ) ? bi_brand_content() : [];
 
 bi_hero(
-	__( 'Built for South African learners', 'beyondinfinity' ),
-	$brand['positioning'] ?? __( 'We believe every child deserves a brilliant, trustworthy tutor — no matter their suburb, school or budget.', 'beyondinfinity' )
+	__( "Connecting South Africa's Best Tutors with Students Who Need Them", 'beyondinfinity' ),
+	$brand['positioning'] ?? __( 'NextGen Tutors was built to fix a broken system — where quality tutoring was expensive, hard to find, and unevenly distributed across provinces. We changed that.', 'beyondinfinity' )
 );
 
 if ( function_exists( 'bi_render_brand_story_sections' ) ) {

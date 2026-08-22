@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-08-09T07:47:35.163Z",
+  "TEST_RANDOM_SEED": 20260809,
+  "bookingId": 154,
+  "hashes": {
+    "inventory/selection.json": "5ad02d847b253afc551478fc110beedf20eb179f69681e29777396eb81848705",
+    "api/join-hrefs.json": "aae12ba76fe2a7b5f24b36e3c415eb71be46296de51f8dda5205cda1d33829d0",
+    "webrtc/same-room-proof.json": "3f63f764278b5dafa280b02559d4aa9a7b63cea8b9c0851e3e0318a110cd1de6",
+    "webrtc/tutor-media-proof.json": "c9c0d98d60ec84edcbb5b63b7ca6ebd913bf9e1becf958b24f87dab23a800ce3",
+    "webrtc/student-media-proof.json": "875caafefb86053d23aee4f81a1b0ed3007d1e7cf95b80d692a51e73fd243753",
+    "recordings/product-recording-discovery.json": "e9b041600de12212943c66ed3748c4f309308dfafdda4326b8d876b068f5856a",
+    "LESSON-E2E-RESULTS.md": "34c5dbe76a19c6b31ccba056f2c843ec01484c3c62b960e4f8cf40e6ce752350",
+    "LESSON-INVOCATION-MATRIX.md": "c85f29a324e91d1adbb64be8b4d36fc0391d1ded27975f4c13903abbb954c6e7",
+    "screenshots/05-both-participants-connected-tutor-view.png": "6d16d9696c6b41309b84ccbb513e16e53e1f67ba51cdcb338b387c103de18188",
+    "screenshots/06-both-participants-connected-student-view.png": "46a9d66ca086afc14df3d83f0bb5e2bcd845996a01ebb561ed3f73e263d2f055",
+    "../../FINAL-LESSON-AUDIO-VIDEO-E2E-VERIFICATION-REPORT.md": "06ffb59e8c33a1e4f9cffed1638ec062888cbfa947bb632663712dc4334af8a4"
+  }
+}

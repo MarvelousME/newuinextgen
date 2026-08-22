@@ -1,0 +1,22 @@
+{
+  "generated": "2026-08-16",
+  "authority": "NGC_Workflow_Authority",
+  "fitness_tests": { "passed": 9, "failed": 0 },
+  "gate": "PASS",
+  "journeys": {
+    "learner": { "code": "IMPLEMENTED", "e2e": "PENDING", "chain_proven": false },
+    "tutor": { "code": "IMPLEMENTED", "e2e": "PENDING", "chain_proven": false },
+    "safety": { "code": "IMPLEMENTED", "e2e": "PENDING", "chain_proven": false }
+  },
+  "dual_fire_guards": [
+    "automatorwp_core_events",
+    "hub_add_user_role",
+    "studio_imported_draft"
+  ],
+  "policy_unresolved": [
+    "RC-01_popular_threshold",
+    "RC-02_listing_badges",
+    "RC-04_recording",
+    "EFT_provider"
+  ]
+}

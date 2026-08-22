@@ -1,0 +1,33 @@
+{
+  "MEDIA_MODE": "browser_fake_media_streams",
+  "PHYSICAL_CAMERA_MIC": false,
+  "ok": true,
+  "proof": {
+    "videos": [
+      {
+        "paused": true,
+        "muted": true,
+        "w": 0,
+        "h": 0,
+        "readyState": 0,
+        "srcObject": false
+      },
+      {
+        "paused": false,
+        "muted": false,
+        "w": 1280,
+        "h": 720,
+        "readyState": 4,
+        "srcObject": true
+      }
+    ],
+    "videoCount": 2,
+    "liveVideoTiles": 1,
+    "localAudio": 1,
+    "localVideo": 1,
+    "remoteAudio": 0,
+    "remoteVideo": 1,
+    "href": "https://meet.jit.si/NextGenTutors-Lesson-48b0e08c-9b50-4af3-ba80-9a675b6450d9#userInfo.displayName=",
+    "title": "Next Gen Tutors Lesson 48 B 0 E 08 C 9 B 50 4 Af 3 Ba 80 9 A 675 B 6450 D 9 | Jitsi Meet"
+  }
+}

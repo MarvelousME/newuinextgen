@@ -131,7 +131,7 @@ function ngt_cta_button( $slug, $label = '' ) {
 	$slug  = sanitize_key( (string) $slug );
 	$label = '' !== $label ? $label : ngt_cta_default_label( $slug );
 	printf(
-		'<a class="ngt-btn ngt-btn-primary" href="%1$s">%2$s</a>',
+		'<a class="ngt-btn ngt-btn--primary" href="%1$s">%2$s</a>',
 		esc_url( ngt_route_url( $slug ) ),
 		esc_html( $label )
 	);

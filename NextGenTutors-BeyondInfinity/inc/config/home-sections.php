@@ -49,7 +49,18 @@ function bi_home_section_enabled( $section_id ) {
 }
 
 function bi_use_kinetic_home() {
-    return is_front_page() && 'kinetic' === bi_get_theme_option( 'home_layout', 'kinetic' );
+    if ( ! is_front_page() ) {
+        return false;
+    }
+    $layout = bi_get_theme_option( 'home_layout', 'kinetic' );
+    if ( 'elementor' === $layout ) {
+        return false;
+    }
+    // Prefer Elementor when the front page already has a real Elementor document.
+    if ( function_exists( 'bi_is_elementor_built' ) && bi_is_elementor_built( (int) get_option( 'page_on_front' ) ) ) {
+        return false;
+    }
+    return 'kinetic' === $layout;
 }
 
 function bi_format_rate( $option_name, $fallback = 320 ) {

@@ -43,16 +43,25 @@ function bi_get_marquee_items() {
  * @return array<int, array{name:string,desc:string}>
  */
 function bi_get_subject_tracks() {
-    return [
-        [ 'name' => 'Mathematics', 'desc' => 'CAPS & IEB Pure Maths (Gr 1–12) plus Matric exam prep.' ],
-        [ 'name' => 'English HL', 'desc' => 'Essays, literature study and comprehension coaching.' ],
-        [ 'name' => 'Physical Sciences', 'desc' => 'Physics and chemistry for CAPS, IEB and Cambridge.' ],
-        [ 'name' => 'Coding & Python', 'desc' => 'IT/CAT projects, Scratch and Python foundations.' ],
-        [ 'name' => 'Accounting', 'desc' => 'Bookkeeping, ledgers and financial statements.' ],
-        [ 'name' => 'Life Sciences', 'desc' => 'Biology, cellular structures and exam technique.' ],
-        [ 'name' => 'Economics', 'desc' => 'Macro, micro and market systems explained clearly.' ],
-        [ 'name' => 'Statistics', 'desc' => 'Tertiary stats, hypothesis testing and data analysis.' ],
-    ];
+	if ( class_exists( 'NGC_Subjects_CMS' ) ) {
+		$cms = NGC_Subjects_CMS::tracks_for_theme();
+		if ( $cms ) {
+			return apply_filters( 'bi_get_subject_tracks', $cms );
+		}
+	}
+
+	$fallback = [
+		[ 'name' => 'Mathematics', 'desc' => 'CAPS & IEB Pure Maths (Gr 1–12) plus Matric exam prep.', 'slug' => 'mathematics' ],
+		[ 'name' => 'English HL', 'desc' => 'Essays, literature study and comprehension coaching.', 'slug' => 'english' ],
+		[ 'name' => 'Physical Sciences', 'desc' => 'Physics and chemistry for CAPS, IEB and Cambridge.', 'slug' => 'physical-science' ],
+		[ 'name' => 'Coding & Python', 'desc' => 'IT/CAT projects, Scratch and Python foundations.', 'slug' => 'programming' ],
+		[ 'name' => 'Accounting', 'desc' => 'Bookkeeping, ledgers and financial statements.', 'slug' => 'accounting' ],
+		[ 'name' => 'Life Sciences', 'desc' => 'Biology, cellular structures and exam technique.', 'slug' => 'life-sciences' ],
+		[ 'name' => 'Economics', 'desc' => 'Macro, micro and market systems explained clearly.', 'slug' => 'economics' ],
+		[ 'name' => 'Statistics', 'desc' => 'Tertiary stats, hypothesis testing and data analysis.', 'slug' => 'statistics' ],
+	];
+
+	return apply_filters( 'bi_get_subject_tracks', $fallback );
 }
 
 /**
@@ -63,10 +72,17 @@ function bi_get_subject_tracks() {
  */
 function bi_subject_label_from_slug( $slug ) {
     foreach ( bi_get_subject_tracks() as $subject ) {
-        if ( sanitize_title( $subject['name'] ) === $slug ) {
+		$subject_slug = isset( $subject['slug'] ) ? sanitize_title( (string) $subject['slug'] ) : sanitize_title( (string) ( $subject['name'] ?? '' ) );
+		if ( $subject_slug === $slug ) {
             return $subject['name'];
         }
     }
+	if ( class_exists( 'NGC_Subjects_CMS' ) ) {
+		$row = NGC_Subjects_CMS::get( $slug );
+		if ( $row ) {
+			return (string) $row['title'];
+		}
+	}
     return ucwords( str_replace( '-', ' ', $slug ) );
 }
 

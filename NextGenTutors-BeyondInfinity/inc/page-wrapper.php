@@ -50,12 +50,15 @@ function bi_render_page_template( $default_callback ) {
     get_header();
 
     if ( bi_should_show_theme_fallback( $post_id ) ) {
+        echo '<!-- bi-render:theme-fallback -->';
         echo '<main id="primary" class="site-main bi-theme-main">';
         bi_render_theme_default( $default_callback );
         echo '</main>';
     } elseif ( bi_elementor_theme_location_handled() ) {
+        echo '<!-- bi-render:elementor-theme-location -->';
         // Elementor Theme Builder rendered the page body.
     } else {
+        echo '<!-- bi-render:builder-content -->';
         bi_render_builder_content();
     }
 
@@ -88,12 +91,34 @@ function bi_render_theme_default( $default_callback ) {
 
 /**
  * Show theme default when builder output would be empty.
+ *
+ * Elementor-native policy: a widget-bearing Elementor document always wins over
+ * `force_theme_default` for non-commerce pages. Checkout/cart/thank-you stay PHP.
  */
 function bi_should_show_theme_fallback( $post_id = 0 ) {
     $post_id = $post_id ?: bi_get_current_page_id();
 
     // Elementor / WPBakery editor & preview must receive a normal builder shell.
     if ( function_exists( 'bi_is_builder_edit_mode' ) && bi_is_builder_edit_mode() ) {
+        return false;
+    }
+
+    $slug = function_exists( 'bi_page_slug' ) ? (string) bi_page_slug() : (string) get_post_field( 'post_name', $post_id );
+
+    // Release-critical commerce shells stay theme-owned.
+    $commerce_locked = in_array( $slug, [ 'thank-you', 'checkout-2', 'checkout', 'cart' ], true );
+    if ( $commerce_locked || ( function_exists( 'is_wc_endpoint_url' ) && is_wc_endpoint_url( 'order-received' ) ) ) {
+        return true;
+    }
+    if ( 'parent-checkout' === $slug && ! ( function_exists( 'bi_is_elementor_built' ) && bi_is_elementor_built( $post_id ) ) ) {
+        return true;
+    }
+
+    // Real Elementor / WPBakery documents own presentation.
+    if ( $post_id && function_exists( 'bi_is_elementor_built' ) && bi_is_elementor_built( $post_id ) ) {
+        return false;
+    }
+    if ( $post_id && function_exists( 'bi_is_wpbakery_built' ) && bi_is_wpbakery_built( $post_id ) ) {
         return false;
     }
 
@@ -105,26 +130,9 @@ function bi_should_show_theme_fallback( $post_id = 0 ) {
         return true;
     }
 
-    // Kinetic marketing home: prefer theme production defaults unless the page has
-    // real Elementor document sections (empty Theme Builder / edit-mode stubs excluded).
+    // Kinetic marketing home: PHP defaults until an Elementor document exists.
     if ( function_exists( 'bi_use_kinetic_home' ) && bi_use_kinetic_home() ) {
-        if ( function_exists( 'bi_is_wpbakery_built' ) && bi_is_wpbakery_built( $post_id ) ) {
-            return false;
-        }
-        if ( function_exists( 'bi_is_elementor_built' ) && bi_is_elementor_built( $post_id ) ) {
-            $data = get_post_meta( $post_id, '_elementor_data', true );
-            if ( is_string( $data ) ) {
-                $data = json_decode( $data, true );
-            }
-            if ( is_array( $data ) && count( $data ) > 0 ) {
-                return false;
-            }
-        }
         return true;
-    }
-
-    if ( bi_is_elementor_built( $post_id ) || bi_is_wpbakery_built( $post_id ) ) {
-        return false;
     }
 
     return ! bi_page_has_editor_content( $post_id );

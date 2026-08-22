@@ -18,6 +18,25 @@ class NGC_Bookings {
 	private static $statuses = [ 'requested', 'confirmed', 'cancelled', 'completed' ];
 
 	/**
+	 * @return string[]
+	 */
+	public static function statuses() {
+		return self::$statuses;
+	}
+
+	/**
+	 * @param string $status Status slug.
+	 * @return string|WP_Error
+	 */
+	public static function normalize_status( $status ) {
+		$status = sanitize_key( $status );
+		if ( ! in_array( $status, self::$statuses, true ) ) {
+			return new WP_Error( 'ngc_invalid_status', __( 'Invalid booking status.', 'nextgencompanion' ) );
+		}
+		return $status;
+	}
+
+	/**
 	 * @param array<string, mixed> $data Booking data.
 	 * @return int|WP_Error
 	 */
@@ -25,27 +44,109 @@ class NGC_Bookings {
 		global $wpdb;
 		$table = NGC_Database::table( 'bookings' );
 
-		$idem_key = '';
-		if ( ! empty( $data['idempotency_key'] ) && class_exists( 'NGC_Idempotency' ) ) {
-			$idem_key = (string) $data['idempotency_key'];
-			$fp       = NGC_Idempotency::fingerprint(
-				[
-					'student' => (int) ( $data['student_user_id'] ?? 0 ),
-					'tutor'   => (int) ( $data['tutor_user_id'] ?? 0 ),
-					'sched'   => (string) ( $data['scheduled_at'] ?? '' ),
-					'subject' => (string) ( $data['subject'] ?? '' ),
-				]
-			);
-			$begun = NGC_Idempotency::begin( $idem_key, $fp, 'bookings' );
-			if ( is_wp_error( $begun ) ) {
-				return $begun;
-			}
-			if ( 'replay' === ( $begun['status'] ?? '' ) ) {
-				return (int) ( $begun['result']['booking_id'] ?? 0 );
-			}
+		$idem = self::begin_create_idempotency( $data );
+		if ( 'error' === $idem['status'] ) {
+			return $idem['error'];
+		}
+		if ( 'replay' === $idem['status'] ) {
+			return (int) $idem['booking_id'];
+		}
+		$idem_key = ( 'begun' === $idem['status'] ) ? (string) $idem['key'] : '';
+
+		$row = self::build_create_row( $data );
+		$conflict = self::has_conflict(
+			(int) $row['tutor_user_id'],
+			(string) $row['scheduled_at'],
+			(int) $row['duration_minutes']
+		);
+		if ( $conflict ) {
+			return new WP_Error( 'ngc_booking_conflict', __( 'Selected slot is no longer available.', 'nextgencompanion' ) );
 		}
 
-		$row = [
+		$inserted = $wpdb->insert( $table, $row );
+		if ( ! $inserted ) {
+			return new WP_Error( 'ngc_booking_create_failed', __( 'Could not create booking.', 'nextgencompanion' ) );
+		}
+
+		$id = (int) $wpdb->insert_id;
+		self::after_create( $id, $data, $row );
+
+		if ( $idem_key !== '' && class_exists( 'NGC_Idempotency' ) ) {
+			NGC_Idempotency::commit( $idem_key, [ 'booking_id' => $id ] );
+		}
+
+		return $id;
+	}
+
+	/**
+	 * @internal
+	 * @param array<string, mixed> $data Booking data.
+	 * @return array{status:string,key?:string,booking_id?:int,error?:WP_Error}
+	 */
+	private static function begin_create_idempotency( $data ) {
+		if ( empty( $data['idempotency_key'] ) || ! class_exists( 'NGC_Idempotency' ) ) {
+			return [ 'status' => 'skip' ];
+		}
+		$idem_key = (string) $data['idempotency_key'];
+		$fp       = NGC_Idempotency::fingerprint(
+			[
+				'student' => (int) ( $data['student_user_id'] ?? 0 ),
+				'tutor'   => (int) ( $data['tutor_user_id'] ?? 0 ),
+				'sched'   => (string) ( $data['scheduled_at'] ?? '' ),
+				'subject' => (string) ( $data['subject'] ?? '' ),
+			]
+		);
+		$begun = NGC_Idempotency::begin( $idem_key, $fp, 'bookings' );
+		if ( is_wp_error( $begun ) ) {
+			return [
+				'status' => 'error',
+				'error'  => $begun,
+			];
+		}
+		if ( 'replay' === ( $begun['status'] ?? '' ) ) {
+			$replay = self::idempotency_replay_id( $begun );
+			if ( is_wp_error( $replay ) ) {
+				return [
+					'status' => 'error',
+					'error'  => $replay,
+				];
+			}
+			return [
+				'status'     => 'replay',
+				'booking_id' => $replay,
+			];
+		}
+		return [
+			'status' => 'begun',
+			'key'    => $idem_key,
+		];
+	}
+
+	/**
+	 * Replay id 0 must not look like a successful create.
+	 *
+	 * @internal
+	 * @param array<string, mixed> $begun Idempotency begin() result.
+	 * @return int|WP_Error
+	 */
+	private static function idempotency_replay_id( $begun ) {
+		$id = (int) ( $begun['result']['booking_id'] ?? 0 );
+		if ( $id <= 0 ) {
+			return new WP_Error(
+				'ngc_booking_idempotency_replay',
+				__( 'Idempotent replay missing booking id.', 'nextgencompanion' )
+			);
+		}
+		return $id;
+	}
+
+	/**
+	 * @internal
+	 * @param array<string, mixed> $data Booking data.
+	 * @return array<string, mixed>
+	 */
+	private static function build_create_row( $data ) {
+		return [
 			'uuid'             => class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4(),
 			'match_id'         => (int) ( $data['match_id'] ?? 0 ),
 			'student_user_id'  => (int) ( $data['student_user_id'] ?? 0 ),
@@ -62,22 +163,14 @@ class NGC_Bookings {
 			'created_at'       => current_time( 'mysql', true ),
 			'updated_at'       => current_time( 'mysql', true ),
 		];
+	}
 
-		$conflict = self::has_conflict(
-			(int) $row['tutor_user_id'],
-			(string) $row['scheduled_at'],
-			(int) $row['duration_minutes']
-		);
-		if ( $conflict ) {
-			return new WP_Error( 'ngc_booking_conflict', __( 'Selected slot is no longer available.', 'nextgencompanion' ) );
-		}
-
-		$inserted = $wpdb->insert( $table, $row );
-		if ( ! $inserted ) {
-			return new WP_Error( 'ngc_booking_create_failed', __( 'Could not create booking.', 'nextgencompanion' ) );
-		}
-
-		$id = (int) $wpdb->insert_id;
+	/**
+	 * @param int                  $id   Booking ID.
+	 * @param array<string, mixed> $data Original payload.
+	 * @param array<string, mixed> $row  Inserted row.
+	 */
+	private static function after_create( $id, $data, $row ) {
 		NGC_Audit::log( 'booking_created', 'booking', $id, $data );
 		NGC_Platform_Repository::create(
 			'conversions',
@@ -102,12 +195,6 @@ class NGC_Bookings {
 				'employee_id'     => (string) $row['tutor_user_id'],
 			]
 		);
-
-		if ( $idem_key !== '' && class_exists( 'NGC_Idempotency' ) ) {
-			NGC_Idempotency::commit( $idem_key, [ 'booking_id' => $id ] );
-		}
-
-		return $id;
 	}
 
 	/**
@@ -149,9 +236,9 @@ class NGC_Bookings {
 	 */
 	public static function transition( $booking_id, $status, $actor_id = 0 ) {
 		global $wpdb;
-		$status = sanitize_key( $status );
-		if ( ! in_array( $status, self::$statuses, true ) ) {
-			return new WP_Error( 'ngc_invalid_status', __( 'Invalid booking status.', 'nextgencompanion' ) );
+		$status = self::normalize_status( $status );
+		if ( is_wp_error( $status ) ) {
+			return $status;
 		}
 
 		$booking = self::get( $booking_id );
@@ -169,7 +256,17 @@ class NGC_Bookings {
 		);
 
 		NGC_Audit::log( 'booking_' . $status, 'booking', $booking_id, [ 'from' => $booking->status ], $actor_id );
+		self::dispatch_transition( $booking_id, $status, $booking, $actor_id );
+		return true;
+	}
 
+	/**
+	 * @param int    $booking_id Booking ID.
+	 * @param string $status     New status.
+	 * @param object $booking    Prior row.
+	 * @param int    $actor_id   Actor.
+	 */
+	private static function dispatch_transition( $booking_id, $status, $booking, $actor_id ) {
 		if ( 'confirmed' === $status ) {
 			$meeting = class_exists( 'NGC_Meetings' )
 				? NGC_Meetings::ensure_for_booking( $booking_id, [ 'user_id' => (int) $actor_id ] )
@@ -200,6 +297,7 @@ class NGC_Bookings {
 			// NGC_Workflows::dispatch already fires ngc_lesson_completed — do not duplicate.
 			self::log_session( $booking_id, 'attended' );
 			NGC_Reviews::record_earning( $booking );
+			do_action( 'ngc_booking_completed', $booking_id, [ 'booking' => $booking ] );
 		}
 
 		if ( 'cancelled' === $status ) {
@@ -211,9 +309,8 @@ class NGC_Bookings {
 					'tutor_user_id'   => (string) $booking->tutor_user_id,
 				]
 			);
+			do_action( 'ngc_booking_cancelled', $booking_id, [ 'booking' => $booking ] );
 		}
-
-		return true;
 	}
 
 	/**
@@ -302,6 +399,13 @@ class NGC_Bookings {
 		$email     = sanitize_email( (string) ( $data['customerEmail'] ?? $data['email'] ?? '' ) );
 		$student   = $email ? get_user_by( 'email', $email ) : false;
 
+		// Commerce truth: Amelia schedules only. Do not mark paid/join-ready without Woo settlement.
+		// Filter may return 'confirmed' only for explicitly approved non-commerce Amelia flows.
+		$initial_status = apply_filters( 'ngc_amelia_sync_initial_status', 'requested', $data );
+		if ( ! in_array( $initial_status, self::$statuses, true ) ) {
+			$initial_status = 'requested';
+		}
+
 		global $wpdb;
 		$table = NGC_Database::table( 'bookings' );
 		$wpdb->insert(
@@ -313,7 +417,7 @@ class NGC_Bookings {
 				'subject'           => sanitize_text_field( (string) ( $data['serviceName'] ?? $data['service'] ?? 'Amelia session' ) ),
 				'scheduled_at'      => $scheduled,
 				'duration_minutes'  => (int) ( $data['duration'] ?? 60 ),
-				'status'            => 'confirmed',
+				'status'            => $initial_status,
 				'amelia_booking_id' => $amelia_id,
 				'meta'              => wp_json_encode( [ 'source' => 'amelia', 'amelia' => $data ] ),
 				'created_at'        => current_time( 'mysql', true ),
@@ -597,43 +701,47 @@ class NGC_Bookings {
 		$peer   = get_user_by( 'id', $peer_id );
 		$avatar = $peer ? get_avatar_url( $peer->ID ) : '';
 
-		$can_join = class_exists( 'NGC_Meetings' ) && NGC_Meetings::can_join_status( $booking );
-		$join_url = '';
-		$provider = '';
-		$room     = '';
-		$meeting  = self::get_meeting_meta( (int) $booking->id );
+		$session_id   = 0;
+		$can_join     = false;
+		$join_reason  = 'not_ready';
+		$provider     = '';
+		$meeting      = self::get_meeting_meta( (int) $booking->id );
+		if ( is_array( $meeting ) ) {
+			$provider = (string) ( $meeting['provider'] ?? '' );
+		}
 
-		if ( $can_join && class_exists( 'NGC_Meetings' ) ) {
-			if ( empty( $meeting['join_url'] ) ) {
-				$ensured = NGC_Meetings::ensure_for_booking( (int) $booking->id, [ 'user_id' => (int) $viewer ] );
+		// Prefer orchestrated session launch — never embed meeting URLs in dashboard HTML.
+		if ( class_exists( 'NGC_Session_Orchestrator' ) && class_exists( 'NGC_Sessions' ) ) {
+			$session = NGC_Sessions::get_by_booking( (int) $booking->id );
+			if ( ! $session && class_exists( 'NGC_Meetings' ) && NGC_Meetings::can_join_status( $booking ) ) {
+				$ensured = NGC_Session_Orchestrator::ensure_provisioned(
+					[
+						'booking_id' => (int) $booking->id,
+						'source'     => 'dashboard_format',
+					]
+				);
 				if ( ! is_wp_error( $ensured ) && is_array( $ensured ) ) {
-					$join_url = (string) ( $ensured['join_url'] ?? '' );
-					$provider = (string) ( $ensured['provider'] ?? 'jitsi' );
-					$room     = (string) ( $ensured['room'] ?? '' );
-					$meeting  = self::get_meeting_meta( (int) $booking->id );
-				}
-			} else {
-				$join_url = (string) $meeting['join_url'];
-				$provider = (string) ( $meeting['provider'] ?? 'jitsi' );
-				$room     = (string) ( $meeting['room'] ?? '' );
-			}
-
-			if ( $room === '' && ! empty( $meeting['room'] ) ) {
-				$room = (string) $meeting['room'];
-			}
-
-			if ( $join_url && $room && (int) $viewer > 0 && class_exists( 'NGC_Jitsi_Meeting_Adapter' ) && ( $provider === 'jitsi' || $provider === '' ) ) {
-				$user = get_userdata( (int) $viewer );
-				if ( $user ) {
-					$join_url = NGC_Jitsi_Meeting_Adapter::join_url_for_room( $room, $user->display_name );
-					$provider = 'jitsi';
+					$session_id = (int) ( $ensured['session_id'] ?? 0 );
+					$session    = $session_id ? NGC_Sessions::get( $session_id ) : null;
 				}
 			}
+			if ( $session ) {
+				$session_id = (int) $session->id;
+				$window     = NGC_Session_Orchestrator::join_window_status( $session );
+				$can_join   = ! empty( $window['allowed'] );
+				$join_reason = (string) ( $window['reason'] ?? '' );
+				$provider    = $provider ?: (string) ( $session->meeting_provider ?? '' );
+			}
+		} elseif ( class_exists( 'NGC_Meetings' ) && NGC_Meetings::can_join_status( $booking ) ) {
+			// Legacy fallback when session module absent — status gate only; URL via REST join.
+			$can_join    = true;
+			$join_reason = 'legacy_status';
 		}
 
 		return [
 			'id'              => (int) $booking->id,
 			'bookingId'       => (int) $booking->id,
+			'sessionId'       => $session_id,
 			'peerName'        => $peer ? $peer->display_name : __( 'Unknown', 'nextgencompanion' ),
 			'peerImage'       => $avatar,
 			'subject'         => $booking->subject,
@@ -641,11 +749,14 @@ class NGC_Bookings {
 			'status'          => $booking->status,
 			'statusLabel'     => ucfirst( $booking->status ),
 			'attendance'      => $booking->status,
-			'joinUrl'         => $join_url,
-			'join_url'        => $join_url,
-			'meetingUrl'      => $join_url,
-			'canJoin'         => $can_join && $join_url !== '',
-			'meetingProvider' => $provider ?: ( $join_url ? 'jitsi' : '' ),
+			// Intentionally empty: clients must POST /sessions/{id}/launch (or bookings/{id}/join).
+			'joinUrl'         => '',
+			'join_url'        => '',
+			'meetingUrl'      => '',
+			'canJoin'         => $can_join && $session_id > 0,
+			'joinReason'      => $join_reason,
+			'joinVia'         => $session_id > 0 ? 'session_launch' : 'booking_join',
+			'meetingProvider' => $provider,
 		];
 	}
 

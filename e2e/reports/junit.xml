@@ -1,75 +1,82 @@
-<testsuites id="" name="" tests="7" failures="0" skipped="0" errors="0" time="330.03605699999997">
-<testsuite name="five-minute-booking-journey.spec.ts" timestamp="2026-08-03T02:07:37.748Z" hostname="chrome" tests="7" failures="0" skipped="0" time="319.246" errors="0">
-<testcase name="Five-minute journey — headed UI + correlation › 01 preflight pages on :8890" classname="five-minute-booking-journey.spec.ts" time="60.951">
+<testsuites id="" name="" tests="6" failures="0" skipped="5" errors="1" time="64.202157">
+<testsuite name="tc-21-26-security.spec.ts" timestamp="2026-08-16T10:30:11.070Z" hostname="chrome" tests="6" failures="0" skipped="5" time="0.001" errors="1">
+<testcase name="TC-21 SQL injection inputs sanitized on contact/find forms" classname="tc-21-26-security.spec.ts" time="0.001">
 <system-out>
 <![CDATA[
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-68909--01-preflight-pages-on-8890-chrome\test-finished-1.png]]
+[[ATTACHMENT|..\test-results\tc-21-26-security-TC-21-SQ-b555f-tized-on-contact-find-forms-chrome\error-context.md]]
 
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-68909--01-preflight-pages-on-8890-chrome\video.webm]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-68909--01-preflight-pages-on-8890-chrome\trace.zip]]
+[[ATTACHMENT|..\test-results\tc-21-26-security-TC-21-SQ-b555f-tized-on-contact-find-forms-chrome\trace.zip]]
 ]]>
 </system-out>
+<error message="apiRequestContext.get: Timeout 30000ms exceeded." type="TimeoutError">
+<![CDATA[  [chrome] › tc-21-26-security.spec.ts:32:5 › TC-21 SQL injection inputs sanitized on contact/find forms 
+
+    TimeoutError: apiRequestContext.get: Timeout 30000ms exceeded.
+    Call log:
+      - → GET http://127.0.0.1:8890/
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+      - ← 301 Moved Permanently
+        - date: Sun, 16 Aug 2026 10:30:43 GMT
+        - server: Apache/2.4.62 (Debian)
+        - x-powered-by: PHP/8.2.28
+        - permissions-policy: private-state-token-redemption=(self "https://www.google.com" "https://www.gstatic.com" "https://recaptcha.net" "https://challenges.cloudflare.com" "https://hcaptcha.com"), private-state-token-issuance=(self "https://www.google.com" "https://www.gstatic.com" "https://recaptcha.net" "https://challenges.cloudflare.com" "https://hcaptcha.com")
+        - x-redirect-by: WordPress
+        - location: http://localhost:8890/
+        - content-length: 0
+        - keep-alive: timeout=5, max=100
+        - connection: Keep-Alive
+        - content-type: text/html; charset=UTF-8
+      - → GET http://localhost:8890/
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+
+
+       at ..\helpers\tc-matrix.ts:69
+
+      67 |   for (const base of [...new Set(candidates)]) {
+      68 |     try {
+    > 69 |       const res = await request.get(base.replace(/\/$/, '') + '/', {
+         |                                 ^
+      70 |         maxRedirects: 5,
+      71 |         timeout: 30_000,
+      72 |       });
+        at ensureSiteUp (C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\helpers\tc-matrix.ts:69:33)
+        at C:\Users\marvi\Downloads\wetransfer_newuinextgen_2026-07-07_1929\newuinextgen\e2e\workflows\tc-21-26-security.spec.ts:29:3
+
+    Error Context: ..\test-results\tc-21-26-security-TC-21-SQ-b555f-tized-on-contact-find-forms-chrome\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\tc-21-26-security-TC-21-SQ-b555f-tized-on-contact-find-forms-chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\tc-21-26-security-TC-21-SQ-b555f-tized-on-contact-find-forms-chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
 </testcase>
-<testcase name="Five-minute journey — headed UI + correlation › 02 public tutor registration form submits" classname="five-minute-booking-journey.spec.ts" time="49.069">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-43dbb-r-registration-form-submits-chrome\test-finished-1.png]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-43dbb-r-registration-form-submits-chrome\video.webm]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-43dbb-r-registration-form-submits-chrome\trace.zip]]
-]]>
-</system-out>
+<testcase name="TC-22 XSS payloads escaped in form fields" classname="tc-21-26-security.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Five-minute journey — headed UI + correlation › 03 parent registration form submits" classname="five-minute-booking-journey.spec.ts" time="90.387">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-ed55d-t-registration-form-submits-chrome\test-finished-1.png]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-ed55d-t-registration-form-submits-chrome\video.webm]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-ed55d-t-registration-form-submits-chrome\trace.zip]]
-]]>
-</system-out>
+<testcase name="TC-23 Dashboard REST requires auth" classname="tc-21-26-security.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Five-minute journey — headed UI + correlation › 04 find-a-tutor marketplace shows bookable cards" classname="five-minute-booking-journey.spec.ts" time="32.775">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-e3cfd-tplace-shows-bookable-cards-chrome\test-finished-1.png]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-e3cfd-tplace-shows-bookable-cards-chrome\video.webm]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-e3cfd-tplace-shows-bookable-cards-chrome\trace.zip]]
-]]>
-</system-out>
+<testcase name="TC-24 CSRF — form without nonce rejected or inert" classname="tc-21-26-security.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Five-minute journey — headed UI + correlation › 05 domain correlation evidence present" classname="five-minute-booking-journey.spec.ts" time="0.008">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-f77fb-orrelation-evidence-present-chrome\trace.zip]]
-]]>
-</system-out>
+<testcase name="TC-25 Role escalation denied" classname="tc-21-26-security.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Five-minute journey — headed UI + correlation › 06 admin surfaces reachable after login" classname="five-minute-booking-journey.spec.ts" time="62.792">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-9caf2-faces-reachable-after-login-chrome\test-finished-1.png]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-9caf2-faces-reachable-after-login-chrome\video.webm]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-9caf2-faces-reachable-after-login-chrome\trace.zip]]
-]]>
-</system-out>
-</testcase>
-<testcase name="Five-minute journey — headed UI + correlation › 07 unauthorized visitor cannot see meeting secrets" classname="five-minute-booking-journey.spec.ts" time="23.264">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-c4c52--cannot-see-meeting-secrets-chrome\test-finished-1.png]]
-
-[[ATTACHMENT|..\test-results\five-minute-booking-journe-c4c52--cannot-see-meeting-secrets-chrome\trace.zip]]
-]]>
-</system-out>
+<testcase name="TC-26 POPIA consent gate for under-18" classname="tc-21-26-security.spec.ts">
+<skipped>
+</skipped>
 </testcase>
 </testsuite>
 </testsuites>

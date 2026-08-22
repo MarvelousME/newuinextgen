@@ -378,7 +378,7 @@ function bi_ngc_dashboard_shortcode( $atts, $content = '', $tag = '' ) {
 
     ob_start();
     ?>
-    <div class="bi-dashboard-rest ngt-card ngt-animate" data-dashboard="<?php echo esc_attr( $type ); ?>" role="region" aria-live="polite" aria-busy="true">
+    <div class="bi-dashboard-rest ngt-card" data-dashboard="<?php echo esc_attr( $type ); ?>" role="region" aria-live="polite" aria-busy="true">
       <p class="bi-dashboard-rest__loading"><?php esc_html_e( 'Loading your dashboard…', 'beyondinfinity' ); ?></p>
     </div>
     <?php

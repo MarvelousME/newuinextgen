@@ -1,0 +1,57 @@
+{
+  "packId": "ngc-authz-matrix",
+  "version": "1.0.0",
+  "ssot": "NGC_Authz_Matrix",
+  "defaultDecision": "DENY",
+  "bridge": "NGC_Policy_Bridge",
+  "notes": "Privileged cross-boundary ops deny until WP cap + matrix + optional Policy_Bridge allow. Do not scatter authz in services. Public REST listed here is throttled, not authenticated (SEC-03).",
+  "privilegedCapabilities": [
+    "manage_options",
+    "ngc_manage_platform",
+    "ngc_manage_safeguarding",
+    "ngc_manage_fraud",
+    "ngc_view_finance",
+    "ngc_manage_payouts",
+    "ngc_view_ledger"
+  ],
+  "roles": {
+    "Student": ["read", "ngc_book_session", "ngc_view_own"],
+    "Parent": ["read", "ngc_book_session", "ngc_view_own", "ngc_manage_children"],
+    "Tutor": ["read", "ngc_tutor_dashboard", "ngc_view_own", "ngc_manage_availability"],
+    "Admin": ["manage_options", "ngc_manage_platform", "ngc_manage_safeguarding", "ngc_manage_fraud", "ngc_view_finance"],
+    "Finance": ["ngc_view_finance", "ngc_manage_payouts", "ngc_view_ledger"],
+    "Support": ["ngc_manage_support", "ngc_view_own"],
+    "Moderator": ["ngc_manage_safeguarding", "ngc_manage_fraud", "ngc_moderate_content"],
+    "Affiliate": ["ngc_view_affiliate", "read"],
+    "Franchise": ["ngc_view_franchise", "ngc_view_finance"],
+    "SuperAdmin": ["manage_options", "ngc_manage_platform", "ngc_manage_safeguarding", "ngc_manage_fraud", "ngc_view_finance", "ngc_manage_payouts", "ngc_view_ledger"]
+  },
+  "wpRoleMap": {
+    "Student": "ngc_student",
+    "Parent": "ngc_parent",
+    "Tutor": "ngc_tutor",
+    "Admin": "administrator",
+    "Finance": "ngc_finance",
+    "Support": "ngc_support",
+    "Moderator": "ngc_moderator",
+    "Affiliate": "ngc_affiliate",
+    "Franchise": "ngc_franchise",
+    "SuperAdmin": "administrator"
+  },
+  "publicRoutes": [
+    {
+      "method": "POST",
+      "route": "/ngc/v1/support/tickets",
+      "auth": "none",
+      "control": "ip_throttle",
+      "sec": "SEC-03"
+    },
+    {
+      "method": "GET",
+      "route": "/ngc/v1/support/status",
+      "auth": "none",
+      "control": "none",
+      "sec": "SEC-03"
+    }
+  ]
+}

@@ -279,6 +279,33 @@ class NGC_Rest_Bookings {
 			return NGC_Rest::error_response( $url );
 		}
 
+		// Ensure orchestration session exists and enforce join window when scheduled.
+		if ( class_exists( 'NGC_Session_Orchestrator' ) ) {
+			NGC_Session_Orchestrator::ensure_provisioned(
+				[
+					'booking_id' => $booking_id,
+					'order_id'   => (int) ( $booking->order_id ?? 0 ),
+					'source'     => 'booking_join',
+				]
+			);
+			$session = class_exists( 'NGC_Sessions' ) ? NGC_Sessions::get_by_booking( $booking_id ) : null;
+			if ( $session ) {
+				$window = NGC_Session_Orchestrator::join_window_status( $session );
+				if ( empty( $window['allowed'] ) && 'no_schedule' !== ( $window['reason'] ?? '' ) ) {
+					// Allow legacy bookings without schedule; otherwise enforce window.
+					if ( ! empty( $session->scheduled_start ) ) {
+						return NGC_Rest::error_response(
+							new WP_Error(
+								'ngc_join_window',
+								__( 'This lesson is not available to join right now.', 'nextgencompanion' ),
+								[ 'status' => 409, 'window' => $window ]
+							)
+						);
+					}
+				}
+			}
+		}
+
 		$meeting = NGC_Bookings::get_meeting_meta( $booking_id );
 		NGC_Audit::log(
 			'lesson_join',

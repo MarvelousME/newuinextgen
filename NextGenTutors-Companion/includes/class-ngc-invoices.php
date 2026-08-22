@@ -22,6 +22,12 @@ class NGC_Invoices {
 	 */
 	public static function generate_from_order( $order ) {
 		global $wpdb;
+		if ( is_numeric( $order ) && function_exists( 'wc_get_order' ) ) {
+			$order = wc_get_order( (int) $order );
+		}
+		if ( ! $order || ! is_object( $order ) || ! method_exists( $order, 'get_id' ) ) {
+			return new WP_Error( 'ngc_invoice_order', __( 'Invalid order for invoice.', 'nextgencompanion' ) );
+		}
 		$table = NGC_Database::table( 'invoices' );
 
 		$user_id    = (int) $order->get_user_id();
@@ -39,26 +45,26 @@ class NGC_Invoices {
 			];
 		}
 
-		$inserted = $wpdb->insert(
-			$table,
-			[
-				'invoice_number' => $number,
-				'user_id'        => $user_id,
-				'booking_id'     => $booking_id,
-				'order_id'       => $order_id,
-				'amount'         => $amount,
-				'currency'       => $order->get_currency() ?: 'ZAR',
-				'status'         => 'paid',
-				'line_items'     => wp_json_encode( $line_items ),
-				'issued_at'      => current_time( 'mysql', true ),
-				'paid_at'        => current_time( 'mysql', true ),
-				'meta'           => wp_json_encode( [ 'billing' => $order->get_address( 'billing' ) ] ),
-			],
-			[ '%s', '%d', '%d', '%d', '%f', '%s', '%s', '%s', '%s', '%s', '%s' ]
-		);
+		$row = [
+			'invoice_number' => $number,
+			'user_id'        => $user_id,
+			'booking_id'     => $booking_id,
+			'order_id'       => $order_id,
+			'amount'         => $amount,
+			'currency'       => $order->get_currency() ?: 'ZAR',
+			'status'         => 'paid',
+			'line_items'     => wp_json_encode( $line_items ),
+			'issued_at'      => current_time( 'mysql', true ),
+			'paid_at'        => current_time( 'mysql', true ),
+			'meta'           => wp_json_encode( [ 'billing' => $order->get_address( 'billing' ) ] ),
+		];
+		if ( method_exists( 'NGC_Database', 'ensure_row_uuid' ) ) {
+			$row = NGC_Database::ensure_row_uuid( $table, $row );
+		}
+		$inserted = $wpdb->insert( $table, $row );
 
 		if ( ! $inserted ) {
-			return new WP_Error( 'ngc_invoice_failed', __( 'Could not create invoice.', 'nextgencompanion' ) );
+			return new WP_Error( 'ngc_invoice_failed', __( 'Could not create invoice.', 'nextgencompanion' ), [ 'db' => $wpdb->last_error ] );
 		}
 
 		$invoice_id = (int) $wpdb->insert_id;

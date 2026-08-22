@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import path from 'node:path';
 
-const baseURL = process.env.BASE_URL || 'http://localhost:8900';
+const baseURL = process.env.BASE_URL || 'http://localhost:8890';
 const isCI = !!process.env.CI;
 /** Full multi-browser matrix when E2E_FULL_MATRIX=1 (needs disk + browsers). */
 const fullMatrix = process.env.E2E_FULL_MATRIX === '1';

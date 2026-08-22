@@ -38,10 +38,25 @@ final class NGC_Metrics {
 	}
 
 	/**
+	 * Scrape/push token: env wins so compose Prometheus and WP share one secret
+	 * that is not committed as a FluentSMTP-style options dump.
+	 *
+	 * @return string
+	 */
+	public static function scrape_token() {
+		$env = getenv( 'NGC_METRICS_TOKEN' );
+		if ( is_string( $env ) && '' !== $env ) {
+			return $env;
+		}
+		$token = (string) get_option( self::OPTION_TOKEN, '' );
+		return $token;
+	}
+
+	/**
 	 * @return array{enabled:bool,token:string,push_url:string,alert_error_threshold:int}
 	 */
 	public static function settings() {
-		$token = (string) get_option( self::OPTION_TOKEN, '' );
+		$token = self::scrape_token();
 		if ( '' === $token ) {
 			$token = self::ensure_token();
 		}
@@ -375,7 +390,10 @@ final class NGC_Metrics {
 		if ( current_user_can( 'manage_options' ) ) {
 			return true;
 		}
-		$expected = (string) get_option( self::OPTION_TOKEN, '' );
+		$expected = self::scrape_token();
+		if ( '' === $expected ) {
+			$expected = (string) get_option( self::OPTION_TOKEN, '' );
+		}
 		if ( '' === $expected ) {
 			return false;
 		}
@@ -411,7 +429,7 @@ final class NGC_Metrics {
 				'timeout' => 8,
 				'headers' => [
 					'Content-Type'  => 'application/json',
-					'Authorization' => 'Bearer ' . (string) get_option( self::OPTION_TOKEN, '' ),
+					'Authorization' => 'Bearer ' . self::scrape_token(),
 					'User-Agent'    => 'NextGenCompanion-Metrics/' . ( defined( 'NGC_VERSION' ) ? NGC_VERSION : '1' ),
 				],
 				'body'    => wp_json_encode( $payload ),

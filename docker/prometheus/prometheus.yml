@@ -1,0 +1,16 @@
+# Local scrape of Companion Prometheus text at /wp-json/ngc/v1/metrics.
+# Bearer must match wordpress env NGC_METRICS_TOKEN (see docker/.env.example).
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+
+scrape_configs:
+  - job_name: ngc-wordpress
+    metrics_path: /wp-json/ngc/v1/metrics
+    scheme: http
+    authorization:
+      type: Bearer
+      credentials: staging-metrics-token
+    static_configs:
+      - targets:
+          - wordpress:80

@@ -45,6 +45,8 @@ fi
 activate_plugin "NextGenTutors-AI-Integration/nextgentutors-ai-integration" "NextGenTutors-AI-Integration/nextgentutors-ai-integration.php" && AI_OK=1
 activate_plugin "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager" "NextGenTutors-Plugin-Manager/NextGenTutors-Plugin-Manager.php" && PM_OK=1
 activate_plugin "NextGenTutors-Html-Importer/revamp-html-importer" "NextGenTutors-Html-Importer/revamp-html-importer.php" && RHI_OK=1
+activate_plugin "NextGenTutors-Mission-Control/nextgentutors-mission-control" "NextGenTutors-Mission-Control/nextgentutors-mission-control.php" 2>/dev/null || log "INFO: Mission Control optional"
+activate_plugin "NextGenTutors-BeyondMeasure/nextgentutors-beyond-measure" "NextGenTutors-BeyondMeasure/nextgentutors-beyond-measure.php" 2>/dev/null || log "INFO: Beyond Measure optional"
 
 activate_plugin "nextgen-automation-hub/nextgen-automation-hub" "nextgen-automation-hub/nextgen-automation-hub.php" 2>/dev/null || log "INFO: Automation Hub optional — mount ../nextgen-automation-hub"
 

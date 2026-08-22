@@ -1,0 +1,70 @@
+{
+    "42": [
+        {
+            "meta_key": "_ngt_booking_id",
+            "meta_value": "176"
+        },
+        {
+            "meta_key": "_ngt_tutor_user_id",
+            "meta_value": "250"
+        },
+        {
+            "meta_key": "_ngt_student_user_id",
+            "meta_value": "247"
+        },
+        {
+            "meta_key": "_ngt_parent_user_id",
+            "meta_value": "243"
+        },
+        {
+            "meta_key": "_ngt_subject",
+            "meta_value": "Mathematics"
+        },
+        {
+            "meta_key": "_ngt_duration_minutes",
+            "meta_value": "60"
+        },
+        {
+            "meta_key": "_ngt_product_id",
+            "meta_value": "57658"
+        },
+        {
+            "meta_key": "_ngt_scheduled_start",
+            "meta_value": "2026-08-12 23:07:47"
+        }
+    ],
+    "43": [
+        {
+            "meta_key": "_ngt_booking_id",
+            "meta_value": "177"
+        },
+        {
+            "meta_key": "_ngt_tutor_user_id",
+            "meta_value": "250"
+        },
+        {
+            "meta_key": "_ngt_student_user_id",
+            "meta_value": "246"
+        },
+        {
+            "meta_key": "_ngt_parent_user_id",
+            "meta_value": "246"
+        },
+        {
+            "meta_key": "_ngt_subject",
+            "meta_value": "English"
+        },
+        {
+            "meta_key": "_ngt_duration_minutes",
+            "meta_value": "60"
+        },
+        {
+            "meta_key": "_ngt_product_id",
+            "meta_value": "57658"
+        },
+        {
+            "meta_key": "_ngt_scheduled_start",
+            "meta_value": "2026-08-19 19:39:07"
+        }
+    ]
+}

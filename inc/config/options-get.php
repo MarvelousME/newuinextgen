@@ -132,7 +132,33 @@ function bi_get_header_style( $post_id = 0 ) {
 }
 
 function bi_get_footer_style( $post_id = 0 ) {
-    $style = sanitize_key( bi_get_theme_option( 'footer_style', 'default', $post_id ) );
-    $allowed = array_keys( bi_get_list_footer_styles() );
-    return in_array( $style, $allowed, true ) ? $style : 'default';
+	$post_id = $post_id ?: ( is_singular() ? (int) get_queried_object_id() : 0 );
+	$allowed = array_keys( bi_get_list_footer_styles() );
+
+	// Dashboards keep the compact chrome; marketing pages use the full migrated footer.
+	if ( $post_id > 0 ) {
+		$slug = (string) get_post_field( 'post_name', $post_id );
+		if ( $slug && function_exists( 'bi_page_type' ) && in_array( bi_page_type( $slug ), [ 'dashboard', 'admin' ], true ) ) {
+			return 'minimal';
+		}
+
+		$meta = get_post_meta( $post_id, 'bi_options', true );
+		$meta = is_array( $meta ) ? $meta : [];
+		if ( isset( $meta['footer_style'] ) && ! bi_is_inherit( $meta['footer_style'] ) ) {
+			$style = sanitize_key( $meta['footer_style'] );
+			if ( in_array( $style, $allowed, true ) ) {
+				// Never allow marketing pages to stay locked on dashboard minimal after migration.
+				if ( 'minimal' === $style && function_exists( 'bi_page_type' ) && 'dashboard' !== bi_page_type( $slug ) && 'admin' !== bi_page_type( $slug ) ) {
+					return 'default';
+				}
+				return $style;
+			}
+		}
+	}
+
+	$style = sanitize_key( bi_get_theme_option( 'footer_style', 'default', $post_id ) );
+	if ( 'minimal' === $style && ( ! $post_id || ( function_exists( 'bi_page_type' ) && ! in_array( bi_page_type( (string) get_post_field( 'post_name', $post_id ) ), [ 'dashboard', 'admin' ], true ) ) ) ) {
+		return 'default';
+	}
+	return in_array( $style, $allowed, true ) ? $style : 'default';
 }

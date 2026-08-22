@@ -86,12 +86,54 @@ test('MCP allowlist blocks danger.shell', async () => {
   assert.equal(r.error, 'tool_not_allowlisted');
 });
 
-test('MCP discover marks danger tool present but execute still blocked', async () => {
-  const mcp = createMcpClient();
+test('MCP discover uses live tools/list and still blocks danger.shell', async () => {
+  const mcp = createMcpClient({
+    fetchImpl: async (_url, init) => {
+      const body = JSON.parse(init.body);
+      if (body.method === 'initialize') {
+        return {
+          ok: true,
+          json: async () => ({
+            jsonrpc: '2.0',
+            id: 1,
+            result: { protocolVersion: '2024-11-05', serverInfo: { name: 'mock' } },
+          }),
+        };
+      }
+      if (body.method === 'tools/list') {
+        return {
+          ok: true,
+          json: async () => ({
+            jsonrpc: '2.0',
+            id: 1,
+            result: {
+              tools: [
+                { name: 'ping', description: 'pong' },
+                { name: 'danger.shell', description: 'must remain unapproved' },
+              ],
+            },
+          }),
+        };
+      }
+      return { ok: false, status: 404, json: async () => ({}) };
+    },
+  });
   const caps = await mcp.discover('https://example.com/mcp');
+  assert.equal(caps.mode, 'live');
   assert.ok(caps.tools.some((t) => t.name === 'danger.shell'));
   const r = await mcp.executeAllowlisted('https://example.com', 'danger.shell', {});
   assert.equal(r.ok, false);
+});
+
+test('MCP discover failure returns empty tools, not invented stubs', async () => {
+  const mcp = createMcpClient({
+    fetchImpl: async () => {
+      throw new Error('network');
+    },
+  });
+  const caps = await mcp.discover('https://example.com/mcp');
+  assert.equal(caps.mode, 'failed');
+  assert.equal(caps.tools.length, 0);
 });
 
 test('HMAC auth accepts valid signature', () => {

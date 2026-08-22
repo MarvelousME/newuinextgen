@@ -85,8 +85,9 @@ final class NGC_Demo_Admin {
 						'run_journeys'    => [ __( 'Run all journeys', 'nextgencompanion' ), '', 'ngc-demo-run-journeys' ],
 						'export_evidence' => [ __( 'Export evidence', 'nextgencompanion' ), '', 'ngc-demo-export' ],
 						'advance_day'     => [ __( 'Advance clock +1 day', 'nextgencompanion' ), '', 'ngc-demo-advance' ],
-						'process_queues'  => [ __( 'Process schedulers', 'nextgencompanion' ), '', 'ngc-demo-queues' ],
-						'reset'           => [ __( 'Reset all demo', 'nextgencompanion' ), '', 'ngc-demo-reset' ],
+						'process_queues'     => [ __( 'Process schedulers', 'nextgencompanion' ), '', 'ngc-demo-queues' ],
+						'seed_join_window'   => [ __( 'Seed in-window classroom', 'nextgencompanion' ), 'button-primary', 'ngc-demo-seed-join' ],
+						'reset'              => [ __( 'Reset all demo', 'nextgencompanion' ), '', 'ngc-demo-reset' ],
 					];
 					foreach ( $ops as $op_key => $meta ) :
 						[ $label, $extra_class, $testid ] = $meta;
@@ -209,6 +210,12 @@ final class NGC_Demo_Admin {
 			case 'reset':
 				$result = NGC_Demo_Reset::reset( 'all' );
 				$msg    = is_wp_error( $result ) ? $result->get_error_message() : 'Reset complete';
+				break;
+			case 'seed_join_window':
+				$result = NGC_Demo_Seeder::seed_classroom_join_window();
+				$msg    = is_wp_error( $result )
+					? $result->get_error_message()
+					: sprintf( 'Join window seeded session %s booking %s', (string) ( $result['session_id'] ?? '' ), (string) ( $result['booking_id'] ?? '' ) );
 				break;
 		}
 		set_transient( 'ngc_demo_flash_' . get_current_user_id(), $msg, 120 );

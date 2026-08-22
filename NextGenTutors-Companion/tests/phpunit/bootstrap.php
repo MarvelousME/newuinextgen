@@ -11,6 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', $root . '/tests-stub/' );
 }
 
+if ( ! defined( 'WP_ENVIRONMENT_TYPE' ) ) {
+	define( 'WP_ENVIRONMENT_TYPE', 'local' );
+}
+
 if ( ! defined( 'WP_PLUGIN_DIR' ) ) {
 	define( 'WP_PLUGIN_DIR', ABSPATH . 'wp-content/plugins' );
 }

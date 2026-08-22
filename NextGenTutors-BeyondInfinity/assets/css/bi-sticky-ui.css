@@ -44,8 +44,12 @@ body.bi-ngt-skin .ngt-nav {
     z-index: var(--bi-z-header) !important;
   }
 
+  body.ngt-offcanvas-open .ngt-nav {
+    z-index: var(--ngt-z-header-elevated, 500) !important;
+  }
+
   .ngt-nav__menu {
-    z-index: calc(var(--bi-z-header) + 10);
+    z-index: 2;
   }
 }
 

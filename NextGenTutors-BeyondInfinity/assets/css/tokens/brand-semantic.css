@@ -1,0 +1,130 @@
+/**
+ * Brand semantic tokens — canonical naming for BeyondInfinity Brand Style Kit.
+ * Maps directive vocabulary (--ngt-color-brand-*) to skin-driven --ngt-* values.
+ * Loaded after unified.css; do not hard-code hex here.
+ */
+
+:root {
+  /* Colour — brand */
+  --ngt-color-brand-primary: var(--ngt-primary);
+  --ngt-color-brand-primary-hover: var(--ngt-primary-dark);
+  --ngt-color-brand-primary-active: var(--ngt-primary-dark);
+  --ngt-color-brand-secondary: var(--ngt-secondary);
+  --ngt-color-brand-accent: var(--ngt-accent);
+
+  /* Colour — text */
+  --ngt-color-text-primary: var(--ngt-text);
+  --ngt-color-text-secondary: var(--ngt-text-2);
+  --ngt-color-text-muted: var(--ngt-text-3);
+  --ngt-color-text-inverse: var(--ngt-text-invert, #ffffff);
+
+  /* Colour — surfaces */
+  --ngt-color-bg-page: var(--ngt-bg);
+  --ngt-color-bg-subtle: var(--ngt-surface-2, #f1f5f9);
+  --ngt-color-bg-elevated: var(--ngt-surface);
+  --ngt-color-bg-inverse: var(--ngt-primary-dark);
+
+  /* Colour — borders */
+  --ngt-color-border: var(--ngt-border);
+  --ngt-color-border-strong: var(--ngt-border-light, var(--ngt-border));
+
+  /* Colour — feedback */
+  --ngt-color-success: var(--ngt-success);
+  --ngt-color-warning: var(--ngt-warning);
+  --ngt-color-danger: var(--ngt-error);
+  --ngt-color-info: var(--ngt-info, #0369a1);
+
+  /* Typography families */
+  --ngt-font-family-display: var(--ngt-font-display);
+  --ngt-font-family-body: var(--ngt-font-body);
+  --ngt-font-family-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+
+  --ngt-font-weight-regular: 400;
+  --ngt-font-weight-medium: 500;
+  --ngt-font-weight-semibold: 600;
+  --ngt-font-weight-bold: 700;
+
+  /* Typography roles */
+  --ngt-type-display-xl: var(--ngt-text-3xl);
+  --ngt-type-display-lg: var(--ngt-text-2xl);
+  --ngt-type-h1: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+  --ngt-type-h2: clamp(1.625rem, 1.35rem + 1.1vw, 2.125rem);
+  --ngt-type-h3: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --ngt-type-h4: clamp(1.125rem, 1.05rem + 0.35vw, 1.375rem);
+  --ngt-type-h5: 1.0625rem;
+  --ngt-type-h6: 1rem;
+  --ngt-type-body-lg: var(--ngt-text-lg);
+  --ngt-type-body: var(--ngt-text-base);
+  --ngt-type-body-sm: var(--ngt-text-sm);
+  --ngt-type-caption: var(--ngt-text-xs);
+  --ngt-type-label: var(--ngt-text-sm);
+  --ngt-type-button: var(--ngt-text-sm);
+  --ngt-type-overline: 0.6875rem;
+
+  /* Spacing — numeric scale */
+  --ngt-space-1: 2px;
+  --ngt-space-2: 4px;
+  --ngt-space-3: 8px;
+  --ngt-space-4: 12px;
+  --ngt-space-5: 16px;
+  --ngt-space-6: 20px;
+  --ngt-space-7: 24px;
+  --ngt-space-8: 32px;
+  --ngt-space-9: 40px;
+  --ngt-space-10: 48px;
+  --ngt-space-11: 64px;
+  --ngt-space-12: 80px;
+  --ngt-space-13: 96px;
+  --ngt-space-14: 128px;
+
+  /* Spacing — semantic layout */
+  --ngt-section-space-sm: var(--ngt-space-8);
+  --ngt-section-space-md: var(--ngt-space-10);
+  --ngt-section-space-lg: var(--ngt-space-11);
+  --ngt-container-gutter: var(--ngt-content-pad, clamp(1rem, 4vw, 2rem));
+  --ngt-component-gap: var(--ngt-grid-gap, clamp(16px, 2vw, 24px));
+
+  /* Layout widths */
+  --ngt-container-narrow: 720px;
+  --ngt-container-default: var(--ngt-layout-max, 1280px);
+  --ngt-container-wide: 1440px;
+
+  /* Radius — extended */
+  --ngt-radius-xs: 4px;
+  --ngt-radius-2xl: 32px;
+  --ngt-radius-pill: var(--ngt-radius-full);
+
+  /* Motion — semantic */
+  --ngt-duration-fast: var(--ngt-duration-fast, 150ms);
+  --ngt-duration-normal: var(--ngt-duration, 250ms);
+  --ngt-duration-slow: var(--ngt-duration-slow, 400ms);
+  --ngt-ease-standard: var(--ngt-ease-out, cubic-bezier(0, 0, 0.2, 1));
+  --ngt-ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ngt-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ngt-ease-emphasized: var(--ngt-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+
+  /* Component aliases — buttons */
+  --ngt-button-primary-bg: var(--ngt-color-brand-secondary);
+  --ngt-button-primary-text: var(--ngt-color-text-inverse);
+  --ngt-button-primary-bg-hover: var(--ngt-secondary-dark);
+  --ngt-button-radius: var(--ngt-radius-md);
+  --ngt-button-padding-y: 0.75rem;
+  --ngt-button-padding-x: 1.25rem;
+
+  /* Component aliases — forms */
+  --ngt-form-control-bg: var(--ngt-color-bg-elevated);
+  --ngt-form-control-border: var(--ngt-color-border);
+  --ngt-form-control-text: var(--ngt-color-text-primary);
+  --ngt-form-control-radius: var(--ngt-radius-md);
+  --ngt-form-control-focus: var(--ngt-focus-ring);
+
+  /* Component aliases — cards */
+  --ngt-card-bg: var(--ngt-color-bg-elevated);
+  --ngt-card-border: var(--ngt-color-border);
+  --ngt-card-radius: var(--ngt-radius-lg);
+  --ngt-card-shadow: var(--ngt-shadow-md);
+  --ngt-card-padding: var(--ngt-space-7);
+
+  /* Elevation aliases */
+  --ngt-shadow-xs: 0 1px 2px rgba(15, 26, 47, 0.05);
+}

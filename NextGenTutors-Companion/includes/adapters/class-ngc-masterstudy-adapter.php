@@ -179,4 +179,197 @@ class NGC_Masterstudy_Adapter extends NGC_Adapter_Base {
 			'id'   => (int) get_user_meta( $user_id, 'ngc_stm_' . $type . '_id', true ),
 		];
 	}
+
+	/**
+	 * Ensure subject course + student enrollment + session lesson association.
+	 *
+	 * @param array<string, mixed> $ctx Context.
+	 * @return array<string, mixed>
+	 */
+	public function ensure_session_learning( $ctx ) {
+		if ( ! $this->is_available() ) {
+			return $this->handle_error( 'masterstudy_unavailable', __( 'MasterStudy LMS is not active.', 'nextgencompanion' ) );
+		}
+
+		$student = (int) ( $ctx['student_user_id'] ?? 0 );
+		$tutor   = (int) ( $ctx['tutor_user_id'] ?? 0 );
+		$subject = sanitize_text_field( (string) ( $ctx['subject'] ?? 'General' ) );
+		$session = (int) ( $ctx['session_id'] ?? 0 );
+
+		if ( $student ) {
+			$this->create_or_update( 'create_student', [ 'user_id' => $student ] );
+		}
+		if ( $tutor ) {
+			$this->create_or_update( 'create_instructor', [ 'user_id' => $tutor ] );
+		}
+
+		$course_id = $this->resolve_or_create_subject_course( $subject, $tutor );
+		$lesson_id = 0;
+		if ( $course_id && $session ) {
+			$lesson_id = $this->resolve_or_create_session_lesson( $course_id, $session, $subject, (string) ( $ctx['correlation_id'] ?? '' ) );
+		}
+
+		if ( $course_id && $student && function_exists( 'stm_lms_add_user_course' ) ) {
+			stm_lms_add_user_course(
+				[
+					'user_id'   => $student,
+					'course_id' => $course_id,
+				]
+			);
+		} elseif ( $course_id && $student ) {
+			// Meta enrollment marker when API absent.
+			$enrolled = get_user_meta( $student, 'ngc_stm_enrolled_courses', true );
+			if ( ! is_array( $enrolled ) ) {
+				$enrolled = [];
+			}
+			if ( ! in_array( $course_id, $enrolled, true ) ) {
+				$enrolled[] = $course_id;
+				update_user_meta( $student, 'ngc_stm_enrolled_courses', $enrolled );
+			}
+		}
+
+		if ( class_exists( 'NGC_Audit' ) ) {
+			NGC_Audit::log(
+				'masterstudy_enrolled',
+				'session',
+				$session,
+				[
+					'course_id' => $course_id,
+					'lesson_id' => $lesson_id,
+					'student'   => $student,
+				]
+			);
+		}
+
+		return [
+			'ok'            => true,
+			'course_id'     => $course_id,
+			'lesson_id'     => $lesson_id,
+			'lesson_status' => $course_id ? 'linked' : 'unresolved',
+		];
+	}
+
+	/**
+	 * @param string $subject Subject.
+	 * @param int    $tutor   Tutor user ID.
+	 * @return int
+	 */
+	private function resolve_or_create_subject_course( $subject, $tutor ) {
+		$key = 'ngt-subject-' . sanitize_title( $subject );
+		$existing = get_posts(
+			[
+				'post_type'      => 'stm-courses',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => '_ngt_subject_course_key', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => $key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			]
+		);
+		if ( $existing ) {
+			return (int) $existing[0];
+		}
+
+		// Fallback CPT names used by some MasterStudy installs.
+		$post_type = post_type_exists( 'stm-courses' ) ? 'stm-courses' : ( post_type_exists( 'stm_lms_course' ) ? 'stm_lms_course' : '' );
+		if ( ! $post_type ) {
+			return 0;
+		}
+
+		$course_id = wp_insert_post(
+			[
+				'post_type'   => $post_type,
+				'post_status' => 'publish',
+				'post_title'  => sprintf(
+					/* translators: %s: subject */
+					__( 'NextGen Tutors — %s', 'nextgencompanion' ),
+					$subject
+				),
+				'post_author' => $tutor > 0 ? $tutor : get_current_user_id(),
+			],
+			true
+		);
+		if ( is_wp_error( $course_id ) || ! $course_id ) {
+			return 0;
+		}
+		update_post_meta( (int) $course_id, '_ngt_subject_course_key', $key );
+		return (int) $course_id;
+	}
+
+	/**
+	 * @param int    $course_id Course.
+	 * @param int    $session_id Session.
+	 * @param string $subject Subject.
+	 * @param string $correlation Correlation.
+	 * @return int
+	 */
+	private function resolve_or_create_session_lesson( $course_id, $session_id, $subject, $correlation ) {
+		$key = 'ngt-session-lesson-' . (int) $session_id;
+		$existing = get_posts(
+			[
+				'post_type'      => [ 'stm-lessons', 'stm_lms_lesson', 'lesson' ],
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => '_ngt_session_lesson_key', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => $key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			]
+		);
+		if ( $existing ) {
+			return (int) $existing[0];
+		}
+
+		$lesson_type = post_type_exists( 'stm-lessons' ) ? 'stm-lessons' : ( post_type_exists( 'stm_lms_lesson' ) ? 'stm_lms_lesson' : '' );
+		if ( ! $lesson_type ) {
+			// Persist association on course meta when lesson CPT missing.
+			update_post_meta( $course_id, $key, $correlation );
+			return 0;
+		}
+
+		$lesson_id = wp_insert_post(
+			[
+				'post_type'   => $lesson_type,
+				'post_status' => 'publish',
+				'post_title'  => sprintf(
+					/* translators: 1: subject 2: session id */
+					__( '%1$s — Session #%2$d', 'nextgencompanion' ),
+					$subject,
+					$session_id
+				),
+				'post_parent' => $course_id,
+			],
+			true
+		);
+		if ( is_wp_error( $lesson_id ) || ! $lesson_id ) {
+			return 0;
+		}
+		update_post_meta( (int) $lesson_id, '_ngt_session_lesson_key', $key );
+		update_post_meta( (int) $lesson_id, '_ngt_session_id', (int) $session_id );
+		update_post_meta( (int) $lesson_id, '_ngt_correlation_id', sanitize_text_field( $correlation ) );
+		update_post_meta( (int) $lesson_id, 'course_id', (int) $course_id );
+		if ( class_exists( 'NGC_Audit' ) ) {
+			NGC_Audit::log( 'lesson_resolved', 'session', $session_id, [ 'lesson_id' => (int) $lesson_id, 'course_id' => $course_id ] );
+		}
+		return (int) $lesson_id;
+	}
+
+	/**
+	 * @param int $course_id Course ID.
+	 * @param int $lesson_id Lesson ID.
+	 * @return string
+	 */
+	public function course_player_url( $course_id, $lesson_id = 0 ) {
+		$course_id = (int) $course_id;
+		if ( $course_id <= 0 ) {
+			return '';
+		}
+		$url = get_permalink( $course_id );
+		if ( ! $url ) {
+			return '';
+		}
+		if ( (int) $lesson_id > 0 ) {
+			$url = add_query_arg( [ 'lesson_id' => (int) $lesson_id ], $url );
+		}
+		return $url;
+	}
 }

@@ -98,7 +98,7 @@ $updated = '1 January 2025';
           <li>Treat Tutors with respect. Abusive or harassing behaviour will result in account suspension.</li>
           <li>Attend booked sessions on time. Sessions missed without 24-hour notice may incur a cancellation fee.</li>
           <li>Pay for sessions only through the Platform using PayFast.</li>
-          <li>Not share session recordings or materials without the Tutor's written consent.</li>
+          <li>Not share lesson materials without the Tutor's written consent.</li>
         </ul>
       </section>
 

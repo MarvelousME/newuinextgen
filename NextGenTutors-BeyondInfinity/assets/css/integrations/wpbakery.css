@@ -1,0 +1,70 @@
+/**
+ * WPBakery Page Builder adapter — progressive normalization via semantic classes.
+ */
+
+.wpb-js-composer .vc_row {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+}
+
+.wpb-js-composer .vc_row[data-vc-full-width="true"] {
+  max-width: none;
+}
+
+.wpb-js-composer .vc_column-inner {
+  padding-left: calc(var(--ngt-container-gutter) / 2);
+  padding-right: calc(var(--ngt-container-gutter) / 2);
+}
+
+.wpb-js-composer h1,
+.wpb-js-composer h2,
+.wpb-js-composer h3,
+.wpb-js-composer h4 {
+  font-family: var(--ngt-font-family-display);
+  color: var(--ngt-color-text-primary);
+}
+
+.wpb-js-composer p,
+.wpb-js-composer .wpb_text_column {
+  font-family: var(--ngt-font-family-body);
+  color: var(--ngt-color-text-secondary);
+}
+
+.vc_btn3-container .vc_btn3,
+.wpb-js-composer .ngt-btn {
+  font-family: var(--ngt-font-family-body);
+  font-weight: var(--ngt-font-weight-semibold);
+  border-radius: var(--ngt-button-radius);
+}
+
+.vc_btn3.vc_btn3-color-primary,
+.vc_btn3.vc_btn3-style-modern {
+  background-color: var(--ngt-button-primary-bg);
+  border-color: var(--ngt-button-primary-bg);
+  color: var(--ngt-button-primary-text);
+}
+
+.vc_btn3.vc_btn3-color-primary:hover,
+.vc_btn3.vc_btn3-style-modern:hover {
+  background-color: var(--ngt-button-primary-bg-hover);
+  border-color: var(--ngt-button-primary-bg-hover);
+  color: var(--ngt-button-primary-text);
+}
+
+.wpb-js-composer .ngt-card,
+.wpb-js-composer .ngt-card--tutor {
+  background: var(--ngt-card-bg);
+  border: 1px solid var(--ngt-card-border);
+  border-radius: var(--ngt-card-radius);
+  box-shadow: var(--ngt-card-shadow);
+}
+
+.vc_tta-color-blue.vc_tta-style-modern .vc_tta-panel .vc_tta-panel-title > a {
+  font-family: var(--ngt-font-family-display);
+  color: var(--ngt-color-text-primary);
+}
+
+.vc_tta-color-blue.vc_tta-style-modern .vc_tta-panel.vc_active .vc_tta-panel-title > a {
+  color: var(--ngt-color-brand-secondary);
+}

@@ -31,9 +31,25 @@ final class NGT_Hub_Companion_Delegate {
 		if ( null === self::$companion_active ) {
 			self::$companion_active = defined( 'NGC_VERSION' )
 				|| class_exists( 'NGC_Plugin', false )
-				|| class_exists( 'NGC_Payout_Scheduler', false );
+				|| class_exists( 'NGC_Payout_Scheduler', false )
+				|| class_exists( 'NGC_Bookings', false )
+				|| class_exists( 'NGC_Workflow_Authority', false );
 		}
 		return (bool) self::$companion_active;
+	}
+
+	/**
+	 * When Companion (or workflow authority) is present, Hub must not own finance/matching writes.
+	 */
+	public static function domain_writes_blocked(): bool {
+		if ( ! self::companion_active() ) {
+			return false;
+		}
+		if ( class_exists( 'NGC_Platform', false ) && method_exists( 'NGC_Platform', 'authority_enabled' ) ) {
+			return (bool) NGC_Platform::authority_enabled();
+		}
+		// Companion present without kill-switch API → still block dual finance/matching.
+		return true;
 	}
 
 	/**

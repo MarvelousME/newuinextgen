@@ -60,33 +60,33 @@ function bi_brand_content() {
 		],
 		'mission'       => [
 			'eyebrow' => __( 'Mission & values', 'beyondinfinity' ),
-			'title'   => __( 'What drives us every day', 'beyondinfinity' ),
-			'lead'    => __( 'Every South African student deserves access to a great tutor — regardless of where they live, what school they attend, or what their family can afford.', 'beyondinfinity' ),
+			'title'   => __( 'Our Mission', 'beyondinfinity' ),
+			'lead'    => __( 'Every South African student deserves access to a great tutor — regardless of where they live, what school they attend, or what their family can afford. Whether you\'re in Soweto or Stellenbosch, Durban or Polokwane — we\'ve got you covered.', 'beyondinfinity' ),
 		],
 		'values'        => [
 			[
-				'title' => __( 'Access for all', 'beyondinfinity' ),
-				'text'  => __( 'Every South African learner deserves quality education support, regardless of location or economic background.', 'beyondinfinity' ),
+				'title' => __( 'Access', 'beyondinfinity' ),
+				'text'  => __( 'Tutoring for every grade, every subject, all 9 provinces — regardless of location or economic background.', 'beyondinfinity' ),
 			],
 			[
-				'title' => __( 'Safety first', 'beyondinfinity' ),
-				'text'  => __( 'Rigorous verification ensures every tutor is ID-verified, qualified, and background-checked before the first lesson.', 'beyondinfinity' ),
+				'title' => __( 'Quality', 'beyondinfinity' ),
+				'text'  => __( 'Every tutor is vetted. Every session is guaranteed. Credentials, reviews and curriculum fit before the first lesson.', 'beyondinfinity' ),
+			],
+			[
+				'title' => __( 'Fairness', 'beyondinfinity' ),
+				'text'  => __( 'Transparent pricing for families. Tutors keep the majority of every session with clear platform fees.', 'beyondinfinity' ),
+			],
+			[
+				'title' => __( 'Safety', 'beyondinfinity' ),
+				'text'  => __( 'ID-verified tutors, secure payments, and a POPIA-aligned platform built for child safeguarding.', 'beyondinfinity' ),
 			],
 			[
 				'title' => __( 'Empower educators', 'beyondinfinity' ),
 				'text'  => __( 'We give South African teachers flexible income opportunities and professional development resources.', 'beyondinfinity' ),
 			],
 			[
-				'title' => __( 'Measurable results', 'beyondinfinity' ),
-				'text'  => __( 'Data-driven progress tracking, assessments, and transparent reporting for parents.', 'beyondinfinity' ),
-			],
-			[
 				'title' => __( 'Proudly South African', 'beyondinfinity' ),
-				'text'  => __( 'Built for the South African curriculum — CAPS, IEB and Cambridge — by South Africans who understand local education challenges.', 'beyondinfinity' ),
-			],
-			[
-				'title' => __( 'Continuous innovation', 'beyondinfinity' ),
-				'text'  => __( 'We keep improving the platform with new features, resources, and learning tools for families and tutors.', 'beyondinfinity' ),
+				'text'  => __( 'Built for CAPS, IEB and Cambridge by South Africans who understand local education challenges.', 'beyondinfinity' ),
 			],
 		],
 		'trust_pillars' => [

@@ -1,0 +1,13 @@
+{
+  "run_id": "bc-wave1-20260814",
+  "persona": "demo.parent@nextgen.local",
+  "booking_id": 185,
+  "session_id": 27,
+  "order_note": "historical confirmed chain from 2026-08-09 E2E; not a new PayFast settlement this run",
+  "join": {
+    "http": 409,
+    "code": "ngc_join_window",
+    "reason": "too_late",
+    "closes_at": "2026-08-09T13:01:57+00:00"
+  }
+}

@@ -83,7 +83,8 @@ function bi_get_list_body_styles( $prepend_inherit = false ) {
 
 function bi_get_list_home_layouts() {
     return [
-        'kinetic' => __( 'Kinetic homepage', 'beyondinfinity' ),
-        'classic' => __( 'Classic (legacy sections)', 'beyondinfinity' ),
+        'kinetic'   => __( 'Kinetic homepage (PHP)', 'beyondinfinity' ),
+        'elementor' => __( 'Elementor-native homepage', 'beyondinfinity' ),
+        'classic'   => __( 'Classic (legacy sections)', 'beyondinfinity' ),
     ];
 }

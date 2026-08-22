@@ -16,8 +16,11 @@ if ( ! defined( 'NGT_AGENT_GATEWAY_URL' ) ) {
 }
 if ( ! defined( 'NGT_GATEWAY_SHARED_SECRET' ) ) {
 	$secret = getenv( 'NGT_GATEWAY_SHARED_SECRET' );
-	if ( ! $secret ) {
-		$secret = 'staging-local-secret';
+	$env    = getenv( 'WP_ENVIRONMENT_TYPE' );
+	if ( ! is_string( $secret ) || '' === $secret ) {
+		$secret = ( is_string( $env ) && 'production' === strtolower( $env ) )
+			? ''
+			: 'staging-local-secret';
 	}
 	define( 'NGT_GATEWAY_SHARED_SECRET', $secret );
 }

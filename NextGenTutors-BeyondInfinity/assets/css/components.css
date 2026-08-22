@@ -303,10 +303,12 @@
 .bi-dashboard-rest__error { color: #b91c1c; padding: 16px; border-radius: 8px; background: #fef2f2; }
 .bi-dashboard-rest__error .bi-dash-retry { margin-top: 12px; }
 .bi-dash-join-error { color: #b91c1c; font-size: 0.85rem; margin: 8px 0 0; }
-.bi-dashboard-rest__heading { margin: 0 0 20px; font-size: 1.35rem; }
-.bi-dashboard-rest__toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.bi-dashboard-rest__heading { margin: 0 0 12px; font-size: 1.35rem; }
+.bi-dashboard-rest__toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.25rem 0 0; }
+.bi-dashboard-rest__body { min-height: 80px; }
 .bi-dash-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
 .bi-dash-chart { padding: 1rem; min-height: 220px; }
+.bi-dash-chart__title { margin: 0 0 8px; font-size: 0.95rem; }
 .bi-dash-chart canvas { width: 100% !important; height: 180px !important; }
 .bi-dash-kpi-grid {
   display: grid;
@@ -315,8 +317,13 @@
   margin-bottom: 24px;
 }
 .bi-dash-kpi { padding: 16px; text-align: center; }
+a.bi-dash-kpi { display: block; text-decoration: none; color: inherit; }
+a.bi-dash-kpi:hover { box-shadow: 0 0 0 2px var(--ngt-secondary, #059669); }
+a.bi-dash-kpi:focus-visible { outline: 2px solid var(--ngt-secondary, #059669); outline-offset: 2px; }
 .bi-dash-kpi__label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--ngt-text-3); }
 .bi-dash-kpi__value { font-size: 1.5rem; font-weight: 800; color: var(--ngt-primary); margin-top: 6px; }
+.bi-dash-session-list { list-style: none; margin: 0; padding: 0; }
+.bi-dash-app-status__next { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 12px 0 0; }
 
 /* Role-specific dashboard layout (Phase 4) */
 .bi-dash-hero {
@@ -351,6 +358,7 @@
   color: var(--ngt-primary, #0F1A2F);
   font-size: 0.82rem;
   font-weight: 600;
+  text-decoration: none;
 }
 .bi-dash-app-status { padding: 20px; margin-bottom: 20px; }
 .bi-dash-app-status__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }

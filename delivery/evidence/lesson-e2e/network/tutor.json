@@ -1,0 +1,37 @@
+[
+  {
+    "method": "GET",
+    "url": "http://localhost:8890/wp-content/plugins/ameliabooking/redesign/dist/amelia-angie.js?ver=9.5.1",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:8890/wp-content/plugins/ameliabooking/vendor/wordpress/abilities-api/packages/client/build/index.js?ver=a969272fbaa2f54966a9",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:8890/wp-content/plugins/ameliabooking/redesign/dist/chunks/_commonjsHelpers-DaWZu8wl.js",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:8890/wp-content/themes/nextgentutors-beyondinfinity/assets/css/ng-ui-booking.css?ver=1.9.28",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:8890/wp-json/ngc/v1/dashboard/tutor",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:8890/wp-content/themes/nextgentutors-beyondinfinity/assets/css/ng-ui-booking.css?ver=1.9.28",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:8890/wp-json/ngc/v1/dashboard/tutor",
+    "status": 200
+  }
+]

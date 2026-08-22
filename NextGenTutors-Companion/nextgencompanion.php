@@ -3,7 +3,7 @@
  * Plugin Name:       NextGenTutors-Companion
  * Plugin URI:        https://beyondinfinity.co.za/
  * Description:       Business logic, data layer, REST API, workflows, and multi-model BYOK AI suite for NextGen Tutors (BeyondInfinity theme).
- * Version:           1.9.19
+ * Version:           1.9.20
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            BeyondInfinity
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NGC_VERSION', '1.9.19' );
+define( 'NGC_VERSION', '1.9.20' );
 define( 'NGC_PLUGIN_FILE', __FILE__ );
 define( 'NGC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NGC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -67,8 +67,11 @@ function ngc_autoload( $class ) {
 		NGC_PLUGIN_DIR . 'includes/intelligence/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/platform/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/session/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/database/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/memory/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/talent/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/journeys/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/ports/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/ui-library/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/ui-library/providers/' . $relative,
 	];

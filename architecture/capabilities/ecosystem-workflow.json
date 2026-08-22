@@ -1,0 +1,20 @@
+{
+  "capabilities": [
+    {
+      "capabilityId": "ecosystem.workflow.authority",
+      "name": "Ecosystem workflow authority",
+      "description": "Single side-effect executor for NextGen journeys (maps to NGC_Workflow_Authority). Plugins are producers/adapters only.",
+      "provider": "companion",
+      "version": "1.0.0",
+      "contract": "architecture/contracts/ngt-journey-events.v1.json",
+      "protocol": "internal",
+      "requiredPermissions": ["ngc_manage_platform", "manage_options"],
+      "inputSchema": "architecture/contracts/ngt-journey-events.v1.json#/events",
+      "outputSchema": "architecture/contracts/ngt-journey-events.v1.json#/events",
+      "availability": "available",
+      "tenantScope": "tenant",
+      "lifecycleState": "active",
+      "tags": ["workflow", "journey", "orchestration"]
+    }
+  ]
+}

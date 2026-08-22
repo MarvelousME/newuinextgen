@@ -116,6 +116,7 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Orchestration_Cockpit_Admin',
 		'NGC_Intelligence',
 		'NGC_Platform',
+		'NGC_Journey_Bootstrap',
 		'NGC_Admin_Shell',
 		'NGC_Payout_Scheduler',
 		'NGC_Demo',

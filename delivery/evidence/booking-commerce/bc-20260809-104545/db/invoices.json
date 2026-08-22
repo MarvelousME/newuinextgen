@@ -1,0 +1,32 @@
+[
+    {
+        "id": "36",
+        "invoice_number": "NGC-INV-2026-01036",
+        "user_id": "243",
+        "booking_id": "176",
+        "order_id": "57718",
+        "amount": "320.00",
+        "currency": "ZAR",
+        "status": "paid"
+    },
+    {
+        "id": "37",
+        "invoice_number": "NGC-INV-2026-01037",
+        "user_id": "246",
+        "booking_id": "177",
+        "order_id": "57720",
+        "amount": "320.00",
+        "currency": "ZAR",
+        "status": "paid"
+    },
+    {
+        "id": "39",
+        "invoice_number": "NGC-INV-2026-01039",
+        "user_id": "243",
+        "booking_id": "176",
+        "order_id": "57718",
+        "amount": "320.00",
+        "currency": "ZAR",
+        "status": "paid"
+    }
+]

@@ -9,4 +9,11 @@ if ($LASTEXITCODE -ne 0) { throw 'apply-defaults failed' }
 
 Write-Host ''
 Write-Host 'Site loaded with defaults:'
-Write-Host '  http://localhost:8900'
+$wpPort = '8890'
+$envFile = Join-Path $docker '.env'
+if (Test-Path $envFile) {
+    Get-Content $envFile | ForEach-Object {
+        if ($_ -match '^\s*WP_PORT=(.+)$') { $wpPort = $Matches[1].Trim() }
+    }
+}
+Write-Host "  http://localhost:$wpPort"

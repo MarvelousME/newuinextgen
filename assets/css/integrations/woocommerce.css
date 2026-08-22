@@ -1,0 +1,75 @@
+/**
+ * WooCommerce adapter — checkout/cart/account normalized to brand tokens.
+ */
+
+.woocommerce .button,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit {
+  font-family: var(--ngt-font-family-body);
+  font-weight: var(--ngt-font-weight-semibold);
+  background: var(--ngt-button-primary-bg);
+  color: var(--ngt-button-primary-text);
+  border-radius: var(--ngt-button-radius);
+  border: none;
+  padding: var(--ngt-button-padding-y) var(--ngt-button-padding-x);
+  transition: background-color var(--ngt-duration-normal) var(--ngt-ease-standard);
+}
+
+.woocommerce .button:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover {
+  background: var(--ngt-button-primary-bg-hover);
+  color: var(--ngt-button-primary-text);
+}
+
+.woocommerce .button.alt,
+.woocommerce #payment #place_order {
+  background: var(--ngt-color-brand-accent);
+  color: var(--ngt-color-text-primary);
+}
+
+.woocommerce form .form-row input.input-text,
+.woocommerce form .form-row textarea,
+.woocommerce form .form-row select {
+  background: var(--ngt-form-control-bg);
+  border: 1px solid var(--ngt-form-control-border);
+  border-radius: var(--ngt-form-control-radius);
+  color: var(--ngt-form-control-text);
+  font-family: var(--ngt-font-family-body);
+}
+
+.woocommerce form .form-row input.input-text:focus,
+.woocommerce form .form-row textarea:focus {
+  border-color: var(--ngt-form-control-focus);
+  outline: var(--ngt-focus-ring-width) solid var(--ngt-focus-ring);
+  outline-offset: var(--ngt-focus-ring-offset);
+}
+
+.woocommerce-message,
+.woocommerce-info {
+  border-top-color: var(--ngt-color-brand-secondary);
+  background: var(--ngt-color-bg-subtle);
+  color: var(--ngt-color-text-primary);
+}
+
+.woocommerce-error {
+  border-top-color: var(--ngt-color-danger);
+  background: var(--ngt-error-bg, #fee2e2);
+  color: var(--ngt-color-text-primary);
+}
+
+.woocommerce .price,
+.woocommerce ul.products li.product .price {
+  color: var(--ngt-color-brand-primary);
+  font-weight: var(--ngt-font-weight-bold);
+}
+
+.woocommerce ul.products li.product,
+.woocommerce .ngt-card {
+  background: var(--ngt-card-bg);
+  border: 1px solid var(--ngt-card-border);
+  border-radius: var(--ngt-card-radius);
+  box-shadow: var(--ngt-card-shadow);
+}

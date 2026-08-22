@@ -29,9 +29,72 @@ final class NGC_Demo_Env {
 	}
 
 	/**
+	 * WordPress environment type. Fail closed to production on public hosts.
+	 *
+	 * @return string
+	 */
+	public static function environment() {
+		if ( isset( $GLOBALS['ngc_test_environment'] ) && is_string( $GLOBALS['ngc_test_environment'] ) && '' !== $GLOBALS['ngc_test_environment'] ) {
+			return strtolower( $GLOBALS['ngc_test_environment'] );
+		}
+		if ( defined( 'WP_ENVIRONMENT_TYPE' ) && WP_ENVIRONMENT_TYPE ) {
+			return strtolower( (string) WP_ENVIRONMENT_TYPE );
+		}
+		$from_env = getenv( 'WP_ENVIRONMENT_TYPE' );
+		if ( is_string( $from_env ) && '' !== $from_env ) {
+			return strtolower( $from_env );
+		}
+		if ( function_exists( 'wp_get_environment_type' ) ) {
+			return strtolower( (string) wp_get_environment_type() );
+		}
+		$host = function_exists( 'home_url' ) ? wp_parse_url( home_url(), PHP_URL_HOST ) : '';
+		if ( in_array( $host, [ 'localhost', '127.0.0.1' ], true ) || ( is_string( $host ) && str_ends_with( $host, '.local' ) ) ) {
+			return 'local';
+		}
+		return 'production';
+	}
+
+	/**
+	 * @return bool
+	 */
+	public static function is_production_environment() {
+		$env = self::environment();
+		if ( in_array( $env, [ 'production', 'prod' ], true ) ) {
+			return true;
+		}
+		$host = function_exists( 'home_url' ) ? wp_parse_url( home_url(), PHP_URL_HOST ) : '';
+		return is_string( $host ) && false !== stripos( $host, 'nextgentutors.co.za' );
+	}
+
+	/**
+	 * Demo CPT/user seed — production cannot enable this via constant or option.
+	 *
+	 * @return bool
+	 */
+	public static function seed_allowed() {
+		if ( self::is_production_environment() ) {
+			return false;
+		}
+		$env_flag = getenv( 'NGC_ALLOW_DEMO_SEED' );
+		if ( is_string( $env_flag ) && in_array( strtolower( trim( $env_flag ) ), [ '0', 'false', 'no', 'off' ], true ) ) {
+			return false;
+		}
+		if ( apply_filters( 'ngc_demo_seed_allowed', null ) === false ) {
+			return false;
+		}
+		if ( defined( 'NGC_ALLOW_DEMO_SEED' ) && NGC_ALLOW_DEMO_SEED ) {
+			return (bool) apply_filters( 'ngc_demo_seed_allowed', true );
+		}
+		return false;
+	}
+
+	/**
 	 * @return bool
 	 */
 	public static function is_demo_mode() {
+		if ( self::is_production_environment() ) {
+			return false;
+		}
 		if ( defined( 'NGC_DEMO_MODE' ) && NGC_DEMO_MODE ) {
 			return true;
 		}
@@ -112,12 +175,11 @@ final class NGC_Demo_Env {
 	 * @return true|WP_Error
 	 */
 	public static function assert_demo_ops_allowed() {
-		$env = function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production';
-		if ( in_array( $env, [ 'production', 'prod' ], true ) && ! self::is_demo_mode() ) {
-			return new WP_Error( 'ngc_demo_blocked', __( 'Demo operations blocked outside demo mode / non-production.', 'nextgencompanion' ) );
+		if ( self::is_production_environment() ) {
+			return new WP_Error( 'ngc_demo_blocked', __( 'Demo operations are forbidden in production.', 'nextgencompanion' ) );
 		}
-		if ( defined( 'NGC_ALLOW_DEMO_SEED' ) && ! NGC_ALLOW_DEMO_SEED && 'local' !== $env && 'development' !== $env ) {
-			return new WP_Error( 'ngc_demo_disallowed', __( 'NGC_ALLOW_DEMO_SEED is false.', 'nextgencompanion' ) );
+		if ( ! self::seed_allowed() && ! self::is_demo_mode() ) {
+			return new WP_Error( 'ngc_demo_disallowed', __( 'Demo operations require NGC_ALLOW_DEMO_SEED on a non-production environment.', 'nextgencompanion' ) );
 		}
 		return true;
 	}

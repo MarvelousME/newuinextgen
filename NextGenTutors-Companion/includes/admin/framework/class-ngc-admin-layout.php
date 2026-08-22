@@ -122,7 +122,7 @@ final class NGC_Admin_Layout {
 	}
 
 	/**
-	 * Coming-soon placeholder for nested Education screens etc.
+	 * Coming-soon placeholder for nested screens that are not yet a live LMS contract.
 	 */
 	public static function render_placeholder() {
 		$page  = isset( $_GET['page'] ) ? sanitize_key( (string) $_GET['page'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -131,8 +131,8 @@ final class NGC_Admin_Layout {
 		self::render_page(
 			[
 				'title'   => (string) $title,
-				'summary' => __( 'This module is registered in the enterprise navigation hierarchy and will be delivered in a later phase.', 'nextgencompanion' ),
-				'content' => '<div class="ngt-admin-card" data-ngt-motion><p>' . esc_html__( 'Placeholder — no data operations yet.', 'nextgencompanion' ) . '</p></div>',
+				'summary' => __( 'Staging directory only. This nested screen is not a live LMS gradebook. Grades and certificates wait on the MasterStudy LMS contract.', 'nextgencompanion' ),
+				'content' => '<div class="ngt-admin-card" data-ngt-motion><p>' . esc_html__( 'Placeholder — no LMS data operations yet.', 'nextgencompanion' ) . '</p></div>',
 			]
 		);
 	}

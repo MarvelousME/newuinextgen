@@ -29,11 +29,12 @@ final class NGC_PayFast_Itn {
 			if ( 'signature' === $key || '' === (string) $val ) {
 				continue;
 			}
-			$parts[] = $key . '=' . rawurlencode( trim( (string) $val ) );
+			// PayFast requires PHP urlencode(): spaces as '+', hex in uppercase.
+			$parts[] = $key . '=' . urlencode( trim( (string) $val ) );
 		}
 		$string = implode( '&', $parts );
 		if ( '' !== (string) $passphrase ) {
-			$string .= '&passphrase=' . rawurlencode( trim( (string) $passphrase ) );
+			$string .= '&passphrase=' . urlencode( trim( (string) $passphrase ) );
 		}
 		return md5( $string );
 	}

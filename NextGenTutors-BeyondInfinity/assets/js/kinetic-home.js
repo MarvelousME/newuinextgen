@@ -89,6 +89,10 @@
               '</div>'
           )
           .join('');
+        const cta = root.querySelector('#ngiSubjectCta');
+        if (cta && tab.dataset.url) {
+          cta.setAttribute('href', tab.dataset.url);
+        }
         panel.style.transition = '.25s';
         panel.style.opacity = 1;
         panel.style.transform = 'translateY(0)';

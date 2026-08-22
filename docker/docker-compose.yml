@@ -61,14 +61,30 @@ services:
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
       NGT_AGENT_GATEWAY_URL: ${NGT_AGENT_GATEWAY_URL:-http://agent-gateway:8787}
       NGT_GATEWAY_SHARED_SECRET: ${NGT_GATEWAY_SHARED_SECRET:-staging-local-secret}
+      NGC_METRICS_TOKEN: ${NGC_METRICS_TOKEN:-staging-metrics-token}
+      WP_ENVIRONMENT_TYPE: ${WP_ENVIRONMENT_TYPE:-local}
+      NGC_ALLOW_DEMO_SEED: ${NGC_ALLOW_DEMO_SEED:-1}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_SECURE: ${SMTP_SECURE:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      SMTP_FROM_NAME: ${SMTP_FROM_NAME:-NextGen Tutors}
       WORDPRESS_CONFIG_EXTRA: |
-        define('WP_DEBUG', true);
-        define('WP_DEBUG_LOG', true);
+        define('WP_DEBUG', getenv('WP_ENVIRONMENT_TYPE') !== 'production');
+        define('WP_DEBUG_LOG', WP_DEBUG);
         define('WP_DEBUG_DISPLAY', false);
         define('FS_METHOD', 'direct');
         define('WP_HTTP_BLOCK_EXTERNAL', false);
         define('WP_ACCESSIBLE_HOSTS', 'api.wordpress.org,downloads.wordpress.org,wordpress.org,*.wordpress.org,agent-gateway');
-        define('NGC_ALLOW_DEMO_SEED', true);
+        if (!defined('WP_ENVIRONMENT_TYPE')) {
+          $$ngt_env = getenv('WP_ENVIRONMENT_TYPE');
+          define('WP_ENVIRONMENT_TYPE', $$ngt_env ? $$ngt_env : 'local');
+        }
+        if (!defined('NGC_ALLOW_DEMO_SEED')) {
+          define('NGC_ALLOW_DEMO_SEED', getenv('WP_ENVIRONMENT_TYPE') !== 'production' && getenv('NGC_ALLOW_DEMO_SEED') !== '0');
+        }
         define('NGCPM_LOCAL_ZIP_DIR', '/var/www/html/wp-content/ngcpm-packages');
     volumes:
       - wp_data:/var/www/html
@@ -107,6 +123,22 @@ services:
       agent-gateway:
         condition: service_healthy
 
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    restart: unless-stopped
+    ports:
+      - "${PROM_BIND:-127.0.0.1}:${PROM_PORT:-9090}:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    depends_on:
+      wordpress:
+        condition: service_started
+
   wpcli:
     profiles:
       - setup
@@ -122,9 +154,18 @@ services:
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
+      WP_ENVIRONMENT_TYPE: ${WP_ENVIRONMENT_TYPE:-local}
+      NGC_ALLOW_DEMO_SEED: ${NGC_ALLOW_DEMO_SEED:-1}
       WORDPRESS_CONFIG_EXTRA: |
-        define('WP_DEBUG', true);
-        define('NGC_ALLOW_DEMO_SEED', true);
+        define('WP_DEBUG', getenv('WP_ENVIRONMENT_TYPE') !== 'production');
+        define('WP_DEBUG_DISPLAY', false);
+        if (!defined('WP_ENVIRONMENT_TYPE')) {
+          $$ngt_env = getenv('WP_ENVIRONMENT_TYPE');
+          define('WP_ENVIRONMENT_TYPE', $$ngt_env ? $$ngt_env : 'local');
+        }
+        if (!defined('NGC_ALLOW_DEMO_SEED')) {
+          define('NGC_ALLOW_DEMO_SEED', getenv('WP_ENVIRONMENT_TYPE') !== 'production' && getenv('NGC_ALLOW_DEMO_SEED') !== '0');
+        }
     volumes:
       - wp_data:/var/www/html
       - ./hello-elementor:/var/www/html/wp-content/themes/hello-elementor
@@ -186,3 +227,4 @@ services:
 volumes:
   db_data:
   wp_data:
+  prometheus_data:

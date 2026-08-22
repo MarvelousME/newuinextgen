@@ -163,6 +163,19 @@ final class NGT_Hub_Workflows {
 				break;
 
 			case 'add_user_role':
+				// Companion tutor journey owns role grants — avoid Hub double-fire.
+				$skip_role = ( class_exists( 'NGC_Business_Rules' ) && NGC_Business_Rules::journey_enabled( 'tutor' ) )
+					|| ( class_exists( 'NGT_Hub_Companion_Delegate' ) && NGT_Hub_Companion_Delegate::companion_active() );
+				if ( $skip_role ) {
+					if ( class_exists( 'NGT_Hub_Companion_Delegate' ) ) {
+						NGT_Hub_Companion_Delegate::log(
+							'info',
+							'Skipped Hub add_user_role — Companion owns tutor verification/roles.',
+							[ 'action' => 'add_user_role' ]
+						);
+					}
+					break;
+				}
 				$uid  = (int) self::render_template( (string) ( $action['user_id'] ?? '{{user_id}}' ), $vars );
 				$role = sanitize_key( $action['role'] ?? '' );
 				if ( $uid && $role ) {

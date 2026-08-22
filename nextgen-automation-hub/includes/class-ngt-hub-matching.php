@@ -24,6 +24,18 @@ final class NGT_Hub_Matching {
 			return NGC_Matching::create_from_find_tutor( $data );
 		}
 
+		if ( class_exists( 'NGT_Hub_Companion_Delegate', false ) && NGT_Hub_Companion_Delegate::domain_writes_blocked() ) {
+			NGT_Hub_Companion_Delegate::log(
+				'warning',
+				'Blocked Hub-local match write — Companion owns matching SoR.',
+				[ 'has_parent' => ! empty( $data['parent_user_id'] ) ]
+			);
+			return new WP_Error(
+				'ngt_match_companion_authority',
+				__( 'Matching is owned by NextGen Companion. Hub local write blocked.', 'nextgen-automation-hub' )
+			);
+		}
+
 		global $wpdb;
 		$table = NGT_Hub_Database::table( 'matches' );
 

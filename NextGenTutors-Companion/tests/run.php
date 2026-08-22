@@ -14,6 +14,12 @@ $passed = 0;
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', $root . '/tests-stub/' );
 }
+if ( ! defined( 'NGC_PLUGIN_DIR' ) ) {
+	define( 'NGC_PLUGIN_DIR', $root . '/' );
+}
+if ( ! defined( 'WP_CONTENT_DIR' ) ) {
+	define( 'WP_CONTENT_DIR', dirname( $root ) );
+}
 
 function ngc_test_assert( $label, $ok ) {
 	global $errors, $passed;
@@ -37,6 +43,9 @@ require_once $root . '/includes/integrations/class-ngc-payout-export.php';
 
 if ( ! defined( 'NGC_ALLOW_DEMO_SEED' ) ) {
 	define( 'NGC_ALLOW_DEMO_SEED', true );
+}
+if ( ! defined( 'WP_ENVIRONMENT_TYPE' ) ) {
+	define( 'WP_ENVIRONMENT_TYPE', 'local' );
 }
 
 $ngc_test_options = [];
@@ -64,6 +73,16 @@ if ( ! function_exists( 'apply_filters' ) ) {
 	function apply_filters( $hook, $value ) {
 		unset( $hook );
 		return $value;
+	}
+}
+if ( ! function_exists( 'trailingslashit' ) ) {
+	function trailingslashit( $string ) {
+		return rtrim( (string) $string, '/\\' ) . '/';
+	}
+}
+if ( ! function_exists( 'untrailingslashit' ) ) {
+	function untrailingslashit( $string ) {
+		return rtrim( (string) $string, '/\\' );
 	}
 }
 
@@ -421,11 +440,14 @@ ngc_test_assert( 'metrics push url saved', 'https://collector.example/ingest' ==
 NGC_Metrics::bump( 'test_counter', 3 );
 $counters = get_transient( NGC_Metrics::TRANSIENT_COUNTERS );
 ngc_test_assert( 'metrics bump works', is_array( $counters ) && 3 === (int) ( $counters['test_counter'] ?? 0 ) );
+putenv( 'NGC_METRICS_TOKEN=from-env-token' );
+ngc_test_assert( 'metrics scrape token prefers env', 'from-env-token' === NGC_Metrics::scrape_token() );
+putenv( 'NGC_METRICS_TOKEN' );
 
 // --- Phase 14 demo subsystem ---
 if ( ! function_exists( 'home_url' ) ) {
 	function home_url( $path = '' ) {
-		return 'http://localhost:8900' . $path;
+		return 'http://localhost:8890' . $path;
 	}
 }
 if ( ! function_exists( 'sanitize_file_name' ) ) {
@@ -499,8 +521,8 @@ if ( ! function_exists( 'wp_http_validate_url' ) ) {
 	}
 }
 if ( ! function_exists( 'wp_parse_url' ) ) {
-	function wp_parse_url( $url ) {
-		return parse_url( $url );
+	function wp_parse_url( $url, $component = -1 ) {
+		return parse_url( $url, $component );
 	}
 }
 if ( ! function_exists( 'site_url' ) ) {
@@ -586,6 +608,7 @@ ngc_test_assert( 'admin catalog has mission-control module', null !== NGC_Admin_
 ngc_test_assert( 'admin catalog has mission control screen', null !== NGC_Admin_Registry::get_screen( 'ngtmc-mission-control' ) );
 ngc_test_assert( 'admin parent helper', 'ngt-admin' === ngt_admin_parent() );
 ngc_test_assert( 'admin catalog screen count', count( NGC_Admin_Registry::screens() ) >= 20 );
+ngc_test_assert( 'admin catalog screen definitions file', count( NGC_Admin_Catalog::screen_definitions() ) >= 20 );
 
 require_once $root . '/includes/admin/framework/class-ngc-platform-version.php';
 require_once $root . '/includes/admin/framework/class-ngc-admin-theme.php';
@@ -692,6 +715,20 @@ $matrix = NGC_Authz_Matrix::matrix();
 ngc_test_assert( 'authz matrix has SuperAdmin', isset( $matrix['SuperAdmin'] ) );
 ngc_test_assert( 'authz matrix has Moderator safeguarding cap', in_array( 'ngc_manage_safeguarding', $matrix['Moderator'], true ) );
 ngc_test_assert( 'authz matrix has Finance ledger cap', in_array( 'ngc_view_ledger', $matrix['Finance'], true ) );
+ngc_test_assert( 'student cannot view finance', ! NGC_Authz_Matrix::role_allows( 'Student', 'ngc_view_finance' ) );
+ngc_test_assert( 'parent cannot manage platform', ! NGC_Authz_Matrix::role_allows( 'Parent', 'ngc_manage_platform' ) );
+ngc_test_assert( 'tutor cannot view ledger', ! NGC_Authz_Matrix::role_allows( 'Tutor', 'ngc_view_ledger' ) );
+ngc_test_assert( 'finance has ledger', NGC_Authz_Matrix::role_allows( 'Finance', 'ngc_view_ledger' ) );
+ngc_test_assert( 'payouts is privileged', NGC_Authz_Matrix::is_privileged( 'ngc_manage_payouts' ) );
+ngc_test_assert( 'book session is not privileged', ! NGC_Authz_Matrix::is_privileged( 'ngc_book_session' ) );
+$pub = NGC_Authz_Matrix::public_routes();
+ngc_test_assert( 'public routes include support tickets', is_array( $pub ) && isset( $pub[0]['route'] ) && false !== strpos( $pub[0]['route'], '/support/' ) );
+$authz_pack = dirname( $root ) . '/architecture/policies/authz-matrix.json';
+$authz_json = is_readable( $authz_pack ) ? json_decode( (string) file_get_contents( $authz_pack ), true ) : null;
+ngc_test_assert( 'authz JSON pack readable', is_array( $authz_json ) );
+ngc_test_assert( 'authz JSON default DENY', is_array( $authz_json ) && 'DENY' === ( $authz_json['defaultDecision'] ?? '' ) );
+ngc_test_assert( 'authz JSON roles match matrix', is_array( $authz_json ) && $matrix === ( $authz_json['roles'] ?? null ) );
+ngc_test_assert( 'authz JSON privileged match', is_array( $authz_json ) && NGC_Authz_Matrix::privileged_capabilities() === ( $authz_json['privilegedCapabilities'] ?? null ) );
 
 if ( ! class_exists( 'WP_Error' ) ) {
 	class WP_Error {
@@ -763,6 +800,17 @@ if ( ! function_exists( 'wp_rand' ) ) {
 }
 $backoff = NGC_Durable_Queue::backoff_seconds( 3 );
 ngc_test_assert( 'queue backoff positive', $backoff >= 1 );
+
+require_once $root . '/includes/demo/class-ngc-demo-env.php';
+$GLOBALS['ngc_test_environment'] = 'production';
+ngc_test_assert( 'production environment detected', NGC_Demo_Env::is_production_environment() );
+ngc_test_assert( 'production denies demo seed even if constant true', ! NGC_Demo_Env::seed_allowed() );
+$prod_gate = NGC_Demo_Env::assert_demo_ops_allowed();
+ngc_test_assert( 'production blocks demo ops', is_wp_error( $prod_gate ) );
+$GLOBALS['ngc_test_environment'] = 'local';
+ngc_test_assert( 'local environment not production', ! NGC_Demo_Env::is_production_environment() );
+ngc_test_assert( 'local allows demo seed when constant set', NGC_Demo_Env::seed_allowed() );
+unset( $GLOBALS['ngc_test_environment'] );
 
 if ( $errors > 0 ) {
 	echo "\n{$errors} test(s) failed\n";

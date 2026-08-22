@@ -1,0 +1,24 @@
+[
+  {
+    "bookingId": 154,
+    "status": "confirmed",
+    "subject": "English",
+    "studentEmail": "demo.student.adult@nextgen.local",
+    "tutorEmail": "demo.tutor.online@nextgen.local",
+    "studentPath": "/student-dashboard/",
+    "tutorPath": "/tutor-dashboard/",
+    "source": "seed-graph:BOOK-ADULT",
+    "canJoin": true
+  },
+  {
+    "bookingId": 151,
+    "status": "confirmed",
+    "subject": "Mathematics",
+    "studentEmail": "demo.parent@nextgen.local",
+    "tutorEmail": "demo.tutor.approved@nextgen.local",
+    "studentPath": "/parent-dashboard/",
+    "tutorPath": "/tutor-dashboard/",
+    "source": "seed-graph:BOOK-001",
+    "canJoin": true
+  }
+]

@@ -215,7 +215,7 @@ if ( false === strpos( $legacy, 'DEPRECATED' ) ) {
 	++$errors;
 }
 
-$db = file_get_contents( $root . '/includes/class-ngc-database.php' );
+$db = file_get_contents( $root . '/includes/class-ngc-database.php' ) . file_get_contents( $root . '/includes/database/class-ngc-schema-statements.php' );
 foreach ( [ 'referrals', 'reminder_schedules', 'studio_dashboards', 'child_learners', 'page_sections' ] as $table ) {
 	if ( false === strpos( $db, "'{$table}'" ) ) {
 		echo "FAIL: database schema missing {$table}\n";

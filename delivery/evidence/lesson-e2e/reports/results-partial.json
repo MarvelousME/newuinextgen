@@ -1,0 +1,11 @@
+[
+  {
+    "testId": "LESSON-E2E-003",
+    "invocation": "INV-06 negative auth",
+    "unauth": 401,
+    "wrongActor": 403,
+    "result": "PASS",
+    "note": "wrong actor denied",
+    "auth": "PASS"
+  }
+]

@@ -84,7 +84,11 @@ final class NGC_Safeguarding {
 	 */
 	public static function sla_hours_for( $priority ) {
 		$priority = sanitize_key( (string) $priority );
-		return self::SLA_HOURS[ $priority ] ?? self::SLA_HOURS['normal'];
+		$hours    = self::SLA_HOURS[ $priority ] ?? self::SLA_HOURS['normal'];
+		if ( 'critical' === $priority ) {
+			$hours = (int) apply_filters( 'ngc_safeguarding_sla_hours_critical', $hours );
+		}
+		return (int) apply_filters( 'ngc_safeguarding_sla_hours', $hours, $priority );
 	}
 
 	/**
@@ -138,6 +142,13 @@ final class NGC_Safeguarding {
 		if ( class_exists( 'NGC_Audit' ) ) {
 			NGC_Audit::log( 'safeguarding_case_created', 'safeguarding', $id, [ 'summary' => $summary, 'due_at' => $due_at ], get_current_user_id() );
 		}
+		/**
+		 * Fires after a safeguarding case row is inserted.
+		 *
+		 * @param int                  $id   Case ID.
+		 * @param array<string, mixed> $data Original payload.
+		 */
+		do_action( 'ngc_safeguarding_case_created', $id, $data );
 		return $id;
 	}
 

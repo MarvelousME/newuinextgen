@@ -58,6 +58,8 @@ $required = [
 	'includes/class-ngc-tutor-seeder.php',
 	'includes/rest/class-ngc-rest-platform-services.php',
 	'includes/class-ngc-database.php',
+	'includes/database/class-ngc-schema-statements.php',
+	'includes/admin/framework/screens.php',
 	'includes/class-ngc-verification.php',
 	'includes/class-ngc-rate-limiter.php',
 	'includes/class-ngc-marketplace.php',

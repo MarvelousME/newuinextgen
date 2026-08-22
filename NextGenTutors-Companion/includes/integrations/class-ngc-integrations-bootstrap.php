@@ -21,6 +21,7 @@ class NGC_Integrations_Bootstrap {
 		add_action( 'ngc_integrate_runtime_ready', [ __CLASS__, 'maybe_auto_configure' ], 20 );
 		// init (not plugins_loaded): translations may load and FluentCRM migrations must be done.
 		add_action( 'init', [ __CLASS__, 'maybe_bootstrap_fluentcrm' ], 20 );
+		add_action( 'init', [ __CLASS__, 'maybe_repair_sandbox_payfast' ], 21 );
 	}
 
 	/**
@@ -45,6 +46,9 @@ class NGC_Integrations_Bootstrap {
 	 * Auto-configure once when demo seed is allowed (Docker local stack).
 	 */
 	public static function maybe_auto_configure() {
+		if ( class_exists( 'NGC_Demo_Env' ) && NGC_Demo_Env::is_production_environment() ) {
+			return;
+		}
 		if ( ! ( defined( 'NGC_ALLOW_DEMO_SEED' ) && NGC_ALLOW_DEMO_SEED ) ) {
 			return;
 		}
@@ -53,6 +57,19 @@ class NGC_Integrations_Bootstrap {
 		}
 		self::configure_local_stack();
 		update_option( 'ngc_integrations_bootstrapped', gmdate( 'c' ), false );
+	}
+
+	/**
+	 * Keep the documented PayFast sandbox passphrase on merchant 10000100.
+	 */
+	public static function maybe_repair_sandbox_payfast() {
+		if ( class_exists( 'NGC_Demo_Env' ) && NGC_Demo_Env::is_production_environment() ) {
+			return;
+		}
+		if ( ! ( defined( 'NGC_ALLOW_DEMO_SEED' ) && NGC_ALLOW_DEMO_SEED ) ) {
+			return;
+		}
+		self::configure_payfast();
 	}
 
 	/**
@@ -91,20 +108,29 @@ class NGC_Integrations_Bootstrap {
 			return [ 'ok' => false, 'reason' => 'woocommerce_inactive' ];
 		}
 
-		$existing = get_option( 'woocommerce_ngc_payfast_settings', [] );
-		if ( ! empty( $existing['merchant_id'] ) && 'yes' === ( $existing['enabled'] ?? '' ) ) {
-			return [ 'ok' => true, 'status' => 'already_configured' ];
-		}
-
-		$sandbox = [
+		$existing = is_array( get_option( 'woocommerce_ngc_payfast_settings', [] ) ) ? get_option( 'woocommerce_ngc_payfast_settings', [] ) : [];
+		$sandbox  = [
 			'enabled'      => 'yes',
 			'title'        => __( 'PayFast', 'nextgencompanion' ),
 			'description'  => __( 'Pay securely with PayFast (sandbox).', 'nextgencompanion' ),
 			'merchant_id'  => '10000100',
 			'merchant_key' => '46f0cd694581a',
-			'passphrase'   => 'payfast',
+			'passphrase'   => 'jt7NOE43FZPn',
 			'sandbox'      => 'yes',
 		];
+		// Official PayFast sandbox merchant 10000100 must use the documented passphrase.
+		if ( '10000100' === (string) ( $existing['merchant_id'] ?? '' ) ) {
+			$existing['enabled']      = 'yes';
+			$existing['sandbox']      = 'yes';
+			$existing['merchant_key'] = $sandbox['merchant_key'];
+			$existing['passphrase']   = $sandbox['passphrase'];
+			update_option( 'woocommerce_ngc_payfast_settings', $existing, false );
+			update_option( 'woocommerce_default_gateway', 'ngc_payfast', false );
+			return [ 'ok' => true, 'status' => 'sandbox_repaired' ];
+		}
+		if ( ! empty( $existing['merchant_id'] ) && 'yes' === ( $existing['enabled'] ?? '' ) ) {
+			return [ 'ok' => true, 'status' => 'already_configured' ];
+		}
 
 		update_option( 'woocommerce_ngc_payfast_settings', $sandbox, false );
 		update_option( 'woocommerce_default_gateway', 'ngc_payfast', false );

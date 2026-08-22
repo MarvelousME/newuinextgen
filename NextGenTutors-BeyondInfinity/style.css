@@ -5,7 +5,7 @@ Description: BeyondInfinity theme for NextGen Tutors - accessible tutoring acros
 Author: NextGen Tutors
 Author URI: https://www.nextgentutors.co.za
 Template: hello-elementor
-Version: 1.9.28
+Version: 1.9.34
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: beyondinfinity
@@ -14,70 +14,13 @@ Tags: education, tutoring, elementor, south-africa
 
 /* ============================================================
    BEYONDINFINITY / NEXTGEN TUTORS - DESIGN SYSTEM
+   Tokens: assets/css/tokens/ (base → skin → unified → brand-semantic)
    ============================================================ */
 
-/* ---- CSS Custom Properties (Design Tokens) ---- */
+/* Legacy fallback bridge — skins override --ngt-* on html[data-bi-skin]. */
 :root {
-  /* Brand Colors */
-  --ngt-primary: #0F1A2F;
-  --ngt-primary-dark: #0B1524;
-  --ngt-primary-light: #E6F0FA;
-
-  --ngt-secondary: #059669;
-  --ngt-secondary-dark: #047857;
-  --ngt-secondary-light: #D1FAE5;
-
-  --ngt-accent: #FF9F0A;
-  --ngt-accent-dark: #E68900;
-  --ngt-accent-light: #FFEBCC;
-
-  /* Neutrals */
-  --ngt-bg: #F8FAFC;
-  --ngt-white: #FFFFFF;
-  --ngt-surface: #FFFFFF;
-  --ngt-border: #E2E8F0;
-  --ngt-border-light: #E5E7EB;
-
-  /* Text */
-  --ngt-text: #1E293B;
-  --ngt-text-2: #64748B;
-  --ngt-text-3: #94A3B8;
-
-  /* Status */
-  --ngt-success: #10B981;
-  --ngt-success-bg: #D1FAE5;
-  --ngt-warning: #F59E0B;
-  --ngt-error: #EF4444;
-
-  /* Typography */
-  --ngt-font-display: 'Sora', sans-serif;
-  --ngt-font-body: 'Inter', sans-serif;
-
-  /* Spacing Scale */
-  --ngt-space-xs: 4px;
-  --ngt-space-sm: 8px;
-  --ngt-space-md: 16px;
-  --ngt-space-lg: 24px;
-  --ngt-space-xl: 32px;
-  --ngt-space-2xl: 48px;
-  --ngt-space-3xl: 64px;
-
-  /* Border Radius */
-  --ngt-radius-sm: 6px;
-  --ngt-radius-md: 10px;
-  --ngt-radius-lg: 16px;
-  --ngt-radius-xl: 24px;
-  --ngt-radius-full: 9999px;
-
-  /* Shadows */
-  --ngt-shadow-sm: 0 2px 8px rgba(15,26,47,0.06);
-  --ngt-shadow-md: 0 8px 24px rgba(15,26,47,0.08);
-  --ngt-shadow-lg: 0 20px 40px rgba(15,26,47,0.12);
-  --ngt-shadow-xl: 0 24px 48px rgba(15,26,47,0.16);
-
-  /* Transitions */
   --ngt-ease: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --ngt-ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ngt-ease-out: cubic-bezier(0, 0, 0.2, 1);
 }
 
 /* ---- Base Reset & Body ---- */
@@ -136,9 +79,18 @@ a:hover {
 
 /* ---- Layout Utilities ---- */
 .ngt-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
+  width: min(100%, var(--ngt-container-default, 1280px));
+  max-width: var(--ngt-container-default, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--ngt-container-gutter, 1.5rem);
+  box-sizing: border-box;
+}
+
+.ngt-nav,
+.ngt-nav .ngt-container,
+.ngt-nav__inner {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .ngt-section {
@@ -791,11 +743,7 @@ a:hover {
   transform: translateY(-2px) !important;
 }
 
-/* ---- Amelia Booking Overrides ---- */
-#amelia-app .el-button--primary {
-  background: var(--ngt-primary) !important;
-  border-color: var(--ngt-primary) !important;
-}
+/* Amelia Booking — see assets/css/integrations/amelia.css */
 
 /* ---- Fluent Forms Overrides ---- */
 .ff-el-input--content input,
@@ -837,12 +785,26 @@ a:hover {
 }
 
 .bi-footer-logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; margin-bottom: 16px; }
+.bi-footer-logo__img { width: 48px; height: 48px; object-fit: contain; border-radius: 10px; }
 .bi-footer-logo__text { font-family: var(--ngt-font-display); font-weight: 800; font-size: 20px; color: #fff; }
 .bi-footer-logo__text span { background: linear-gradient(135deg, #0066CC, #00C896); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.bi-footer-chip {
+  display: inline-flex;
+  margin-top: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255,255,255,.85);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+}
 .bi-footer-contact li { display: flex; gap: 8px; align-items: flex-start; }
 .bi-footer-legal { display: flex; gap: 24px; flex-wrap: wrap; }
 .bi-footer-legal a { color: rgba(255,255,255,.5); text-decoration: none; }
 .bi-footer-legal a:hover { color: var(--ngt-secondary); }
+.ngt-nav__signin { white-space: nowrap; }
 
 /* Hero */
 .bi-hero { min-height: 420px; }

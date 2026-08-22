@@ -17,7 +17,7 @@ if ( empty( $t ) ) {
 
 $subjects = isset( $t['subjects'] ) ? (array) $t['subjects'] : array();
 ?>
-<article class="ngt-tutor-card ngt-tilt" data-tilt tabindex="0">
+<article class="ngt-card ngt-card--tutor ngt-tutor-card ngt-tilt" data-tilt tabindex="0">
 	<div class="ngt-tutor-top">
 		<img class="ngt-tutor-avatar"
 			src="<?php echo esc_url( $t['avatar'] ); ?>"
@@ -51,7 +51,7 @@ $subjects = isset( $t['subjects'] ) ? (array) $t['subjects'] : array();
 		</div>
 	</div>
 
-	<a class="ngt-btn ngt-btn-primary ngt-tutor-cta" href="<?php echo esc_url( ngt_route_url( 'find-a-tutor' ) ); ?>">
+	<a class="ngt-btn ngt-btn--primary ngt-tutor-cta" href="<?php echo esc_url( ngt_route_url( 'find-a-tutor' ) ); ?>">
 		<?php esc_html_e( 'Request This Tutor', 'nextgen-tutors' ); ?>
 	</a>
 </article>

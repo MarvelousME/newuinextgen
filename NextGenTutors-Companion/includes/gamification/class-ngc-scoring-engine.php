@@ -37,21 +37,28 @@ class NGC_Scoring_Engine {
 	 * @return array<string, array<string, float>>
 	 */
 	public static function event_points() {
-		return [
+		// Aligned to NGT System Triggers / GamiPress map (Match):
+		// Session Completed → Student 50 / Tutor 25 NGT points.
+		$map = [
 			'tutor_registration'       => [ 'xp' => 50, 'tutor_points' => 100 ],
 			'tutor_approval'           => [ 'xp' => 200, 'tutor_points' => 500, 'reputation_points' => 50 ],
 			'parent_registration'      => [ 'xp' => 30, 'parent_points' => 100 ],
 			'student_registration'     => [ 'xp' => 30, 'student_points' => 100 ],
-			'booking_completion'       => [ 'xp' => 25, 'student_points' => 50, 'tutor_points' => 50 ],
+			// Match: Session Completed → Student 50 / Tutor 25 (separate event keys — never both on one user).
+			'session_completed'        => [ 'xp' => 25, 'student_points' => 50 ],
+			'session_completed_tutor'  => [ 'xp' => 25, 'tutor_points' => 25 ],
+			'booking_completion'       => [ 'xp' => 25, 'student_points' => 50 ],
 			'session_attendance'       => [ 'xp' => 15, 'student_points' => 25 ],
-			'lesson_completion'        => [ 'xp' => 40, 'student_points' => 75, 'tutor_points' => 75 ],
+			'lesson_completion'        => [ 'xp' => 25, 'student_points' => 50 ],
 			'consecutive_attendance'   => [ 'xp' => 100, 'loyalty_points' => 50 ],
 			'review_submission'        => [ 'xp' => 20, 'reputation_points' => 30 ],
 			'tutor_rating'             => [ 'xp' => 10, 'reputation_points' => 20, 'tutor_points' => 15 ],
 			'referral_conversion'      => [ 'xp' => 150, 'referral_points' => 200 ],
 			'payment_completion'       => [ 'xp' => 35, 'loyalty_points' => 25 ],
+			'first_booking'            => [ 'xp' => 100, 'student_points' => 100 ],
 			'profile_completion'       => [ 'xp' => 50, 'loyalty_points' => 30 ],
 		];
+		return apply_filters( 'ngc_scoring_event_points', $map );
 	}
 
 	/**

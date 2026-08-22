@@ -1,0 +1,88 @@
+/**
+ * Accessibility baseline — WCAG 2.2 AA helpers (BeyondInfinity Brand Style Kit).
+ */
+
+/* Minimum practical target size for icon-only controls */
+.ngt-btn--icon,
+.bi-scheme-toggle,
+.ngt-nav__toggle {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Skip link */
+.bi-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: var(--ngt-z-toast, 900);
+}
+.bi-skip-link:focus {
+  position: fixed;
+  left: var(--ngt-container-gutter, 1rem);
+  top: var(--ngt-container-gutter, 1rem);
+  width: auto;
+  height: auto;
+  padding: var(--ngt-space-3) var(--ngt-space-5);
+  background: var(--ngt-color-bg-elevated, #fff);
+  color: var(--ngt-color-text-primary);
+  border: 2px solid var(--ngt-focus-ring);
+  border-radius: var(--ngt-radius-sm);
+  text-decoration: none;
+  font-weight: var(--ngt-font-weight-semibold);
+}
+
+/* Validation — never colour-only */
+.ngc-field.is-invalid .ngc-field__label,
+.ngt-form-group.has-error label {
+  color: var(--ngt-color-danger);
+}
+.ngc-field.is-invalid .ngc-field__error,
+.ngt-form-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ngt-space-2);
+  font-size: var(--ngt-type-body-sm);
+  color: var(--ngt-color-danger);
+}
+.ngc-field.is-invalid .ngc-field__error::before,
+.ngt-form-error::before {
+  content: "!";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--ngt-color-danger);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .preloader,
+  .ngi-reveal,
+  .ngt-animate {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* High contrast focus for keyboard users */
+:focus:not(:focus-visible) {
+  outline: none;
+}

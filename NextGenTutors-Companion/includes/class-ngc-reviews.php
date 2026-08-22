@@ -94,6 +94,56 @@ class NGC_Reviews {
 		} else {
 			$wpdb->insert( $table, $row, [ '%d', '%d', '%d', '%d', '%s', '%s' ] );
 		}
+
+		self::sync_tutor_rating_meta( $tutor_id );
+	}
+
+	/**
+	 * Aggregate rating stats for milestone / matching (Popular = review count).
+	 *
+	 * @param int $tutor_id Tutor user ID.
+	 * @return array{average: float, count: int}
+	 */
+	public static function stats_for_tutor( $tutor_id ) {
+		global $wpdb;
+		$tutor_id = (int) $tutor_id;
+		if ( $tutor_id <= 0 ) {
+			return [ 'average' => 0.0, 'count' => 0 ];
+		}
+
+		$table = NGC_Database::table( 'ratings' );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$row = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT AVG(rating) AS avg_rating, COUNT(*) AS review_count FROM {$table} WHERE tutor_user_id = %d",
+				$tutor_id
+			),
+			ARRAY_A
+		);
+
+		$avg   = $row && null !== $row['avg_rating'] ? round( (float) $row['avg_rating'], 1 ) : 0.0;
+		$count = $row ? (int) $row['review_count'] : 0;
+
+		return [
+			'average' => $avg,
+			'count'   => $count,
+		];
+	}
+
+	/**
+	 * Persist tutor rating aggregates on user meta for milestones and search.
+	 *
+	 * @param int $tutor_id Tutor user ID.
+	 */
+	public static function sync_tutor_rating_meta( $tutor_id ) {
+		$tutor_id = (int) $tutor_id;
+		if ( $tutor_id <= 0 ) {
+			return;
+		}
+
+		$stats = self::stats_for_tutor( $tutor_id );
+		update_user_meta( $tutor_id, 'tutor_average_rating', $stats['average'] );
+		update_user_meta( $tutor_id, 'tutor_review_count', $stats['count'] );
 	}
 
 	/**
@@ -146,6 +196,12 @@ class NGC_Reviews {
 			],
 			[ '%d', '%d', '%f', '%s', '%s', '%s' ]
 		);
+
+		$tutor_id = (int) $booking->tutor_user_id;
+		if ( $tutor_id > 0 ) {
+			$lifetime = (float) get_user_meta( $tutor_id, 'ngt_lifetime_earnings', true );
+			update_user_meta( $tutor_id, 'ngt_lifetime_earnings', round( $lifetime + $tutor_share, 2 ) );
+		}
 	}
 
 	/**
@@ -173,6 +229,21 @@ class NGC_Reviews {
 		if ( $amount <= 0 ) {
 			$amount = $pending;
 		}
+		if ( $amount <= 0 ) {
+			return new WP_Error( 'ngc_no_payout', __( 'No pending earnings.', 'nextgencompanion' ) );
+		}
+
+		/**
+		 * Filter payout amount before insert (business rules: minimum, fee).
+		 *
+		 * @param float $amount   Amount.
+		 * @param int   $tutor_id Tutor user ID.
+		 */
+		$filtered = apply_filters( 'ngc_payout_create_amount', (float) $amount, (int) $tutor_id );
+		if ( is_wp_error( $filtered ) ) {
+			return $filtered;
+		}
+		$amount = (float) $filtered;
 		if ( $amount <= 0 ) {
 			return new WP_Error( 'ngc_no_payout', __( 'No pending earnings.', 'nextgencompanion' ) );
 		}

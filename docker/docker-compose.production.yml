@@ -1,0 +1,32 @@
+# Production overlay — never enable demo seed or WP_DEBUG.
+# Usage (from docker/):
+#   docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
+#
+# Requires host .env: NGT_GATEWAY_SHARED_SECRET, NGC_METRICS_TOKEN, SMTP_*.
+# PayFast live keys stay in Woo admin — never in git.
+
+services:
+  wordpress:
+    environment:
+      WP_ENVIRONMENT_TYPE: production
+      NGC_ALLOW_DEMO_SEED: "0"
+      WP_DEBUG: "0"
+      NGT_GATEWAY_SHARED_SECRET: ${NGT_GATEWAY_SHARED_SECRET:?set NGT_GATEWAY_SHARED_SECRET}
+      NGT_GATEWAY_KILL_SWITCH: ${NGT_GATEWAY_KILL_SWITCH:-0}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG', false);
+        define('WP_DEBUG_LOG', false);
+        define('WP_DEBUG_DISPLAY', false);
+        define('FS_METHOD', 'direct');
+        define('DISALLOW_FILE_EDIT', true);
+        define('WP_ENVIRONMENT_TYPE', 'production');
+        define('NGC_ALLOW_DEMO_SEED', false);
+
+  phpmyadmin:
+    profiles:
+      - tools
+
+  agent-gateway:
+    environment:
+      NGT_GATEWAY_ALLOW_LOCAL: "0"
+      NGT_GATEWAY_SHARED_SECRET: ${NGT_GATEWAY_SHARED_SECRET:?set NGT_GATEWAY_SHARED_SECRET}

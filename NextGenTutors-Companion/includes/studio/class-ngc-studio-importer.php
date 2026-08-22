@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class NGC_Studio_Importer {
 
 	public const OPTION_SYNCED = 'ngc_studio_sources_synced';
-	public const SYNC_VERSION  = '2026-07-27.2';
+	public const SYNC_VERSION  = '2026-08-16.journey-v1';
 
 	/**
 	 * Auto-sync missing source workflows once (or when version bumps).
@@ -39,7 +39,7 @@ final class NGC_Studio_Importer {
 			'created' => 0,
 			'updated' => 0,
 			'skipped' => 0,
-			'sources' => [ 'templates' => 0, 'hub' => 0, 'integrate' => 0, 'orchestrator' => 0 ],
+			'sources' => [ 'templates' => 0, 'hub' => 0, 'integrate' => 0, 'orchestrator' => 0, 'journeys' => 0 ],
 			'errors'  => [],
 		];
 		foreach ( self::from_templates() as $item ) {
@@ -53,6 +53,9 @@ final class NGC_Studio_Importer {
 		}
 		foreach ( self::from_orchestrator() as $item ) {
 			self::upsert( $item, $force, 'orchestrator', $report );
+		}
+		foreach ( self::from_journeys() as $item ) {
+			self::upsert( $item, $force, 'journeys', $report );
 		}
 		update_option( self::OPTION_SYNCED, self::SYNC_VERSION, false );
 		return $report;
@@ -254,6 +257,41 @@ final class NGC_Studio_Importer {
 	}
 
 	/** @return array<int, array<string, mixed>> */
+	private static function from_journeys() {
+		$out = [];
+		if ( ! class_exists( 'NGC_Journey_Registry' ) ) {
+			return $out;
+		}
+		foreach ( NGC_Journey_Registry::definitions() as $def ) {
+			$id = sanitize_key( (string) ( $def['id'] ?? '' ) );
+			if ( ! $id ) {
+				continue;
+			}
+			$events = (array) ( $def['events'] ?? [] );
+			$trigger = (string) ( $events[0] ?? 'CUSTOM_EVENT' );
+			$steps   = [ 'EVENT', 'CONDITION', 'CRM', 'NOTIFICATION', 'AUDIT', 'END' ];
+			$out[]   = [
+				'workflow_key' => 'journey_' . $id,
+				'name'         => (string) ( $def['name'] ?? $id ),
+				'description'  => 'Ecosystem journey (VIEW) — authority: ' . (string) ( $def['authority'] ?? '' ),
+				'graph'        => class_exists( 'NGC_Studio_Templates' )
+					? NGC_Studio_Templates::build_linear_graph( $trigger, $steps )
+					: [ 'nodes' => [], 'edges' => [] ],
+				'settings'     => [
+					'source'     => 'journeys',
+					'source_key' => $id,
+					'events'     => $events,
+					'evidence'   => (string) ( $def['evidence'] ?? '' ),
+					'editable'   => false,
+					'mode'       => 'VIEW',
+				],
+				'status'       => 'draft',
+			];
+		}
+		return $out;
+	}
+
+	/** @return array<int, array<string, mixed>> */
 	private static function from_orchestrator() {
 		$out = [];
 		foreach ( self::orchestrator_map() as $wf_key => $meta ) {
@@ -268,7 +306,7 @@ final class NGC_Studio_Importer {
 					'form'       => $meta['form'] ?? '',
 					'editable'   => true,
 				],
-				'status'       => 'published',
+				'status'       => 'draft',
 			];
 		}
 		return $out;

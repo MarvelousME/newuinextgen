@@ -157,7 +157,13 @@ function bi_ngt_enqueue_assets() {
 
 	bi_ngt_register_vendor_scripts();
 
-	wp_enqueue_script( 'bi-ngt-wp-bridge', BI_URI . '/assets/js/ngt-wp-bridge.js', [ 'bi-ngt-lucide' ], $ver, true );
+	// Spiral page intro + GSAP (home auto-play + logo replay).
+	wp_enqueue_script( 'bi-ngt-gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', [], '3.12.5', true );
+	wp_enqueue_script( 'bi-ngt-scrolltrigger', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', [ 'bi-ngt-gsap' ], '3.12.5', true );
+	wp_enqueue_script( 'bi-ngt-wp-bridge', BI_URI . '/assets/js/ngt-wp-bridge.js', [ 'bi-ngt-lucide', 'bi-ngt-gsap' ], $ver, true );
+	if ( file_exists( bi_ngt_assets_dir() . '/js/preloader.js' ) ) {
+		wp_enqueue_script( 'bi-ngt-preloader', $uri . '/js/preloader.js', [ 'bi-ngt-gsap', 'bi-ngt-wp-bridge' ], $ver, true );
+	}
 
 	$page_key = bi_ngt_page_key();
 	$map      = bi_ngt_script_map();
@@ -192,8 +198,6 @@ function bi_ngt_enqueue_assets() {
 
 	$deps = [ 'bi-ngt-wp-bridge' ];
 	if ( in_array( 'static', $effective, true ) || in_array( 'home', $effective, true ) ) {
-		wp_enqueue_script( 'bi-ngt-gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', [], '3.12.5', true );
-		wp_enqueue_script( 'bi-ngt-scrolltrigger', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', [ 'bi-ngt-gsap' ], '3.12.5', true );
 		$deps[] = 'bi-ngt-scrolltrigger';
 	}
 
@@ -215,6 +219,7 @@ function bi_ngt_enqueue_assets() {
 		[
 			'assetsUrl'  => trailingslashit( $uri ),
 			'imgUrl'     => trailingslashit( $uri . '/img' ),
+			'logo200Url' => trailingslashit( $uri . '/img' ) . 'logo-200.png',
 			'homeUrl'    => home_url( '/' ),
 			'pageKey'    => $page_key,
 			'findUrl'    => home_url( '/find-a-tutor' ),
@@ -283,3 +288,6 @@ function bi_ngt_print_data_page() {
 function bi_ngt_default_logo_url() {
 	return bi_ngt_assets_uri() . '/img/logo.png';
 }
+
+// Elementor-native authoring (widgets + seed + kinetic yield).
+require_once __DIR__ . '/elementor-native.php';

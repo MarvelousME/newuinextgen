@@ -48,7 +48,7 @@ if ! wp core is-installed --path="$WP_PATH" --allow-root 2>/dev/null; then
   log "Installing WordPress..."
   wp core install \
     --path="$WP_PATH" \
-    --url="${WP_URL:-http://localhost:8900}" \
+    --url="${WP_URL:-http://localhost:8890}" \
     --title="${WP_TITLE:-NextGen Tutors}" \
     --admin_user="${WP_ADMIN_USER:-admin}" \
     --admin_password="${WP_ADMIN_PASSWORD:-NextGenAdmin!2026}" \
@@ -115,6 +115,6 @@ fi
 
 wp option update "$MARKER_OPTION" "$MARKER_VERSION" --path="$WP_PATH" --allow-root
 log "Setup complete."
-log "Site: ${WP_URL:-http://localhost:8900}"
+log "Site: ${WP_URL:-http://localhost:8890}"
 log "Admin: ${WP_ADMIN_USER:-admin} / ${WP_ADMIN_PASSWORD:-NextGenAdmin!2026}"
 log "phpMyAdmin: http://localhost:${PMA_PORT:-8082}"

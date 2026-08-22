@@ -1,0 +1,3 @@
+id,session_uuid,correlation_id,booking_id,order_id,product_id,status,payment_status,ms_course,ms_lesson,meeting_id
+17,d5e0b8b5-6bbc-4c3b-b0e5-cf3444ab1535,NGT-SES-20260809-41CE5DF5,176,57718,57658,ready,paid,57675,57719,NextGenTutors-Lesson-ff65c560-4040-425b-b40c-4a2f2cbbc43d
+18,5c23865b-51b0-4b51-8afe-c51233be275c,NGT-SES-20260809-254A84BC,177,57720,57658,ready,paid,57683,57721,NextGenTutors-Lesson-4e8a9526-fd05-4a0d-89d3-82427196bda2

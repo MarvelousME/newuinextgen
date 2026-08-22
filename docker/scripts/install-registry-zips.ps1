@@ -21,7 +21,13 @@ try {
         --path=/var/www/html --allow-root
 
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-    Write-Host "`nDone. Site: http://localhost:8900"
+    $wpPort = '8890'
+    if (Test-Path (Join-Path $composeDir '.env')) {
+        Get-Content (Join-Path $composeDir '.env') | ForEach-Object {
+            if ($_ -match '^\s*WP_PORT=(.+)$') { $wpPort = $Matches[1].Trim() }
+        }
+    }
+    Write-Host "`nDone. Site: http://localhost:$wpPort"
 }
 finally {
     Pop-Location

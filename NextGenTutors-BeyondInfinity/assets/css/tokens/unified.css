@@ -45,7 +45,7 @@
   --ngt-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ngt-duration-base: var(--ngt-duration, 250ms);
 
-  /* Z-index scale */
+  /* Z-index scale (semantic tiers — do not invent ad-hoc values in components) */
   --ngt-z-base: 0;
   --ngt-z-raised: 2;
   --ngt-z-sticky: 40;
@@ -53,10 +53,15 @@
   --bi-z-content: 0;
   --bi-z-fab: 30;
   --bi-z-header: 40;
-  --ngt-z-drawer: 700;
-  --ngt-z-modal: 800;
-  --ngt-z-toast: 900;
-  --ngt-z-loader: 1000;
+  /* Header stacking context while mobile drawer is open (child of .ngt-nav) */
+  --ngt-z-header-elevated: 500;
+  --bi-z-header-elevated: var(--ngt-z-header-elevated);
+  --ngt-z-overlay: 450;
+  --ngt-z-drawer: 500;
+  --ngt-z-modal: 600;
+  --ngt-z-popover: 700;
+  --ngt-z-toast: 800;
+  --ngt-z-loader: 900;
   --ngt-z-hero-poster: 0;
   --ngt-z-hero-video: 1;
   --ngt-z-hero-scrim: 2;

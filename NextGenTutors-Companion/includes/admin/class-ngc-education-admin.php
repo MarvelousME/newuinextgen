@@ -30,7 +30,7 @@ final class NGC_Education_Admin {
 	public static function render_students() {
 		self::render_role_directory(
 			__( 'Students', 'nextgencompanion' ),
-			__( 'Registered student accounts from WordPress roles (live query).', 'nextgencompanion' ),
+			__( 'Registered student accounts from WordPress roles (live query). Directory only — grades and certificates stay on the MasterStudy LMS contract.', 'nextgencompanion' ),
 			[ 'student', 'ngc_student', 'subscriber' ],
 			'students'
 		);
@@ -222,39 +222,20 @@ final class NGC_Education_Admin {
 	}
 
 	/**
-	 * Subjects from tutor meta / options.
+	 * Subjects CMS (tabs / tracks / landing pages) + live taxonomy context.
 	 */
 	public static function render_subjects() {
-		$subjects = [];
-		if ( function_exists( 'get_terms' ) ) {
-			$terms = get_terms(
-				[
-					'taxonomy'   => 'tutor_subject',
-					'hide_empty' => false,
-				]
-			);
-			if ( ! is_wp_error( $terms ) && $terms ) {
-				foreach ( $terms as $term ) {
-					$subjects[] = [ 'name' => $term->name, 'count' => (int) $term->count ];
-				}
-			}
-		}
-		if ( ! $subjects && class_exists( 'NGC_Marketplace' ) && method_exists( 'NGC_Marketplace', 'list_subjects' ) ) {
-			foreach ( (array) NGC_Marketplace::list_subjects() as $s ) {
-				$subjects[] = is_array( $s ) ? $s : [ 'name' => (string) $s, 'count' => 0 ];
-			}
-		}
 		ob_start();
-		if ( ! $subjects ) {
-			echo '<div class="ngt-admin-card"><p>' . esc_html__( 'No subject taxonomy terms found yet. Subjects appear as tutors publish profiles.', 'nextgencompanion' ) . '</p></div>';
+		if ( class_exists( 'NGC_Subjects_CMS' ) ) {
+			NGC_Subjects_CMS::render_admin();
 		} else {
-			echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Subject', 'nextgencompanion' ) . '</th><th>' . esc_html__( 'Count', 'nextgencompanion' ) . '</th></tr></thead><tbody>';
-			foreach ( $subjects as $s ) {
-				echo '<tr><td>' . esc_html( (string) ( $s['name'] ?? '' ) ) . '</td><td>' . esc_html( (string) ( $s['count'] ?? 0 ) ) . '</td></tr>';
-			}
-			echo '</tbody></table>';
+			echo '<div class="ngt-admin-card"><p>' . esc_html__( 'Subjects CMS is unavailable.', 'nextgencompanion' ) . '</p></div>';
 		}
-		self::page( __( 'Subjects', 'nextgencompanion' ), __( 'Teaching subjects from live taxonomy / marketplace data.', 'nextgencompanion' ), ob_get_clean() );
+		self::page(
+			__( 'Subjects', 'nextgencompanion' ),
+			__( 'Create and edit subject tabs, marquee tracks, and landing-page content. Tutor taxonomy counts appear below for context.', 'nextgencompanion' ),
+			ob_get_clean()
+		);
 	}
 
 	/**
@@ -289,6 +270,7 @@ final class NGC_Education_Admin {
 		$total_pages = max( 1, (int) ceil( $total / $per_page ) );
 
 		ob_start();
+		echo '<div class="notice notice-info"><p>' . esc_html__( 'This screen is a WordPress directory. Grades, certificates, and LMS progress stay on the MasterStudy adapter contract — they are not edited here.', 'nextgencompanion' ) . '</p></div>';
 		?>
 		<div class="ngt-admin-card" style="margin-bottom:12px">
 			<p>
