@@ -1,10 +1,10 @@
 # Architecture Gate Report
 
-Generated: 2026-08-11T02:08:05.883Z
+Generated: 2026-08-30T20:59:04.985Z
 
 **Result:** PASS
 
-Manifests: 8 | Capabilities: 39 | Errors: 0
+Manifests: 9 | Capabilities: 43 | Errors: 0
 
 ## Findings
 

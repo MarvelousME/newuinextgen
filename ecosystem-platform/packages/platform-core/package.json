@@ -1,0 +1,14 @@
+{
+  "name": "@ecosystem/platform-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "dependencies": {
+    "@ecosystem/contracts": "0.1.0",
+    "yaml": "^2.6.1"
+  }
+}

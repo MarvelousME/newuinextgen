@@ -1,0 +1,22 @@
+{
+  "contractVersion": "1.0.0",
+  "name": "ecosystem-platform",
+  "description": "Platform BFF API — stable contracts; Odoo behind adapters only.",
+  "basePath": "/api/v1",
+  "configuration": {
+    "type": "object",
+    "properties": {
+      "ECOSYSTEM_API_PORT": { "type": "string" },
+      "ECOSYSTEM_SUPER_ADMIN_IDS": { "type": "string" },
+      "ODOO_URL": { "type": "string" }
+    }
+  },
+  "endpoints": [
+    { "method": "GET", "path": "/health", "auth": "none" },
+    { "method": "GET", "path": "/platform/overview", "auth": "platform_super_admin" },
+    { "method": "POST", "path": "/platform/tenants", "auth": "platform_super_admin" },
+    { "method": "POST", "path": "/platform/tenants/{id}/provision", "auth": "platform_super_admin" },
+    { "method": "GET", "path": "/tenants/{tenantId}/customers", "auth": "tenant_member" },
+    { "method": "POST", "path": "/tenants/{tenantId}/customers", "auth": "tenant_member" }
+  ]
+}

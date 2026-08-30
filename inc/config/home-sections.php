@@ -49,7 +49,11 @@ function bi_home_section_enabled( $section_id ) {
 }
 
 function bi_use_kinetic_home() {
-    return is_front_page() && 'kinetic' === bi_get_theme_option( 'home_layout', 'kinetic' );
+	if ( ! is_front_page() ) {
+		return false;
+	}
+	$layout = bi_get_theme_option( 'home_layout', 'kinetic' );
+	return 'classic' !== $layout;
 }
 
 function bi_format_rate( $option_name, $fallback = 320 ) {

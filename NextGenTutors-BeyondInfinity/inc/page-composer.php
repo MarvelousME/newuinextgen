@@ -21,6 +21,30 @@ function bi_page_slug() {
 		$slug = 'home';
 		return $slug;
 	}
+	if ( is_home() ) {
+		$slug = 'blog';
+		return $slug;
+	}
+	if ( is_search() ) {
+		$slug = 'search';
+		return $slug;
+	}
+	if ( is_404() ) {
+		$slug = 'error-404';
+		return $slug;
+	}
+	if ( is_post_type_archive( 'tutors' ) ) {
+		$slug = 'tutor-marketplace';
+		return $slug;
+	}
+	if ( is_archive() ) {
+		$slug = 'archive';
+		return $slug;
+	}
+	if ( is_singular() && ! is_page() ) {
+		$slug = 'single-' . sanitize_key( get_post_type() );
+		return $slug;
+	}
 	$post_id = function_exists( 'bi_get_current_page_id' ) ? bi_get_current_page_id() : get_queried_object_id();
 	$slug    = $post_id ? (string) get_post_field( 'post_name', $post_id ) : '';
 	return $slug;

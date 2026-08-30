@@ -1,0 +1,71 @@
+{
+  "bridgeManifestVersion": "1.0",
+  "system": {
+    "id": "ecosystem-platform",
+    "name": "Ecosystem Platform Control Plane",
+    "version": "0.1.0",
+    "description": "Sovereign multi-tenant SaaS control plane: tenants, blueprints, IAM, provisioning, platform API, Odoo adapters.",
+    "owner": "platform-control"
+  },
+  "runtime": {
+    "type": "service",
+    "entrypoint": "ecosystem-platform/services/platform-api/src/server.mjs",
+    "path": "ecosystem-platform"
+  },
+  "lifecycle": {
+    "installable": true,
+    "enableable": true,
+    "disableable": true,
+    "upgradeable": true,
+    "rollbackSupported": true
+  },
+  "capabilities": {
+    "provides": [
+      "platform.tenant.create",
+      "platform.tenant.provision",
+      "customer.query",
+      "customer.command"
+    ],
+    "consumes": [
+      "companion.rest.query"
+    ]
+  },
+  "contracts": {
+    "rest": [
+      "architecture/contracts/ecosystem-platform.v1.json"
+    ],
+    "grpc": [],
+    "events": [
+      "architecture/contracts/ngc-domain-events.v1.json"
+    ],
+    "commands": [],
+    "queries": []
+  },
+  "permissions": {
+    "required": ["platform.super_admin"],
+    "optional": ["tenant.owner"]
+  },
+  "data": {
+    "owns": ["ecosystem_tenants", "ecosystem_audit", "ecosystem_blueprints"],
+    "reads": []
+  },
+  "dependencies": {
+    "required": [],
+    "optional": ["companion", "odoo", "bridge-talent-intelligence", "ai-integration"]
+  },
+  "health": {
+    "readiness": "/health",
+    "liveness": "/health"
+  },
+  "observability": {
+    "logs": "audit jsonl",
+    "metrics": "planned",
+    "traces": "x-correlation-id"
+  },
+  "configuration": {
+    "schema": "architecture/contracts/ecosystem-platform.v1.json#/configuration"
+  },
+  "compatibility": {
+    "minimumPlatformVersion": "0.1.0"
+  }
+}

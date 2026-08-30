@@ -1,0 +1,36 @@
+id: education-tutoring
+version: "1"
+industry: education
+name: Education / Tutoring Ecosystem
+
+capabilities:
+  - crm
+  - sales
+  - invoicing
+  - booking
+  - lms
+  - payments
+  - video
+  - ai-matching
+  - workflow-automation
+  - ai-agents
+
+roles:
+  - owner
+  - administrator
+  - tutor
+  - student
+  - parent
+
+agents:
+  - lead-agent
+  - tutor-match-agent
+  - support-agent
+  - billing-agent
+
+integrations:
+  - wordpress
+  - woocommerce
+  - payfast
+  - n8n
+  - ollama
