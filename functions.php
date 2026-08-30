@@ -18,6 +18,7 @@ if ( ! defined( 'NGT_DIR' ) ) {
 }
 
 require_once BI_DIR . '/inc/helpers.php';
+require_once BI_DIR . '/inc/brand-content.php';
 require_once BI_DIR . '/inc/companion.php';
 require_once BI_DIR . '/inc/security.php';
 require_once BI_DIR . '/inc/shortcodes-fallback.php';
@@ -39,6 +40,7 @@ require_once BI_DIR . '/inc/tutoring-imagery.php';
 require_once BI_DIR . '/inc/page-builders.php';
 require_once BI_DIR . '/inc/page-wrapper.php';
 require_once BI_DIR . '/inc/page-composer.php';
+require_once BI_DIR . '/inc/builder-host.php';
 require_once BI_DIR . '/inc/layout-manager.php';
 require_once BI_DIR . '/inc/customizer.php';
 require_once BI_DIR . '/inc/seo.php';
