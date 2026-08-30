@@ -16,7 +16,7 @@ import { compactCard, ifaceCard, subsystemCard } from './components/primitives.j
 import { mountConnectors } from './components/connectors.js';
 
 const API = window.ECOSYSTEM_API_URL || '';
-const SUPER_ADMIN = 'platform-super-admin';
+const TOKEN_KEY = 'ecosystem_api_token';
 
 const LIFECYCLE_GLYPH = {
   queued: '◷',
@@ -35,16 +35,48 @@ const LIFECYCLE_GLYPH = {
   'red-muted': '⊘',
 };
 
+function getToken() {
+  return sessionStorage.getItem(TOKEN_KEY) || '';
+}
+
+function setToken(token) {
+  if (token) {
+    sessionStorage.setItem(TOKEN_KEY, token);
+  } else {
+    sessionStorage.removeItem(TOKEN_KEY);
+  }
+}
+
+function showTokenModal() {
+  const modal = document.getElementById('auth-modal');
+  const input = document.getElementById('api-token');
+  modal.hidden = false;
+  input.value = getToken();
+  input.focus();
+}
+
+function hideTokenModal() {
+  document.getElementById('auth-modal').hidden = true;
+}
+
 async function api(path, options = {}) {
   const base = API || window.location.origin;
   const headers = {
     'Content-Type': 'application/json',
-    'X-User-Id': SUPER_ADMIN,
     'X-Correlation-Id': crypto.randomUUID(),
     ...(options.headers || {}),
   };
+  const token = getToken();
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
   const res = await fetch(`${base}${path}`, { ...options, headers });
   const json = await res.json().catch(() => ({}));
+  if (res.status === 401) {
+    setToken('');
+    showTokenModal();
+    throw new Error(json.error || 'Authentication required');
+  }
   if (!res.ok) {
     throw new Error(json.error || res.statusText);
   }
@@ -195,9 +227,36 @@ function renderLegend() {
   });
 }
 
+function bindAuthModal() {
+  const modal = document.getElementById('auth-modal');
+  document.getElementById('btn-auth-token').addEventListener('click', showTokenModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) hideTokenModal();
+  });
+  document.getElementById('btn-save-token').addEventListener('click', async () => {
+    const token = document.getElementById('api-token').value.trim();
+    if (!token) {
+      return;
+    }
+    setToken(token);
+    hideTokenModal();
+    await loadLiveData();
+  });
+  document.getElementById('btn-clear-token').addEventListener('click', () => {
+    setToken('');
+    document.getElementById('api-token').value = '';
+    hideTokenModal();
+    loadLiveData();
+  });
+}
+
 function bindTenantModal() {
   const modal = document.getElementById('tenant-modal');
   document.getElementById('btn-tenant-modal').addEventListener('click', () => {
+    if (!getToken()) {
+      showTokenModal();
+      return;
+    }
     modal.hidden = false;
     const pre = document.getElementById('tenants-json');
     if (pre.textContent && pre.textContent !== 'Loading…') {
@@ -208,6 +267,10 @@ function bindTenantModal() {
     if (e.target === modal) modal.hidden = true;
   });
   document.getElementById('btn-create').addEventListener('click', async () => {
+    if (!getToken()) {
+      showTokenModal();
+      return;
+    }
     const slug = document.getElementById('slug').value.trim();
     const name = document.getElementById('name').value.trim() || slug;
     const out = document.getElementById('create-result');
@@ -237,6 +300,12 @@ async function loadLiveData() {
   const badge = document.getElementById('cc-api-badge');
   try {
     const health = await api('/health');
+    if (!getToken()) {
+      badge.textContent = `${health.status} · auth required`;
+      badge.className = 'cc-header__meta cc-api-status cc-api-status--warn';
+      renderEvents();
+      return;
+    }
     const overview = await api('/api/v1/platform/overview');
     const tenants = await api('/api/v1/platform/tenants');
     document.getElementById('tenants-json').textContent = JSON.stringify(tenants.items, null, 2);
@@ -249,8 +318,8 @@ async function loadLiveData() {
     }));
     renderEvents(auditEvents);
   } catch (err) {
-    badge.textContent = 'API unreachable';
-    badge.className = 'cc-header__meta cc-api-status cc-api-status--err';
+    badge.textContent = getToken() ? 'API unreachable' : 'API up · auth required';
+    badge.className = `cc-header__meta cc-api-status cc-api-status--${getToken() ? 'err' : 'warn'}`;
     renderEvents();
   }
 }
@@ -268,6 +337,7 @@ function init() {
   renderLifecycle();
   renderLegend();
   mountConnectors(document.getElementById('cc-connector-layer'));
+  bindAuthModal();
   bindTenantModal();
   staggerEnter(document.getElementById('cc-workspace-inner'));
   loadLiveData();

@@ -7,27 +7,28 @@ import os from 'node:os';
 import path from 'node:path';
 import { createPlatformCore } from '../index.mjs';
 import { createOdooAdapters } from '@ecosystem/odoo-adapter';
+import { runAuthTests } from './auth.test.mjs';
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ecosystem-test-'));
 process.env.ECOSYSTEM_DATA_DIR = tmp;
+process.env.ECOSYSTEM_API_TOKEN = 'ecosystem-core-test-token-' + Date.now();
 process.env.ODOO_ADAPTER_MEMORY = '1';
 
 const odoo = createOdooAdapters();
 const core = createPlatformCore({ odooProvisioner: odoo.provisioner });
 core.providers.registerCustomerProvider(odoo.customer);
 
-let pass = 0;
-let fail = 0;
+const stats = { pass: 0, fail: 0 };
 
 async function run() {
   const test = (name, fn) => {
     try {
       fn();
       console.log(`OK  ${name}`);
-      pass += 1;
+      stats.pass += 1;
     } catch (e) {
       console.error(`FAIL ${name}:`, e.message);
-      fail += 1;
+      stats.fail += 1;
     }
   };
 
@@ -35,10 +36,10 @@ async function run() {
     try {
       await fn();
       console.log(`OK  ${name}`);
-      pass += 1;
+      stats.pass += 1;
     } catch (e) {
       console.error(`FAIL ${name}:`, e.message);
-      fail += 1;
+      stats.fail += 1;
     }
   };
 
@@ -98,8 +99,10 @@ async function run() {
     assert.equal(listB.items[0].name, 'Customer B');
   });
 
-  console.log(`\n${pass} passed, ${fail} failed`);
-  process.exit(fail > 0 ? 1 : 0);
+  await runAuthTests(stats);
+
+  console.log(`\n${stats.pass} passed, ${stats.fail} failed`);
+  process.exit(stats.fail > 0 ? 1 : 0);
 }
 
 run();

@@ -19,6 +19,7 @@
         <p class="cc-header__subtitle">Sovereign Multi-Tenant Agentic Architecture</p>
       </div>
       <div class="cc-header__meta cc-header__meta--right">
+        <button type="button" class="cc-nav__btn" id="btn-auth-token" style="width:auto;height:auto;padding:6px 10px">API Token</button>
         <button type="button" class="cc-nav__btn" id="btn-tenant-modal" style="width:auto;height:auto;padding:6px 10px">+ Tenant</button>
       </div>
     </header>
@@ -94,6 +95,21 @@
         </div>
         <div class="cc-legend" id="cc-legend"></div>
       </aside>
+    </div>
+  </div>
+
+  <div class="cc-modal-backdrop" id="auth-modal" hidden>
+    <div class="cc-modal" role="dialog" aria-labelledby="auth-modal-title">
+      <h2 id="auth-modal-title">Platform API Token</h2>
+      <p style="font-size:0.75rem;color:var(--cc-text-muted);margin:0 0 10px">
+        Enter the ECOSYSTEM_API_TOKEN configured on the platform API. Stored in this browser session only.
+      </p>
+      <div class="cc-field">
+        <label for="api-token">Bearer token</label>
+        <input id="api-token" type="password" placeholder="ECOSYSTEM_API_TOKEN" autocomplete="off" />
+      </div>
+      <button type="button" class="cc-btn-primary" id="btn-save-token">Save token</button>
+      <button type="button" class="cc-nav__btn" id="btn-clear-token" style="margin-left:8px">Clear</button>
     </div>
   </div>
 

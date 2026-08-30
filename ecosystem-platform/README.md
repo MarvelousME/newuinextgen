@@ -26,6 +26,8 @@ npm run dev:api
 
 API default: `http://localhost:8790`
 
+**Authentication:** all `/api/v1/*` routes require `Authorization: Bearer <ECOSYSTEM_API_TOKEN>`. Client `X-User-Id` is ignored for privilege. Set `ECOSYSTEM_API_TOKEN` to a strong secret (weak sentinels are rejected). The Control Center stores the token in browser session storage only.
+
 With full stack (Odoo, Postgres, Redis, RabbitMQ):
 
 ```bash
@@ -35,10 +37,11 @@ docker compose -f docker-compose.yml -f docker-compose.ecosystem.yml up -d
 
 ## API (platform-owned)
 
-- `GET /health`
-- `GET /api/v1/platform/overview` — Super Admin
+- `GET /health` — no auth
+- `GET /api/v1/platform/overview` — Bearer platform token
+- `GET /api/v1/platform/tenants` — Bearer platform token
 - `POST /api/v1/platform/tenants` — create tenant
 - `POST /api/v1/platform/tenants/:id/provision` — run blueprint provisioner
-- `GET /api/v1/tenants/:tenantId/customers` — tenant-scoped (header `X-Tenant-Id` + membership)
+- `GET /api/v1/tenants/:tenantId/customers` — Bearer platform token (tenant header + membership)
 
 See `.agent-audit/ECOSYSTEM-PLATFORM-VERIFICATION-MASTER-PROMPT.md` for verification gates.

@@ -631,6 +631,7 @@ body.cc-shell {
 }
 
 .cc-api-status--ok { color: var(--cc-accent-green); }
+.cc-api-status--warn { color: var(--cc-accent-amber, #f5a623); }
 .cc-api-status--err { color: var(--cc-accent-red); }
 
 /* Entrance animation */

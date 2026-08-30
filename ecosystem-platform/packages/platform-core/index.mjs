@@ -63,4 +63,10 @@ export { EventBus } from './event-bus.mjs';
 export { ProvisioningOrchestrator } from './provisioning.mjs';
 export { ProviderRouter } from './provider-router.mjs';
 export { IamService } from './iam.mjs';
+export {
+  authenticateRequest,
+  getApiToken,
+  getPlatformPrincipalId,
+  isTokenConfigured,
+} from './auth.mjs';
 export { resolveTenantContext } from './tenant-context.mjs';

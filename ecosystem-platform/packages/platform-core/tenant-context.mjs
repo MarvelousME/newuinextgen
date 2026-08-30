@@ -5,14 +5,20 @@ import crypto from 'node:crypto';
  * @param {import('node:http').IncomingMessage} req
  * @param {import('./iam.mjs').IamService} iam
  * @param {import('./tenant-store.mjs').TenantStore} tenantStore
+ * @param {{ userId?: string }} [options]
  */
-export function resolveTenantContext(req, iam, tenantStore) {
+export function resolveTenantContext(req, iam, tenantStore, options = {}) {
   const correlationId =
     req.headers['x-correlation-id'] ||
     req.headers['x-request-id'] ||
     crypto.randomUUID();
 
-  const userId = String(req.headers['x-user-id'] || 'anonymous');
+  const userId = options.userId ? String(options.userId) : '';
+  if (!userId) {
+    const err = new Error('authentication required');
+    err.code = 'AUTH_REQUIRED';
+    throw err;
+  }
   const tenantHeader = String(req.headers['x-tenant-id'] || '');
   const tenantSlug = String(req.headers['x-tenant-slug'] || '');
 

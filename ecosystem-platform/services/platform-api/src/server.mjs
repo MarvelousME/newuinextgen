@@ -2,7 +2,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createPlatformCore, resolveTenantContext } from '@ecosystem/platform-core';
+import { createPlatformCore, resolveTenantContext, authenticateRequest } from '@ecosystem/platform-core';
 import { createOdooAdapters } from '@ecosystem/odoo-adapter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -54,6 +54,33 @@ function serveStatic(res, filePath, contentType) {
   res.end(fs.readFileSync(filePath));
 }
 
+/**
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
+ * @returns {{ ok: true, userId: string } | null}
+ */
+function requireAuth(req, res) {
+  const auth = authenticateRequest(req);
+  if (!auth.ok) {
+    json(res, auth.status, { error: auth.error });
+    return null;
+  }
+  return auth;
+}
+
+/**
+ * @param {{ ok: true, userId: string }} auth
+ * @param {http.ServerResponse} res
+ * @returns {boolean}
+ */
+function requirePlatformSuperAdmin(auth, res) {
+  if (!core.iam.isPlatformSuperAdmin(auth.userId)) {
+    json(res, 403, { error: 'platform super admin required' });
+    return false;
+  }
+  return true;
+}
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
   const pathname = url.pathname;
@@ -90,105 +117,110 @@ const server = http.createServer(async (req, res) => {
         status: 'HEALTHY',
         service: 'ecosystem-platform-api',
         odoo: odooHealth,
-        tenants: core.tenantStore.list().length,
       });
     }
 
-    if (pathname === '/api/v1/platform/overview' && method === 'GET') {
-      const userId = String(req.headers['x-user-id'] || '');
-      if (!core.iam.isPlatformSuperAdmin(userId)) {
-        return json(res, 403, { error: 'platform super admin required' });
+    if (pathname.startsWith('/api/v1/')) {
+      const auth = requireAuth(req, res);
+      if (!auth) {
+        return;
       }
-      return json(res, 200, {
-        tenants: core.tenantStore.list(),
-        capabilities: core.capabilities.list(),
-        blueprints: core.blueprints.list(),
-        auditTail: core.audit.tail(10),
-      });
-    }
 
-    if (pathname === '/api/v1/platform/tenants' && method === 'GET') {
-      const userId = String(req.headers['x-user-id'] || '');
-      if (!core.iam.isPlatformSuperAdmin(userId)) {
-        return json(res, 403, { error: 'platform super admin required' });
+      if (pathname === '/api/v1/platform/overview' && method === 'GET') {
+        if (!requirePlatformSuperAdmin(auth, res)) {
+          return;
+        }
+        return json(res, 200, {
+          tenants: core.tenantStore.list(),
+          capabilities: core.capabilities.list(),
+          blueprints: core.blueprints.list(),
+          auditTail: core.audit.tail(10),
+        });
       }
-      return json(res, 200, { items: core.tenantStore.list() });
-    }
 
-    if (pathname === '/api/v1/platform/tenants' && method === 'POST') {
-      const userId = String(req.headers['x-user-id'] || '');
-      if (!core.iam.isPlatformSuperAdmin(userId)) {
-        return json(res, 403, { error: 'platform super admin required' });
+      if (pathname === '/api/v1/platform/tenants' && method === 'GET') {
+        if (!requirePlatformSuperAdmin(auth, res)) {
+          return;
+        }
+        return json(res, 200, { items: core.tenantStore.list() });
       }
-      const body = await readBody(req);
-      const tenant = core.tenantStore.create({
-        slug: body.slug,
-        name: body.name,
-        blueprintId: body.blueprintId,
-        ownerUserId: body.ownerUserId,
-      });
-      if (body.ownerUserId) {
-        core.iam.assignMembership(body.ownerUserId, tenant.id, 'L2');
+
+      if (pathname === '/api/v1/platform/tenants' && method === 'POST') {
+        if (!requirePlatformSuperAdmin(auth, res)) {
+          return;
+        }
+        const body = await readBody(req);
+        const tenant = core.tenantStore.create({
+          slug: body.slug,
+          name: body.name,
+          blueprintId: body.blueprintId,
+          ownerUserId: body.ownerUserId,
+        });
+        if (body.ownerUserId) {
+          core.iam.assignMembership(body.ownerUserId, tenant.id, 'L2');
+        }
+        await core.events.emit({
+          eventType: 'TenantCreated',
+          tenantId: tenant.id,
+          correlationId: String(req.headers['x-correlation-id'] || ''),
+          payload: { slug: tenant.slug },
+        });
+        return json(res, 201, { tenant });
       }
-      await core.events.emit({
-        eventType: 'TenantCreated',
-        tenantId: tenant.id,
-        correlationId: String(req.headers['x-correlation-id'] || ''),
-        payload: { slug: tenant.slug },
-      });
-      return json(res, 201, { tenant });
-    }
 
-    const provisionMatch = pathname.match(/^\/api\/v1\/platform\/tenants\/([^/]+)\/provision$/);
-    if (provisionMatch && method === 'POST') {
-      const userId = String(req.headers['x-user-id'] || '');
-      if (!core.iam.isPlatformSuperAdmin(userId)) {
-        return json(res, 403, { error: 'platform super admin required' });
+      const provisionMatch = pathname.match(/^\/api\/v1\/platform\/tenants\/([^/]+)\/provision$/);
+      if (provisionMatch && method === 'POST') {
+        if (!requirePlatformSuperAdmin(auth, res)) {
+          return;
+        }
+        const result = await core.provisioning.provision(provisionMatch[1], {
+          userId: auth.userId,
+          correlationId: String(req.headers['x-correlation-id'] || ''),
+        });
+        return json(res, 200, result);
       }
-      const result = await core.provisioning.provision(provisionMatch[1], {
-        userId,
-        correlationId: String(req.headers['x-correlation-id'] || ''),
-      });
-      return json(res, 200, result);
-    }
 
-    const customersMatch = pathname.match(/^\/api\/v1\/tenants\/([^/]+)\/customers$/);
-    if (customersMatch && method === 'GET') {
-      req.headers['x-tenant-id'] = customersMatch[1];
-      const ctx = resolveTenantContext(req, core.iam, core.tenantStore);
-      const tenant = core.tenantStore.get(customersMatch[1]);
-      ctx.odooDatabase = tenant?.odooDatabase || '';
-      const provider = core.providers.customerProvider(ctx);
-      const data = await provider.list(ctx, {
-        page: url.searchParams.get('page'),
-        pageSize: url.searchParams.get('pageSize'),
-      });
-      return json(res, 200, data, { correlationId: ctx.correlationId });
-    }
+      const customersMatch = pathname.match(/^\/api\/v1\/tenants\/([^/]+)\/customers$/);
+      if (customersMatch && method === 'GET') {
+        req.headers['x-tenant-id'] = customersMatch[1];
+        const ctx = resolveTenantContext(req, core.iam, core.tenantStore, { userId: auth.userId });
+        const tenant = core.tenantStore.get(customersMatch[1]);
+        ctx.odooDatabase = tenant?.odooDatabase || '';
+        const provider = core.providers.customerProvider(ctx);
+        const data = await provider.list(ctx, {
+          page: url.searchParams.get('page'),
+          pageSize: url.searchParams.get('pageSize'),
+        });
+        return json(res, 200, data, { correlationId: ctx.correlationId });
+      }
 
-    if (customersMatch && method === 'POST') {
-      req.headers['x-tenant-id'] = customersMatch[1];
-      const ctx = resolveTenantContext(req, core.iam, core.tenantStore);
-      const tenant = core.tenantStore.get(customersMatch[1]);
-      ctx.odooDatabase = tenant?.odooDatabase || '';
-      const body = await readBody(req);
-      const provider = core.providers.customerProvider(ctx);
-      const customer = await provider.create(ctx, body);
-      core.audit.append({
-        actorId: ctx.userId,
-        tenantId: ctx.tenantId,
-        action: 'customer.create',
-        resource: customer.id,
-        correlationId: ctx.correlationId,
-        result: 'ok',
-      });
-      return json(res, 201, { customer }, { correlationId: ctx.correlationId });
+      if (customersMatch && method === 'POST') {
+        req.headers['x-tenant-id'] = customersMatch[1];
+        const ctx = resolveTenantContext(req, core.iam, core.tenantStore, { userId: auth.userId });
+        const tenant = core.tenantStore.get(customersMatch[1]);
+        ctx.odooDatabase = tenant?.odooDatabase || '';
+        const body = await readBody(req);
+        const provider = core.providers.customerProvider(ctx);
+        const customer = await provider.create(ctx, body);
+        core.audit.append({
+          actorId: ctx.userId,
+          tenantId: ctx.tenantId,
+          action: 'customer.create',
+          resource: customer.id,
+          correlationId: ctx.correlationId,
+          result: 'ok',
+        });
+        return json(res, 201, { customer }, { correlationId: ctx.correlationId });
+      }
     }
 
     return json(res, 404, { error: 'not found' });
   } catch (err) {
     const code = err?.code || 'INTERNAL_ERROR';
-    const status = code === 'TENANT_FORBIDDEN' || code === 'TENANT_SUSPENDED' ? 403 : 500;
+    const status =
+      code === 'TENANT_FORBIDDEN' || code === 'TENANT_SUSPENDED' || code === 'AUTH_REQUIRED'
+        ? 403
+        : 500;
     return json(res, status, { error: String(err?.message || err), code });
   }
 });
