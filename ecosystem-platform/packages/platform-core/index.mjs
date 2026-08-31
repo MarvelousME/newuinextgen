@@ -64,6 +64,18 @@ export { ProvisioningOrchestrator } from './provisioning.mjs';
 export { ProviderRouter } from './provider-router.mjs';
 export { IamService } from './iam.mjs';
 export {
+  ECONOMIC_SCREENS,
+  ECONOMIC_PERMISSIONS,
+  PERMISSIONS_BY_LEVEL,
+} from './economic-catalog.mjs';
+export {
+  buildEconomicOverview,
+  buildEconomicCatalog,
+  authorizeEconomicMutation,
+  configuredCurrencies,
+  toMinorUnits,
+} from './economic-service.mjs';
+export {
   authenticateRequest,
   getApiToken,
   getPlatformPrincipalId,

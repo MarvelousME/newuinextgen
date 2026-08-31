@@ -14,6 +14,8 @@ import {
 } from './architecture.js';
 import { compactCard, ifaceCard, subsystemCard } from './components/primitives.js';
 import { mountConnectors } from './components/connectors.js';
+import { enableKinetic } from './components/kinetic.js';
+import { bindEconomic, parseEconomicHash, economicCommands } from './economic.js';
 
 const API = window.ECOSYSTEM_API_URL || '';
 const TOKEN_KEY = 'ecosystem_api_token';
@@ -139,6 +141,7 @@ function scrollToSection(id) {
 
 function renderActionBar() {
   const bar = document.getElementById('cc-action-bar');
+  bar.innerHTML = '';
   ACTION_FLOW.forEach((action) => {
     const btn = el('button', `cc-action-bar__btn cc-action-bar__btn--${action.accent}`);
     btn.type = 'button';
@@ -324,6 +327,129 @@ async function loadLiveData() {
   }
 }
 
+function bindCommandPalette() {
+  const backdrop = document.getElementById('command-palette');
+  const input = document.getElementById('command-input');
+  const list = document.getElementById('command-list');
+  let selected = 0;
+
+  const commands = [
+    ...economicCommands(),
+    ...NAV_ITEMS.map((item) => ({
+      id: `nav-${item.id}`,
+      label: item.label,
+      group: 'Pages',
+      run: () => {
+        window.location.hash = '#/';
+        renderNav(item.id);
+        scrollToSection(item.id);
+      },
+    })),
+    ...SUBSYSTEMS.map((sub) => ({
+      id: `sub-${sub.name}`,
+      label: sub.name,
+      group: 'Subsystems',
+      run: () => scrollToSection('subsystems'),
+    })),
+    {
+      id: 'op-tenant',
+      label: 'Create + Provision Tenant',
+      group: 'Operations',
+      run: () => document.getElementById('btn-tenant-modal').click(),
+    },
+    {
+      id: 'op-token',
+      label: 'Set API Token',
+      group: 'Settings',
+      run: () => showTokenModal(),
+    },
+  ];
+
+  function filtered() {
+    const q = input.value.trim().toLowerCase();
+    if (!q) return commands;
+    return commands.filter((c) => c.label.toLowerCase().includes(q) || c.group.toLowerCase().includes(q));
+  }
+
+  function paint() {
+    const rows = filtered();
+    selected = Math.max(0, Math.min(selected, rows.length - 1));
+    list.innerHTML = '';
+    rows.forEach((cmd, i) => {
+      const li = document.createElement('li');
+      const btn = el('button', 'cc-command__item');
+      btn.type = 'button';
+      btn.setAttribute('role', 'option');
+      btn.setAttribute('aria-selected', i === selected ? 'true' : 'false');
+      btn.appendChild(document.createTextNode(cmd.label));
+      btn.appendChild(el('span', 'cc-command__kbd', cmd.group));
+      btn.addEventListener('click', () => {
+        close();
+        cmd.run();
+      });
+      li.appendChild(btn);
+      list.appendChild(li);
+    });
+  }
+
+  function open() {
+    backdrop.hidden = false;
+    input.value = '';
+    selected = 0;
+    paint();
+    input.focus();
+  }
+
+  function close() {
+    backdrop.hidden = true;
+  }
+
+  document.getElementById('btn-command').addEventListener('click', open);
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) close();
+  });
+  input.addEventListener('input', () => {
+    selected = 0;
+    paint();
+  });
+  input.addEventListener('keydown', (e) => {
+    const rows = filtered();
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selected = Math.min(selected + 1, rows.length - 1);
+      paint();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selected = Math.max(selected - 1, 0);
+      paint();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const cmd = rows[selected];
+      if (cmd) {
+        close();
+        cmd.run();
+      }
+    } else if (e.key === 'Escape') {
+      close();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (backdrop.hidden) open();
+      else close();
+    }
+    if (e.key === 'Escape' && !backdrop.hidden) close();
+  });
+}
+
+function restoreArchitectureShell() {
+  document.querySelector('.cc-sidebar__title').textContent = 'NAVIGATION';
+  renderNav('overview');
+  renderActionBar();
+}
+
 function init() {
   renderNav('overview');
   renderActionBar();
@@ -337,10 +463,23 @@ function init() {
   renderLifecycle();
   renderLegend();
   mountConnectors(document.getElementById('cc-connector-layer'));
+  enableKinetic(document.getElementById('cc-workspace-inner'));
   bindAuthModal();
   bindTenantModal();
+  bindCommandPalette();
   staggerEnter(document.getElementById('cc-workspace-inner'));
-  loadLiveData();
+  bindEconomic({
+    api,
+    getToken,
+    el,
+    showTokenModal,
+    renderEvents,
+    staggerEnter,
+    restoreArchitecture: restoreArchitectureShell,
+  });
+  if (!parseEconomicHash().product || parseEconomicHash().product === 'architecture') {
+    loadLiveData();
+  }
 }
 
 init();

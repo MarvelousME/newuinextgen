@@ -5,6 +5,8 @@ export class ProviderRouter {
   constructor(deps = {}) {
     /** @type {Map<string, import('@ecosystem/contracts').ICustomerProvider>} */
     this.customerProviders = new Map();
+    /** @type {Map<string, object>} */
+    this.invoiceProviders = new Map();
     this.odooDatabases = new Map();
     this.odooProvisioner = deps.odooProvisioner || null;
   }
@@ -14,6 +16,11 @@ export class ProviderRouter {
     this.customerProviders.set(provider.providerId, provider);
   }
 
+  /** @param {{ providerId: string }} provider */
+  registerInvoiceProvider(provider) {
+    this.invoiceProviders.set(provider.providerId, provider);
+  }
+
   /**
    * @param {import('@ecosystem/contracts/types.mjs').TenantContext} ctx
    */
@@ -21,6 +28,17 @@ export class ProviderRouter {
     const p = this.customerProviders.get(PROVIDER_IDS.ODOO);
     if (!p) {
       throw new Error('no customer provider registered');
+    }
+    return p;
+  }
+
+  /**
+   * @param {import('@ecosystem/contracts/types.mjs').TenantContext} ctx
+   */
+  invoiceProvider(ctx) {
+    const p = this.invoiceProviders.get(PROVIDER_IDS.ODOO);
+    if (!p) {
+      throw new Error('no invoice provider registered');
     }
     return p;
   }

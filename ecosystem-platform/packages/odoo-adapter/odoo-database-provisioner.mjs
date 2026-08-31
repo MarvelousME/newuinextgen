@@ -1,3 +1,5 @@
+import { requireOdooSecret, resolveOdooLogin } from './odoo-secrets.mjs';
+
 /**
  * Odoo database-per-tenant provisioner.
  * Uses Odoo web database API when ODOO_URL is set; no-op in memory mode.
@@ -6,10 +8,10 @@ export class OdooDatabaseProvisioner {
   /** @param {{ baseUrl: string; masterPassword?: string; adminLogin?: string; adminPassword?: string }} config */
   constructor(config) {
     this.baseUrl = (config.baseUrl || '').replace(/\/$/, '');
-    this.masterPassword =
-      config.masterPassword || process.env.ODOO_MASTER_PASSWORD || 'admin';
-    this.adminLogin = config.adminLogin || process.env.ODOO_USERNAME || 'admin';
-    this.adminPassword = config.adminPassword || process.env.ODOO_PASSWORD || 'admin';
+    this.masterPassword = config.masterPassword || process.env.ODOO_MASTER_PASSWORD || '';
+    this.adminLogin = resolveOdooLogin(config.adminLogin || process.env.ODOO_USERNAME);
+    this.adminPassword =
+      config.adminPassword || process.env.ODOO_PASSWORD || process.env.ODOO_ADMIN_PASSWORD || '';
     this.useMemory =
       process.env.ODOO_ADAPTER_MEMORY === '1' || !this.baseUrl || !process.env.ODOO_URL;
     this._provisioned = new Set();
@@ -64,11 +66,13 @@ export class OdooDatabaseProvisioner {
 
   /** @param {string} dbName */
   async createDatabase(dbName) {
+    const master = requireOdooSecret(this.masterPassword, 'ODOO_MASTER_PASSWORD');
+    const adminPassword = requireOdooSecret(this.adminPassword, 'ODOO_ADMIN_PASSWORD');
     const form = new URLSearchParams();
-    form.set('master_pwd', this.masterPassword);
+    form.set('master_pwd', master);
     form.set('name', dbName);
     form.set('login', this.adminLogin);
-    form.set('password', this.adminPassword);
+    form.set('password', adminPassword);
     form.set('lang', 'en_US');
     form.set('country_code', 'za');
     form.set('phone', '');

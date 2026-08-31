@@ -47,6 +47,7 @@ export function ifaceCard(label) {
 export function subsystemCard(sub) {
   const card = document.createElement('article');
   card.className = 'cc-subsystem-card';
+  card.dataset.kinetic = 'tilt';
   const icon = document.createElement('div');
   icon.className = 'cc-subsystem-card__icon';
   icon.textContent = sub.name.slice(0, 2).toUpperCase();

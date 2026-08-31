@@ -2,7 +2,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createPlatformCore, resolveTenantContext, authenticateRequest } from '@ecosystem/platform-core';
+import { createPlatformCore, resolveTenantContext, authenticateRequest, buildEconomicOverview, buildEconomicCatalog, authorizeEconomicMutation, configuredCurrencies, ECONOMIC_PERMISSIONS } from '@ecosystem/platform-core';
 import { createOdooAdapters } from '@ecosystem/odoo-adapter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -14,6 +14,7 @@ const PORT = Number(process.env.ECOSYSTEM_API_PORT || 8790);
 const odoo = createOdooAdapters();
 const core = createPlatformCore({ odooProvisioner: odoo.provisioner });
 core.providers.registerCustomerProvider(odoo.customer);
+core.providers.registerInvoiceProvider(odoo.invoices);
 
 /** @param {http.IncomingMessage} req */
 function readBody(req) {
@@ -81,6 +82,19 @@ function requirePlatformSuperAdmin(auth, res) {
   return true;
 }
 
+/**
+ * @param {http.IncomingMessage} req
+ * @param {{ ok: true, userId: string }} auth
+ * @param {string} tenantId
+ */
+function resolveTenantForEconomic(req, auth, tenantId) {
+  req.headers['x-tenant-id'] = tenantId;
+  const ctx = resolveTenantContext(req, core.iam, core.tenantStore, { userId: auth.userId });
+  const tenant = core.tenantStore.get(tenantId);
+  ctx.odooDatabase = tenant?.odooDatabase || '';
+  return ctx;
+}
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
   const pathname = url.pathname;
@@ -97,6 +111,15 @@ const server = http.createServer(async (req, res) => {
   }
   if (method === 'GET' && pathname === '/control-center.css') {
     return serveStatic(res, path.join(CONTROL_CENTER, 'control-center.css'), 'text/css; charset=utf-8');
+  }
+  if (method === 'GET' && pathname === '/economic.css') {
+    return serveStatic(res, path.join(CONTROL_CENTER, 'economic.css'), 'text/css; charset=utf-8');
+  }
+  if (method === 'GET' && pathname === '/economic.js') {
+    return serveStatic(res, path.join(CONTROL_CENTER, 'economic.js'), 'application/javascript; charset=utf-8');
+  }
+  if (method === 'GET' && pathname === '/economic-catalog.js') {
+    return serveStatic(res, path.join(CONTROL_CENTER, 'economic-catalog.js'), 'application/javascript; charset=utf-8');
   }
   if (method === 'GET' && pathname.startsWith('/components/')) {
     const rel = pathname.replace(/^\//, '');
@@ -211,6 +234,164 @@ const server = http.createServer(async (req, res) => {
           result: 'ok',
         });
         return json(res, 201, { customer }, { correlationId: ctx.correlationId });
+      }
+
+      if (pathname === '/api/v1/economic/catalog' && method === 'GET') {
+        if (!core.iam.can(auth.userId, ECONOMIC_PERMISSIONS.READ, url.searchParams.get('tenantId') || '')) {
+          return json(res, 403, { error: 'permission denied', permission: ECONOMIC_PERMISSIONS.READ });
+        }
+        return json(res, 200, buildEconomicCatalog(core, auth.userId, url.searchParams.get('tenantId') || ''));
+      }
+
+      if (pathname === '/api/v1/economic/overview' && method === 'GET') {
+        const tenantId = url.searchParams.get('tenantId') || '';
+        if (!core.iam.can(auth.userId, ECONOMIC_PERMISSIONS.READ, tenantId)) {
+          return json(res, 403, { error: 'permission denied', permission: ECONOMIC_PERMISSIONS.READ });
+        }
+        let customerTotal = null;
+        let invoiceTotal = null;
+        if (tenantId) {
+          const tenantCtx = resolveTenantForEconomic(req, auth, tenantId);
+          try {
+            customerTotal = (await core.providers.customerProvider(tenantCtx).list(tenantCtx)).total;
+          } catch {
+            customerTotal = null;
+          }
+          try {
+            invoiceTotal = (await core.providers.invoiceProvider(tenantCtx).list(tenantCtx)).total;
+          } catch {
+            invoiceTotal = null;
+          }
+        }
+        const odooHealth = await odoo.client.health();
+        return json(
+          res,
+          200,
+          buildEconomicOverview({
+            core,
+            iamUserId: auth.userId,
+            tenantId,
+            odooHealth,
+            customerTotal,
+            invoiceTotal,
+          })
+        );
+      }
+
+      if (pathname === '/api/v1/economic/audit' && method === 'GET') {
+        const tenantId = url.searchParams.get('tenantId') || '';
+        if (!core.iam.can(auth.userId, ECONOMIC_PERMISSIONS.AUDIT_READ, tenantId)) {
+          return json(res, 403, { error: 'permission denied', permission: ECONOMIC_PERMISSIONS.AUDIT_READ });
+        }
+        const q = String(url.searchParams.get('q') || '').toLowerCase();
+        const rows = core.audit.tail(100).filter((row) => {
+          if (tenantId && row.tenantId && row.tenantId !== tenantId) {
+            return false;
+          }
+          if (!q) {
+            return true;
+          }
+          return JSON.stringify(row).toLowerCase().includes(q);
+        });
+        return json(res, 200, { items: rows, total: rows.length, page: 1, pageSize: rows.length });
+      }
+
+      if (pathname === '/api/v1/economic/currencies' && method === 'GET') {
+        if (!core.iam.can(auth.userId, ECONOMIC_PERMISSIONS.READ, url.searchParams.get('tenantId') || '')) {
+          return json(res, 403, { error: 'permission denied', permission: ECONOMIC_PERMISSIONS.READ });
+        }
+        return json(res, 200, configuredCurrencies());
+      }
+
+      if (pathname === '/api/v1/economic/customers' && method === 'GET') {
+        const tenantId = url.searchParams.get('tenantId') || '';
+        if (!tenantId) {
+          return json(res, 400, { error: 'tenantId required' });
+        }
+        if (!core.iam.can(auth.userId, ECONOMIC_PERMISSIONS.CUSTOMERS_READ, tenantId)) {
+          return json(res, 403, { error: 'permission denied', permission: ECONOMIC_PERMISSIONS.CUSTOMERS_READ });
+        }
+        const ctx = resolveTenantForEconomic(req, auth, tenantId);
+        const data = await core.providers.customerProvider(ctx).list(ctx, {
+          page: url.searchParams.get('page'),
+          pageSize: url.searchParams.get('pageSize'),
+        });
+        return json(res, 200, data, { correlationId: ctx.correlationId });
+      }
+
+      if (pathname === '/api/v1/economic/customers' && method === 'POST') {
+        const body = await readBody(req);
+        const tenantId = body.tenantId || url.searchParams.get('tenantId') || '';
+        const gate = authorizeEconomicMutation(core, auth.userId, tenantId, 'customers.create');
+        if (!gate.ok) {
+          return json(res, gate.status, { error: gate.error, permission: gate.permission });
+        }
+        const ctx = resolveTenantForEconomic(req, auth, tenantId);
+        const customer = await core.providers.customerProvider(ctx).create(ctx, body);
+        core.audit.append({
+          actorId: ctx.userId,
+          tenantId: ctx.tenantId,
+          action: 'customer.create',
+          resource: customer.id,
+          correlationId: ctx.correlationId,
+          result: 'ok',
+        });
+        await core.events.emit({
+          eventType: 'customer.created',
+          tenantId: ctx.tenantId,
+          correlationId: ctx.correlationId,
+          payload: { id: customer.id },
+        });
+        return json(res, 201, { customer }, { correlationId: ctx.correlationId });
+      }
+
+      if (pathname === '/api/v1/economic/invoices' && method === 'GET') {
+        const tenantId = url.searchParams.get('tenantId') || '';
+        if (!tenantId) {
+          return json(res, 400, { error: 'tenantId required' });
+        }
+        if (!core.iam.can(auth.userId, ECONOMIC_PERMISSIONS.INVOICES_READ, tenantId)) {
+          return json(res, 403, { error: 'permission denied', permission: ECONOMIC_PERMISSIONS.INVOICES_READ });
+        }
+        const ctx = resolveTenantForEconomic(req, auth, tenantId);
+        const data = await core.providers.invoiceProvider(ctx).list(ctx, {
+          page: url.searchParams.get('page'),
+          pageSize: url.searchParams.get('pageSize'),
+        });
+        return json(res, 200, data, { correlationId: ctx.correlationId });
+      }
+
+      if (pathname === '/api/v1/economic/invoices' && method === 'POST') {
+        const body = await readBody(req);
+        const tenantId = body.tenantId || url.searchParams.get('tenantId') || '';
+        const gate = authorizeEconomicMutation(core, auth.userId, tenantId, 'invoices.create');
+        if (!gate.ok) {
+          return json(res, gate.status, { error: gate.error, permission: gate.permission });
+        }
+        const ctx = resolveTenantForEconomic(req, auth, tenantId);
+        const invoice = await core.providers.invoiceProvider(ctx).create(ctx, body);
+        core.audit.append({
+          actorId: ctx.userId,
+          tenantId: ctx.tenantId,
+          action: 'invoice.create',
+          resource: invoice.id,
+          correlationId: ctx.correlationId,
+          result: 'ok',
+        });
+        await core.events.emit({
+          eventType: 'invoice.issued',
+          tenantId: ctx.tenantId,
+          correlationId: ctx.correlationId,
+          payload: { id: invoice.id, status: invoice.status },
+        });
+        return json(res, 201, { invoice }, { correlationId: ctx.correlationId });
+      }
+
+      if (pathname === '/api/v1/economic/actions' && method === 'POST') {
+        const body = await readBody(req);
+        const tenantId = body.tenantId || url.searchParams.get('tenantId') || '';
+        const gate = authorizeEconomicMutation(core, auth.userId, tenantId, body.action);
+        return json(res, gate.status, gate.ok ? { ok: true, action: body.action } : { error: gate.error, permission: gate.permission });
       }
     }
 

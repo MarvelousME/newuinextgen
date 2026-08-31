@@ -1,4 +1,5 @@
 import { IAM_LEVELS } from '@ecosystem/contracts';
+import { PERMISSIONS_BY_LEVEL } from './economic-catalog.mjs';
 
 export class IamService {
   /** @param {{ tenantStore: import('./tenant-store.mjs').TenantStore; audit: import('./audit-log.mjs').AuditLog }} deps */
@@ -47,5 +48,23 @@ export class IamService {
     }
     const m = this.memberships.get(`${userId}:${tenantId}`);
     return m?.role || null;
+  }
+
+  /**
+   * Capability-style permission check. Prefer this over role === 'admin'.
+   * @param {string} userId
+   * @param {string} permission
+   * @param {string} [tenantId]
+   */
+  can(userId, permission, tenantId = '') {
+    if (this.isPlatformSuperAdmin(userId)) {
+      return true;
+    }
+    const role = tenantId ? this.getRole(userId, tenantId) : null;
+    if (!role) {
+      return false;
+    }
+    const granted = PERMISSIONS_BY_LEVEL[role] || [];
+    return granted.includes('*') || granted.includes(permission);
   }
 }

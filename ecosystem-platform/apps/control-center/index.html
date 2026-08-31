@@ -9,8 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/ui/tokens.css" />
   <link rel="stylesheet" href="/control-center.css" />
+  <link rel="stylesheet" href="/economic.css" />
 </head>
 <body class="cc-shell">
+  <div class="cc-aurora" aria-hidden="true">
+    <div class="cc-aurora__blob cc-aurora__blob--indigo"></div>
+    <div class="cc-aurora__blob cc-aurora__blob--violet"></div>
+    <div class="cc-aurora__blob cc-aurora__blob--cyan"></div>
+    <div class="cc-aurora__noise"></div>
+  </div>
   <div class="cc-app" id="cc-app">
     <header class="cc-header">
       <div class="cc-header__meta" id="cc-api-badge">API …</div>
@@ -18,9 +25,10 @@
         <h1 class="cc-header__title">ECOSYSTEM CONTROL CENTER</h1>
         <p class="cc-header__subtitle">Sovereign Multi-Tenant Agentic Architecture</p>
       </div>
-      <div class="cc-header__meta cc-header__meta--right">
-        <button type="button" class="cc-nav__btn" id="btn-auth-token" style="width:auto;height:auto;padding:6px 10px">API Token</button>
-        <button type="button" class="cc-nav__btn" id="btn-tenant-modal" style="width:auto;height:auto;padding:6px 10px">+ Tenant</button>
+      <div class="cc-header__meta cc-header__meta--right cc-header__actions">
+        <button type="button" class="cc-btn-ghost" id="btn-command" title="Command palette (Ctrl/Cmd+K)">⌘K</button>
+        <button type="button" class="cc-btn-secondary" id="btn-auth-token">API Token</button>
+        <button type="button" class="cc-btn-primary" id="btn-tenant-modal" style="margin-top:0">+ Tenant</button>
       </div>
     </header>
 
@@ -34,16 +42,16 @@
         <svg class="cc-connectors" id="cc-connectors" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(40,199,247,0.6)" />
+              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(34,211,238,0.6)" />
             </marker>
             <marker id="arrow-purple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(155,107,255,0.6)" />
+              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(139,92,246,0.6)" />
             </marker>
           </defs>
           <g id="cc-connector-layer"></g>
         </svg>
-        <div class="cc-workspace__inner" id="cc-workspace-inner">
-          <nav class="cc-action-bar" id="cc-action-bar" aria-label="Control actions"></nav>
+        <nav class="cc-action-bar" id="cc-action-bar" aria-label="Control actions"></nav>
+        <div class="cc-workspace__inner cc-arch-view" id="cc-workspace-inner">
 
           <section class="cc-panel cc-panel--blue cc-enter" data-section="design-system">
             <h2 class="cc-panel__heading">KINETIC / NEXTGEN UI DESIGN SYSTEM</h2>
@@ -82,6 +90,9 @@
             <div class="cc-card-row cc-card-row--infra" id="cc-data-state"></div>
           </section>
         </div>
+        <div class="cc-workspace__inner cc-economic-view" id="cc-economic-view">
+          <div id="ecc-page" class="ecc-page" aria-live="polite"></div>
+        </div>
       </main>
 
       <aside class="cc-rail" aria-label="Operations">
@@ -109,7 +120,7 @@
         <input id="api-token" type="password" placeholder="ECOSYSTEM_API_TOKEN" autocomplete="off" />
       </div>
       <button type="button" class="cc-btn-primary" id="btn-save-token">Save token</button>
-      <button type="button" class="cc-nav__btn" id="btn-clear-token" style="margin-left:8px">Clear</button>
+      <button type="button" class="cc-btn-ghost" id="btn-clear-token" style="margin-left:8px">Clear</button>
     </div>
   </div>
 
@@ -127,6 +138,14 @@
       <button type="button" class="cc-btn-primary" id="btn-create">Create + Provision</button>
       <pre id="create-result" style="font-size:0.65rem;margin-top:10px;color:var(--cc-text-muted)"></pre>
       <pre id="tenants-json" hidden></pre>
+    </div>
+  </div>
+
+  <div class="cc-command-backdrop" id="command-palette" hidden>
+    <div class="cc-command" role="dialog" aria-label="Command palette">
+      <input class="cc-command__input" id="command-input" type="search" placeholder="Search pages, subsystems, operations…" autocomplete="off" />
+      <ul class="cc-command__list" id="command-list" role="listbox"></ul>
+      <div class="cc-command__hint">Navigate with ↑↓ · Enter to open · Esc to close</div>
     </div>
   </div>
 

@@ -1,3 +1,30 @@
+import { requireOdooSecret } from './odoo-secrets.mjs';
+
+/**
+ * Equality-only domain filter for memory mode.
+ * @param {Record<string, unknown>} rec
+ * @param {unknown[]} domain
+ */
+function domainMatches(rec, domain) {
+  if (!Array.isArray(domain) || domain.length === 0) {
+    return true;
+  }
+  return domain.every((clause) => {
+    if (!Array.isArray(clause) || clause.length < 3) {
+      return true;
+    }
+    const [field, op, value] = clause;
+    const actual = rec[field];
+    if (op === '=') {
+      return actual === value;
+    }
+    if (op === 'in' && Array.isArray(value)) {
+      return value.includes(actual);
+    }
+    return true;
+  });
+}
+
 /**
  * Odoo JSON-RPC client — tenant DB selected per request context.
  */
@@ -17,6 +44,7 @@ export class OdooJsonRpcClient {
     if (this.useMemory) {
       return { uid: 1, db };
     }
+    requireOdooSecret(this.password, 'ODOO_ADMIN_PASSWORD');
     const cached = this._sessions.get(db);
     if (cached) {
       return cached;
@@ -59,7 +87,13 @@ export class OdooJsonRpcClient {
       }
       const store = this._memory.get(key);
       if (method === 'search_read') {
-        return store;
+        const domain = Array.isArray(args[0]) ? args[0] : [];
+        const opts = args[1] && typeof args[1] === 'object' ? args[1] : {};
+        let rows = store.filter((rec) => domainMatches(rec, domain));
+        if (opts.limit) {
+          rows = rows.slice(0, Number(opts.limit));
+        }
+        return rows;
       }
       if (method === 'create') {
         const id = store.length + 1;

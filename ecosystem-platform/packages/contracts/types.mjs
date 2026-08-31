@@ -30,11 +30,15 @@ export const TenantStatus = {
  */
 
 /**
- * @typedef {object} PagedResult
- * @property {unknown[]} items
- * @property {number} total
- * @property {number} page
- * @property {number} pageSize
+ * @typedef {object} Invoice
+ * @property {string} id
+ * @property {string} reference
+ * @property {number} amountMinor
+ * @property {string} currency
+ * @property {string} status
+ * @property {string} [date]
+ * @property {string} [customer]
+ * @property {Record<string, unknown>} [meta]
  */
 
 /**

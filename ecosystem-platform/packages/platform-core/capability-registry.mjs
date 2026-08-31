@@ -19,6 +19,7 @@ export class CapabilityRegistry {
       { id: 'ai-agents', category: 'ai', name: 'AI Agents', provider: 'agent-gateway', dependencies: [] },
       { id: 'monitoring', category: 'operations', name: 'Monitoring', provider: 'platform', dependencies: [] },
       { id: 'audit', category: 'operations', name: 'Audit', provider: 'platform', dependencies: [] },
+      { id: 'economic-overview', category: 'economic', name: 'Economic Overview', provider: 'platform', dependencies: ['audit'] },
     ];
   }
 
