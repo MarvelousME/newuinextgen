@@ -163,6 +163,9 @@ final class NGC_Plugin {
 		if ( class_exists( 'NGC_Section_CMS' ) ) {
 			NGC_Section_CMS::install_defaults();
 		}
+		if ( class_exists( 'NGC_Product_Provisioner' ) ) {
+			do_action( 'ngc_provision_tutor_products' );
+		}
 		do_action( 'ngc_fluentcrm_bootstrap' );
 		flush_rewrite_rules();
 		update_option( 'ngc_db_version', NGC_VERSION, false );

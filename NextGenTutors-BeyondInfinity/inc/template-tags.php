@@ -1196,7 +1196,7 @@ function bi_get_search_query_arg( $key ) {
  * Hero subject/location search (pages-to-review/index.html).
  */
 function bi_hero_search_form() {
-    $subjects         = function_exists( 'bi_get_subject_tracks' ) ? bi_get_subject_tracks() : [];
+    $subjects         = function_exists( 'bi_get_subject_options' ) ? bi_get_subject_options() : [];
     $selected_subject = bi_get_search_query_arg( 'subject' );
     $location         = bi_get_search_query_arg( 'location' );
     ?>
@@ -1205,10 +1205,8 @@ function bi_hero_search_form() {
         <label class="screen-reader-text" for="bi-hero-subject"><?php esc_html_e( 'Subject', 'beyondinfinity' ); ?></label>
         <select id="bi-hero-subject" name="subject">
           <option value=""><?php esc_html_e( 'Choose a subject…', 'beyondinfinity' ); ?></option>
-          <?php foreach ( $subjects as $subject ) :
-              $slug = sanitize_title( $subject['name'] );
-              ?>
-            <option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $selected_subject, $slug ); ?>><?php echo esc_html( $subject['name'] ); ?></option>
+          <?php foreach ( $subjects as $slug => $label ) : ?>
+            <option value="<?php echo esc_attr( (string) $slug ); ?>" <?php selected( $selected_subject, (string) $slug ); ?>><?php echo esc_html( (string) $label ); ?></option>
           <?php endforeach; ?>
         </select>
       </div>

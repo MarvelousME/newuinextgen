@@ -114,8 +114,13 @@
   }
 
   .ngt-nav__toggle {
-    display: block !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
     margin-left: auto;
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--ngt-space-sm, 8px);
   }
 }
 

@@ -58,6 +58,20 @@ docker compose --profile setup run --rm wpcli
 
 Defaults use **8890** (WordPress), **8787** (Agent Gateway), and **8082** (phpMyAdmin).
 
+## Ecosystem platform overlay
+
+With `docker compose -f docker-compose.yml -f docker-compose.ecosystem.yml up -d`:
+
+| Service | URL | Notes |
+|---------|-----|-------|
+| Control Center / API | http://localhost:8790 | Loopback only (`ECOSYSTEM_BIND=127.0.0.1`) |
+| RabbitMQ management | http://localhost:15672 | Loopback only |
+| Odoo | http://localhost:8069 | Loopback only |
+
+Set a strong `ECOSYSTEM_API_TOKEN` in `.env` before using tenant/provision APIs. The Control Center prompts for this token at runtime (session storage). Do **not** use weak values like `platform-super-admin` or `admin`.
+
+On LAN/VPS deployments: override all default passwords, keep `ECOSYSTEM_BIND=127.0.0.1`, and never expose `:8790` without Bearer auth.
+
 ## Companion plugin
 
 **NextGenTutors-Companion** provides forms, dashboards, smart matching, agentic control plane, and MCP registry.

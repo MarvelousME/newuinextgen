@@ -561,7 +561,7 @@ class NGC_Provision_Step_Commerce extends NGC_Provisioning_Step_Base {
 }
 
 /**
- * 21 — Products (no invented prices).
+ * 21 — Default lesson SKUs via NGC_Product_Provisioner.
  */
 class NGC_Provision_Step_Products extends NGC_Provisioning_Step_Base {
 	public function id(): string { return 'products'; }
@@ -571,10 +571,24 @@ class NGC_Provision_Step_Products extends NGC_Provisioning_Step_Base {
 	public function is_critical(): bool { return false; }
 
 	public function apply( NGC_Provision_Context $context ): NGC_Provision_Step_Result {
-		return $this->skipped(
-			'Product/price creation blocked until approved pricing is supplied in INPUTS-REQUIRED.md.',
-			[ 'reason' => 'no_invented_prices' ]
-		);
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return $this->skipped( 'WooCommerce inactive — default lesson SKUs not created.', [ 'woocommerce' => false ] );
+		}
+		if ( ! class_exists( 'NGC_Product_Provisioner' ) ) {
+			return $this->skipped( 'Product provisioner unavailable.', [] );
+		}
+		if ( $context->dry_run ) {
+			return $this->ok( 'Dry-run: would provision default lesson SKUs via NGC_Product_Provisioner.', [ 'dry_run' => true ] );
+		}
+		do_action( 'ngc_provision_tutor_products' );
+		$result = NGC_Product_Provisioner::provision_defaults();
+		if ( empty( $result['success'] ) ) {
+			return $this->partial(
+				(string) ( $result['message'] ?? 'Lesson SKU provision did not complete.' ),
+				$result
+			);
+		}
+		return $this->ok( 'Default lesson SKUs provisioned.', $result );
 	}
 }
 

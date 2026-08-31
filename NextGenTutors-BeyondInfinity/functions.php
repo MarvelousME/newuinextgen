@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'BI_VERSION', '1.9.28' );
+define( 'BI_VERSION', '1.9.29' );
 define( 'BI_DIR', get_stylesheet_directory() );
 define( 'BI_URI', get_stylesheet_directory_uri() );
 if ( ! defined( 'NGT_URI' ) ) {

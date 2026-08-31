@@ -1,0 +1,23 @@
+{
+  "name": "ecosystem-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sovereign multi-tenant agentic ecosystem-as-a-service control plane",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "services/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:api": "node services/platform-api/src/server.mjs",
+    "dev:control": "npm run dev --workspace=@ecosystem/control-center",
+    "build": "npm run build --workspaces --if-present",
+    "test": "node packages/platform-core/test/run.mjs",
+    "test:e2e": "node packages/platform-core/test/e2e-odoo.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

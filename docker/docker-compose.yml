@@ -50,7 +50,7 @@ services:
       start_period: 10s
 
   wordpress:
-    image: wordpress:6.7-php8.2-apache
+    image: wordpress:6.9-php8.2-apache
     restart: unless-stopped
     ports:
       - "${WP_PORT:-8890}:80"

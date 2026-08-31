@@ -1,0 +1,26 @@
+id: generic-business
+version: "1"
+industry: generic
+name: Generic Business Ecosystem
+
+capabilities:
+  - crm
+  - sales
+  - invoicing
+  - projects
+  - workflow-automation
+  - monitoring
+  - audit
+
+roles:
+  - owner
+  - administrator
+  - manager
+  - staff
+
+agents:
+  - support-agent
+
+integrations:
+  - wordpress
+  - n8n

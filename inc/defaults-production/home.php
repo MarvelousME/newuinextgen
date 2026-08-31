@@ -777,10 +777,17 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
           <input id="ngi_parent_email" name="email" type="email" required autocomplete="email" />
           <label for="ngi_subject"><?php esc_html_e( 'Subject', 'beyondinfinity' ); ?></label>
           <select id="ngi_subject" name="subject">
-            <option><?php esc_html_e( 'Mathematics', 'beyondinfinity' ); ?></option>
-            <option><?php esc_html_e( 'Physical Science', 'beyondinfinity' ); ?></option>
-            <option><?php esc_html_e( 'English', 'beyondinfinity' ); ?></option>
-            <option><?php esc_html_e( 'Programming', 'beyondinfinity' ); ?></option>
+            <?php
+            $subject_options = function_exists( 'bi_get_subject_options' ) ? bi_get_subject_options() : [
+                'mathematics'      => __( 'Mathematics', 'beyondinfinity' ),
+                'physical-science' => __( 'Physical Science', 'beyondinfinity' ),
+                'english'          => __( 'English', 'beyondinfinity' ),
+                'coding-python'    => __( 'Programming', 'beyondinfinity' ),
+            ];
+            foreach ( $subject_options as $slug => $label ) :
+                ?>
+            <option value="<?php echo esc_attr( (string) $slug ); ?>"><?php echo esc_html( (string) $label ); ?></option>
+            <?php endforeach; ?>
           </select>
           <button class="ngi-btn ngi-btn-primary" style="width:100%;margin-top:10px" type="submit"><?php esc_html_e( 'Submit Assessment Request', 'beyondinfinity' ); ?></button>
         </form>

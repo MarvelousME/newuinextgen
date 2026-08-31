@@ -1,0 +1,11 @@
+{
+  "name": "@ecosystem/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./types.mjs": "./types.mjs"
+  }
+}

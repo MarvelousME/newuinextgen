@@ -12,6 +12,7 @@ One product, **six deployable packages** (plus ops consoles). Each package has a
 | **AI-Integration** | `NextGenTutors-AI-Integration/` | `plugins/NextGenTutors-AI-Integration` | Transport/security/governance bridge for approved AI integrations. No Companion domain ownership and no direct LLM or model runtime. |
 | **Html-Importer** | `NextGenTutors-Html-Importer/` | `plugins/NextGenTutors-Html-Importer` | One-time / ops: static HTML → WP pages (dry-run, rollback). No runtime business logic. |
 | **Plugin-Manager** | `NextGenTutors-Plugin-Manager/` | `plugins/NextGenTutors-Plugin-Manager` | Operator console: install/activate stack plugins, health, offline zips. Does not own tutor data. |
+| **Ecosystem Platform** | `ecosystem-platform/` | Node service `:8790` + Docker overlay | SaaS control plane: tenants, blueprints, IAM, BFF API, Odoo adapters (replaceable business engine). |
 
 **Do not duplicate** these folders elsewhere in the repo for active development. Legacy paths (`beyondinfinity/`, `nextgencompanion/`, `revamp-html-importer/`, `docker/wp-content/themes/beyondinfinity/`) are retired.
 

@@ -230,15 +230,19 @@ function bi_ngc_form_find_tutor() {
         'High School (8-12)' => __( 'High School (8-12)', 'beyondinfinity' ),
         'Tertiary'  => __( 'Tertiary', 'beyondinfinity' ),
     ];
-    $subject_opts = [
-        ''                   => __( 'Select…', 'beyondinfinity' ),
-        'Mathematics'        => __( 'Mathematics', 'beyondinfinity' ),
-        'Physical Science'   => __( 'Physical Science', 'beyondinfinity' ),
-        'Accounting'         => __( 'Accounting', 'beyondinfinity' ),
-        'English'            => __( 'English', 'beyondinfinity' ),
-        'Life Sciences'      => __( 'Life Sciences', 'beyondinfinity' ),
-        'Tertiary Support'   => __( 'Tertiary Support', 'beyondinfinity' ),
-    ];
+    $subject_opts = [ '' => __( 'Select…', 'beyondinfinity' ) ];
+    if ( function_exists( 'bi_get_subject_options' ) ) {
+        foreach ( bi_get_subject_options() as $slug => $label ) {
+            $subject_opts[ (string) $slug ] = (string) $label;
+        }
+    } else {
+        $subject_opts['mathematics']      = __( 'Mathematics', 'beyondinfinity' );
+        $subject_opts['physical-science'] = __( 'Physical Science', 'beyondinfinity' );
+        $subject_opts['accounting']       = __( 'Accounting', 'beyondinfinity' );
+        $subject_opts['english']          = __( 'English', 'beyondinfinity' );
+        $subject_opts['life-sciences']    = __( 'Life Sciences', 'beyondinfinity' );
+        $subject_opts['tertiary-support'] = __( 'Tertiary Support', 'beyondinfinity' );
+    }
     $province_opts = [
         ''               => __( 'Select…', 'beyondinfinity' ),
         'Gauteng'        => __( 'Gauteng', 'beyondinfinity' ),

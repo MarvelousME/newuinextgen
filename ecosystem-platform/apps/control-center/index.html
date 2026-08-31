@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ecosystem Control Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/ui/tokens.css" />
+  <link rel="stylesheet" href="/control-center.css" />
+  <link rel="stylesheet" href="/economic.css" />
+</head>
+<body class="cc-shell">
+  <div class="cc-aurora" aria-hidden="true">
+    <div class="cc-aurora__blob cc-aurora__blob--indigo"></div>
+    <div class="cc-aurora__blob cc-aurora__blob--violet"></div>
+    <div class="cc-aurora__blob cc-aurora__blob--cyan"></div>
+    <div class="cc-aurora__noise"></div>
+  </div>
+  <div class="cc-app" id="cc-app">
+    <header class="cc-header">
+      <div class="cc-header__meta" id="cc-api-badge">API …</div>
+      <div>
+        <h1 class="cc-header__title">ECOSYSTEM CONTROL CENTER</h1>
+        <p class="cc-header__subtitle">Sovereign Multi-Tenant Agentic Architecture</p>
+      </div>
+      <div class="cc-header__meta cc-header__meta--right cc-header__actions">
+        <button type="button" class="cc-btn-ghost" id="btn-command" title="Command palette (Ctrl/Cmd+K)">⌘K</button>
+        <button type="button" class="cc-btn-secondary" id="btn-auth-token">API Token</button>
+        <button type="button" class="cc-btn-primary" id="btn-tenant-modal" style="margin-top:0">+ Tenant</button>
+      </div>
+    </header>
+
+    <div class="cc-body">
+      <aside class="cc-sidebar" aria-label="Navigation">
+        <p class="cc-sidebar__title">NAVIGATION</p>
+        <ul class="cc-nav" id="cc-nav"></ul>
+      </aside>
+
+      <main class="cc-workspace" id="cc-workspace">
+        <svg class="cc-connectors" id="cc-connectors" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <marker id="arrow-cyan" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(34,211,238,0.6)" />
+            </marker>
+            <marker id="arrow-purple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(139,92,246,0.6)" />
+            </marker>
+          </defs>
+          <g id="cc-connector-layer"></g>
+        </svg>
+        <nav class="cc-action-bar" id="cc-action-bar" aria-label="Control actions"></nav>
+        <div class="cc-workspace__inner cc-arch-view" id="cc-workspace-inner">
+
+          <section class="cc-panel cc-panel--blue cc-enter" data-section="design-system">
+            <h2 class="cc-panel__heading">KINETIC / NEXTGEN UI DESIGN SYSTEM</h2>
+            <div class="cc-card-row" id="cc-design-system"></div>
+          </section>
+
+          <section class="cc-panel cc-panel--purple cc-enter" data-section="control-plane">
+            <h2 class="cc-panel__heading">CONTROL PLANE — CORE SERVICES</h2>
+            <div class="cc-card-row" id="cc-control-plane"></div>
+          </section>
+
+          <section class="cc-panel cc-panel--blue cc-enter" data-section="providers">
+            <h2 class="cc-panel__heading">PROVIDER / ADAPTER LAYER</h2>
+            <p class="cc-panel__subtitle">Abstraction over heterogeneous subsystems</p>
+            <div class="cc-card-row" id="cc-providers"></div>
+          </section>
+
+          <section class="cc-panel cc-panel--blue cc-enter" data-section="subsystems">
+            <h2 class="cc-panel__heading">SUBSYSTEMS — MANAGED THROUGH PROVIDERS</h2>
+            <div class="cc-subsystem-grid" id="cc-subsystems"></div>
+          </section>
+
+          <div class="cc-split-row">
+            <section class="cc-panel cc-panel--purple cc-enter" data-section="infrastructure">
+              <h2 class="cc-panel__heading">INFRASTRUCTURE LAYER</h2>
+              <div class="cc-card-row cc-card-row--infra" id="cc-infrastructure"></div>
+            </section>
+            <section class="cc-panel cc-panel--purple cc-enter" data-section="security">
+              <h2 class="cc-panel__heading">SECURITY &amp; GOVERNANCE</h2>
+              <ul class="cc-security-list" id="cc-security"></ul>
+            </section>
+          </div>
+
+          <section class="cc-panel cc-panel--purple cc-enter" data-section="data-state">
+            <h2 class="cc-panel__heading">DATA &amp; STATE LAYER</h2>
+            <div class="cc-card-row cc-card-row--infra" id="cc-data-state"></div>
+          </section>
+        </div>
+        <div class="cc-workspace__inner cc-economic-view" id="cc-economic-view">
+          <div id="ecc-page" class="ecc-page" aria-live="polite"></div>
+        </div>
+      </main>
+
+      <aside class="cc-rail" aria-label="Operations">
+        <div class="cc-rail-panel">
+          <h2 class="cc-rail-panel__title">EVENT STREAM</h2>
+          <ul class="cc-event-list" id="cc-events"></ul>
+        </div>
+        <div class="cc-rail-panel cc-rail-panel--lifecycle">
+          <h2 class="cc-rail-panel__title">OPERATION LIFECYCLE</h2>
+          <ul class="cc-lifecycle" id="cc-lifecycle"></ul>
+        </div>
+        <div class="cc-legend" id="cc-legend"></div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="cc-modal-backdrop" id="auth-modal" hidden>
+    <div class="cc-modal" role="dialog" aria-labelledby="auth-modal-title">
+      <h2 id="auth-modal-title">Platform API Token</h2>
+      <p style="font-size:0.75rem;color:var(--cc-text-muted);margin:0 0 10px">
+        Enter the ECOSYSTEM_API_TOKEN configured on the platform API. Stored in this browser session only.
+      </p>
+      <div class="cc-field">
+        <label for="api-token">Bearer token</label>
+        <input id="api-token" type="password" placeholder="ECOSYSTEM_API_TOKEN" autocomplete="off" />
+      </div>
+      <button type="button" class="cc-btn-primary" id="btn-save-token">Save token</button>
+      <button type="button" class="cc-btn-ghost" id="btn-clear-token" style="margin-left:8px">Clear</button>
+    </div>
+  </div>
+
+  <div class="cc-modal-backdrop" id="tenant-modal" hidden>
+    <div class="cc-modal" role="dialog" aria-labelledby="tenant-modal-title">
+      <h2 id="tenant-modal-title">Create + Provision Tenant</h2>
+      <div class="cc-field">
+        <label for="slug">Slug</label>
+        <input id="slug" placeholder="nextgen-tutors" autocomplete="off" />
+      </div>
+      <div class="cc-field">
+        <label for="name">Name</label>
+        <input id="name" placeholder="NextGen Tutors" autocomplete="off" />
+      </div>
+      <button type="button" class="cc-btn-primary" id="btn-create">Create + Provision</button>
+      <pre id="create-result" style="font-size:0.65rem;margin-top:10px;color:var(--cc-text-muted)"></pre>
+      <pre id="tenants-json" hidden></pre>
+    </div>
+  </div>
+
+  <div class="cc-command-backdrop" id="command-palette" hidden>
+    <div class="cc-command" role="dialog" aria-label="Command palette">
+      <input class="cc-command__input" id="command-input" type="search" placeholder="Search pages, subsystems, operations…" autocomplete="off" />
+      <ul class="cc-command__list" id="command-list" role="listbox"></ul>
+      <div class="cc-command__hint">Navigate with ↑↓ · Enter to open · Esc to close</div>
+    </div>
+  </div>
+
+  <script type="module" src="/architecture.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

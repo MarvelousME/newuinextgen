@@ -1,0 +1,302 @@
+/* Economic Control Center — same Control Center language, operational type scale */
+
+.cc-product-switch {
+  display: inline-flex;
+  gap: 4px;
+  margin-right: 8px;
+}
+
+.cc-product-switch__btn {
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: var(--ecc-radius-sm);
+  border: 1px solid var(--ecc-border-subtle);
+  background: transparent;
+  color: var(--ecc-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cc-product-switch__btn[aria-current="true"] {
+  border-color: var(--ecc-border-focus);
+  color: var(--ecc-text-primary);
+  background: var(--ecc-surface-active);
+  box-shadow: var(--ecc-shadow-glow);
+}
+
+.cc-header__context {
+  font-size: 12px;
+  color: var(--ecc-text-muted);
+  margin: 2px 0 0;
+}
+
+.cc-header__tenant {
+  min-height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--ecc-border-subtle);
+  background: var(--ecc-bg-secondary);
+  color: var(--ecc-text-primary);
+  font-size: 12px;
+  padding: 0 8px;
+}
+
+.cc-economic-view { display: none; }
+body.cc-shell--economic .cc-arch-view { display: none; }
+body.cc-shell--economic .cc-economic-view { display: block; }
+body.cc-shell--economic .cc-connectors,
+body.cc-shell--economic #cc-legend { display: none; }
+
+.ecc-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ecc-space-md);
+}
+
+.ecc-page-title {
+  font-family: Sora, var(--eco-font-display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0;
+  color: var(--ecc-text-primary);
+}
+
+.ecc-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ecc-accent-cyan);
+  margin: 0 0 8px;
+}
+
+.ecc-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--ecc-space-sm);
+}
+
+.ecc-metric {
+  min-height: 92px;
+  padding: 12px 14px;
+  border-radius: var(--ecc-radius-sm);
+}
+
+.ecc-metric__label {
+  font-size: 12px;
+  color: var(--ecc-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ecc-metric__value {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 6px;
+  color: var(--ecc-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.ecc-metric__hint {
+  font-size: 11px;
+  color: var(--ecc-text-muted);
+  margin-top: 4px;
+}
+
+.ecc-metric--unavailable .ecc-metric__value {
+  color: var(--ecc-text-disabled);
+}
+
+.ecc-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--ecc-border-subtle);
+}
+
+.ecc-status__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.ecc-status--success { color: var(--ecc-positive); border-color: rgba(34, 197, 94, 0.4); }
+.ecc-status--info { color: var(--ecc-accent-cyan); border-color: rgba(34, 211, 238, 0.4); }
+.ecc-status--warning { color: var(--ecc-warning); border-color: rgba(245, 158, 11, 0.45); }
+.ecc-status--danger { color: var(--ecc-danger); border-color: rgba(239, 68, 68, 0.45); }
+.ecc-status--neutral { color: var(--ecc-text-muted); }
+
+.ecc-money {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ecc-money--negative { color: var(--ecc-danger); }
+
+.ecc-grid {
+  overflow: auto;
+}
+
+.ecc-grid__toolbar {
+  margin-bottom: 8px;
+}
+
+.ecc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ecc-table th {
+  text-align: left;
+  font-size: 12px;
+  color: var(--ecc-text-muted);
+  font-weight: 600;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--ecc-border-subtle);
+}
+
+.ecc-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--ecc-text-secondary);
+}
+
+.ecc-table tbody tr {
+  cursor: pointer;
+}
+
+.ecc-table tbody tr:hover,
+.ecc-table tbody tr:focus-visible {
+  background: var(--ecc-surface-glass-hover);
+}
+
+.ecc-num { text-align: right; }
+
+.ecc-input {
+  width: 100%;
+  min-height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--ecc-border-subtle);
+  background: var(--ecc-bg-secondary);
+  color: var(--ecc-text-primary);
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.ecc-input:focus-visible {
+  outline: 2px solid var(--ecc-accent-violet);
+  outline-offset: 1px;
+}
+
+.ecc-input:invalid:not(:placeholder-shown) {
+  border-color: var(--ecc-danger);
+}
+
+.ecc-input:disabled {
+  color: var(--ecc-text-disabled);
+  cursor: not-allowed;
+}
+
+.ecc-input--money { text-align: right; font-variant-numeric: tabular-nums; }
+
+.ecc-help, .ecc-empty {
+  font-size: 12px;
+  color: var(--ecc-text-muted);
+  margin: 6px 0 0;
+}
+
+.ecc-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.ecc-form__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+}
+
+.ecc-unavailable {
+  padding: var(--cc-panel-pad);
+}
+
+.ecc-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 10, 0.55);
+  z-index: var(--ecc-z-drawer);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ecc-drawer-backdrop[hidden] { display: none; }
+
+.ecc-drawer {
+  width: min(420px, 100%);
+  height: 100%;
+  background: var(--ecc-bg-secondary);
+  border-left: 1px solid var(--ecc-border-medium);
+  padding: 18px;
+  overflow: auto;
+  box-shadow: var(--ecc-shadow-floating);
+}
+
+.ecc-drawer__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ecc-drawer__header h2 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.ecc-kv {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 6px 10px;
+  font-size: 13px;
+}
+.ecc-kv dt { color: var(--ecc-text-muted); }
+.ecc-kv dd { margin: 0; color: var(--ecc-text-primary); word-break: break-word; }
+
+@media (max-width: 1439px) {
+  .ecc-kpi-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 1023px) {
+  .ecc-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .ecc-form { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 767px) {
+  .ecc-kpi-grid { grid-template-columns: 1fr; }
+  .ecc-page-title { font-size: 22px; }
+  .ecc-table { font-size: 12px; }
+}
+
+@media (max-width: 767px) {
+  body.cc-shell--economic .cc-sidebar {
+    max-height: 72px;
+  }
+  body.cc-shell--economic .cc-header__title {
+    font-size: 1.05rem;
+  }
+  body.cc-shell--economic .cc-action-bar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+}

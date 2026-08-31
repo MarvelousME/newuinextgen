@@ -134,6 +134,9 @@ export function runFitness(p, options = {}) {
   // ARCH-002 theme writing ngc_ tables (heuristic)
   findings.push(...scanThemeDataOwnership(p));
 
+  // BI theme package must include all functions.php requires (ARCH-BI-PACKAGE)
+  findings.push(...scanThemePackageIntegrity(p));
+
   // ARCH-021/022 vendor denylist in Domain/Application paths
   findings.push(...scanVendorDenylist(p));
 
@@ -253,6 +256,54 @@ function scanPackageBoundaries(p, rules, ids) {
 function scanThemeDataOwnership(p) {
   // Covered in boundary scan; keep hook for future SQL AST
   return [];
+}
+
+const BI_REQUIRED_INC = [
+  'inc/helpers.php',
+  'inc/security.php',
+  'inc/loader.php',
+  'inc/page-composer.php',
+  'inc/config/bootstrap.php',
+];
+
+function scanThemePackageIntegrity(p) {
+  const findings = [];
+  const themeDir = path.join(p.repoRoot, 'NextGenTutors-BeyondInfinity');
+  const functionsPhp = path.join(themeDir, 'functions.php');
+  if (!fs.existsSync(functionsPhp)) {
+    findings.push({
+      severity: 'error',
+      code: 'ARCH-BI-PACKAGE',
+      file: functionsPhp,
+      message: 'BeyondInfinity functions.php missing',
+    });
+    return findings;
+  }
+
+  const content = fs.readFileSync(functionsPhp, 'utf8');
+  const requires = [...content.matchAll(/require_once\s+BI_DIR\s*\.\s*'([^']+)'/g)].map((m) => m[1]);
+  const missing = [];
+  for (const rel of requires) {
+    const full = path.join(themeDir, rel.replace(/^\//, ''));
+    if (!fs.existsSync(full)) {
+      missing.push(rel);
+    }
+  }
+  for (const rel of BI_REQUIRED_INC) {
+    const full = path.join(themeDir, rel);
+    if (!fs.existsSync(full)) {
+      missing.push(rel);
+    }
+  }
+  if (missing.length > 0) {
+    findings.push({
+      severity: 'error',
+      code: 'ARCH-BI-PACKAGE',
+      file: functionsPhp,
+      message: `BeyondInfinity package missing required inc files (${missing.length}): ${missing.slice(0, 8).join(', ')}${missing.length > 8 ? '…' : ''}. Run: node scripts/sync-beyondinfinity-theme.mjs`,
+    });
+  }
+  return findings;
 }
 
 function scanVendorDenylist(p) {

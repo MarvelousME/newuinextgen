@@ -57,6 +57,23 @@ class NGC_UI_Subject_Data_Provider extends NGC_UI_Data_Provider {
 			}
 		}
 
+		if ( class_exists( 'NGC_Subjects_CMS' ) ) {
+			$catalog = NGC_Subjects_CMS::catalog();
+			if ( $catalog ) {
+				return array_map(
+					static function ( $label, $slug ) {
+						return [
+							'slug' => (string) $slug,
+							'name' => (string) $label,
+							'desc' => '',
+						];
+					},
+					$catalog,
+					array_keys( $catalog )
+				);
+			}
+		}
+
 		if ( function_exists( 'bi_get_subject_tracks' ) && $this->demo_allowed() ) {
 			return array_map(
 				static function ( $row ) {

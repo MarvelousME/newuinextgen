@@ -412,6 +412,27 @@ class NGC_Marketplace {
 			}
 		}
 
+		$catalog = apply_filters( 'ngc_subject_options', [] );
+		if ( is_array( $catalog ) ) {
+			$seen = [];
+			foreach ( (array) $opts['subjects'] as $row ) {
+				if ( ! empty( $row['value'] ) ) {
+					$seen[ (string) $row['value'] ] = true;
+				}
+			}
+			foreach ( $catalog as $slug => $label ) {
+				$slug = sanitize_title( (string) $slug );
+				if ( ! $slug || isset( $seen[ $slug ] ) ) {
+					continue;
+				}
+				$seen[ $slug ]      = true;
+				$opts['subjects'][] = [
+					'value' => $slug,
+					'label' => (string) $label,
+				];
+			}
+		}
+
 		return $opts;
 	}
 

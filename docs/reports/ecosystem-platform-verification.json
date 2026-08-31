@@ -1,0 +1,12 @@
+{
+  "verdict": "STAGING READY",
+  "generatedAt": "2026-08-28",
+  "build": { "status": "PASS", "note": "ecosystem-platform scaffold; npm workspaces" },
+  "tenancy": { "status": "PASS", "crossTenantIsolation": "PASS", "note": "platform-core unit tests" },
+  "odoo": { "status": "PARTIAL", "note": "memory adapter PASS; live Odoo JSON-RPC not exercised in CI" },
+  "ui": { "status": "PARTIAL", "note": "control-center static shell + nextgen-ui tokens" },
+  "security": { "status": "PARTIAL", "note": "tenant header + IAM membership; no pen test" },
+  "e2e": { "status": "PARTIAL", "note": "automated platform-core only" },
+  "backupRestore": { "status": "MISSING" },
+  "productionReady": false
+}

@@ -327,6 +327,25 @@ class NGC_CLI {
 	}
 
 	/**
+	 * Provision default lesson SKUs (online / in-person).
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc provision_tutor_products
+	 */
+	public function provision_tutor_products( $args, $assoc_args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
+		if ( ! class_exists( 'NGC_Product_Provisioner' ) ) {
+			WP_CLI::error( 'Product provisioner not loaded.' );
+		}
+		do_action( 'ngc_provision_tutor_products' );
+		$result = NGC_Product_Provisioner::provision_defaults();
+		WP_CLI::line( wp_json_encode( $result, JSON_PRETTY_PRINT ) );
+		if ( empty( $result['success'] ) ) {
+			WP_CLI::halt( 1 );
+		}
+	}
+
+	/**
 	 * Run monthly payout batch manually.
 	 *
 	 * ## OPTIONS

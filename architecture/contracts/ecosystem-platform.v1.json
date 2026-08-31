@@ -1,0 +1,25 @@
+{
+  "contractVersion": "1.0.0",
+  "name": "ecosystem-platform",
+  "description": "Platform BFF API — stable contracts; Odoo behind adapters only.",
+  "basePath": "/api/v1",
+  "configuration": {
+    "type": "object",
+    "properties": {
+      "ECOSYSTEM_API_PORT": { "type": "string" },
+      "ECOSYSTEM_API_TOKEN": { "type": "string", "description": "Bearer token required for all /api/v1/* routes. Must not be a weak sentinel." },
+      "ECOSYSTEM_SUPER_ADMIN_IDS": { "type": "string", "description": "Internal platform principal IDs; not accepted from client headers." },
+      "ECOSYSTEM_BIND": { "type": "string", "description": "Host bind for management ports; default 127.0.0.1" },
+      "ODOO_URL": { "type": "string" }
+    }
+  },
+  "endpoints": [
+    { "method": "GET", "path": "/health", "auth": "none" },
+    { "method": "GET", "path": "/platform/overview", "auth": "bearer_platform_token" },
+    { "method": "GET", "path": "/platform/tenants", "auth": "bearer_platform_token" },
+    { "method": "POST", "path": "/platform/tenants", "auth": "bearer_platform_token" },
+    { "method": "POST", "path": "/platform/tenants/{id}/provision", "auth": "bearer_platform_token" },
+    { "method": "GET", "path": "/tenants/{tenantId}/customers", "auth": "bearer_platform_token" },
+    { "method": "POST", "path": "/tenants/{tenantId}/customers", "auth": "bearer_platform_token" }
+  ]
+}

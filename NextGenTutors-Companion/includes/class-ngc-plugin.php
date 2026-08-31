@@ -59,6 +59,7 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Platform_Tracking',
 		'NGC_Popia_Consent',
 		'NGC_Plugin_Manager_Bridge',
+		'NGC_Ecosystem_Platform_Bridge',
 		'NGC_Integrate_Runtime',
 		'NGC_Integrations_Bootstrap',
 		'NGC_Content_Pack_Bridge',
