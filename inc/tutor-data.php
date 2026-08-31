@@ -62,12 +62,33 @@ function bi_get_subject_tracks() {
  * @return string
  */
 function bi_subject_label_from_slug( $slug ) {
+    $slug  = sanitize_title( (string) $slug );
+    $label = ucwords( str_replace( '-', ' ', $slug ) );
     foreach ( bi_get_subject_tracks() as $subject ) {
         if ( sanitize_title( $subject['name'] ) === $slug ) {
-            return $subject['name'];
+            $label = $subject['name'];
+            break;
         }
     }
-    return ucwords( str_replace( '-', ' ', $slug ) );
+    return (string) apply_filters( 'bi_subject_label_from_slug', $label, $slug );
+}
+
+/**
+ * Subject picker map (slug => label). Companion CMS may replace or extend this.
+ *
+ * @return array<string, string>
+ */
+function bi_get_subject_options() {
+    $options = [];
+    foreach ( bi_get_subject_tracks() as $subject ) {
+        $name = (string) ( $subject['name'] ?? '' );
+        if ( '' === $name ) {
+            continue;
+        }
+        $options[ sanitize_title( $name ) ] = $name;
+    }
+    $filtered = apply_filters( 'ngc_subject_options', $options );
+    return is_array( $filtered ) ? $filtered : $options;
 }
 
 /**

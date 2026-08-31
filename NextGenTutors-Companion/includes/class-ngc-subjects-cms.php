@@ -61,9 +61,13 @@ class NGC_Subjects_CMS {
 	}
 
 	/**
+	 * Merge CMS catalogue over incoming picker defaults (slug => label).
+	 *
+	 * @param array<string, string> $options Incoming options.
 	 * @return array<string, string>
 	 */
-	public static function subject_options() {
-		return self::catalog();
+	public static function subject_options( $options = [] ) {
+		$incoming = is_array( $options ) ? $options : [];
+		return array_merge( $incoming, self::catalog() );
 	}
 }

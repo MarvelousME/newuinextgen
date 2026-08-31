@@ -307,11 +307,29 @@ class NGC_Smart_Matching {
 	 */
 	private static function get_form_lists() {
 		return [
-			'subjects'  => self::term_list( 'subject', [ 'Mathematics', 'Physical Sciences', 'English HL', 'Accounting', 'Life Sciences' ] ),
+			'subjects'  => self::subject_option_labels(),
 			'grades'    => self::term_list( 'grade', [ 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12', 'Tertiary' ] ),
 			'provinces' => self::term_list( 'province', [ 'Gauteng', 'Western Cape', 'KwaZulu-Natal', 'Eastern Cape', 'Free State' ] ),
 			'formats'   => self::term_list( 'learning_format', [ 'Online', 'In-Person', 'Hybrid' ] ),
 		];
+	}
+
+	/**
+	 * Subject picker labels, filtered through the CMS catalogue.
+	 *
+	 * @return string[]
+	 */
+	private static function subject_option_labels() {
+		$fallback = self::term_list( 'subject', [ 'Mathematics', 'Physical Sciences', 'English HL', 'Accounting', 'Life Sciences' ] );
+		$map      = [];
+		foreach ( $fallback as $label ) {
+			$map[ sanitize_title( (string) $label ) ] = (string) $label;
+		}
+		$filtered = apply_filters( 'ngc_subject_options', $map );
+		if ( ! is_array( $filtered ) || empty( $filtered ) ) {
+			return $fallback;
+		}
+		return array_values( array_filter( array_map( 'strval', $filtered ) ) );
 	}
 
 	/**
