@@ -31,7 +31,7 @@ class NGCPM_NGT_Stack {
 			],
 			'NextGenTutors-Mission-Control/nextgentutors-mission-control.php' => [
 				'label'    => 'Mission Control',
-				'required' => false,
+				'required' => true,
 				'priority' => 8,
 				'notes'    => __( 'Ops control plane — configure, seed, verify, overrides.', 'nextgentutors-plugin-manager' ),
 			],
@@ -41,17 +41,35 @@ class NGCPM_NGT_Stack {
 				'priority' => 9,
 				'notes'    => __( 'Fleet install and registry health (this plugin).', 'nextgentutors-plugin-manager' ),
 			],
+			'nextgen-3d-scroll-manager/nextgen-3d-scroll-manager.php'         => [
+				'label'    => '3D Scroll Manager',
+				'required' => true,
+				'priority' => 16,
+				'notes'    => __( 'GSAP / ScrollTrigger motion engine — shares bi-ngt-gsap handles.', 'nextgentutors-plugin-manager' ),
+			],
+			'nextgen-3d-filmstrip/nextgen-3d-filmstrip.php'                   => [
+				'label'    => '3D Filmstrip',
+				'required' => true,
+				'priority' => 17,
+				'notes'    => __( 'Perspective filmstrip for Subjects / Tutors.', 'nextgentutors-plugin-manager' ),
+			],
+			'nextgen-subjects-widget/nextgen-subjects-widget.php'             => [
+				'label'    => 'Subjects Widget',
+				'required' => true,
+				'priority' => 18,
+				'notes'    => __( 'Subject grid shortcode/widget; reads Companion taxonomies when present.', 'nextgentutors-plugin-manager' ),
+			],
 			'NextGenTutors-AI-Integration/nextgentutors-ai-integration.php'   => [
 				'label'    => 'AI Integration',
 				'required' => false,
-				'priority' => 12,
+				'priority' => 40,
 				'notes'    => __( 'Agent outbox bridge — optional until agents-api is configured.', 'nextgentutors-plugin-manager' ),
 			],
 			'nextgen-automation-hub/nextgen-automation-hub.php'               => [
 				'label'    => 'Automation Hub',
 				'required' => false,
-				'priority' => 15,
-				'notes'    => __( 'Event triggers + RTM — defers to Companion when active.', 'nextgentutors-plugin-manager' ),
+				'priority' => 45,
+				'notes'    => __( 'Legacy overlap with Companion — leave inactive when Companion is the domain owner.', 'nextgentutors-plugin-manager' ),
 			],
 			'NextGenTutors-Html-Importer/revamp-html-importer.php'            => [
 				'label'    => 'Html Importer',

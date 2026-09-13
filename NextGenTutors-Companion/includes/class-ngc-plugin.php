@@ -122,7 +122,6 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Demo',
 		'NGC_Agentic_Admin',
 		'NGC_Education_Admin',
-		'NGC_Publish_Worker',
 	];
 
 	/**

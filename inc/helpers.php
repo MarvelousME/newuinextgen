@@ -179,7 +179,10 @@ function ngt_mod( $key, $default = '' ) {
  * @return bool
  */
 function ngt_plugin_active() {
-	return defined( 'NGC_VERSION' ) || class_exists( 'NGC_Plugin' );
+	if ( function_exists( 'bi_companion_active' ) ) {
+		return bi_companion_active();
+	}
+	return class_exists( 'NGC_Plugin', false );
 }
 
 /**

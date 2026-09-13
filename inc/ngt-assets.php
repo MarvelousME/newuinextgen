@@ -87,7 +87,35 @@ function bi_ngt_script_map() {
 	];
 }
 
+add_action( 'wp_enqueue_scripts', 'bi_register_gsap_stack', 1 );
 add_action( 'wp_enqueue_scripts', 'bi_ngt_enqueue_assets', 12 );
+
+/**
+ * Register GSAP / ScrollTrigger once so the theme and 3D Scroll Manager share handles.
+ */
+function bi_register_gsap_stack() {
+	if ( is_admin() ) {
+		return;
+	}
+	if ( ! wp_script_is( 'bi-ngt-gsap', 'registered' ) ) {
+		wp_register_script(
+			'bi-ngt-gsap',
+			'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+			[],
+			'3.12.5',
+			true
+		);
+	}
+	if ( ! wp_script_is( 'bi-ngt-scrolltrigger', 'registered' ) ) {
+		wp_register_script(
+			'bi-ngt-scrolltrigger',
+			'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+			[ 'bi-ngt-gsap' ],
+			'3.12.5',
+			true
+		);
+	}
+}
 
 /**
  * Enqueue NGT CSS/JS design system.
@@ -192,8 +220,11 @@ function bi_ngt_enqueue_assets() {
 
 	$deps = [ 'bi-ngt-wp-bridge' ];
 	if ( in_array( 'static', $effective, true ) || in_array( 'home', $effective, true ) ) {
-		wp_enqueue_script( 'bi-ngt-gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', [], '3.12.5', true );
-		wp_enqueue_script( 'bi-ngt-scrolltrigger', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', [ 'bi-ngt-gsap' ], '3.12.5', true );
+		if ( function_exists( 'bi_register_gsap_stack' ) ) {
+			bi_register_gsap_stack();
+		}
+		wp_enqueue_script( 'bi-ngt-gsap' );
+		wp_enqueue_script( 'bi-ngt-scrolltrigger' );
 		$deps[] = 'bi-ngt-scrolltrigger';
 	}
 

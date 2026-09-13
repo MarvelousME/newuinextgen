@@ -52,7 +52,18 @@
     if (window.gsap) {
       return Promise.resolve(window.gsap);
     }
-    return loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js').then(function () {
+    var existing = document.querySelector('script[src*="gsap.min.js"], script[id*="bi-ngt-gsap"]');
+    if (existing) {
+      return new Promise(function (resolve) {
+        if (window.gsap) {
+          resolve(window.gsap);
+          return;
+        }
+        existing.addEventListener('load', function () { resolve(window.gsap || null); });
+        existing.addEventListener('error', function () { resolve(null); });
+      });
+    }
+    return loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js').then(function () {
       return window.gsap || null;
     }).catch(function () {
       return null;
