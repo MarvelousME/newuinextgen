@@ -1,0 +1,332 @@
+.ngtfs {
+	--ngtfs-ink: var(--ng-color-ink, var(--ngt-text, #1e293b));
+	--ngtfs-muted: var(--ng-color-muted, #64748b);
+	--ngtfs-navy: var(--ng-color-primary, #0f1a2f);
+	--ngtfs-surface: #ffffff;
+	--ngtfs-accent: var(--ng-color-secondary, #059669);
+	--ngtfs-card-w: min(300px, 78vw);
+	--ngtfs-card-h: min(460px, 72vh);
+	position: relative;
+	width: 100%;
+	padding: clamp(40px, 6vw, 80px) 16px 56px;
+	overflow: hidden;
+	background:
+		radial-gradient(ellipse at 20% 0%, color-mix(in srgb, var(--ngtfs-accent) 14%, transparent), transparent 45%),
+		radial-gradient(ellipse at 80% 100%, rgba(14, 165, 233, 0.1), transparent 40%),
+		linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+	font-family: var(--ng-font-body, var(--ngt-font-body, "DM Sans", system-ui, sans-serif));
+	color: var(--ngtfs-ink);
+	box-sizing: border-box;
+}
+
+.ngtfs *,
+.ngtfs *::before,
+.ngtfs *::after {
+	box-sizing: border-box;
+}
+
+.ngtfs__header {
+	max-width: 720px;
+	margin: 0 auto 28px;
+	text-align: center;
+}
+
+.ngtfs__title {
+	margin: 0;
+	font-family: var(--ng-font-heading, var(--ngt-font-display, "Sora", system-ui, sans-serif));
+	font-size: clamp(28px, 4vw, 44px);
+	font-weight: 750;
+	letter-spacing: -0.035em;
+	color: var(--ngtfs-navy);
+	line-height: 1.1;
+}
+
+.ngtfs__subtitle {
+	margin: 12px 0 0;
+	color: var(--ngtfs-muted);
+	font-size: clamp(15px, 1.8vw, 18px);
+	line-height: 1.6;
+}
+
+.ngtfs__viewport {
+	position: relative;
+	height: calc(var(--ngtfs-card-h) + 40px);
+	margin: 0 auto;
+	max-width: 1100px;
+	touch-action: pan-y;
+	cursor: grab;
+	outline: none;
+}
+
+.ngtfs__viewport:active {
+	cursor: grabbing;
+}
+
+.ngtfs__stage {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+}
+
+.ngtfs-card {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: var(--ngtfs-card-w);
+	height: var(--ngtfs-card-h);
+	margin: 0;
+	border-radius: 22px;
+	overflow: hidden;
+	background: var(--ngtfs-surface);
+	box-shadow: 0 18px 40px rgba(15, 26, 47, 0.14);
+	transform-style: preserve-3d;
+	will-change: transform, opacity, filter;
+	border: 1px solid rgba(15, 26, 47, 0.08);
+}
+
+.ngtfs[data-ngtfs-enhanced] .ngtfs-card {
+	transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease, filter 0.7s ease, box-shadow 0.7s ease;
+}
+
+.ngtfs-card.is-active {
+	box-shadow: 0 28px 60px rgba(15, 26, 47, 0.22);
+}
+
+.ngtfs-card__hit {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	text-decoration: none;
+	color: inherit;
+}
+
+.ngtfs-card__portrait {
+	position: relative;
+	flex: 1 1 auto;
+	min-height: 58%;
+	background:
+		linear-gradient(160deg, color-mix(in srgb, var(--ngtfs-accent) 35%, #0f1a2f), #0f1a2f 70%);
+	overflow: hidden;
+}
+
+.ngtfs-card__portrait img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.ngtfs-card__glyph {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	color: rgba(255, 255, 255, 0.92);
+}
+
+.ngtfs-card__glyph svg {
+	width: 72px;
+	height: 72px;
+}
+
+.ngtfs-card__badge {
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.92);
+	color: var(--ngtfs-navy);
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.ngtfs-card__meta {
+	position: absolute;
+	right: 14px;
+	bottom: 14px;
+	padding: 8px 12px;
+	border-radius: 12px;
+	background: rgba(15, 26, 47, 0.82);
+	color: #fff;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.ngtfs-card__footer {
+	flex: 0 0 auto;
+	padding: 16px 18px 18px;
+	background: #fff;
+	border-top: 1px solid rgba(15, 26, 47, 0.06);
+}
+
+.ngtfs-card__footer-top {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.ngtfs-card__name {
+	margin: 0;
+	font-family: var(--ng-font-heading, var(--ngt-font-display, "Sora", system-ui, sans-serif));
+	font-size: 1.15rem;
+	font-weight: 700;
+	color: var(--ngtfs-navy);
+	letter-spacing: -0.02em;
+	line-height: 1.25;
+}
+
+.ngtfs-card__rating {
+	color: #b45309;
+	font-size: 0.85rem;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.ngtfs-card__sub {
+	margin: 6px 0 0;
+	color: var(--ngtfs-muted);
+	font-size: 0.8rem;
+	line-height: 1.4;
+}
+
+.ngtfs-card__body {
+	display: none;
+	margin: 8px 0 0;
+	color: var(--ngtfs-muted);
+	font-size: 0.82rem;
+	line-height: 1.45;
+}
+
+.ngtfs-card.is-active .ngtfs-card__body {
+	display: block;
+}
+
+.ngtfs-card__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-top: 10px;
+}
+
+.ngtfs-card__tags span {
+	padding: 4px 8px;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--ngtfs-accent) 12%, #fff);
+	color: var(--ngtfs-navy);
+	font-size: 11px;
+	font-weight: 600;
+}
+
+.ngtfs-card__cta {
+	display: inline-block;
+	margin-top: 12px;
+	color: var(--ngtfs-accent);
+	font-size: 0.85rem;
+	font-weight: 700;
+}
+
+.ngtfs__controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	margin-top: 8px;
+}
+
+.ngtfs__nav {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	border: 1px solid rgba(15, 26, 47, 0.12);
+	background: #fff;
+	color: var(--ngtfs-navy);
+	font-size: 1.5rem;
+	line-height: 1;
+	cursor: pointer;
+	transition: background 160ms ease, border-color 160ms ease;
+}
+
+.ngtfs__nav:hover,
+.ngtfs__nav:focus-visible {
+	background: var(--ngtfs-navy);
+	color: #fff;
+	border-color: var(--ngtfs-navy);
+	outline: none;
+}
+
+.ngtfs__dots {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+	justify-content: center;
+	max-width: 60%;
+}
+
+.ngtfs__dot {
+	width: 9px;
+	height: 9px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(15, 26, 47, 0.2);
+	cursor: pointer;
+}
+
+.ngtfs__dot.is-active {
+	background: var(--ngtfs-accent);
+	transform: scale(1.25);
+}
+
+/* Enhanced: hide fallback list; No-JS: hide stage chrome, show list */
+.ngtfs[data-ngtfs-enhanced] .ngtfs__fallback {
+	display: none;
+}
+
+.ngtfs:not([data-ngtfs-enhanced]) .ngtfs__viewport,
+.ngtfs:not([data-ngtfs-enhanced]) .ngtfs__controls {
+	display: none;
+}
+
+.ngtfs__fallback {
+	list-style: none;
+	margin: 0 auto;
+	padding: 0;
+	max-width: 640px;
+}
+
+.ngtfs__fallback li {
+	margin: 0 0 10px;
+	padding: 12px 16px;
+	border-radius: 12px;
+	background: #fff;
+	border: 1px solid rgba(15, 26, 47, 0.08);
+}
+
+.ngtfs__fallback a {
+	color: var(--ngtfs-navy);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+@media (max-width: 720px) {
+	.ngtfs {
+		--ngtfs-card-w: min(260px, 84vw);
+		--ngtfs-card-h: min(420px, 68vh);
+		padding-bottom: 40px;
+	}
+
+	.ngtfs-card__body {
+		display: none !important;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ngtfs[data-ngtfs-enhanced] .ngtfs-card {
+		transition: none !important;
+	}
+}

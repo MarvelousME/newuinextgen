@@ -146,6 +146,34 @@ class NGC_Page_Forms_Registry {
 			if ( ! is_array( $meta ) ) {
 				$meta = [];
 			}
+
+			// Preserve Elementor-owned kinetic pages (theme + Companion).
+			$preserve_elementor = (bool) apply_filters( 'ngc_preserve_elementor_pages', true );
+			$has_elementor      = (bool) get_post_meta( $page->ID, '_elementor_data', true );
+
+			if ( $preserve_elementor && $has_elementor ) {
+				$meta['force_theme_default'] = 0;
+				update_post_meta( $page->ID, 'bi_options', $meta );
+				$results[ $slug ] = [
+					'ok'                 => true,
+					'page_id'            => (int) $page->ID,
+					'preserved_elementor'=> true,
+				];
+				continue;
+			}
+
+			if ( $preserve_elementor ) {
+				// Do not force theme-only mode when Elementor pages are the product direction.
+				$meta['force_theme_default'] = 0;
+				update_post_meta( $page->ID, 'bi_options', $meta );
+				$results[ $slug ] = [
+					'ok'      => true,
+					'page_id' => (int) $page->ID,
+					'skipped_elementor_wipe' => true,
+				];
+				continue;
+			}
+
 			$meta['force_theme_default'] = 1;
 			update_post_meta( $page->ID, 'bi_options', $meta );
 
@@ -236,10 +264,11 @@ class NGC_Page_Forms_Registry {
 		$has_warn = false;
 
 		foreach ( $shortcodes as $tag ) {
-			$registered = shortcode_exists( $tag );
-			$on_page    = self::content_has_shortcode( $content, $tag );
-			$theme_ok   = self::theme_fallback_has_shortcode( $page, $tag );
-			$present    = $on_page || $theme_ok;
+			$registered   = shortcode_exists( $tag );
+			$on_page      = self::content_has_shortcode( $content, $tag );
+			$theme_ok     = self::theme_fallback_has_shortcode( $page, $tag );
+			$elementor_ok = self::elementor_has_shortcode( $page, $tag );
+			$present      = $on_page || $theme_ok || $elementor_ok;
 
 			if ( ! $registered ) {
 				$status = 'FAIL';
@@ -252,11 +281,12 @@ class NGC_Page_Forms_Registry {
 			}
 
 			$sc_rows[] = [
-				'tag'        => $tag,
-				'registered' => $registered,
-				'on_page'    => $on_page,
-				'theme_ok'   => $theme_ok,
-				'status'     => $status,
+				'tag'          => $tag,
+				'registered'   => $registered,
+				'on_page'      => $on_page,
+				'theme_ok'     => $theme_ok,
+				'elementor_ok' => $elementor_ok,
+				'status'       => $status,
 			];
 		}
 
@@ -305,6 +335,33 @@ class NGC_Page_Forms_Registry {
 			return false;
 		}
 		return in_array( $shortcode, (array) $reg[ $slug ]['shortcodes'], true );
+	}
+
+	/**
+	 * Detect shortcode widgets inside Elementor JSON documents.
+	 *
+	 * @param WP_Post $page      Page.
+	 * @param string  $shortcode Tag.
+	 * @return bool
+	 */
+	private static function elementor_has_shortcode( $page, $shortcode ) {
+		$data = get_post_meta( $page->ID, '_elementor_data', true );
+		if ( ! $data ) {
+			return false;
+		}
+		$json = is_string( $data ) ? $data : wp_json_encode( $data );
+		if ( ! is_string( $json ) || '' === $json ) {
+			return false;
+		}
+		$tag = sanitize_key( (string) $shortcode );
+		if ( ! $tag ) {
+			return false;
+		}
+		// Match [tag], [tag attr=...], or escaped JSON forms.
+		if ( false !== strpos( $json, '[' . $tag . ']' ) || false !== strpos( $json, '[' . $tag . ' ' ) ) {
+			return true;
+		}
+		return (bool) preg_match( '/\\\\?\[' . preg_quote( $tag, '/' ) . '(?:\s|\]|\\\\)/', $json );
 	}
 
 	/**
@@ -424,18 +481,43 @@ class NGC_Page_Forms_Registry {
 		}
 
 		if ( ! empty( $def['template'] ) && 'default' !== $def['template'] ) {
-			update_post_meta( $page->ID, '_wp_page_template', $def['template'] );
+			$preserve = (bool) apply_filters( 'ngc_preserve_elementor_pages', true );
+			$current  = get_page_template_slug( $page->ID );
+			if ( $preserve && in_array( $current, [ 'elementor_header_footer', 'elementor_canvas' ], true ) ) {
+				// Keep Elementor template assignment.
+			} elseif ( $preserve && get_post_meta( $page->ID, '_elementor_data', true ) ) {
+				update_post_meta( $page->ID, '_wp_page_template', 'elementor_header_footer' );
+			} else {
+				update_post_meta( $page->ID, '_wp_page_template', $def['template'] );
+			}
 		}
 
 		$injected = [];
 		$content  = (string) $page->post_content;
 		$changed  = false;
+		$preserve = (bool) apply_filters( 'ngc_preserve_elementor_pages', true );
+		$has_el   = (bool) get_post_meta( $page->ID, '_elementor_data', true );
+
+		// Elementor-owned pages: never inject shortcodes into post_content (duplicates / editor noise).
+		if ( $preserve && $has_el ) {
+			return [
+				'ok'                => true,
+				'page_id'           => (int) $page->ID,
+				'created'           => $created,
+				'injected'          => [],
+				'skipped_elementor' => true,
+			];
+		}
 
 		foreach ( (array) ( $def['shortcodes'] ?? [] ) as $tag ) {
 			if ( ! shortcode_exists( $tag ) ) {
 				continue;
 			}
-			if ( self::content_has_shortcode( $content, $tag ) || self::theme_fallback_has_shortcode( $page, $tag ) ) {
+			if (
+				self::content_has_shortcode( $content, $tag )
+				|| self::theme_fallback_has_shortcode( $page, $tag )
+				|| self::elementor_has_shortcode( $page, $tag )
+			) {
 				continue;
 			}
 			$block = "\n\n" . self::INJECT_MARKER . $tag . " -->\n[" . $tag . "]\n";

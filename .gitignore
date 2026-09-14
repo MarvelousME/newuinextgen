@@ -39,6 +39,9 @@ npm-debug.log*
 .tmp/
 temp/
 
+# Ecosystem platform runtime data
+ecosystem-platform/.data/
+
 # Docker local extracts
 docker/hello-elementor/
 docker/hello-elementor.zip
@@ -59,6 +62,13 @@ wp-content/uploads/
 wp-content/cache/
 wp-config.php
 
+# Ecosystem platform runtime (tenant store, audit logs)
+ecosystem-platform/.data/
+
 # Test / agent scratch
 .phpunit.result.cache
 coverage/
+
+# Architecture quarantine / local backups (kept in tree for review; exclude from deploy packaging)
+# Do not treat as runtime theme/plugin code.
+

@@ -263,8 +263,10 @@ function bi_theme_setup() {
     add_theme_support( 'responsive-embeds' );
     add_theme_support( 'editor-styles' );
     register_nav_menus( [
-        'primary'  => __( 'Primary Navigation', 'beyondinfinity' ),
-        'footer-1' => __( 'Footer Column 1', 'beyondinfinity' ),
+        'primary'      => __( 'Primary Navigation', 'beyondinfinity' ),
+        'footer-1'     => __( 'Footer Quick Links', 'beyondinfinity' ),
+        'footer-2'     => __( 'Footer Families & Tutors', 'beyondinfinity' ),
+        'footer-legal' => __( 'Footer Legal', 'beyondinfinity' ),
     ] );
 }
 

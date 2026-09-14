@@ -99,7 +99,7 @@ foreach ( [ 'integrate_status', 'import_woocommerce_products', 'run_payout_batch
 }
 
 $reviews = file_get_contents( $root . '/includes/class-ngc-reviews.php' );
-if ( false === strpos( $reviews, "do_action(\n\t\t\t'ngc_review_submitted'" ) && false === strpos( $reviews, "do_action( 'ngc_review_submitted'" ) ) {
+if ( ! preg_match( "/do_action\s*\(\s*['\"]ngc_review_submitted['\"]/s", $reviews ) ) {
 	echo "FAIL: NGC_Reviews::create_review must fire ngc_review_submitted\n";
 	++$errors;
 }

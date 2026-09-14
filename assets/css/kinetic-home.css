@@ -217,6 +217,7 @@ body.bi-nav-on-hero .ngi-hero--theme .ngi-hero-grid { padding-top: 8px; }
 }
 
 /* Pathways — sticky journey pills + light-blue preview subtext */
+#pathways .ngi-cursor-list [role="tablist"],
 #cursor-reveal .ngi-cursor-list [role="tablist"] {
   position: sticky;
   top: calc(var(--nav-h, 88px) + 12px);
@@ -227,6 +228,7 @@ body.bi-nav-on-hero .ngi-hero--theme .ngi-hero-grid { padding-top: 8px; }
   gap: 10px;
 }
 
+#pathways .ngi-cursor-item,
 #cursor-reveal .ngi-cursor-item {
   background: linear-gradient(120deg, #0a2748 0%, #1a3d7a 45%, #5b2d8e 100%);
   color: #fff;
@@ -235,6 +237,7 @@ body.bi-nav-on-hero .ngi-hero--theme .ngi-hero-grid { padding-top: 8px; }
   text-align: left;
 }
 
+#pathways .ngi-cursor-item.is-active,
 #cursor-reveal .ngi-cursor-item.is-active {
   border-color: rgba(40, 199, 247, 0.65);
   box-shadow:
@@ -262,6 +265,7 @@ body.bi-nav-on-hero .ngi-hero--theme .ngi-hero-grid { padding-top: 8px; }
 }
 
 @media (max-width: 980px) {
+  #pathways .ngi-cursor-list [role="tablist"],
   #cursor-reveal .ngi-cursor-list [role="tablist"] {
     position: relative;
     top: auto;

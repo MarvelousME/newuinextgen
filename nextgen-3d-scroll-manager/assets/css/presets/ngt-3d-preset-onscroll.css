@@ -1,0 +1,8 @@
+/* onscroll — staggered image/media entrances */
+.ngt-3d-preset--onscroll .ngt-3d-onscroll__item,
+.ngt-3d-preset--onscroll [data-ngt-enter],
+.ngt-3d-preset--onscroll img,
+.ngt-3d-preset--onscroll figure {
+	will-change: transform, opacity;
+	transform-origin: center center;
+}

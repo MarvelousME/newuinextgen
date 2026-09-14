@@ -4,9 +4,8 @@
       "C:\\Users\\marvi\\AppData\\Local\\Volta\\tools\\image\\node\\24.18.0\\node.exe",
       "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\node_modules\\@playwright\\test\\cli.js",
       "test",
-      "--headed",
-      "--workers=1",
-      "workflows/five-minute-booking-journey.spec.ts"
+      "workflows/economic-control-center-visual.spec.ts",
+      "--project=chrome"
     ],
     "configFile": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\playwright.config.ts",
     "rootDir": "C:/Users/marvi/Downloads/wetransfer_newuinextgen_2026-07-07_1929/newuinextgen/e2e/workflows",
@@ -21,8 +20,8 @@
     "maxFailures": 0,
     "metadata": {
       "evidenceRoot": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\reports\\evidence",
-      "baseURL": "http://localhost:8890",
-      "generatedAt": "2026-08-03T02:07:37.565Z",
+      "baseURL": "http://localhost:8900",
+      "generatedAt": "2026-08-31T09:02:07.204Z",
       "actualWorkers": 1
     },
     "preserveOutput": "always",
@@ -33,8 +32,8 @@
         "retries": 0,
         "metadata": {
           "evidenceRoot": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\reports\\evidence",
-          "baseURL": "http://localhost:8890",
-          "generatedAt": "2026-08-03T02:07:37.565Z",
+          "baseURL": "http://localhost:8900",
+          "generatedAt": "2026-08-31T09:02:07.204Z",
           "actualWorkers": 1
         },
         "id": "chrome",
@@ -87,25 +86,25 @@
   },
   "suites": [
     {
-      "title": "five-minute-booking-journey.spec.ts",
-      "file": "five-minute-booking-journey.spec.ts",
+      "title": "economic-control-center-visual.spec.ts",
+      "file": "economic-control-center-visual.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Five-minute journey — headed UI + correlation",
-          "file": "five-minute-booking-journey.spec.ts",
-          "line": 35,
+          "title": "Economic Control Center visual",
+          "file": "economic-control-center-visual.spec.ts",
+          "line": 20,
           "column": 6,
           "specs": [
             {
-              "title": "01 preflight pages on :8890",
+              "title": "overview 1800x1120",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 300000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chrome",
@@ -115,47 +114,31 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 60951,
+                      "duration": 11098,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-03T02:07:38.217Z",
+                      "startTime": "2026-08-31T09:02:12.652Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-68909--01-preflight-pages-on-8890-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-68909--01-preflight-pages-on-8890-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-68909--01-preflight-pages-on-8890-chrome\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "0aa318cf87987a6c4b38-676e3cd44481281b8a86",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 37,
-              "column": 7
+              "id": "aa4941b267986856104b-a9823be74a414e1e2f31",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 29,
+              "column": 9
             },
             {
-              "title": "02 public tutor registration form submits",
+              "title": "overview 1440x900",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 300000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chrome",
@@ -165,47 +148,31 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 49069,
+                      "duration": 10910,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-03T02:08:41.197Z",
+                      "startTime": "2026-08-31T09:02:25.199Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-43dbb-r-registration-form-submits-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-43dbb-r-registration-form-submits-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-43dbb-r-registration-form-submits-chrome\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "0aa318cf87987a6c4b38-b8ea3eb2e0b76e7025e1",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 52,
-              "column": 7
+              "id": "aa4941b267986856104b-0b51d6370cc3ea38c52d",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 29,
+              "column": 9
             },
             {
-              "title": "03 parent registration form submits",
+              "title": "overview 1366x768",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 300000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chrome",
@@ -215,47 +182,31 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 90387,
+                      "duration": 12161,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-03T02:09:31.607Z",
+                      "startTime": "2026-08-31T09:02:36.439Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-ed55d-t-registration-form-submits-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-ed55d-t-registration-form-submits-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-ed55d-t-registration-form-submits-chrome\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "0aa318cf87987a6c4b38-8a1acda78f099084e67d",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 76,
-              "column": 7
+              "id": "aa4941b267986856104b-c9f325f5548d94a8a356",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 29,
+              "column": 9
             },
             {
-              "title": "04 find-a-tutor marketplace shows bookable cards",
+              "title": "overview 1024x768",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 300000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chrome",
@@ -265,47 +216,31 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 32775,
+                      "duration": 12037,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-03T02:11:03.887Z",
+                      "startTime": "2026-08-31T09:02:48.666Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-e3cfd-tplace-shows-bookable-cards-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-e3cfd-tplace-shows-bookable-cards-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-e3cfd-tplace-shows-bookable-cards-chrome\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "0aa318cf87987a6c4b38-b23f9e9a5ce6632cb631",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 120,
-              "column": 7
+              "id": "aa4941b267986856104b-162ebc6549bea21ce64c",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 29,
+              "column": 9
             },
             {
-              "title": "05 domain correlation evidence present",
+              "title": "overview 768x1024",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 300000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chrome",
@@ -315,37 +250,31 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 8,
+                      "duration": 49943,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-03T02:11:37.689Z",
+                      "startTime": "2026-08-31T09:03:00.810Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-f77fb-orrelation-evidence-present-chrome\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "0aa318cf87987a6c4b38-63dc3679bd8e8a2817e9",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 129,
-              "column": 7
+              "id": "aa4941b267986856104b-8e1c28bad523892d153a",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 29,
+              "column": 9
             },
             {
-              "title": "06 admin surfaces reachable after login",
+              "title": "overview 390x844",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 300000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chrome",
@@ -355,47 +284,31 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 62792,
+                      "duration": 87530,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-03T02:11:37.723Z",
+                      "startTime": "2026-08-31T09:03:52.816Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-9caf2-faces-reachable-after-login-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-9caf2-faces-reachable-after-login-chrome\\video.webm"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-9caf2-faces-reachable-after-login-chrome\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "0aa318cf87987a6c4b38-7577f5feb4fd6eb874ee",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 153,
-              "column": 7
+              "id": "aa4941b267986856104b-cfa9f4b828f9788b57f1",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 29,
+              "column": 9
             },
             {
-              "title": "07 unauthorized visitor cannot see meeting secrets",
+              "title": "screen treasury 1440x900",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 300000,
+                  "timeout": 180000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chrome",
@@ -405,34 +318,227 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 23264,
+                      "duration": 42046,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-03T02:12:42.981Z",
+                      "startTime": "2026-08-31T09:05:22.584Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-c4c52--cannot-see-meeting-secrets-chrome\\test-finished-1.png"
-                        },
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\marvi\\Downloads\\wetransfer_newuinextgen_2026-07-07_1929\\newuinextgen\\e2e\\test-results\\five-minute-booking-journe-c4c52--cannot-see-meeting-secrets-chrome\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "0aa318cf87987a6c4b38-a361aa3791414aad6693",
-              "file": "five-minute-booking-journey.spec.ts",
-              "line": 167,
-              "column": 7
+              "id": "aa4941b267986856104b-af463c2629a35484c87e",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 47,
+              "column": 9
+            },
+            {
+              "title": "screen ledger 1440x900",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10511,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-31T09:06:06.718Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aa4941b267986856104b-8228817ec8adef0f2a19",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 47,
+              "column": 9
+            },
+            {
+              "title": "screen wallets 1440x900",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5828,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-31T09:06:17.294Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aa4941b267986856104b-81aed245b97c2731ab3e",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 47,
+              "column": 9
+            },
+            {
+              "title": "screen payments 1440x900",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5878,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-31T09:06:23.170Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aa4941b267986856104b-157ce33f4b2ed132a349",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 47,
+              "column": 9
+            },
+            {
+              "title": "screen invoices 1440x900",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5442,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-31T09:06:29.125Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aa4941b267986856104b-1be0a68f1399afed0036",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 47,
+              "column": 9
+            },
+            {
+              "title": "screen reports 1440x900",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5540,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-31T09:06:34.619Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aa4941b267986856104b-76691f7a660bf8eddef2",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 47,
+              "column": 9
+            },
+            {
+              "title": "screen settings 1440x900",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chrome",
+                  "projectName": "chrome",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5321,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-31T09:06:40.233Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aa4941b267986856104b-3b8d2f594df05f35d1d6",
+              "file": "economic-control-center-visual.spec.ts",
+              "line": 47,
+              "column": 9
             }
           ]
         }
@@ -441,9 +547,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-03T02:07:37.569Z",
-    "duration": 330036.057,
-    "expected": 7,
+    "startTime": "2026-08-31T09:02:07.224Z",
+    "duration": 281776.06799999997,
+    "expected": 13,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

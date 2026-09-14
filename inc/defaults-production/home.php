@@ -128,7 +128,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <?php /* Floating Book CTA removed — right-hand float dock covers global actions. */ ?>
 
   <?php if ( bi_home_section_enabled( 'hero' ) ) : ?>
-  <section class="ngi-hero ngi-hero--theme ngi-hero--cinematic<?php echo function_exists( 'bi_get_hero_video_url' ) && bi_get_hero_video_url() ? ' ngi-hero--has-video' : ''; ?>" aria-label="<?php esc_attr_e( 'NextGen Tutors homepage hero', 'beyondinfinity' ); ?>">
+  <section id="hero" class="ngi-hero ngi-hero--theme ngi-hero--cinematic<?php echo function_exists( 'bi_get_hero_video_url' ) && bi_get_hero_video_url() ? ' ngi-hero--has-video' : ''; ?>" aria-label="<?php esc_attr_e( 'NextGen Tutors homepage hero', 'beyondinfinity' ); ?>">
     <?php
     $hero_video  = function_exists( 'bi_get_hero_video_url' ) ? bi_get_hero_video_url() : esc_url( (string) bi_get_theme_option( 'home_hero_video_url', '' ) );
     $hero_poster = function_exists( 'bi_get_hero_video_poster_url' ) ? bi_get_hero_video_poster_url() : ( function_exists( 'bi_get_theme_image_url' ) ? bi_get_theme_image_url( 'home_video' ) : '' );
@@ -325,7 +325,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <?php endif; ?>
 
   <?php if ( bi_home_section_enabled( 'journey' ) ) : ?>
-  <section class="ngi-section" id="journey">
+  <section class="ngi-section ngi-section--journey" id="how-it-works" data-home-section="journey">
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_journey['eyebrow'] ?? __( 'Learner journey', 'beyondinfinity' ) ); ?></div>
@@ -472,7 +472,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <?php endif; ?>
 
   <?php if ( bi_home_section_enabled( 'pathways' ) ) : ?>
-  <section class="ngi-section ngi-alt" id="cursor-reveal">
+  <section class="ngi-section ngi-alt ngi-section--pathways" id="pathways" data-home-section="pathways">
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_pathways['eyebrow'] ?? __( 'Learning pathways', 'beyondinfinity' ) ); ?></div>
@@ -647,7 +647,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <?php endif; ?>
 
   <?php if ( bi_home_section_enabled( 'reviews' ) ) : ?>
-  <section class="ngi-section ngi-section--testimonials" id="reviews">
+  <section class="ngi-section ngi-section--testimonials" id="testimonials" data-home-section="reviews">
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_reviews['eyebrow'] ?? __( 'Happy clients · real marks', 'beyondinfinity' ) ); ?></div>
@@ -729,7 +729,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <?php endif; ?>
 
   <?php if ( bi_home_section_enabled( 'cta' ) ) : ?>
-  <section class="ngi-section">
+  <section class="ngi-section bi-parallax-cta" id="cta" data-home-section="cta">
     <div class="ngi-wrap">
       <div class="ngi-cta ngi-reveal">
         <div>

@@ -48,6 +48,8 @@ services:
       HOST: odoo-db
       USER: ${ODOO_DB_USER:-odoo}
       PASSWORD: ${ODOO_DB_PASSWORD:-odoo}
+    # Master password comes from docker/.env — never default to admin in git.
+    command: ['odoo', '--admin_passwd=${ODOO_MASTER_PASSWORD}']
     ports:
       - '${ECOSYSTEM_BIND:-127.0.0.1}:${ODOO_PORT:-8069}:8069'
     volumes:
@@ -87,11 +89,14 @@ services:
       ECOSYSTEM_SUPER_ADMIN_IDS: platform-super-admin
       ODOO_URL: http://odoo:8069
       ODOO_USERNAME: ${ODOO_ADMIN_USER:-admin}
-      ODOO_PASSWORD: ${ODOO_ADMIN_PASSWORD:-admin}
-      ODOO_MASTER_PASSWORD: ${ODOO_MASTER_PASSWORD:-admin}
+      ODOO_PASSWORD: ${ODOO_ADMIN_PASSWORD}
+      ODOO_MASTER_PASSWORD: ${ODOO_MASTER_PASSWORD}
       ECOSYSTEM_RABBITMQ_URL: amqp://${ECOSYSTEM_RABBIT_USER:-ecosystem}:${ECOSYSTEM_RABBIT_PASSWORD:-ecosystem}@ecosystem-rabbitmq:5672
     volumes:
       - ecosystem_api_data:/data
+      # Live-reload Control Center UI + tokens from host (no image rebuild for CSS/JS edits)
+      - ../ecosystem-platform/apps/control-center:/app/apps/control-center:ro
+      - ../ecosystem-platform/packages/nextgen-ui/tokens.css:/app/packages/nextgen-ui/tokens.css:ro
     depends_on:
       - odoo
       - ecosystem-rabbitmq

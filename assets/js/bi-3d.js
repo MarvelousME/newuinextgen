@@ -93,7 +93,7 @@
 
   function syncPathwaysStack() {
     var stack = document.querySelector(".bi-stack-3d--pathways");
-    var tablist = document.querySelector("#cursor-reveal [role=tablist]");
+    var tablist = document.querySelector("#pathways [role=tablist], #cursor-reveal [role=tablist]");
     if (!stack || !tablist) return;
 
     stack.addEventListener("bi-stack-select", function (e) {

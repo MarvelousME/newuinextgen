@@ -415,13 +415,14 @@ a:hover {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--ngt-primary);
+  background: var(--ngi-cyan, #28c7f7); /* .ngi-accent */
   transition: width 0.3s ease;
 }
 
 .ngt-nav__link:hover,
+.ngt-nav__link:focus-visible,
 .ngt-nav__link.current-menu-item {
-  color: var(--ngt-primary);
+  color: var(--ngi-cyan, #28c7f7); /* same as .ngi-accent */
 }
 
 .ngt-nav__link:hover::after,
@@ -863,8 +864,18 @@ a:hover {
 .bi-footer-logo__text span { background: linear-gradient(135deg, #0066CC, #00C896); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .bi-footer-contact li { display: flex; gap: 8px; align-items: flex-start; }
 .bi-footer-legal { display: flex; gap: 24px; flex-wrap: wrap; }
-.bi-footer-legal a { color: rgba(255,255,255,.5); text-decoration: none; }
-.bi-footer-legal a:hover { color: var(--ngt-secondary); }
+.bi-footer-legal .bi-footer-legal__menu {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.bi-footer-legal a,
+.bi-footer-legal .bi-footer-legal__menu a { color: rgba(255,255,255,.5); text-decoration: none; }
+.bi-footer-legal a:hover,
+.bi-footer-legal .bi-footer-legal__menu a:hover { color: var(--ngi-cyan, #28c7f7); }
 
 /* Hero */
 .bi-hero { min-height: 420px; }

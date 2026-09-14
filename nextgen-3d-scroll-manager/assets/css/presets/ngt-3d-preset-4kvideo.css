@@ -1,0 +1,16 @@
+/* 4kvideo — media scale/pin emphasis (no video time scrub) */
+.ngt-3d-preset--4kvideo {
+	overflow: hidden;
+}
+
+.ngt-3d-preset--4kvideo .ngt-3d-4k__media,
+.ngt-3d-preset--4kvideo [data-ngt-media],
+.ngt-3d-preset--4kvideo video,
+.ngt-3d-preset--4kvideo img {
+	display: block;
+	width: 100%;
+	height: auto;
+	transform-origin: center center;
+	will-change: transform;
+	backface-visibility: hidden;
+}

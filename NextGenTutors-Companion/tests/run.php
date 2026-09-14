@@ -446,6 +446,24 @@ if ( ! function_exists( 'wp_mkdir_p' ) ) {
 if ( ! defined( 'NGC_PLUGIN_DIR' ) ) {
 	define( 'NGC_PLUGIN_DIR', $root . '/' );
 }
+if ( ! defined( 'WP_CONTENT_DIR' ) ) {
+	define( 'WP_CONTENT_DIR', $root . '/tests-stub/wp-content' );
+}
+if ( ! function_exists( 'trailingslashit' ) ) {
+	function trailingslashit( $value ) {
+		return rtrim( (string) $value, "/\\" ) . '/';
+	}
+}
+if ( ! function_exists( 'untrailingslashit' ) ) {
+	function untrailingslashit( $value ) {
+		return rtrim( (string) $value, "/\\" );
+	}
+}
+if ( ! function_exists( 'apply_filters' ) ) {
+	function apply_filters( $hook, $value ) {
+		return $value;
+	}
+}
 
 require_once $root . '/includes/demo/class-ngc-demo-env.php';
 require_once $root . '/includes/demo/class-ngc-demo-clock.php';

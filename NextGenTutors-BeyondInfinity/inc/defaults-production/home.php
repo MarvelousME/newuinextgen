@@ -128,7 +128,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <?php /* Floating Book CTA removed — right-hand float dock covers global actions. */ ?>
 
   <?php if ( bi_home_section_enabled( 'hero' ) ) : ?>
-  <section class="ngi-hero ngi-hero--theme ngi-hero--cinematic<?php echo function_exists( 'bi_get_hero_video_url' ) && bi_get_hero_video_url() ? ' ngi-hero--has-video' : ''; ?>" aria-label="<?php esc_attr_e( 'NextGen Tutors homepage hero', 'beyondinfinity' ); ?>">
+  <section id="hero" class="ngi-hero ngi-hero--theme ngi-hero--cinematic<?php echo function_exists( 'bi_get_hero_video_url' ) && bi_get_hero_video_url() ? ' ngi-hero--has-video' : ''; ?>" aria-label="<?php esc_attr_e( 'NextGen Tutors homepage hero', 'beyondinfinity' ); ?>">
     <?php
     $hero_video  = function_exists( 'bi_get_hero_video_url' ) ? bi_get_hero_video_url() : esc_url( (string) bi_get_theme_option( 'home_hero_video_url', '' ) );
     $hero_poster = function_exists( 'bi_get_hero_video_poster_url' ) ? bi_get_hero_video_poster_url() : ( function_exists( 'bi_get_theme_image_url' ) ? bi_get_theme_image_url( 'home_video' ) : '' );
@@ -729,7 +729,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <?php endif; ?>
 
   <?php if ( bi_home_section_enabled( 'cta' ) ) : ?>
-  <section class="ngi-section">
+  <section class="ngi-section" id="cta">
     <div class="ngi-wrap">
       <div class="ngi-cta ngi-reveal">
         <div>

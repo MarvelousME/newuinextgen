@@ -50,7 +50,7 @@ services:
       start_period: 10s
 
   wordpress:
-    image: wordpress:6.9-php8.2-apache
+    image: wordpress:7.1-php8.2-apache
     restart: unless-stopped
     ports:
       - "${WP_PORT:-8890}:80"
@@ -92,6 +92,9 @@ services:
       - ../NextGenTutors-Mission-Control:/var/www/html/wp-content/plugins/NextGenTutors-Mission-Control
       - ../NextGenTutors-BeyondMeasure:/var/www/html/wp-content/plugins/NextGenTutors-BeyondMeasure
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer
+      - ../nextgen-subjects-widget:/var/www/html/wp-content/plugins/nextgen-subjects-widget
+      - ../nextgen-3d-filmstrip:/var/www/html/wp-content/plugins/nextgen-3d-filmstrip
+      - ../nextgen-3d-scroll-manager:/var/www/html/wp-content/plugins/nextgen-3d-scroll-manager
       - ../content/_extracted/nextgen-command-center-v1.0:/var/www/html/wp-content/plugins/nextgen-command-center
       - ../content/_extracted/nextgen-completion-suite:/var/www/html/wp-content/plugins/nextgen-completion-suite
       - ../webpages-content:/var/www/html/wp-content/ngt-html-source
@@ -146,6 +149,9 @@ services:
       - ../NextGenTutors-Mission-Control:/var/www/html/wp-content/plugins/NextGenTutors-Mission-Control
       - ../NextGenTutors-BeyondMeasure:/var/www/html/wp-content/plugins/NextGenTutors-BeyondMeasure
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer
+      - ../nextgen-subjects-widget:/var/www/html/wp-content/plugins/nextgen-subjects-widget
+      - ../nextgen-3d-filmstrip:/var/www/html/wp-content/plugins/nextgen-3d-filmstrip
+      - ../nextgen-3d-scroll-manager:/var/www/html/wp-content/plugins/nextgen-3d-scroll-manager
       - ../content/_extracted/nextgen-command-center-v1.0:/var/www/html/wp-content/plugins/nextgen-command-center
       - ../content/_extracted/nextgen-completion-suite:/var/www/html/wp-content/plugins/nextgen-completion-suite
       - ../webpages-content:/var/www/html/wp-content/ngt-html-source

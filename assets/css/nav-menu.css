@@ -30,12 +30,15 @@
   left: 50%;
   width: 0;
   height: 2px;
-  background: var(--ngt-accent, #10b981);
+  background: var(--ngi-cyan, #28c7f7); /* .ngi-accent */
   transition: width 0.3s ease, left 0.3s ease;
 }
 
-.ngt-nav__menu .menu-item > a:hover {
-  color: var(--ngt-primary, #1e1b4b);
+.ngt-nav__menu .menu-item > a:hover,
+.ngt-nav__menu .menu-item > a:focus-visible,
+.ngt-nav__link:hover,
+.ngt-nav__dropdown-trigger:hover {
+  color: var(--ngi-cyan, #28c7f7); /* same as .ngi-accent */
 }
 
 .ngt-nav__menu .menu-item > a:hover::after {
@@ -46,7 +49,7 @@
 /* Current page indicator */
 .ngt-nav__menu .current-menu-item > a,
 .ngt-nav__menu .current_page_item > a {
-  color: var(--ngt-primary, #1e1b4b);
+  color: var(--ngi-cyan, #28c7f7);
 }
 
 .ngt-nav__menu .current-menu-item > a::after,
@@ -217,8 +220,8 @@
 
 .ngt-nav__sublink:hover,
 .ngt-nav__submenu a:hover {
-  background: rgba(174, 206, 97, 0.12);
-  color: var(--ngt-navy, #0f2744);
+  background: rgba(40, 199, 247, 0.12);
+  color: var(--ngi-cyan, #28c7f7); /* same as .ngi-accent */
 }
 
 /* Tutoring imagery strip */
