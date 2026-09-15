@@ -181,3 +181,11 @@ html[data-bi-scheme="dark"] {
   --ngt-glass-surface: rgba(15, 26, 47, 0.72);
   color-scheme: dark;
 }
+
+/* Elementor kit globals → BeyondInfinity tokens */
+:root {
+  --e-global-color-primary: var(--ngt-primary);
+  --e-global-color-secondary: var(--ngt-secondary);
+  --e-global-color-text: var(--ngt-text);
+  --e-global-color-accent: var(--ngt-secondary);
+}

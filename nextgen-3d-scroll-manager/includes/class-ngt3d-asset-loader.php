@@ -40,6 +40,14 @@ class NGT3D_Asset_Loader {
 		$page  = NGT3D_Page_Resolver::resolve();
 		$rules = NGT3D_Rule_Repository::get_for_page( $page['id'], $page['slug'] );
 
+		/**
+		 * Filter enabled 3D rules for the current page (e.g. Elementor widget motion).
+		 *
+		 * @param array $rules DB rules.
+		 * @param array $page  Resolved page.
+		 */
+		$rules = (array) apply_filters( 'ngt3d_page_rules', $rules, $page );
+
 		if ( empty( $rules ) ) {
 			// No rules for this page — do NOT load any 3D engine overhead.
 			return;

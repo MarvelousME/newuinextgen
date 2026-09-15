@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once BI_DIR . '/inc/ui-library/component-loader.php';
 require_once BI_DIR . '/inc/ui-library/builders.php';
+require_once BI_DIR . '/inc/elementor-design-system/bootstrap.php';
 
 add_action( 'after_setup_theme', 'ng_ui_bootstrap', 20 );
 /**
