@@ -12,6 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class NGT_Hub_Matching {
 
 	public static function register_hooks(): void {
+		if ( class_exists( 'NGT_Hub_Companion_Delegate', false )
+			&& ! NGT_Hub_Companion_Delegate::should_register_matching() ) {
+			return;
+		}
 		add_action( 'ngt_find_tutor_matched', [ __CLASS__, 'on_intake' ], 10, 1 );
 	}
 

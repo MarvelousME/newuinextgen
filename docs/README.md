@@ -6,7 +6,7 @@
 |-------|--------|
 | **Product** | NextGen Tutors — accessible tutoring marketplace (South Africa) |
 | **Stack** | WordPress 6.7+ · PHP 8.2+ · MySQL 8.0 |
-| **Theme** | BeyondInfinity (`BI_VERSION` 1.9.9) — workspace root |
+| **Theme** | TutorFabulous / BeyondInfinity — edit root `NextGenTutors-BeyondInfinity/` (see `THEME-TUTORFABULOUS.md`) |
 | **Core plugin** | NextGenTutors-Companion (`NGC_VERSION` 1.9.0) |
 | **Local dev** | Docker @ http://localhost:8890 (+ Agent Gateway :8787) |
 | **Last doc refresh** | 2026-08-03 |

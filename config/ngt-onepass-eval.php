@@ -3,7 +3,12 @@ if ( ! defined( 'NGT_AGENT_GATEWAY_URL' ) ) {
   define( 'NGT_AGENT_GATEWAY_URL', 'http://host.docker.internal:8787' );
 }
 if ( ! defined( 'NGT_GATEWAY_SHARED_SECRET' ) ) {
-  define( 'NGT_GATEWAY_SHARED_SECRET', 'staging-local-secret' );
+  $secret = getenv( 'NGT_GATEWAY_SHARED_SECRET' );
+  if ( ! is_string( $secret ) || $secret === '' ) {
+    fwrite( STDERR, "NGT_GATEWAY_SHARED_SECRET env is required (no hardcoded default).\n" );
+    exit(1);
+  }
+  define( 'NGT_GATEWAY_SHARED_SECRET', $secret );
 }
 echo 'URL=' . NGC_Agent_Gateway_Client::base_url() . PHP_EOL;
 $h = NGC_Agent_Gateway_Client::health();

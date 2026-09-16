@@ -25,7 +25,7 @@
 |---|------|-------|----------------|
 | 1 | Install integration stack on Docker | Ops | `powershell -File docker/scripts/install-phase2-stack.ps1` |
 | 2 | Re-run full verify after deploy | Dev | `scripts/run-ui-library-audit.ps1` + `run-playwright.ps1` |
-| 3 | Visual QA home + pricing + find-a-tutor on mobile | QA | Manual @ :8899 |
+| 3 | Visual QA home + pricing + find-a-tutor on mobile | QA | Manual @ :8890 |
 
 ---
 

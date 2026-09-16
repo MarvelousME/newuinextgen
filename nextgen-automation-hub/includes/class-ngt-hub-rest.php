@@ -3,6 +3,7 @@
  * REST API for dashboards, notifications, calendar, and matching.
  *
  * When Companion is active, routes register under ngt-hub/v1 to avoid ngt/v1 collision.
+ * Matching routes are omitted entirely (quiet domain / TD-RAD-004).
  *
  * @package NextGenAutomationHub
  */
@@ -18,9 +19,19 @@ final class NGT_Hub_REST {
 	}
 
 	public static function register_routes(): void {
+		if ( class_exists( 'NGT_Hub_Companion_Delegate', false )
+			&& ! NGT_Hub_Companion_Delegate::should_register_rest() ) {
+			return;
+		}
+
 		$ns = class_exists( 'NGT_Hub_Companion_Delegate', false )
 			? NGT_Hub_Companion_Delegate::rest_namespace()
 			: 'ngt/v1';
+
+		$register_matching = ! class_exists( 'NGT_Hub_Companion_Delegate', false )
+			|| NGT_Hub_Companion_Delegate::should_register_matching();
+
+		$route_count = 0;
 
 		register_rest_route(
 			$ns,
@@ -31,6 +42,7 @@ final class NGT_Hub_REST {
 				'permission_callback' => 'is_user_logged_in',
 			]
 		);
+		++$route_count;
 
 		register_rest_route(
 			$ns,
@@ -41,6 +53,7 @@ final class NGT_Hub_REST {
 				'permission_callback' => 'is_user_logged_in',
 			]
 		);
+		++$route_count;
 
 		register_rest_route(
 			$ns,
@@ -51,6 +64,7 @@ final class NGT_Hub_REST {
 				'permission_callback' => 'is_user_logged_in',
 			]
 		);
+		++$route_count;
 
 		register_rest_route(
 			$ns,
@@ -61,6 +75,7 @@ final class NGT_Hub_REST {
 				'permission_callback' => 'is_user_logged_in',
 			]
 		);
+		++$route_count;
 
 		register_rest_route(
 			$ns,
@@ -71,18 +86,23 @@ final class NGT_Hub_REST {
 				'permission_callback' => 'is_user_logged_in',
 			]
 		);
+		++$route_count;
 
-		register_rest_route(
-			$ns,
-			'/matches/pending',
-			[
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => [ __CLASS__, 'pending_matches' ],
-				'permission_callback' => function () {
-					return current_user_can( 'manage_options' ) || current_user_can( 'ngt_manage_hub' );
-				},
-			]
-		);
+		// TD-RAD-004: matching REST stays off when Companion owns the domain.
+		if ( $register_matching ) {
+			register_rest_route(
+				$ns,
+				'/matches/pending',
+				[
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ __CLASS__, 'pending_matches' ],
+					'permission_callback' => function () {
+						return current_user_can( 'manage_options' ) || current_user_can( 'ngt_manage_hub' );
+					},
+				]
+			);
+			++$route_count;
+		}
 
 		register_rest_route(
 			$ns,
@@ -95,12 +115,18 @@ final class NGT_Hub_REST {
 				},
 			]
 		);
+		++$route_count;
 
 		if ( class_exists( 'NGT_Hub_Companion_Delegate', false ) ) {
 			NGT_Hub_Companion_Delegate::log(
 				'info',
 				'Hub REST routes registered.',
-				[ 'namespace' => $ns, 'route_count' => 7 ]
+				[
+					'namespace'           => $ns,
+					'route_count'         => $route_count,
+					'matching_registered' => $register_matching,
+					'quiet_domain'        => NGT_Hub_Companion_Delegate::is_quiet_domain(),
+				]
 			);
 		}
 	}

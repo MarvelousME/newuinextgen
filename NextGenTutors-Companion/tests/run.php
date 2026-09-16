@@ -33,7 +33,7 @@ if ( ! function_exists( 'sanitize_text_field' ) ) {
 
 require_once $root . '/includes/class-ngc-uuid.php';
 require_once $root . '/includes/integrations/class-ngc-woocommerce-catalog.php';
-require_once $root . '/includes/integrations/class-ngc-payout-export.php';
+require_once $root . '/includes/payments/class-ngc-payout-export.php';
 
 if ( ! defined( 'NGC_ALLOW_DEMO_SEED' ) ) {
 	define( 'NGC_ALLOW_DEMO_SEED', true );

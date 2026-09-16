@@ -42,6 +42,9 @@ temp/
 # Ecosystem platform runtime data
 ecosystem-platform/.data/
 
+# Agent Gateway durable SQLite (tasks + idempotency)
+data/gateway/
+
 # Docker local extracts
 docker/hello-elementor/
 docker/hello-elementor.zip

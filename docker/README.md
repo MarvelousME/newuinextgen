@@ -7,6 +7,7 @@ Local WordPress with the **parent workspace folder** bind-mounted as the active 
 ```powershell
 cd docker
 Copy-Item .env.example .env
+# Edit .env: replace every CHANGE_ME_* with strong unique secrets (required).
 .\start.ps1
 # Or explicitly:
 docker compose up -d --build db agent-gateway wordpress
@@ -20,16 +21,46 @@ docker compose up -d --build db agent-gateway wordpress
 | Agent Gateway | http://localhost:8787/health |
 | phpMyAdmin | http://localhost:8082 |
 
-**Login:** `admin` / `NextGenAdmin!2026` (override in `.env`)
+**Login:** use `WP_ADMIN_USER` / `WP_ADMIN_PASSWORD` from your local `docker/.env` (never commit `.env`).
+
+## Secrets (required)
+
+Compose **does not** ship default values for:
+
+| Env | Purpose |
+|-----|---------|
+| `MYSQL_PASSWORD` | WordPress DB user password |
+| `MYSQL_ROOT_PASSWORD` | MySQL root password |
+| `NGT_GATEWAY_SHARED_SECRET` | Shared secret between WordPress and Agent Gateway |
+
+Copy `.env.example` → `.env` and replace `CHANGE_ME_*` placeholders. Non-secret names (`MYSQL_DATABASE`, `MYSQL_USER`) may keep example defaults.
+
+### Rotate secrets
+
+If a secret was ever committed, shared in chat, or matches an old known default (`wordpress`, `rootpass`, `staging-local-secret`):
+
+1. Generate new values (password manager or `openssl rand -hex 32`).
+2. Update `docker/.env` with the new `MYSQL_PASSWORD`, `MYSQL_ROOT_PASSWORD`, and/or `NGT_GATEWAY_SHARED_SECRET`.
+3. Recreate affected services so containers pick up env:
+   ```powershell
+   docker compose up -d --force-recreate db agent-gateway wordpress
+   ```
+4. **MySQL passwords:** changing `MYSQL_*` after the volume already exists does **not** update the live DB. Either:
+   - Local disposable data: `docker compose down -v` then `up` (destroys DB volume), or
+   - Keep data: connect as root and `ALTER USER` / set WordPress DB password to match `.env`.
+5. Confirm gateway calls work (Companion / MCP smoke) with the new shared secret.
+6. Run the repo check: `php ../scripts/check-no-default-secrets.php` from `docker/` (or `php scripts/check-no-default-secrets.php` from the `newuinextgen` root).
+
+`.env` is gitignored under `docker/`. Never commit real secrets.
 
 ## Agent Gateway + MCP
 
-| Env | Default |
-|-----|---------|
-| `WP_PORT` | `8890` |
-| `NGT_AGENT_GATEWAY_URL` | `http://agent-gateway:8787` (in-container DNS) |
-| `NGT_GATEWAY_SHARED_SECRET` | `staging-local-secret` (local only) |
-| `NGT_GATEWAY_HOST_PORT` | `8787` |
+| Env | Notes |
+|-----|-------|
+| `WP_PORT` | Default `8890` |
+| `NGT_AGENT_GATEWAY_URL` | Default `http://agent-gateway:8787` (in-container DNS) |
+| `NGT_GATEWAY_SHARED_SECRET` | **Required** via `.env` — no compose/PHP hardcoded default |
+| `NGT_GATEWAY_HOST_PORT` | Default `8787` |
 
 - Seed product MCP inventory: `.\scripts\seed-mcp-staging.ps1`
 - Docs: [MCP free config](../docs/GUIDES/MCP-SERVERS-FREE-CONFIG.md), [How to use agentic](../docs/GUIDES/AGENTIC-HOW-TO-USE.md)
@@ -52,6 +83,7 @@ docker compose down
 docker compose logs -f wordpress agent-gateway
 docker compose --profile setup run --rm wpcli
 .\scripts\seed-mcp-staging.ps1
+php ../scripts/check-no-default-secrets.php
 ```
 
 ## Ports

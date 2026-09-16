@@ -45,7 +45,14 @@ function ngc_autoload( $class ) {
 
 	$paths = [
 		NGC_PLUGIN_DIR . 'includes/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/modules/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/ai/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/a2a/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/content/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/leads/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/mcp/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/social/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/adapters/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/workflows/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/rest/' . $relative,
@@ -60,6 +67,7 @@ function ngc_autoload( $class ) {
 		NGC_PLUGIN_DIR . 'includes/audit/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/diagnostics/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/matching/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/payments/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/agents/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/cli/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/demo/' . $relative,
@@ -183,6 +191,10 @@ final class NGC_Plugin {
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'load_textdomain' ] );
+		// Domain module registry stubs (no-op); must stay after autoload registration.
+		if ( class_exists( 'NGC_Module_Registry' ) ) {
+			NGC_Module_Registry::boot();
+		}
 		NGC_Plugin_Bootstrap::init();
 	}
 

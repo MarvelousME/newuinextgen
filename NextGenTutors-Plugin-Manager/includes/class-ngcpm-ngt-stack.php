@@ -69,7 +69,7 @@ class NGCPM_NGT_Stack {
 				'label'    => 'Automation Hub',
 				'required' => false,
 				'priority' => 45,
-				'notes'    => __( 'Legacy overlap with Companion — leave inactive when Companion is the domain owner.', 'nextgentutors-plugin-manager' ),
+				'notes'    => __( 'Optional; default off. When Companion (NGC_Plugin) is active, Hub runs quiet-domain — matching/finance CPT+REST deferred (TD-RAD-004).', 'nextgentutors-plugin-manager' ),
 			],
 			'NextGenTutors-Html-Importer/revamp-html-importer.php'            => [
 				'label'    => 'Html Importer',

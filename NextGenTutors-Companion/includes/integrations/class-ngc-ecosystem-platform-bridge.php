@@ -2,6 +2,9 @@
 /**
  * Ecosystem-platform bridge — tenant context and API health without Odoo leakage to theme.
  *
+ * Talks only to ecosystem-platform HTTP API (ECOSYSTEM_PLATFORM_API_URL).
+ * Must never call Odoo / XML-RPC directly; business data stays behind platform-api.
+ *
  * @package NextGenCompanion
  */
 

@@ -79,7 +79,7 @@ require_once $root . '/includes/diagnostics/class-ngc-legacy-plugin-guard.php';
 require_once $root . '/includes/session/class-ngc-session-states.php';
 require_once $root . '/includes/integrations/class-ngc-product-provisioner.php';
 require_once $root . '/includes/integrations/class-ngc-woocommerce-catalog.php';
-require_once $root . '/includes/integrations/class-ngc-payout-export.php';
+require_once $root . '/includes/payments/class-ngc-payout-export.php';
 require_once $root . '/includes/memory/interface-ngc-memory-provider.php';
 require_once $root . '/includes/memory/class-ngc-memory-settings.php';
 require_once $root . '/includes/memory/class-ngc-memory-noop-provider.php';

@@ -38,7 +38,16 @@ final class NGT_Hub_Data_Model {
 	}
 
 	public static function register_post_types(): void {
+		$skip_finance = class_exists( 'NGT_Hub_Companion_Delegate', false )
+			&& ! NGT_Hub_Companion_Delegate::should_register_finance();
+		$finance_slugs = $skip_finance
+			? NGT_Hub_Companion_Delegate::finance_post_types()
+			: [];
+
 		foreach ( self::$post_types as $slug => $labels ) {
+			if ( $skip_finance && in_array( $slug, $finance_slugs, true ) ) {
+				continue;
+			}
 			register_post_type(
 				$slug,
 				[

@@ -54,7 +54,7 @@ services:
       - '${ECOSYSTEM_BIND:-127.0.0.1}:${ODOO_PORT:-8069}:8069'
     volumes:
       - odoo_data:/var/lib/odoo
-      - ../ecosystem-platform/platforms/odoo/addons:/mnt/extra-addons
+      - ../../ecosystem-platform/platforms/odoo/addons:/mnt/extra-addons
     networks:
       - ecosystem_internal
 
@@ -77,7 +77,7 @@ services:
 
   ecosystem-api:
     build:
-      context: ../ecosystem-platform
+      context: ../../ecosystem-platform
       dockerfile: infrastructure/docker/platform-api.Dockerfile
     restart: unless-stopped
     ports:
@@ -95,8 +95,8 @@ services:
     volumes:
       - ecosystem_api_data:/data
       # Live-reload Control Center UI + tokens from host (no image rebuild for CSS/JS edits)
-      - ../ecosystem-platform/apps/control-center:/app/apps/control-center:ro
-      - ../ecosystem-platform/packages/nextgen-ui/tokens.css:/app/packages/nextgen-ui/tokens.css:ro
+      - ../../ecosystem-platform/apps/control-center:/app/apps/control-center:ro
+      - ../../ecosystem-platform/packages/nextgen-ui/tokens.css:/app/packages/nextgen-ui/tokens.css:ro
     depends_on:
       - odoo
       - ecosystem-rabbitmq
@@ -109,7 +109,7 @@ services:
       ECOSYSTEM_PLATFORM_API_URL: http://ecosystem-api:8790
       ECOSYSTEM_API_TOKEN: ${ECOSYSTEM_API_TOKEN:-}
     volumes:
-      - ../ecosystem-platform/bridges/wordpress/nextgentutors-ecosystem-bridge:/var/www/html/wp-content/plugins/nextgentutors-ecosystem-bridge:ro
+      - ../../ecosystem-platform/bridges/wordpress/nextgentutors-ecosystem-bridge:/var/www/html/wp-content/plugins/nextgentutors-ecosystem-bridge:ro
 
 volumes:
   ecosystem_pg_data:

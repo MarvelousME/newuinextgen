@@ -71,12 +71,13 @@ test('first-party agent rejects protected traits', async () => {
 });
 
 test('task store idempotency', () => {
-  const store = createTaskStore();
+  const store = createTaskStore({ dbPath: ':memory:' });
   const t = store.create({ id: 't1', idempotency_key: 'abc', status: 'submitted' });
   assert.equal(store.getByIdempotency('abc').id, 't1');
   store.update('t1', { status: 'completed' });
   assert.equal(store.get('t1').status, 'completed');
   assert.ok(t);
+  store.close();
 });
 
 test('MCP allowlist blocks danger.shell', async () => {

@@ -21,8 +21,8 @@ Copy-Item .env.example .env   # first run only
 
 | Service | URL |
 |---------|-----|
-| WordPress | http://localhost:8900 |
-| Admin | http://localhost:8900/wp-admin |
+| WordPress | http://localhost:8890 |
+| Admin | http://localhost:8890/wp-admin |
 | phpMyAdmin | http://localhost:8082 |
 
 **Credentials:** `admin` / `NextGenAdmin!2026` (override in `.env`)

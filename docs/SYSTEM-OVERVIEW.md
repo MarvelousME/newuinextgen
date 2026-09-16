@@ -1,8 +1,9 @@
 # NextGen Tutors REVAMP — System Overview
 
-**Last updated:** 2026-07-06  
+**Last updated:** 2026-09-16  
 **Stack version:** Theme `BI_VERSION` 1.9.0 · Companion `NGC_VERSION` 1.9.0  
-**Local dev:** Docker WordPress @ http://localhost:8899
+**Local dev:** Docker WordPress @ http://localhost:8890  
+**Theme edit root:** `NextGenTutors-BeyondInfinity/` (brand TutorFabulous; text domain `beyondinfinity`) — see `THEME-TUTORFABULOUS.md`
 
 This document is the canonical **whole-system map** of the REVAMP monorepo: what each package does, how data flows, what is verified, and what remains partial.
 
@@ -14,7 +15,7 @@ NextGen Tutors is a **four-package WordPress solution** for a South African tuto
 
 | Package | Role |
 |---------|------|
-| **BeyondInfinity** (theme) | Presentation, page shells, design system, kinetic homepage, UI Library partials |
+| **BeyondInfinity / TutorFabulous** (theme) | Presentation, page shells, design system, kinetic homepage, UI Library partials. Edit root: `NextGenTutors-BeyondInfinity/` |
 | **Companion** (plugin) | Business logic, 44 custom DB tables, REST API, workflows, AI suite, integrations |
 | **Html-Importer** | One-time static HTML → WP pages (dry-run, rollback) |
 | **Plugin-Manager** | Operator console for stack plugin install (WooCommerce, Amelia, FluentCRM, etc.) |
@@ -36,23 +37,26 @@ NextGen Tutors is a **four-package WordPress solution** for a South African tuto
 ## 2. Repository layout
 
 ```
-REVAMP/
-├── NextGenTutors-BeyondInfinity/     # Theme (presentation)
+newuinextgen/
+├── NextGenTutors-BeyondInfinity/     # ONLY theme edit / package root (TutorFabulous brand)
 ├── NextGenTutors-Companion/          # Plugin (domain + API)
 ├── NextGenTutors-Html-Importer/      # Migration tool
 ├── NextGenTutors-Plugin-Manager/     # Fleet manager
-├── docker/                           # Local WP 6.7 + MySQL stack
+├── docker/                           # Local WP + MySQL (default :8890)
 ├── e2e/                              # Playwright workflow tests
 ├── scripts/                          # Repo tooling (audit, release, UI scan)
 ├── docs/                             # Documentation suite (this file)
+├── THEME-TUTORFABULOUS.md            # Theme identity + Docker mount policy
 ├── automations/                      # DEPRECATED AutomatorWP JSON
 ├── diagrams/                         # Enterprise SVG diagrams
-└── ARCHITECTURE.md                   # Four-package SOLID contract
+└── ARCHITECTURE.md                   # Package SOLID contract
 ```
+
+**Not a second edit root:** workspace-root `inc/`, `assets/`, `template-parts/`, … are Docker **live overlays** onto `themes/nextgentutors-tutorfabulous` (they win at runtime). Prefer collapsing into `NextGenTutors-BeyondInfinity/`; keep legacy slug `nextgentutors-beyondinfinity` as an alias mount only.
 
 ---
 
-## 3. Theme: BeyondInfinity
+## 3. Theme: BeyondInfinity / TutorFabulous
 
 ### 3.1 Bootstrap (`functions.php`)
 
@@ -199,7 +203,7 @@ php NextGenTutors-Companion/scripts/verify-ui-library.php
 # Workflow SVG → runtime gap report
 powershell -File scripts/run-flow-audit.ps1
 
-# Playwright E2E (requires Docker @ :8899)
+# Playwright E2E (requires Docker @ :8890)
 powershell -File scripts/run-playwright.ps1
 ```
 
@@ -263,8 +267,8 @@ Forms submit → `admin-post.php` → redirect `?ngc_submitted={form_id}`.
 cd docker
 Copy-Item .env.example .env
 .\start.ps1
-# → http://localhost:8899
-# Activate theme + companion via WP admin or scripts/activate-beyondinfinity.ps1
+# → http://localhost:8890
+# Activate theme: wp theme activate nextgentutors-tutorfabulous (legacy alias still mounted)
 ```
 
 Release build: `powershell -File scripts/build-release.ps1`  

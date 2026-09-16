@@ -6,7 +6,7 @@ One product, **six deployable packages** (plus ops consoles). Each package has a
 
 | Package | Folder | WordPress path | Responsibility |
 |---------|--------|----------------|----------------|
-| **BeyondInfinity** | `NextGenTutors-BeyondInfinity/` | `themes/nextgentutors-beyondinfinity` | Presentation: templates, design tokens, page defaults, theme workflows (fallback), `[bi_*]` / consumed `[ngc_*]` |
+| **BeyondInfinity / TutorFabulous** | `NextGenTutors-BeyondInfinity/` | `themes/nextgentutors-tutorfabulous` (+ legacy alias `nextgentutors-beyondinfinity`) | Presentation: templates, design tokens, page defaults, theme workflows (fallback), `[bi_*]` / consumed `[ngc_*]`. Brand TutorFabulous; text domain `beyondinfinity`. |
 | **Companion** | `NextGenTutors-Companion/` | `plugins/NextGenTutors-Companion` | Domain: data layer, CPTs, `[ngc_*]` shortcodes, `ngc/v1` REST, matching, bookings, AI suite, integrations |
 | **Beyond Measure** | `NextGenTutors-BeyondMeasure/` | `plugins/NextGenTutors-BeyondMeasure` | Control Plane admin OS: React SPA in `wp-admin`, RBAC matrix, metadata-driven CRUD, health/audit; does **not** own domain scoring/payments |
 | **AI-Integration** | `NextGenTutors-AI-Integration/` | `plugins/NextGenTutors-AI-Integration` | Transport/security/governance bridge for approved AI integrations. No Companion domain ownership and no direct LLM or model runtime. |
@@ -88,10 +88,16 @@ Presentation components with **data providers** — no hardcoded tutor/pricing/r
 
 ## Docker (local dev)
 
-All mounts point at **canonical folders** at repo root:
+Theme **edit root** is only `NextGenTutors-BeyondInfinity/`. Compose mounts that folder as:
+
+- `themes/nextgentutors-tutorfabulous` (primary — activate this)
+- `themes/nextgentutors-beyondinfinity` (legacy alias)
+
+Root `assets/`, `inc/`, `template-parts/`, … are **live overlays** on the primary mount (they win at runtime). Prefer collapsing into BeyondInfinity; keep the legacy slug. Details: `THEME-TUTORFABULOUS.md`. Default site port **8890**.
 
 ```yaml
-../NextGenTutors-BeyondInfinity  → themes/nextgentutors-beyondinfinity
+../NextGenTutors-BeyondInfinity  → themes/nextgentutors-tutorfabulous
+../NextGenTutors-BeyondInfinity  → themes/nextgentutors-beyondinfinity   # legacy alias
 ../NextGenTutors-Companion       → plugins/NextGenTutors-Companion
 ../NextGenTutors-BeyondMeasure   → plugins/NextGenTutors-BeyondMeasure
 ../NextGenTutors-AI-Integration  → plugins/NextGenTutors-AI-Integration
