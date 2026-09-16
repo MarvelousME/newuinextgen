@@ -1,9 +1,10 @@
 # NextGen Tutors REVAMP — System Overview
 
 **Last updated:** 2026-09-16  
-**Stack version:** Theme `BI_VERSION` 1.9.0 · Companion `NGC_VERSION` 1.9.0  
-**Local dev:** Docker WordPress @ http://localhost:8890  
-**Theme edit root:** `NextGenTutors-BeyondInfinity/` (brand TutorFabulous; text domain `beyondinfinity`) — see `THEME-TUTORFABULOUS.md`
+**Stack version:** Theme `BI_VERSION` **2.0.0** · Companion `NGC_VERSION` **1.9.19**  
+**Local dev:** Docker WordPress @ http://localhost:8890 · Agent Gateway :8787 · Ecosystem :8790 (overlay)  
+**Theme edit root:** `NextGenTutors-BeyondInfinity/` (brand TutorFabulous; text domain `beyondinfinity`) — see `THEME-TUTORFABULOUS.md`  
+**Long-form architecture:** [architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) · [CODEMAPS/INDEX.md](CODEMAPS/INDEX.md)
 
 This document is the canonical **whole-system map** of the REVAMP monorepo: what each package does, how data flows, what is verified, and what remains partial.
 
@@ -11,25 +12,29 @@ This document is the canonical **whole-system map** of the REVAMP monorepo: what
 
 ## 1. Executive summary
 
-NextGen Tutors is a **four-package WordPress solution** for a South African tutoring marketplace:
+NextGen Tutors is a **WordPress modular-monolith solution** (theme + Companion + ops plugins + sidecars) for a South African tutoring marketplace:
 
 | Package | Role |
 |---------|------|
 | **BeyondInfinity / TutorFabulous** (theme) | Presentation, page shells, design system, kinetic homepage, UI Library partials. Edit root: `NextGenTutors-BeyondInfinity/` |
-| **Companion** (plugin) | Business logic, 44 custom DB tables, REST API, workflows, AI suite, integrations |
+| **Companion** (plugin) | Business logic, `wp_ngc_*` tables, REST, workflows, AI suite, agents, Policy Bridge |
+| **AI-Integration** | Governed AI transport (no domain ownership) |
+| **BeyondMeasure** | Admin control-plane SPA (no scoring/payments ownership) |
 | **Html-Importer** | One-time static HTML → WP pages (dry-run, rollback) |
 | **Plugin-Manager** | Operator console for stack plugin install (WooCommerce, Amelia, FluentCRM, etc.) |
+| **Agent Gateway** | Node sidecar `:8787` — durable tasks + allowlisted MCP |
+| **RAD** | Architecture discover / validate / gate in CI |
 
-**Architecture principle:** Theme renders; Companion owns data. No tutor names, prices, ratings, or dashboard KPIs are hardcoded in UI Library partials — they flow through **data providers** (`NGC_UI_*_Data_Provider`).
+**Architecture principle:** Theme renders; Companion owns data. Privileged mutations go through **Policy Bridge**. No tutor names, prices, ratings, or dashboard KPIs are hardcoded in UI Library partials — they flow through **data providers** (`NGC_UI_*_Data_Provider`).
 
-**Verification status (2026-07-06):**
+**Verification status (2026-09-16):**
 
 | Layer | Status |
 |-------|--------|
-| PHP lint + companion `validate.php` | PASS |
-| UI Library hardcode scan | PASS (28 files) |
+| Companion `tests/run.php` (incl. Policy Bridge / vault) | PASS (120 OK last run) |
+| RAD validate + gate | PASS |
+| UI Library hardcode scan | PASS (historical) |
 | Playwright E2E | 28 blueprint-aligned tests (8 specs) |
-| Flow audit (25 SVG workflows) | 8+ full · partial reduced via WF-09 + integrate specs |
 | Live production UAT | Environment-dependent |
 
 ---
@@ -39,16 +44,20 @@ NextGen Tutors is a **four-package WordPress solution** for a South African tuto
 ```
 newuinextgen/
 ├── NextGenTutors-BeyondInfinity/     # ONLY theme edit / package root (TutorFabulous brand)
-├── NextGenTutors-Companion/          # Plugin (domain + API)
+├── NextGenTutors-Companion/          # Plugin (domain + API + agents)
+├── NextGenTutors-AI-Integration/     # AI transport governance
+├── NextGenTutors-BeyondMeasure/      # Admin control-plane SPA
 ├── NextGenTutors-Html-Importer/      # Migration tool
 ├── NextGenTutors-Plugin-Manager/     # Fleet manager
+├── services/ngt-agent-gateway/       # Node A2A + MCP (:8787)
+├── rad-platform/                     # discover → validate → gate
+├── architecture/                     # Sacred contracts + inventories
 ├── docker/                           # Local WP + MySQL (default :8890)
 ├── e2e/                              # Playwright workflow tests
 ├── scripts/                          # Repo tooling (audit, release, UI scan)
 ├── docs/                             # Documentation suite (this file)
+├── content-enhancement/              # FEEDSTOCK — do not activate
 ├── THEME-TUTORFABULOUS.md            # Theme identity + Docker mount policy
-├── automations/                      # DEPRECATED AutomatorWP JSON
-├── diagrams/                         # Enterprise SVG diagrams
 └── ARCHITECTURE.md                   # Package SOLID contract
 ```
 
@@ -112,32 +121,56 @@ Registry: `content/page-map.json` + `inc/pages-registry.php` + `inc/defaults/{sl
 
 ### 4.1 Bootstrap
 
-`nextgencompanion.php` → PSR-4 autoload → `NGC_Loader` → `NGC_Plugin_Bootstrap` loads **52 modules** on `plugins_loaded`.
+`nextgencompanion.php` → PSR-4-style autoload (`NGC_*` / `BIA_*`) → plugin loader on `plugins_loaded`.
 
-### 4.2 Data layer
+**Internal module registry** (`NGC_Module_Registry`) lazy-boots:
+
+| Module id | Path | Notes |
+|-----------|------|-------|
+| `matching` | `includes/matching/` | Policy Bridge: `matching.propose` |
+| `payments` | `includes/payments/` | Policy Bridge: `payment.authorize` |
+| `ai` | `includes/ai/` | BYOK suite |
+| `integrations` | `includes/integrations/` | PayFast, adapters |
+| `platform` | `includes/platform/` | Capability Registry, Policy Bridge, Authz, Observability |
+
+Bookings remain a core class (`class-ngc-bookings.php`) with Policy Bridge on `booking.create`.
+
+### 4.2 Platform kernel (security & observability)
+
+| Class | Role |
+|-------|------|
+| `NGC_Policy_Bridge` | Capability authorize — default **DENY** |
+| `NGC_Authz_Matrix` | Capability → permission audit |
+| `NGC_Secret_Vault` | `env:NAME` refs + encrypted option vault |
+| `NGC_Platform_Observability` | `traceparent` + `export_span()` / `ngc_otel_span` when OTLP endpoint set |
+
+Debt status: [architecture/current-state/TECHNICAL-DEBT-REGISTER.md](../architecture/current-state/TECHNICAL-DEBT-REGISTER.md).
+
+### 4.3 Data layer
 
 **44 tables** (`wp_ngc_*`): matches, bookings, invoices, wallet, reviews, audit, workflow_runs, page_sections, studio_*, gamification_*, child_learners, analytics, etc.
 
 **CPTs:** `tutors`, `testimonials`, `resources`  
 **Taxonomies:** `subject`, `province`, `grade`, `learning_format`
 
-### 4.3 Core subsystems
+### 4.4 Core subsystems
 
 | Subsystem | Classes | Responsibility |
 |-----------|---------|----------------|
 | Registration | `NGC_Registration`, `NGC_Forms`, `NGC_Child_Learners` | Parent/student/tutor forms → `admin-post.php` |
-| Matching | `NGC_Matching`, `NGC_Smart_Matching` | WF-08 manual assign; WF-09 scoring only (auto-assign deferred) |
-| Bookings | `NGC_Bookings`, `NGC_Amelia` | Session lifecycle, Amelia sync |
-| Finance | `NGC_Payments`, `NGC_Invoices`, `NGC_Wallet` | Payouts WF-16, invoices WF-12 |
+| Matching | `NGC_Matching`, `NGC_Smart_Matching` | Propose/score; Policy Bridge on propose; auto-accept when enabled |
+| Bookings | `NGC_Bookings`, Amelia adapter | Session lifecycle; Policy Bridge on create |
+| Finance | `NGC_Payments`, `NGC_Invoices`, `NGC_Wallet`, PayFast | Settle via Policy Bridge; ITN `trusted_system` |
 | Reviews | `NGC_Reviews` | Parent ratings → `ngc_reviews` table |
 | Section CMS | `NGC_Section_CMS` | 11 homepage blocks in `ngc_page_sections` |
 | Workflows | `NGC_Workflow_Orchestrator`, `NGC_Workflows` | Event dispatch, integrate pack |
 | Studio | `NGC_Studio_*` | Visual workflow builder, forms, emails, dashboards |
 | AI Suite | `NGC_AI_*`, `BIA_*` | BYOK multi-model chat, agents, diagnostics |
+| Agents | `NGC_Agent_Control_Plane`, Tool Gateway | 16 registry agents → Gateway |
 | Gamification | `NGC_Gamification` | GamiPress bridge, achievements, leaderboards |
 | UI Library | `NGC_UI_Library`, providers, import admin | Data providers + Import & Merge |
 
-### 4.4 REST API
+### 4.5 REST API
 
 Namespace **`ngc/v1`** (mirrored to legacy **`ngt/v1`**).
 
@@ -145,13 +178,13 @@ Major groups: dashboards, matches, bookings, wallet/invoices, reviews, admin tut
 
 Public calendar: **`nextgen/v1/tutors/{id}/calendar`**.
 
-### 4.5 Shortcodes (12 core)
+### 4.6 Shortcodes (12 core)
 
 `ngc_find_tutor_form`, `ngc_become_tutor_form`, `ngc_contact_support_form`, `ngc_parent_register_child_form`, `ngc_student_register_form`, `ngc_login_form`, `ngc_forgot_password_form`, `ngc_parent_dashboard`, `ngc_student_dashboard`, `ngc_tutor_dashboard`, `ngc_admin_dashboard`, `nextgen_tutor_calendar`
 
 Plus: `ng_ui_component`, `ngc_tutor_carousel`, Studio forms/dashboards.
 
-### 4.6 UI Library data providers
+### 4.7 UI Library data providers
 
 | Provider | Source |
 |----------|--------|
@@ -234,15 +267,17 @@ Forms submit → `admin-post.php` → redirect `?ngc_submitted={form_id}`.
 
 | Document | Purpose |
 |----------|---------|
-| `ARCHITECTURE.md` | Four-package SOLID contract |
+| `ARCHITECTURE.md` | Multi-package SOLID contract |
 | `docs/SYSTEM-OVERVIEW.md` | **This file** — whole-system map |
-| `docs/CODE-REVIEW-2026-07-06.md` | Latest review findings + fixes |
+| `docs/architecture/SYSTEM-ARCHITECTURE-REFERENCE.md` | Long-form architecture reference |
+| `docs/CODEMAPS/INDEX.md` | Codemaps from live code |
+| `architecture/current-state/*` | Debt, capabilities, ownership, risks |
 | `docs/NEXT-STEPS.md` | Prioritized backlog |
 | `docs/ui-library/` | UI extraction, page matrix, verification |
 | `docs/workflows/` | Workflow catalog + gap report |
 | `docs/apis/openapi-nextgen.yaml` | REST OpenAPI |
-| `NextGenTutors-BeyondInfinity/PAGES-AUDIT-REPORT.md` | Page touchpoint matrix |
-| `NextGenTutors-BeyondInfinity/COMPARE-DIFFERENCES.md` | Legacy theme merge notes |
+| `docs/GUIDES/AGENTIC-HOW-TO-USE.md` | Agents / MCP / gateway runbook |
+| `content-enhancement/README.md` | Feedstock reject list (do not activate) |
 
 ---
 
