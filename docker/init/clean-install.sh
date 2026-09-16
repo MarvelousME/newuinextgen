@@ -88,9 +88,10 @@ if [ -n "$IMP" ]; then
 fi
 
 THEME="$(pick_zip 'NextGenTutors-BeyondInfinity-v*.zip')"
-log "Installing child theme $THEME"
+log "Installing child theme $THEME (branded NextgenTutors-TutorFabulous)"
 wp theme install "$THEME" --force --path="$WP_PATH" --allow-root
-wp theme activate nextgentutors-beyondinfinity --path="$WP_PATH" --allow-root 2>/dev/null \
+wp theme activate nextgentutors-tutorfabulous --path="$WP_PATH" --allow-root 2>/dev/null \
+  || wp theme activate nextgentutors-beyondinfinity --path="$WP_PATH" --allow-root 2>/dev/null \
   || wp theme activate NextGenTutors-BeyondInfinity --path="$WP_PATH" --allow-root
 
 if [ -f "${PKG}/drop-ins/ngt-ui-library.zip" ]; then

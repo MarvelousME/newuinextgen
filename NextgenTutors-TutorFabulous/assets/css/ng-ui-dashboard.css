@@ -1,0 +1,21 @@
+.ng-ui-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--ng-space-4);
+}
+.ng-ui-kpi {
+  padding: var(--ng-space-5);
+  border-radius: var(--ng-radius-md);
+  background: var(--ng-color-surface);
+  border: 1px solid var(--ng-color-border);
+}
+.ng-ui-kpi__value {
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-text-2xl);
+  font-weight: var(--ng-weight-bold);
+  color: var(--ng-color-primary);
+}
+.ng-ui-kpi__label {
+  font-size: var(--ng-text-sm);
+  color: var(--ng-color-muted);
+}

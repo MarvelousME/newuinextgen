@@ -29,7 +29,7 @@ bi_hero(
         <a href="<?php echo esc_url( bi_whatsapp_url() ); ?>" class="ngt-btn ngt-btn--white" data-testid="bi-contact-whatsapp" style="margin-top:20px" target="_blank" rel="noopener"><?php esc_html_e( 'WhatsApp Us', 'beyondinfinity' ); ?></a>
       </div>
       <div>
-        <?php bi_shortcode_block( '[ngc_contact_support_form]', __( 'Send a message', 'beyondinfinity' ) ); ?>
+        <?php bi_shortcode_block( '[ngc_contact_support_form]', __( 'Send a message', 'beyondinfinity' ), '', __( 'Tell us how we can help — bookings, payments, or tutor questions. We typically reply within one business day.', 'beyondinfinity' ) ); ?>
       </div>
     </div>
   </div>

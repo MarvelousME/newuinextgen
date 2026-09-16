@@ -1,0 +1,234 @@
+/**
+ * Home 2 / Home 3D cinematic skin.
+ * Scoped to body.ngt-home-3d-preview only — live front page untouched.
+ *
+ * Palette + photography from 3D Scroll lab (navy/cyan + assets/images pack).
+ */
+
+body.ngt-home-3d-preview {
+  --ngi-navy: #07172f;
+  --ngi-midnight: #031126;
+  --ngi-blue: #123c7c;
+  --ngi-cyan: #28c7f7;
+  --ngi-gold: #ffb703;
+  --ngi-soft: #0b1524;
+  --ngi-white: #e8f3ff;
+  --ngi-text: #e6edf7;
+  --ngi-muted: #9fb0c7;
+  --ngi-line: #24344f;
+  --ngi-shadow: 0 28px 80px rgba(3, 17, 38, 0.45);
+  --ngt-bg: #07172f;
+  --ngt-text: #e6edf7;
+  --ngt-text-2: #9fb0c7;
+  --ngt-secondary: #28c7f7;
+  --ngt-accent: #ffb703;
+  --home3d-hero: none;
+  --home3d-video: none;
+  --home3d-about: none;
+  --home3d-become: none;
+  --home3d-pricing: none;
+  --home3d-cta: none;
+  --home3d-guarantee: none;
+  color-scheme: dark;
+  background:
+    radial-gradient(1200px 600px at 12% -10%, rgba(40, 199, 247, 0.16), transparent 55%),
+    radial-gradient(900px 500px at 88% 8%, rgba(255, 183, 3, 0.08), transparent 50%),
+    linear-gradient(180deg, #031126 0%, #07172f 42%, #0b1524 100%);
+  color: var(--ngi-text);
+}
+
+body.ngt-home-3d-preview .ngt-home-3d-preview__banner {
+  background: linear-gradient(90deg, #031126, #092746 45%, #1a5594);
+  color: #e8f3ff;
+  border-bottom: 1px solid rgba(40, 199, 247, 0.4);
+  letter-spacing: 0.02em;
+}
+
+body.ngt-home-3d-preview .ngt-home-3d-preview__banner strong {
+  color: #28c7f7;
+  font-weight: 700;
+}
+
+/* Hero — full-bleed photo plane from 3D media pack */
+body.ngt-home-3d-preview #hero.ngi-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: min(92vh, 920px);
+  background-color: #031126;
+}
+
+body.ngt-home-3d-preview #hero.ngi-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(115deg, rgba(3, 17, 38, 0.88) 8%, rgba(7, 23, 47, 0.55) 48%, rgba(3, 17, 38, 0.35) 100%),
+    var(--home3d-hero);
+  background-size: cover;
+  background-position: center 28%;
+  transform: scale(1.04);
+}
+
+body.ngt-home-3d-preview #hero .ngi-wrap,
+body.ngt-home-3d-preview #hero .ngi-hero-grid,
+body.ngt-home-3d-preview #hero .ngi-kh-mesh {
+  position: relative;
+  z-index: 1;
+}
+
+body.ngt-home-3d-preview #hero .ngi-title {
+  color: #f4f8ff;
+  text-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+body.ngt-home-3d-preview #hero .ngi-accent {
+  color: #28c7f7;
+}
+
+body.ngt-home-3d-preview #hero .ngi-lead,
+body.ngt-home-3d-preview #hero .ngi-badge {
+  color: #c9d7ea;
+}
+
+body.ngt-home-3d-preview #hero .ngi-btn-primary {
+  background: linear-gradient(135deg, #28c7f7, #1a8fc4);
+  color: #031126;
+  border: 0;
+  box-shadow: 0 12px 32px rgba(40, 199, 247, 0.35);
+}
+
+body.ngt-home-3d-preview #hero .ngi-btn-secondary {
+  border-color: rgba(232, 243, 255, 0.35);
+  color: #e8f3ff;
+  background: rgba(7, 23, 47, 0.35);
+  backdrop-filter: blur(10px);
+}
+
+/* Section rhythm on dark canvas */
+body.ngt-home-3d-preview .ngi-section,
+body.ngt-home-3d-preview .ngi-section.ngi-alt {
+  background: transparent;
+  color: var(--ngi-text);
+}
+
+body.ngt-home-3d-preview .ngi-section.ngi-alt {
+  background: linear-gradient(180deg, rgba(16, 29, 51, 0.72), rgba(11, 21, 36, 0.55));
+}
+
+body.ngt-home-3d-preview .ngi-heading,
+body.ngt-home-3d-preview .ngi-eyebrow {
+  color: #f0f6ff;
+}
+
+body.ngt-home-3d-preview .ngi-subtitle,
+body.ngt-home-3d-preview .ngi-muted,
+body.ngt-home-3d-preview .ngi-lead {
+  color: var(--ngi-muted);
+}
+
+body.ngt-home-3d-preview .ngi-card,
+body.ngt-home-3d-preview .ngi-step,
+body.ngt-home-3d-preview .ngi-panel,
+body.ngt-home-3d-preview .price-card,
+body.ngt-home-3d-preview .ngi-faq-item {
+  background: rgba(16, 29, 51, 0.82);
+  border: 1px solid rgba(40, 199, 247, 0.16);
+  box-shadow: var(--ngi-shadow);
+  color: var(--ngi-text);
+}
+
+/* Video story — photo plate */
+body.ngt-home-3d-preview #video-story.bi-cinematic-band {
+  background-image:
+    linear-gradient(180deg, rgba(3, 17, 38, 0.75), rgba(7, 23, 47, 0.82)),
+    var(--home3d-video);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Highlights / proof */
+body.ngt-home-3d-preview #platform-highlights,
+body.ngt-home-3d-preview #learning-proof {
+  background-image:
+    linear-gradient(120deg, rgba(7, 23, 47, 0.92), rgba(18, 60, 124, 0.55)),
+    var(--home3d-about);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Pathways */
+body.ngt-home-3d-preview #cursor-reveal {
+  background-image:
+    linear-gradient(160deg, rgba(3, 17, 38, 0.9) 20%, rgba(7, 23, 47, 0.7)),
+    var(--home3d-become);
+  background-size: cover;
+  background-position: center right;
+}
+
+/* Pricing depth */
+body.ngt-home-3d-preview #pricing {
+  background-image:
+    linear-gradient(180deg, rgba(3, 17, 38, 0.88), rgba(11, 21, 36, 0.92)),
+    var(--home3d-pricing);
+  background-size: cover;
+  background-position: center;
+}
+
+/* CTA parallax plate */
+body.ngt-home-3d-preview #cta.bi-parallax-cta,
+body.ngt-home-3d-preview #cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+body.ngt-home-3d-preview #cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(100deg, rgba(3, 17, 38, 0.9), rgba(26, 85, 148, 0.55)),
+    var(--home3d-cta);
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.08);
+}
+
+body.ngt-home-3d-preview #cta .ngi-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+body.ngt-home-3d-preview #cta .ngi-cta {
+  background: rgba(7, 23, 47, 0.55);
+  border: 1px solid rgba(40, 199, 247, 0.28);
+  backdrop-filter: blur(14px);
+}
+
+/* Filmstrip breathing room on dark */
+body.ngt-home-3d-preview .ngi-home-3d-filmstrip {
+  background: linear-gradient(180deg, rgba(3, 17, 38, 0.4), rgba(16, 29, 51, 0.85));
+}
+
+body.ngt-home-3d-preview .ngtfs {
+  --ngtfs-bg: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.ngt-home-3d-preview #hero.ngi-hero::before,
+  body.ngt-home-3d-preview #cta::before {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  body.ngt-home-3d-preview #hero.ngi-hero {
+    min-height: auto;
+  }
+
+  body.ngt-home-3d-preview #hero.ngi-hero::before {
+    background-position: center top;
+  }
+}

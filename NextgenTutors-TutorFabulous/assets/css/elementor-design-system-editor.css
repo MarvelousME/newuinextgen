@@ -1,0 +1,12 @@
+/**
+ * Elementor editor panel hints for NextGen Tutors category.
+ */
+
+.elementor-panel .elementor-element[data-widget_type^="bi_el_"] .icon {
+  color: #059669;
+}
+
+.elementor-editor-active .bi-el__empty {
+  border: 1px dashed #059669;
+  border-radius: 8px;
+}

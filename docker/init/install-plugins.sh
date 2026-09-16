@@ -50,6 +50,8 @@ activate_plugin "nextgen-automation-hub/nextgen-automation-hub" "nextgen-automat
 activate_plugin "nextgen-subjects-widget/nextgen-subjects-widget" "nextgen-subjects-widget/nextgen-subjects-widget.php" 2>/dev/null || log "INFO: Subjects Widget optional — mount ../nextgen-subjects-widget"
 activate_plugin "nextgen-3d-filmstrip/nextgen-3d-filmstrip" "nextgen-3d-filmstrip/nextgen-3d-filmstrip.php" 2>/dev/null || log "INFO: 3D Filmstrip optional — mount ../nextgen-3d-filmstrip"
 
+activate_plugin "nextgen-3d-scroll-manager/nextgen-3d-scroll-manager" "nextgen-3d-scroll-manager/nextgen-3d-scroll-manager.php" 2>/dev/null || log "INFO: NGT3D Scroll Manager — mount ../nextgen-3d-scroll-manager"
+
 activate_plugin "nextgen-command-center/nextgen-command-center" "nextgen-command-center/nextgen-command-center.php" 2>/dev/null || log "INFO: Command Center optional — mount content/_extracted/nextgen-command-center-v1.0"
 activate_plugin "nextgen-completion-suite/nextgen-completion-suite" "nextgen-completion-suite/nextgen-completion-suite.php" 2>/dev/null || log "INFO: Completion Suite optional — mount content/_extracted/nextgen-completion-suite"
 

@@ -1,0 +1,33 @@
+/* ===== FLOAT ANIMATION (Hero Elements) ===== */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* ===== PULSE GLOW ===== */
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+  50% { box-shadow: 0 0 0 20px rgba(99, 102, 241, 0); }
+}
+
+/* ===== MARQUEE SCROLL (Horizontal Text) ===== */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  mask: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+}
+.marquee-track {
+  display: flex;
+  animation: marqueeScroll 20s linear infinite;
+}
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

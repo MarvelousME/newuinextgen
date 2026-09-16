@@ -87,7 +87,7 @@ bi_hero(
           </div>
         <?php endif; ?>
 
-        <?php bi_shortcode_block( '[ngc_login_form]', __( 'Sign In', 'beyondinfinity' ) ); ?>
+        <?php bi_shortcode_block( '[ngc_login_form]', __( 'Sign In', 'beyondinfinity' ), '', __( 'Use your NextGen account email and password. After sign-in you are routed to the dashboard that matches your role.', 'beyondinfinity' ) ); ?>
 
         <p class="bi-login__switch">
           <?php

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Canonical page body — home
  * Migrated from inc/defaults-production/home.php (live data / shortcodes / kinetic).

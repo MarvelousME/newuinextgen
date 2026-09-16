@@ -1,0 +1,519 @@
+﻿/**
+ * BeyondInfinity motion pack - combined from motion/01-09 (Phase 5 consolidation).
+ * Source files kept for reference; edit them and re-concatenate, or edit here.
+ */
+
+/* ==== 01-base.css ==== */
+/* ===== GPU ACCELERATION & BASE ===== */
+.framer-motion {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .framer-motion,
+  .framer-motion * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== EASING FUNCTIONS (Framer-like springs) ===== */
+:root {
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+/* ==== 02-entrance.css ==== */
+/* ===== FADE IN ===== */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s var(--ease-smooth) forwards;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ===== SLIDE UP/DOWN/LEFT/RIGHT ===== */
+.slide-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUp 0.7s var(--ease-spring) forwards;
+}
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-down {
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: slideDown 0.7s var(--ease-spring) forwards;
+}
+@keyframes slideDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-left {
+  opacity: 0;
+  transform: translateX(30px);
+  animation: slideLeft 0.7s var(--ease-spring) forwards;
+}
+@keyframes slideLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-right {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: slideRight 0.7s var(--ease-spring) forwards;
+}
+@keyframes slideRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== SCALE IN ===== */
+.scale-in {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: scaleIn 0.5s var(--ease-spring) forwards;
+}
+@keyframes scaleIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== ZOOM BLUR (Framer-style) ===== */
+.zoom-blur-in {
+  opacity: 0;
+  transform: scale(0.8);
+  filter: blur(10px);
+  animation: zoomBlurIn 0.8s var(--ease-smooth) forwards;
+}
+@keyframes zoomBlurIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+/* ===== ROTATE FADE ===== */
+.rotate-fade-in {
+  opacity: 0;
+  transform: rotate(-5deg) scale(0.95);
+  animation: rotateFadeIn 0.6s var(--ease-elastic) forwards;
+}
+@keyframes rotateFadeIn {
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+/* ==== 03-sections.css ==== */
+/* ===== FRAME CONTAINER (Centered, Max-Width) ===== */
+.framer-frame {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ===== GRID LAYOUT WITH GAP ===== */
+.framer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* ===== STACKED FRAMES (Z-Index Layers) ===== */
+.frame-stack {
+  position: relative;
+}
+.frame-stack > * {
+  position: relative;
+  z-index: 1;
+}
+.frame-stack > *:nth-child(2) { z-index: 2; margin-top: -40px; }
+.frame-stack > *:nth-child(3) { z-index: 3; margin-top: -40px; }
+
+/* ===== MASK REVEAL ANIMATION ===== */
+.mask-reveal {
+  position: relative;
+  overflow: hidden;
+}
+.mask-reveal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: scaleX(1);
+  transform-origin: right;
+  transition: transform 0.8s var(--ease-smooth);
+  z-index: 10;
+}
+.mask-reveal.revealed::before,
+.mask-reveal:hover::before {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+/* ==== 04-hover.css ==== */
+/* ===== HOVER LIFT (Card Effect) ===== */
+.hover-lift {
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+}
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* ===== HOVER GLOW ===== */
+.hover-glow {
+  position: relative;
+  transition: box-shadow 0.3s var(--ease-smooth);
+}
+.hover-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-smooth);
+  pointer-events: none;
+}
+.hover-glow:hover::after {
+  opacity: 1;
+}
+
+/* ===== HOVER SCALE + ROTATE ===== */
+.hover-spin {
+  transition: transform 0.4s var(--ease-elastic);
+}
+.hover-spin:hover {
+  transform: scale(1.1) rotate(3deg);
+}
+
+/* ===== BUTTON RIPPLE (Pure CSS) ===== */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.btn-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease-out, height 0.6s ease-out;
+}
+.btn-ripple:active::before {
+  width: 300px;
+  height: 300px;
+}
+/* ==== 05-parallax.css ==== */
+/* ===== FIXED BACKGROUND PARALLAX ===== */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  will-change: background-position;
+}
+
+/* ===== 3D PARALLAX LAYERS ===== */
+.parallax-container {
+  perspective: 1px;
+  transform-style: preserve-3d;
+  min-height: 100vh;
+}
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(-1px) scale(2);
+  z-index: -1;
+}
+.parallax-layer.slow {
+  transform: translateZ(-0.5px) scale(1.5);
+}
+.parallax-layer.fast {
+  transform: translateZ(-2px) scale(3);
+}
+
+/* ===== SCROLL-TRIGGERED PARALLAX (CSS Scroll Timeline - Experimental) ===== */
+/* Works in Chrome 115+ with flag: chrome://flags/#enable-experimental-web-platform-features */
+@supports (animation-timeline: scroll()) {
+  .parallax-scroll {
+    animation: parallaxMove linear;
+    animation-timeline: scroll(root);
+    animation-range: entry 0% cover 50%;
+  }
+  @keyframes parallaxMove {
+    from { background-position-y: 0%; }
+    to { background-position-y: 30%; }
+  }
+}
+/* ==== 06-responsive.css ==== */
+/* ===== DISABLE HEAVY ANIMS ON MOBILE ===== */
+@media (max-width: 768px) {
+  .no-mobile-anim {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  
+  /* Reduce parallax intensity */
+  .parallax-bg {
+    background-attachment: scroll !important;
+  }
+}
+
+/* ===== TOUCH-FRIENDLY HOVER FALLBACKS ===== */
+@media (hover: none) {
+  .hover-lift:hover,
+  .hover-glow:hover,
+  .hover-spin:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+/* ==== 07-stagger.css ==== */
+/* ===== STAGGER CONTAINER ===== */
+.stagger-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.stagger-container > * {
+  opacity: 0; /* Hidden initially */
+}
+
+/* Apply these to children with incremental delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+.stagger-7 { animation-delay: 0.7s; }
+.stagger-8 { animation-delay: 0.8s; }
+.stagger-9 { animation-delay: 0.9s; }
+.stagger-10 { animation-delay: 1s; }
+
+/* ===== AUTO-STAGGER WITH CSS COUNTERS (Advanced) ===== */
+.stagger-auto {
+  counter-reset: stagger;
+}
+.stagger-auto > * {
+  counter-increment: stagger;
+  opacity: 0;
+  animation: fadeIn 0.5s var(--ease-smooth) forwards;
+  animation-delay: calc(0.1s * var(--stagger-offset, 1) * counter(stagger));
+}
+/* Usage: Add --stagger-offset: 2; inline for slower pacing */
+/* ==== 08-subtle.css ==== */
+/* ===== FLOAT ANIMATION (Hero Elements) ===== */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* ===== PULSE GLOW ===== */
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+  50% { box-shadow: 0 0 0 20px rgba(99, 102, 241, 0); }
+}
+
+/* ===== MARQUEE SCROLL (Horizontal Text) ===== */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  mask: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+}
+.marquee-track {
+  display: flex;
+  animation: marqueeScroll 20s linear infinite;
+}
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+/* ==== 09-theme-bridge.css ==== */
+/**
+ * BeyondInfinity bridge â€” Framer-style motion + NextGen brand tokens.
+ */
+
+:root {
+  --bi-motion-glow-1: var(--ngt-primary, #0066cc);
+  --bi-motion-glow-2: var(--ngt-secondary, #00c896);
+  --bi-motion-glow-3: var(--ngt-accent, #ffb703);
+}
+
+/* Brand-aligned hover glow */
+.hover-glow::after {
+  background: linear-gradient(135deg, var(--bi-motion-glow-1), var(--bi-motion-glow-2), var(--bi-motion-glow-3));
+}
+
+.pulse-glow {
+  animation-name: biPulseGlow;
+}
+@keyframes biPulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--bi-motion-glow-1) 40%, transparent); }
+  50% { box-shadow: 0 0 0 20px color-mix(in srgb, var(--bi-motion-glow-1) 0%, transparent); }
+}
+
+/* Theme cards â€” lift without scale (avoids conflict with legacy tilt JS) */
+.bi-motion-enabled .bi-theme-content .ngt-card,
+.bi-motion-enabled .bi-theme-content .ngt-pricing-card,
+.bi-motion-enabled .bi-theme-content .bi-stat-card,
+.bi-motion-enabled .bi-theme-content .bi-dir-card {
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+}
+.bi-motion-enabled .bi-theme-content .ngt-card:hover,
+.bi-motion-enabled .bi-theme-content .ngt-pricing-card:hover,
+.bi-motion-enabled .bi-theme-content .bi-stat-card:hover,
+.bi-motion-enabled .bi-theme-content .bi-dir-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Primary buttons */
+.bi-motion-enabled .ngt-btn--primary,
+.bi-motion-enabled .ngi-btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero parallax background */
+.bi-hero .ngt-hero__bg.bi-hero__bg--image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.bi-hero .ngt-hero__bg.bi-hero__bg--image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(9, 39, 70, 0.88), rgba(0, 102, 204, 0.72));
+}
+.bi-hero--guarantee .ngt-hero__bg.bi-hero__bg--image::after {
+  background: linear-gradient(135deg, rgba(9, 39, 70, 0.92), rgba(0, 80, 160, 0.78));
+}
+
+/* Scroll-triggered motion (JS adds .is-motion-in) */
+[data-bi-motion]:not(.is-motion-in) {
+  opacity: 0;
+}
+[data-bi-motion="fade-in"]:not(.is-motion-in) { animation: none; opacity: 0; }
+[data-bi-motion="fade-in"].is-motion-in { animation: fadeIn 0.6s var(--ease-smooth) forwards; }
+[data-bi-motion="slide-up"]:not(.is-motion-in) { transform: translateY(30px); }
+[data-bi-motion="slide-up"].is-motion-in { animation: slideUp 0.7s var(--ease-spring) forwards; }
+[data-bi-motion="slide-left"]:not(.is-motion-in) { transform: translateX(30px); }
+[data-bi-motion="slide-left"].is-motion-in { animation: slideLeft 0.7s var(--ease-spring) forwards; }
+[data-bi-motion="scale-in"]:not(.is-motion-in) { transform: scale(0.94); }
+[data-bi-motion="scale-in"].is-motion-in { animation: scaleIn 0.5s var(--ease-spring) forwards; }
+[data-bi-motion="zoom-blur-in"]:not(.is-motion-in) { transform: scale(0.92); filter: blur(8px); }
+[data-bi-motion="zoom-blur-in"].is-motion-in { animation: zoomBlurIn 0.8s var(--ease-smooth) forwards; }
+
+/* Framer frame on theme sections */
+.bi-theme-content .framer-frame {
+  padding: 0 24px;
+}
+.bi-theme-content .ngt-section .framer-grid {
+  align-items: stretch;
+}
+
+/* Parallax CTA band */
+.bi-parallax-cta {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  padding: 96px 24px;
+}
+.bi-parallax-cta__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.bi-parallax-cta__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(9, 39, 70, 0.85), rgba(0, 102, 204, 0.75));
+  z-index: 1;
+}
+.bi-parallax-cta__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.bi-parallax-cta h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* Theme image blocks */
+.bi-theme-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 260px;
+}
+.bi-theme-image-wrap {
+  overflow: hidden;
+  border-radius: var(--ngt-radius-lg, 12px);
+}
+.bi-theme-image-wrap.mask-reveal .bi-theme-image {
+  min-height: 280px;
+}
+
+/* Video tile background on kinetic home */
+.ngi-video-tile.bi-video-tile--image {
+  background-size: cover;
+  background-position: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-bi-motion] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}

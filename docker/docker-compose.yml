@@ -77,13 +77,13 @@ services:
       - wp_data:/var/www/html
       - ./hello-elementor:/var/www/html/wp-content/themes/hello-elementor
 
-      # Theme edit root: NextGenTutors-BeyondInfinity/ (brand TutorFabulous; text domain beyondinfinity).
-      # Legacy stylesheet alias — same package; no root overlays on this path.
+      # Traditional default edit root: NextgenTutors-TutorFabulous/ (text domain beyondinfinity).
+      # Legacy BeyondInfinity package — alias slug only.
       - ../NextGenTutors-BeyondInfinity:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity
       # Primary stylesheet mount (activate nextgentutors-tutorfabulous).
-      - ../NextGenTutors-BeyondInfinity:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous
+      - ../NextgenTutors-TutorFabulous:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous
       # Live overlays from monorepo root — WIN over package paths below (Linux cannot follow Windows junctions).
-      # Prefer collapsing into BeyondInfinity; keep dual slug mounts. See THEME-TUTORFABULOUS.md.
+      # Prefer complete TutorFabulous package; keep dual slug mounts. See THEME-TUTORFABULOUS.md.
       - ../assets:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/assets
       - ../inc:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/inc
       - ../templates:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/templates
@@ -141,13 +141,13 @@ services:
       - wp_data:/var/www/html
       - ./hello-elementor:/var/www/html/wp-content/themes/hello-elementor
 
-      # Theme edit root: NextGenTutors-BeyondInfinity/ (brand TutorFabulous; text domain beyondinfinity).
-      # Legacy stylesheet alias — same package; no root overlays on this path.
+      # Traditional default edit root: NextgenTutors-TutorFabulous/ (text domain beyondinfinity).
+      # Legacy BeyondInfinity package — alias slug only.
       - ../NextGenTutors-BeyondInfinity:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity
       # Primary stylesheet mount (activate nextgentutors-tutorfabulous).
-      - ../NextGenTutors-BeyondInfinity:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous
+      - ../NextgenTutors-TutorFabulous:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous
       # Live overlays from monorepo root — WIN over package paths below (Linux cannot follow Windows junctions).
-      # Prefer collapsing into BeyondInfinity; keep dual slug mounts. See THEME-TUTORFABULOUS.md.
+      # Prefer complete TutorFabulous package; keep dual slug mounts. See THEME-TUTORFABULOUS.md.
       - ../assets:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/assets
       - ../inc:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/inc
       - ../templates:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/templates

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Canonical page body — parent-checkout
  * Migrated from inc/defaults-production/parent-checkout.php (live data / shortcodes / kinetic).

@@ -2,11 +2,11 @@
 /**
  * Plugin Name:       NextGenTutors-Companion
  * Plugin URI:        https://beyondinfinity.co.za/
- * Description:       Business logic, data layer, REST API, workflows, and multi-model BYOK AI suite for NextGen Tutors (BeyondInfinity theme).
+ * Description:       Business logic, data layer, REST API, workflows, and multi-model BYOK AI suite for NextGen Tutors (TutorFabulous theme; BeyondInfinity legacy slug supported).
  * Version:           1.9.19
  * Requires at least: 6.0
  * Requires PHP:      8.0
- * Author:            BeyondInfinity
+ * Author:            NextGen Tutors
  * Text Domain:       nextgencompanion
  * Domain Path:       /languages
  *
@@ -22,6 +22,29 @@ define( 'NGC_PLUGIN_FILE', __FILE__ );
 define( 'NGC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NGC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'NGC_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
+/**
+ * Whether the active theme is a supported NextGen Tutors skin.
+ *
+ * Traditional default: NextgenTutors-TutorFabulous.
+ * Legacy alias: NextGenTutors-BeyondInfinity (same product family).
+ *
+ * @param WP_Theme|null $theme Optional theme object; defaults to active theme.
+ * @return bool
+ */
+function ngc_is_supported_theme( $theme = null ) {
+	if ( ! $theme instanceof WP_Theme ) {
+		$theme = wp_get_theme();
+	}
+	$stylesheet = (string) $theme->get_stylesheet();
+	$name       = (string) $theme->get( 'Name' );
+	return (
+		false !== stripos( $stylesheet, 'tutorfabulous' )
+		|| false !== stripos( $stylesheet, 'beyondinfinity' )
+		|| false !== stripos( $name, 'TutorFabulous' )
+		|| false !== stripos( $name, 'BeyondInfinity' )
+	);
+}
 
 /**
  * PSR-4 style autoloader for includes/.
@@ -252,14 +275,17 @@ function ngc_theme_switch_targets() {
 	return apply_filters(
 		'ngc_theme_switch_targets',
 		[
-			'agntix-child'                => __( 'Agntix', 'nextgencompanion' ),
-			'nextgentutors-beyondinfinity' => __( 'BeyondInfinity', 'nextgencompanion' ),
+			'agntix-child'                  => __( 'Agntix', 'nextgencompanion' ),
+			'nextgentutors-tutorfabulous'   => __( 'TutorFabulous', 'nextgencompanion' ),
+			'nextgentutors-beyondinfinity'  => __( 'BeyondInfinity (legacy)', 'nextgencompanion' ),
 		]
 	);
 }
 
 /**
  * Resolve the theme the switch should target from the current stylesheet.
+ *
+ * Traditional default skin is TutorFabulous; BeyondInfinity remains a legacy alias.
  *
  * @param string $current Current stylesheet.
  * @return array{stylesheet:string,label:string}|null
@@ -270,12 +296,16 @@ function ngc_theme_switch_resolve_target( $current ) {
 		return null;
 	}
 
-	// Prefer the "other" registered theme; default to BeyondInfinity.
+	$primary = 'nextgentutors-tutorfabulous';
+	if ( ! isset( $targets[ $primary ] ) || ! wp_get_theme( $primary )->exists() ) {
+		$primary = isset( $targets['nextgentutors-beyondinfinity'] ) ? 'nextgentutors-beyondinfinity' : '';
+	}
+
 	$target = '';
-	if ( 'nextgentutors-beyondinfinity' === $current ) {
-		$target = 'agntix-child';
-	} elseif ( isset( $targets['nextgentutors-beyondinfinity'] ) ) {
-		$target = 'nextgentutors-beyondinfinity';
+	if ( in_array( $current, [ 'nextgentutors-tutorfabulous', 'nextgentutors-beyondinfinity' ], true ) ) {
+		$target = isset( $targets['agntix-child'] ) ? 'agntix-child' : '';
+	} elseif ( $primary ) {
+		$target = $primary;
 	} else {
 		foreach ( array_keys( $targets ) as $slug ) {
 			if ( $slug !== $current ) {

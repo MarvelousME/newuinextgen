@@ -72,8 +72,13 @@ function bi_page_uses_marketing_chrome( $slug = '' ) {
  */
 function bi_page_open( $slug = '' ) {
 	$slug = $slug ?: bi_page_slug();
+	$extra = '';
+	if ( function_exists( 'bi_uses_kinetic_ui' ) && bi_uses_kinetic_ui() ) {
+		$extra = ' ng-page--kinetic';
+	}
 	printf(
-		'<div class="ng-page bi-blended-layout" data-page-slug="%s" data-page-type="%s">',
+		'<div class="ng-page bi-blended-layout%s" data-page-slug="%s" data-page-type="%s">',
+		esc_attr( $extra ),
 		esc_attr( $slug ),
 		esc_attr( bi_page_type( $slug ) )
 	);
@@ -209,12 +214,12 @@ function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
 			$title = __( 'NextGen Tutors', 'beyondinfinity' );
 		}
 
-		$hero_classes = trim( 'ng-page-hero bi-hero ngt-hero nbi-aurora-hero ng-page-hero--cinematic ' . $extra );
+		$hero_classes = trim( 'ng-page-hero bi-hero ngt-hero nbi-aurora-hero ng-page-hero--cinematic ng-page-hero--kinetic ' . $extra );
 		if ( $video_url || $poster ) {
 			$hero_classes .= ' ng-page-hero--has-video';
 		}
 		?>
-		<section class="<?php echo esc_attr( $hero_classes ); ?>" aria-labelledby="ng-page-hero-title">
+		<section class="<?php echo esc_attr( $hero_classes ); ?>" aria-labelledby="ng-page-hero-title" data-bi-kinetic-hero>
 			<div class="ng-page-hero__mesh" aria-hidden="true"></div>
 			<div class="nbi-aurora-layer" aria-hidden="true"></div>
 			<?php if ( function_exists( 'bi_nbi_render_constellation' ) ) { bi_nbi_render_constellation( [ 'id' => 'nbi-page-constellation' ] ); } ?>
@@ -244,7 +249,7 @@ function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
 					<?php endif; ?>
 					<?php if ( $cta_label && $cta_url ) : ?>
 						<div class="ng-page-hero__actions">
-							<a class="ng-btn ng-btn--primary" href="<?php echo esc_url( $cta_url ); ?>"><?php echo esc_html( $cta_label ); ?></a>
+							<a class="ng-btn ng-btn--primary ngi-btn ngi-btn-primary" href="<?php echo esc_url( $cta_url ); ?>"><?php echo esc_html( $cta_label ); ?></a>
 						</div>
 					<?php endif; ?>
 				</div>

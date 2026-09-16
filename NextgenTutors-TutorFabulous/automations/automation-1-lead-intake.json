@@ -1,0 +1,62 @@
+{
+  "version": "2.0",
+  "name": "NGT — New Parent Lead Intake",
+  "description": "Triggered when Find a Tutor form is submitted. Creates FluentCRM contact, tags as parent, and notifies admin.",
+  "status": "active",
+  "type": "user",
+  "triggers": [
+    {
+      "integration": "fluentform",
+      "trigger": "fluentform_form_submitted",
+      "parameters": {
+        "form_id": "REPLACE_WITH_FIND_A_TUTOR_FORM_ID"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_create_or_update_contact",
+      "parameters": {
+        "email":      "{{trigger:field:email}}",
+        "first_name": "{{trigger:field:first_name}}",
+        "last_name":  "{{trigger:field:last_name}}",
+        "phone":      "{{trigger:field:phone}}",
+        "status":     "subscribed"
+      }
+    },
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_add_contact_to_list",
+      "parameters": {
+        "email":   "{{trigger:field:email}}",
+        "list_id": "REPLACE_WITH_NEW_LEAD_LIST_ID"
+      }
+    },
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_add_tag_to_contact",
+      "parameters": {
+        "email":  "{{trigger:field:email}}",
+        "tag_id": "REPLACE_WITH_PARENT_TAG_ID"
+      }
+    },
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_trigger_email_sequence",
+      "parameters": {
+        "email":       "{{trigger:field:email}}",
+        "sequence_id": "REPLACE_WITH_LEAD_NURTURE_SEQUENCE_ID"
+      }
+    },
+    {
+      "integration": "wordpress",
+      "action": "send_email",
+      "parameters": {
+        "to":      "REPLACE_WITH_ADMIN_EMAIL",
+        "subject": "[NGT] New Parent Lead: {{trigger:field:first_name}} {{trigger:field:last_name}}",
+        "body":    "New enquiry received.\n\nName: {{trigger:field:first_name}} {{trigger:field:last_name}}\nEmail: {{trigger:field:email}}\nPhone: {{trigger:field:phone}}\nGrade: {{trigger:field:grade_level}}\nSubject: {{trigger:field:subject}}\nFormat: {{trigger:field:format}}\nArea: {{trigger:field:area}}\nHow they heard: {{trigger:field:how_heard}}\n\nLogin to FluentCRM to follow up."
+      }
+    }
+  ]
+}

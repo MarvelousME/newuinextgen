@@ -309,6 +309,18 @@ function bi_hero_image_key( $class = '' ) {
  */
 function bi_parallax_cta( $title, $button, $url, $image_key = 'cta_bg' ) {
     $bg = bi_get_theme_image_url( $image_key );
+    $kinetic = function_exists( 'bi_uses_kinetic_ui' ) && bi_uses_kinetic_ui();
+    if ( $kinetic ) {
+        ?>
+    <section class="ng-page-footer-band bi-parallax-cta bi-parallax-cta--kinetic framer-motion ng-reveal" data-bi-motion="slide-up">
+      <div class="ng-page-footer-band__inner bi-parallax-cta__inner">
+        <h2 class="ng-page-footer-band__title"><?php echo esc_html( $title ); ?></h2>
+        <a href="<?php echo esc_url( $url ); ?>" class="ngt-btn ngt-btn--primary ngt-btn--lg ng-btn ng-btn--primary btn-ripple"><?php echo esc_html( $button ); ?></a>
+      </div>
+    </section>
+        <?php
+        return;
+    }
     ?>
     <section class="bi-parallax-cta framer-motion">
       <div class="bi-parallax-cta__bg parallax-bg" data-parallax-rate="0.25" style="background-image:url(<?php echo esc_url( $bg ); ?>)" aria-hidden="true"></div>

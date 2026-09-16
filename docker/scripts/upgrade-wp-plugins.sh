@@ -97,7 +97,8 @@ $WP core update-db || true
 if ! $WP theme is-installed hello-elementor 2>/dev/null; then
   $WP theme install hello-elementor || true
 fi
-$WP theme activate nextgentutors-beyondinfinity 2>/dev/null || true
+$WP theme activate nextgentutors-tutorfabulous 2>/dev/null \
+  || $WP theme activate nextgentutors-beyondinfinity 2>/dev/null || true
 
 echo "=== AFTER ==="
 $WP core version

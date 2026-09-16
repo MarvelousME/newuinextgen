@@ -1,0 +1,45 @@
+/**
+ * Skin: NGT Marketing — prototype navy/lime palette (tokens only).
+ */
+html[data-bi-skin="ngt-marketing"] {
+  --ngt-primary: #092746;
+  --ngt-primary-dark: #0a2c50;
+  --ngt-primary-light: #e9f3d4;
+  --ngt-secondary: #aece61;
+  --ngt-secondary-dark: #8ba44d;
+  --ngt-secondary-light: #e9f3d4;
+  --ngt-accent: #f5b740;
+  --ngt-accent-dark: #d99417;
+  --ngt-accent-light: #fff8e6;
+  --ngt-bg: #fcfaf3;
+  --ngt-white: #ffffff;
+  --ngt-surface: #ffffff;
+  --ngt-border: #e2e8f0;
+  --ngt-border-light: #f1f5f9;
+  --ngt-text: #0b1220;
+  --ngt-text-2: #475569;
+  --ngt-text-3: #64748b;
+  --ngt-success: #aece61;
+  --ngt-success-bg: #e9f3d4;
+  --ngt-warning: #f5b740;
+  --ngt-error: #ef4444;
+  --ngt-font-display: "Space Grotesk", system-ui, sans-serif;
+  --ngt-font-body: "Open Sans", system-ui, sans-serif;
+
+  --navy: #092746;
+  --blue: #134477;
+  --lime: #aece61;
+  --lime-bright: #c4e07a;
+  --amber: #f5b740;
+  --ink: #0b1220;
+  --cream: #fcfaf3;
+  --font-display: var(--ngt-font-display);
+  --font-sans: var(--ngt-font-body);
+
+  --ng-color-primary: var(--ngt-primary);
+  --ng-color-secondary: var(--ngt-secondary);
+  --ng-color-accent: var(--ngt-accent);
+  --ng-color-bg: var(--ngt-bg);
+  --ng-font-heading: var(--ngt-font-display);
+  --ng-font-body: var(--ngt-font-body);
+}

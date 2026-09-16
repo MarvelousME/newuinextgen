@@ -1,0 +1,12 @@
+.ngc-form { max-width: 640px; }
+.ngc-form__title { margin: 0 0 20px; font-size: 1.15rem; }
+.ngc-form .ngt-btn { margin-top: 8px; }
+.ngc-form-notice,
+.ngc-dashboard-notice { padding: 16px; border-radius: 8px; background: var(--ngt-surface-alt, #f8fafc); }
+.ngc-form-forgot { margin-top: 12px; font-size: 0.9rem; }
+#ngc-loginform { display: flex; flex-direction: column; gap: 12px; }
+#ngc-loginform label { font-weight: 600; font-size: 0.85rem; }
+#ngc-loginform input[type="text"],
+#ngc-loginform input[type="password"] {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--ngt-border, #e2e8f0); border-radius: 8px;
+}

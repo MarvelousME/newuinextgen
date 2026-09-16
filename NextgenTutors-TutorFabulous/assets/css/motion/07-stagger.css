@@ -1,0 +1,33 @@
+/* ===== STAGGER CONTAINER ===== */
+.stagger-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.stagger-container > * {
+  opacity: 0; /* Hidden initially */
+}
+
+/* Apply these to children with incremental delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+.stagger-7 { animation-delay: 0.7s; }
+.stagger-8 { animation-delay: 0.8s; }
+.stagger-9 { animation-delay: 0.9s; }
+.stagger-10 { animation-delay: 1s; }
+
+/* ===== AUTO-STAGGER WITH CSS COUNTERS (Advanced) ===== */
+.stagger-auto {
+  counter-reset: stagger;
+}
+.stagger-auto > * {
+  counter-increment: stagger;
+  opacity: 0;
+  animation: fadeIn 0.5s var(--ease-smooth) forwards;
+  animation-delay: calc(0.1s * var(--stagger-offset, 1) * counter(stagger));
+}
+/* Usage: Add --stagger-offset: 2; inline for slower pacing */

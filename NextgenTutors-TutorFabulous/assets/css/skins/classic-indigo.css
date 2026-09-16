@@ -1,0 +1,37 @@
+/**
+ * Skin: Classic Indigo — lighter marketing look (tokens only).
+ */
+html[data-bi-skin="classic-indigo"] {
+  --ngt-primary: #1e1b4b;
+  --ngt-primary-dark: #312e81;
+  --ngt-primary-light: #eef2ff;
+  --ngt-secondary: #10b981;
+  --ngt-secondary-dark: #059669;
+  --ngt-secondary-light: #ecfdf5;
+  --ngt-accent: #10b981;
+  --ngt-accent-dark: #059669;
+  --ngt-accent-light: #d1fae5;
+  --ngt-bg: #f8fafc;
+  --ngt-white: #ffffff;
+  --ngt-surface: #ffffff;
+  --ngt-border: #e2e8f0;
+  --ngt-border-light: #f1f5f9;
+  --ngt-text: #0f172a;
+  --ngt-text-2: #64748b;
+  --ngt-text-3: #94a3b8;
+  --ngt-success: #10b981;
+  --ngt-success-bg: #ecfdf5;
+  --ngt-warning: #f59e0b;
+  --ngt-error: #f43f5e;
+  --ngt-font-display: "Syne", "DM Sans", system-ui, sans-serif;
+  --ngt-font-body: "DM Sans", system-ui, sans-serif;
+  --ngt-grad-from: #0066cc;
+  --ngt-grad-to: #00c896;
+
+  --ng-color-primary: var(--ngt-primary);
+  --ng-color-secondary: var(--ngt-secondary);
+  --ng-color-accent: var(--ngt-accent);
+  --ng-color-bg: var(--ngt-bg);
+  --ng-font-heading: var(--ngt-font-display);
+  --ng-font-body: var(--ngt-font-body);
+}

@@ -30,8 +30,8 @@ class NGC_Provision_Step_Env_Preflight extends NGC_Provisioning_Step_Base {
 			$blocking[] = 'Companion inactive';
 		}
 		$theme = wp_get_theme();
-		if ( false === stripos( $theme->get_stylesheet(), 'beyondinfinity' ) && false === stripos( (string) $theme->get( 'Name' ), 'BeyondInfinity' ) ) {
-			$blocking[] = 'Theme is not NextGenTutors-BeyondInfinity';
+		if ( ! function_exists( 'ngc_is_supported_theme' ) || ! ngc_is_supported_theme( $theme ) ) {
+			$blocking[] = 'Theme is not NextgenTutors-TutorFabulous (or BeyondInfinity legacy alias)';
 		}
 		if ( ! is_writable( WP_CONTENT_DIR ) ) {
 			$warnings[] = 'wp-content not writable';
@@ -171,16 +171,15 @@ class NGC_Provision_Step_Theme extends NGC_Provisioning_Step_Base {
 
 	public function apply( NGC_Provision_Context $context ): NGC_Provision_Step_Result {
 		$theme = wp_get_theme();
-		$ok = false !== stripos( $theme->get_stylesheet(), 'beyondinfinity' )
-			|| false !== stripos( (string) $theme->get( 'Name' ), 'BeyondInfinity' );
+		$ok    = function_exists( 'ngc_is_supported_theme' ) && ngc_is_supported_theme( $theme );
 		$evidence = [
 			'stylesheet' => $theme->get_stylesheet(),
 			'name'       => $theme->get( 'Name' ),
 			'version'    => $theme->get( 'Version' ),
 		];
 		return $ok
-			? $this->ok( 'NextGenTutors-BeyondInfinity active', $evidence )
-			: $this->failed( 'BeyondInfinity theme not active — activate via Appearance → Themes or Docker setup.', $evidence );
+			? $this->ok( 'NextgenTutors-TutorFabulous (or legacy BeyondInfinity) active', $evidence )
+			: $this->failed( 'TutorFabulous theme not active — activate nextgentutors-tutorfabulous via Appearance → Themes or Docker setup.', $evidence );
 	}
 }
 
@@ -834,7 +833,7 @@ class NGC_Provision_Step_Verify extends NGC_Provisioning_Step_Base {
 	public function apply( NGC_Provision_Context $context ): NGC_Provision_Step_Result {
 		$report = [
 			'business' => class_exists( 'NGC_Business_Profile' ) ? NGC_Business_Profile::status() : null,
-			'theme_ok' => false !== stripos( wp_get_theme()->get_stylesheet(), 'beyondinfinity' ),
+			'theme_ok' => function_exists( 'ngc_is_supported_theme' ) && ngc_is_supported_theme(),
 		];
 		if ( class_exists( 'NGC_Verification' ) ) {
 			$report['companion'] = NGC_Verification::run_checks();
@@ -847,7 +846,7 @@ class NGC_Provision_Step_Verify extends NGC_Provisioning_Step_Base {
 
 		$blocking = [];
 		if ( empty( $report['theme_ok'] ) ) {
-			$blocking[] = 'BeyondInfinity theme not active';
+			$blocking[] = 'TutorFabulous theme not active';
 		}
 		if ( ! empty( $report['companion'] ) && empty( $report['companion']['ok'] ) ) {
 			$blocking[] = 'Companion verification failed';
@@ -878,9 +877,9 @@ class NGC_Provision_Step_Verify extends NGC_Provisioning_Step_Base {
 	 */
 	public function verify( NGC_Provision_Context $context ): NGC_Provision_Check_Result {
 		$blocking = [];
-		$theme_ok = false !== stripos( wp_get_theme()->get_stylesheet(), 'beyondinfinity' );
+		$theme_ok = function_exists( 'ngc_is_supported_theme' ) && ngc_is_supported_theme();
 		if ( ! $theme_ok ) {
-			$blocking[] = 'BeyondInfinity theme not active';
+			$blocking[] = 'TutorFabulous theme not active';
 		}
 		if ( class_exists( 'NGC_Verification' ) ) {
 			$companion = NGC_Verification::run_checks();

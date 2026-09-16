@@ -17,12 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 function bi_required_ngc_shortcodes() {
     return [
         'ngc_find_tutor_form',
+        'ngc_tutor_marketplace',
         'ngc_become_tutor_form',
         'ngc_contact_support_form',
         'ngc_parent_register_child_form',
         'ngc_student_register_form',
         'ngc_login_form',
         'ngc_forgot_password_form',
+        'ngc_parent_checkout',
         'ngc_parent_dashboard',
         'ngc_student_dashboard',
         'ngc_tutor_dashboard',

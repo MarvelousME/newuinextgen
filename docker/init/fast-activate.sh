@@ -7,8 +7,10 @@ WP="wp --allow-root --path=${WP_PATH} --skip-plugins --skip-themes"
 log() { printf '[fast-activate] %s\n' "$1"; }
 
 log "Core: $($WP core version)"
-log "Activating theme..."
-$WP theme activate nextgentutors-beyondinfinity || log "Theme already active or missing"
+log "Activating theme NextgenTutors-TutorFabulous..."
+$WP theme activate nextgentutors-tutorfabulous \
+  || $WP theme activate nextgentutors-beyondinfinity \
+  || log "Theme already active or missing"
 
 log "Activating plugins..."
 $WP plugin activate \

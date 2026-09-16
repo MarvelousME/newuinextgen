@@ -1,0 +1,190 @@
+/**
+ * Narrative 3D scroll — informal tutoring storytelling.
+ */
+
+.bi-narrative-3d {
+  --bi-narr-ink: #10213f;
+  --bi-narr-muted: #687386;
+  --bi-narr-accent: #28c7f7;
+  --bi-narr-deep: #07172f;
+  position: relative;
+  padding: 4.5rem 0 5rem;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(40, 199, 247, 0.08), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(18, 60, 124, 0.06), transparent 50%),
+    #f5f8ff;
+  overflow: clip;
+}
+
+.bi-narrative-3d__intro {
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto 3rem;
+}
+
+.bi-narrative-3d__lead {
+  margin: 0.75rem auto 0;
+  color: var(--bi-narr-muted);
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+.bi-narrative-3d__stage {
+  perspective: 1200px;
+  perspective-origin: 50% 40%;
+}
+
+.bi-narrative-3d__panel {
+  padding: 1.75rem 0;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  opacity: 0.35;
+  transform: translateZ(-80px) rotateX(8deg) scale(0.96);
+  transition: opacity 0.35s ease;
+}
+
+.bi-narrative-3d__panel.is-in-view {
+  opacity: 1;
+}
+
+.bi-narrative-3d__inner {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.bi-narrative-3d__panel--flip .bi-narrative-3d__inner {
+  grid-template-columns: 1.05fr 1fr;
+}
+
+.bi-narrative-3d__panel--flip .bi-narrative-3d__copy {
+  order: 2;
+}
+
+.bi-narrative-3d__panel--flip .bi-narrative-3d__media {
+  order: 1;
+}
+
+.bi-narrative-3d__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #123c7c;
+}
+
+.bi-narrative-3d__title {
+  margin: 0 0 0.85rem;
+  font-family: var(--ngt-font-display, "Sora", system-ui, sans-serif);
+  font-size: clamp(1.55rem, 3.2vw, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--bi-narr-ink);
+}
+
+.bi-narrative-3d__body {
+  margin: 0 0 1rem;
+  color: var(--bi-narr-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 36rem;
+}
+
+.bi-narrative-3d__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(40, 199, 247, 0.12);
+  color: #0b3a5c;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.bi-narrative-3d__media {
+  position: relative;
+  margin: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 28px 70px rgba(7, 23, 47, 0.18),
+    0 0 0 1px rgba(18, 60, 124, 0.08);
+  transform-style: preserve-3d;
+  will-change: transform;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, #06152e, #123c7c);
+}
+
+.bi-narrative-3d__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+  will-change: transform;
+}
+
+.bi-narrative-3d__glow {
+  position: absolute;
+  inset: auto -20% -30% auto;
+  width: 55%;
+  height: 55%;
+  background: radial-gradient(circle, rgba(40, 199, 247, 0.45), transparent 70%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.bi-narrative-3d__cta {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.bi-narrative-3d__cta-copy {
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--bi-narr-ink);
+}
+
+.bi-narrative-3d__cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.bi-narrative-3d__fine {
+  margin: 1rem 0 0;
+  font-size: 0.75rem;
+  color: var(--bi-narr-muted);
+}
+
+@media (max-width: 900px) {
+  .bi-narrative-3d__inner,
+  .bi-narrative-3d__panel--flip .bi-narrative-3d__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .bi-narrative-3d__panel--flip .bi-narrative-3d__copy,
+  .bi-narrative-3d__panel--flip .bi-narrative-3d__media {
+    order: unset;
+  }
+
+  .bi-narrative-3d__panel {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bi-narrative-3d__panel,
+  .bi-narrative-3d__media,
+  .bi-narrative-3d__media img {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}

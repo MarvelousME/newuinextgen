@@ -1,17 +1,18 @@
 # NextgenTutors-TutorFabulous
 
-WordPress child theme brand for NextGen Tutors (Hello Elementor parent).
+WordPress child theme for NextGen Tutors (Hello Elementor parent).
 
-## Canonical edit root (ONE tree)
+## Canonical edit root (traditional monolith default)
 
 | Rule | Value |
 |---|---|
-| **Edit / package root** | `NextGenTutors-BeyondInfinity/` |
-| **Do not treat as edit root** | Monorepo workspace root (`newuinextgen/`) theme-shaped folders |
-| **Brand (Theme Name)** | TutorFabulous — stays |
-| **Text Domain** | `beyondinfinity` — stays (do not rename) |
+| **Edit / package root** | `NextgenTutors-TutorFabulous/` |
+| **Legacy alias package** | `NextGenTutors-BeyondInfinity/` (same product family; keep for old activations) |
+| **Brand (Theme Name)** | `NextgenTutors-TutorFabulous` |
+| **Text Domain** | `beyondinfinity` — stays (do not rename; Companion / `bi_*` i18n depend on it) |
+| **Page templates** | Traditional WordPress `page-{slug}.php` + `Template Name:` (About, Pricing, …) — **not** BeyondInfinity-named |
 
-**Ship and develop from `NextGenTutors-BeyondInfinity/` only.** Root-level `inc/`, `assets/`, `template-parts/`, etc. exist for Docker bind-mount history; they are not a second product tree. Prefer collapsing work into BeyondInfinity and keeping the legacy stylesheet slug mount (below). Do not invent a parallel “TutorFabulous package” edit root.
+**Ship and develop from `NextgenTutors-TutorFabulous/`.** Do not present pages, admin labels, or `@package` headers as BeyondInfinity. BeyondInfinity remains a legacy stylesheet slug / package alias only.
 
 Identity reference: this file. Docker mounts: `docker/docker-compose.yml`.
 
@@ -20,15 +21,15 @@ Identity reference: this file. Docker mounts: `docker/docker-compose.yml`.
 | Field | Value |
 |---|---|
 | **Theme Name** | `NextgenTutors-TutorFabulous` |
-| **Stylesheet slug (Docker primary)** | `nextgentutors-tutorfabulous` |
-| **Legacy slug (alias mount)** | `nextgentutors-beyondinfinity` (same package) |
-| **Text Domain** | `beyondinfinity` (**do not change** — Companion / bi_el_* strings depend on it) |
+| **Stylesheet slug (primary)** | `nextgentutors-tutorfabulous` |
+| **Legacy slug (alias)** | `nextgentutors-beyondinfinity` |
+| **Text Domain** | `beyondinfinity` (**do not change**) |
 | **PHP APIs** | `bi_*`, `ngt_*`, Companion `ngc_*` shortcodes |
 | **Version** | 2.0.0 |
 
 ## Why Text Domain stayed `beyondinfinity`
 
-Companion, Elementor design-system widgets, and hundreds of `__()` calls use `beyondinfinity`. Renaming the text domain would break translations and any plugin checks. Branding is the **Theme Name** + body classes + `BI_THEME_BRAND`.
+Companion, Elementor design-system widgets, and hundreds of `__()` calls use `beyondinfinity`. Renaming the text domain would break translations and plugin checks. Branding is the **Theme Name** + body classes + `BI_THEME_BRAND` + traditional page template names.
 
 ## Required for Companion + fleet to work
 
@@ -41,31 +42,18 @@ Activated by `docker/init/install-plugins.sh` + `fast-activate.sh`:
 
 Recommended: AI Integration, Plugin Manager, HTML Importer, 3D Filmstrip, Subjects Widget, Automation Hub, Mission Control, BeyondMeasure.
 
-Health check: `inc/tutorfabulous-compat.php` → admin notice if required plugins missing.
+Health check: `inc/tutorfabulous-compat.php` → admin notice if required plugins missing. Companion accepts TutorFabulous via `ngc_is_supported_theme()`.
 
 ## Docker
 
-Package is mounted twice (same files on disk):
-
 ```yaml
-# Primary stylesheet (activate this)
-../NextGenTutors-BeyondInfinity → themes/nextgentutors-tutorfabulous
-# Legacy alias (old activations / docs that still say beyondinfinity)
+# Primary stylesheet (activate this) — traditional default
+../NextgenTutors-TutorFabulous → themes/nextgentutors-tutorfabulous
+# Legacy alias
 ../NextGenTutors-BeyondInfinity → themes/nextgentutors-beyondinfinity
 ```
 
-### Live overlays (workspace root → Tutofabulous tree)
-
-Compose also bind-mounts monorepo-root dirs **onto** the primary theme:
-
-`assets`, `inc`, `templates`, `template-parts`, `page-templates`, `prototypes`, `content`, `automations`, `tests`
-
-| Fact | Detail |
-|------|--------|
-| **Why** | Linux containers do not follow Windows junctions inside `NextGenTutors-BeyondInfinity/` |
-| **Who wins at runtime** | **Root overlays win** for those paths on `nextgentutors-tutorfabulous` (later volume mounts override the package tree) |
-| **Legacy alias** | `nextgentutors-beyondinfinity` gets the package mount only — **no** root overlay binds |
-| **Policy** | Treat BeyondInfinity as source of truth for packaging; keep overlays only until collapsed. Prefer sync/collapse into BeyondInfinity + keep legacy slug mount — avoid large moves unless trivial/safe |
+Root overlays (`assets`, `inc`, …) may still bind onto the primary slug for Docker/Windows path history; prefer keeping TutorFabulous package complete so overlays are optional.
 
 Activate:
 
@@ -79,16 +67,9 @@ Local URL: **http://localhost:8890** (default `WP_PORT`).
 
 | Page | Shortcodes |
 |---|---|
-| find-a-tutor | `ngc_find_tutor_form`, `ngc_tutor_marketplace` |
-| become-a-tutor | `ngc_become_tutor_form` |
-| contact / support | `ngc_contact_support_form` |
-| login | `ngc_login_form`, `ngc_forgot_password_form` |
-| register | `ngc_parent_register_child_form`, `ngc_student_register_form` |
-| parent-checkout | `ngc_parent_checkout` |
-| dashboards | `ngc_*_dashboard` |
+| Find a Tutor | `[ngc_tutor_marketplace]` |
+| Parent Checkout | `[ngc_parent_checkout]` |
+| Contact / Become a Tutor / Onboarding | form shortcodes per registry |
+| Dashboards | Companion dashboard shortcodes |
 
-Fallbacks: `inc/shortcodes-fallback.php` only when Companion is inactive.
-
-## Content
-
-Canonical page bodies remain in `template-parts/pages/{slug}.php` under the theme tree (edit via BeyondInfinity / overlay policy above). Finished HTML previews merge wireframe section order + these bodies + AI Studio UI — **additive**.
+Fallback stubs live in `inc/shortcodes-fallback.php` when Companion is inactive.

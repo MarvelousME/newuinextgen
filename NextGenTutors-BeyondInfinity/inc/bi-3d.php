@@ -38,10 +38,14 @@ function bi_page_needs_3d_assets() {
     if ( ! bi_3d_enabled() ) {
         return false;
     }
+    // Uniform kinetic site: load 3D scroll/tilt assets on all public kinetic views.
+    if ( function_exists( 'bi_uses_kinetic_ui' ) && bi_uses_kinetic_ui() ) {
+        return true;
+    }
     if ( bi_is_kinetic_home() ) {
         return true;
     }
-    if ( is_front_page() || is_page( [ 'home', 'find-a-tutor', 'pricing', 'about' ] ) ) {
+    if ( is_front_page() || is_page( [ 'home', 'find-a-tutor', 'pricing', 'about', 'contact', 'become-a-tutor', 'login', 'register', 'guarantee', 'support' ] ) ) {
         return true;
     }
     if ( bi_page_needs_carousel_assets() ) {

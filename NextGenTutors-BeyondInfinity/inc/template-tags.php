@@ -214,11 +214,12 @@ function bi_render_shortcode( $shortcode, $fallback_message = '' ) {
 
 function bi_hero( $title, $subtitle = '', $class = '' ) {
 	if ( function_exists( 'bi_render_modern_hero' ) ) {
+		$kinetic = ( function_exists( 'bi_uses_kinetic_ui' ) && bi_uses_kinetic_ui() ) ? ' ng-page-hero--kinetic' : '';
 		bi_render_modern_hero(
 			$title,
 			$subtitle,
 			[
-				'class'      => $class,
+				'class'      => trim( $class . $kinetic ),
 				'show_stats' => false,
 				'show_trust' => true,
 			]
@@ -293,15 +294,39 @@ function bi_bullets( $items, $light = false ) {
     echo '</ul>';
 }
 
-function bi_shortcode_block( $shortcode, $title = '', $fallback = '' ) {
-    ?>
-    <div class="ngt-card ngt-animate bi-shortcode-block ng-reveal bi-tilt-3d" data-bi-tilt data-bi-tilt-max="6">
-      <?php if ( $title ) : ?>
-        <h2 class="bi-shortcode-block__title"><?php echo esc_html( $title ); ?></h2>
-      <?php endif; ?>
-      <?php bi_render_shortcode( $shortcode, $fallback ); ?>
-    </div>
-    <?php
+/**
+ * Render a Companion/theme shortcode inside a kinetic form card.
+ *
+ * @param string $shortcode   Shortcode markup.
+ * @param string $title       Heading above the form.
+ * @param string $fallback    Fallback HTML/text when shortcode missing.
+ * @param string $description Supporting copy under the heading (proportional form chrome).
+ */
+function bi_shortcode_block( $shortcode, $title = '', $fallback = '', $description = '' ) {
+	if ( '' === $description && $title ) {
+		$description = sprintf(
+			/* translators: %s: form title */
+			__( 'Complete the fields below to continue with %s. All fields stay within a readable width for clarity.', 'beyondinfinity' ),
+			$title
+		);
+	}
+	?>
+	<div class="bi-kinetic-form ng-reveal" data-bi-scroll-3d data-bi-motion="slide-up">
+		<?php if ( $title || $description ) : ?>
+			<header class="bi-kinetic-form__head">
+				<?php if ( $title ) : ?>
+					<h2 class="bi-kinetic-form__title bi-shortcode-block__title"><?php echo esc_html( $title ); ?></h2>
+				<?php endif; ?>
+				<?php if ( $description ) : ?>
+					<p class="bi-kinetic-form__desc"><?php echo esc_html( $description ); ?></p>
+				<?php endif; ?>
+			</header>
+		<?php endif; ?>
+		<div class="ngt-card ngt-animate bi-shortcode-block bi-kinetic-form__card bi-tilt-3d" data-bi-tilt data-bi-tilt-max="5">
+			<?php bi_render_shortcode( $shortcode, $fallback ); ?>
+		</div>
+	</div>
+	<?php
 }
 
 function bi_trust_badges() {

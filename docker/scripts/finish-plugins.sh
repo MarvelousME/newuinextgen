@@ -54,7 +54,8 @@ done
 echo "=== UPDATES ==="
 $WP_FULL plugin update --all || true
 $WP theme update --all || true
-$WP theme activate nextgentutors-beyondinfinity 2>/dev/null || true
+$WP theme activate nextgentutors-tutorfabulous 2>/dev/null \
+  || $WP theme activate nextgentutors-beyondinfinity 2>/dev/null || true
 
 echo "=== SUMMARY ==="
 $WP core version
