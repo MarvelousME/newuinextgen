@@ -11,7 +11,7 @@
 
 | Class | Location |
 |-------|----------|
-| `NGC_Matching` | `includes/matching/class-ngc-matching.php` |
+| `NGC_Matching` | `includes/matching/class-ngc-matching.php` — `create_from_find_tutor` requires `matching.propose` via Policy Bridge |
 | `NGC_Smart_Matching` | `includes/matching/class-ngc-smart-matching.php` |
 | `NGC_Tutor_Cpt_Source` | `includes/matching/class-ngc-tutor-cpt-source.php` |
 | `NGC_Rest_Matching` | `includes/matching/class-ngc-rest-matching.php` |

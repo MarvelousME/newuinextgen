@@ -212,7 +212,7 @@ class NGC_PayFast_Gateway extends WC_Payment_Gateway {
 				NGC_PayFast_Itn::mark_processed( $pf_id, $order_id );
 			}
 			if ( class_exists( 'NGC_Payments' ) ) {
-				NGC_Payments::settle_order( $order->get_id() );
+				NGC_Payments::settle_order( $order->get_id(), [ 'trusted_system' => true ] );
 			}
 			if ( class_exists( 'NGC_Audit' ) ) {
 				NGC_Audit::log( 'payfast_itn_complete', 'payment', $order_id, [ 'pf_payment_id' => $pf_id ], 0 );

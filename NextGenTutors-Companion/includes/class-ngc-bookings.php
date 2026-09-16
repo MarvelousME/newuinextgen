@@ -22,6 +22,19 @@ class NGC_Bookings {
 	 * @return int|WP_Error
 	 */
 	public static function create( $data ) {
+		if ( class_exists( 'NGC_Policy_Bridge' ) ) {
+			$auth = NGC_Policy_Bridge::authorize_domain(
+				'booking.create',
+				[
+					'actor_type' => 'human',
+					'operation'  => 'invoke',
+				]
+			);
+			if ( is_wp_error( $auth ) ) {
+				return $auth;
+			}
+		}
+
 		global $wpdb;
 		$table = NGC_Database::table( 'bookings' );
 

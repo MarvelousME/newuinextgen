@@ -57,10 +57,45 @@ class NGC_Payments {
 	/**
 	 * Idempotent payment settlement — wallet, invoice, booking, workflows.
 	 *
-	 * @param int $order_id Order ID.
+	 * @param int                  $order_id Order ID.
+	 * @param array<string, mixed> $context  Optional `{ trusted_system: bool }` for gated gateways (PayFast ITN).
 	 * @return bool
 	 */
-	public static function settle_order( $order_id ) {
+	public static function settle_order( $order_id, array $context = [] ) {
+		if ( class_exists( 'NGC_Policy_Bridge' ) ) {
+			$uid = function_exists( 'get_current_user_id' ) ? (int) get_current_user_id() : 0;
+			$in_wc_hook = function_exists( 'doing_action' ) && (
+				doing_action( 'woocommerce_payment_complete' )
+				|| doing_action( 'woocommerce_order_status_completed' )
+				|| doing_action( 'woocommerce_order_status_failed' )
+				|| doing_action( 'woocommerce_order_status_refunded' )
+				|| doing_action( 'woocommerce_order_partially_refunded' )
+			);
+			$sys = ! empty( $context['trusted_system'] )
+				|| ( defined( 'DOING_CRON' ) && DOING_CRON )
+				|| $in_wc_hook;
+			$auth = NGC_Policy_Bridge::authorize_domain(
+				'payment.authorize',
+				[
+					'actor_type'     => $sys ? 'service' : 'human',
+					'trusted_system' => $sys,
+					'operation'      => 'invoke',
+					'actor_user_id'  => $uid,
+				]
+			);
+			if ( is_wp_error( $auth ) ) {
+				if ( class_exists( 'NGC_Audit' ) ) {
+					NGC_Audit::log(
+						'payment_settle_denied',
+						'order',
+						(int) $order_id,
+						[ 'reason' => $auth->get_error_message() ]
+					);
+				}
+				return false;
+			}
+		}
+
 		if ( ! function_exists( 'wc_get_order' ) ) {
 			return false;
 		}

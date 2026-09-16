@@ -107,6 +107,36 @@ final class NGC_Policy_Bridge {
 	}
 
 	/**
+	 * Domain entry authorization (TD-RAD-001).
+	 *
+	 * - Normal path: {@see authorize_invoke()}.
+	 * - Trusted system path (WooCommerce ITN / cron): capability must exist; no interactive user ACL.
+	 *
+	 * @param string               $capability_id Capability id.
+	 * @param array<string, mixed> $context       Context (`trusted_system` => true for webhooks).
+	 * @return array|WP_Error
+	 */
+	public static function authorize_domain( $capability_id, array $context = [] ) {
+		if ( ! empty( $context['trusted_system'] ) ) {
+			$cap = class_exists( 'NGC_Capability_Registry' ) ? NGC_Capability_Registry::get( $capability_id ) : null;
+			if ( ! $cap ) {
+				return new WP_Error(
+					'ngc_policy_deny',
+					'Unknown capability (default DENY)',
+					[ 'status' => 403 ]
+				);
+			}
+			return [
+				'decision'       => self::ALLOW,
+				'reason'         => 'Trusted system invoke',
+				'capability'     => $cap,
+				'policy_version' => 'rad-bridge-1.0',
+			];
+		}
+		return self::authorize_invoke( $capability_id, $context );
+	}
+
+	/**
 	 * Optional pre-policy filter hook for agents (identity passthrough unless capability mapped).
 	 *
 	 * @param null|array           $pre     Existing.

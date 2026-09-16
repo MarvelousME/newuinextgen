@@ -50,11 +50,22 @@ final class NGC_Secret_Vault {
 	}
 
 	/**
+	 * Reveal a secret server-side only — never send plaintext or env values to browsers.
+	 *
+	 * Supported refs:
+	 * - `env:NAME` — read from process environment (fail closed if empty)
+	 * - `ref_*` / opaque option keys — decrypt from encrypted wp_options vault
+	 *
 	 * @param string $ref Reference.
 	 * @return string|WP_Error Plaintext (server-side only).
 	 */
 	public static function reveal( $ref ) {
-		$ref = sanitize_key( (string) $ref );
+		$raw = trim( (string) $ref );
+		if ( 0 === stripos( $raw, 'env:' ) ) {
+			return self::reveal_env( substr( $raw, 4 ) );
+		}
+
+		$ref = sanitize_key( $raw );
 		$row = get_option( self::OPTION_PREFIX . $ref, null );
 		if ( ! is_array( $row ) || empty( $row['ciphertext'] ) ) {
 			return new WP_Error( 'ngc_vault_missing', __( 'Secret reference not found.', 'nextgencompanion' ) );
@@ -64,6 +75,25 @@ final class NGC_Secret_Vault {
 		}
 		$plain = NGC_Crypto::decrypt( (string) $row['ciphertext'] );
 		return false === $plain ? new WP_Error( 'ngc_vault_decrypt', __( 'Secret could not be decrypted.', 'nextgencompanion' ) ) : (string) $plain;
+	}
+
+	/**
+	 * @param string $name Environment variable name.
+	 * @return string|WP_Error
+	 */
+	private static function reveal_env( $name ) {
+		$name = trim( (string) $name );
+		if ( ! preg_match( '/^[A-Za-z_][A-Za-z0-9_]*$/', $name ) ) {
+			return new WP_Error( 'ngc_vault_env_invalid', __( 'Invalid environment secret name.', 'nextgencompanion' ) );
+		}
+		$val = getenv( $name );
+		if ( false === $val || '' === $val ) {
+			$val = isset( $_ENV[ $name ] ) ? (string) $_ENV[ $name ] : '';
+		}
+		if ( '' === $val ) {
+			return new WP_Error( 'ngc_vault_env_empty', __( 'Environment secret is not configured.', 'nextgencompanion' ) );
+		}
+		return (string) $val;
 	}
 
 	/**
@@ -86,7 +116,24 @@ final class NGC_Secret_Vault {
 	 * @return array<string,string>|null
 	 */
 	public static function meta( $ref ) {
-		$ref = sanitize_key( (string) $ref );
+		$raw = trim( (string) $ref );
+		if ( 0 === stripos( $raw, 'env:' ) ) {
+			$name = trim( substr( $raw, 4 ) );
+			if ( ! preg_match( '/^[A-Za-z_][A-Za-z0-9_]*$/', $name ) ) {
+				return null;
+			}
+			$present = ( false !== getenv( $name ) && '' !== (string) getenv( $name ) )
+				|| ( isset( $_ENV[ $name ] ) && '' !== (string) $_ENV[ $name ] );
+			return [
+				'ref'        => 'env:' . $name,
+				'label'      => 'env',
+				'created_at' => '',
+				'present'    => $present ? '1' : '0',
+				'backend'    => 'env',
+			];
+		}
+
+		$ref = sanitize_key( $raw );
 		$row = get_option( self::OPTION_PREFIX . $ref, null );
 		if ( ! is_array( $row ) ) {
 			return null;
@@ -96,6 +143,7 @@ final class NGC_Secret_Vault {
 			'label'      => (string) ( $row['label'] ?? '' ),
 			'created_at' => (string) ( $row['created_at'] ?? '' ),
 			'present'    => ! empty( $row['ciphertext'] ) ? '1' : '0',
+			'backend'    => 'option',
 		];
 	}
 }

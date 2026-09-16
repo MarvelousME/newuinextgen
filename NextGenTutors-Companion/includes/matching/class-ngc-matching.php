@@ -19,6 +19,19 @@ class NGC_Matching {
 	 * @return int|WP_Error Match ID.
 	 */
 	public static function create_from_find_tutor( $data ) {
+		if ( class_exists( 'NGC_Policy_Bridge' ) ) {
+			$auth = NGC_Policy_Bridge::authorize_domain(
+				'matching.propose',
+				[
+					'actor_type' => 'human',
+					'operation'  => 'invoke',
+				]
+			);
+			if ( is_wp_error( $auth ) ) {
+				return $auth;
+			}
+		}
+
 		global $wpdb;
 		$table = NGC_Database::table( 'matches' );
 

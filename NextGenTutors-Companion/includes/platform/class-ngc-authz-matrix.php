@@ -121,6 +121,12 @@ final class NGC_Authz_Matrix {
 	 */
 	public static function audit( $actor_id, $resource, $resource_id, $capability, $decision, $reason = '' ) {
 		global $wpdb;
+		if ( ! $wpdb || ! is_object( $wpdb ) || ! method_exists( $wpdb, 'insert' ) ) {
+			return;
+		}
+		if ( ! class_exists( 'NGC_Platform_Schema' ) || ! class_exists( 'NGC_Tenant_Context' ) ) {
+			return;
+		}
 		$wpdb->insert(
 			NGC_Platform_Schema::table( 'authz_audit' ),
 			[
