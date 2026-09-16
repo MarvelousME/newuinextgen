@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if ( ! defined( 'NGT_AGENT_GATEWAY_URL' ) ) {
   define( 'NGT_AGENT_GATEWAY_URL', 'http://host.docker.internal:8787' );
 }

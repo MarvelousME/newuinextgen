@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 3D Scroll Test demo page â€” ensure WP page + NGT3D rules + shortcode markup.
  *

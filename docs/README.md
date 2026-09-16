@@ -5,11 +5,12 @@
 | Field | Value |
 |-------|--------|
 | **Product** | NextGen Tutors — accessible tutoring marketplace (South Africa) |
-| **Stack** | WordPress 6.7+ · PHP 8.2+ · MySQL 8.0 |
+| **Stack** | WordPress 6.7+ · PHP 8.2+ · MySQL 8.0 · Node ≥22 (Agent Gateway) |
 | **Theme** | TutorFabulous / BeyondInfinity — edit root `NextGenTutors-BeyondInfinity/` (see `THEME-TUTORFABULOUS.md`) |
-| **Core plugin** | NextGenTutors-Companion (`NGC_VERSION` 1.9.0) |
-| **Local dev** | Docker @ http://localhost:8890 (+ Agent Gateway :8787) |
-| **Last doc refresh** | 2026-08-03 |
+| **Core plugin** | NextGenTutors-Companion (`NGC_VERSION` **1.9.19**) |
+| **Theme version** | `BI_VERSION` **2.0.0** |
+| **Local dev** | Docker @ http://localhost:8890 (+ Agent Gateway :8787 · Ecosystem :8790) |
+| **Last doc refresh** | 2026-09-16 |
 
 ---
 
@@ -18,6 +19,7 @@
 | Audience | Document | Purpose |
 |----------|----------|---------|
 | **Everyone** | [SYSTEM-OVERVIEW.md](SYSTEM-OVERVIEW.md) | Whole-system map, data flow, verification status |
+| **Architects (deep)** | [architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) | Long-form architecture: boundaries, security, deploy |
 | **Operators (post-plugin)** | [tutorials/BEYONDINFINITY-SEQUENTIAL-SETUP.md](tutorials/BEYONDINFINITY-SEQUENTIAL-SETUP.md) | **Step-by-step: run BeyondInfinity + all features after required plugins are installed** |
 | **Executives / clients** | [client/NEXTGEN-TUTORS-ENTERPRISE-PRODUCT-SPECIFICATION.md](client/NEXTGEN-TUTORS-ENTERPRISE-PRODUCT-SPECIFICATION.md) | Product spec, personas, competitive positioning |
 | **Commercial deploy** | [COMMERCIAL-DEPLOYMENT-GUIDE.md](COMMERCIAL-DEPLOYMENT-GUIDE.md) | Licensed deployment, environments, go-live |
@@ -25,8 +27,9 @@
 | **Developers** | [DEVELOPER-GUIDE.md](DEVELOPER-GUIDE.md) | Onboarding, contracts, extension points |
 | **Agentic / MCP** | [GUIDES/AGENTIC-HOW-TO-USE.md](GUIDES/AGENTIC-HOW-TO-USE.md) | Control plane, tools, gateway, Docker :8890 |
 | **Free MCP config** | [GUIDES/MCP-SERVERS-FREE-CONFIG.md](GUIDES/MCP-SERVERS-FREE-CONFIG.md) | Cursor vs product MCP inventory |
-| **Codemaps** | [CODEMAPS/INDEX.md](CODEMAPS/INDEX.md) | Architecture maps from code |
+| **Codemaps** | [CODEMAPS/INDEX.md](CODEMAPS/INDEX.md) | Architecture maps from code (platform, domain, agentic, theme, services, RAD) |
 | **Architects** | [../ARCHITECTURE.md](../ARCHITECTURE.md) | SOLID package boundaries (repo root) |
+| **Debt / capabilities** | [../architecture/current-state/TECHNICAL-DEBT-REGISTER.md](../architecture/current-state/TECHNICAL-DEBT-REGISTER.md) | TD-RAD + capability inventory |
 | **Operators** | [tutorials/OPERATOR-TUTORIALS.md](tutorials/OPERATOR-TUTORIALS.md) | Plugin Manager, Docker, fleet install |
 | **End users** | [tutorials/user-manuals.md](tutorials/user-manuals.md) | Parent, tutor, admin, finance, support manuals |
 
