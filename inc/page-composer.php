@@ -196,13 +196,35 @@ function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
 	}
 
 	if ( ! $used_ui ) {
-		$cta_label = (string) ( $args['cta_label'] ?? '' );
-		$cta_url   = (string) ( $args['cta_url'] ?? '' );
-		$extra     = trim( (string) ( $args['class'] ?? '' ) );
+		$cta_label            = (string) ( $args['cta_label'] ?? '' );
+		$cta_url              = (string) ( $args['cta_url'] ?? '' );
+		$cta_secondary_label  = (string) ( $args['cta_secondary_label'] ?? '' );
+		$cta_secondary_url    = (string) ( $args['cta_secondary_url'] ?? '' );
+		$eyebrow              = (string) ( $args['eyebrow'] ?? '' );
+		$chips                = isset( $args['chips'] ) && is_array( $args['chips'] ) ? $args['chips'] : [];
+		$extra                = trim( (string) ( $args['class'] ?? '' ) );
+		$variant   = sanitize_key( (string) ( $args['variant'] ?? ( function_exists( 'bi_hero_variant' ) ? bi_hero_variant() : 'editorial' ) ) );
+		$allowed   = [ 'cinematic', 'editorial', 'search', 'trust', 'conversion', 'utility', 'auth', 'dashboard', 'legal' ];
+		if ( ! in_array( $variant, $allowed, true ) ) {
+			$variant = 'editorial';
+		}
+		$cinematic = ( 'cinematic' === $variant );
+		if ( ! empty( $args['video'] ) ) {
+			$cinematic = true;
+			$variant   = 'cinematic';
+		}
+		if ( $cinematic && function_exists( 'bi_allows_cinematic_assets' ) && ! bi_allows_cinematic_assets() ) {
+			$cinematic = false;
+			$variant   = 'editorial';
+		}
 		$img_key   = function_exists( 'bi_hero_image_key' ) ? bi_hero_image_key( $extra ) : 'hero_bg';
 		$bg_url    = function_exists( 'bi_get_theme_image_url' ) ? bi_get_theme_image_url( $img_key ) : '';
-		$video_url = function_exists( 'bi_tutoring_video_url' ) ? bi_tutoring_video_url( $slug ) : '';
-		$poster    = function_exists( 'bi_tutoring_video_poster_url' ) ? bi_tutoring_video_poster_url( $slug ) : '';
+		$video_url = '';
+		$poster    = '';
+		if ( $cinematic ) {
+			$video_url = function_exists( 'bi_tutoring_video_url' ) ? bi_tutoring_video_url( $slug ) : '';
+			$poster    = function_exists( 'bi_tutoring_video_poster_url' ) ? bi_tutoring_video_poster_url( $slug ) : '';
+		}
 		if ( ! $poster && $bg_url ) {
 			$poster = $bg_url;
 		}
@@ -214,19 +236,24 @@ function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
 			$title = __( 'NextGen Tutors', 'beyondinfinity' );
 		}
 
-		$hero_classes = trim( 'ng-page-hero bi-hero ngt-hero nbi-aurora-hero ng-page-hero--cinematic ng-page-hero--kinetic ' . $extra );
-		if ( $video_url || $poster ) {
+		$hero_classes = trim( 'ng-page-hero bi-hero ngt-hero ng-page-hero--kinetic ngi-hero ngi-hero--' . $variant . ' ' . $extra );
+		if ( $cinematic ) {
+			$hero_classes .= ' nbi-aurora-hero ng-page-hero--cinematic';
+		}
+		if ( $cinematic && ( $video_url || $poster ) ) {
 			$hero_classes .= ' ng-page-hero--has-video';
 		}
 		?>
-		<section class="<?php echo esc_attr( $hero_classes ); ?>" aria-labelledby="ng-page-hero-title" data-bi-kinetic-hero>
+		<section class="<?php echo esc_attr( $hero_classes ); ?>" aria-labelledby="ng-page-hero-title" data-bi-kinetic-hero data-hero-variant="<?php echo esc_attr( $variant ); ?>">
+			<?php if ( $cinematic ) : ?>
 			<div class="ng-page-hero__mesh" aria-hidden="true"></div>
 			<div class="nbi-aurora-layer" aria-hidden="true"></div>
 			<?php if ( function_exists( 'bi_nbi_render_constellation' ) ) { bi_nbi_render_constellation( [ 'id' => 'nbi-page-constellation' ] ); } ?>
+			<?php endif; ?>
 			<?php if ( $bg_url || $poster ) : ?>
 				<div class="ng-page-hero__photo" style="background-image:url(<?php echo esc_url( $poster ? $poster : $bg_url ); ?>)" aria-hidden="true"></div>
 			<?php endif; ?>
-			<?php if ( $video_url ) : ?>
+			<?php if ( $cinematic && $video_url ) : ?>
 				<video
 					class="ng-page-hero__video"
 					data-bi-cinematic
@@ -243,13 +270,41 @@ function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
 			<div class="ng-page-hero__scrim" aria-hidden="true"></div>
 			<div class="ng-container ng-page-hero__inner">
 				<div class="ng-page-hero__copy ng-reveal" data-bi-motion="slide-up">
+					<?php if ( $eyebrow ) : ?>
+						<p class="ng-page-hero__eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
+					<?php endif; ?>
 					<h1 id="ng-page-hero-title" class="ng-page-hero__title" data-bi-slide-title><?php echo esc_html( $title ); ?></h1>
 					<?php if ( $subtitle ) : ?>
 						<p class="ng-page-hero__subtitle"><?php echo esc_html( $subtitle ); ?></p>
 					<?php endif; ?>
-					<?php if ( $cta_label && $cta_url ) : ?>
+					<?php if ( $chips ) : ?>
+						<ul class="ng-page-hero__chips" role="list">
+							<?php foreach ( $chips as $chip ) : ?>
+								<?php
+								$chip_label = is_array( $chip ) ? (string) ( $chip['label'] ?? '' ) : (string) $chip;
+								$chip_url   = is_array( $chip ) ? (string) ( $chip['url'] ?? '' ) : '';
+								if ( '' === $chip_label ) {
+									continue;
+								}
+								?>
+								<li>
+									<?php if ( $chip_url ) : ?>
+										<a class="ng-page-hero__chip" href="<?php echo esc_url( $chip_url ); ?>"><?php echo esc_html( $chip_label ); ?></a>
+									<?php else : ?>
+										<span class="ng-page-hero__chip"><?php echo esc_html( $chip_label ); ?></span>
+									<?php endif; ?>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					<?php endif; ?>
+					<?php if ( ( $cta_label && $cta_url ) || ( $cta_secondary_label && $cta_secondary_url ) ) : ?>
 						<div class="ng-page-hero__actions">
-							<a class="ng-btn ng-btn--primary ngi-btn ngi-btn-primary" href="<?php echo esc_url( $cta_url ); ?>"><?php echo esc_html( $cta_label ); ?></a>
+							<?php if ( $cta_label && $cta_url ) : ?>
+								<a class="ng-btn ng-btn--primary ngi-btn ngi-btn-primary" href="<?php echo esc_url( $cta_url ); ?>"><?php echo esc_html( $cta_label ); ?></a>
+							<?php endif; ?>
+							<?php if ( $cta_secondary_label && $cta_secondary_url ) : ?>
+								<a class="ng-btn ng-btn--outline ngi-btn" href="<?php echo esc_url( $cta_secondary_url ); ?>"><?php echo esc_html( $cta_secondary_label ); ?></a>
+							<?php endif; ?>
 						</div>
 					<?php endif; ?>
 				</div>
@@ -268,12 +323,14 @@ function bi_render_modern_hero( $title, $subtitle = '', $args = [] ) {
 		<?php
 	}
 
+	$light      = function_exists( 'bi_page_visual_weight' ) && 'LIGHT' === bi_page_visual_weight();
+	$hero_var   = function_exists( 'bi_hero_variant' ) ? bi_hero_variant() : '';
 	$show_trust = ! isset( $args['show_trust'] ) || ! empty( $args['show_trust'] );
-	if ( $show_trust && bi_page_uses_marketing_chrome( $slug ) ) {
+	if ( $show_trust && ! $light && ! in_array( $hero_var, [ 'legal', 'auth', 'dashboard' ], true ) && bi_page_uses_marketing_chrome( $slug ) ) {
 		bi_page_render_trust_rail();
 	}
 
-	if ( function_exists( 'ng_ui_component' ) && in_array( $slug, [ 'about', 'become-a-tutor', 'home', 'pricing', 'guarantee', 'tutor-vetting', 'find-a-tutor' ], true ) ) {
+	if ( ! $light && function_exists( 'ng_ui_component' ) && in_array( $slug, [ 'about', 'become-a-tutor', 'home', 'pricing', 'find-a-tutor' ], true ) ) {
 		ng_ui_component( 'stats-band', [ 'page_key' => $slug ] );
 	}
 }
@@ -372,22 +429,24 @@ function bi_page_composer_assets() {
 		[ 'bi-style', 'ng-ui-components' ],
 		BI_VERSION
 	);
-	wp_enqueue_style(
-		'bi-cinematic-hero',
-		BI_URI . '/assets/css/bi-cinematic-hero.css',
-		[ 'bi-page-composer' ],
-		BI_VERSION
-	);
+	if ( function_exists( 'bi_allows_cinematic_assets' ) ? bi_allows_cinematic_assets() : false ) {
+		wp_enqueue_style(
+			'bi-cinematic-hero',
+			BI_URI . '/assets/css/bi-cinematic-hero.css',
+			[ 'bi-page-composer' ],
+			BI_VERSION
+		);
+		wp_enqueue_script(
+			'bi-cinematic-video',
+			BI_URI . '/assets/js/bi-cinematic-video.js',
+			[],
+			BI_VERSION,
+			true
+		);
+	}
 	wp_enqueue_script(
 		'bi-page-composer',
 		BI_URI . '/assets/js/page-composer.js',
-		[],
-		BI_VERSION,
-		true
-	);
-	wp_enqueue_script(
-		'bi-cinematic-video',
-		BI_URI . '/assets/js/bi-cinematic-video.js',
 		[],
 		BI_VERSION,
 		true

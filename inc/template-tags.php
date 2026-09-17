@@ -181,6 +181,79 @@ function bi_real_marketing_kpis() {
 }
 
 /**
+ * Whether a marketing KPI is an unpublished empty slot (never print "EMPTY STATE").
+ *
+ * @param mixed $value KPI value.
+ * @return bool
+ */
+function bi_kpi_is_empty( $value ) {
+	$raw = trim( (string) $value );
+	if ( '' === $raw ) {
+		return true;
+	}
+	return 0 === strcasecmp( $raw, 'EMPTY STATE' );
+}
+
+/**
+ * tel: href from a displayed phone string.
+ *
+ * @param string $phone Optional; defaults to theme support phone.
+ * @return string
+ */
+function bi_phone_tel_href( $phone = '' ) {
+	$phone = $phone ? (string) $phone : (string) bi_get_phone();
+	$digits = preg_replace( '/[^0-9+]/', '', $phone );
+	return 'tel:' . $digits;
+}
+
+/**
+ * In-page contents chips (legal / trust TOC). Not a new DS primitive.
+ *
+ * @param array<int, array{id:string,label:string}> $items Anchor items.
+ * @param string                                    $label Nav aria-label.
+ */
+function bi_page_toc( $items, $label = '' ) {
+	if ( empty( $items ) || ! is_array( $items ) ) {
+		return;
+	}
+	$label = $label ? (string) $label : __( 'On this page', 'beyondinfinity' );
+	echo '<nav class="bi-page-toc" aria-label="' . esc_attr( $label ) . '">';
+	echo '<ul class="bi-page-toc__list">';
+	foreach ( $items as $item ) {
+		$id    = sanitize_title( (string) ( $item['id'] ?? '' ) );
+		$text  = (string) ( $item['label'] ?? '' );
+		if ( '' === $id || '' === $text ) {
+			continue;
+		}
+		echo '<li><a class="bi-page-toc__chip" href="#' . esc_attr( $id ) . '">' . esc_html( $text ) . '</a></li>';
+	}
+	echo '</ul></nav>';
+}
+
+/**
+ * Related destination chips.
+ *
+ * @param array<int, array{url:string,label:string}> $links Links.
+ * @param string                                     $label Nav aria-label.
+ */
+function bi_related_nav( $links, $label = '' ) {
+	if ( empty( $links ) || ! is_array( $links ) ) {
+		return;
+	}
+	$label = $label ? (string) $label : __( 'Related', 'beyondinfinity' );
+	echo '<nav class="bi-related-nav" aria-label="' . esc_attr( $label ) . '">';
+	foreach ( $links as $link ) {
+		$url  = (string) ( $link['url'] ?? '' );
+		$text = (string) ( $link['label'] ?? '' );
+		if ( '' === $url || '' === $text ) {
+			continue;
+		}
+		echo '<a class="bi-related-nav__chip" href="' . esc_url( $url ) . '">' . esc_html( $text ) . '</a>';
+	}
+	echo '</nav>';
+}
+
+/**
  * Policy/SLA labels (configurable, non-analytic values).
  *
  * @return array<string, string>
@@ -213,16 +286,24 @@ function bi_render_shortcode( $shortcode, $fallback_message = '' ) {
 }
 
 function bi_hero( $title, $subtitle = '', $class = '' ) {
+	$extra = [];
+	if ( is_array( $class ) ) {
+		$extra = $class;
+		$class = (string) ( $extra['class'] ?? '' );
+	}
 	if ( function_exists( 'bi_render_modern_hero' ) ) {
 		$kinetic = ( function_exists( 'bi_uses_kinetic_ui' ) && bi_uses_kinetic_ui() ) ? ' ng-page-hero--kinetic' : '';
 		bi_render_modern_hero(
 			$title,
 			$subtitle,
-			[
-				'class'      => trim( $class . $kinetic ),
-				'show_stats' => false,
-				'show_trust' => true,
-			]
+			array_merge(
+				[
+					'class'      => trim( $class . $kinetic ),
+					'show_stats' => false,
+					'show_trust' => true,
+				],
+				$extra
+			)
 		);
 		return;
 	}
@@ -590,14 +671,14 @@ function bi_badge_table( $rows ) {
  * @param array<int, array{title:string,text:string}> $steps Steps.
  */
 function bi_vsteps( $steps ) {
-    echo '<div class="bi-vsteps">';
+    echo '<ol class="bi-vsteps">';
     foreach ( $steps as $i => $step ) {
-        echo '<div class="bi-vstep ngt-animate ngt-animate--delay-' . esc_attr( (string) ( ( $i % 3 ) + 1 ) ) . '">';
-        echo '<span class="bi-vstep__n">' . esc_html( (string) ( $i + 1 ) ) . '</span>';
+        echo '<li class="bi-vstep ngt-animate ngt-animate--delay-' . esc_attr( (string) ( ( $i % 3 ) + 1 ) ) . '" tabindex="0">';
+        echo '<span class="bi-vstep__n" aria-hidden="true">' . esc_html( (string) ( $i + 1 ) ) . '</span>';
         echo '<div><div class="bi-vstep__t">' . esc_html( $step['title'] ) . '</div>';
-        echo '<p class="bi-vstep__d">' . esc_html( $step['text'] ) . '</p></div></div>';
+        echo '<p class="bi-vstep__d">' . esc_html( $step['text'] ) . '</p></div></li>';
     }
-    echo '</div>';
+    echo '</ol>';
 }
 
 /**
@@ -606,9 +687,29 @@ function bi_vsteps( $steps ) {
  * @param array<int, array{value:string,label:string}> $metrics Metrics.
  */
 function bi_metric_grid( $metrics ) {
+    $rows = [];
+    foreach ( (array) $metrics as $metric ) {
+        $value = (string) ( $metric['value'] ?? '' );
+        if ( bi_kpi_is_empty( $value ) ) {
+            if ( ! empty( $metric['empty'] ) ) {
+                $rows[] = [
+                    'value' => (string) $metric['empty'],
+                    'label' => (string) ( $metric['label'] ?? '' ),
+                    'empty' => true,
+                ];
+            }
+            continue;
+        }
+        $rows[] = $metric;
+    }
+    if ( empty( $rows ) ) {
+        echo '<p class="bi-metric-empty">' . esc_html__( 'We’ll publish these rates when we have enough applications.', 'beyondinfinity' ) . '</p>';
+        return;
+    }
     echo '<div class="bi-metric-grid">';
-    foreach ( $metrics as $i => $metric ) {
-        echo '<div class="ngt-card bi-metric ngt-animate ngt-animate--delay-' . esc_attr( (string) ( ( $i % 4 ) + 1 ) ) . '">';
+    foreach ( $rows as $i => $metric ) {
+        $empty_class = ! empty( $metric['empty'] ) ? ' bi-metric--empty' : '';
+        echo '<div class="ngt-card bi-metric' . esc_attr( $empty_class ) . ' ngt-animate ngt-animate--delay-' . esc_attr( (string) ( ( $i % 4 ) + 1 ) ) . '">';
         echo '<div class="bi-metric__n">' . esc_html( $metric['value'] ) . '</div>';
         echo '<div class="bi-metric__l">' . esc_html( $metric['label'] ) . '</div>';
         echo '</div>';
@@ -1036,8 +1137,8 @@ function bi_render_tutor_profile( $tutor ) {
     }
 
     $rate    = (int) ( $tutor['hourlyRate'] ?? 0 );
-    $rating  = number_format( (float) ( $tutor['rating'] ?? 4.8 ), 2 );
-    $reviews = (int) ( $tutor['reviewsCount'] ?? 0 );
+    $rating  = (float) ( $tutor['rating'] ?? 0 );
+    $reviews = (int) ( $tutor['reviewsCount'] ?? $tutor['reviews'] ?? 0 );
     $badges  = [
         __( 'ID Verified', 'beyondinfinity' ),
         __( 'Degree Certified', 'beyondinfinity' ),
@@ -1067,11 +1168,24 @@ function bi_render_tutor_profile( $tutor ) {
         : home_url( '/contact/' );
     ?>
     <section class="bi-profile-hero ngt-hero" style="min-height:auto;padding:64px 0 48px">
-      <div class="ngt-hero__bg" style="background:linear-gradient(135deg,var(--ngt-primary),#0a3d6b)"></div>
+      <div class="ngt-hero__bg" style="background:linear-gradient(135deg,var(--ngi-navy,#07172f),var(--ngi-blue,#123c7c))"></div>
       <div class="ngt-container bi-profile-hero__inner ngt-animate">
-        <div class="bi-profile-hero__photo">
+        <div class="bi-profile-hero__photo<?php echo function_exists( 'bi_3d_enabled' ) && bi_3d_enabled() ? ' bi-tilt-3d' : ''; ?>"<?php echo function_exists( 'bi_3d_enabled' ) && bi_3d_enabled() ? ' data-bi-tilt' : ''; ?>>
           <?php if ( ! empty( $tutor['imageUrl'] ) ) : ?>
             <img src="<?php echo esc_url( $tutor['imageUrl'] ); ?>" alt="<?php echo esc_attr( $tutor['name'] ); ?>" loading="eager" referrerpolicy="no-referrer" />
+          <?php else : ?>
+            <?php
+            $initials = '';
+            foreach ( preg_split( '/\s+/', (string) $tutor['name'] ) as $part ) {
+                if ( '' !== $part ) {
+                    $initials .= strtoupper( substr( $part, 0, 1 ) );
+                }
+                if ( strlen( $initials ) >= 2 ) {
+                    break;
+                }
+            }
+            ?>
+            <span class="bi-profile-hero__initials" aria-hidden="true"><?php echo esc_html( $initials ?: '?' ); ?></span>
           <?php endif; ?>
         </div>
         <div class="bi-profile-hero__body">
@@ -1081,17 +1195,23 @@ function bi_render_tutor_profile( $tutor ) {
             <p class="bi-profile-hero__degree"><?php echo esc_html( $tutor['degree'] ); ?></p>
           <?php endif; ?>
           <div class="bi-profile-hero__meta">
-            <span>★ <?php echo esc_html( $rating ); ?><?php echo $reviews ? ' · ' . esc_html( (string) $reviews ) . ' ' . esc_html__( 'reviews', 'beyondinfinity' ) : ''; ?></span>
+            <?php if ( $rating > 0 ) : ?>
+              <span>★ <?php echo esc_html( number_format( $rating, 2 ) ); ?><?php echo $reviews ? ' · ' . esc_html( (string) $reviews ) . ' ' . esc_html__( 'reviews', 'beyondinfinity' ) : ''; ?></span>
+            <?php else : ?>
+              <span><?php esc_html_e( 'Rating coming soon', 'beyondinfinity' ); ?></span>
+            <?php endif; ?>
             <?php if ( $rate > 0 ) : ?>
               <span><?php echo esc_html( 'R' . $rate . '/hr' ); ?></span>
+            <?php else : ?>
+              <span><?php esc_html_e( 'Rate on request', 'beyondinfinity' ); ?></span>
             <?php endif; ?>
           </div>
           <?php if ( $approved ) : ?>
             <div class="bi-profile-badges" aria-label="<?php esc_attr_e( 'Tutor verification', 'beyondinfinity' ); ?>">
-              <?php foreach ( $badges as $badge ) : ?>
-                <span class="bi-profile-badge"><?php echo esc_html( $badge ); ?></span>
-              <?php endforeach; ?>
+              <span class="bi-profile-badge"><?php esc_html_e( 'Verified tutor', 'beyondinfinity' ); ?></span>
             </div>
+          <?php else : ?>
+            <p class="bi-profile-hero__degree"><?php esc_html_e( 'Verification in progress', 'beyondinfinity' ); ?></p>
           <?php endif; ?>
           <div class="bi-profile-hero__cta">
             <a
@@ -1114,7 +1234,7 @@ function bi_render_tutor_profile( $tutor ) {
         <div class="bi-profile-main">
           <div class="ngt-card ngt-animate" style="padding:32px;margin-bottom:24px">
             <h2 style="margin-bottom:16px"><?php esc_html_e( 'About', 'beyondinfinity' ); ?> <?php echo esc_html( $tutor['name'] ); ?></h2>
-            <p style="margin:0;line-height:1.7;color:var(--ngt-text-2)"><?php echo esc_html( $tutor['bio'] ?? __( 'Patient, prepared tutoring tailored to South African curricula.', 'beyondinfinity' ) ); ?></p>
+            <p style="margin:0;line-height:1.7;color:var(--ngt-text-2)"><?php echo esc_html( $tutor['bio'] ?: __( 'Profile details will appear here once this tutor completes their bio.', 'beyondinfinity' ) ); ?></p>
             <?php if ( ! empty( $tutor['subjects'] ) ) : ?>
               <div class="bi-profile-tags" style="margin-top:18px">
                 <?php foreach ( (array) $tutor['subjects'] as $subject ) : ?>
@@ -1184,12 +1304,22 @@ function bi_render_tutor_profile( $tutor ) {
         <aside class="bi-profile-side">
           <div class="ngt-card ngt-animate" style="padding:28px;margin-bottom:20px">
             <h3 style="margin-bottom:14px"><?php esc_html_e( 'At a Glance', 'beyondinfinity' ); ?></h3>
-            <?php bi_bullets( [
-              __( 'Online & in-person sessions available', 'beyondinfinity' ),
-              __( 'Grades 8–12 & tertiary support', 'beyondinfinity' ),
-              __( 'CAPS, IEB & Cambridge curricula', 'beyondinfinity' ),
-              __( 'Platform-managed payments only', 'beyondinfinity' ),
-            ] ); ?>
+            <?php
+            $format_line = ! empty( $tutor['formats'] )
+                ? implode( ' · ', array_map( 'strval', (array) $tutor['formats'] ) )
+                : __( 'Online & in-person sessions available', 'beyondinfinity' );
+            $grade_line  = ! empty( $tutor['grades'] )
+                ? implode( ', ', array_map( 'strval', (array) $tutor['grades'] ) )
+                : __( 'Grades 8–12 & tertiary support', 'beyondinfinity' );
+            bi_bullets(
+                [
+                    $format_line,
+                    $grade_line,
+                    __( 'CAPS, IEB & Cambridge curricula', 'beyondinfinity' ),
+                    __( 'Platform-managed payments only', 'beyondinfinity' ),
+                ]
+            );
+            ?>
             <a href="<?php echo esc_url( home_url( '/tutor-vetting' ) ); ?>" class="ngt-btn ngt-btn--outline ngt-btn--block" style="margin-top:20px"><?php esc_html_e( 'How We Vet Tutors', 'beyondinfinity' ); ?></a>
           </div>
           <div class="ngt-card ngt-animate bi-center" style="padding:28px;background:var(--ngt-primary-light)">
@@ -1197,6 +1327,66 @@ function bi_render_tutor_profile( $tutor ) {
             <a href="<?php echo esc_url( home_url( '/guarantee' ) ); ?>" class="ngt-btn ngt-btn--primary"><?php esc_html_e( 'View Guarantee', 'beyondinfinity' ); ?></a>
           </div>
         </aside>
+      </div>
+    </section>
+    <?php
+    if ( function_exists( 'bi_tf_module' ) ) {
+        bi_tf_module( 'guarantee-panel' );
+    }
+    if ( function_exists( 'bi_render_related_tutors' ) ) {
+        bi_render_related_tutors( $tutor );
+    }
+}
+
+/**
+ * Related live tutors (same subject), excluding the current profile.
+ *
+ * @param array<string, mixed> $tutor Current tutor.
+ */
+function bi_render_related_tutors( $tutor ) {
+    $exclude = (int) ( $tutor['postId'] ?? 0 );
+    $subject = '';
+    if ( ! empty( $tutor['subjects'][0] ) ) {
+        $subject = sanitize_title( (string) $tutor['subjects'][0] );
+    }
+    $items = [];
+    if ( class_exists( 'NGC_Marketplace' ) && method_exists( 'NGC_Marketplace', 'query_tutors' ) ) {
+        $result = NGC_Marketplace::query_tutors(
+            [
+                'per_page' => 4,
+                'subject'  => $subject,
+                '_nofall'  => 1,
+            ]
+        );
+        $raw = is_array( $result ) ? ( $result['items'] ?? $result['tutors'] ?? $result ) : [];
+        foreach ( (array) $raw as $item ) {
+            $id = (int) ( $item['postId'] ?? $item['id'] ?? 0 );
+            if ( $id && $id !== $exclude ) {
+                $items[] = $item;
+            }
+            if ( count( $items ) >= 3 ) {
+                break;
+            }
+        }
+    }
+    if ( ! $items ) {
+        return;
+    }
+    ?>
+    <section class="ngt-section" aria-labelledby="bi-related-tutors-title">
+      <div class="ngt-container">
+        <h2 id="bi-related-tutors-title"><?php esc_html_e( 'Related tutors', 'beyondinfinity' ); ?></h2>
+        <div class="bi-dir-grid">
+          <?php foreach ( $items as $related ) : ?>
+            <?php
+            if ( is_array( $related ) && function_exists( 'bi_render_tutor_carousel_card' ) ) {
+                echo '<div class="bi-dir-card ngt-card">';
+                bi_render_tutor_carousel_card( $related );
+                echo '</div>';
+            }
+            ?>
+          <?php endforeach; ?>
+        </div>
       </div>
     </section>
     <?php
@@ -1220,14 +1410,25 @@ function bi_get_search_query_arg( $key ) {
 /**
  * Hero subject/location search (pages-to-review/index.html).
  */
-function bi_hero_search_form() {
+function bi_hero_search_form( $args = [] ) {
+    $args = wp_parse_args(
+        $args,
+        [
+            'expanded' => false,
+            'action'   => home_url( '/find-a-tutor/' ),
+        ]
+    );
     $subjects         = function_exists( 'bi_get_subject_options' ) ? bi_get_subject_options() : [];
     $selected_subject = bi_get_search_query_arg( 'subject' );
     $location         = bi_get_search_query_arg( 'location' );
+    $province         = function_exists( 'bi_get_search_query_arg' ) ? bi_get_search_query_arg( 'province' ) : '';
+    if ( ! $province && $location ) {
+        $province = $location;
+    }
     ?>
-    <form class="bi-hero-search ngt-animate" action="<?php echo esc_url( home_url( '/find-a-tutor' ) ); ?>" method="get">
+    <form class="bi-hero-search ngt-animate<?php echo ! empty( $args['expanded'] ) ? ' bi-hero-search--dock' : ''; ?>" action="<?php echo esc_url( $args['action'] ); ?>" method="get">
       <div class="bi-hero-search__field">
-        <label class="screen-reader-text" for="bi-hero-subject"><?php esc_html_e( 'Subject', 'beyondinfinity' ); ?></label>
+        <label for="bi-hero-subject"><?php esc_html_e( 'Subject', 'beyondinfinity' ); ?></label>
         <select id="bi-hero-subject" name="subject">
           <option value=""><?php esc_html_e( 'Choose a subject…', 'beyondinfinity' ); ?></option>
           <?php foreach ( $subjects as $slug => $label ) : ?>
@@ -1235,11 +1436,40 @@ function bi_hero_search_form() {
           <?php endforeach; ?>
         </select>
       </div>
+      <?php if ( empty( $args['expanded'] ) ) : ?>
       <div class="bi-hero-search__field">
         <label class="screen-reader-text" for="bi-hero-location"><?php esc_html_e( 'Location', 'beyondinfinity' ); ?></label>
         <input type="text" id="bi-hero-location" name="location" value="<?php echo esc_attr( $location ); ?>" placeholder="<?php esc_attr_e( 'Your city or suburb', 'beyondinfinity' ); ?>" />
       </div>
-      <button type="submit" class="ngt-btn ngt-btn--secondary"><?php esc_html_e( 'Search', 'beyondinfinity' ); ?></button>
+      <?php else : ?>
+      <?php
+        $grades         = function_exists( 'bi_get_grade_options' ) ? bi_get_grade_options() : [];
+        $selected_grade = bi_get_search_query_arg( 'grade' );
+        $selected_format = bi_get_search_query_arg( 'format' );
+      ?>
+      <div class="bi-hero-search__field">
+        <label for="bi-hero-grade"><?php esc_html_e( 'Grade', 'beyondinfinity' ); ?></label>
+        <select id="bi-hero-grade" name="grade">
+          <option value=""><?php esc_html_e( 'Any grade', 'beyondinfinity' ); ?></option>
+          <?php foreach ( $grades as $slug => $label ) : ?>
+            <option value="<?php echo esc_attr( (string) $slug ); ?>" <?php selected( $selected_grade, (string) $slug ); ?>><?php echo esc_html( (string) $label ); ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="bi-hero-search__field">
+        <label for="bi-hero-province"><?php esc_html_e( 'Province', 'beyondinfinity' ); ?></label>
+        <input type="text" id="bi-hero-province" name="province" value="<?php echo esc_attr( $province ); ?>" placeholder="<?php esc_attr_e( 'Province or city', 'beyondinfinity' ); ?>" />
+      </div>
+      <div class="bi-hero-search__field">
+        <label for="bi-hero-format"><?php esc_html_e( 'Format', 'beyondinfinity' ); ?></label>
+        <select id="bi-hero-format" name="format">
+          <option value=""><?php esc_html_e( 'Either', 'beyondinfinity' ); ?></option>
+          <option value="online" <?php selected( $selected_format, 'online' ); ?>><?php esc_html_e( 'Online', 'beyondinfinity' ); ?></option>
+          <option value="in-person" <?php selected( $selected_format, 'in-person' ); ?>><?php esc_html_e( 'In-person', 'beyondinfinity' ); ?></option>
+        </select>
+      </div>
+      <?php endif; ?>
+      <button type="submit" class="ngt-btn ngt-btn--primary tf-btn"><?php echo ! empty( $args['expanded'] ) ? esc_html__( 'Show tutors', 'beyondinfinity' ) : esc_html__( 'Search', 'beyondinfinity' ); ?></button>
     </form>
     <?php
 }
