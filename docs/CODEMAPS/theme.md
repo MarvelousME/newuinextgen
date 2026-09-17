@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-09-16  
 **Entry Points:**
-- `NextGenTutors-BeyondInfinity/functions.php` (`BI_VERSION` 2.0.0)
+- `NextgenTutors-TutorFabulous/functions.php` (`BI_VERSION` 2.1.1)
 - Docker theme slug: `nextgentutors-tutorfabulous` (legacy alias `nextgentutors-beyondinfinity`)
 - Policy: `THEME-TUTORFABULOUS.md`
 
@@ -12,7 +12,7 @@
 Browser
    │
    ▼
- BeyondInfinity (TutorFabulous brand)
+ TutorFabulous theme (edit / package root)
    ├─ page templates / kinetic home
    ├─ UI Library partials (template-parts/ui-library/)
    ├─ Elementor / NextGen widgets (3D scroll, subjects, …)
@@ -20,6 +20,8 @@ Browser
 ```
 
 **Rule:** Theme renders; Companion owns data. No hardcoded tutor prices/ratings in UI Library partials.
+
+**Identity:** Edit/package root = `NextgenTutors-TutorFabulous/`. `NextGenTutors-BeyondInfinity/` is a **legacy alias** only (same product family; old activations). Text domain stays `beyondinfinity`.
 
 ## Key Modules
 
@@ -41,7 +43,7 @@ Browser
 
 ## Overlays (Docker)
 
-Repo-root `inc/`, `assets/`, `template-parts/` may overlay the mounted theme at runtime. Prefer editing **`NextGenTutors-BeyondInfinity/`**; collapse overlays into that package over time.
+Repo-root `inc/`, `assets/`, `template-parts/` may still mount onto the primary theme slug at runtime (Docker/Windows path history). Prefer editing **`NextgenTutors-TutorFabulous/`** so the package stays complete and overlays remain optional. Do not treat `NextGenTutors-BeyondInfinity/` as the edit root (legacy alias only).
 
 ## External Dependencies
 

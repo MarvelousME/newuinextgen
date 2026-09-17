@@ -1,16 +1,42 @@
-# NextGen Tutors PRODUCTION
+﻿# NextGen Tutors â€” PRODUCTION Delivery
 
-Release train **2026.09.12**. Build with:
+**Release train:** 2026.09.14  
+**Packages:** `01-INSTALLABLE-PACKAGES/`  
+**Checksums:** `CHECKSUMS.sha256`  
+**Manifest:** `RELEASE-MANIFEST.json`
+
+## What this is
+
+A client-ready production distribution of the NextGen Tutors WordPress theme and first-party plugins, plus architecture and operations documentation. **TutorFabulous** is the active brand / edit root; **BeyondInfinity** is the legacy package name still used in some ZIP / train labels.
+
+## Quick start
+
+1. Read `02-DOCUMENTATION/INSTALLATION-GUIDE.md`
+2. Verify `CHECKSUMS.sha256`
+3. Install packages in the documented order on a **fresh** WordPress site
+4. Configure external credentials (PayFast, SMTP, CRM/LMS as needed)
+5. Sign `04-VALIDATION/RELEASE-ACCEPTANCE.md` only after clean-install evidence
+
+## Build / test (maintainers)
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/build-production-release.ps1
+powershell -ExecutionPolicy Bypass -File scripts\Build-NextGenProductionRelease.ps1
+powershell -ExecutionPolicy Bypass -File scripts\Test-NextGenProductionRelease.ps1
+cd docker; .\clean-install.ps1   # http://localhost:8891
 ```
 
-Clean-room ZIP install (isolated Docker project, port **8891**):
+## Documentation map
 
-```powershell
-cd docker
-.\clean-install.ps1
-```
+| Folder | Purpose |
+|--------|---------|
+| 01-INSTALLABLE-PACKAGES | Theme/plugin ZIPs + Hello Elementor + drop-ins |
+| 02-DOCUMENTATION | Install, admin, persona, security, upgrade guides |
+| 03-ARCHITECTURE | System/theme/companion/data/REST/RBAC/motion docs |
+| 04-VALIDATION | Inventory, parity, security, install tests, logs |
+| 05-MIGRATION | Legacy mapping + migration guides |
+| 06-CLIENT-HANDOVER | Non-developer start pack |
+| 07-RELEASE-MANIFEST | Per-package hashes and release metadata |
 
-Start at [02-DOCUMENTATION/README.md](02-DOCUMENTATION/README.md). Verify checksums in `CHECKSUMS.sha256`. Do not install the monorepo root as a theme.
+## Support
+
+See `02-DOCUMENTATION/TROUBLESHOOTING.md`. Do **not** install the monorepo root as a theme.

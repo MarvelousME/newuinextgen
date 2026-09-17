@@ -1,9 +1,9 @@
 # Platform / Domain Codemap
 
-**Last Updated:** 2026-09-16  
+**Last Updated:** 2026-09-17  
 **Entry Points:**
 - `NextGenTutors-Companion/nextgencompanion.php`
-- `NextGenTutors-BeyondInfinity/functions.php` (Docker: `nextgentutors-tutorfabulous`)
+- `NextgenTutors-TutorFabulous/functions.php` (Docker: `nextgentutors-tutorfabulous`; BeyondInfinity = legacy alias)
 - `services/ngt-agent-gateway/src/server.js`
 - `rad-platform/cli/discover.mjs`
 
@@ -13,7 +13,7 @@
 Browser / Elementor
         │
         ▼
- TutorFabulous theme (BeyondInfinity package)
+ TutorFabulous theme (`NextgenTutors-TutorFabulous/`; BeyondInfinity = legacy alias)
         │  [ngc_*] shortcodes / ngc/v1 REST
         ▼
  Companion (NGC_Module_Registry)
@@ -36,7 +36,8 @@ Browser / Elementor
 | Module registry | `includes/modules/class-ngc-module-registry.php` | Lazy bootstraps: matching, payments, ai, integrations, platform |
 | Matching | `includes/matching/` | Propose/score matches |
 | Payments | `includes/payments/` | WC settle + payouts |
-| Bookings | `includes/class-ngc-bookings.php` | Session lifecycle (+ Amelia adapter) |
+| Bookings | `includes/class-ngc-bookings.php` | Scheduling truth (+ Amelia adapter) |
+| Session commerce | `includes/session/` | Provision, checkout integrity, launch (see [session-commerce.md](session-commerce.md)) |
 | Policy Bridge | `includes/platform/class-ngc-policy-bridge.php` | Capability authorize (default DENY) |
 | Authz matrix | `includes/platform/class-ngc-authz-matrix.php` | Cap → permission audit |
 | Secret Vault | `includes/agentic/class-ngc-secret-vault.php` | `env:` + encrypted options |

@@ -1,12 +1,12 @@
 # System architecture
 
-Release train 2026.09.12. Live code roots: BeyondInfinity theme 1.9.29, Companion 1.9.19.
+Release train 2026.09.12. Live code roots: TutorFabulous theme (`BI_VERSION` 2.1.1; BeyondInfinity = legacy package name / train ZIP label 1.9.29), Companion 1.9.22.
 
 ```mermaid
 flowchart TB
   WP[WordPress]
   Hello[Hello Elementor]
-  Theme[BeyondInfinity presentation]
+  Theme[TutorFabulous presentation]
   Comp[Companion domain]
   Support[PluginManager MissionControl Subjects Filmstrip Scroll3D]
   WP --> Hello --> Theme

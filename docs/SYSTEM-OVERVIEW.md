@@ -1,9 +1,9 @@
 # NextGen Tutors REVAMP — System Overview
 
 **Last updated:** 2026-09-16  
-**Stack version:** Theme `BI_VERSION` **2.0.0** · Companion `NGC_VERSION` **1.9.19**  
+**Stack version:** Theme `BI_VERSION` **2.1.1** · Companion `NGC_VERSION` **1.9.22**  
 **Local dev:** Docker WordPress @ http://localhost:8890 · Agent Gateway :8787 · Ecosystem :8790 (overlay)  
-**Theme edit root:** `NextGenTutors-BeyondInfinity/` (brand TutorFabulous; text domain `beyondinfinity`) — see `THEME-TUTORFABULOUS.md`  
+**Theme edit root:** `NextgenTutors-TutorFabulous/` (text domain `beyondinfinity`; `NextGenTutors-BeyondInfinity/` = legacy alias only) — see `THEME-TUTORFABULOUS.md`  
 **Long-form architecture:** [architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) · [CODEMAPS/INDEX.md](CODEMAPS/INDEX.md)
 
 This document is the canonical **whole-system map** of the REVAMP monorepo: what each package does, how data flows, what is verified, and what remains partial.
@@ -16,7 +16,7 @@ NextGen Tutors is a **WordPress modular-monolith solution** (theme + Companion +
 
 | Package | Role |
 |---------|------|
-| **BeyondInfinity / TutorFabulous** (theme) | Presentation, page shells, design system, kinetic homepage, UI Library partials. Edit root: `NextGenTutors-BeyondInfinity/` |
+| **TutorFabulous** (theme) | Presentation, page shells, design system, kinetic homepage, UI Library partials. Edit root: `NextgenTutors-TutorFabulous/` (BeyondInfinity = legacy alias) |
 | **Companion** (plugin) | Business logic, `wp_ngc_*` tables, REST, workflows, AI suite, agents, Policy Bridge |
 | **AI-Integration** | Governed AI transport (no domain ownership) |
 | **BeyondMeasure** | Admin control-plane SPA (no scoring/payments ownership) |
@@ -43,7 +43,8 @@ NextGen Tutors is a **WordPress modular-monolith solution** (theme + Companion +
 
 ```
 newuinextgen/
-├── NextGenTutors-BeyondInfinity/     # ONLY theme edit / package root (TutorFabulous brand)
+├── NextgenTutors-TutorFabulous/      # ONLY theme edit / package root
+├── NextGenTutors-BeyondInfinity/     # Legacy alias only (do not prefer as edit root)
 ├── NextGenTutors-Companion/          # Plugin (domain + API + agents)
 ├── NextGenTutors-AI-Integration/     # AI transport governance
 ├── NextGenTutors-BeyondMeasure/      # Admin control-plane SPA
@@ -61,11 +62,11 @@ newuinextgen/
 └── ARCHITECTURE.md                   # Package SOLID contract
 ```
 
-**Not a second edit root:** workspace-root `inc/`, `assets/`, `template-parts/`, … are Docker **live overlays** onto `themes/nextgentutors-tutorfabulous` (they win at runtime). Prefer collapsing into `NextGenTutors-BeyondInfinity/`; keep legacy slug `nextgentutors-beyondinfinity` as an alias mount only.
+**Not a second edit root:** workspace-root `inc/`, `assets/`, `template-parts/`, … may still bind as Docker **live overlays** onto `themes/nextgentutors-tutorfabulous` (they win at runtime). Prefer keeping `NextgenTutors-TutorFabulous/` complete so overlays stay optional; keep legacy slug `nextgentutors-beyondinfinity` as an alias mount only.
 
 ---
 
-## 3. Theme: BeyondInfinity / TutorFabulous
+## 3. Theme: TutorFabulous (BeyondInfinity = legacy alias)
 
 ### 3.1 Bootstrap (`functions.php`)
 

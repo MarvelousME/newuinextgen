@@ -4,13 +4,15 @@ Release train **2026.09.12**. Package versions are **WordPress headers**, not ZI
 
 This folder is the client-facing production kit. Install from `../01-INSTALLABLE-PACKAGES/` onto a **brand-new WordPress** instance. Do not unzip the monorepo root as a theme.
 
+**Brand note:** **TutorFabulous** (`NextgenTutors-TutorFabulous/`) is the active brand and edit root; **BeyondInfinity** remains the legacy package / ZIP name in this production train (same product family; text domain stays `beyondinfinity`).
+
 ## What ships
 
 | Package | Version | Role | Required |
 |---|---|---|---|
 | Hello Elementor | 3.5.1 | Parent theme | Yes |
-| NextGenTutors-BeyondInfinity | 1.9.29 | Presentation | Yes |
-| NextGenTutors-Companion | 1.9.19 | Domain / persistence / REST | Yes |
+| NextGenTutors-BeyondInfinity | 1.9.29 | Presentation (legacy package name; active brand = TutorFabulous) | Yes |
+| NextGenTutors-Companion | 1.9.22 | Domain / persistence / REST | Yes |
 | NextGenTutors-Plugin-Manager | 1.3.5 | Install order / health | Yes |
 | NextGenTutors-Mission-Control | 1.0.0 | Onboarding / ops | Yes |
 | nextgen-3d-scroll-manager | 1.2.0 | GSAP/3D motion | Yes |

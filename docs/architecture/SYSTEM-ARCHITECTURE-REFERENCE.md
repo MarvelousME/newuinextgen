@@ -15,8 +15,8 @@ NextGen Tutors is a **South African tutoring marketplace** delivered primarily a
 
 | Concern | Owner package | Version constant |
 |---------|---------------|------------------|
-| Presentation | `NextGenTutors-BeyondInfinity/` (TutorFabulous brand) | `BI_VERSION` **2.0.0** |
-| Domain / API / agents | `NextGenTutors-Companion/` | `NGC_VERSION` **1.9.19** |
+| Presentation | `NextgenTutors-TutorFabulous/` (BeyondInfinity = legacy alias) | `BI_VERSION` **2.1.1** |
+| Domain / API / agents | `NextGenTutors-Companion/` | `NGC_VERSION` **1.9.22** |
 | AI transport governance | `NextGenTutors-AI-Integration/` | plugin header |
 | Ops install / health | `NextGenTutors-Plugin-Manager/` | — |
 | HTML → pages migration | `NextGenTutors-Html-Importer/` | — |
@@ -56,7 +56,7 @@ Local staging: WordPress **:8890**, Agent Gateway **:8787**, Ecosystem API **:87
 Browser / Elementor
         │
         ▼
- BeyondInfinity theme
+ TutorFabulous theme (BeyondInfinity = legacy alias)
         │  shortcodes / REST
         ▼
  Companion (modular monolith)
@@ -91,7 +91,7 @@ Detailed ownership: [DATA-OWNERSHIP-MATRIX.md](../../architecture/current-state/
 | Vault `env:` + encrypted options | No secrets in repo/compose defaults | TD-RAD-005 |
 | Agent Gateway separate Node service | Isolate untrusted/durable workloads from PHP | ADR agent gateway + `services/` |
 | RAD discover/gate in CI | Architecture as executable contracts | ADR-0006 |
-| TutorFabulous mount / BeyondInfinity package | Brand vs package identity | `THEME-TUTORFABULOUS.md` |
+| TutorFabulous edit root / BeyondInfinity legacy alias | Brand vs package identity | `THEME-TUTORFABULOUS.md` |
 
 ADRs live under `architecture/decisions/`.
 
@@ -99,9 +99,10 @@ ADRs live under `architecture/decisions/`.
 
 ## 4. Core Components
 
-### 4.1 BeyondInfinity theme
+### 4.1 TutorFabulous theme
 
-- **Edit root:** `NextGenTutors-BeyondInfinity/`  
+- **Edit root:** `NextgenTutors-TutorFabulous/`  
+- **Legacy alias:** `NextGenTutors-BeyondInfinity/` (do not prefer as edit root)  
 - **Docker activate:** `nextgentutors-tutorfabulous`  
 - **Jobs:** templates, design tokens, UI Library partials, Elementor/NextGen widgets, consume Companion contracts  
 - **Codemap:** [theme.md](../CODEMAPS/theme.md)
@@ -192,7 +193,7 @@ Capabilities of note: `matching.propose`, `booking.create`, `payment.authorize` 
 ```
 docker/ compose (COMPOSE_PROJECT_NAME=newuinextgen)
   ├─ WordPress :8890
-  │    mounts BeyondInfinity → themes/nextgentutors-tutorfabulous
+  │    mounts TutorFabulous → themes/nextgentutors-tutorfabulous (BeyondInfinity = legacy alias)
   │    mounts Companion + sibling plugins
   ├─ MySQL 8
   ├─ Agent Gateway :8787 (optional profile)
@@ -264,7 +265,7 @@ See [SECURITY-BOUNDARIES.md](../../architecture/current-state/SECURITY-BOUNDARIE
 | Policy Bridge | Capability-id authorization facade over Authz + registry |
 | Quiet-domain | Hub defers finance/domain when Companion is active |
 | Feedstock | Reference trees/zips not for live activation |
-| TutorFabulous | Brand / Docker theme slug for BeyondInfinity package |
+| TutorFabulous | Canonical theme edit / package root (`NextgenTutors-TutorFabulous/`); BeyondInfinity = legacy alias |
 
 ### B. Reading paths
 

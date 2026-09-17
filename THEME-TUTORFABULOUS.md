@@ -25,7 +25,7 @@ Identity reference: this file. Docker mounts: `docker/docker-compose.yml`.
 | **Legacy slug (alias)** | `nextgentutors-beyondinfinity` |
 | **Text Domain** | `beyondinfinity` (**do not change**) |
 | **PHP APIs** | `bi_*`, `ngt_*`, Companion `ngc_*` shortcodes |
-| **Version** | 2.0.0 |
+| **Version** | 2.1.1 (`BI_VERSION` in `functions.php`; `style.css` header may lag until next package cut) |
 
 ## Why Text Domain stayed `beyondinfinity`
 
