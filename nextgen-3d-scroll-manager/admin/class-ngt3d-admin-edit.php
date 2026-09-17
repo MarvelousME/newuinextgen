@@ -128,6 +128,7 @@ class NGT3D_Admin_Edit {
 					<th scope="row"><?php esc_html_e( 'Enabled', 'ngt-3d-scroll' ); ?></th>
 					<td>
 						<label>
+							<input type="hidden" name="enabled" value="0" />
 							<input type="checkbox" name="enabled" value="1" <?php checked( ! empty( $data['enabled'] ) ); ?> />
 							<?php esc_html_e( 'Rule is active', 'ngt-3d-scroll' ); ?>
 						</label>

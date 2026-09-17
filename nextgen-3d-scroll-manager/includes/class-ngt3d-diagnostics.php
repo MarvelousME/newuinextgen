@@ -49,7 +49,35 @@ class NGT3D_Diagnostics {
 			'bi_motion_enabled'   => function_exists( 'bi_motion_enabled' ) ? bi_motion_enabled() : null,
 			'is_kinetic_home'     => function_exists( 'bi_is_kinetic_home' ) ? bi_is_kinetic_home() : null,
 			'companion_active'    => defined( 'NGC_VERSION' ),
+			'vendor_assets'       => self::get_vendor_status(),
 		];
+	}
+
+	/**
+	 * Report whether the vendored third-party engines (Three.js, GLTFLoader,
+	 * Lenis) are present. All three ship inside the plugin zip; this only
+	 * catches the rare case of a partial upload or an overzealous file
+	 * exclusion during deploy.
+	 *
+	 * @return array<string, array{present: bool, path: string}>
+	 */
+	private static function get_vendor_status(): array {
+		$files = [
+			'three'      => 'assets/vendor/three.min.js',
+			'gltfloader' => 'assets/vendor/GLTFLoader.js',
+			'lenis'      => 'assets/vendor/lenis.min.js',
+			'lenis_css'  => 'assets/vendor/lenis.css',
+		];
+
+		$status = [];
+		foreach ( $files as $key => $rel ) {
+			$status[ $key ] = [
+				'present' => file_exists( NGT3D_PLUGIN_DIR . $rel ),
+				'path'    => $rel,
+			];
+		}
+
+		return $status;
 	}
 
 	/**

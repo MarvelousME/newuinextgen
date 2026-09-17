@@ -65,8 +65,20 @@
 .ngt-3d-preset--onscroll,
 .ngt-3d-preset--zoom,
 .ngt-3d-preset--swag-card,
-.ngt-3d-preset--transforms {
+.ngt-3d-preset--transforms,
+.ngt-3d-preset--horizontal-3d-scroll {
 	isolation: isolate;
+}
+
+/* Generic overlay canvas used by the WebGL engine (webgl-distortion,
+   webgl-image-reveal) — the horizontal-3d-scroll preset uses its own
+   .ngt-3d-hscroll__canvas sizing rules instead. */
+.ngt-3d-webgl-canvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

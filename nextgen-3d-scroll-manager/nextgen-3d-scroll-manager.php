@@ -2,13 +2,28 @@
 /**
  * Plugin Name:       NextGen 3D Scroll Manager
  * Plugin URI:        https://nextgentutors.co.za/
- * Description:       Unified Visual Motion Engine for NextGen Tutors — 3D scrolling, GSAP effect stacks, text motion, ScrollTrigger, and transform composition. Built on the 3D Scroll Manager foundation.
- * Version:           1.2.0
+ * Description:       Unified Visual Motion Engine for NextGen Tutors — 3D scrolling, GSAP effect stacks, text motion, ScrollTrigger, transform composition, and horizontal 3D scroll scenes (Three.js + Lenis). Built on the 3D Scroll Manager foundation.
+ * Version:           1.3.0
  * Requires at least: 6.2
  * Requires PHP:      8.0
  * Author:            NextGen Tutors / BeyondInfinity
  * Text Domain:       ngt-3d-scroll
  * Domain Path:       /languages
+ *
+ * Changelog:
+ * 1.3.0 — Added the `horizontal-3d-scroll` engine: pinned GSAP/ScrollTrigger
+ *         horizontal panels, per-panel CSS 3D depth layers, and live
+ *         scroll-reactive Three.js models (procedural or glTF/GLB). Vendored
+ *         Three.js r139.2 (assets/vendor/three.min.js + GLTFLoader.js) and
+ *         Lenis 1.3.26 (assets/vendor/lenis.min.js) — cdnjs never shipped a
+ *         working post-r150 Three.js build or any Lenis build, so both are
+ *         redistributed locally under their MIT licenses (see
+ *         assets/vendor/*-LICENSE.txt). This also makes two settings that
+ *         previously did nothing actually work for the first time: "Lenis
+ *         smooth scroll" (Settings) and the FPS safeguard (Settings →
+ *         FPS threshold), the latter now also covering webgl-distortion and
+ *         webgl-image-reveal, which were registered but had no vendor file
+ *         to run against until now.
  *
  * @package NGT_3D_Scroll
  */
@@ -18,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // ── Constants ──────────────────────────────────────────────────────────────────
-define( 'NGT3D_VERSION',      '1.2.0' );
+define( 'NGT3D_VERSION',      '1.3.0' );
 define( 'NGT3D_PLUGIN_FILE',  __FILE__ );
 define( 'NGT3D_PLUGIN_DIR',   plugin_dir_path( __FILE__ ) );
 define( 'NGT3D_PLUGIN_URL',   plugin_dir_url( __FILE__ ) );

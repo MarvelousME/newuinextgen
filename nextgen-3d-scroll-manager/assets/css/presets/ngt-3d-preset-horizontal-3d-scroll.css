@@ -1,0 +1,100 @@
+/*
+ * horizontal-3d-scroll — pinned GSAP/ScrollTrigger horizontal track with
+ * per-panel CSS 3D depth and optional live Three.js models.
+ *
+ * PROGRESSIVE ENHANCEMENT: everything up to the "--engaged" block below works
+ * with zero JavaScript — a native horizontally-swipeable, scroll-snapped
+ * strip. The runtime only adds ".ngt-3d-hscroll--engaged" on devices where
+ * desktop/tablet/mobile_mode resolves to "full" or "reduced" AND the visitor
+ * has not asked for reduced motion; on mobile_mode:"disabled" (the default)
+ * or prefers-reduced-motion, this base layout is exactly what visitors see —
+ * content is never hidden, only ever upgraded.
+ *
+ * Authors give the target element and its children these three class names
+ * directly in markup (the plugin never invents structure it doesn't own):
+ *   .ngt-3d-hscroll        — the target_selector element (pin host + viewport)
+ *   .ngt-3d-hscroll__track — the row that scrolls (auto-created if omitted)
+ *   .ngt-3d-hscroll__panel — each horizontal panel
+ */
+
+.ngt-3d-hscroll {
+	position: relative;
+}
+
+.ngt-3d-hscroll__track {
+	display: flex;
+	align-items: stretch;
+	gap: var(--ngt-3d-hscroll-gap, 1.5rem);
+	overflow-x: auto;
+	overflow-y: hidden;
+	scroll-snap-type: x proximity;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	perspective: var(--ngt-3d-perspective, 1400px);
+}
+
+.ngt-3d-hscroll__panel {
+	position: relative;
+	flex: 0 0 auto;
+	width: var(--ngt-3d-hscroll-panel-width, min(78vw, 640px));
+	scroll-snap-align: start;
+	transform-style: preserve-3d;
+	transform: scale(var(--ngt-3d-panel-scale, 1)) rotateY(var(--ngt-3d-panel-rotate-y, 0deg));
+	will-change: transform;
+}
+
+.ngt-3d-hscroll__panel [data-depth] {
+	transform-style: preserve-3d;
+	will-change: transform;
+}
+
+/* The live-model canvas sits behind the panel's own content by default. */
+.ngt-3d-hscroll__canvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.ngt-3d-hscroll__panel > :not(.ngt-3d-hscroll__canvas) {
+	position: relative;
+	z-index: 2;
+}
+
+.ngt-3d-hscroll--rtl .ngt-3d-hscroll__track {
+	flex-direction: row-reverse;
+}
+
+/* ── Engaged (JS-driven pin + scrub) ─────────────────────────────────────── */
+
+.ngt-3d-hscroll--engaged {
+	overflow: hidden;
+}
+
+.ngt-3d-hscroll--engaged .ngt-3d-hscroll__track {
+	overflow: visible;
+	scroll-snap-type: none;
+	flex-wrap: nowrap;
+}
+
+.ngt-3d-hscroll--engaged .ngt-3d-hscroll__panel {
+	scroll-snap-align: none;
+}
+
+@media (max-width: 767px) {
+	.ngt-3d-hscroll__panel {
+		width: var(--ngt-3d-hscroll-panel-width, min(86vw, 420px));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ngt-3d-hscroll__track {
+		scroll-behavior: auto;
+	}
+	.ngt-3d-hscroll__panel,
+	.ngt-3d-hscroll__panel [data-depth] {
+		will-change: auto;
+	}
+}

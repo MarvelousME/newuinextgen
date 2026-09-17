@@ -50,7 +50,7 @@ class NGT3D_Admin_Settings {
 					<td>
 						<label>
 							<input type="checkbox" name="lenis_enabled" value="1" <?php checked( ! empty( $settings['lenis_enabled'] ) ); ?> />
-							<?php esc_html_e( 'Enable Lenis (when available)', 'ngt-3d-scroll' ); ?>
+							<?php esc_html_e( 'Momentum-based smooth scrolling (vendored Lenis 1.3.26) — applies site-wide, and is what gives horizontal-3d-scroll its momentum feel.', 'ngt-3d-scroll' ); ?>
 						</label>
 					</td>
 				</tr>
@@ -63,7 +63,11 @@ class NGT3D_Admin_Settings {
 				<tr>
 					<th scope="row"><label for="lenis_easing"><?php esc_html_e( 'Lenis easing', 'ngt-3d-scroll' ); ?></label></th>
 					<td>
-						<input type="text" class="regular-text" id="lenis_easing" name="lenis_easing" value="<?php echo esc_attr( (string) $settings['lenis_easing'] ); ?>" />
+						<select id="lenis_easing" name="lenis_easing">
+							<?php foreach ( [ 'ease-out' => __( 'Ease out (default)', 'ngt-3d-scroll' ), 'ease-in-out' => __( 'Ease in-out', 'ngt-3d-scroll' ), 'linear' => __( 'Linear', 'ngt-3d-scroll' ) ] as $value => $label ) : ?>
+								<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $settings['lenis_easing'], $value ); ?>><?php echo esc_html( $label ); ?></option>
+							<?php endforeach; ?>
+						</select>
 					</td>
 				</tr>
 				<tr>

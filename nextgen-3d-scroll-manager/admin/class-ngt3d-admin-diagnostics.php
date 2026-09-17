@@ -48,6 +48,32 @@ class NGT3D_Admin_Diagnostics {
 				<tr><th><?php esc_html_e( 'Active rules', 'ngt-3d-scroll' ); ?></th><td><?php echo esc_html( (string) $status['active_rules'] ); ?></td></tr>
 				<tr><th><?php esc_html_e( 'PHP / WP', 'ngt-3d-scroll' ); ?></th><td><?php echo esc_html( $status['php_version'] . ' / ' . $status['wp_version'] ); ?></td></tr>
 				<tr><th><?php esc_html_e( 'Companion active', 'ngt-3d-scroll' ); ?></th><td><?php echo ! empty( $status['companion_active'] ) ? 'yes' : 'no'; ?></td></tr>
+				<tr><th><?php esc_html_e( 'Lenis smooth scroll', 'ngt-3d-scroll' ); ?></th><td><?php echo ! empty( $status['settings']['lenis_enabled'] ) ? 'enabled' : 'disabled'; ?></td></tr>
+				<tr><th><?php esc_html_e( 'FPS safeguard', 'ngt-3d-scroll' ); ?></th><td><?php echo ! empty( $status['settings']['fps_safeguard'] ) ? esc_html( sprintf( 'on, threshold %d fps', (int) ( $status['settings']['fps_threshold'] ?? 30 ) ) ) : 'off'; ?></td></tr>
+			</tbody>
+		</table>
+
+		<h2><?php esc_html_e( 'Vendored engines (Three.js / GLTFLoader / Lenis)', 'ngt-3d-scroll' ); ?></h2>
+		<table class="widefat striped">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'File', 'ngt-3d-scroll' ); ?></th>
+					<th><?php esc_html_e( 'Status', 'ngt-3d-scroll' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ( (array) ( $status['vendor_assets'] ?? [] ) as $item ) : ?>
+					<tr>
+						<td><code><?php echo esc_html( $item['path'] ); ?></code></td>
+						<td>
+							<?php if ( ! empty( $item['present'] ) ) : ?>
+								<span style="color:#1a7f37;">✓ <?php esc_html_e( 'present', 'ngt-3d-scroll' ); ?></span>
+							<?php else : ?>
+								<span style="color:#b32d2e;">✕ <?php esc_html_e( 'missing — re-upload the plugin zip', 'ngt-3d-scroll' ); ?></span>
+							<?php endif; ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
 			</tbody>
 		</table>
 

@@ -88,7 +88,9 @@ class NGT3D_Asset_Loader {
 			wp_enqueue_script( 'bi-ngt-scrolltrigger' );
 		}
 
-		// Three.js — local copy required; CDN only when file exists.
+		// Three.js — vendored locally (r139.2 — the last release with a classic
+		// global <script> build; cdnjs and later npm releases ship ES modules only).
+		$three_loaded = false;
 		if ( $deps_info['needs_three'] ) {
 			$three_path = NGT3D_PLUGIN_DIR . 'assets/vendor/three.min.js';
 			if ( file_exists( $three_path ) ) {
@@ -96,9 +98,48 @@ class NGT3D_Asset_Loader {
 					'ngt3d-three',
 					NGT3D_PLUGIN_URL . 'assets/vendor/three.min.js',
 					[],
-					'0.160.0',
+					'139.2',
 					true
 				);
+				$three_loaded = true;
+			}
+		}
+
+		// GLTFLoader — only pulled in when a rule actually references a .glb/.gltf model.
+		$gltf_loaded = false;
+		if ( $deps_info['needs_hscroll_gltf'] && $three_loaded ) {
+			$gltf_path = NGT3D_PLUGIN_DIR . 'assets/vendor/GLTFLoader.js';
+			if ( file_exists( $gltf_path ) ) {
+				wp_enqueue_script(
+					'ngt3d-gltfloader',
+					NGT3D_PLUGIN_URL . 'assets/vendor/GLTFLoader.js',
+					[ 'ngt3d-three' ],
+					'139.2',
+					true
+				);
+				$gltf_loaded = true;
+			}
+		}
+
+		// Lenis — vendored locally (official 1.3.26 IIFE build; never shipped on cdnjs).
+		$lenis_loaded = false;
+		if ( $deps_info['needs_lenis'] ) {
+			$lenis_path = NGT3D_PLUGIN_DIR . 'assets/vendor/lenis.min.js';
+			if ( file_exists( $lenis_path ) ) {
+				wp_enqueue_style(
+					'ngt3d-lenis',
+					NGT3D_PLUGIN_URL . 'assets/vendor/lenis.css',
+					[],
+					'1.3.26'
+				);
+				wp_enqueue_script(
+					'ngt3d-lenis',
+					NGT3D_PLUGIN_URL . 'assets/vendor/lenis.min.js',
+					[],
+					'1.3.26',
+					true
+				);
+				$lenis_loaded = true;
 			}
 		}
 
@@ -170,12 +211,28 @@ class NGT3D_Asset_Loader {
 		);
 		$runtime_deps[] = 'ngt3d-motion-primitives';
 
-		// WebGL engine (Three.js effects) — only when needed.
-		if ( $deps_info['needs_webgl'] && file_exists( NGT3D_PLUGIN_DIR . 'assets/js/ngt-3d-webgl-engine.js' ) ) {
+		// Lenis smooth-scroll bridge — singleton, drives ScrollTrigger.update via gsap.ticker.
+		if ( $lenis_loaded && file_exists( NGT3D_PLUGIN_DIR . 'assets/js/ngt-3d-lenis-bridge.js' ) ) {
+			wp_enqueue_script(
+				'ngt3d-lenis-bridge',
+				NGT3D_PLUGIN_URL . 'assets/js/ngt-3d-lenis-bridge.js',
+				[ 'ngt3d-lenis', 'ngt3d-motion-primitives' ],
+				NGT3D_VERSION,
+				true
+			);
+			$runtime_deps[] = 'ngt3d-lenis-bridge';
+		}
+
+		// WebGL engine (Three.js effects + reusable model-stage helper) — only when needed.
+		if ( $deps_info['needs_webgl'] && $three_loaded && file_exists( NGT3D_PLUGIN_DIR . 'assets/js/ngt-3d-webgl-engine.js' ) ) {
+			$webgl_deps = [ 'ngt3d-three' ];
+			if ( $gltf_loaded ) {
+				$webgl_deps[] = 'ngt3d-gltfloader';
+			}
 			wp_enqueue_script(
 				'ngt3d-webgl',
 				NGT3D_PLUGIN_URL . 'assets/js/ngt-3d-webgl-engine.js',
-				[ 'ngt3d-three' ],
+				$webgl_deps,
 				NGT3D_VERSION,
 				true
 			);

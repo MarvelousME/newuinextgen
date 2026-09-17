@@ -556,6 +556,65 @@ body.page-slug-3d-scroll-test,
 	}
 }
 
+/* horizontal-3d-scroll demo section — visual dressing only; layout/behavior
+   classes (.ngt-3d-hscroll / __track / __panel) live in the reusable preset
+   stylesheet so they work the same on any theme. */
+#ngt3d-horizontal-3d.ngt-3d-hscroll {
+	--ngt-3d-hscroll-gap: 2rem;
+	--ngt-3d-hscroll-panel-width: min(72vw, 560px);
+	padding: 3rem 0 4rem;
+	background: linear-gradient(180deg, var(--ngt-demo-wash), #ffffff);
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__track {
+	padding: 1rem clamp(1.25rem, 6vw, 6rem) 2.5rem;
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel {
+	background: var(--ngt-demo-surface);
+	border: 1px solid var(--ngt-demo-line);
+	border-radius: 1.5rem;
+	box-shadow: var(--ngt-demo-shadow);
+	overflow: hidden;
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel img {
+	display: block;
+	width: 100%;
+	height: 220px;
+	object-fit: cover;
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel-body {
+	padding: 1.35rem 1.4rem 1.6rem;
+	color: var(--ngt-demo-ink);
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel-body h3 {
+	margin: 0.15rem 0 0.4rem;
+	font-size: 1.15rem;
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel-body p {
+	margin: 0;
+	color: var(--ngt-demo-muted);
+}
+
+/* The live model renders as a floating badge over the photo's corner rather
+   than filling the whole card — legible at a glance, never fights the photo
+   or the copy for attention. */
+#ngt3d-horizontal-3d .ngt-3d-hscroll__canvas {
+	inset: auto;
+	top: 12px;
+	left: 12px;
+	width: 84px;
+	height: 84px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.82);
+	box-shadow: var(--ngt-demo-shadow);
+	z-index: 3;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.ngt-3d-demo__toc a,
 	.ngt-3d-demo__cta {

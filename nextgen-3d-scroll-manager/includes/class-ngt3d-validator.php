@@ -135,11 +135,28 @@ class NGT3D_Validator {
 			'scaleFrom', 'scaleTo', 'opacityFrom', 'opacityTo',
 			'rate', 'depth', 'max', 'intensity', 'speed',
 			'activeOffset', 'shadowScale', 'sort_order',
+			// Horizontal 3D scroll (NGT3D_Motion_Catalogue / horizontal-3d-scroll).
+			'speedRatio', 'layerDepth', 'rotateYRange', 'autoRotateSpeed',
+			'lightIntensity', 'cameraFov', 'modelMetalness', 'modelRoughness',
+			'panelGap', 'snapDuration',
 		];
 
-		$bool_keys = [ 'pin', 'pinSpacing', 'anticipatePin', 'once', 'markers', 'single' ];
+		$bool_keys = [
+			'pin', 'pinSpacing', 'anticipatePin', 'once', 'markers', 'single',
+			// Horizontal 3D scroll.
+			'snap', 'autoRotate', 'castShadow',
+		];
 
 		$string_keys = [ 'start', 'end', 'ease', 'displacement' ];
+
+		/** Free-text keys restricted to a fixed whitelist of values. */
+		$enum_keys = [
+			'direction'     => [ 'ltr', 'rtl' ],
+			'modelGeometry' => [ 'icosahedron', 'torusKnot', 'dodecahedron', 'capsule', 'sphere', 'box', 'none' ],
+		];
+
+		/** Keys re-validated through the same gate as target_selector. */
+		$selector_keys = [ 'panelSelector', 'trackSelector' ];
 
 		$device_keys = [ 'desktop', 'tablet', 'mobile' ];
 
@@ -159,6 +176,26 @@ class NGT3D_Validator {
 				$safe[ $key ] = (bool) $val;
 			} elseif ( in_array( $key, $string_keys, true ) ) {
 				$safe[ $key ] = sanitize_text_field( (string) $val );
+			} elseif ( isset( $enum_keys[ $key ] ) ) {
+				$candidate = sanitize_key( (string) $val );
+				if ( in_array( $candidate, $enum_keys[ $key ], true ) ) {
+					$safe[ $key ] = $candidate;
+				}
+			} elseif ( in_array( $key, $selector_keys, true ) ) {
+				$sel_result = self::validate_selector( (string) $val );
+				if ( 'VALID_SELECTOR' === $sel_result['status'] ) {
+					$safe[ $key ] = $sel_result['selector'];
+				}
+			} elseif ( 'modelColor' === $key ) {
+				$color = sanitize_hex_color( (string) $val );
+				if ( null !== $color && '' !== $color ) {
+					$safe[ $key ] = $color;
+				}
+			} elseif ( 'modelUrl' === $key ) {
+				$url = self::validate_model_url( (string) $val );
+				if ( '' !== $url ) {
+					$safe[ $key ] = $url;
+				}
 			} elseif ( in_array( $key, $device_keys, true ) && is_array( $val ) ) {
 				$safe[ $key ] = self::sanitize_options_array( $val );
 			}
@@ -166,6 +203,43 @@ class NGT3D_Validator {
 		}
 
 		return $safe;
+	}
+
+	/**
+	 * Validate a glTF/GLB model URL used by the horizontal-3d-scroll engine.
+	 *
+	 * Only same-site (or protocol-relative/relative) URLs ending in .glb or
+	 * .gltf are accepted — prevents the WebGL loader from being pointed at an
+	 * arbitrary remote origin.
+	 *
+	 * @param string $raw Raw URL.
+	 * @return string  Sanitized URL, or '' if invalid.
+	 */
+	public static function validate_model_url( string $raw ): string {
+		$raw = trim( $raw );
+		if ( '' === $raw ) {
+			return '';
+		}
+
+		$clean = esc_url_raw( $raw );
+		if ( '' === $clean ) {
+			return '';
+		}
+
+		$path = (string) wp_parse_url( $clean, PHP_URL_PATH );
+		if ( ! preg_match( '/\.(glb|gltf)$/i', $path ) ) {
+			return '';
+		}
+
+		$host = wp_parse_url( $clean, PHP_URL_HOST );
+		if ( null !== $host && '' !== $host ) {
+			$site_host = (string) wp_parse_url( home_url(), PHP_URL_HOST );
+			if ( ! hash_equals( strtolower( $site_host ), strtolower( (string) $host ) ) ) {
+				return '';
+			}
+		}
+
+		return $clean;
 	}
 
 	/**

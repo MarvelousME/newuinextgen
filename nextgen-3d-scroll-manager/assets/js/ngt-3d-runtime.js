@@ -10,7 +10,7 @@
 	var animations = root.NGT3DAnimations || (root.NGT3DAnimations = Object.create(null));
 	var SHOWCASE_IDS = [
 		'doublescroll', '4kvideo', 'wiper', 'dark-veles', 'scroll-mask',
-		'onscroll', 'zoom', 'swag-card', 'transforms'
+		'onscroll', 'zoom', 'swag-card', 'transforms', 'horizontal-3d-scroll'
 	];
 
 	var state = {

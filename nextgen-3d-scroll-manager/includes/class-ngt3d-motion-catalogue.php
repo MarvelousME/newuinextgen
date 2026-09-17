@@ -50,7 +50,7 @@ class NGT3D_Motion_Catalogue {
 	 * @param array<string, mixed> $def Definition.
 	 */
 	private static function infer_source( string $id, array $def ): string {
-		$showcase = [ 'doublescroll', '4kvideo', 'wiper', 'dark-veles', 'scroll-mask', 'onscroll', 'zoom', 'swag-card', 'transforms' ];
+		$showcase = [ 'doublescroll', '4kvideo', 'wiper', 'dark-veles', 'scroll-mask', 'onscroll', 'zoom', 'swag-card', 'transforms', 'horizontal-3d-scroll' ];
 		if ( in_array( $id, $showcase, true ) ) {
 			return 'SYSTEM-ENHANCEMENT';
 		}

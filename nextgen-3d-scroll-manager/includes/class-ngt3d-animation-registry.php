@@ -9,7 +9,7 @@
  * Each entry defines:
  *   label         – Human-readable name shown in the admin.
  *   description   – Short description for the Animation Library screen.
- *   engine        – 'gsap' | 'native' | 'three' | 'atropos'
+ *   engine        – 'gsap' | 'native' | 'three' | 'atropos' | '3d-hscroll'
  *   cost          – 'low' | 'medium' | 'high'  (performance classification)
  *   desktop_mode  – Default mode: 'full' | 'reduced' | 'disabled'
  *   tablet_mode   – Default mode.
@@ -714,6 +714,40 @@ class NGT3D_Animation_Registry {
 				'options'          => [
 					'scrub' => 1.1, 'scaleFrom' => 0.82, 'scaleTo' => 1, 'opacityFrom' => 0.85, 'opacityTo' => 1,
 					'perspective' => 1200, 'originX' => '50%', 'originY' => '50%', 'z' => 40,
+				],
+			],
+
+			// ── Horizontal 3D Scroll (GSAP + ScrollTrigger + Three.js + Lenis + CSS 3D) ─
+			'horizontal-3d-scroll' => [
+				'label'          => __( 'Horizontal 3D Scroll', 'ngt-3d-scroll' ),
+				'description'    => __( 'Pins the section and drives its panels horizontally as the page scrolls vertically. Lenis powers the momentum feel, ScrollTrigger scrubs the horizontal track and gives every panel its own local progress, CSS 3D transforms add per-layer depth, and panels marked with data-ngt-3d-model render a live, scroll-reactive Three.js object (built-in geometry or a glTF/GLB you supply).', 'ngt-3d-scroll' ),
+				'engine'         => '3d-hscroll',
+				'cost'           => 'high',
+				'status'         => 'READY',
+				'desktop_mode'   => 'full',
+				'tablet_mode'    => 'reduced',
+				'mobile_mode'    => 'disabled',
+				'reduced_motion' => 'static',
+				'deps'           => array_merge( $gsap_st_deps, [ 'ngt3d-lenis' ] ),
+				'preset_asset'   => 'horizontal-3d-scroll',
+				'recommended'    => [ '.ngt-3d-hscroll', '[data-ngt-3d-target="horizontal-3d-scroll"]' ],
+				'options'        => [
+					'scrub'           => 1,
+					'pin'             => true,
+					'direction'       => 'ltr',
+					'perspective'     => 1400,
+					'layerDepth'      => 60,
+					'rotateYRange'    => 10,
+					'snap'            => false,
+					'panelGap'        => 0,
+					'modelGeometry'   => 'icosahedron',
+					'modelColor'      => '#3ABF35',
+					'modelMetalness'  => 0.35,
+					'modelRoughness'  => 0.4,
+					'autoRotate'      => true,
+					'autoRotateSpeed' => 0.4,
+					'lightIntensity'  => 1.1,
+					'cameraFov'       => 45,
 				],
 			],
 		];

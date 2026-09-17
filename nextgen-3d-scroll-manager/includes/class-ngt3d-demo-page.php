@@ -21,9 +21,6 @@ class NGT3D_Demo_Page {
 	}
 
 	public static function maybe_seed(): void {
-		if ( get_option( self::SEED_FLAG ) === '2026-09-12-motion-text' ) {
-			return;
-		}
 		if ( ! class_exists( 'NGT3D_Rule_Repository' ) || ! class_exists( 'NGT3D_Schema' ) ) {
 			return;
 		}
@@ -31,7 +28,7 @@ class NGT3D_Demo_Page {
 		$page_id = self::ensure_page();
 		if ( $page_id > 0 ) {
 			self::seed_rules( $page_id );
-			update_option( self::SEED_FLAG, '2026-09-12-motion-text', false );
+			update_option( self::SEED_FLAG, '2026-09-17-horizontal-3d', false );
 		}
 	}
 
@@ -138,6 +135,17 @@ class NGT3D_Demo_Page {
 			[ 'selector' => '#ngt3d-text-depth', 'animation' => 'text-depth', 'options' => [ 'scrub' => 1, 'z' => 48 ], 'mobile' => 'reduced' ],
 			[ 'selector' => '#ngt3d-section-cinematic', 'animation' => 'section-cinematic', 'options' => [ 'scrub' => 1, 'scaleFrom' => 1.06, 'scaleTo' => 1 ], 'mobile' => 'disabled' ],
 			[ 'selector' => '#ngt3d-tilt', 'animation' => 'tilt-3d', 'options' => [ 'max' => 12 ], 'mobile' => 'disabled', 'tablet' => 'disabled' ],
+			[
+				'selector'  => '#ngt3d-horizontal-3d',
+				'animation' => 'horizontal-3d-scroll',
+				'options'   => [
+					'scrub' => 0.9, 'perspective' => 1400, 'layerDepth' => 70, 'rotateYRange' => 12,
+					'modelColor' => '#3ABF35', 'modelMetalness' => 0.3, 'modelRoughness' => 0.45,
+					'autoRotate' => true, 'autoRotateSpeed' => 0.35, 'lightIntensity' => 1.15,
+				],
+				'mobile'    => 'disabled',
+				'tablet'    => 'reduced',
+			],
 			// Text + entrance effects on existing lab markup.
 			[ 'selector' => '.ngt-3d-demo__intro h1', 'animation' => 'gsapify-text-fade-up-words', 'options' => [ 'duration' => 0.9, 'stagger' => 0.04 ], 'mobile' => 'reduced' ],
 			[ 'selector' => '.ngt-3d-demo__intro .ngt-3d-demo__lede', 'animation' => 'fade-up', 'options' => [ 'duration' => 0.7, 'distance' => 24 ], 'mobile' => 'full' ],
@@ -774,6 +782,42 @@ class NGT3D_Demo_Page {
 							</article>
 						<?php endforeach; ?>
 					</div>
+				</div>
+			</section>
+
+			<section id="ngt3d-horizontal-3d" class="ngt-3d-demo__section ngt-3d-demo__section--tall ngt-3d-hscroll" data-ngt-3d-target="horizontal-3d-scroll">
+				<div class="ngt-container">
+					<span class="ngt-3d-demo__label">horizontal-3d-scroll</span>
+					<p class="ngt-3d-demo__usecase"><?php esc_html_e( 'Use case: walk a parent through the five-week journey without a single extra click', 'ngt-3d-scroll' ); ?></p>
+					<div class="ngt-3d-demo__section-head">
+						<p class="ngt-3d-demo__eyebrow"><?php esc_html_e( 'Horizontal 3D scroll', 'ngt-3d-scroll' ); ?></p>
+						<h2><?php esc_html_e( 'The journey scrolls sideways, in 3D, while the page scrolls down', 'ngt-3d-scroll' ); ?></h2>
+						<p><?php esc_html_e( 'GSAP + ScrollTrigger pin this section and drive the track; Lenis (when enabled in Settings) smooths the momentum; each panel gets its own scroll progress for CSS 3D depth and a live, scroll-reactive Three.js object.', 'ngt-3d-scroll' ); ?></p>
+					</div>
+				</div>
+				<div class="ngt-3d-hscroll__track">
+					<?php
+					$journey_panels = [
+						[ 'geometry' => 'icosahedron', 'title' => __( 'Week 0 · Assessment', 'ngt-3d-scroll' ), 'body' => __( 'Baseline gaps mapped against CAPS / IEB outcomes.', 'ngt-3d-scroll' ), 'img' => $img['desk'] ],
+						[ 'geometry' => 'torusKnot', 'title' => __( 'Week 1 · Tutor match', 'ngt-3d-scroll' ), 'body' => __( 'Vetted educator confirmed within 48 hours.', 'ngt-3d-scroll' ), 'img' => $img['tutor'] ],
+						[ 'geometry' => 'dodecahedron', 'title' => __( 'Week 2 · Weekly plan', 'ngt-3d-scroll' ), 'body' => __( 'Goals a parent can audit every Friday.', 'ngt-3d-scroll' ), 'img' => $img['classroom'] ],
+						[ 'geometry' => 'capsule', 'title' => __( 'Week 3 · Live lessons', 'ngt-3d-scroll' ), 'body' => __( 'Notes and homework loop stay in one dashboard.', 'ngt-3d-scroll' ), 'img' => $img['students'] ],
+						[ 'geometry' => 'sphere', 'title' => __( 'Week 4 · Progress report', 'ngt-3d-scroll' ), 'body' => __( 'Love the fit, or rematch under the guarantee.', 'ngt-3d-scroll' ), 'img' => $img['mentor'] ],
+					];
+					foreach ( $journey_panels as $i => $panel ) :
+						?>
+						<article class="ngt-3d-hscroll__panel" data-ngt-3d-model="<?php echo esc_attr( $panel['geometry'] ); ?>">
+							<img data-depth="50" src="<?php echo esc_url( $panel['img'] ); ?>" alt="" width="640" height="360" loading="<?php echo 0 === $i ? 'eager' : 'lazy'; ?>" />
+							<div class="ngt-3d-hscroll__panel-body">
+								<span class="ngt-3d-demo__step"><?php echo (int) ( $i + 1 ); ?></span>
+								<h3 data-depth="20"><?php echo esc_html( $panel['title'] ); ?></h3>
+								<p><?php echo esc_html( $panel['body'] ); ?></p>
+							</div>
+						</article>
+					<?php endforeach; ?>
+				</div>
+				<div class="ngt-container">
+					<p class="ngt-3d-demo__note"><?php esc_html_e( 'Desktop: pinned, scrubbed, live 3D models per panel. Tablet: scrubbed, models off. Mobile / reduced motion: the same five panels as a native swipeable strip — nothing is ever hidden.', 'ngt-3d-scroll' ); ?></p>
 				</div>
 			</section>
 
