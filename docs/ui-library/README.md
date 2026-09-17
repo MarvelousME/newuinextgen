@@ -16,7 +16,7 @@ docs/ui-library/                   NGC_UI_Provider_Registry      template-parts/
 
 **Strict data rule:** Tutor, pricing, review, stats, and dashboard values flow through providers — never pasted into templates.
 
-See also: [SYSTEM-OVERVIEW.md](../SYSTEM-OVERVIEW.md) · [CODE-REVIEW-2026-07-06.md](../CODE-REVIEW-2026-07-06.md) · [NEXT-STEPS.md](../NEXT-STEPS.md)
+See also: [CODEMAPS/theme.md](../CODEMAPS/theme.md) · [CODE-REVIEW-2026-07-06.md](../CODE-REVIEW-2026-07-06.md) · [STALE-DOCS/NEXT-STEPS.md](../STALE-DOCS/NEXT-STEPS.md)
 
 ```powershell
 # Regenerate inventories from Desktop artifacts

@@ -302,7 +302,7 @@ E2E maps to blueprint workflows WF-01–WF-25. See `docs/verification/testing-do
 3. Run Playwright on staging
 4. `powershell -File scripts/build-release.ps1`
 5. Deploy zips per [COMMERCIAL-DEPLOYMENT-GUIDE.md](COMMERCIAL-DEPLOYMENT-GUIDE.md)
-6. Update `CHANGES-REGISTRY.md` and `KNOWN-LIMITATIONS.md`
+6. Update `CHANGES-REGISTRY.md` and (if still relevant) `docs/STALE-DOCS/KNOWN-LIMITATIONS.md`
 
 ---
 
@@ -310,7 +310,7 @@ E2E maps to blueprint workflows WF-01–WF-25. See `docs/verification/testing-do
 
 | Topic | Document |
 |-------|----------|
-| Architecture | [../ARCHITECTURE.md](../ARCHITECTURE.md) |
+| Architecture | [architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) |
 | Packages | [PACKAGES.md](PACKAGES.md) |
 | Workflow catalog | [workflows/INTEGRATION-CATALOG.md](workflows/INTEGRATION-CATALOG.md) |
 | Hands-on tutorials | [tutorials/DEVELOPER-TUTORIALS.md](tutorials/DEVELOPER-TUTORIALS.md) |

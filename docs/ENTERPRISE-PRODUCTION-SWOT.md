@@ -147,8 +147,8 @@ The stack is **architecturally enterprise-capable** — clean four-package separ
 
 | Artifact | Status | Gap |
 |----------|--------|-----|
-| `ARCHITECTURE.md` | Current | — |
-| `SYSTEM-OVERVIEW.md` | Current | Re-run after flow audit |
+| `docs/STALE-DOCS/ARCHITECTURE.md` | Quarantined | — |
+| `docs/STALE-DOCS/SYSTEM-OVERVIEW.md` | Quarantined | Re-run after flow audit |
 | Enterprise blueprint (WF-01…25) | VERIFIED | WF-09 SVG still says "deferred" — update |
 | OpenAPI (`openapi-nextgen.yaml`) | Exists | Contract tests not wired |
 | RBAC matrix | In blueprint | Live cap test matrix |
@@ -288,4 +288,4 @@ powershell -File scripts/build-release.ps1
 
 ---
 
-*See also: `docs/NEXT-STEPS.md`, `docs/SYSTEM-OVERVIEW.md`, `docs/workflows/FLOW-GAP-REPORT.md`*
+*See also: `docs/STALE-DOCS/NEXT-STEPS.md`, `docs/STALE-DOCS/SYSTEM-OVERVIEW.md`, `docs/STALE-DOCS/FLOW-GAP-REPORT.md`*

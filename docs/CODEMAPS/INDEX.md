@@ -20,8 +20,9 @@
 | Delivery registry | [../../delivery/MCP-SERVER-REGISTRY.md](../../delivery/MCP-SERVER-REGISTRY.md) | Verified MCP behaviour |
 | Debt register | [../../architecture/current-state/TECHNICAL-DEBT-REGISTER.md](../../architecture/current-state/TECHNICAL-DEBT-REGISTER.md) | TD-RAD status |
 | System architecture | [../architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](../architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) | Long-form technical reference |
-| System overview | [../SYSTEM-OVERVIEW.md](../SYSTEM-OVERVIEW.md) | Whole-system map |
-| Workspace SoT | [../../../SOURCE-OF-TRUTH.md](../../../SOURCE-OF-TRUTH.md) | Canonical vs feedstock (WeTransfer root) |
+| System overview (stale) | [../STALE-DOCS/SYSTEM-OVERVIEW.md](../STALE-DOCS/SYSTEM-OVERVIEW.md) | Quarantined whole-system map |
+| Workspace summary | [../../../CODEBASE-SUMMARY.md](../../../CODEBASE-SUMMARY.md) | Canonical vs feedstock + live versions |
+| Stale-docs index | [../STALE-DOCS/README.md](../STALE-DOCS/README.md) | Quarantined overviews |
 
 ## Runtime entry points
 
@@ -51,7 +52,7 @@
 
 | Audience | Start |
 |----------|-------|
-| New developer | [../SYSTEM-OVERVIEW.md](../SYSTEM-OVERVIEW.md) → [platform.md](platform.md) → [companion-domain.md](companion-domain.md) → [session-commerce.md](session-commerce.md) |
+| New developer | [../../../CODEBASE-SUMMARY.md](../../../CODEBASE-SUMMARY.md) → [platform.md](platform.md) → [companion-domain.md](companion-domain.md) → [session-commerce.md](session-commerce.md) |
 | Architect | [../architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](../architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) → [rad.md](rad.md) |
 | Ops / agents | [agentic.md](agentic.md) → [../GUIDES/AGENTIC-HOW-TO-USE.md](../GUIDES/AGENTIC-HOW-TO-USE.md) |
-| Frontend / theme | [theme.md](theme.md) → `ARCHITECTURE.md` (repo root) |
+| Frontend / theme | [theme.md](theme.md) → [../architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](../architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) |

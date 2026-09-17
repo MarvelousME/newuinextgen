@@ -3,7 +3,7 @@
 **Last Updated:** 2026-09-16  
 **Audience:** architects, senior developers, security reviewers  
 **Canonical code root:** `newuinextgen/`  
-**Workspace SoT:** `SOURCE-OF-TRUTH.md` (WeTransfer root)
+**Workspace SoT:** [CODEBASE-SUMMARY.md](../../../CODEBASE-SUMMARY.md) (WeTransfer root). Old `SOURCE-OF-TRUTH.md` is in [STALE-DOCS](../STALE-DOCS/SOURCE-OF-TRUTH.md).
 
 > Progressive disclosure: start with [§1 Executive Summary](#1-executive-summary), then [§2 Architecture Overview](#2-architecture-overview). Implementation detail lives in [docs/CODEMAPS/](../CODEMAPS/INDEX.md).
 
@@ -271,7 +271,7 @@ See [SECURITY-BOUNDARIES.md](../../architecture/current-state/SECURITY-BOUNDARIE
 
 | Role | Path |
 |------|------|
-| Developer onboarding | [SYSTEM-OVERVIEW.md](../SYSTEM-OVERVIEW.md) → [DEVELOPER-GUIDE.md](../DEVELOPER-GUIDE.md) → CODEMAPS |
+| Developer onboarding | [CODEBASE-SUMMARY.md](../../../CODEBASE-SUMMARY.md) → [DEVELOPER-GUIDE.md](../DEVELOPER-GUIDE.md) → CODEMAPS |
 | Architect review | This document → [TECHNICAL-DEBT-REGISTER.md](../../architecture/current-state/TECHNICAL-DEBT-REGISTER.md) → ADRs |
 | Ops / agents | [GUIDES/AGENTIC-HOW-TO-USE.md](../GUIDES/AGENTIC-HOW-TO-USE.md) → [agentic.md](../CODEMAPS/agentic.md) |
 
@@ -279,7 +279,7 @@ See [SECURITY-BOUNDARIES.md](../../architecture/current-state/SECURITY-BOUNDARIE
 
 - Docs hub: [docs/README.md](../README.md)  
 - Codemaps: [docs/CODEMAPS/INDEX.md](../CODEMAPS/INDEX.md)  
-- SOLID package contract: [ARCHITECTURE.md](../../ARCHITECTURE.md)  
+- SOLID package contract (stale): [STALE-DOCS/ARCHITECTURE.md](../STALE-DOCS/ARCHITECTURE.md)  
 - Deletion / quarantine log: [docs/DELETION_LOG.md](../DELETION_LOG.md)  
 
 ### D. Document maintenance
@@ -291,4 +291,4 @@ Update this reference when:
 - RAD gate contracts change  
 - Version constants (`BI_VERSION` / `NGC_VERSION`) bump for a release  
 
-Prefer editing **canonical** trees only (`SOURCE-OF-TRUTH.md`).
+Prefer editing **canonical** trees only (`CODEBASE-SUMMARY.md` §2).

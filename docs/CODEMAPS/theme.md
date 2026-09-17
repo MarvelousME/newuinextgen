@@ -55,5 +55,5 @@ Repo-root `inc/`, `assets/`, `template-parts/` may still mount onto the primary 
 
 - [platform.md](platform.md)  
 - [companion-domain.md](companion-domain.md)  
-- `ARCHITECTURE.md` (repo root SOLID contract)  
+- [../architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](../architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) (SOLID / package contract; old `ARCHITECTURE.md` is in [../STALE-DOCS/ARCHITECTURE.md](../STALE-DOCS/ARCHITECTURE.md))  
 - `docs/ELEMENTOR-*.md` (widget / design system)  

@@ -22,7 +22,7 @@ const auditFeeds = [
   '.agent-audit/01-repository-inventory.md',
   '.agent-audit/02-architecture-current-state.md',
   '.agent-audit/11-functional-capability-matrix.md',
-  'ARCHITECTURE.md',
+  'docs/STALE-DOCS/ARCHITECTURE.md',
 ].map((rel) => ({
   path: rel,
   exists: fs.existsSync(path.join(p.repoRoot, rel)),
