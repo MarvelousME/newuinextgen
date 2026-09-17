@@ -2,6 +2,9 @@
 /**
  * Bookings REST CRUD.
  *
+ * List/get/update responses never include meeting join URLs. Launch URLs are
+ * issued only from POST/GET /bookings/{id}/join after session launch policy.
+ *
  * @package NextGenCompanion
  */
 
@@ -126,54 +129,7 @@ class NGC_Rest_Bookings {
 	 * @return WP_REST_Response
 	 */
 	public static function list( $request ) {
-		$args = [ 'limit' => (int) ( $request->get_param( 'limit' ) ?: 20 ) ];
-		$uid  = get_current_user_id();
-		$user = wp_get_current_user();
-		$roles = (array) $user->roles;
-
-		if ( NGC_Access::is_ops( $uid ) ) {
-			if ( $request->get_param( 'student_user_id' ) ) {
-				$args['student_user_id'] = (int) $request->get_param( 'student_user_id' );
-			}
-			if ( $request->get_param( 'tutor_user_id' ) ) {
-				$args['tutor_user_id'] = (int) $request->get_param( 'tutor_user_id' );
-			}
-			if ( $request->get_param( 'status' ) ) {
-				$args['status'] = sanitize_key( $request->get_param( 'status' ) );
-			}
-			return new WP_REST_Response( [ 'bookings' => NGC_Bookings::query( $args ) ], 200 );
-		}
-
-		if ( in_array( 'tutor', $roles, true ) || in_array( 'ngt_tutor', $roles, true ) ) {
-			$args['tutor_user_id'] = $uid;
-			if ( $request->get_param( 'status' ) ) {
-				$args['status'] = sanitize_key( $request->get_param( 'status' ) );
-			}
-			return new WP_REST_Response( [ 'bookings' => NGC_Bookings::query( $args ) ], 200 );
-		}
-
-		// Parent (or student acting as self): never accept foreign student_user_id filters.
-		if ( in_array( 'parent', $roles, true ) || in_array( 'ngt_parent', $roles, true ) ) {
-			$bookings = NGC_Bookings::query_for_parent( $uid, (int) $args['limit'] );
-			$status   = $request->get_param( 'status' ) ? sanitize_key( $request->get_param( 'status' ) ) : '';
-			if ( $status ) {
-				$bookings = array_values(
-					array_filter(
-						$bookings,
-						static function ( $b ) use ( $status ) {
-							return isset( $b->status ) && sanitize_key( $b->status ) === $status;
-						}
-					)
-				);
-			}
-			return new WP_REST_Response( [ 'bookings' => $bookings ], 200 );
-		}
-
-		$args['student_user_id'] = $uid;
-		if ( $request->get_param( 'status' ) ) {
-			$args['status'] = sanitize_key( $request->get_param( 'status' ) );
-		}
-		return new WP_REST_Response( [ 'bookings' => NGC_Bookings::query( $args ) ], 200 );
+		return self::bookings_response( self::query_visible_bookings( $request ) );
 	}
 
 	/**
@@ -181,11 +137,7 @@ class NGC_Rest_Bookings {
 	 * @return WP_REST_Response
 	 */
 	public static function create( $request ) {
-		$data = $request->get_json_params() ?: $request->get_params();
-		if ( ! is_array( $data ) ) {
-			$data = [];
-		}
-		$data = NGC_Access::sanitize_booking_create_payload( $data );
+		$data = NGC_Access::sanitize_booking_create_payload( self::request_payload( $request ) );
 		if ( is_wp_error( $data ) ) {
 			return NGC_Rest::error_response( $data );
 		}
@@ -194,7 +146,7 @@ class NGC_Rest_Bookings {
 			return NGC_Rest::error_response( $id );
 		}
 		do_action( 'ngc_booking_created', $id );
-		return new WP_REST_Response( [ 'booking_id' => $id, 'booking' => NGC_Bookings::get( $id ) ], 201 );
+		return new WP_REST_Response( [ 'booking_id' => $id, 'booking' => self::safe_booking( NGC_Bookings::get( $id ) ) ], 201 );
 	}
 
 	/**
@@ -206,7 +158,7 @@ class NGC_Rest_Bookings {
 		if ( ! $booking ) {
 			return NGC_Rest::error_response( new WP_Error( 'ngc_not_found', __( 'Booking not found.', 'nextgencompanion' ), [ 'status' => 404 ] ) );
 		}
-		return new WP_REST_Response( [ 'booking' => $booking ], 200 );
+		return new WP_REST_Response( [ 'booking' => self::safe_booking( $booking ) ], 200 );
 	}
 
 	/**
@@ -214,17 +166,12 @@ class NGC_Rest_Bookings {
 	 * @return WP_REST_Response
 	 */
 	public static function update( $request ) {
-		$id   = (int) $request['id'];
-		$data = $request->get_json_params() ?: $request->get_params();
-		if ( ! is_array( $data ) ) {
-			$data = [];
-		}
-		$data   = NGC_Access::sanitize_booking_update_payload( $data );
-		$result = NGC_Bookings::update( $id, $data );
+		$id     = (int) $request['id'];
+		$result = NGC_Bookings::update( $id, NGC_Access::sanitize_booking_update_payload( self::request_payload( $request ) ) );
 		if ( is_wp_error( $result ) ) {
 			return NGC_Rest::error_response( $result );
 		}
-		return new WP_REST_Response( [ 'booking' => NGC_Bookings::get( $id ) ], 200 );
+		return new WP_REST_Response( [ 'booking' => self::safe_booking( NGC_Bookings::get( $id ) ) ], 200 );
 	}
 
 	/**
@@ -249,7 +196,7 @@ class NGC_Rest_Bookings {
 		if ( is_wp_error( $result ) ) {
 			return NGC_Rest::error_response( $result );
 		}
-		return new WP_REST_Response( [ 'booking' => NGC_Bookings::get( (int) $request['id'] ) ], 200 );
+		return new WP_REST_Response( [ 'booking' => self::safe_booking( NGC_Bookings::get( (int) $request['id'] ) ) ], 200 );
 	}
 
 	/**
@@ -260,7 +207,22 @@ class NGC_Rest_Bookings {
 	 */
 	public static function join( $request ) {
 		$booking_id = (int) $request['id'];
-		$booking    = NGC_Bookings::get( $booking_id );
+		if ( class_exists( 'NGC_Session_Launch' ) ) {
+			$result = NGC_Session_Launch::launch_booking( $booking_id, get_current_user_id() );
+			if ( is_wp_error( $result ) ) {
+				$denied = self::join_window_response( $result );
+				return $denied ? $denied : NGC_Rest::error_response( $result );
+			}
+			NGC_Audit::log(
+				'lesson_join',
+				'booking',
+				$booking_id,
+				[ 'session_id' => $result['session_id'] ?? 0 ],
+				get_current_user_id()
+			);
+			return new WP_REST_Response( $result, 200 );
+		}
+		$booking = NGC_Bookings::get( $booking_id );
 		if ( ! $booking ) {
 			return NGC_Rest::error_response( new WP_Error( 'ngc_not_found', __( 'Booking not found.', 'nextgencompanion' ), [ 'status' => 404 ] ) );
 		}
@@ -293,14 +255,132 @@ class NGC_Rest_Bookings {
 
 		return new WP_REST_Response(
 			[
-				'booking_id' => $booking_id,
-				'join_url'   => $url,
-				'joinUrl'    => $url,
-				'provider'   => (string) ( $meeting['provider'] ?? 'jitsi' ),
-				'room'       => (string) ( $meeting['room'] ?? '' ),
-				'audio_video'=> true,
+				'booking_id'  => $booking_id,
+				'join_url'    => $url,
+				'joinUrl'     => $url,
+				'provider'    => (string) ( $meeting['provider'] ?? 'jitsi' ),
+				'room'        => (string) ( $meeting['room'] ?? '' ),
+				'audio_video' => true,
 			],
 			200
 		);
+	}
+
+	/**
+	 * Visible bookings for the current user. Parents never accept a foreign student_user_id filter.
+	 *
+	 * @param WP_REST_Request $request Request.
+	 * @return array<int, object>
+	 */
+	private static function query_visible_bookings( $request ) {
+		$limit  = (int) ( $request->get_param( 'limit' ) ?: 20 );
+		$uid    = get_current_user_id();
+		$roles  = (array) wp_get_current_user()->roles;
+		$status = $request->get_param( 'status' ) ? sanitize_key( $request->get_param( 'status' ) ) : '';
+		$args   = [ 'limit' => $limit ];
+
+		if ( NGC_Access::is_ops( $uid ) ) {
+			if ( $request->get_param( 'student_user_id' ) ) {
+				$args['student_user_id'] = (int) $request->get_param( 'student_user_id' );
+			}
+			if ( $request->get_param( 'tutor_user_id' ) ) {
+				$args['tutor_user_id'] = (int) $request->get_param( 'tutor_user_id' );
+			}
+			if ( $status ) {
+				$args['status'] = $status;
+			}
+			return NGC_Bookings::query( $args );
+		}
+
+		if ( in_array( 'tutor', $roles, true ) || in_array( 'ngt_tutor', $roles, true ) ) {
+			$args['tutor_user_id'] = $uid;
+			if ( $status ) {
+				$args['status'] = $status;
+			}
+			return NGC_Bookings::query( $args );
+		}
+
+		if ( in_array( 'parent', $roles, true ) || in_array( 'ngt_parent', $roles, true ) ) {
+			$bookings = NGC_Bookings::query_for_parent( $uid, $limit );
+			if ( ! $status ) {
+				return $bookings;
+			}
+			return array_values(
+				array_filter(
+					$bookings,
+					static function ( $booking ) use ( $status ) {
+						return isset( $booking->status ) && sanitize_key( $booking->status ) === $status;
+					}
+				)
+			);
+		}
+
+		$args['student_user_id'] = $uid;
+		if ( $status ) {
+			$args['status'] = $status;
+		}
+		return NGC_Bookings::query( $args );
+	}
+
+	/**
+	 * @param WP_REST_Request $request Request.
+	 * @return array<string, mixed>
+	 */
+	private static function request_payload( $request ) {
+		$data = $request->get_json_params() ?: $request->get_params();
+		return is_array( $data ) ? $data : [];
+	}
+
+	/**
+	 * @param array<int, object|array> $bookings Rows.
+	 * @return WP_REST_Response
+	 */
+	private static function bookings_response( $bookings ) {
+		return new WP_REST_Response( [ 'bookings' => self::safe_bookings( $bookings ) ], 200 );
+	}
+
+	/**
+	 * @param WP_Error $result Join denial.
+	 * @return WP_REST_Response|null
+	 */
+	private static function join_window_response( $result ) {
+		$data = $result->get_error_data();
+		if ( ! is_array( $data ) || ! isset( $data['window'] ) ) {
+			return null;
+		}
+		return new WP_REST_Response(
+			[
+				'code'    => $result->get_error_code(),
+				'message' => $result->get_error_message(),
+				'reason'  => $data['reason'] ?? '',
+				'window'  => $data['window'],
+			],
+			(int) ( $data['status'] ?? 409 )
+		);
+	}
+
+	/**
+	 * @param object|array|null $booking Booking.
+	 * @return object|array|null
+	 */
+	private static function safe_booking( $booking ) {
+		if ( class_exists( 'NGC_Session_Presenter' ) ) {
+			return NGC_Session_Presenter::sanitize_booking_for_rest( $booking );
+		}
+		return $booking;
+	}
+
+	/**
+	 * @param array<int, object|array> $bookings Rows.
+	 * @return array<int, object|array>
+	 */
+	private static function safe_bookings( $bookings ) {
+		if ( ! is_array( $bookings ) ) {
+			return [];
+		}
+		if ( class_exists( 'NGC_Session_Presenter' ) ) {
+			return NGC_Session_Presenter::sanitize_bookings_for_rest( $bookings );
+		}
+		return $bookings;
 	}
 }

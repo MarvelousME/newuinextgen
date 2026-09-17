@@ -77,7 +77,15 @@ foreach ( array( 'custom-folder/custom.php', 'legacy/legacy.php', 'vendor/ngt-co
 
 require_once $root . '/includes/diagnostics/class-ngc-legacy-plugin-guard.php';
 require_once $root . '/includes/session/class-ngc-session-states.php';
-require_once $root . '/includes/integrations/class-ngc-product-provisioner.php';
+require_once $root . '/includes/session/class-ngc-session-exceptions.php';
+require_once $root . '/includes/session/class-ngc-session-state-machine.php';
+require_once $root . '/includes/session/class-ngc-session-join-policy.php';
+require_once $root . '/includes/session/class-ngc-session-correlation.php';
+require_once $root . '/includes/session/class-ngc-product-catalog.php';
+require_once $root . '/includes/session/class-ngc-session-identity.php';
+require_once $root . '/includes/session/class-ngc-session-price-integrity.php';
+require_once $root . '/includes/session/class-ngc-session-presenter.php';
+require_once $root . '/includes/session/class-ngc-session-checkout.php';
 require_once $root . '/includes/integrations/class-ngc-woocommerce-catalog.php';
 require_once $root . '/includes/payments/class-ngc-payout-export.php';
 require_once $root . '/includes/memory/interface-ngc-memory-provider.php';
