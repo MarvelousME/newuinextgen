@@ -30,6 +30,13 @@ class NGC_Parent_Checkout {
 	 * @return int Product ID.
 	 */
 	public static function ensure_product() {
+		if ( class_exists( 'NGC_Product_Provisioner' ) ) {
+			$id = NGC_Product_Provisioner::product_id_for_key( 'NGT-ONLINE-1HR' );
+			if ( $id ) {
+				update_option( self::PRODUCT_OPTION, $id, false );
+				return $id;
+			}
+		}
 		$product_id = (int) get_option( self::PRODUCT_OPTION, 0 );
 		if ( $product_id && 'product' === get_post_type( $product_id ) ) {
 			return $product_id;
@@ -70,6 +77,14 @@ class NGC_Parent_Checkout {
 			return new WP_Error( 'woocommerce_inactive', __( 'WooCommerce is not active.', 'nextgencompanion' ) );
 		}
 
+		if ( class_exists( 'NGC_Session_Checkout' ) ) {
+			$prepared = NGC_Session_Checkout::prepare_order_args( $args );
+			if ( is_wp_error( $prepared ) ) {
+				return $prepared;
+			}
+			$args = $prepared;
+		}
+
 		$product_id  = (int) ( $args['product_id'] ?? self::ensure_product() );
 		$product     = $product_id ? wc_get_product( $product_id ) : null;
 		if ( ! $product ) {
@@ -88,6 +103,9 @@ class NGC_Parent_Checkout {
 		}
 
 		$order->add_product( $product, max( 1, (int) ( $args['qty'] ?? 1 ) ) );
+		if ( class_exists( 'NGC_Session_Checkout' ) ) {
+			NGC_Session_Checkout::stamp_order( $order, $args );
+		}
 		$order->set_billing_first_name( $first );
 		$order->set_billing_last_name( $last );
 		if ( $email ) {
@@ -182,12 +200,17 @@ class NGC_Parent_Checkout {
 			[
 				'methods'             => 'POST',
 				'callback'            => [ __CLASS__, 'rest_create_checkout' ],
-				'permission_callback' => '__return_true',
+				'permission_callback' => [ 'NGC_Rest', 'require_login' ],
 				'args'                => [
-					'booking_id' => [ 'type' => 'integer', 'default' => 0 ],
-					'email'      => [ 'type' => 'string' ],
-					'first_name' => [ 'type' => 'string' ],
-					'last_name'  => [ 'type' => 'string' ],
+					'booking_id'       => [ 'type' => 'integer', 'default' => 0 ],
+					'email'            => [ 'type' => 'string' ],
+					'first_name'       => [ 'type' => 'string' ],
+					'last_name'        => [ 'type' => 'string' ],
+					'product_key'      => [ 'type' => 'string' ],
+					'tutor_user_id'    => [ 'type' => 'integer' ],
+					'student_user_id'  => [ 'type' => 'integer' ],
+					'subject'          => [ 'type' => 'string' ],
+					'scheduled_start'  => [ 'type' => 'string' ],
 				],
 			]
 		);
@@ -198,13 +221,21 @@ class NGC_Parent_Checkout {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public static function rest_create_checkout( $request ) {
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error( 'ngc_login_required', __( 'You must be signed in to checkout.', 'nextgencompanion' ), [ 'status' => 401 ] );
+		}
 		$order = self::create_order(
 			[
-				'user_id'    => get_current_user_id(),
-				'booking_id' => (int) $request->get_param( 'booking_id' ),
-				'email'      => (string) $request->get_param( 'email' ),
-				'first_name' => (string) $request->get_param( 'first_name' ),
-				'last_name'  => (string) $request->get_param( 'last_name' ),
+				'user_id'         => get_current_user_id(),
+				'booking_id'      => (int) $request->get_param( 'booking_id' ),
+				'email'           => (string) $request->get_param( 'email' ),
+				'first_name'      => (string) $request->get_param( 'first_name' ),
+				'last_name'       => (string) $request->get_param( 'last_name' ),
+				'product_key'     => (string) $request->get_param( 'product_key' ),
+				'tutor_user_id'   => (int) $request->get_param( 'tutor_user_id' ),
+				'student_user_id' => (int) $request->get_param( 'student_user_id' ),
+				'subject'         => (string) $request->get_param( 'subject' ),
+				'scheduled_start' => (string) $request->get_param( 'scheduled_start' ),
 			]
 		);
 

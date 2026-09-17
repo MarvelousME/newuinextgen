@@ -121,6 +121,7 @@ class NGC_Database {
 
 		$sql[] = "CREATE TABLE {$t['bookings']} (
 			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			uuid varchar(64) NOT NULL DEFAULT '',
 			match_id bigint(20) unsigned NOT NULL DEFAULT 0,
 			student_user_id bigint(20) unsigned NOT NULL DEFAULT 0,
 			tutor_user_id bigint(20) unsigned NOT NULL DEFAULT 0,
@@ -137,6 +138,7 @@ class NGC_Database {
 			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY  (id),
+			UNIQUE KEY uuid (uuid),
 			KEY match_id (match_id),
 			KEY student_user_id (student_user_id),
 			KEY tutor_user_id (tutor_user_id),
@@ -147,6 +149,7 @@ class NGC_Database {
 
 		$sql[] = "CREATE TABLE {$t['sessions']} (
 			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			uuid varchar(64) NOT NULL DEFAULT '',
 			session_uuid varchar(64) NOT NULL DEFAULT '',
 			correlation_id varchar(64) NOT NULL DEFAULT '',
 			idempotency_key varchar(191) NOT NULL DEFAULT '',
@@ -183,6 +186,7 @@ class NGC_Database {
 			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY  (id),
+			UNIQUE KEY uuid (uuid),
 			UNIQUE KEY session_uuid (session_uuid),
 			UNIQUE KEY idempotency_key (idempotency_key),
 			KEY correlation_id (correlation_id),
@@ -196,6 +200,7 @@ class NGC_Database {
 
 		$sql[] = "CREATE TABLE {$t['invoices']} (
 			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			uuid varchar(64) NOT NULL DEFAULT '',
 			invoice_number varchar(64) NOT NULL DEFAULT '',
 			user_id bigint(20) unsigned NOT NULL DEFAULT 0,
 			booking_id bigint(20) unsigned NOT NULL DEFAULT 0,
@@ -208,7 +213,9 @@ class NGC_Database {
 			paid_at datetime NULL,
 			meta longtext NULL,
 			PRIMARY KEY  (id),
+			UNIQUE KEY uuid (uuid),
 			UNIQUE KEY invoice_number (invoice_number),
+			UNIQUE KEY order_id (order_id),
 			KEY user_id (user_id),
 			KEY booking_id (booking_id),
 			KEY status (status)

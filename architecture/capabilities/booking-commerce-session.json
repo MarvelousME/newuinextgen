@@ -1,0 +1,43 @@
+{
+  "capabilities": [
+    {
+      "capabilityId": "booking.create",
+      "name": "Create tutoring booking",
+      "description": "Parent or adult student creates a scheduling booking.",
+      "provider": "nextgentutors-companion",
+      "version": "1.0.0",
+      "protocol": "domain",
+      "requiredPermissions": ["ngc_book_sessions"],
+      "availability": "available",
+      "tenantScope": "tenant",
+      "lifecycleState": "active",
+      "tags": ["booking", "session"]
+    },
+    {
+      "capabilityId": "payment.authorize",
+      "name": "Authorize tutoring payment",
+      "description": "Settle a WooCommerce tutoring order (human checkout or trusted ITN).",
+      "provider": "nextgentutors-companion",
+      "version": "1.0.0",
+      "protocol": "domain",
+      "requiredPermissions": ["ngc_manage_wallet"],
+      "availability": "available",
+      "tenantScope": "tenant",
+      "lifecycleState": "active",
+      "tags": ["payment", "woocommerce"]
+    },
+    {
+      "capabilityId": "session.launch",
+      "name": "Launch live lesson",
+      "description": "Authorized participant requests JOIN LESSON URLs.",
+      "provider": "nextgentutors-companion",
+      "version": "1.0.0",
+      "protocol": "rest",
+      "requiredPermissions": ["read"],
+      "availability": "available",
+      "tenantScope": "tenant",
+      "lifecycleState": "active",
+      "tags": ["session", "join"]
+    }
+  ]
+}

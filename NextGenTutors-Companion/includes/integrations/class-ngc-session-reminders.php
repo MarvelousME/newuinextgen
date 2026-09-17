@@ -88,6 +88,20 @@ class NGC_Session_Reminders {
 		$booking_id = (int) ( $context['booking_id'] ?? $context['internal_booking_id'] ?? 0 );
 		$starts_at  = (string) ( $context['starts_at'] ?? $context['session_start'] ?? '' );
 
+		if ( ! $booking_id && ! empty( $context['order_id'] ) && class_exists( 'NGC_Session_Repository' ) ) {
+			$session = NGC_Session_Repository::get_by_order_id( (int) $context['order_id'] );
+			if ( is_array( $session ) ) {
+				$booking_id = (int) ( $session['booking_id'] ?? 0 );
+				if ( '' === $starts_at && ! empty( $session['scheduled_start'] ) ) {
+					$starts_at = (string) $session['scheduled_start'];
+				}
+			}
+		}
+
+		if ( $booking_id <= 0 ) {
+			return;
+		}
+
 		if ( $booking_id && class_exists( 'NGC_Bookings' ) ) {
 			$row = NGC_Bookings::get( $booking_id );
 			if ( $row && empty( $starts_at ) && ! empty( $row->scheduled_at ) ) {
@@ -150,17 +164,18 @@ class NGC_Session_Reminders {
 				return;
 			}
 		}
-		$wpdb->insert(
-			$table,
-			[
-				'booking_id'   => (int) ( $row['booking_id'] ?? 0 ),
-				'reminder_key' => sanitize_key( (string) ( $row['reminder_key'] ?? '' ) ),
-				'send_at'      => (string) ( $row['send_at'] ?? '' ),
-				'recipient'    => sanitize_email( (string) ( $row['recipient'] ?? '' ) ),
-				'payload'      => (string) ( $row['payload'] ?? '{}' ),
-				'status'       => 'pending',
-				'created_at'   => current_time( 'mysql', true ),
-			],
+		$row = [
+			'booking_id'   => (int) ( $row['booking_id'] ?? 0 ),
+			'reminder_key' => sanitize_key( (string) ( $row['reminder_key'] ?? '' ) ),
+			'send_at'      => (string) ( $row['send_at'] ?? '' ),
+			'recipient'    => sanitize_email( (string) ( $row['recipient'] ?? '' ) ),
+			'payload'      => (string) ( $row['payload'] ?? '{}' ),
+			'status'       => 'pending',
+			'created_at'   => current_time( 'mysql', true ),
+		];
+		NGC_Database::insert(
+			'reminder_schedules',
+			$row,
 			[ '%d', '%s', '%s', '%s', '%s', '%s', '%s' ]
 		);
 	}

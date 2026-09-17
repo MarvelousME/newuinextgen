@@ -26,6 +26,11 @@ class NGC_Invoices {
 
 		$user_id    = (int) $order->get_user_id();
 		$order_id   = (int) $order->get_id();
+		$existing   = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$table} WHERE order_id = %d LIMIT 1", $order_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		if ( $existing ) {
+			return (int) $existing;
+		}
+
 		$booking_id = (int) $order->get_meta( 'ngc_booking_id' );
 		$amount     = (float) $order->get_total();
 		$number     = self::next_invoice_number();
@@ -33,15 +38,21 @@ class NGC_Invoices {
 		$line_items = [];
 		foreach ( $order->get_items() as $item ) {
 			$line_items[] = [
-				'name'   => $item->get_name(),
-				'qty'    => $item->get_quantity(),
-				'total'  => $item->get_total(),
+				'name'          => $item->get_name(),
+				'qty'           => $item->get_quantity(),
+				'unit_amount'   => (float) $item->get_subtotal() / max( 1, (int) $item->get_quantity() ),
+				'total'         => $item->get_total(),
+				'tax'           => (float) $item->get_total_tax(),
+				'subject'       => $item->get_meta( '_ngt_subject_name' ),
+				'student'       => $item->get_meta( '_ngt_student_name' ),
+				'package'       => $item->get_meta( '_ngt_product_key' ),
 			];
 		}
 
 		$inserted = $wpdb->insert(
 			$table,
 			[
+				'uuid'           => class_exists( 'NGC_Uuid' ) ? NGC_Uuid::generate() : wp_generate_uuid4(),
 				'invoice_number' => $number,
 				'user_id'        => $user_id,
 				'booking_id'     => $booking_id,
@@ -54,7 +65,7 @@ class NGC_Invoices {
 				'paid_at'        => current_time( 'mysql', true ),
 				'meta'           => wp_json_encode( [ 'billing' => $order->get_address( 'billing' ) ] ),
 			],
-			[ '%s', '%d', '%d', '%d', '%f', '%s', '%s', '%s', '%s', '%s', '%s' ]
+			[ '%s', '%s', '%d', '%d', '%d', '%f', '%s', '%s', '%s', '%s', '%s', '%s' ]
 		);
 
 		if ( ! $inserted ) {
@@ -107,6 +118,17 @@ class NGC_Invoices {
 		$table = NGC_Database::table( 'invoices' );
 		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$table} WHERE id = %d", (int) $invoice_id ) );
+	}
+
+	/**
+	 * @param int $order_id Order ID.
+	 * @return object|null
+	 */
+	public static function get_by_order_id( $order_id ) {
+		global $wpdb;
+		$table = NGC_Database::table( 'invoices' );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$table} WHERE order_id = %d ORDER BY id DESC LIMIT 1", (int) $order_id ) );
 	}
 
 	/**

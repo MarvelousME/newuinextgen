@@ -163,14 +163,18 @@
   }
 
   function sessionRow(s) {
-    var join = joinButton(s, "bi-dash-session__join ngt-btn ngt-btn--sm ngt-btn--primary", "Join lesson");
+    var join = joinButton(s, "bi-dash-session__join ngt-btn ngt-btn--sm ngt-btn--primary", s.joinLabel || "Join lesson");
     var alt = s.peerName ? s.peerName : "";
+    var meta = [fmtDate(s.scheduledStart || s.createdAt), s.timezone, s.paymentStatus, s.joinLabel || s.statusLabel]
+      .filter(Boolean)
+      .join(" · ");
+    var inv = s.invoice && s.invoice.number ? " · Invoice " + s.invoice.number : "";
     return (
       '<div class="bi-dash-session">' +
       (s.peerImage ? '<img src="' + esc(s.peerImage) + '" alt="' + esc(alt) + '" class="bi-dash-session__img" loading="lazy" />' : "") +
       '<div class="bi-dash-session__body"><div class="bi-dash-session__title">' +
       esc(s.peerName) + " · " + esc(s.subject) +
-      '</div><div class="bi-dash-session__meta">' + esc(fmtDate(s.createdAt)) + "</div></div>" +
+      '</div><div class="bi-dash-session__meta">' + esc(meta + inv) + "</div></div>" +
       join +
       '<span class="bi-dash-session__status">' + esc(s.statusLabel || s.attendance || "") + "</span></div>"
     );
@@ -422,6 +426,21 @@
     html += "</div>";
     html += chartsHtml(data.charts);
     html += recentList(data);
+    var invoices = data.invoices || [];
+    if (invoices.length) {
+      html += "<h3>" + esc("Invoices / orders") + "</h3>";
+      invoices.forEach(function (inv) {
+        html +=
+          '<div class="bi-dash-session"><div class="bi-dash-session__body"><div class="bi-dash-session__title">' +
+          esc(inv.number || "Invoice") +
+          '</div><div class="bi-dash-session__meta">R' +
+          esc(zar(inv.amount)) +
+          " · " +
+          esc(inv.status || "") +
+          (inv.orderId ? " · Order " + esc(String(inv.orderId)) : "") +
+          "</div></div></div>";
+      });
+    }
     html += "</div>";
     return html;
   }

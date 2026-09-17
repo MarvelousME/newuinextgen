@@ -1,0 +1,2 @@
+Tables_in_wordpress (%ngc_sessions)
+wp_ngc_sessions

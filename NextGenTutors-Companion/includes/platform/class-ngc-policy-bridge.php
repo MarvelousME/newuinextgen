@@ -46,6 +46,10 @@ final class NGC_Policy_Bridge {
 
 		$actor_type = (string) ( $context['actor_type'] ?? 'human' );
 		$operation  = (string) ( $context['operation'] ?? 'invoke' );
+		$actor_id   = (int) ( $context['actor_user_id'] ?? 0 );
+		if ( $actor_id <= 0 && function_exists( 'get_current_user_id' ) ) {
+			$actor_id = (int) get_current_user_id();
+		}
 
 		// Machine/agent path: reuse agent policy engine when action maps 1:1 or via alias.
 		if ( in_array( $actor_type, [ 'agent', 'service', 'machine' ], true ) && class_exists( 'NGC_Agent_Policy_Engine' ) ) {
@@ -71,10 +75,10 @@ final class NGC_Policy_Bridge {
 				continue;
 			}
 			if ( class_exists( 'NGC_Authz_Matrix' ) && ! NGC_Authz_Matrix::can( $perm, $operation ) ) {
-				if ( ! current_user_can( $perm ) && ! current_user_can( 'manage_options' ) ) {
+				if ( ! self::actor_can( $actor_id, $perm ) && ! self::actor_can( $actor_id, 'manage_options' ) ) {
 					return self::result( self::DENY, 'Missing permission: ' . $perm, $cap );
 				}
-			} elseif ( ! current_user_can( $perm ) && ! current_user_can( 'manage_options' ) ) {
+			} elseif ( ! self::actor_can( $actor_id, $perm ) && ! self::actor_can( $actor_id, 'manage_options' ) ) {
 				return self::result( self::DENY, 'Missing capability: ' . $perm, $cap );
 			}
 		}
@@ -88,6 +92,23 @@ final class NGC_Policy_Bridge {
 		 */
 		$result = self::result( self::ALLOW, 'Authorized', $cap );
 		return apply_filters( 'ngc_policy_bridge_decide', $result, $capability_id, $context );
+	}
+
+	/**
+	 * @param int    $user_id User.
+	 * @param string $cap     Capability.
+	 * @return bool
+	 */
+	private static function actor_can( $user_id, $cap ) {
+		$user_id = (int) $user_id;
+		$cap     = (string) $cap;
+		if ( '' === $cap ) {
+			return false;
+		}
+		if ( $user_id > 0 && function_exists( 'user_can' ) ) {
+			return user_can( $user_id, $cap );
+		}
+		return function_exists( 'current_user_can' ) && current_user_can( $cap );
 	}
 
 	/**

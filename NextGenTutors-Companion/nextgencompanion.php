@@ -3,7 +3,7 @@
  * Plugin Name:       NextGenTutors-Companion
  * Plugin URI:        https://beyondinfinity.co.za/
  * Description:       Business logic, data layer, REST API, workflows, and multi-model BYOK AI suite for NextGen Tutors (TutorFabulous theme; BeyondInfinity legacy slug supported).
- * Version:           1.9.19
+ * Version:           1.9.23
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            NextGen Tutors
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NGC_VERSION', '1.9.19' );
+define( 'NGC_VERSION', '1.9.23' );
 define( 'NGC_PLUGIN_FILE', __FILE__ );
 define( 'NGC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NGC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -110,11 +110,19 @@ function ngc_autoload( $class ) {
 		}
 	}
 
+	if ( 0 === strpos( $class, 'NGC_Session_' ) && ( 'NGC_Session_Exception' === $class || substr( $class, -10 ) === '_Exception' ) ) {
+		$ex = NGC_PLUGIN_DIR . 'includes/session/class-ngc-session-exceptions.php';
+		if ( file_exists( $ex ) ) {
+			require_once $ex;
+			return;
+		}
+	}
+
 	// Interfaces: NGC_Foo_Interface → interface-ngc-foo.php (drop trailing -interface).
 	if ( substr( $class, -10 ) === '_Interface' ) {
 		$base = substr( $class, 0, -10 );
 		$iface = 'interface-' . strtolower( str_replace( '_', '-', $base ) ) . '.php';
-		foreach ( [ 'includes/memory/', 'includes/talent/', 'includes/adapters/' ] as $dir ) {
+		foreach ( [ 'includes/memory/', 'includes/talent/', 'includes/adapters/', 'includes/session/' ] as $dir ) {
 			$ipath = NGC_PLUGIN_DIR . $dir . $iface;
 			if ( file_exists( $ipath ) ) {
 				require_once $ipath;

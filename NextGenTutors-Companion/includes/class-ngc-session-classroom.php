@@ -37,14 +37,17 @@ class NGC_Session_Classroom {
 		if ( ! $booking_id || ! class_exists( 'NGC_Bookings' ) ) {
 			return '';
 		}
-		$join = apply_filters( 'ngc_session_join_url', '', $booking_id );
-		if ( ! $join ) {
-			return '<p class="ngc-session-classroom">' . esc_html__( 'Session link will appear when the lesson is confirmed.', 'nextgencompanion' ) . '</p>';
+		$session = class_exists( 'NGC_Session_Repository' ) ? NGC_Session_Repository::get_by_booking_id( $booking_id ) : null;
+		$sid     = $session ? (int) $session['id'] : 0;
+		$window  = $session ? NGC_Session_Join_Policy::evaluate( $session ) : [ 'allowed' => false, 'label' => __( 'Session link will appear when the lesson is confirmed.', 'nextgencompanion' ) ];
+		if ( empty( $window['allowed'] ) ) {
+			return '<p class="ngc-session-classroom">' . esc_html( (string) $window['label'] ) . '</p>';
 		}
 		return sprintf(
-			'<p class="ngc-session-classroom"><a class="ngc-btn ngc-btn--primary" href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>',
-			esc_url( $join ),
-			esc_html__( 'Join session', 'nextgencompanion' )
+			'<p class="ngc-session-classroom"><button type="button" class="ngc-btn ngc-btn--primary bi-dash-join-btn" data-session-id="%d" data-booking-id="%d">%s</button></p>',
+			$sid,
+			$booking_id,
+			esc_html__( 'Join lesson', 'nextgencompanion' )
 		);
 	}
 

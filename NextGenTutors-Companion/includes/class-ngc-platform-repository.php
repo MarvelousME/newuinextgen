@@ -171,6 +171,9 @@ class NGC_Platform_Repository {
 			return $valid;
 		}
 		$payload = self::map_to_response( $entity, $data );
+		if ( class_exists( 'NGC_Database' ) ) {
+			$payload = NGC_Database::ensure_row_uuid( $table, $payload );
+		}
 		$ok      = $wpdb->insert( $table, $payload );
 		if ( ! $ok ) {
 			return new WP_Error( 'ngc_repo_insert_failed', __( 'Failed to create record.', 'nextgencompanion' ) );

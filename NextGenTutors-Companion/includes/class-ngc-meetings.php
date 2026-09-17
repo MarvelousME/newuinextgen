@@ -18,7 +18,7 @@ class NGC_Meetings {
 	 * Hook registration.
 	 */
 	public static function init() {
-		add_action( 'ngc_booking_confirmed', [ __CLASS__, 'on_booking_confirmed' ], 10, 2 );
+		// Meeting rooms are provisioned exclusively by NGC_Ensure_Session_Provisioned.
 	}
 
 	/**
@@ -26,6 +26,9 @@ class NGC_Meetings {
 	 * @param array<string, mixed> $context    Context.
 	 */
 	public static function on_booking_confirmed( $booking_id, $context = [] ) {
+		if ( class_exists( 'NGC_Session_Orchestrator' ) && ! empty( NGC_Session_Orchestrator::$provisioning ) ) {
+			return;
+		}
 		self::ensure_for_booking( (int) $booking_id, $context );
 	}
 
@@ -136,6 +139,16 @@ class NGC_Meetings {
 			return false;
 		}
 		$status = sanitize_key( (string) $booking->status );
-		return in_array( $status, [ 'requested', 'confirmed' ], true );
+		if ( ! in_array( $status, [ 'confirmed', 'completed' ], true ) ) {
+			return false;
+		}
+		if ( class_exists( 'NGC_Session_Repository' ) ) {
+			$session = NGC_Session_Repository::get_by_booking_id( (int) $booking->id );
+			if ( $session ) {
+				$window = NGC_Session_Join_Policy::evaluate( $session );
+				return ! empty( $window['allowed'] );
+			}
+		}
+		return false;
 	}
 }

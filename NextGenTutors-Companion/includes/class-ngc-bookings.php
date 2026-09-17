@@ -22,17 +22,10 @@ class NGC_Bookings {
 	 * @return int|WP_Error
 	 */
 	public static function create( $data ) {
-		if ( class_exists( 'NGC_Policy_Bridge' ) ) {
-			$auth = NGC_Policy_Bridge::authorize_domain(
-				'booking.create',
-				[
-					'actor_type' => 'human',
-					'operation'  => 'invoke',
-				]
-			);
-			if ( is_wp_error( $auth ) ) {
-				return $auth;
-			}
+		$data = is_array( $data ) ? $data : [];
+		$auth = self::authorize_create( $data );
+		if ( is_wp_error( $auth ) ) {
+			return $auth;
 		}
 
 		global $wpdb;
@@ -184,19 +177,17 @@ class NGC_Bookings {
 		NGC_Audit::log( 'booking_' . $status, 'booking', $booking_id, [ 'from' => $booking->status ], $actor_id );
 
 		if ( 'confirmed' === $status ) {
-			$meeting = class_exists( 'NGC_Meetings' )
-				? NGC_Meetings::ensure_for_booking( $booking_id, [ 'user_id' => (int) $actor_id ] )
-				: null;
-			$join_url = ( ! is_wp_error( $meeting ) && is_array( $meeting ) ) ? (string) ( $meeting['join_url'] ?? '' ) : '';
-			$ctx      = [
+			$ctx = [
 				'booking_id'      => (string) $booking_id,
 				'student_user_id' => (string) $booking->student_user_id,
 				'tutor_user_id'   => (string) $booking->tutor_user_id,
-				'join_url'        => $join_url,
 				'session_start'   => (string) ( $booking->scheduled_at ?? '' ),
 				'subject'         => (string) ( $booking->subject ?? '' ),
+				'order_id'        => (int) ( $booking->order_id ?? 0 ),
 			];
-			NGC_Workflows::dispatch( 'booking.confirmed', $ctx );
+			if ( empty( NGC_Session_Orchestrator::$provisioning ) ) {
+				NGC_Workflows::dispatch( 'booking.confirmed', $ctx );
+			}
 			do_action( 'ngc_booking_confirmed', $booking_id, $ctx );
 		}
 
@@ -598,6 +589,20 @@ class NGC_Bookings {
 	 * @return array<string, mixed>
 	 */
 	public static function format_session_row( $booking, $viewer ) {
+		if ( class_exists( 'NGC_Session_Presenter' ) ) {
+			return NGC_Session_Presenter::format_session_row( $booking, $viewer );
+		}
+		return self::format_session_row_legacy( $booking, $viewer );
+	}
+
+	/**
+	 * Legacy formatter kept for presenter fallback. Does not include meeting URLs.
+	 *
+	 * @param object $booking Row.
+	 * @param int    $viewer  Viewing user ID.
+	 * @return array<string, mixed>
+	 */
+	public static function format_session_row_legacy( $booking, $viewer ) {
 		$viewer_user = get_user_by( 'id', $viewer );
 		$roles       = $viewer_user ? (array) $viewer_user->roles : [];
 		if ( in_array( 'parent', $roles, true ) || in_array( 'parent_guardian', $roles, true ) ) {
@@ -611,38 +616,6 @@ class NGC_Bookings {
 		$avatar = $peer ? get_avatar_url( $peer->ID ) : '';
 
 		$can_join = class_exists( 'NGC_Meetings' ) && NGC_Meetings::can_join_status( $booking );
-		$join_url = '';
-		$provider = '';
-		$room     = '';
-		$meeting  = self::get_meeting_meta( (int) $booking->id );
-
-		if ( $can_join && class_exists( 'NGC_Meetings' ) ) {
-			if ( empty( $meeting['join_url'] ) ) {
-				$ensured = NGC_Meetings::ensure_for_booking( (int) $booking->id, [ 'user_id' => (int) $viewer ] );
-				if ( ! is_wp_error( $ensured ) && is_array( $ensured ) ) {
-					$join_url = (string) ( $ensured['join_url'] ?? '' );
-					$provider = (string) ( $ensured['provider'] ?? 'jitsi' );
-					$room     = (string) ( $ensured['room'] ?? '' );
-					$meeting  = self::get_meeting_meta( (int) $booking->id );
-				}
-			} else {
-				$join_url = (string) $meeting['join_url'];
-				$provider = (string) ( $meeting['provider'] ?? 'jitsi' );
-				$room     = (string) ( $meeting['room'] ?? '' );
-			}
-
-			if ( $room === '' && ! empty( $meeting['room'] ) ) {
-				$room = (string) $meeting['room'];
-			}
-
-			if ( $join_url && $room && (int) $viewer > 0 && class_exists( 'NGC_Jitsi_Meeting_Adapter' ) && ( $provider === 'jitsi' || $provider === '' ) ) {
-				$user = get_userdata( (int) $viewer );
-				if ( $user ) {
-					$join_url = NGC_Jitsi_Meeting_Adapter::join_url_for_room( $room, $user->display_name );
-					$provider = 'jitsi';
-				}
-			}
-		}
 
 		return [
 			'id'              => (int) $booking->id,
@@ -654,12 +627,34 @@ class NGC_Bookings {
 			'status'          => $booking->status,
 			'statusLabel'     => ucfirst( $booking->status ),
 			'attendance'      => $booking->status,
-			'joinUrl'         => $join_url,
-			'join_url'        => $join_url,
-			'meetingUrl'      => $join_url,
-			'canJoin'         => $can_join && $join_url !== '',
-			'meetingProvider' => $provider ?: ( $join_url ? 'jitsi' : '' ),
+			'joinUrl'         => '',
+			'join_url'        => '',
+			'meetingUrl'      => '',
+			'canJoin'         => false,
+			'meetingProvider' => '',
 		];
+	}
+
+	/**
+	 * Policy gate for booking.create (default DENY).
+	 *
+	 * @param array<string, mixed> $data Booking payload.
+	 * @return true|WP_Error
+	 */
+	private static function authorize_create( array $data ) {
+		if ( ! class_exists( 'NGC_Policy_Bridge' ) ) {
+			return true;
+		}
+		$actor = (int) ( $data['actor_user_id'] ?? ( function_exists( 'get_current_user_id' ) ? get_current_user_id() : 0 ) );
+		$auth  = NGC_Policy_Bridge::authorize_domain(
+			'booking.create',
+			[
+				'actor_type'    => 'human',
+				'operation'     => 'invoke',
+				'actor_user_id' => $actor,
+			]
+		);
+		return is_wp_error( $auth ) ? $auth : true;
 	}
 
 	/**

@@ -19,6 +19,7 @@ class NGC_Payments {
 	 */
 	public static function init() {
 		add_action( 'woocommerce_payment_complete', [ __CLASS__, 'on_payment_complete' ], 30 );
+		add_action( 'woocommerce_order_status_processing', [ __CLASS__, 'on_order_completed' ], 30 );
 		add_action( 'woocommerce_order_status_completed', [ __CLASS__, 'on_order_completed' ], 30 );
 		add_action( 'woocommerce_order_status_failed', [ __CLASS__, 'on_order_failed' ], 30 );
 		add_action( 'woocommerce_order_status_refunded', [ __CLASS__, 'on_order_refunded' ], 30 );
@@ -66,6 +67,7 @@ class NGC_Payments {
 			$uid = function_exists( 'get_current_user_id' ) ? (int) get_current_user_id() : 0;
 			$in_wc_hook = function_exists( 'doing_action' ) && (
 				doing_action( 'woocommerce_payment_complete' )
+				|| doing_action( 'woocommerce_order_status_processing' )
 				|| doing_action( 'woocommerce_order_status_completed' )
 				|| doing_action( 'woocommerce_order_status_failed' )
 				|| doing_action( 'woocommerce_order_status_refunded' )
@@ -139,8 +141,10 @@ class NGC_Payments {
 		NGC_Invoices::generate_from_order( $order );
 
 		$booking_id = (int) $order->get_meta( 'ngc_booking_id' );
-		if ( $booking_id && class_exists( 'NGC_Bookings' ) ) {
-			NGC_Bookings::transition( $booking_id, 'confirmed' );
+		if ( class_exists( 'NGC_Session_Orchestrator' ) ) {
+			NGC_Session_Orchestrator::ensure( (int) $order_id, $booking_id, [ 'user_id' => $user_id ] );
+		} elseif ( class_exists( 'NGC_Ensure_Session_Provisioned' ) ) {
+			NGC_Ensure_Session_Provisioned::run( (int) $order_id, $booking_id, [ 'user_id' => $user_id ] );
 		}
 
 		NGC_Workflows::dispatch(
@@ -233,6 +237,11 @@ class NGC_Payments {
 		);
 
 		NGC_Audit::log( 'payment_failed', 'order', $order_id );
+		$session = class_exists( 'NGC_Session_Repository' ) ? NGC_Session_Repository::get_by_order_id( (int) $order_id ) : null;
+		if ( $session && NGC_Session_State_Machine::can_transition( (string) $session['status'], NGC_Session_States::FAILED ) ) {
+			NGC_Session_Repository::transition( (int) $session['id'], NGC_Session_States::FAILED, [ 'payment_status' => 'failed' ] );
+		}
+		NGC_Session_Observability::failure( 'payment_failure_total', [ 'order_id' => (int) $order_id ] );
 	}
 
 	/**

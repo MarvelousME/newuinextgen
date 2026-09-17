@@ -46,6 +46,7 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Meetings',
 		'NGC_Session_Orchestrator',
 		'NGC_Session_Classroom',
+		'NGC_Session_Checkout',
 		'NGC_Product_Provisioner',
 		'NGC_Payments',
 		'NGC_PayFast',

@@ -19,7 +19,7 @@ export type DbEvidenceContext = {
 const DEFAULT_CONTAINER = process.env.E2E_DB_CONTAINER || 'newuinextgen-db-1';
 const DEFAULT_DB = process.env.E2E_DB_NAME || 'wordpress';
 const DEFAULT_USER = process.env.E2E_DB_USER || 'wordpress';
-const DEFAULT_PASS = process.env.E2E_DB_PASSWORD || 'wordpress';
+const DEFAULT_PASS = process.env.E2E_DB_PASSWORD || 'localdev_test_only';
 
 function evidenceDir(ctx: DbEvidenceContext): string {
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');

@@ -35,35 +35,16 @@ final class NGC_Capability_Registry {
 	 * Load declared capabilities + merge hooks.
 	 */
 	public static function load() {
-		self::$capabilities = [];
-		$dir = NGC_Subsystem_Registry::architecture_root() . DIRECTORY_SEPARATOR . 'capabilities';
-		if ( is_dir( $dir ) ) {
-			$files = glob( $dir . DIRECTORY_SEPARATOR . '*.json' ) ?: [];
-			foreach ( $files as $file ) {
-				$raw = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-				if ( false === $raw ) {
-					continue;
-				}
-				$data = json_decode( $raw, true );
-				if ( ! is_array( $data ) ) {
-					continue;
-				}
-				$list = [];
-				if ( isset( $data['capabilities'] ) && is_array( $data['capabilities'] ) ) {
-					$list = $data['capabilities'];
-				} elseif ( isset( $data['capabilityId'] ) ) {
-					$list = [ $data ];
-				}
-				foreach ( $list as $cap ) {
-					if ( ! is_array( $cap ) || empty( $cap['capabilityId'] ) ) {
-						continue;
-					}
-					if ( ! isset( $cap['requiredPermissions'] ) || ! is_array( $cap['requiredPermissions'] ) ) {
-						continue; // ARCH-004 fail closed for undeclared perms.
-					}
-					self::$capabilities[ (string) $cap['capabilityId'] ] = $cap;
-				}
+		self::$capabilities = self::built_in();
+		$dirs               = [
+			NGC_PLUGIN_DIR . 'includes/platform/capabilities',
+			class_exists( 'NGC_Subsystem_Registry' ) ? NGC_Subsystem_Registry::architecture_root() . DIRECTORY_SEPARATOR . 'capabilities' : '',
+		];
+		foreach ( $dirs as $dir ) {
+			if ( ! is_string( $dir ) || '' === $dir || ! is_dir( $dir ) ) {
+				continue;
 			}
+			self::merge_directory( $dir );
 		}
 
 		/**
@@ -116,5 +97,63 @@ final class NGC_Capability_Registry {
 			}
 		}
 		return $out;
+	}
+
+	/**
+	 * Capabilities that must exist even when architecture/ is not mounted (Docker plugin bind-mount).
+	 *
+	 * @return array<string, array<string, mixed>>
+	 */
+	public static function built_in() {
+		return [
+			'booking.create'    => [
+				'capabilityId'        => 'booking.create',
+				'requiredPermissions' => [ 'ngc_book_sessions' ],
+				'provider'            => 'nextgentutors-companion',
+			],
+			'payment.authorize' => [
+				'capabilityId'        => 'payment.authorize',
+				'requiredPermissions' => [ 'ngc_manage_wallet' ],
+				'provider'            => 'nextgentutors-companion',
+			],
+			'session.launch'    => [
+				'capabilityId'        => 'session.launch',
+				'requiredPermissions' => [ 'read' ],
+				'provider'            => 'nextgentutors-companion',
+			],
+		];
+	}
+
+	/**
+	 * @param string $dir Directory of capability JSON files.
+	 * @return void
+	 */
+	private static function merge_directory( $dir ) {
+		$files = glob( rtrim( $dir, '/\\' ) . DIRECTORY_SEPARATOR . '*.json' ) ?: [];
+		foreach ( $files as $file ) {
+			$raw = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			if ( false === $raw ) {
+				continue;
+			}
+			$data = json_decode( $raw, true );
+			if ( ! is_array( $data ) ) {
+				continue;
+			}
+			$list = [];
+			if ( isset( $data['capabilities'] ) && is_array( $data['capabilities'] ) ) {
+				$list = $data['capabilities'];
+			} elseif ( isset( $data['capabilityId'] ) ) {
+				$list = [ $data ];
+			}
+			foreach ( $list as $cap ) {
+				if ( ! is_array( $cap ) || empty( $cap['capabilityId'] ) ) {
+					continue;
+				}
+				if ( ! isset( $cap['requiredPermissions'] ) || ! is_array( $cap['requiredPermissions'] ) ) {
+					continue;
+				}
+				self::$capabilities[ (string) $cap['capabilityId'] ] = $cap;
+			}
+		}
 	}
 }
