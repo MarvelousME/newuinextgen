@@ -22,15 +22,19 @@
   right: 0;
   z-index: var(--bi-z-header) !important;
   width: 100%;
+  height: var(--nav-h, 159px);
+  background: transparent;
+  box-shadow: none;
   transition:
     box-shadow var(--bi-sticky-transition) ease,
     background var(--bi-sticky-transition) ease,
-    height 0.3s ease;
+    color var(--bi-sticky-transition) ease;
 }
 
 .ngt-nav.ngt-nav--scrolled,
 .ngt-nav.is-solid,
 .ngt-nav.ngt-nav--solid {
+  background: var(--ngi-navy, #07172f);
   box-shadow: 0 12px 32px rgba(7, 23, 47, 0.28);
 }
 

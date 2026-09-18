@@ -3,7 +3,7 @@
   --ng-layout-max-boxed: 1280px;
   --ng-layout-max-wide: 1480px;
   --ng-layout-gutter: clamp(16px, 2vw, 28px);
-  --ng-sticky-offset: 88px;
+  --ng-sticky-offset: var(--nav-h, 159px);
   --ng-z-dropdown: 1060;
   --ng-z-sticky: 1070;
   --ng-z-modal: 1080;

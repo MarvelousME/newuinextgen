@@ -59,9 +59,11 @@ body.bi-kinetic-dashboard .ngi-btn-primary {
   font-weight: 950;
 }
 
-body.bi-kinetic-dashboard .ngt-nav {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(14px);
+body.bi-kinetic-dashboard .ngt-nav,
+body.bi-kinetic-dashboard .ngt-nav.ngt-nav--transparent {
+  height: var(--nav-h, 159px);
+  background: var(--ngi-navy, #07172f) !important;
+  backdrop-filter: none;
 }
 
 body.bi-kinetic-dashboard .bi-theme-content {

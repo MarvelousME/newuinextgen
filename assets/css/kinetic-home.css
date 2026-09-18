@@ -125,7 +125,7 @@
 .ngi-close { display: grid; place-items: center; cursor: pointer; }
 .ngi-faq-toggle { flex-shrink: 0; color: var(--ngi-blue); }
 .ngi-section--testimonials { background: #f6f9ff; }
-body.bi-nav-on-hero .ngi-hero--theme { padding-top: calc(var(--nav-h, 88px) + 1rem); }
+body.bi-nav-on-hero .ngi-hero--theme { padding-top: calc(var(--nav-h, 159px) + 1rem); }
 body.bi-nav-on-hero .ngi-hero--theme .ngi-hero-grid { padding-top: 8px; }
 .ngi-visual--search {
   display: flex;
@@ -220,7 +220,7 @@ body.bi-nav-on-hero .ngi-hero--theme .ngi-hero-grid { padding-top: 8px; }
 #pathways .ngi-cursor-list [role="tablist"],
 #cursor-reveal .ngi-cursor-list [role="tablist"] {
   position: sticky;
-  top: calc(var(--nav-h, 88px) + 12px);
+  top: calc(var(--nav-h, 159px) + 12px);
   z-index: 6;
   align-self: start;
   display: flex;

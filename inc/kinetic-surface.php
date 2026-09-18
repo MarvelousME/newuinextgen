@@ -95,6 +95,12 @@ function bi_kinetic_surface_body_class( $classes ) {
 	if ( bi_uses_kinetic_surface() ) {
 		$classes[] = 'bi-kinetic-surface';
 	}
+	if ( function_exists( 'bi_page_visual_weight' ) ) {
+		$classes[] = 'bi-weight-' . strtolower( (string) bi_page_visual_weight() );
+	}
+	if ( function_exists( 'bi_hero_variant' ) ) {
+		$classes[] = 'bi-hero-' . sanitize_html_class( (string) bi_hero_variant() );
+	}
 	return $classes;
 }
 add_filter( 'body_class', 'bi_kinetic_surface_body_class', 12 );
@@ -111,42 +117,63 @@ function bi_kinetic_surface_assets() {
 		'bi-kinetic-tokens',
 		BI_URI . '/assets/css/kinetic-tokens.css',
 		[ 'bi-style' ],
-		BI_VERSION
+		file_exists( BI_DIR . '/assets/css/kinetic-tokens.css' )
+			? (string) filemtime( BI_DIR . '/assets/css/kinetic-tokens.css' )
+			: BI_VERSION
 	);
 	wp_enqueue_style(
 		'bi-kinetic-home',
 		BI_URI . '/assets/css/kinetic-home.css',
 		[ 'bi-kinetic-tokens' ],
-		BI_VERSION
-	);
-	wp_enqueue_style(
-		'bi-kinetic-image-hover',
-		BI_URI . '/assets/css/kinetic-image-hover.css',
-		[ 'bi-kinetic-home' ],
-		BI_VERSION
-	);
-	wp_enqueue_style(
-		'bi-cinematic-hero',
-		BI_URI . '/assets/css/bi-cinematic-hero.css',
-		[ 'bi-kinetic-image-hover' ],
-		BI_VERSION
+		file_exists( BI_DIR . '/assets/css/kinetic-home.css' )
+			? (string) filemtime( BI_DIR . '/assets/css/kinetic-home.css' )
+			: BI_VERSION
 	);
 
-	wp_enqueue_script( 'bi-focus-trap', BI_URI . '/assets/js/bi-focus-trap.js', [], BI_VERSION, true );
-	wp_enqueue_script(
-		'bi-kinetic-home',
-		BI_URI . '/assets/js/kinetic-home.js',
-		[ 'bi-focus-trap' ],
-		BI_VERSION,
-		true
-	);
-	wp_enqueue_script(
-		'bi-cinematic-video',
-		BI_URI . '/assets/js/bi-cinematic-video.js',
-		[],
-		BI_VERSION,
-		true
-	);
+	$weight     = function_exists( 'bi_page_visual_weight' ) ? bi_page_visual_weight() : 'MEDIUM';
+	$is_light   = ( 'LIGHT' === $weight );
+	$cinematic  = function_exists( 'bi_allows_cinematic_assets' ) ? bi_allows_cinematic_assets() : ( 'HEAVY' === $weight );
+	$home_css   = 'bi-kinetic-home';
+
+	if ( ! $is_light ) {
+		wp_enqueue_style(
+			'bi-kinetic-image-hover',
+			BI_URI . '/assets/css/kinetic-image-hover.css',
+			[ 'bi-kinetic-home' ],
+			BI_VERSION
+		);
+		$home_css = 'bi-kinetic-image-hover';
+	}
+
+	if ( $cinematic ) {
+		wp_enqueue_style(
+			'bi-cinematic-hero',
+			BI_URI . '/assets/css/bi-cinematic-hero.css',
+			[ $home_css ],
+			BI_VERSION
+		);
+	}
+
+	if ( ! $is_light ) {
+		wp_enqueue_script( 'bi-focus-trap', BI_URI . '/assets/js/bi-focus-trap.js', [], BI_VERSION, true );
+		wp_enqueue_script(
+			'bi-kinetic-home',
+			BI_URI . '/assets/js/kinetic-home.js',
+			[ 'bi-focus-trap' ],
+			BI_VERSION,
+			true
+		);
+	}
+
+	if ( $cinematic ) {
+		wp_enqueue_script(
+			'bi-cinematic-video',
+			BI_URI . '/assets/js/bi-cinematic-video.js',
+			[],
+			BI_VERSION,
+			true
+		);
+	}
 
 	$layout_max = (int) apply_filters( 'ngt_content_width', 1280 );
 	if ( $layout_max < 960 ) {
@@ -157,18 +184,21 @@ function bi_kinetic_surface_assets() {
 		sprintf( ':root{--ngi-layout-max:%dpx;}', $layout_max )
 	);
 
-	// Scroll / form control enhancements on every kinetic view (home + inner + dashboards).
-	$page_js_deps = [ 'bi-kinetic-home' ];
-	if ( wp_script_is( 'bi-page-composer', 'registered' ) || wp_script_is( 'bi-page-composer', 'enqueued' ) ) {
-		$page_js_deps[] = 'bi-page-composer';
+	if ( ! $is_light ) {
+		$page_js_deps = wp_script_is( 'bi-kinetic-home', 'enqueued' ) || wp_script_is( 'bi-kinetic-home', 'registered' )
+			? [ 'bi-kinetic-home' ]
+			: [];
+		if ( wp_script_is( 'bi-page-composer', 'registered' ) || wp_script_is( 'bi-page-composer', 'enqueued' ) ) {
+			$page_js_deps[] = 'bi-page-composer';
+		}
+		wp_enqueue_script(
+			'bi-kinetic-page',
+			BI_URI . '/assets/js/kinetic-page.js',
+			$page_js_deps,
+			BI_VERSION,
+			true
+		);
 	}
-	wp_enqueue_script(
-		'bi-kinetic-page',
-		BI_URI . '/assets/js/kinetic-page.js',
-		$page_js_deps,
-		BI_VERSION,
-		true
-	);
 
 	if ( bi_uses_kinetic_surface() ) {
 		$bridge_deps = [ 'bi-kinetic-home' ];
@@ -180,6 +210,37 @@ function bi_kinetic_surface_assets() {
 			BI_URI . '/assets/css/kinetic-bridge.css',
 			$bridge_deps,
 			BI_VERSION
+		);
+		$contract_css = BI_DIR . '/assets/css/tutorfabulous-contract.css';
+		wp_enqueue_style(
+			'bi-tf-contract',
+			BI_URI . '/assets/css/tutorfabulous-contract.css',
+			[ 'bi-kinetic-bridge' ],
+			file_exists( $contract_css ) ? (string) filemtime( $contract_css ) : BI_VERSION
+		);
+		if ( is_page( 'find-a-tutor' ) ) {
+			wp_enqueue_style(
+				'bi-marketplace-drawer',
+				BI_URI . '/assets/css/marketplace-drawer.css',
+				[ 'bi-tf-contract' ],
+				BI_VERSION
+			);
+			wp_enqueue_script(
+				'bi-marketplace-drawer',
+				BI_URI . '/assets/js/marketplace-drawer.js',
+				[],
+				BI_VERSION,
+				true
+			);
+		}
+	} elseif ( bi_uses_kinetic_ui() ) {
+		wp_enqueue_style(
+			'bi-tf-contract',
+			BI_URI . '/assets/css/tutorfabulous-contract.css',
+			[ 'bi-kinetic-home' ],
+			file_exists( BI_DIR . '/assets/css/tutorfabulous-contract.css' )
+				? (string) filemtime( BI_DIR . '/assets/css/tutorfabulous-contract.css' )
+				: BI_VERSION
 		);
 	}
 
@@ -194,7 +255,9 @@ function bi_kinetic_surface_assets() {
 			'bi-kinetic-dashboard',
 			BI_URI . '/assets/css/kinetic-dashboard.css',
 			[ 'bi-dashboard-mission', 'bi-kinetic-home' ],
-			BI_VERSION
+			file_exists( BI_DIR . '/assets/css/kinetic-dashboard.css' )
+				? (string) filemtime( BI_DIR . '/assets/css/kinetic-dashboard.css' )
+				: BI_VERSION
 		);
 	}
 }

@@ -2,6 +2,7 @@
  * Kinetic design tokens — shared across homepage and inner pages.
  */
 :root {
+  --nav-h: 159px;
   --ngi-navy: #07172f;
   --ngi-midnight: #031126;
   --ngi-blue: #123c7c;
@@ -42,4 +43,9 @@ body.bi-kinetic-surface {
   --ng-color-border: var(--ngi-line);
   --ng-shadow-card: var(--ngi-shadow);
   --ng-radius-xl: var(--ngi-radius);
+  --ngt-cta: var(--ngi-cyan);
+  --color-primary: var(--ngi-navy);
+  --color-accent: var(--ngi-cyan);
+  --color-cta: var(--ngi-cyan);
+  --lime: var(--ngi-cyan);
 }
