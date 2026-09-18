@@ -125,6 +125,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
 <?php return; endif; ?>
 
 <div class="ngi-home" id="nextgen-home">
+  <div class="ngi-progress" id="ngiProgress" hidden aria-hidden="true"></div>
   <?php /* Floating Book CTA removed — right-hand float dock covers global actions. */ ?>
 
   <?php if ( bi_home_section_enabled( 'hero' ) ) : ?>
@@ -289,7 +290,8 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
   <?php endif; ?>
 
   <?php if ( bi_home_section_enabled( 'subjects' ) ) : ?>
-  <section class="ngi-section ngi-alt" id="subjects">
+  <section class="ngi-section ngi-alt ngi-h-journey" id="subjects" data-bi-h-journey>
+    <div class="ngi-h-journey__pin">
     <div class="ngi-wrap">
       <div class="ngi-section-head ngi-reveal">
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_subjects['eyebrow'] ?? __( 'Subject explorer', 'beyondinfinity' ) ); ?></div>
@@ -297,13 +299,16 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
         <p class="ngi-subtitle"><?php echo esc_html( $cms_subjects['subtitle'] ?? __( 'Every track is mapped to CAPS, IEB and Cambridge outcomes.', 'beyondinfinity' ) ); ?></p>
       </div>
       <div class="ngi-subject-shell">
-        <div class="ngi-subject-tabs ngi-reveal" role="tablist" aria-label="<?php esc_attr_e( 'Subjects', 'beyondinfinity' ); ?>">
+        <div class="ngi-subject-tabs ngi-h-journey__rail ngi-reveal" role="tablist" data-bi-h-rail aria-label="<?php esc_attr_e( 'Subjects', 'beyondinfinity' ); ?>">
           <?php foreach ( $subject_tabs as $i => $tab ) : ?>
-            <button class="ngi-tab<?php echo 0 === $i ? ' is-active' : ''; ?>" type="button" role="tab" aria-selected="<?php echo 0 === $i ? 'true' : 'false'; ?>"
+            <button class="ngi-tab ngi-h-card<?php echo 0 === $i ? ' is-active' : ''; ?>" type="button" role="tab" aria-selected="<?php echo 0 === $i ? 'true' : 'false'; ?>"
               data-title="<?php echo esc_attr( $tab['title'] ); ?>"
               data-body="<?php echo esc_attr( $tab['body'] ); ?>"
               data-bullets="<?php echo esc_attr( implode( '|', $tab['bullets'] ) ); ?>">
-              <?php echo esc_html( $tab['title'] ); ?> <span aria-hidden="true">→</span>
+              <span class="ngi-h-card__num" aria-hidden="true"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+              <span class="ngi-h-card__icon" aria-hidden="true"><?php echo bi_kinetic_icon( $tab['icon'] ?? 'book' ); // phpcs:ignore ?></span>
+              <span class="ngi-h-card__title"><?php echo esc_html( $tab['title'] ); ?></span>
+              <span class="ngi-h-card__body"><?php echo esc_html( $tab['body'] ); ?></span>
             </button>
           <?php endforeach; ?>
         </div>
@@ -320,6 +325,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
           </div>
         </div>
       </div>
+    </div>
     </div>
   </section>
   <?php endif; ?>

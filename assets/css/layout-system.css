@@ -199,11 +199,23 @@ body.admin-bar .ngt-nav--minimal {
 }
 
 img,
-video,
 iframe,
 svg {
   max-width: 100%;
   height: auto;
+}
+
+/* Hero / cinematic videos are absolutely sized; height:auto made them
+ * taller than the section and paint into the next block. */
+video {
+  max-width: 100%;
+}
+
+.ngi-hero-video,
+.ng-page-hero__video,
+.bi-cinematic-video {
+  max-width: none;
+  height: 100%;
 }
 
 /* Admin-only debug mode */

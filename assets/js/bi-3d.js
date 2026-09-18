@@ -31,7 +31,7 @@
         el.style.setProperty("--bi-glare-x", String(x * 100) + "%");
         el.style.setProperty("--bi-glare-y", String(y * 100) + "%");
         inner.style.transform =
-          "perspective(900px) rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) translateZ(8px)";
+          "perspective(900px) rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) translateZ(16px) translateY(-6px)";
       });
     }
 
@@ -135,6 +135,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     if (!document.body.classList.contains("bi-3d-enabled")) return;
+    if (document.body.classList.contains("bi-weight-light") || document.body.classList.contains("bi-weight-none")) return;
 
     document.querySelectorAll("[data-bi-tilt]").forEach(initTilt);
     document.querySelectorAll("[data-bi-stack-3d]").forEach(initStack);

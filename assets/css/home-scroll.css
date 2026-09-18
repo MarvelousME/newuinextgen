@@ -1,0 +1,86 @@
+/**
+ * Home Scroll — extras on top of kinetic home (H-strip fallback + panel chrome).
+ * 3D pin/scrub comes from nextgen-3d-scroll-manager presets.
+ */
+body.bi-home-scroll .ngt-home-scroll__hstrip {
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+body.bi-home-scroll .ngt-home-scroll__step {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--ngi-cyan, #28c7f7);
+  color: #041326;
+  font-weight: 900;
+  margin-bottom: 0.75rem;
+}
+
+body.bi-home-scroll .ngt-3d-hscroll__panel {
+  border-radius: 34px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(145deg, #0d69ff, #06172e);
+  color: #fff;
+  min-height: 58vh;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+}
+
+body.bi-home-scroll .ngt-3d-hscroll__panel:nth-child(2) {
+  background: linear-gradient(145deg, #16a5a0, #071a28);
+}
+
+body.bi-home-scroll .ngt-3d-hscroll__panel:nth-child(3) {
+  background: linear-gradient(145deg, #6734e8, #10142f);
+}
+
+body.bi-home-scroll .ngt-3d-hscroll__panel:nth-child(4) {
+  background: linear-gradient(145deg, #1671a5, #08152d);
+}
+
+body.bi-home-scroll .ngt-3d-hscroll__panel:nth-child(5) {
+  background: linear-gradient(145deg, #e66338, #28101b);
+}
+
+body.bi-home-scroll .ngt-3d-hscroll__panel-body {
+  padding: 28px 32px 36px;
+}
+
+body.bi-home-scroll .ngt-3d-hscroll__panel-body h3 {
+  font-size: clamp(28px, 3vw, 42px);
+  letter-spacing: -0.04em;
+  margin: 0 0 10px;
+}
+
+body.bi-home-scroll .ngt-3d-hscroll__panel-body p {
+  color: #d7e3f4;
+  line-height: 1.55;
+  max-width: 36ch;
+}
+
+body.bi-home-scroll .ngt-home-scroll__step {
+  background: var(--ngi-lime, #31f0aa);
+}
+
+@media (max-width: 767px) {
+  body.bi-home-scroll .ngt-3d-hscroll__track {
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  body.bi-home-scroll .ngt-3d-hscroll__panel {
+    width: 100%;
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.bi-home-scroll .ngt-3d-hscroll__track {
+    overflow-x: auto;
+  }
+}

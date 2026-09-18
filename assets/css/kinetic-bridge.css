@@ -9,6 +9,7 @@ body.bi-kinetic-surface {
   background: var(--ngi-soft, #f5f8ff);
   color: var(--ngi-text, #10213f);
   font-family: Inter, "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  overflow-x: clip;
 }
 
 body.bi-kinetic-surface .ng-page {
@@ -19,7 +20,7 @@ body.bi-kinetic-surface .ng-page {
 body.bi-kinetic-surface .ng-page__canvas {
   background:
     radial-gradient(ellipse 70% 45% at 8% -5%, rgba(40, 199, 247, 0.16), transparent 55%),
-    radial-gradient(ellipse 55% 40% at 92% 2%, rgba(255, 183, 3, 0.12), transparent 50%),
+    radial-gradient(ellipse 55% 40% at 92% 2%, rgba(49, 240, 170, 0.1), transparent 50%),
     radial-gradient(ellipse 80% 50% at 50% 100%, rgba(18, 60, 124, 0.08), transparent 60%);
 }
 
@@ -36,7 +37,7 @@ body.bi-kinetic-surface .ng-page-hero--kinetic {
 body.bi-kinetic-surface .ng-page-hero__mesh {
   background:
     radial-gradient(circle at 74% 18%, rgba(40, 199, 247, 0.34), transparent 23%),
-    radial-gradient(circle at 12% 78%, rgba(255, 183, 3, 0.2), transparent 26%),
+    radial-gradient(circle at 12% 78%, rgba(49, 240, 170, 0.16), transparent 26%),
     linear-gradient(135deg, var(--ngi-midnight, #031126), var(--ngi-blue, #123c7c));
 }
 
@@ -171,11 +172,14 @@ body.bi-kinetic-surface .bi-stat-card,
 body.bi-kinetic-surface .ngt-pricing-card,
 body.bi-kinetic-surface .comparison-card,
 body.bi-kinetic-surface .subject-card {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.78);
   border: 1px solid var(--ngi-line, #e6edf7);
   border-radius: var(--ngi-radius, 28px);
   box-shadow: var(--ngi-shadow, 0 24px 70px rgba(18, 60, 124, 0.12));
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  backdrop-filter: blur(16px);
+  transform-style: preserve-3d;
+  transition: transform 0.35s var(--ngi-ease, cubic-bezier(0.2, 0.8, 0.2, 1)),
+    border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 body.bi-kinetic-surface .ngt-card:hover,
@@ -185,6 +189,16 @@ body.bi-kinetic-surface .ngt-pricing-card:hover {
   transform: translateY(-10px) scale(1.012);
   border-color: var(--ngi-cyan, #28c7f7);
   box-shadow: 0 32px 80px rgba(18, 60, 124, 0.18);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body.bi-kinetic-surface:not(.bi-weight-light) .ngt-card:hover,
+  body.bi-kinetic-surface:not(.bi-weight-light) .ng-page-grid .ngt-card:hover,
+  body.bi-kinetic-surface:not(.bi-weight-light) .bi-stat-card:hover,
+  body.bi-kinetic-surface:not(.bi-weight-light) .ngt-pricing-card:hover,
+  body.bi-kinetic-surface:not(.bi-weight-light) .subject-card:hover {
+    transform: perspective(900px) rotateX(4deg) rotateY(-4deg) translateY(-8px);
+  }
 }
 
 /* Buttons — .ngi-btn parity */
@@ -314,8 +328,17 @@ body.bi-kinetic-surface textarea:focus-visible {
 /* Reveal timing aligned with kinetic home */
 body.bi-kinetic-surface .ng-reveal,
 body.bi-kinetic-surface .ngi-reveal {
-  transition-duration: 0.55s;
-  transition-timing-function: var(--ngi-ease, cubic-bezier(0.2, 0.9, 0.2, 1));
+  opacity: 0;
+  transform: translateY(70px) rotateX(8deg);
+  transform-origin: 50% 100%;
+  transition: opacity 1s var(--ngi-ease, cubic-bezier(0.2, 0.8, 0.2, 1)),
+    transform 1s var(--ngi-ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+}
+
+body.bi-kinetic-surface .ng-reveal.is-in,
+body.bi-kinetic-surface .ngi-reveal.is-in {
+  opacity: 1;
+  transform: none;
 }
 
 /* Generic templates — blog, archives, singles, 404 */
@@ -382,6 +405,11 @@ body.bi-kinetic-surface .bi-tutor-archive-main .ng-container {
   body.bi-kinetic-surface .ng-page-hero,
   body.bi-kinetic-surface .ng-page-hero--kinetic {
     min-height: clamp(380px, 58vh, 640px);
+  }
+
+  body.bi-kinetic-surface .bi-steps,
+  body.bi-kinetic-surface .tf-how-booking ol {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -505,10 +533,110 @@ body.bi-kinetic-surface .ng-reveal.is-in {
     rotateY(var(--bi-scroll-rot, 0deg));
 }
 
+body.bi-kinetic-ui [data-bi-scroll-3d],
+body.bi-kinetic-surface [data-bi-scroll-3d],
+body.bi-kinetic-ui .ng-reveal {
+  transform: translate3d(0, 70px, -24px) rotateX(8deg);
+}
+
+/* Inner how-it-works / booking steps — preview navy stepgrid */
+body.bi-kinetic-surface:not(.bi-weight-light) #how-it-works,
+body.bi-kinetic-surface:not(.bi-weight-light) .tf-how-booking {
+  background: #06101f;
+  color: #fff;
+}
+
+body.bi-kinetic-surface:not(.bi-weight-light) #how-it-works .ng-page-heading__title,
+body.bi-kinetic-surface:not(.bi-weight-light) .tf-how-booking h2 {
+  color: #fff;
+}
+
+body.bi-kinetic-surface:not(.bi-weight-light) #how-it-works .ng-page-heading__eyebrow {
+  color: #8ceaff;
+}
+
+body.bi-kinetic-surface .bi-steps,
+body.bi-kinetic-surface .tf-how-booking ol {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.17);
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 32px;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+body.bi-kinetic-surface .bi-steps li,
+body.bi-kinetic-surface .tf-how-booking li {
+  background: var(--ngi-navy, #07172d);
+  min-height: 280px;
+  border: 0;
+  border-radius: 0;
+  padding: 48px 32px;
+  color: #fff;
+  position: relative;
+}
+
+body.bi-kinetic-surface .bi-step__num,
+body.bi-kinetic-surface .tf-how-booking__num {
+  position: absolute;
+  right: 22px;
+  top: 8px;
+  font-size: 72px;
+  font-weight: 900;
+  opacity: 0.1;
+  color: #fff;
+}
+
+body.bi-kinetic-surface .bi-step__title,
+body.bi-kinetic-surface .tf-how-booking h3 {
+  color: #fff;
+  font-size: 28px;
+  margin-top: 56px;
+}
+
+body.bi-kinetic-surface .bi-step__text,
+body.bi-kinetic-surface .tf-how-booking li p {
+  color: #93a8c8;
+  line-height: 1.65;
+}
+
+body.bi-kinetic-surface .bi-coverage-chip {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px);
+  border-radius: 999px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body.bi-kinetic-surface .bi-coverage-chip:hover {
+    border-color: var(--ngi-cyan, #28c7f7);
+    color: var(--ngi-navy, #07172f);
+    transform: perspective(900px) rotateX(4deg) translateY(-4px);
+  }
+}
+
+body.bi-kinetic-surface .bi-coverage-chip:hover {
+  border-color: var(--ngi-cyan, #28c7f7);
+  color: var(--ngi-navy, #07172f);
+}
+
+/* LIGHT / NONE — never 3D */
+body.bi-weight-light .ngt-card:hover,
+body.bi-weight-light .ngt-pricing-card:hover,
+body.bi-weight-light .bi-stat-card:hover,
+body.bi-weight-none .ngt-card:hover {
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   body.bi-kinetic-ui [data-bi-scroll-3d],
   body.bi-kinetic-surface [data-bi-scroll-3d],
-  body.bi-kinetic-ui .ng-reveal {
+  body.bi-kinetic-ui .ng-reveal,
+  body.bi-kinetic-surface .ng-reveal,
+  body.bi-kinetic-surface .ngi-reveal {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;

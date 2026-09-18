@@ -14,7 +14,8 @@ body.bi-kinetic-surface {
   --color-primary: var(--ngi-navy, #07172f);
   --color-accent: var(--ngi-cyan, #28c7f7);
   --color-cta: var(--ngi-cyan, #28c7f7);
-  --lime: var(--ngi-cyan, #28c7f7);
+  --lime: var(--ngi-lime, #31f0aa);
+  --mint: var(--ngi-lime, #31f0aa);
 }
 
 /* Buttons — .tf-btn aliases the cyan/navy contract */
@@ -436,7 +437,7 @@ body.bi-kinetic-surface #guardian,
 body.bi-kinetic-surface #tutors,
 body.bi-kinetic-surface #sessions,
 body.bi-kinetic-surface #reporting {
-  scroll-margin-top: 96px;
+  scroll-margin-top: calc(var(--nav-h, 159px) + 12px);
 }
 
 body.bi-kinetic-surface .bi-legal-report {
@@ -530,8 +531,11 @@ body.bi-ngt-skin.bi-kinetic-ui .ngt-nav.is-solid,
 body.bi-ngt-skin.bi-kinetic-ui .ngt-nav.ngt-nav--scrolled,
 body.bi-ngt-skin.bi-kinetic-home .ngt-nav.is-solid,
 body.bi-ngt-skin.bi-kinetic-surface .ngt-nav.is-solid {
-  background: var(--ngi-navy, #07172f) !important;
-  box-shadow: 0 12px 32px rgba(7, 23, 47, 0.28);
+  background: rgba(7, 23, 47, 0.92) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
 }
 
 body.bi-kinetic-ui .ngt-nav__inner,
@@ -585,6 +589,7 @@ body.bi-kinetic-home .ngt-nav__toggle,
 body.bi-kinetic-surface .ngt-nav__toggle {
   color: #fff;
   text-shadow: 0 1px 10px rgba(7, 23, 47, 0.45);
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
 body.bi-kinetic-ui .ngt-nav__logo-text span,
@@ -609,6 +614,7 @@ body.bi-kinetic-home .ngt-nav__menu .current-menu-item > a,
 body.bi-kinetic-surface .ngt-nav__menu .current-menu-item > a,
 body.bi-kinetic-ui .ngt-nav__link.current-menu-item {
   color: var(--ngi-cyan, #28c7f7);
+  transform: translateY(-2px);
 }
 
 body.bi-kinetic-ui .ngt-nav__menu .menu-item > a::after,
