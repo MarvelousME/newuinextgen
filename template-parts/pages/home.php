@@ -512,31 +512,7 @@ if ( is_array( $cms_faqs ) && $cms_faqs ) {
         <div class="ngi-eyebrow"><?php echo esc_html( $cms_pathways['eyebrow'] ?? __( 'Learning pathways', 'beyondinfinity' ) ); ?></div>
         <h2 class="ngi-heading" data-bi-slide-title><?php echo esc_html( $cms_pathways['title'] ?? __( 'Interactive discovery for every role.', 'beyondinfinity' ) ); ?></h2>
       </div>
-      <?php
-        $pathways_3d = function_exists( 'bi_3d_enabled' ) && bi_3d_enabled();
-        $pathways_class = $pathways_3d ? 'ngi-pathways-split ngi-reveal' : 'ngi-reveal';
-      ?>
-      <div class="<?php echo esc_attr( $pathways_class ); ?>">
-        <?php
-        if ( $pathways_3d ) {
-            $stack_items = array_map(
-                static function ( $j ) {
-                    return [
-                        'title' => $j['title'] ?? '',
-                        'body'  => $j['copy'] ?? '',
-                    ];
-                },
-                $journeys
-            );
-            bi_render_3d_card_stack(
-                $stack_items,
-                [
-                    'aria_label' => __( 'Learning pathway cards â€” hover or tap to fan', 'beyondinfinity' ),
-                    'class'      => 'bi-stack-3d--pathways',
-                ]
-            );
-        }
-        ?>
+      <div class="ngi-reveal">
       <div class="ngi-cursor-list ngi-reveal">
         <div role="tablist" aria-label="<?php esc_attr_e( 'User journeys', 'beyondinfinity' ); ?>">
           <?php foreach ( $journeys as $i => $j ) : ?>

@@ -13,7 +13,7 @@ fi
 
 COMPOSE=( -p ngt-clean-install -f docker-compose.clean-install.host.yml )
 
-echo "Starting clean-install stack (http://127.0.0.1:8891)..."
+echo "Starting clean-install stack (http://127.0.0.1:8999)..."
 docker compose "${COMPOSE[@]}" down -v --remove-orphans || true
 docker compose "${COMPOSE[@]}" up -d
 
@@ -32,7 +32,7 @@ STAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   echo "## Latest clean-install run"
   echo "- UTC: $STAMP"
   echo "- WP-CLI exit: $CODE"
-  echo "- URL: http://127.0.0.1:8891"
+  echo "- URL: http://127.0.0.1:8999"
   echo "- Compose: docker-compose.clean-install.host.yml (host network)"
 } >> "$REPORT"
 
@@ -43,6 +43,6 @@ fi
 
 echo ""
 echo "Clean install WP-CLI succeeded."
-echo "  WordPress: http://127.0.0.1:8891"
-echo "  Admin:     http://127.0.0.1:8891/wp-admin"
+echo "  WordPress: http://127.0.0.1:8999"
+echo "  Admin:     http://127.0.0.1:8999/wp-admin"
 echo "Visit Home, Find a Tutor, Login with JS on/off before signing RELEASE-ACCEPTANCE.md."

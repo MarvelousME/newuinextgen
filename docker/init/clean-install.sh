@@ -66,7 +66,7 @@ if ! wp core is-installed --path="$WP_PATH" --allow-root 2>/dev/null; then
   log "Installing WordPress..."
   wp core install \
     --path="$WP_PATH" \
-    --url="${WP_URL:-http://localhost:8891}" \
+    --url="${WP_URL:-http://localhost:8999}" \
     --title="${WP_TITLE:-NextGen Tutors Clean Install}" \
     --admin_user="${WP_ADMIN_USER:-admin}" \
     --admin_password="${WP_ADMIN_PASSWORD:-NextGenAdmin!2026}" \

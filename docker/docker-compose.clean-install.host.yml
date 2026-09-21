@@ -1,6 +1,6 @@
 # Host-network clean-room WordPress for environments where Docker bridge
 # networking is blocked (common in nested/cloud VMs). Same PRODUCTION ZIPs.
-# Site: http://127.0.0.1:8891  DB: 127.0.0.1:3307
+# Site: http://127.0.0.1:8999  DB: 127.0.0.1:3307
 
 name: ngt-clean-install
 
@@ -47,8 +47,8 @@ services:
     volumes:
       - clean_wp:/var/www/html
       - ../PRODUCTION/01-INSTALLABLE-PACKAGES:/packages:ro
-      - ./apache-8891.conf:/etc/apache2/ports.conf:ro
-      - ./apache-8891-site.conf:/etc/apache2/sites-enabled/000-default.conf:ro
+      - ./apache-8999.conf:/etc/apache2/ports.conf:ro
+      - ./apache-8999-site.conf:/etc/apache2/sites-enabled/000-default.conf:ro
     depends_on:
       db:
         condition: service_healthy
@@ -59,7 +59,7 @@ services:
     image: wordpress:cli-php8.2
     network_mode: host
     environment:
-      WP_URL: http://127.0.0.1:8891
+      WP_URL: http://127.0.0.1:8999
       WP_TITLE: NextGen Tutors Clean Install
       WP_ADMIN_USER: admin
       WP_ADMIN_PASSWORD: NextGenAdmin!2026
