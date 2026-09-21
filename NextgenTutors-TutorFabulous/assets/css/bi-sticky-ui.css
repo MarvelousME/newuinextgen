@@ -24,6 +24,19 @@ body {
   max-width: 100vw;
 }
 
+/*
+ * CRITICAL: transform / perspective / filter / will-change:transform on html|body
+ * create a fixed containing block — sticky header + FAB then scroll away.
+ * Keep document root free of those properties so position:fixed tracks the viewport.
+ */
+html,
+body {
+  transform: none !important; /* Justified: protect viewport-fixed chrome */
+  perspective: none !important;
+  filter: none !important;
+  will-change: auto !important;
+}
+
 /* ========== HEADER — always fixed, never hidden ========== */
 .ngt-nav,
 .ngt-nav--transparent,
@@ -234,11 +247,38 @@ body.admin-bar.has-float-dock .ngc-match-panel {
   top: calc(32px + var(--nav-h, 159px) + 0.75rem);
 }
 
-/* Keep page content from sitting under the FAB rail */
+/* Keep page content clear of the FAB rail (buttons only; tooltips are hover) */
 body.has-float-dock .site-main,
 body.has-float-dock .bi-theme-content,
 body.has-float-dock .entry-content {
   padding-right: max(0px, env(safe-area-inset-right, 0px));
+}
+
+/* Reserve a slim right gutter so fixed FAB never covers interactive controls */
+body.has-float-dock {
+  --bi-fab-gutter: calc(56px + 1.25rem + env(safe-area-inset-right, 0px));
+}
+
+body.has-float-dock .ngi-hero .ngi-wrap,
+body.has-float-dock .ngi-section .ngi-wrap,
+body.has-float-dock .bi-narrative-3d__intro,
+body.has-float-dock .bi-narrative-3d__cta {
+  padding-right: max(1rem, var(--bi-fab-gutter));
+  box-sizing: border-box;
+}
+
+/* Nav chrome: never clip logo / theme toggle / burger on narrow viewports */
+.ngt-nav .ngt-container,
+.ngt-nav .ngt-nav__inner {
+  width: 100%;
+  max-width: 100%;
+  padding-inline: max(0.75rem, env(safe-area-inset-left, 0px)) max(0.75rem, env(safe-area-inset-right, 0px));
+  box-sizing: border-box;
+}
+
+.ngt-nav__cta--tools,
+.ngt-nav__toggle {
+  flex-shrink: 0;
 }
 
 @media (max-width: 900px) {
@@ -268,6 +308,14 @@ body.has-float-dock .entry-content {
     min-height: var(--nav-h, 72px);
   }
 
+  .ngt-nav__logo-text {
+    font-size: clamp(14px, 3.6vw, 18px);
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .float-dock,
   body.has-float-dock .float-dock,
   #float-dock {
@@ -288,6 +336,10 @@ body.has-float-dock .entry-content {
     height: 52px;
     min-width: 52px;
     min-height: 52px;
+  }
+
+  body.has-float-dock {
+    --bi-fab-gutter: calc(48px + 1rem + env(safe-area-inset-right, 0px));
   }
 
   body.has-float-dock .chat-panel,

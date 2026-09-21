@@ -78,18 +78,24 @@
   font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
   padding: 7px 12px; border-radius: 999px; white-space: nowrap;
   border: 1.5px solid #aecf61;
-  opacity: 1; pointer-events: none;
+  /* Hover/focus only — always-on labels overlap page content */
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s ease, color .2s ease, background .2s ease, border-color .2s ease;
   box-shadow: 0 6px 16px rgba(15,39,68,.25);
 }
 .fdock-tooltip::after {
   content: ""; position: absolute; right: -7px; top: 50%; transform: translateY(-50%);
   border: 7px solid transparent; border-left-color: #aecf61; border-right: 0;
 }
-.fdock-btn:hover .fdock-tooltip { color: #fff; background: #123056; border-color: #d4f06a; }
+.fdock-btn:hover .fdock-tooltip,
+.fdock-btn:focus-visible .fdock-tooltip {
+  opacity: 1;
+  color: #fff; background: #123056; border-color: #d4f06a;
+}
 @media (max-width: 600px) {
   .float-dock { right: 12px; top: calc(var(--nav-h, 72px) + 8px); bottom: auto; transform: none; z-index: 1000 !important; }
   .fdock-btn { width: 48px; height: 48px; }
-  .fdock-tooltip { font-size: 10px; padding: 5px 9px; right: 56px; }
+  .fdock-tooltip { display: none; } /* no room for labels on small screens */
 }
 
 /* ===================== RTM CHAT PANEL ===================== */

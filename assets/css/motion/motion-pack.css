@@ -4,12 +4,23 @@
  */
 
 /* ==== 01-base.css ==== */
-/* ===== GPU ACCELERATION & BASE ===== */
-.framer-motion {
+/* ===== GPU ACCELERATION & BASE =====
+   Never put transform / perspective / will-change:transform on html|body —
+   those create a fixed containing block and sticky header/FAB scroll away. */
+.framer-motion:not(html):not(body) {
   will-change: transform, opacity;
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+html.framer-motion,
+body.framer-motion {
+  transform: none;
+  perspective: none;
+  filter: none;
+  will-change: auto;
+  backface-visibility: visible;
 }
 
 /* Reduce motion for accessibility */

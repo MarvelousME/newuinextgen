@@ -7,6 +7,8 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var root = document.documentElement;
 
+  // Marker only — GPU transform/perspective must NOT land on <html>
+  // (breaks position:fixed for sticky header + FAB). See motion/01-base.css.
   if (document.body.classList.contains('bi-motion-enabled') && !reduced) {
     root.classList.add('framer-motion');
   }
