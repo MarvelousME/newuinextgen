@@ -31,6 +31,16 @@
     if (!nav || nav.getAttribute('data-bi-sticky-nav') === '1') return;
     nav.setAttribute('data-bi-sticky-nav', '1');
 
+    // Hard guarantees: header stays fixed + visible (no scroll-hide patterns).
+    nav.style.setProperty('position', 'fixed', 'important');
+    nav.style.setProperty('top', document.body.classList.contains('admin-bar') ? '' : '0', 'important');
+    nav.style.setProperty('z-index', '1100', 'important');
+    nav.style.setProperty('visibility', 'visible', 'important');
+    nav.style.setProperty('opacity', '1', 'important');
+    nav.style.setProperty('transform', 'none', 'important');
+    nav.style.setProperty('display', 'flex', 'important');
+    nav.classList.remove('is-hidden', 'nav-hidden', 'ngt-nav--hidden');
+
     var onScroll = function () {
       var scrolled = window.scrollY > SCROLL_THRESHOLD;
       if (scrolled === state.scrolled) return;
@@ -38,6 +48,11 @@
       nav.classList.toggle('ngt-nav--scrolled', scrolled);
       nav.classList.toggle('is-solid', scrolled);
       nav.classList.toggle('ngt-nav--solid', scrolled);
+      // Re-assert visibility every scroll tick in case other scripts mutate it.
+      nav.style.setProperty('visibility', 'visible', 'important');
+      nav.style.setProperty('opacity', '1', 'important');
+      nav.style.setProperty('transform', 'none', 'important');
+      nav.style.setProperty('position', 'fixed', 'important');
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });

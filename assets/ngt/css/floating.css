@@ -4,12 +4,13 @@
 
 /* ===================== FLOATING DOCK ===================== */
 .float-dock {
-  /* Viewport-pinned FAB — sticky from top-right (below header). */
+  /* Viewport-pinned FAB — sticky from top-right (below header), z-index 1000. */
   position: fixed !important; /* Justified: ancestor transforms break sticky FABs */
   right: max(20px, env(safe-area-inset-right, 0px));
-  top: calc(var(--nav-h, 72px) + 12px);
+  top: calc(var(--nav-h, 159px) + 12px);
   bottom: auto;
-  z-index: var(--bi-z-fab, 30);
+  z-index: 1000 !important;
+  z-index: var(--bi-z-fab, 1000) !important;
   transform: none;
   display: flex !important;
   visibility: visible !important;
@@ -86,7 +87,7 @@
 }
 .fdock-btn:hover .fdock-tooltip { color: #fff; background: #123056; border-color: #d4f06a; }
 @media (max-width: 600px) {
-  .float-dock { right: 12px; top: calc(var(--nav-h, 64px) + 8px); bottom: auto; transform: none; }
+  .float-dock { right: 12px; top: calc(var(--nav-h, 72px) + 8px); bottom: auto; transform: none; z-index: 1000 !important; }
   .fdock-btn { width: 48px; height: 48px; }
   .fdock-tooltip { font-size: 10px; padding: 5px 9px; right: 56px; }
 }

@@ -452,7 +452,8 @@ body.bi-kinetic-home .ngt-3d-hscroll {
   top: 0;
   height: 3px;
   width: 0;
-  z-index: 1000;
+  /* Under sticky header (--bi-z-header: 1100); never cover chrome */
+  z-index: 1080;
   pointer-events: none;
   background: linear-gradient(90deg, var(--ngi-cyan, #28c7f7), var(--ngi-lime, #31f0aa));
 }

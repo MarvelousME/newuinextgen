@@ -13,7 +13,7 @@ Tags: education, tutoring, elementor, south-africa, companion
 */
 
 /* ============================================================
-   TUTORFABULOUS / NEXTGEN TUTORS - DESIGN SYSTEM
+   BEYONDINFINITY / NEXTGEN TUTORS - DESIGN SYSTEM
    ============================================================ */
 
 /* ---- CSS Custom Properties (Design Tokens) ---- */
@@ -350,11 +350,17 @@ a:hover {
   background: var(--ngt-glass-surface, rgba(255,255,255,0.95));
   border-bottom: 1px solid var(--ngt-border-light);
   padding: 1rem 0;
-  position: sticky;
+  /* Position/z-index owned by bi-sticky-ui.css (fixed + --bi-z-header 1100). */
+  position: fixed;
   top: 0;
-  z-index: var(--ngt-z-nav, 40);
+  left: 0;
+  right: 0;
+  z-index: var(--bi-z-header, var(--ngt-z-nav, 1100));
   backdrop-filter: blur(var(--ngt-blur-glass, 10px));
   -webkit-backdrop-filter: blur(var(--ngt-blur-glass, 10px));
+  visibility: visible;
+  opacity: 1;
+  transform: none;
 }
 
 .ngt-nav__inner {

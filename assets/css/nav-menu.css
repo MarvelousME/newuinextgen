@@ -255,14 +255,15 @@
   object-fit: cover;
 }
 
-/* Float rail — sticky FAB top-right below header (bi-sticky-ui.css may refine) */
+/* Float rail — sticky FAB top-right below header, z-index 1000 */
 body.has-float-dock .float-dock {
   position: fixed;
   right: 20px;
-  top: calc(var(--nav-h, 72px) + 12px);
+  top: calc(var(--nav-h, 159px) + 12px);
   bottom: auto;
   transform: none;
-  z-index: var(--bi-z-fab, 30);
+  z-index: 1000;
+  z-index: var(--bi-z-fab, 1000);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -274,8 +275,9 @@ body.has-float-dock .chat-panel,
 body.has-float-dock .support-panel,
 body.has-float-dock .ngc-match-panel {
   right: calc(20px + 56px + 16px);
-  top: calc(var(--nav-h, 72px) + 12px);
+  top: calc(var(--nav-h, 159px) + 12px);
   bottom: auto;
+  z-index: calc(var(--bi-z-fab, 1000) + 20);
 }
 
 body.has-float-dock .fdock-btn {
@@ -286,17 +288,18 @@ body.has-float-dock .fdock-btn {
 @media (max-width: 600px) {
   body.has-float-dock .float-dock {
     right: 12px;
-    top: calc(var(--nav-h, 64px) + 8px);
+    top: calc(var(--nav-h, 72px) + 8px);
     bottom: auto;
     transform: none;
     gap: 10px;
+    z-index: 1000;
   }
   body.has-float-dock .chat-panel,
   body.has-float-dock .support-panel,
   body.has-float-dock .ngc-match-panel {
     right: 0;
     left: 0;
-    top: calc(var(--nav-h, 64px) + 8px);
+    top: calc(var(--nav-h, 72px) + 8px);
     bottom: auto;
     transform: none;
   }

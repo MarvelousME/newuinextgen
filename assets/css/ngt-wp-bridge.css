@@ -12,28 +12,35 @@ body.bi-ngt-skin {
 /* Theme nav — solid theme blue chrome (no header CTAs); always pinned */
 body.bi-ngt-skin .ngt-nav {
   position: fixed !important;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: var(--bi-z-header, 40);
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: var(--bi-z-header, 1100) !important;
   height: var(--nav-h, 159px);
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
+  transform: none !important;
   align-items: center;
   transition: background 0.35s var(--ease-smooth, ease), box-shadow 0.35s, color 0.35s;
   border-bottom: none;
-  background: transparent;
+  background: rgba(7, 23, 47, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: none;
   color: #fff;
   pointer-events: auto;
 }
 
 body.bi-ngt-skin .ngt-nav.ngt-nav--transparent:not(.is-solid):not(.ngt-nav--scrolled):not(.ngt-nav--solid) {
-  background: transparent;
-  backdrop-filter: none;
+  background: rgba(7, 23, 47, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: none;
   height: var(--nav-h, 159px);
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 body.bi-ngt-skin .ngt-nav.is-solid,
