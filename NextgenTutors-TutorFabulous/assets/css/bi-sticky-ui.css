@@ -22,15 +22,19 @@
   right: 0;
   z-index: var(--bi-z-header) !important;
   width: 100%;
+  height: var(--nav-h, 159px);
+  background: transparent;
+  box-shadow: none;
   transition:
     box-shadow var(--bi-sticky-transition) ease,
     background var(--bi-sticky-transition) ease,
-    height 0.3s ease;
+    color var(--bi-sticky-transition) ease;
 }
 
 .ngt-nav.ngt-nav--scrolled,
 .ngt-nav.is-solid,
 .ngt-nav.ngt-nav--solid {
+  background: var(--ngi-navy, #07172f);
   box-shadow: 0 12px 32px rgba(7, 23, 47, 0.28);
 }
 
@@ -63,18 +67,18 @@ body.admin-bar .ngt-nav--minimal {
   }
 }
 
-/* ========== FAB DOCK ========== */
+/* ========== FAB DOCK — sticky from top (not bottom) ========== */
 .float-dock,
 body.has-float-dock .float-dock {
   position: fixed !important;
   right: max(1.25rem, env(safe-area-inset-right, 0px));
-  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
-  top: auto;
+  top: calc(var(--nav-h, 72px) + 0.75rem);
+  bottom: auto;
   left: auto;
   transform: none;
   z-index: var(--bi-z-fab) !important;
   display: flex !important;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
   gap: 0.75rem;
   width: auto;
@@ -83,13 +87,25 @@ body.has-float-dock .float-dock {
   opacity: 1 !important;
 }
 
+body.admin-bar .float-dock,
+body.admin-bar.has-float-dock .float-dock {
+  top: calc(32px + var(--nav-h, 72px) + 0.75rem);
+}
+
+@media (max-width: 782px) {
+  body.admin-bar .float-dock,
+  body.admin-bar.has-float-dock .float-dock {
+    top: calc(46px + var(--nav-h, 72px) + 0.75rem);
+  }
+}
+
 .float-dock > * {
   pointer-events: auto;
 }
 
 .float-dock__actions {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
   gap: 0.75rem;
 }
@@ -138,7 +154,7 @@ body.has-float-dock .float-dock {
 
 .float-dock__item {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(-12px);
   pointer-events: none;
   transition-property: opacity, transform;
   transition-duration: var(--bi-sticky-transition);
@@ -155,21 +171,28 @@ body.has-float-dock .float-dock {
   pointer-events: auto;
 }
 
-/* Panels: position + z only — transforms/opacity owned by floating.css */
+/* Panels: anchored near top dock */
 body.has-float-dock .chat-panel,
 body.has-float-dock .support-panel,
 body.has-float-dock .ngc-match-panel {
   right: calc(20px + 56px + 16px);
-  top: auto;
-  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+  top: calc(var(--nav-h, 72px) + 0.75rem);
+  bottom: auto;
   z-index: calc(var(--bi-z-fab) + 20);
+}
+
+body.admin-bar.has-float-dock .chat-panel,
+body.admin-bar.has-float-dock .support-panel,
+body.admin-bar.has-float-dock .ngc-match-panel {
+  top: calc(32px + var(--nav-h, 72px) + 0.75rem);
 }
 
 @media (max-width: 600px) {
   .float-dock,
   body.has-float-dock .float-dock {
     right: max(0.75rem, env(safe-area-inset-right, 0px));
-    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    top: calc(var(--nav-h, 64px) + 0.5rem);
+    bottom: auto;
     gap: 0.625rem;
   }
 
@@ -190,8 +213,8 @@ body.has-float-dock .ngc-match-panel {
   body.has-float-dock .ngc-match-panel {
     right: 0;
     left: 0;
-    bottom: 0;
-    top: auto;
+    top: calc(var(--nav-h, 64px) + 0.5rem);
+    bottom: auto;
   }
 }
 
