@@ -19,11 +19,16 @@ A client-ready production distribution of the NextGen Tutors WordPress theme and
 
 ## Build / test (maintainers)
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\Build-NextGenProductionRelease.ps1
-powershell -ExecutionPolicy Bypass -File scripts\Test-NextGenProductionRelease.ps1
-cd docker; .\clean-install.ps1   # http://localhost:8891
+```bash
+python3 scripts/build-production-release.py
+# Windows: powershell -ExecutionPolicy Bypass -File scripts/build-production-release.ps1
+
+cd docker
+./clean-install.sh          # Linux/macOS — http://127.0.0.1:8891
+# or: .\clean-install.ps1   # Windows PowerShell
 ```
+
+`clean-install.sh` uses `docker-compose.clean-install.host.yml` when Docker bridge networking is unavailable (common in nested/cloud VMs). Packages under `01-INSTALLABLE-PACKAGES/` are gitignored (`*.zip`); rebuild before install.
 
 ## Documentation map
 

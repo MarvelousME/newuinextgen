@@ -21,7 +21,20 @@ wait_for_file() {
 
 wait_for_db() {
   i=0
-  while ! wp db check --path="$WP_PATH" --allow-root --skip-ssl >/dev/null 2>&1; do
+  # Avoid `wp db check` / mariadb-check --skip-ssl hangs against MySQL 8.
+  # WORDPRESS_DB_HOST may be "db" or "127.0.0.1:3307".
+  while ! php -r '
+$raw = getenv("WORDPRESS_DB_HOST") ?: "db";
+$host = $raw; $port = 3306;
+if (strpos($raw, ":") !== false) { list($host, $port) = explode(":", $raw, 2); $port = (int)$port; }
+$user = getenv("WORDPRESS_DB_USER") ?: "wordpress";
+$pass = getenv("WORDPRESS_DB_PASSWORD") ?: "wordpress";
+$name = getenv("WORDPRESS_DB_NAME") ?: "wordpress";
+mysqli_report(MYSQLI_REPORT_OFF);
+$m = @new mysqli($host, $user, $pass, $name, $port);
+if ($m->connect_errno) { exit(1); }
+$m->close();
+'; do
     i=$((i + 1))
     if [ "$i" -ge 45 ]; then
       log "Database not reachable"

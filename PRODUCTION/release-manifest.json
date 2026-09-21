@@ -1,10 +1,10 @@
 {
-    "schema_version":  "1.0.0",
-    "release_train":  "2026.09.12",
-    "generated_at":  "2026-09-12T09:14:09.5443484Z",
-    "git_commit":  "5afb189f8b8a12bb87e3bc90359cbc1cd7efc46f",
-    "theme_version":  "1.9.29",
-    "recommendation":  "CLEAN-INSTALL CANDIDATE - not production-ready until 04-VALIDATION/RELEASE-ACCEPTANCE.md is signed",
-    "checksums_file":  "CHECKSUMS.sha256",
-    "notes":  "Versions are plugin/theme headers. Secrets are never packaged. Plugin Manager ZIP is slim (no offline-packages). Companion excludes build-src/tests."
+  "schema_version": "1.0.0",
+  "release_train": "2026.09.21",
+  "generated_at": "2026-09-21T01:04:58.818142Z",
+  "git_commit": "70b14a1acde88b9ecbae9aef6c16d8618dc12737",
+  "theme_version": "2.0.0",
+  "recommendation": "CLEAN-INSTALL CANDIDATE - not production-ready until 04-VALIDATION/RELEASE-ACCEPTANCE.md is signed",
+  "checksums_file": "CHECKSUMS.sha256",
+  "notes": "Versions are plugin/theme headers. Secrets are never packaged. Plugin Manager ZIP is slim (no offline-packages). Companion excludes build-src/tests."
 }

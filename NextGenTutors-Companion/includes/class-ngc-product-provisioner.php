@@ -145,6 +145,9 @@ class NGC_Product_Provisioner {
 	 */
 	public static function find_existing( $key ) {
 		$key = strtoupper( (string) $key );
+		if ( ! function_exists( 'wc_get_product_id_by_sku' ) ) {
+			return 0;
+		}
 		$id  = (int) wc_get_product_id_by_sku( $key );
 		if ( $id ) {
 			return $id;
