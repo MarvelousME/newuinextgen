@@ -1,0 +1,41 @@
+/* ===== FIXED BACKGROUND PARALLAX ===== */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  will-change: background-position;
+}
+
+/* ===== 3D PARALLAX LAYERS ===== */
+.parallax-container {
+  perspective: 1px;
+  transform-style: preserve-3d;
+  min-height: 100vh;
+}
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(-1px) scale(2);
+  z-index: -1;
+}
+.parallax-layer.slow {
+  transform: translateZ(-0.5px) scale(1.5);
+}
+.parallax-layer.fast {
+  transform: translateZ(-2px) scale(3);
+}
+
+/* ===== SCROLL-TRIGGERED PARALLAX (CSS Scroll Timeline - Experimental) ===== */
+/* Works in Chrome 115+ with flag: chrome://flags/#enable-experimental-web-platform-features */
+@supports (animation-timeline: scroll()) {
+  .parallax-scroll {
+    animation: parallaxMove linear;
+    animation-timeline: scroll(root);
+    animation-range: entry 0% cover 50%;
+  }
+  @keyframes parallaxMove {
+    from { background-position-y: 0%; }
+    to { background-position-y: 30%; }
+  }
+}

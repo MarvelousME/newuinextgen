@@ -1,0 +1,489 @@
+{
+    "run_id": "booking-commerce-20260917-003256",
+    "started_at": "2026-09-17T00:32:56+00:00",
+    "checks": [
+        {
+            "label": "booking.create capability registered",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "sessions table exists",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "invoices table exists",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "woocommerce active",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "masterstudy detected",
+            "result": "PASS",
+            "data": {
+                "available": true
+            }
+        },
+        {
+            "label": "catalogue provisioned",
+            "result": "PASS",
+            "data": {
+                "success": true,
+                "products": [
+                    {
+                        "sku": "NGT-ONLINE-1HR",
+                        "product_id": 2104,
+                        "status": "updated",
+                        "price": "320",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-INPERSON-1HR",
+                        "product_id": 2105,
+                        "status": "updated",
+                        "price": "350",
+                        "purchasable": true,
+                        "virtual": false
+                    },
+                    {
+                        "sku": "NGT-TERTIARY-1HR",
+                        "product_id": 2106,
+                        "status": "updated",
+                        "price": "500",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-ONLINE-4-1TO3",
+                        "product_id": 2107,
+                        "status": "updated",
+                        "price": "1280",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-ONLINE-8-1TO3",
+                        "product_id": 2108,
+                        "status": "updated",
+                        "price": "2560",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-ONLINE-4-3TO12",
+                        "product_id": 2109,
+                        "status": "updated",
+                        "price": "1200",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-ONLINE-8-3TO12",
+                        "product_id": 2110,
+                        "status": "updated",
+                        "price": "2400",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-INPERSON-4-1TO3",
+                        "product_id": 2111,
+                        "status": "updated",
+                        "price": "1400",
+                        "purchasable": true,
+                        "virtual": false
+                    },
+                    {
+                        "sku": "NGT-INPERSON-8-1TO3",
+                        "product_id": 2112,
+                        "status": "updated",
+                        "price": "2800",
+                        "purchasable": true,
+                        "virtual": false
+                    },
+                    {
+                        "sku": "NGT-INPERSON-4-3TO12",
+                        "product_id": 2113,
+                        "status": "updated",
+                        "price": "1280",
+                        "purchasable": true,
+                        "virtual": false
+                    },
+                    {
+                        "sku": "NGT-INPERSON-8-3TO12",
+                        "product_id": 2114,
+                        "status": "updated",
+                        "price": "2560",
+                        "purchasable": true,
+                        "virtual": false
+                    },
+                    {
+                        "sku": "NGT-TERTIARY-4",
+                        "product_id": 2115,
+                        "status": "updated",
+                        "price": "2000",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-TERTIARY-8",
+                        "product_id": 2116,
+                        "status": "updated",
+                        "price": "4000",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-HIGHFREQ-12",
+                        "product_id": 2117,
+                        "status": "updated",
+                        "price": "3600",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-HIGHFREQ-16",
+                        "product_id": 2118,
+                        "status": "updated",
+                        "price": "4800",
+                        "purchasable": true,
+                        "virtual": true
+                    },
+                    {
+                        "sku": "NGT-HIGHFREQ-20",
+                        "product_id": 2119,
+                        "status": "updated",
+                        "price": "6000",
+                        "purchasable": true,
+                        "virtual": true
+                    }
+                ],
+                "errors": [],
+                "count": 16,
+                "version": "1",
+                "verified_at": "2026-09-17T00:32:57+00:00"
+            }
+        },
+        {
+            "label": "NGT-ONLINE-1HR product id",
+            "result": "PASS",
+            "data": {
+                "product_id": 2104
+            }
+        },
+        {
+            "label": "parent user",
+            "result": "PASS",
+            "data": 24
+        },
+        {
+            "label": "child user",
+            "result": "PASS",
+            "data": 25
+        },
+        {
+            "label": "tutor user",
+            "result": "PASS",
+            "data": 26
+        },
+        {
+            "label": "parent can ngc_book_sessions",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "parent pays for child",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "adult self purchase identity",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "booking.create allowed for parent",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "booking created",
+            "result": "PASS",
+            "data": 31
+        },
+        {
+            "label": "order created pending",
+            "result": "PASS",
+            "data": {
+                "order_id": 2159,
+                "total": "320.00"
+            }
+        },
+        {
+            "label": "unpaid session awaiting payment",
+            "result": "PASS",
+            "data": "awaiting_payment"
+        },
+        {
+            "label": "unpaid launch denied",
+            "result": "PASS",
+            "data": "ngc_join_denied"
+        },
+        {
+            "label": "paid session ready",
+            "result": "PASS",
+            "data": {
+                "id": "26",
+                "uuid": "c0d665fb-fb86-4060-b5ee-6f2e108ec363",
+                "session_uuid": "c0d665fb-fb86-4060-b5ee-6f2e108ec363",
+                "correlation_id": "NGT-SES-20260917-CAF07090",
+                "idempotency_key": "session:order:2159:booking:31",
+                "booking_provider": "ngc",
+                "booking_id": "31",
+                "order_id": "2159",
+                "order_item_id": "21",
+                "product_id": "2104",
+                "student_user_id": "25",
+                "parent_user_id": "24",
+                "tutor_user_id": "26",
+                "subject_id": "mathematics",
+                "subject_name": "mathematics",
+                "masterstudy_course_id": "2122",
+                "masterstudy_lesson_id": "2160",
+                "meeting_provider": "jitsi",
+                "meeting_id": "NextGenTutors-Lesson-7175d258-68c2-4f79-80c0-0022c24f6e5d",
+                "meeting_url_reference": "NextGenTutors-Lesson-7175d258-68c2-4f79-80c0-0022c24f6e5d",
+                "scheduled_start": "2026-09-24 04:24:58",
+                "scheduled_end": "2026-09-24 05:24:58",
+                "timezone": "Africa\/Johannesburg",
+                "status": "ready",
+                "payment_status": "paid",
+                "booking_status": "confirmed",
+                "lesson_status": "ready",
+                "meeting_status": "ready",
+                "student_joined_at": null,
+                "tutor_joined_at": null,
+                "started_at": null,
+                "completed_at": null,
+                "cancelled_at": null,
+                "version": "8",
+                "meta": [],
+                "created_at": "2026-09-17 00:33:03",
+                "updated_at": "2026-09-17 00:33:10"
+            }
+        },
+        {
+            "label": "duplicate provision same session",
+            "result": "PASS",
+            "data": {
+                "first": "26",
+                "second": "26"
+            }
+        },
+        {
+            "label": "invoice one per order",
+            "result": "PASS",
+            "data": {
+                "id": "15",
+                "uuid": "df152b69-0374-4bb5-9189-5c6679a6e944",
+                "invoice_number": "NGC-INV-2026-01015",
+                "user_id": "24",
+                "booking_id": "31",
+                "order_id": "2159",
+                "amount": "320.00",
+                "currency": "ZAR",
+                "status": "paid",
+                "line_items": "[{\"name\":\"Online Tutoring - Single 1 Hour Lesson\",\"qty\":1,\"unit_amount\":320,\"total\":\"320\",\"tax\":0,\"subject\":\"mathematics\",\"student\":\"E2E Child\",\"package\":\"NGT-ONLINE-1HR\"}]",
+                "issued_at": "2026-09-17 00:33:06",
+                "paid_at": "2026-09-17 00:33:06",
+                "meta": "{\"billing\":{\"first_name\":\"E2E\",\"last_name\":\"Parent\",\"company\":\"\",\"address_1\":\"\",\"address_2\":\"\",\"city\":\"\",\"state\":\"\",\"postcode\":\"\",\"country\":\"\",\"email\":\"ngt.e2e.parent@example.test\",\"phone\":\"\"}}"
+            }
+        },
+        {
+            "label": "stranger launch denied",
+            "result": "PASS",
+            "data": "ngc_session_forbidden"
+        },
+        {
+            "label": "join too_early before window",
+            "result": "PASS",
+            "data": {
+                "status": 409,
+                "reason": "too_early",
+                "window": {
+                    "allowed": false,
+                    "reason": "too_early",
+                    "opens_at": 1790223598,
+                    "closes_at": 1790228398,
+                    "seconds_until_open": 618400,
+                    "label": "Lesson starts in 171:51:40",
+                    "status": "ready",
+                    "can_join": false
+                }
+            }
+        },
+        {
+            "label": "student join authorized",
+            "result": "PASS",
+            "data": {
+                "session_id": 26,
+                "correlation_id": "NGT-SES-20260917-CAF07090",
+                "launch_url": "http:\/\/localhost:8890\/courses\/ngt-mathematics\/2160",
+                "player_url": "http:\/\/localhost:8890\/courses\/ngt-mathematics\/2160",
+                "classroom_url": "http:\/\/localhost:8890\/courses\/ngt-mathematics\/2160",
+                "meeting_url": "https:\/\/meet.jit.si\/NextGenTutors-Lesson-7175d258-68c2-4f79-80c0-0022c24f6e5d#userInfo.displayName=\"E2E%20Child\"",
+                "join_url": "http:\/\/localhost:8890\/courses\/ngt-mathematics\/2160",
+                "provider": "jitsi",
+                "window": {
+                    "allowed": true,
+                    "reason": "open",
+                    "opens_at": 1789604838,
+                    "closes_at": 1789609638,
+                    "seconds_until_open": 0,
+                    "label": "JOIN LESSON",
+                    "status": "join_window_open",
+                    "can_join": true
+                }
+            }
+        },
+        {
+            "label": "tutor join authorized",
+            "result": "PASS",
+            "data": {
+                "session_id": 26,
+                "correlation_id": "NGT-SES-20260917-CAF07090",
+                "launch_url": "http:\/\/localhost:8890\/courses\/ngt-mathematics\/2160",
+                "player_url": "http:\/\/localhost:8890\/courses\/ngt-mathematics\/2160",
+                "classroom_url": "http:\/\/localhost:8890\/courses\/ngt-mathematics\/2160",
+                "meeting_url": "https:\/\/meet.jit.si\/NextGenTutors-Lesson-7175d258-68c2-4f79-80c0-0022c24f6e5d#userInfo.displayName=\"E2E%20Tutor\"",
+                "join_url": "http:\/\/localhost:8890\/courses\/ngt-mathematics\/2160",
+                "provider": "jitsi",
+                "window": {
+                    "allowed": true,
+                    "reason": "open",
+                    "opens_at": 1789604838,
+                    "closes_at": 1789609638,
+                    "seconds_until_open": 0,
+                    "label": "JOIN LESSON",
+                    "status": "in_progress",
+                    "can_join": true
+                }
+            }
+        },
+        {
+            "label": "session completed",
+            "result": "PASS",
+            "data": "completed"
+        },
+        {
+            "label": "failed payment session failed",
+            "result": "PASS",
+            "data": {
+                "id": "27",
+                "uuid": "82cf555c-a60e-4462-86ae-11d0cf5c90d4",
+                "session_uuid": "82cf555c-a60e-4462-86ae-11d0cf5c90d4",
+                "correlation_id": "NGT-SES-20260917-8A18806B",
+                "idempotency_key": "session:order:2161:booking:32",
+                "booking_provider": "ngc",
+                "booking_id": "32",
+                "order_id": "2161",
+                "order_item_id": "22",
+                "product_id": "2104",
+                "student_user_id": "25",
+                "parent_user_id": "24",
+                "tutor_user_id": "26",
+                "subject_id": "mathematics",
+                "subject_name": "mathematics",
+                "masterstudy_course_id": "0",
+                "masterstudy_lesson_id": "0",
+                "meeting_provider": "",
+                "meeting_id": "",
+                "meeting_url_reference": "",
+                "scheduled_start": "2026-09-18 00:33:21",
+                "scheduled_end": "2026-09-18 01:33:21",
+                "timezone": "Africa\/Johannesburg",
+                "status": "failed",
+                "payment_status": "failed",
+                "booking_status": "requested",
+                "lesson_status": "",
+                "meeting_status": "",
+                "student_joined_at": null,
+                "tutor_joined_at": null,
+                "started_at": null,
+                "completed_at": null,
+                "cancelled_at": null,
+                "version": "3",
+                "meta": [],
+                "created_at": "2026-09-17 00:33:24",
+                "updated_at": "2026-09-17 00:33:25"
+            }
+        },
+        {
+            "label": "refunded session refunded",
+            "result": "PASS",
+            "data": {
+                "id": "28",
+                "uuid": "3fad3073-8c71-40a5-96cd-790aabd3741c",
+                "session_uuid": "3fad3073-8c71-40a5-96cd-790aabd3741c",
+                "correlation_id": "NGT-SES-20260917-695DCFBC",
+                "idempotency_key": "session:order:2162:booking:33",
+                "booking_provider": "ngc",
+                "booking_id": "33",
+                "order_id": "2162",
+                "order_item_id": "23",
+                "product_id": "2104",
+                "student_user_id": "25",
+                "parent_user_id": "24",
+                "tutor_user_id": "26",
+                "subject_id": "mathematics",
+                "subject_name": "mathematics",
+                "masterstudy_course_id": "2122",
+                "masterstudy_lesson_id": "2163",
+                "meeting_provider": "jitsi",
+                "meeting_id": "NextGenTutors-Lesson-c9a80654-166d-4daa-a9a1-64c84e05cc77",
+                "meeting_url_reference": "NextGenTutors-Lesson-c9a80654-166d-4daa-a9a1-64c84e05cc77",
+                "scheduled_start": "2026-09-19 00:33:26",
+                "scheduled_end": "2026-09-19 01:33:26",
+                "timezone": "Africa\/Johannesburg",
+                "status": "refunded",
+                "payment_status": "paid",
+                "booking_status": "confirmed",
+                "lesson_status": "ready",
+                "meeting_status": "revoked",
+                "student_joined_at": null,
+                "tutor_joined_at": null,
+                "started_at": null,
+                "completed_at": null,
+                "cancelled_at": null,
+                "version": "8",
+                "meta": [],
+                "created_at": "2026-09-17 00:33:31",
+                "updated_at": "2026-09-17 00:33:48"
+            }
+        }
+    ],
+    "passed": 28,
+    "failed": 0,
+    "finished_at": "2026-09-17T00:33:49+00:00",
+    "masterstudy": "available",
+    "relationship": {
+        "order_id": 2159,
+        "booking_id": 31,
+        "session": {
+            "id": "26",
+            "correlation_id": "NGT-SES-20260917-CAF07090",
+            "status": "ready",
+            "course_id": "2122",
+            "lesson_id": "2160",
+            "meeting_id": "NextGenTutors-Lesson-7175d258-68c2-4f79-80c0-0022c24f6e5d",
+            "payment_status": "paid"
+        },
+        "invoice_id": "15"
+    }
+}

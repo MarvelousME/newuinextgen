@@ -29,11 +29,12 @@ final class NGC_PayFast_Itn {
 			if ( 'signature' === $key || '' === (string) $val ) {
 				continue;
 			}
-			$parts[] = $key . '=' . rawurlencode( trim( (string) $val ) );
+			// PayFast requires PHP urlencode() (space → +), not rawurlencode().
+			$parts[] = $key . '=' . urlencode( trim( stripslashes( (string) $val ) ) );
 		}
 		$string = implode( '&', $parts );
 		if ( '' !== (string) $passphrase ) {
-			$string .= '&passphrase=' . rawurlencode( trim( (string) $passphrase ) );
+			$string .= '&passphrase=' . urlencode( trim( (string) $passphrase ) );
 		}
 		return md5( $string );
 	}
@@ -172,6 +173,13 @@ final class NGC_PayFast_Itn {
 			return new WP_Error( 'ngc_pf_amount', 'Amount mismatch.', [ 'status' => 400 ] );
 		}
 
+		if ( ! $sandbox && empty( $gateway_cfg['skip_remote_validate'] ) ) {
+			$remote = self::remote_validate( $posted, false );
+			if ( 'VALID' !== $remote && 'SKIPPED' !== $remote ) {
+				return new WP_Error( 'ngc_pf_remote', 'PayFast remote validate failed: ' . $remote, [ 'status' => 400 ] );
+			}
+		}
+
 		$pf_id = (string) ( $posted['pf_payment_id'] ?? '' );
 		if ( $pf_id && self::is_replay( $pf_id ) ) {
 			return new WP_Error( 'ngc_pf_replay', 'Duplicate ITN (replay).', [ 'status' => 200, 'idempotent' => true ] );
@@ -182,5 +190,39 @@ final class NGC_PayFast_Itn {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Confirm an ITN with PayFast (production). Sandbox local proofs skip this.
+	 *
+	 * @param array<string, mixed> $posted  Original ITN POST.
+	 * @param bool                 $sandbox Sandbox endpoint.
+	 * @return string VALID|INVALID|SKIPPED|error text
+	 */
+	public static function remote_validate( array $posted, $sandbox ) {
+		if ( ! function_exists( 'wp_remote_post' ) ) {
+			return 'SKIPPED';
+		}
+		$url  = $sandbox
+			? ( class_exists( 'NGC_PayFast_Credentials' ) ? NGC_PayFast_Credentials::SANDBOX_VALIDATE_URL : 'https://sandbox.payfast.co.za/eng/query/validate' )
+			: ( class_exists( 'NGC_PayFast_Credentials' ) ? NGC_PayFast_Credentials::LIVE_VALIDATE_URL : 'https://www.payfast.co.za/eng/query/validate' );
+		$body = [];
+		foreach ( $posted as $key => $val ) {
+			if ( is_scalar( $val ) ) {
+				$body[ (string) $key ] = (string) $val;
+			}
+		}
+		$response = wp_remote_post(
+			$url,
+			[
+				'timeout'   => 20,
+				'body'      => $body,
+				'sslverify' => true,
+			]
+		);
+		if ( is_wp_error( $response ) ) {
+			return $response->get_error_message();
+		}
+		return strtoupper( trim( (string) wp_remote_retrieve_body( $response ) ) );
 	}
 }

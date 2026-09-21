@@ -2,11 +2,11 @@
 /**
  * Plugin Name:       NextGenTutors-Companion
  * Plugin URI:        https://beyondinfinity.co.za/
- * Description:       Business logic, data layer, REST API, workflows, and multi-model BYOK AI suite for NextGen Tutors (BeyondInfinity theme).
- * Version:           1.9.19
+ * Description:       Business logic, data layer, REST API, workflows, and multi-model BYOK AI suite for NextGen Tutors (TutorFabulous theme; BeyondInfinity legacy slug supported).
+ * Version:           1.9.23
  * Requires at least: 6.0
  * Requires PHP:      8.0
- * Author:            BeyondInfinity
+ * Author:            NextGen Tutors
  * Text Domain:       nextgencompanion
  * Domain Path:       /languages
  *
@@ -17,11 +17,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NGC_VERSION', '1.9.19' );
+define( 'NGC_VERSION', '1.9.23' );
 define( 'NGC_PLUGIN_FILE', __FILE__ );
 define( 'NGC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NGC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'NGC_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
+/**
+ * Whether the active theme is a supported NextGen Tutors skin.
+ *
+ * Traditional default: NextgenTutors-TutorFabulous.
+ * Legacy alias: NextGenTutors-BeyondInfinity (same product family).
+ *
+ * @param WP_Theme|null $theme Optional theme object; defaults to active theme.
+ * @return bool
+ */
+function ngc_is_supported_theme( $theme = null ) {
+	if ( ! $theme instanceof WP_Theme ) {
+		$theme = wp_get_theme();
+	}
+	$stylesheet = (string) $theme->get_stylesheet();
+	$name       = (string) $theme->get( 'Name' );
+	return (
+		false !== stripos( $stylesheet, 'tutorfabulous' )
+		|| false !== stripos( $stylesheet, 'beyondinfinity' )
+		|| false !== stripos( $name, 'TutorFabulous' )
+		|| false !== stripos( $name, 'BeyondInfinity' )
+	);
+}
 
 /**
  * PSR-4 style autoloader for includes/.
@@ -45,7 +68,14 @@ function ngc_autoload( $class ) {
 
 	$paths = [
 		NGC_PLUGIN_DIR . 'includes/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/modules/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/ai/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/a2a/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/content/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/leads/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/mcp/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/agentic/social/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/adapters/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/workflows/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/rest/' . $relative,
@@ -60,6 +90,7 @@ function ngc_autoload( $class ) {
 		NGC_PLUGIN_DIR . 'includes/audit/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/diagnostics/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/matching/' . $relative,
+		NGC_PLUGIN_DIR . 'includes/payments/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/agents/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/cli/' . $relative,
 		NGC_PLUGIN_DIR . 'includes/demo/' . $relative,
@@ -79,11 +110,19 @@ function ngc_autoload( $class ) {
 		}
 	}
 
+	if ( 0 === strpos( $class, 'NGC_Session_' ) && ( 'NGC_Session_Exception' === $class || substr( $class, -10 ) === '_Exception' ) ) {
+		$ex = NGC_PLUGIN_DIR . 'includes/session/class-ngc-session-exceptions.php';
+		if ( file_exists( $ex ) ) {
+			require_once $ex;
+			return;
+		}
+	}
+
 	// Interfaces: NGC_Foo_Interface → interface-ngc-foo.php (drop trailing -interface).
 	if ( substr( $class, -10 ) === '_Interface' ) {
 		$base = substr( $class, 0, -10 );
 		$iface = 'interface-' . strtolower( str_replace( '_', '-', $base ) ) . '.php';
-		foreach ( [ 'includes/memory/', 'includes/talent/', 'includes/adapters/' ] as $dir ) {
+		foreach ( [ 'includes/memory/', 'includes/talent/', 'includes/adapters/', 'includes/session/' ] as $dir ) {
 			$ipath = NGC_PLUGIN_DIR . $dir . $iface;
 			if ( file_exists( $ipath ) ) {
 				require_once $ipath;
@@ -163,6 +202,9 @@ final class NGC_Plugin {
 		if ( class_exists( 'NGC_Section_CMS' ) ) {
 			NGC_Section_CMS::install_defaults();
 		}
+		if ( class_exists( 'NGC_Product_Provisioner' ) ) {
+			do_action( 'ngc_provision_tutor_products' );
+		}
 		do_action( 'ngc_fluentcrm_bootstrap' );
 		flush_rewrite_rules();
 		update_option( 'ngc_db_version', NGC_VERSION, false );
@@ -180,6 +222,10 @@ final class NGC_Plugin {
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'load_textdomain' ] );
+		// Domain module registry stubs (no-op); must stay after autoload registration.
+		if ( class_exists( 'NGC_Module_Registry' ) ) {
+			NGC_Module_Registry::boot();
+		}
 		NGC_Plugin_Bootstrap::init();
 	}
 
@@ -237,14 +283,17 @@ function ngc_theme_switch_targets() {
 	return apply_filters(
 		'ngc_theme_switch_targets',
 		[
-			'agntix-child'                => __( 'Agntix', 'nextgencompanion' ),
-			'nextgentutors-beyondinfinity' => __( 'BeyondInfinity', 'nextgencompanion' ),
+			'agntix-child'                  => __( 'Agntix', 'nextgencompanion' ),
+			'nextgentutors-tutorfabulous'   => __( 'TutorFabulous', 'nextgencompanion' ),
+			'nextgentutors-beyondinfinity'  => __( 'BeyondInfinity (legacy)', 'nextgencompanion' ),
 		]
 	);
 }
 
 /**
  * Resolve the theme the switch should target from the current stylesheet.
+ *
+ * Traditional default skin is TutorFabulous; BeyondInfinity remains a legacy alias.
  *
  * @param string $current Current stylesheet.
  * @return array{stylesheet:string,label:string}|null
@@ -255,12 +304,16 @@ function ngc_theme_switch_resolve_target( $current ) {
 		return null;
 	}
 
-	// Prefer the "other" registered theme; default to BeyondInfinity.
+	$primary = 'nextgentutors-tutorfabulous';
+	if ( ! isset( $targets[ $primary ] ) || ! wp_get_theme( $primary )->exists() ) {
+		$primary = isset( $targets['nextgentutors-beyondinfinity'] ) ? 'nextgentutors-beyondinfinity' : '';
+	}
+
 	$target = '';
-	if ( 'nextgentutors-beyondinfinity' === $current ) {
-		$target = 'agntix-child';
-	} elseif ( isset( $targets['nextgentutors-beyondinfinity'] ) ) {
-		$target = 'nextgentutors-beyondinfinity';
+	if ( in_array( $current, [ 'nextgentutors-tutorfabulous', 'nextgentutors-beyondinfinity' ], true ) ) {
+		$target = isset( $targets['agntix-child'] ) ? 'agntix-child' : '';
+	} elseif ( $primary ) {
+		$target = $primary;
 	} else {
 		foreach ( array_keys( $targets ) as $slug ) {
 			if ( $slug !== $current ) {

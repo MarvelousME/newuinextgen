@@ -1,0 +1,23 @@
+-- PayFast sandbox ITN evidence 2026-09-17T02:45:40Z (Companion 1.9.23)
+-- Settlement path: NGC_PayFast_Gateway::process_itn (same handler as /?wc-api=ngc_payfast_itn)
+-- Hosted: POST https://sandbox.payfast.co.za/eng/process → HTTP 302
+--   Location: https://sandbox.payfast.co.za/eng/process/payment/72ffa3e2-c413-4ad9-aee9-03b431cf2233
+-- Merchant: sandbox 10000100 (official PayFast test credentials). Live merchant is set in WooCommerce admin.
+
+session	29	NGT-SES-20260917-0019E51E	ready	paid	booking 34	order 2165	parent 24	student 25	product 2104	course 2122	lesson 2166	jitsi NextGenTutors-Lesson-214a54c2-8f39-4482-8eb0-ff30a6d8904e
+
+booking	34	confirmed	320.00	ZAR	notes=payfast-sandbox-itn
+
+invoice	17	NGC-INV-2026-01017	order 2165	user 24	320.00	paid
+
+wc_order	2165	wc-processing	320.00	payment_method=ngc_payfast
+
+hpos meta
+_ngc_payfast_amount_gross	320.00
+_ngc_payfast_custom_str1	NGT-ONLINE-1HR
+_ngc_payfast_itn_status	COMPLETE
+_ngc_payfast_pf_payment_id	pf_ngt_20260917024549_JmHM9W
+_ngc_payfast_sandbox	yes
+ngc_booking_id	34
+
+Variance: catalogue 320 = order 320.00 = invoice 320.00

@@ -1,0 +1,107 @@
+<?php
+/**
+ * Page builder compatibility styles.
+ */
+
+/* Full-width builder content */
+.bi-builder-content {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.bi-builder-article {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* Do not apply theme card transforms inside builders */
+.elementor .ngt-card,
+.elementor .ngt-pricing-card,
+.elementor .ngt-tutor-card,
+.wpb-js-composer .ngt-card,
+.vc_row .ngt-card {
+  transform: none !important;
+}
+
+.elementor .ngt-card:hover,
+.wpb-js-composer .ngt-card:hover {
+  transform: none !important;
+  box-shadow: var(--ngt-shadow-sm);
+}
+
+/* Elementor width fixes */
+.bi-elementor-page .elementor-section.elementor-section-boxed > .elementor-container {
+  max-width: 1280px;
+}
+
+.bi-elementor-page .elementor-widget-container,
+.bi-elementor-page .elementor-column,
+.bi-elementor-page .elementor-column-wrap {
+  min-width: 0;
+}
+
+.bi-elementor-page .elementor-widget-heading .elementor-heading-title {
+  font-family: var(--ngt-font-display);
+}
+
+.bi-elementor-page .elementor-widget-text-editor {
+  font-family: var(--ngt-font-body);
+  color: var(--ngt-text-2);
+}
+
+/* WPBakery fixes */
+.bi-wpbakery-page .vc_row {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+}
+
+.bi-wpbakery-page .wpb_content_element {
+  margin-bottom: 24px;
+}
+
+.wpb-js-composer .vc_tta-color-blue.vc_tta-style-modern .vc_tta-panel .vc_tta-panel-title > a {
+  font-family: var(--ngt-font-display);
+}
+
+/* Editor / preview */
+.elementor-editor-active .bi-sticky-cta,
+.elementor-editor-active .bi-whatsapp-fab,
+.vc_editor .bi-sticky-cta,
+.vc_editor .bi-whatsapp-fab {
+  display: none !important;
+}
+
+/* Canvas template */
+.bi-elementor-canvas .ngt-nav,
+.bi-elementor-canvas .ngt-footer,
+.bi-elementor-canvas .bi-sticky-cta,
+.bi-elementor-canvas .bi-whatsapp-fab {
+  display: none !important;
+}
+
+.bi-generic-page.entry-content > *:first-child {
+  margin-top: 0;
+}
+
+.bi-full-width-content {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bi-page-builder-active .ngc-form,
+.bi-page-builder-active .bi-dashboard-rest,
+.bi-page-builder-active .ngc-tutor-calendar {
+  max-width: 100%;
+  overflow: visible;
+}

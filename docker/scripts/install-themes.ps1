@@ -37,8 +37,8 @@ if ($LASTEXITCODE -ne 0) { throw 'docker compose up failed' }
 Write-Host 'Waiting for WordPress (10s)...'
 Start-Sleep -Seconds 10
 
-Write-Host 'Activating nextgentutors-beyondinfinity theme...'
-docker compose --profile setup run --rm --entrypoint wp wpcli theme activate nextgentutors-beyondinfinity --path=/var/www/html --allow-root
+Write-Host 'Activating nextgentutors-tutorfabulous theme...'
+docker compose --profile setup run --rm --entrypoint wp wpcli theme activate nextgentutors-tutorfabulous --path=/var/www/html --allow-root
 if ($LASTEXITCODE -ne 0) { throw 'Theme activation failed' }
 
-Write-Host 'Done. Active theme: NextGenTutors-BeyondInfinity (child of Hello Elementor).'
+Write-Host 'Done. Active theme: NextgenTutors-TutorFabulous (child of Hello Elementor).'

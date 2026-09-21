@@ -116,7 +116,7 @@ $become = function_exists( 'bi_brand_content' ) ? ( bi_brand_content()['become']
       bi_trust_chip( $payout_message, '', [ 'icon' => 'check' ] );
       ?>
     </div>
-    <?php bi_shortcode_block( '[ngc_become_tutor_form]', __( 'Tutor Application', 'beyondinfinity' ) ); ?>
+    <?php bi_shortcode_block( '[ngc_become_tutor_form]', __( 'Tutor Application', 'beyondinfinity' ), '', __( 'Apply with your subjects and experience. Vetting starts after you submit — keep answers concise and accurate.', 'beyondinfinity' ) ); ?>
     <?php bi_safety_notice( 'tutor' ); ?>
   </div>
 </section>

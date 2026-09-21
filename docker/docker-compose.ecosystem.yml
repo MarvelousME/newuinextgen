@@ -1,0 +1,122 @@
+# Docker overlay — ecosystem-platform control plane + Odoo + data plane
+# Usage:
+#   cd docker
+#   docker compose -f docker-compose.yml -f docker-compose.ecosystem.yml up -d
+
+services:
+  ecosystem-postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${ECOSYSTEM_PG_USER:-ecosystem}
+      POSTGRES_PASSWORD: ${ECOSYSTEM_PG_PASSWORD:-ecosystem}
+      POSTGRES_DB: ${ECOSYSTEM_PG_DB:-ecosystem_platform}
+    volumes:
+      - ecosystem_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ecosystem']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - ecosystem_internal
+
+  ecosystem-redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    networks:
+      - ecosystem_internal
+
+  ecosystem-rabbitmq:
+    image: rabbitmq:3-management-alpine
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${ECOSYSTEM_RABBIT_USER:-ecosystem}
+      RABBITMQ_DEFAULT_PASS: ${ECOSYSTEM_RABBIT_PASSWORD:-ecosystem}
+    ports:
+      - '${ECOSYSTEM_BIND:-127.0.0.1}:${ECOSYSTEM_RABBIT_PORT:-15672}:15672'
+    networks:
+      - ecosystem_internal
+
+  odoo:
+    image: odoo:17.0
+    restart: unless-stopped
+    depends_on:
+      odoo-db:
+        condition: service_healthy
+    environment:
+      HOST: odoo-db
+      USER: ${ODOO_DB_USER:-odoo}
+      PASSWORD: ${ODOO_DB_PASSWORD:-odoo}
+    # Master password comes from docker/.env — never default to admin in git.
+    command: ['odoo', '--admin_passwd=${ODOO_MASTER_PASSWORD}']
+    ports:
+      - '${ECOSYSTEM_BIND:-127.0.0.1}:${ODOO_PORT:-8069}:8069'
+    volumes:
+      - odoo_data:/var/lib/odoo
+      - ../../ecosystem-platform/platforms/odoo/addons:/mnt/extra-addons
+    networks:
+      - ecosystem_internal
+
+  odoo-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${ODOO_DB_USER:-odoo}
+      POSTGRES_PASSWORD: ${ODOO_DB_PASSWORD:-odoo}
+      POSTGRES_DB: postgres
+    volumes:
+      - odoo_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U odoo']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - ecosystem_internal
+
+  ecosystem-api:
+    build:
+      context: ../../ecosystem-platform
+      dockerfile: infrastructure/docker/platform-api.Dockerfile
+    restart: unless-stopped
+    ports:
+      - '${ECOSYSTEM_BIND:-127.0.0.1}:${ECOSYSTEM_API_PORT:-8790}:8790'
+    environment:
+      ECOSYSTEM_API_PORT: '8790'
+      ECOSYSTEM_DATA_DIR: /data
+      ECOSYSTEM_API_TOKEN: ${ECOSYSTEM_API_TOKEN:-}
+      ECOSYSTEM_SUPER_ADMIN_IDS: platform-super-admin
+      ODOO_URL: http://odoo:8069
+      ODOO_USERNAME: ${ODOO_ADMIN_USER:-admin}
+      ODOO_PASSWORD: ${ODOO_ADMIN_PASSWORD}
+      ODOO_MASTER_PASSWORD: ${ODOO_MASTER_PASSWORD}
+      ECOSYSTEM_RABBITMQ_URL: amqp://${ECOSYSTEM_RABBIT_USER:-ecosystem}:${ECOSYSTEM_RABBIT_PASSWORD:-ecosystem}@ecosystem-rabbitmq:5672
+    volumes:
+      - ecosystem_api_data:/data
+      # Live-reload Control Center UI + tokens from host (no image rebuild for CSS/JS edits)
+      - ../../ecosystem-platform/apps/control-center:/app/apps/control-center:ro
+      - ../../ecosystem-platform/packages/nextgen-ui/tokens.css:/app/packages/nextgen-ui/tokens.css:ro
+    depends_on:
+      - odoo
+      - ecosystem-rabbitmq
+    networks:
+      - ecosystem_internal
+      - default
+
+  wordpress:
+    environment:
+      ECOSYSTEM_PLATFORM_API_URL: http://ecosystem-api:8790
+      ECOSYSTEM_API_TOKEN: ${ECOSYSTEM_API_TOKEN:-}
+    volumes:
+      - ../../ecosystem-platform/bridges/wordpress/nextgentutors-ecosystem-bridge:/var/www/html/wp-content/plugins/nextgentutors-ecosystem-bridge:ro
+
+volumes:
+  ecosystem_pg_data:
+  ecosystem_api_data:
+  odoo_data:
+  odoo_pg_data:
+
+networks:
+  ecosystem_internal:
+    internal: false

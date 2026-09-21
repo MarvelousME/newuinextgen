@@ -1,0 +1,60 @@
+{
+  "version": "2.0",
+  "name": "NGT — Tutor Self-Registration",
+  "description": "Fires when a new user registers via the Tutor Plugin. Creates FluentCRM contact as tutor-applicant and notifies admin.",
+  "status": "active",
+  "type": "user",
+  "triggers": [
+    {
+      "integration": "tutor",
+      "trigger": "tutor_after_new_tutor_signup",
+      "parameters": {}
+    }
+  ],
+  "actions": [
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_create_or_update_contact",
+      "parameters": {
+        "email":      "{{trigger:user:email}}",
+        "first_name": "{{trigger:user:first_name}}",
+        "last_name":  "{{trigger:user:last_name}}",
+        "status":     "subscribed"
+      }
+    },
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_add_tag_to_contact",
+      "parameters": {
+        "email":  "{{trigger:user:email}}",
+        "tag_id": "REPLACE_WITH_TUTOR_APPLICANT_TAG_ID"
+      }
+    },
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_add_contact_to_list",
+      "parameters": {
+        "email":   "{{trigger:user:email}}",
+        "list_id": "REPLACE_WITH_TUTOR_APPLICANTS_LIST_ID"
+      }
+    },
+    {
+      "integration": "wordpress",
+      "action": "update_user_meta",
+      "parameters": {
+        "user_id":    "{{trigger:user:id}}",
+        "meta_key":   "ngt_tutor_status",
+        "meta_value": "pending"
+      }
+    },
+    {
+      "integration": "wordpress",
+      "action": "send_email",
+      "parameters": {
+        "to":      "REPLACE_WITH_ADMIN_EMAIL",
+        "subject": "[NGT] New Tutor Application — {{trigger:user:display_name}}",
+        "body":    "A new tutor has registered and is pending review.\n\nName: {{trigger:user:display_name}}\nEmail: {{trigger:user:email}}\nUser ID: {{trigger:user:id}}\n\nLogin to WP Admin > Tutor LMS > Tutors to review and approve."
+      }
+    }
+  ]
+}

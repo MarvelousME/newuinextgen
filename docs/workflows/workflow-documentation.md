@@ -9,7 +9,7 @@ powershell -File scripts/run-flow-audit.ps1
 ```
 
 - Manifest: `docs/workflows/flow-manifest.json`
-- Gap report: `docs/workflows/FLOW-GAP-REPORT.md`
+- Gap report: `docs/STALE-DOCS/FLOW-GAP-REPORT.md`
 
 Playwright E2E specs use **blueprint `WF-NN` IDs** in `e2e/workflows/blueprint-wf*.spec.ts`.
 

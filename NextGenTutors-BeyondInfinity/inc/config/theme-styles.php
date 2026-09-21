@@ -121,16 +121,22 @@ function bi_config_body_classes( $classes ) {
 }
 
 /**
- * Legacy home-only white nav tokens (disabled when marketing header chrome is active).
+ * Transparent nav over hero — kinetic marketing pages (home + inner), not dashboards.
+ * Disabled when marketing header chrome already owns the transparent nav look.
  */
 function bi_nav_on_hero() {
     if ( bi_uses_marketing_header_chrome() ) {
         return false;
     }
+    if ( 'transparent' !== bi_get_header_style() ) {
+        return false;
+    }
+    if ( function_exists( 'bi_uses_kinetic_ui' ) && bi_uses_kinetic_ui() ) {
+        return true;
+    }
     return is_front_page()
         && function_exists( 'bi_use_kinetic_home' )
-        && bi_use_kinetic_home()
-        && 'transparent' === bi_get_header_style();
+        && bi_use_kinetic_home();
 }
 
 /**

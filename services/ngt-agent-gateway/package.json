@@ -11,7 +11,7 @@
     "health": "node src/health-check.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "dependencies": {
     "@a2a-js/sdk": "^1.0.0"

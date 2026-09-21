@@ -3,6 +3,7 @@
  * Delegates duplicate domain work to Companion when present.
  *
  * Prevents dual payout crons, REST namespace collisions on ngt/v1, and duplicate health crons.
+ * TD-RAD-004: quiet-domain skips matching/finance CPT + matching REST when NGC_Plugin is active.
  *
  * @package NextGenAutomationHub
  */
@@ -13,10 +14,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Companion delegation + structured logging for Automation Hub.
+ *
+ * TD-RAD-004: When Companion is active, Hub runs quiet-domain / delegate-only —
+ * matching + finance CPT/REST stay off; Hub remains installable for RTM/workflows.
  */
 final class NGT_Hub_Companion_Delegate {
 
 	private const LOG_SOURCE = 'automation_hub';
+
+	/** Finance CPTs Companion owns when present. */
+	private const FINANCE_POST_TYPES = [
+		'ngt_payout',
+	];
 
 	/** @var bool|null */
 	private static $companion_active = null;
@@ -34,6 +43,51 @@ final class NGT_Hub_Companion_Delegate {
 				|| class_exists( 'NGC_Payout_Scheduler', false );
 		}
 		return (bool) self::$companion_active;
+	}
+
+	/**
+	 * Reset cached detection (tests / late Companion load).
+	 */
+	public static function reset_detection_cache(): void {
+		self::$companion_active = null;
+		self::$synced           = false;
+	}
+
+	/**
+	 * Quiet domain = Companion is authority; Hub must not register matching/finance.
+	 */
+	public static function is_quiet_domain(): bool {
+		return self::companion_active();
+	}
+
+	/**
+	 * Alias: Hub installable but domain registration deferred.
+	 */
+	public static function is_delegate_only(): bool {
+		return self::is_quiet_domain();
+	}
+
+	/**
+	 * Whether Hub may register matching hooks / match REST.
+	 */
+	public static function should_register_matching(): bool {
+		return ! self::is_quiet_domain();
+	}
+
+	/**
+	 * Whether Hub may register finance CPT / payout hooks.
+	 */
+	public static function should_register_finance(): bool {
+		return ! self::is_quiet_domain();
+	}
+
+	/**
+	 * Finance CPT slugs skipped under quiet domain.
+	 *
+	 * @return array<int, string>
+	 */
+	public static function finance_post_types(): array {
+		return self::FINANCE_POST_TYPES;
 	}
 
 	/**
@@ -65,20 +119,26 @@ final class NGT_Hub_Companion_Delegate {
 			return;
 		}
 
-		$actions = [];
+		$actions = [
+			'quiet_domain'          => true,
+			'matching_registration' => 'skipped',
+			'finance_registration'  => 'skipped',
+			'payout_cron_cleared'   => false,
+			'health_cron_cleared'   => false,
+		];
 
 		if ( class_exists( 'NGT_Hub_Payouts', false ) ) {
 			NGT_Hub_Payouts::unschedule_cron();
-			$actions[] = 'payout_cron_cleared';
+			$actions['payout_cron_cleared'] = true;
 		}
 		if ( class_exists( 'NGT_Hub_Workflows', false ) ) {
 			NGT_Hub_Workflows::unschedule_health_cron();
-			$actions[] = 'health_cron_cleared';
+			$actions['health_cron_cleared'] = true;
 		}
 
 		self::log(
 			'info',
-			'Delegated domain crons and REST namespace to Companion.',
+			'Delegate-only mode: quiet domain (matching/finance deferred to Companion).',
 			[
 				'rest_namespace' => self::rest_namespace(),
 				'actions'        => $actions,
@@ -91,13 +151,17 @@ final class NGT_Hub_Companion_Delegate {
 		 * @param array<string, mixed> $context Delegation context.
 		 */
 		do_action( 'ngt_hub_companion_delegated', [
-			'rest_namespace' => self::rest_namespace(),
-			'actions'        => $actions,
+			'rest_namespace'           => self::rest_namespace(),
+			'quiet_domain'             => true,
+			'should_register_matching' => self::should_register_matching(),
+			'should_register_finance'  => self::should_register_finance(),
+			'actions'                  => $actions,
 		] );
 	}
 
 	/**
-	 * Skip Hub REST registration on ngt/v1 when Companion is active (routes move to ngt-hub/v1).
+	 * Hub may still register non-domain REST under ngt-hub/v1 when Companion is active.
+	 * Matching/finance routes are gated separately via should_register_matching().
 	 */
 	public static function should_register_rest(): bool {
 		return true;

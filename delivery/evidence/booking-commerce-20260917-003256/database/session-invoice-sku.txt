@@ -1,0 +1,19 @@
+-- Booking commerce evidence 2026-09-17T00:32:56Z (Companion 1.9.22)
+-- Docker: newuinextgen-db-1 / wordpress
+
+-- === SESSIONS ===
+id	correlation_id	status	payment_status	booking_id	order_id	parent_user_id	student_user_id	tutor_user_id	product_id	masterstudy_course_id	masterstudy_lesson_id	meeting_provider	meeting_id
+26	NGT-SES-20260917-CAF07090	completed	paid	31	2159	24	25	26	2104	2122	2160	jitsi	NextGenTutors-Lesson-7175d258-68c2-4f79-80c0-0022c24f6e5d
+27	NGT-SES-20260917-8A18806B	failed	failed	32	2161	24	25	26	2104	0	0		
+28	NGT-SES-20260917-695DCFBC	refunded	paid	33	2162	24	25	26	2104	2122	2163	jitsi	NextGenTutors-Lesson-c9a80654-166d-4daa-a9a1-64c84e05cc77
+
+-- === BOOKING (policy-created NGC_Bookings::create) ===
+id	uuid	student_user_id	tutor_user_id	status	amount	currency	notes
+31	7175d258-68c2-4f79-80c0-0022c24f6e5d	25	26	completed	320.00	ZAR	e2e-session-integration
+
+-- === INVOICE ===
+id	invoice_number	order_id	user_id	amount	status	currency
+15	NGC-INV-2026-01015	2159	24	320.00	paid	ZAR
+
+-- Product: 2104 NGT-ONLINE-1HR 320.00 ZAR
+-- Settlement path: WooCommerce payment_complete() (same hook as PayFast ITN). Hosted PayFast ITN not executed.

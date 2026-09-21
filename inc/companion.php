@@ -1,10 +1,8 @@
 <?php
 /**
- * Companion interop — NGC_VERSION bridge and REST fallback detection.
+ * Companion interop — detect the domain plugin without claiming it is active.
  *
- * When NextGenTutors-Companion is not installed, NGT_VERSION from the active
- * NextGen Tutors theme/platform is mirrored to NGC_VERSION so dashboards
- * and detection logic share one contract.
+ * NGC_VERSION is owned by NextGenTutors-Companion. The theme must not define it.
  *
  * @package BeyondInfinity
  */
@@ -13,50 +11,25 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-add_action( 'after_setup_theme', 'bi_bridge_ngc_version', 0 );
-/**
- * Mirror NGT_VERSION → NGC_VERSION until NextGenTutors-Companion defines it.
- */
-function bi_bridge_ngc_version() {
-    if ( defined( 'NGC_VERSION' ) ) {
-        return;
-    }
-    if ( defined( 'NGT_VERSION' ) ) {
-        define( 'NGC_VERSION', NGT_VERSION );
-    }
-}
-
 /**
  * Resolved platform API version string.
  *
  * @return string
  */
 function bi_ngc_version() {
-    if ( defined( 'NGC_VERSION' ) ) {
+    if ( class_exists( 'NGC_Plugin', false ) && defined( 'NGC_VERSION' ) ) {
         return NGC_VERSION;
-    }
-    if ( defined( 'NGT_VERSION' ) ) {
-        return NGT_VERSION;
     }
     return BI_VERSION;
 }
 
 /**
- * True when the companion plugin or bridged NGT platform is available.
+ * True when NextGenTutors-Companion is actually booted.
  *
  * @return bool
  */
 function bi_companion_active() {
-    if ( class_exists( 'NGC_Plugin', false ) ) {
-        return true;
-    }
-    if ( defined( 'NGC_VERSION' ) && defined( 'NGT_VERSION' ) ) {
-        return true;
-    }
-    if ( defined( 'NGC_VERSION' ) && function_exists( 'ngt_dashboard_student_payload' ) ) {
-        return true;
-    }
-    return false;
+    return class_exists( 'NGC_Plugin', false );
 }
 
 /**
@@ -67,12 +40,6 @@ function bi_companion_active() {
 function bi_dashboard_rest_available() {
     if ( ! is_user_logged_in() ) {
         return false;
-    }
-    if ( function_exists( 'ngt_rest_dashboard_student' ) ) {
-        return true;
-    }
-    if ( defined( 'NGT_VERSION' ) ) {
-        return true;
     }
     if ( bi_companion_active() ) {
         return true;

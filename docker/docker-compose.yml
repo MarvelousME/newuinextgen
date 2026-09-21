@@ -12,12 +12,12 @@ services:
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
       MYSQL_USER: ${MYSQL_USER:-wordpress}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpass}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 5s
       timeout: 5s
       retries: 15
@@ -33,9 +33,12 @@ services:
     environment:
       NGT_GATEWAY_BIND: "0.0.0.0"
       NGT_GATEWAY_PORT: "8787"
-      NGT_GATEWAY_SHARED_SECRET: ${NGT_GATEWAY_SHARED_SECRET:-staging-local-secret}
+      NGT_GATEWAY_SHARED_SECRET: ${NGT_GATEWAY_SHARED_SECRET}
       NGT_GATEWAY_ALLOW_LOCAL: "1"
       NGT_GATEWAY_KILL_SWITCH: ${NGT_GATEWAY_KILL_SWITCH:-0}
+      NGT_GATEWAY_DATA_DIR: /data/gateway
+    volumes:
+      - ../data/gateway:/data/gateway
     healthcheck:
       test:
         [
@@ -50,17 +53,17 @@ services:
       start_period: 10s
 
   wordpress:
-    image: wordpress:6.7-php8.2-apache
+    image: wordpress:7.1-php8.2-apache
     restart: unless-stopped
     ports:
       - "${WP_PORT:-8890}:80"
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
       NGT_AGENT_GATEWAY_URL: ${NGT_AGENT_GATEWAY_URL:-http://agent-gateway:8787}
-      NGT_GATEWAY_SHARED_SECRET: ${NGT_GATEWAY_SHARED_SECRET:-staging-local-secret}
+      NGT_GATEWAY_SHARED_SECRET: ${NGT_GATEWAY_SHARED_SECRET}
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_DEBUG', true);
         define('WP_DEBUG_LOG', true);
@@ -73,17 +76,23 @@ services:
     volumes:
       - wp_data:/var/www/html
       - ./hello-elementor:/var/www/html/wp-content/themes/hello-elementor
-      # Theme-only package + explicit dir binds (Windows junctions are not followed in Linux containers).
+
+      # Traditional default edit root: NextgenTutors-TutorFabulous/ (text domain beyondinfinity).
+      # Legacy BeyondInfinity package — alias slug only.
       - ../NextGenTutors-BeyondInfinity:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity
-      - ../assets:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/assets
-      - ../inc:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/inc
-      - ../templates:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/templates
-      - ../template-parts:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/template-parts
-      - ../page-templates:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/page-templates
-      - ../prototypes:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/prototypes
-      - ../content:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/content
-      - ../automations:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/automations
-      - ../tests:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/tests
+      # Primary stylesheet mount (activate nextgentutors-tutorfabulous).
+      - ../NextgenTutors-TutorFabulous:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous
+      # Live overlays from monorepo root — WIN over package paths below (Linux cannot follow Windows junctions).
+      # Prefer complete TutorFabulous package; keep dual slug mounts. See THEME-TUTORFABULOUS.md.
+      - ../assets:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/assets
+      - ../inc:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/inc
+      - ../templates:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/templates
+      - ../template-parts:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/template-parts
+      - ../page-templates:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/page-templates
+      - ../prototypes:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/prototypes
+      - ../content:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/content
+      - ../automations:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/automations
+      - ../tests:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/tests
       - ../agntix/agntix-child:/var/www/html/wp-content/themes/agntix-child
       - ${COMPANION_PLUGIN_PATH:-../NextGenTutors-Companion}:/var/www/html/wp-content/plugins/NextGenTutors-Companion
       - ../NextGenTutors-AI-Integration:/var/www/html/wp-content/plugins/NextGenTutors-AI-Integration
@@ -92,6 +101,9 @@ services:
       - ../NextGenTutors-Mission-Control:/var/www/html/wp-content/plugins/NextGenTutors-Mission-Control
       - ../NextGenTutors-BeyondMeasure:/var/www/html/wp-content/plugins/NextGenTutors-BeyondMeasure
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer
+      - ../nextgen-subjects-widget:/var/www/html/wp-content/plugins/nextgen-subjects-widget
+      - ../nextgen-3d-filmstrip:/var/www/html/wp-content/plugins/nextgen-3d-filmstrip
+      - ../nextgen-3d-scroll-manager:/var/www/html/wp-content/plugins/nextgen-3d-scroll-manager
       - ../content/_extracted/nextgen-command-center-v1.0:/var/www/html/wp-content/plugins/nextgen-command-center
       - ../content/_extracted/nextgen-completion-suite:/var/www/html/wp-content/plugins/nextgen-completion-suite
       - ../webpages-content:/var/www/html/wp-content/ngt-html-source
@@ -120,7 +132,7 @@ services:
       WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL:-admin@nextgentutors.local}
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_DEBUG', true);
@@ -128,16 +140,23 @@ services:
     volumes:
       - wp_data:/var/www/html
       - ./hello-elementor:/var/www/html/wp-content/themes/hello-elementor
+
+      # Traditional default edit root: NextgenTutors-TutorFabulous/ (text domain beyondinfinity).
+      # Legacy BeyondInfinity package — alias slug only.
       - ../NextGenTutors-BeyondInfinity:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity
-      - ../assets:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/assets
-      - ../inc:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/inc
-      - ../templates:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/templates
-      - ../template-parts:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/template-parts
-      - ../page-templates:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/page-templates
-      - ../prototypes:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/prototypes
-      - ../content:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/content
-      - ../automations:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/automations
-      - ../tests:/var/www/html/wp-content/themes/nextgentutors-beyondinfinity/tests
+      # Primary stylesheet mount (activate nextgentutors-tutorfabulous).
+      - ../NextgenTutors-TutorFabulous:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous
+      # Live overlays from monorepo root — WIN over package paths below (Linux cannot follow Windows junctions).
+      # Prefer complete TutorFabulous package; keep dual slug mounts. See THEME-TUTORFABULOUS.md.
+      - ../assets:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/assets
+      - ../inc:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/inc
+      - ../templates:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/templates
+      - ../template-parts:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/template-parts
+      - ../page-templates:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/page-templates
+      - ../prototypes:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/prototypes
+      - ../content:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/content
+      - ../automations:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/automations
+      - ../tests:/var/www/html/wp-content/themes/nextgentutors-tutorfabulous/tests
       - ../agntix/agntix-child:/var/www/html/wp-content/themes/agntix-child
       - ${COMPANION_PLUGIN_PATH:-../NextGenTutors-Companion}:/var/www/html/wp-content/plugins/NextGenTutors-Companion
       - ../NextGenTutors-AI-Integration:/var/www/html/wp-content/plugins/NextGenTutors-AI-Integration
@@ -146,6 +165,9 @@ services:
       - ../NextGenTutors-Mission-Control:/var/www/html/wp-content/plugins/NextGenTutors-Mission-Control
       - ../NextGenTutors-BeyondMeasure:/var/www/html/wp-content/plugins/NextGenTutors-BeyondMeasure
       - ../NextGenTutors-Html-Importer:/var/www/html/wp-content/plugins/NextGenTutors-Html-Importer
+      - ../nextgen-subjects-widget:/var/www/html/wp-content/plugins/nextgen-subjects-widget
+      - ../nextgen-3d-filmstrip:/var/www/html/wp-content/plugins/nextgen-3d-filmstrip
+      - ../nextgen-3d-scroll-manager:/var/www/html/wp-content/plugins/nextgen-3d-scroll-manager
       - ../content/_extracted/nextgen-command-center-v1.0:/var/www/html/wp-content/plugins/nextgen-command-center
       - ../content/_extracted/nextgen-completion-suite:/var/www/html/wp-content/plugins/nextgen-completion-suite
       - ../webpages-content:/var/www/html/wp-content/ngt-html-source
@@ -178,7 +200,7 @@ services:
     environment:
       PMA_HOST: db
       PMA_USER: ${MYSQL_USER:-wordpress}
-      PMA_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
       db:
         condition: service_healthy

@@ -1,0 +1,31 @@
+{
+  "name": "NGT — Active Client Retention Sequence",
+  "description": "Ongoing retention for paid clients. Monthly check-ins and exam season upsells.",
+  "status": "active",
+  "type": "sequence",
+  "trigger_type": "tag",
+  "trigger_id": "REPLACE_WITH_PAID_CLIENT_TAG_ID",
+  "emails": [
+    {
+      "sequence_order": 1,
+      "delay_unit": "days",
+      "delay_value": 30,
+      "subject": "How is your learner's progress going?",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>It's been about a month since your learner started with NextGen Tutors, and we'd love to hear how things are going.</p><p>A few questions worth asking your learner this week:</p><ul><li>Are they feeling more confident in the subject?</li><li>Have class test results improved?</li><li>Are they completing homework more independently?</li></ul><p>If you'd like to <strong>increase session frequency</strong> or add a second subject, reply to this email and we'll arrange it within 24 hours.</p><p>The NextGen Tutors Team</p>"
+    },
+    {
+      "sequence_order": 2,
+      "delay_unit": "days",
+      "delay_value": 75,
+      "subject": "Exam season is coming — is your learner ready?",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>With mid-year exams approaching, many of our families are upgrading to our <strong>Intensive Exam Prep Package</strong> — 3 sessions per week for 4 weeks, focusing entirely on past papers, key concepts, and exam technique.</p><p>Benefits of the Intensive Package:</p><ul><li>Structured 4-week programme aligned to CAPS exam guidelines</li><li>Past paper practise with tutor feedback</li><li>R300/hr rate (our best rate) with 12+ sessions commitment</li></ul><p><a href='https://nextgentutors.co.za/contact'>Contact us to upgrade →</a></p>"
+    },
+    {
+      "sequence_order": 3,
+      "delay_unit": "days",
+      "delay_value": 150,
+      "subject": "Matric finals are 90 days away — here's your action plan",
+      "body": "<h2>Hi {{contact.first_name}},</h2><p>If your learner is in Grade 12, now is the time to shift into exam preparation mode. Our Matric Champions programme has helped dozens of learners achieve distinctions in subjects they previously struggled with.</p><p>What our Matric Champions programme includes:</p><ul><li>Weekly sessions through to exams</li><li>Structured past paper revision calendar</li><li>WhatsApp support between sessions</li><li>Monthly progress reports</li></ul><p><a href='https://nextgentutors.co.za/find-a-tutor'>Speak to us about Matric prep →</a></p>"
+    }
+  ]
+}

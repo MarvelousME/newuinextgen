@@ -46,6 +46,7 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Meetings',
 		'NGC_Session_Orchestrator',
 		'NGC_Session_Classroom',
+		'NGC_Session_Checkout',
 		'NGC_Product_Provisioner',
 		'NGC_Payments',
 		'NGC_PayFast',
@@ -59,6 +60,7 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Platform_Tracking',
 		'NGC_Popia_Consent',
 		'NGC_Plugin_Manager_Bridge',
+		'NGC_Ecosystem_Platform_Bridge',
 		'NGC_Integrate_Runtime',
 		'NGC_Integrations_Bootstrap',
 		'NGC_Content_Pack_Bridge',
@@ -121,7 +123,6 @@ class NGC_Plugin_Bootstrap {
 		'NGC_Demo',
 		'NGC_Agentic_Admin',
 		'NGC_Education_Admin',
-		'NGC_Publish_Worker',
 	];
 
 	/**

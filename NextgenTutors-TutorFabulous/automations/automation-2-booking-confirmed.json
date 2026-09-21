@@ -1,0 +1,47 @@
+{
+  "version": "2.0",
+  "name": "NGT — Booking Confirmed → Invoice & Notification",
+  "description": "Fires when Amelia appointment status changes to Approved. Creates WooCommerce order, adds FluentCRM tag, notifies tutor.",
+  "status": "active",
+  "type": "user",
+  "triggers": [
+    {
+      "integration": "amelia",
+      "trigger": "amelia_after_appointment_status_changed",
+      "parameters": {
+        "status": "approved"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "integration": "woocommerce",
+      "action": "woocommerce_create_order",
+      "parameters": {
+        "product_id":      "REPLACE_WITH_TUTORING_SESSION_PRODUCT_ID",
+        "customer_email":  "{{trigger:amelia:customer_email}}",
+        "customer_name":   "{{trigger:amelia:customer_full_name}}",
+        "quantity":        1,
+        "order_status":    "pending",
+        "order_note":      "Session: {{trigger:amelia:service_name}} on {{trigger:amelia:appointment_start_date}} at {{trigger:amelia:appointment_start_time}}"
+      }
+    },
+    {
+      "integration": "fluentcrm",
+      "action": "fluentcrm_add_tag_to_contact",
+      "parameters": {
+        "email":  "{{trigger:amelia:customer_email}}",
+        "tag_id": "REPLACE_WITH_SESSION_BOOKED_TAG_ID"
+      }
+    },
+    {
+      "integration": "wordpress",
+      "action": "send_email",
+      "parameters": {
+        "to":      "{{trigger:amelia:employee_email}}",
+        "subject": "[NGT] New Session Booked — {{trigger:amelia:appointment_start_date}}",
+        "body":    "Hi {{trigger:amelia:employee_first_name}},\n\nA new session has been confirmed.\n\nClient: {{trigger:amelia:customer_full_name}}\nDate: {{trigger:amelia:appointment_start_date}}\nTime: {{trigger:amelia:appointment_start_time}}\nService: {{trigger:amelia:service_name}}\nFormat: {{trigger:amelia:custom_field_format}}\n\nPlease log in to Amelia to view full details.\n\nNextGen Tutors Admin"
+      }
+    }
+  ]
+}

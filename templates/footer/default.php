@@ -2,6 +2,9 @@
 /**
  * Default site footer.
  *
+ * Quick Links / Families / Legal columns render from WP menus
+ * (Appearance → Menus → locations footer-1, footer-2, footer-legal).
+ *
  * @package BeyondInfinity
  */
 
@@ -22,35 +25,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <div>
         <h4 class="ngt-footer__heading"><?php esc_html_e( 'Quick Links', 'beyondinfinity' ); ?></h4>
-        <ul class="ngt-footer__links">
-          <?php
-          $links = [
-            'Find a Tutor'   => '/find-a-tutor',
-            'Become a Tutor' => '/become-a-tutor',
-            'Pricing'        => '/pricing',
-            'Guarantee'      => '/guarantee',
-            'Blog'           => '/blog',
-            'About'          => '/about',
-            'Tutor Vetting'  => '/tutor-vetting',
-            'Safety Guide'   => '/safety-guide',
-            'Support'        => '/support',
-            'Contact'        => '/contact',
-          ];
-          foreach ( $links as $label => $url ) {
-            echo '<li><a href="' . esc_url( home_url( $url ) ) . '">' . esc_html( $label ) . '</a></li>';
-          }
-          ?>
-        </ul>
+        <?php
+        bi_render_footer_nav_menu(
+          'footer-1',
+          [
+            __( 'Find a Tutor', 'beyondinfinity' )   => '/find-a-tutor',
+            __( 'Become a Tutor', 'beyondinfinity' ) => '/become-a-tutor',
+            __( 'Pricing', 'beyondinfinity' )        => '/pricing',
+            __( 'Guarantee', 'beyondinfinity' )      => '/guarantee',
+            __( 'Blog', 'beyondinfinity' )           => '/blog',
+            __( 'About', 'beyondinfinity' )          => '/about',
+            __( 'Tutor Vetting', 'beyondinfinity' )  => '/tutor-vetting',
+            __( 'Safety Guide', 'beyondinfinity' )   => '/safety-guide',
+            __( 'Support', 'beyondinfinity' )        => '/support',
+            __( 'Contact', 'beyondinfinity' )        => '/contact',
+          ]
+        );
+        ?>
       </div>
 
       <div>
         <h4 class="ngt-footer__heading"><?php esc_html_e( 'For Families & Tutors', 'beyondinfinity' ); ?></h4>
-        <ul class="ngt-footer__links">
-          <li><a href="<?php echo esc_url( home_url( '/register' ) ); ?>"><?php esc_html_e( 'Register', 'beyondinfinity' ); ?></a></li>
-          <li><a href="<?php echo esc_url( home_url( '/login' ) ); ?>"><?php esc_html_e( 'Login', 'beyondinfinity' ); ?></a></li>
-          <li><a href="<?php echo esc_url( home_url( '/find-a-tutor' ) ); ?>"><?php esc_html_e( 'Request a Tutor', 'beyondinfinity' ); ?></a></li>
-          <li><a href="<?php echo esc_url( home_url( '/become-a-tutor' ) ); ?>"><?php esc_html_e( 'Apply as Tutor', 'beyondinfinity' ); ?></a></li>
-        </ul>
+        <?php
+        bi_render_footer_nav_menu(
+          'footer-2',
+          [
+            __( 'Register', 'beyondinfinity' )       => '/register',
+            __( 'Login', 'beyondinfinity' )          => '/login',
+            __( 'Request a Tutor', 'beyondinfinity' ) => '/find-a-tutor',
+            __( 'Apply as Tutor', 'beyondinfinity' )  => '/become-a-tutor',
+          ]
+        );
+        ?>
       </div>
 
       <div>
@@ -75,9 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="ngt-footer__bottom">
       <p>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All rights reserved.', 'beyondinfinity' ); ?></p>
       <div class="bi-footer-legal">
-        <a href="<?php echo esc_url( home_url( '/privacy-policy' ) ); ?>"><?php esc_html_e( 'Privacy Policy', 'beyondinfinity' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/terms' ) ); ?>"><?php esc_html_e( 'Terms of Service', 'beyondinfinity' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/child-safety' ) ); ?>"><?php esc_html_e( 'Child Safety', 'beyondinfinity' ); ?></a>
+        <?php bi_render_footer_legal_menu(); ?>
       </div>
     </div>
   </div>

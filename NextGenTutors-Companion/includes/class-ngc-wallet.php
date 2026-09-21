@@ -85,8 +85,8 @@ class NGC_Wallet {
 			$balance -= $amount;
 		}
 
-		$inserted = $wpdb->insert(
-			$table,
+		$inserted = NGC_Database::insert(
+			'wallet_ledger',
 			[
 				'user_id'        => (int) $user_id,
 				'entry_type'     => sanitize_key( $type ),

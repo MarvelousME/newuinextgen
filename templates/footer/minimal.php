@@ -2,6 +2,8 @@
 /**
  * Minimal footer for dashboards + marketing when footer_style=minimal.
  *
+ * Legal links come from WP menu location `footer-legal`.
+ *
  * @package BeyondInfinity
  */
 
@@ -25,8 +27,16 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="ngt-footer__bottom">
       <p>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>.</p>
       <div class="bi-footer-legal">
-        <a href="<?php echo esc_url( home_url( '/support' ) ); ?>"><?php esc_html_e( 'Support', 'beyondinfinity' ); ?></a>
-        <a href="<?php echo esc_url( home_url( '/privacy-policy' ) ); ?>"><?php esc_html_e( 'Privacy', 'beyondinfinity' ); ?></a>
+        <?php
+        if ( function_exists( 'bi_render_footer_legal_menu' ) ) {
+          bi_render_footer_legal_menu();
+        } else {
+          ?>
+          <a href="<?php echo esc_url( home_url( '/support' ) ); ?>"><?php esc_html_e( 'Support', 'beyondinfinity' ); ?></a>
+          <a href="<?php echo esc_url( home_url( '/privacy-policy' ) ); ?>"><?php esc_html_e( 'Privacy', 'beyondinfinity' ); ?></a>
+          <?php
+        }
+        ?>
       </div>
     </div>
   </div>

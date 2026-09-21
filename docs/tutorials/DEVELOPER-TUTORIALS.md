@@ -2,7 +2,7 @@
 
 Hands-on tutorials for engineers extending the NextGen Tutors platform.
 
-**Prerequisites:** [DEVELOPER-GUIDE.md](../DEVELOPER-GUIDE.md), Docker @ http://localhost:8900  
+**Prerequisites:** [DEVELOPER-GUIDE.md](../DEVELOPER-GUIDE.md), Docker @ http://localhost:8890  
 **Last updated:** 2026-07-13
 
 ---
@@ -31,7 +31,7 @@ Hands-on tutorials for engineers extending the NextGen Tutors platform.
    php NextGenTutors-Companion/scripts/validate.php
    php NextGenTutors-Companion/scripts/verify-ui-library.php
    ```
-5. Log in: http://localhost:8900/wp-admin (`admin` / `NextGenAdmin!2026`)
+5. Log in: http://localhost:8890/wp-admin (`admin` / `NextGenAdmin!2026`)
 
 ### Expected result
 
@@ -162,7 +162,7 @@ wp ngc integrate_status
 
 ```bash
 php NextGenTutors-Companion/scripts/verify-ui-library.php
-curl http://localhost:8900/wp-json/ngc/v1/ui-library/verify
+curl http://localhost:8890/wp-json/ngc/v1/ui-library/verify
 ```
 
 ---
@@ -208,7 +208,7 @@ See [COMPLETION-SUITE.md](../content-packs/COMPLETION-SUITE.md).
 ### Test
 
 ```bash
-curl http://localhost:8900/wp-json/ngc/v1/partnerships
+curl http://localhost:8890/wp-json/ngc/v1/partnerships
 ```
 
 ---
@@ -228,7 +228,7 @@ curl http://localhost:8900/wp-json/ngc/v1/partnerships
    ```powershell
    powershell -File scripts/run-playwright.ps1
    ```
-4. Requires Docker @ :8900 with demo seed enabled
+4. Requires Docker @ :8890 with demo seed enabled
 
 ---
 

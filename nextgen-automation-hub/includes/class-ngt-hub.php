@@ -68,10 +68,16 @@ final class NGT_Hub {
 		NGT_Hub_Database::maybe_upgrade();
 		NGT_Hub_Data_Model::register_hooks();
 		NGT_Hub_Security::register_hooks();
-		NGT_Hub_Matching::register_hooks();
+
+		// TD-RAD-004: quiet domain — Companion owns matching + finance registration.
+		if ( NGT_Hub_Companion_Delegate::should_register_matching() ) {
+			NGT_Hub_Matching::register_hooks();
+		}
 		NGT_Hub_Notifications::register_hooks();
 		NGT_Hub_Gamification::register_hooks();
-		NGT_Hub_Payouts::register_hooks();
+		if ( NGT_Hub_Companion_Delegate::should_register_finance() ) {
+			NGT_Hub_Payouts::register_hooks();
+		}
 		NGT_Hub_Lessons::register_hooks();
 		NGT_Hub_Dashboard::register_hooks();
 		NGT_Hub_Calendar::register_hooks();

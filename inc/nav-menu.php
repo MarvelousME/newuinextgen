@@ -106,6 +106,70 @@ function bi_render_primary_nav_menu() {
 }
 
 /**
+ * Ensure footer theme locations have assigned WP menus.
+ */
+function bi_ensure_footer_nav_menus() {
+	$locations = get_theme_mod( 'nav_menu_locations', [] );
+	$need_sync = empty( $locations['footer-1'] ) || empty( $locations['footer-2'] ) || empty( $locations['footer-legal'] );
+	if ( $need_sync ) {
+		bi_sync_footer_menus( false );
+	}
+}
+
+/**
+ * Render a footer column from a WP menu location.
+ *
+ * @param string               $location   Theme location slug.
+ * @param array<string,string> $fallback   Label => path map used when menu empty.
+ * @param string               $menu_class UL class for the menu.
+ */
+function bi_render_footer_nav_menu( $location, $fallback = [], $menu_class = 'ngt-footer__links' ) {
+	bi_ensure_footer_nav_menus();
+
+	$locations = get_theme_mod( 'nav_menu_locations', [] );
+	$menu_id   = (int) ( $locations[ $location ] ?? 0 );
+	$items     = $menu_id ? wp_get_nav_menu_items( $menu_id ) : false;
+
+	if ( is_array( $items ) && count( $items ) > 0 ) {
+		wp_nav_menu(
+			[
+				'theme_location' => $location,
+				'container'      => false,
+				'menu_class'     => $menu_class,
+				'depth'          => 1,
+				'fallback_cb'    => false,
+			]
+		);
+		return;
+	}
+
+	if ( empty( $fallback ) ) {
+		return;
+	}
+
+	echo '<ul class="' . esc_attr( $menu_class ) . '">';
+	foreach ( $fallback as $label => $path ) {
+		echo '<li><a href="' . esc_url( home_url( $path ) ) . '">' . esc_html( $label ) . '</a></li>';
+	}
+	echo '</ul>';
+}
+
+/**
+ * Render legal strip from WP menu location `footer-legal`.
+ */
+function bi_render_footer_legal_menu() {
+	bi_render_footer_nav_menu(
+		'footer-legal',
+		[
+			__( 'Privacy Policy', 'beyondinfinity' )  => '/privacy-policy',
+			__( 'Terms of Service', 'beyondinfinity' ) => '/terms',
+			__( 'Child Safety', 'beyondinfinity' )     => '/child-safety',
+		],
+		'bi-footer-legal__menu'
+	);
+}
+
+/**
  * Fallback grouped nav when no WP menu assigned.
  */
 function bi_nav_fallback_menu() {
@@ -146,6 +210,32 @@ function bi_nav_menu_item_classes( $classes, $item ) {
 	return $classes;
 }
 add_filter( 'nav_menu_css_class', 'bi_nav_menu_item_classes', 10, 2 );
+
+/**
+ * Add theme link classes to WP menu anchors (primary + footer).
+ *
+ * @param array<string,string> $atts   Link attributes.
+ * @param WP_Post              $item   Menu item.
+ * @param stdClass             $args   wp_nav_menu args.
+ * @param int                  $depth  Depth.
+ * @return array<string,string>
+ */
+function bi_nav_menu_link_attributes( $atts, $item, $args, $depth = 0 ) {
+	$location = isset( $args->theme_location ) ? (string) $args->theme_location : '';
+	$class    = isset( $atts['class'] ) ? (string) $atts['class'] : '';
+
+	if ( 'primary' === $location ) {
+		$class .= ( $depth > 0 ) ? ' ngt-nav__sublink' : ' ngt-nav__link';
+	} elseif ( in_array( $location, [ 'footer-1', 'footer-2' ], true ) ) {
+		$class .= ' ngt-footer__link';
+	} elseif ( 'footer-legal' === $location ) {
+		$class .= ' bi-footer-legal__link';
+	}
+
+	$atts['class'] = trim( $class );
+	return $atts;
+}
+add_filter( 'nav_menu_link_attributes', 'bi_nav_menu_link_attributes', 10, 4 );
 
 /**
  * Menu groups for header navigation (slug lists).
@@ -307,15 +397,17 @@ function bi_sync_all_pages_menu( $force = false ) {
 }
 
 /**
- * Footer menu with legal and utility pages.
+ * Build or refresh a flat page menu and assign it to a theme location.
  *
- * @param bool $force Rebuild menu items.
+ * @param string   $menu_name Menu name in Appearance → Menus.
+ * @param string   $location  Theme location slug.
+ * @param string[] $slugs     Page slugs.
+ * @param bool     $force     Rebuild even when populated.
  * @return int Menu term ID or 0.
  */
-function bi_sync_footer_menu( $force = false ) {
-	$menu_name = 'NextGen Footer';
-	$menu      = wp_get_nav_menu_object( $menu_name );
-	$menu_id   = $menu ? (int) $menu->term_id : 0;
+function bi_sync_named_page_menu( $menu_name, $location, $slugs, $force = false ) {
+	$menu    = wp_get_nav_menu_object( $menu_name );
+	$menu_id = $menu ? (int) $menu->term_id : 0;
 	if ( ! $menu_id ) {
 		$menu_id = wp_create_nav_menu( $menu_name );
 	}
@@ -323,12 +415,10 @@ function bi_sync_footer_menu( $force = false ) {
 		return 0;
 	}
 
-	$slugs = [ 'privacy-policy', 'terms', 'child-safety', 'safety-guide', 'guarantee', 'contact', 'support' ];
 	$existing = wp_get_nav_menu_items( $menu_id );
-
 	if ( ! $force && is_array( $existing ) && count( $existing ) >= count( $slugs ) ) {
-		$locations = get_theme_mod( 'nav_menu_locations', [] );
-		$locations['footer-1'] = $menu_id;
+		$locations              = get_theme_mod( 'nav_menu_locations', [] );
+		$locations[ $location ] = $menu_id;
 		set_theme_mod( 'nav_menu_locations', $locations );
 		return $menu_id;
 	}
@@ -353,11 +443,51 @@ function bi_sync_footer_menu( $force = false ) {
 		);
 	}
 
-	$locations = get_theme_mod( 'nav_menu_locations', [] );
-	$locations['footer-1'] = $menu_id;
+	$locations              = get_theme_mod( 'nav_menu_locations', [] );
+	$locations[ $location ] = $menu_id;
 	set_theme_mod( 'nav_menu_locations', $locations );
 
 	return $menu_id;
+}
+
+/**
+ * Footer menus wired to WP theme locations (Appearance → Menus).
+ *
+ * @param bool $force Rebuild menu items.
+ * @return array<string, int>
+ */
+function bi_sync_footer_menus( $force = false ) {
+	return [
+		'footer-1'     => (int) bi_sync_named_page_menu(
+			'NextGen Footer Quick Links',
+			'footer-1',
+			[ 'find-a-tutor', 'become-a-tutor', 'pricing', 'guarantee', 'blog', 'about', 'tutor-vetting', 'safety-guide', 'support', 'contact' ],
+			$force
+		),
+		'footer-2'     => (int) bi_sync_named_page_menu(
+			'NextGen Footer Families',
+			'footer-2',
+			[ 'register', 'login', 'find-a-tutor', 'become-a-tutor' ],
+			$force
+		),
+		'footer-legal' => (int) bi_sync_named_page_menu(
+			'NextGen Footer Legal',
+			'footer-legal',
+			[ 'privacy-policy', 'terms', 'child-safety' ],
+			$force
+		),
+	];
+}
+
+/**
+ * Legacy alias — syncs all footer WP menus.
+ *
+ * @param bool $force Rebuild menu items.
+ * @return int Primary footer menu ID.
+ */
+function bi_sync_footer_menu( $force = false ) {
+	$ids = bi_sync_footer_menus( $force );
+	return (int) ( $ids['footer-1'] ?? 0 );
 }
 
 /**
@@ -367,11 +497,15 @@ function bi_sync_footer_menu( $force = false ) {
  * @return array<string, int>
  */
 function bi_sync_launch_nav( $force = false ) {
-	return [
-		'primary'   => (int) bi_sync_grouped_primary_menu( $force ),
-		'all_pages' => (int) bi_sync_all_pages_menu( $force ),
-		'footer'    => (int) bi_sync_footer_menu( $force ),
-	];
+	$footer = bi_sync_footer_menus( $force );
+	return array_merge(
+		[
+			'primary'   => (int) bi_sync_grouped_primary_menu( $force ),
+			'all_pages' => (int) bi_sync_all_pages_menu( $force ),
+			'footer'    => (int) ( $footer['footer-1'] ?? 0 ),
+		],
+		$footer
+	);
 }
 
 /**

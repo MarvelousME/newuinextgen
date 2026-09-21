@@ -1,41 +1,91 @@
 /**
- * Sticky UI — fixed header (z-40) + collapsible FAB dock (z-30).
+ * Sticky UI — fixed header (always visible) + FAB dock (z-index 1000).
  * WhatsApp persists outside the collapsible menu.
  * Panel open/close transforms stay in floating.css — this file only positions/z-indexes panels.
  */
 
 :root {
   --bi-z-content: 0;
-  --bi-z-fab: 30;
-  --bi-z-header: 40;
+  /* Floating action buttons — exact product requirement */
+  --bi-z-fab: 1000;
+  /* Header must sit above FAB + page chrome so it never disappears under content */
+  --bi-z-header: 1100;
   --bi-sticky-transition: 300ms;
 }
 
-/* ========== HEADER — always fixed (sole sticky chrome) ========== */
+/* ========== GLOBAL — prevent horizontal overlap / bleed ========== */
+html {
+  scroll-padding-top: var(--nav-h, 159px);
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+  max-width: 100vw;
+}
+
+/*
+ * CRITICAL: transform / perspective / filter / will-change:transform on html|body
+ * create a fixed containing block — sticky header + FAB then scroll away.
+ * Keep document root free of those properties so position:fixed tracks the viewport.
+ */
+html,
+body {
+  transform: none !important; /* Justified: protect viewport-fixed chrome */
+  perspective: none !important;
+  filter: none !important;
+  will-change: auto !important;
+}
+
+/* ========== HEADER — always fixed, never hidden ========== */
 .ngt-nav,
 .ngt-nav--transparent,
 .ngt-nav--minimal,
-.ngt-nav--default {
+.ngt-nav--default,
+header.ngt-nav,
+nav.ngt-nav {
   position: fixed !important; /* Justified: sticky chrome must outlive ancestor transforms */
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
   z-index: var(--bi-z-header) !important;
   width: 100%;
+  max-width: 100vw;
+  height: var(--nav-h, 159px);
+  min-height: var(--nav-h, 159px);
+  margin: 0 !important;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  translate: none !important;
+  pointer-events: auto !important;
+  box-shadow: none;
+  /* Soft scrim so transparent header remains readable over busy heroes */
+  background: rgba(7, 23, 47, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition:
     box-shadow var(--bi-sticky-transition) ease,
     background var(--bi-sticky-transition) ease,
-    height 0.3s ease;
+    color var(--bi-sticky-transition) ease;
 }
 
 .ngt-nav.ngt-nav--scrolled,
 .ngt-nav.is-solid,
 .ngt-nav.ngt-nav--solid {
+  background: var(--ngi-navy, #07172f) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow: 0 12px 32px rgba(7, 23, 47, 0.28);
 }
 
 body.bi-ngt-skin .ngt-nav {
   z-index: var(--bi-z-header) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 @media (max-width: 1099px) {
@@ -52,35 +102,57 @@ body.bi-ngt-skin .ngt-nav {
 body.admin-bar .ngt-nav,
 body.admin-bar .ngt-nav--transparent,
 body.admin-bar .ngt-nav--minimal {
-  top: 32px;
+  top: 32px !important;
 }
 
 @media (max-width: 782px) {
   body.admin-bar .ngt-nav,
   body.admin-bar .ngt-nav--transparent,
   body.admin-bar .ngt-nav--minimal {
-    top: 46px;
+    top: 46px !important;
   }
 }
 
-/* ========== FAB DOCK ========== */
+/* Progress bar under header, never above it */
+.ngi-progress {
+  z-index: calc(var(--bi-z-header) - 20) !important;
+}
+
+/* ========== FAB DOCK — sticky top-right, z-index 1000 ========== */
 .float-dock,
-body.has-float-dock .float-dock {
+body.has-float-dock .float-dock,
+#float-dock {
   position: fixed !important;
   right: max(1.25rem, env(safe-area-inset-right, 0px));
-  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
-  top: auto;
+  top: calc(var(--nav-h, 159px) + 0.75rem);
+  bottom: auto !important;
   left: auto;
-  transform: none;
-  z-index: var(--bi-z-fab) !important;
+  transform: none !important;
+  z-index: 1000 !important;
+  z-index: var(--bi-z-fab, 1000) !important;
   display: flex !important;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
   gap: 0.75rem;
   width: auto;
+  max-width: calc(100vw - 1.5rem);
   pointer-events: none;
   visibility: visible !important;
   opacity: 1 !important;
+}
+
+body.admin-bar .float-dock,
+body.admin-bar.has-float-dock .float-dock,
+body.admin-bar #float-dock {
+  top: calc(32px + var(--nav-h, 159px) + 0.75rem);
+}
+
+@media (max-width: 782px) {
+  body.admin-bar .float-dock,
+  body.admin-bar.has-float-dock .float-dock,
+  body.admin-bar #float-dock {
+    top: calc(46px + var(--nav-h, 159px) + 0.75rem);
+  }
 }
 
 .float-dock > * {
@@ -89,7 +161,7 @@ body.has-float-dock .float-dock {
 
 .float-dock__actions {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
   gap: 0.75rem;
 }
@@ -97,6 +169,8 @@ body.has-float-dock .float-dock {
 .fdock-btn {
   min-width: 48px;
   min-height: 48px;
+  position: relative;
+  z-index: 1000;
 }
 
 .fdock-btn--toggle {
@@ -110,7 +184,7 @@ body.has-float-dock .float-dock {
   box-shadow:
     0 4px 0 rgba(0, 0, 0, 0.2),
     0 12px 28px rgba(26, 85, 148, 0.4);
-  z-index: 1;
+  z-index: 1000;
 }
 
 .fdock-btn--toggle[aria-expanded="true"] {
@@ -138,7 +212,7 @@ body.has-float-dock .float-dock {
 
 .float-dock__item {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(-12px);
   pointer-events: none;
   transition-property: opacity, transform;
   transition-duration: var(--bi-sticky-transition);
@@ -155,22 +229,101 @@ body.has-float-dock .float-dock {
   pointer-events: auto;
 }
 
-/* Panels: position + z only — transforms/opacity owned by floating.css */
+/* Panels: anchored near top dock, above FAB */
 body.has-float-dock .chat-panel,
 body.has-float-dock .support-panel,
 body.has-float-dock .ngc-match-panel {
   right: calc(20px + 56px + 16px);
-  top: auto;
-  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
-  z-index: calc(var(--bi-z-fab) + 20);
+  top: calc(var(--nav-h, 159px) + 0.75rem);
+  bottom: auto;
+  z-index: calc(var(--bi-z-fab, 1000) + 20);
+  max-width: min(420px, calc(100vw - 1.5rem));
+  max-height: min(70vh, calc(100vh - var(--nav-h, 159px) - 2rem));
+}
+
+body.admin-bar.has-float-dock .chat-panel,
+body.admin-bar.has-float-dock .support-panel,
+body.admin-bar.has-float-dock .ngc-match-panel {
+  top: calc(32px + var(--nav-h, 159px) + 0.75rem);
+}
+
+/* Keep page content clear of the FAB rail (buttons only; tooltips are hover) */
+body.has-float-dock .site-main,
+body.has-float-dock .bi-theme-content,
+body.has-float-dock .entry-content {
+  padding-right: max(0px, env(safe-area-inset-right, 0px));
+}
+
+/* Reserve a slim right gutter so fixed FAB never covers interactive controls */
+body.has-float-dock {
+  --bi-fab-gutter: calc(56px + 1.25rem + env(safe-area-inset-right, 0px));
+}
+
+body.has-float-dock .ngi-hero .ngi-wrap,
+body.has-float-dock .ngi-section .ngi-wrap,
+body.has-float-dock .bi-narrative-3d__intro,
+body.has-float-dock .bi-narrative-3d__cta {
+  padding-right: max(1rem, var(--bi-fab-gutter));
+  box-sizing: border-box;
+}
+
+/* Nav chrome: never clip logo / theme toggle / burger on narrow viewports */
+.ngt-nav .ngt-container,
+.ngt-nav .ngt-nav__inner {
+  width: 100%;
+  max-width: 100%;
+  padding-inline: max(0.75rem, env(safe-area-inset-left, 0px)) max(0.75rem, env(safe-area-inset-right, 0px));
+  box-sizing: border-box;
+}
+
+.ngt-nav__cta--tools,
+.ngt-nav__toggle {
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --nav-h: 96px;
+  }
+
+  .ngt-nav,
+  .ngt-nav--transparent,
+  .ngt-nav--minimal,
+  .ngt-nav--default {
+    height: var(--nav-h, 96px);
+    min-height: var(--nav-h, 96px);
+  }
 }
 
 @media (max-width: 600px) {
+  :root {
+    --nav-h: 72px;
+  }
+
+  .ngt-nav,
+  .ngt-nav--transparent,
+  .ngt-nav--minimal,
+  .ngt-nav--default {
+    height: var(--nav-h, 72px);
+    min-height: var(--nav-h, 72px);
+  }
+
+  .ngt-nav__logo-text {
+    font-size: clamp(14px, 3.6vw, 18px);
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .float-dock,
-  body.has-float-dock .float-dock {
+  body.has-float-dock .float-dock,
+  #float-dock {
     right: max(0.75rem, env(safe-area-inset-right, 0px));
-    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    top: calc(var(--nav-h, 72px) + 0.5rem);
+    bottom: auto !important;
     gap: 0.625rem;
+    z-index: 1000 !important;
   }
 
   .fdock-btn {
@@ -185,13 +338,20 @@ body.has-float-dock .ngc-match-panel {
     min-height: 52px;
   }
 
+  body.has-float-dock {
+    --bi-fab-gutter: calc(48px + 1rem + env(safe-area-inset-right, 0px));
+  }
+
   body.has-float-dock .chat-panel,
   body.has-float-dock .support-panel,
   body.has-float-dock .ngc-match-panel {
     right: 0;
     left: 0;
-    bottom: 0;
-    top: auto;
+    top: calc(var(--nav-h, 72px) + 0.5rem);
+    bottom: auto;
+    width: 100%;
+    max-width: 100vw;
+    max-height: calc(100vh - var(--nav-h, 72px) - 1rem);
   }
 }
 

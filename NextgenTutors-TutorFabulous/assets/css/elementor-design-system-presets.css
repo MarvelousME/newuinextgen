@@ -1,0 +1,62 @@
+/**
+ * Premium style presets for .bi-el[data-bi-el-preset].
+ */
+
+.bi-el-preset--glass {
+  --bi-el-surface: var(--ngt-glass-surface);
+}
+
+.bi-el-preset--aurora .bi-el__hero,
+.bi-el-preset--aurora.bi-el {
+  background:
+    radial-gradient(120% 80% at 10% 0%, color-mix(in srgb, var(--ngt-secondary) 28%, transparent), transparent 55%),
+    radial-gradient(90% 70% at 90% 20%, color-mix(in srgb, #7c3aed 22%, transparent), transparent 50%),
+    var(--ngt-surface-2, #0b1524);
+  color: var(--ngt-text-invert, #fff);
+}
+
+.bi-el-preset--orbital {
+  border: 1px solid color-mix(in srgb, var(--ngt-secondary) 40%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ngt-secondary) 20%, transparent), var(--ngt-shadow-lg);
+}
+
+.bi-el-preset--neural {
+  background-image:
+    linear-gradient(180deg, color-mix(in srgb, var(--ngt-primary) 88%, #000), var(--ngt-primary-strong, #0B1524));
+  color: var(--ngt-text-invert, #fff);
+}
+
+.bi-el-preset--spatial {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.bi-el-preset--holographic {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.25), rgba(14, 165, 233, 0.2), rgba(124, 58, 237, 0.22));
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.bi-el-preset--editorial .bi-el__title {
+  font-size: var(--ngt-text-3xl);
+  max-width: 18ch;
+}
+
+.bi-el-preset--dark-technology {
+  background: #070b12;
+  color: #e6edf7;
+  border-color: #24344f;
+}
+
+.bi-el-preset--soft-education {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #e2e8f0;
+  box-shadow: var(--ngt-shadow-sm);
+}
+
+.bi-el-preset--premium-minimal {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding-inline: 0;
+}

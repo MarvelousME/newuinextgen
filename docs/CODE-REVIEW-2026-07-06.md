@@ -105,7 +105,7 @@
 
 ---
 
-## Recommended follow-up (see `docs/NEXT-STEPS.md`)
+## Recommended follow-up (see `docs/STALE-DOCS/NEXT-STEPS.md`)
 
 1. ~~Gate `ngt_get_tutors()` static fallback behind demo mode only~~ **Done**
 2. Playwright REST smoke for WF-08, WF-12, WF-14 — **Added** (`blueprint-wf08-wf12-wf14-ops.spec.ts`); re-run when Docker is up

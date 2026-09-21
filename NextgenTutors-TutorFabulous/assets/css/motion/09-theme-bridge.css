@@ -1,0 +1,146 @@
+/**
+ * BeyondInfinity bridge — Framer-style motion + NextGen brand tokens.
+ */
+
+:root {
+  --bi-motion-glow-1: var(--ngt-primary, #0066cc);
+  --bi-motion-glow-2: var(--ngt-secondary, #00c896);
+  --bi-motion-glow-3: var(--ngt-accent, #ffb703);
+}
+
+/* Brand-aligned hover glow */
+.hover-glow::after {
+  background: linear-gradient(135deg, var(--bi-motion-glow-1), var(--bi-motion-glow-2), var(--bi-motion-glow-3));
+}
+
+.pulse-glow {
+  animation-name: biPulseGlow;
+}
+@keyframes biPulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--bi-motion-glow-1) 40%, transparent); }
+  50% { box-shadow: 0 0 0 20px color-mix(in srgb, var(--bi-motion-glow-1) 0%, transparent); }
+}
+
+/* Theme cards — lift without scale (avoids conflict with legacy tilt JS) */
+.bi-motion-enabled .bi-theme-content .ngt-card,
+.bi-motion-enabled .bi-theme-content .ngt-pricing-card,
+.bi-motion-enabled .bi-theme-content .bi-stat-card,
+.bi-motion-enabled .bi-theme-content .bi-dir-card {
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+}
+.bi-motion-enabled .bi-theme-content .ngt-card:hover,
+.bi-motion-enabled .bi-theme-content .ngt-pricing-card:hover,
+.bi-motion-enabled .bi-theme-content .bi-stat-card:hover,
+.bi-motion-enabled .bi-theme-content .bi-dir-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Primary buttons */
+.bi-motion-enabled .ngt-btn--primary,
+.bi-motion-enabled .ngi-btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero parallax background */
+.bi-hero .ngt-hero__bg.bi-hero__bg--image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.bi-hero .ngt-hero__bg.bi-hero__bg--image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(9, 39, 70, 0.88), rgba(0, 102, 204, 0.72));
+}
+.bi-hero--guarantee .ngt-hero__bg.bi-hero__bg--image::after {
+  background: linear-gradient(135deg, rgba(9, 39, 70, 0.92), rgba(0, 80, 160, 0.78));
+}
+
+/* Scroll-triggered motion (JS adds .is-motion-in) */
+[data-bi-motion]:not(.is-motion-in) {
+  opacity: 0;
+}
+[data-bi-motion="fade-in"]:not(.is-motion-in) { animation: none; opacity: 0; }
+[data-bi-motion="fade-in"].is-motion-in { animation: fadeIn 0.6s var(--ease-smooth) forwards; }
+[data-bi-motion="slide-up"]:not(.is-motion-in) { transform: translateY(30px); }
+[data-bi-motion="slide-up"].is-motion-in { animation: slideUp 0.7s var(--ease-spring) forwards; }
+[data-bi-motion="slide-left"]:not(.is-motion-in) { transform: translateX(30px); }
+[data-bi-motion="slide-left"].is-motion-in { animation: slideLeft 0.7s var(--ease-spring) forwards; }
+[data-bi-motion="scale-in"]:not(.is-motion-in) { transform: scale(0.94); }
+[data-bi-motion="scale-in"].is-motion-in { animation: scaleIn 0.5s var(--ease-spring) forwards; }
+[data-bi-motion="zoom-blur-in"]:not(.is-motion-in) { transform: scale(0.92); filter: blur(8px); }
+[data-bi-motion="zoom-blur-in"].is-motion-in { animation: zoomBlurIn 0.8s var(--ease-smooth) forwards; }
+
+/* Framer frame on theme sections */
+.bi-theme-content .framer-frame {
+  padding: 0 24px;
+}
+.bi-theme-content .ngt-section .framer-grid {
+  align-items: stretch;
+}
+
+/* Parallax CTA band */
+.bi-parallax-cta {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  padding: 96px 24px;
+}
+.bi-parallax-cta__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.bi-parallax-cta__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(9, 39, 70, 0.85), rgba(0, 102, 204, 0.75));
+  z-index: 1;
+}
+.bi-parallax-cta__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.bi-parallax-cta h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* Theme image blocks */
+.bi-theme-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 260px;
+}
+.bi-theme-image-wrap {
+  overflow: hidden;
+  border-radius: var(--ngt-radius-lg, 12px);
+}
+.bi-theme-image-wrap.mask-reveal .bi-theme-image {
+  min-height: 280px;
+}
+
+/* Video tile background on kinetic home */
+.ngi-video-tile.bi-video-tile--image {
+  background-size: cover;
+  background-position: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-bi-motion] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}

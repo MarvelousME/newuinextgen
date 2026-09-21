@@ -1,0 +1,14 @@
+/* scroll-mask — luxury masked text reveals */
+.ngt-3d-preset--scroll-mask {
+	isolation: isolate;
+}
+
+.ngt-3d-preset--scroll-mask .ngt-3d-mask__text,
+.ngt-3d-preset--scroll-mask [data-ngt-mask] {
+	display: inline-block;
+	will-change: clip-path, mask-image, -webkit-mask-image, opacity;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-size: 100% 100%;
+	mask-size: 100% 100%;
+}

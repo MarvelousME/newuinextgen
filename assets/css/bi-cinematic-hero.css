@@ -157,10 +157,15 @@
 }
 
 .ngi-hero.ngi-hero--cinematic .ngi-wrap,
-.ngi-hero.ngi-hero--cinematic .ngi-kh-mesh,
-.ngi-hero.ngi-hero--cinematic .ngi-shape {
+.ngi-hero.ngi-hero--cinematic .ngi-kh-mesh {
   position: relative;
   z-index: var(--bi-z-hero-content, 2);
+}
+
+.ngi-hero.ngi-hero--cinematic .ngi-shape {
+  position: absolute;
+  z-index: var(--bi-z-hero-content, 2);
+  pointer-events: none;
 }
 
 .ngi-hero.ngi-hero--cinematic .ngi-kh-mesh {

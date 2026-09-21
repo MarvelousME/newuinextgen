@@ -1,0 +1,402 @@
+/**
+ * BeyondInfinity — 3D hover, stacked cards, carousel polish.
+ */
+
+/* Pricing grid (works with or without 3D stack) */
+.ngi-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.ngi-pricing:not(.ngi-pricing--3d) .bi-stack-3d {
+  display: none;
+}
+
+/* ---- Pointer tilt wrapper ---- */
+.bi-tilt-3d {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.bi-tilt-3d__inner {
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out, box-shadow 0.25s ease;
+  border-radius: inherit;
+  position: relative;
+}
+
+.bi-tilt-3d__inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--bi-glare-x, 50%) var(--bi-glare-y, 50%),
+    rgba(255, 255, 255, 0.35) 0%,
+    transparent 55%
+  );
+  transition: opacity 0.25s ease;
+}
+
+.bi-tilt-3d:hover .bi-tilt-3d__inner::after,
+.bi-tilt-3d:focus-within .bi-tilt-3d__inner::after {
+  opacity: 1;
+}
+
+.bi-3d-enabled .ngi-card.bi-tilt-3d:not(.bi-tilt-3d--decorative),
+.bi-3d-enabled [data-bi-tilt].ngi-card:not(.bi-tilt-3d--decorative) {
+  cursor: pointer;
+}
+
+.bi-tilt-3d--decorative {
+  cursor: default;
+}
+
+.bi-3d-enabled .ngi-card-grid .ngi-card {
+  transform-style: preserve-3d;
+}
+
+/* ---- 3D stacked cards (collapsed fan → vertical expand on hover) ---- */
+.bi-stack-3d {
+  position: relative;
+  min-height: 300px;
+  perspective: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 380px;
+  transition: min-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bi-stack-3d__card {
+  position: absolute;
+  width: min(320px, 92vw);
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  transform-origin: center center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, opacity 0.35s ease, top 0.45s cubic-bezier(0.16, 1, 0.3, 1), left 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+  cursor: pointer;
+  outline: none;
+}
+
+.bi-stack-3d__card:focus-visible {
+  box-shadow: 0 0 0 3px var(--ngt-primary), 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.bi-stack-3d__card.is-featured {
+  border-color: var(--ngt-primary);
+}
+
+.bi-stack-3d__meta {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ngt-primary);
+  margin-bottom: 8px;
+}
+
+/* Collapsed: overlapping stack */
+.bi-stack-3d__card:nth-child(1) {
+  z-index: 4;
+  transform: translate(-50%, -50%) rotate(-3deg) translateY(8px) scale(1);
+}
+.bi-stack-3d__card:nth-child(2) {
+  z-index: 3;
+  transform: translate(-50%, -50%) rotate(2deg) translateY(-6px) scale(0.97);
+}
+.bi-stack-3d__card:nth-child(3) {
+  z-index: 2;
+  transform: translate(-50%, -50%) rotate(-4deg) translateY(-18px) scale(0.94);
+}
+.bi-stack-3d__card:nth-child(4) {
+  z-index: 1;
+  transform: translate(-50%, -50%) rotate(5deg) translateY(-28px) scale(0.91);
+}
+.bi-stack-3d__card:nth-child(n+5) {
+  z-index: 0;
+  transform: translate(-50%, -50%) rotate(-6deg) translateY(-36px) scale(0.88);
+  opacity: 0.92;
+}
+
+/* Hover / focus / JS expand: vertical list, one under another */
+.bi-stack-3d.is-expanded,
+.bi-stack-3d:hover,
+.bi-stack-3d:focus-within {
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 14px;
+  perspective: none;
+  padding: 4px 0;
+}
+
+.bi-stack-3d.is-expanded .bi-stack-3d__card,
+.bi-stack-3d:hover .bi-stack-3d__card,
+.bi-stack-3d:focus-within .bi-stack-3d__card,
+.bi-stack-3d.is-expanded .bi-stack-3d__card:nth-child(n),
+.bi-stack-3d:hover .bi-stack-3d__card:nth-child(n),
+.bi-stack-3d:focus-within .bi-stack-3d__card:nth-child(n) {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  transform: none;
+  opacity: 1;
+  z-index: 1;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+}
+
+.bi-stack-3d__card.is-active {
+  z-index: 10;
+  box-shadow: 0 16px 36px rgba(18, 60, 124, 0.18);
+  outline: 2px solid rgba(40, 199, 247, 0.45);
+}
+
+/* Journey stack cards show body copy in light blue when rendered in navy panels */
+.bi-stack-3d__card .ngi-card p,
+.bi-stack-3d__card p {
+  color: var(--ngi-muted, #687386);
+}
+
+.bi-stack-3d__card[style*="background"] p,
+.ngi-cursor-preview p {
+  color: #9fd4ff;
+}
+
+@media (min-width: 960px) {
+  .ngi-pathways-split {
+    grid-template-columns: minmax(280px, 380px) 1fr;
+    gap: 56px;
+  }
+}
+
+/* Pricing 3D deck */
+.ngi-pricing--3d {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .ngi-pricing--3d {
+    grid-template-columns: minmax(300px, 380px) 1fr;
+    gap: 48px;
+  }
+
+  .ngi-pricing--3d .bi-stack-3d {
+    min-height: 400px;
+  }
+
+  .ngi-pricing--3d .ngi-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Allow carousel bleed without clipping side cards on kinetic home */
+.ngi-home {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* ---- Carousel enhancements (kinetic home) ---- */
+.ngi-section--tutors-3d {
+  overflow: visible;
+  padding-bottom: 2.25rem;
+  position: relative;
+  isolation: isolate;
+}
+
+.ngi-wrap--wide,
+.ngi-section--tutors-3d .ngi-wrap {
+  width: min(1600px, 98vw);
+  max-width: 100%;
+}
+
+.ngi-section--tutors-3d .ngi-section-head {
+  position: relative;
+  z-index: 5;
+  /* Keep heading clear of the 3D stage (cards use translateY(-50%) and scale up). */
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  padding-bottom: 0.75rem;
+}
+
+.bi-carousel-3d-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: min(1800px, 100vw);
+  margin-inline: auto;
+  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.5rem, 6vw, 5rem) 0;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.bi-carousel-3d--kinetic {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  overflow: visible;
+}
+
+.bi-carousel-3d__glow {
+  position: absolute;
+  inset: 10% 15%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 102, 204, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.bi-carousel-3d__glow.is-active {
+  opacity: 1;
+  animation: bi-carousel-glow 8s ease-in-out infinite;
+}
+
+@keyframes bi-carousel-glow {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
+  50% { transform: scale(1.08) rotate(180deg); opacity: 1; }
+}
+
+.ngi-section--tutors-3d .carousel-3d {
+  height: 470px;
+  width: 100%;
+  perspective: 2200px;
+  margin-top: clamp(0.75rem, 2vw, 1.5rem);
+  margin-bottom: 0;
+  margin-inline: auto;
+  overflow: visible;
+}
+
+.ngi-section--tutors-3d .tutor-card3d {
+  position: absolute;
+  left: 50%;
+  width: min(320px, 86vw);
+}
+
+.ngi-section--tutors-3d .carousel-3d__stage {
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  transition: transform 0.35s ease-out;
+  overflow: visible;
+}
+
+.ngi-section--tutors-3d .bi-carousel-nav--kinetic {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 0.35rem;
+  padding-top: 0;
+  padding-bottom: 0.5rem;
+  max-width: min(1600px, 98vw);
+  margin-inline: auto;
+}
+
+.bi-carousel-nav--kinetic .carousel-arrow {
+  background: var(--ngi-accent, var(--ngt-primary));
+}
+
+.bi-carousel-nav--kinetic .carousel-arrow:focus-visible {
+  outline: 3px solid var(--ngt-primary);
+  outline-offset: 3px;
+}
+
+/* Journey steps 3D lift */
+.bi-3d-enabled .ngi-steps .ngi-step {
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bi-3d-enabled .ngi-steps .ngi-step:hover {
+  transform: translateY(-6px) translateZ(12px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
+}
+
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bi-tilt-3d__inner,
+  .bi-stack-3d__card,
+  .carousel-3d__stage,
+  .bi-carousel-3d__glow {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .bi-stack-3d {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: none;
+    perspective: none;
+  }
+
+  .bi-stack-3d__card {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .ngi-pricing--3d {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .bi-stack-3d {
+    min-height: auto;
+    flex-direction: column;
+    gap: 14px;
+    perspective: none;
+    max-width: none;
+  }
+
+  .bi-stack-3d__card {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    transform: none !important;
+  }
+
+  .ngi-section--tutors-3d .carousel-3d {
+    height: 440px;
+  }
+}

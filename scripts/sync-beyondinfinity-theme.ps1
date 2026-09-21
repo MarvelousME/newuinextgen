@@ -79,4 +79,5 @@ Set-Content -Path (Join-Path $themeDir '.ngt-theme-package') -Encoding UTF8 -Val
 )
 
 Write-Host ("THEME_PACKAGE=" + $themeDir)
+Write-Host "Also run: node scripts/sync-beyondinfinity-theme.mjs (cross-platform copy for CI/release)"
 Get-ChildItem $themeDir | Select-Object Name, Mode, LinkType | Format-Table -AutoSize

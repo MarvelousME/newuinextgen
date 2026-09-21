@@ -1,0 +1,13 @@
+/* zoom — scale entrance */
+.ngt-3d-preset--zoom {
+	overflow: hidden;
+}
+
+.ngt-3d-preset--zoom .ngt-3d-zoom__target,
+.ngt-3d-preset--zoom [data-ngt-zoom],
+.ngt-3d-preset--zoom img,
+.ngt-3d-preset--zoom video {
+	transform-origin: center center;
+	will-change: transform;
+	backface-visibility: hidden;
+}

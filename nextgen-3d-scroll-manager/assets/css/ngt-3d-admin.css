@@ -1,0 +1,72 @@
+/* NextGen 3D Scroll Manager — admin UI */
+.ngt3d-wrap .ngt3d-heading {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.ngt3d-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2rem;
+	height: 1.75rem;
+	padding: 0 0.45rem;
+	border-radius: 4px;
+	background: #0f2744;
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+}
+
+.ngt3d-status--on {
+	color: #007017;
+	font-weight: 600;
+}
+
+.ngt3d-status--off {
+	color: #8a2424;
+	font-weight: 600;
+}
+
+.ngt3d-mode {
+	display: inline-block;
+	margin-right: 0.35rem;
+	padding: 0.1rem 0.35rem;
+	border-radius: 3px;
+	background: #f0f0f1;
+	font-size: 11px;
+}
+
+.ngt3d-mode--full { background: #dff3e5; }
+.ngt3d-mode--reduced { background: #fff3cd; }
+.ngt3d-mode--disabled { background: #f8d7da; }
+
+.ngt3d-two-col {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.5rem;
+	margin-top: 1rem;
+}
+
+@media (max-width: 960px) {
+	.ngt3d-two-col {
+		grid-template-columns: 1fr;
+	}
+}
+
+.ngt3d-anim-picker {
+	margin-top: 0.75rem;
+}
+
+.ngt3d-anim-picker ul {
+	max-height: 220px;
+	overflow: auto;
+	margin: 0.5rem 0 0;
+	padding-left: 1.25rem;
+}
+
+.ngt3d-inspector-list {
+	line-height: 1.7;
+}

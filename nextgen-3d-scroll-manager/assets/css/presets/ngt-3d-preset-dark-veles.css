@@ -1,0 +1,21 @@
+/* dark-veles — motion language: pace / stagger / image scale */
+.ngt-3d-preset--dark-veles {
+	--ngt-3d-dv-reveal-y: 36px;
+}
+
+.ngt-3d-preset--dark-veles .ngt-3d-dv__section,
+.ngt-3d-preset--dark-veles [data-ngt-pace] {
+	position: relative;
+}
+
+.ngt-3d-preset--dark-veles .ngt-3d-dv__reveal,
+.ngt-3d-preset--dark-veles [data-ngt-reveal] {
+	will-change: transform, opacity;
+}
+
+.ngt-3d-preset--dark-veles .ngt-3d-dv__media,
+.ngt-3d-preset--dark-veles [data-ngt-scale],
+.ngt-3d-preset--dark-veles img {
+	transform-origin: center center;
+	will-change: transform;
+}

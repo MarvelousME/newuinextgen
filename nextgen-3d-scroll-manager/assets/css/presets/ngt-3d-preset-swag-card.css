@@ -1,0 +1,69 @@
+/**
+ * swag-card — sticky stacked cards (Swag / learnframer recreation).
+ */
+.ngt-3d-preset--swag-card {
+	isolation: isolate;
+}
+
+.ngt-3d-swag__stage,
+.ngt-3d-preset--swag-card [data-ngt-swag-stage] {
+	position: relative;
+	min-height: min(72vh, 640px);
+	display: grid;
+	place-items: center;
+	perspective: 1400px;
+	transform-style: preserve-3d;
+}
+
+.ngt-3d-swag__card,
+.ngt-3d-preset--swag-card [data-ngt-swag-card] {
+	grid-area: 1 / 1;
+	width: min(420px, 88vw);
+	border-radius: 1.35rem;
+	background: #ffffff;
+	border: 1px solid rgba(19, 32, 51, 0.12);
+	box-shadow:
+		0 24px 50px -20px rgba(19, 32, 51, 0.28),
+		inset 0 1px 0 rgba(255, 255, 255, 0.9);
+	overflow: hidden;
+	will-change: transform, opacity;
+	transform-style: preserve-3d;
+	backface-visibility: hidden;
+}
+
+.ngt-3d-swag__card img,
+.ngt-3d-preset--swag-card [data-ngt-swag-card] img {
+	display: block;
+	width: 100%;
+	height: 220px;
+	object-fit: cover;
+	border: 0;
+	border-radius: 0;
+}
+
+.ngt-3d-swag__card-body {
+	padding: 1.15rem 1.25rem 1.35rem;
+	color: #132033;
+}
+
+.ngt-3d-swag__card-body h3 {
+	margin: 0 0 0.35rem;
+	font-size: 1.15rem;
+	letter-spacing: -0.02em;
+}
+
+.ngt-3d-swag__card-body p {
+	margin: 0;
+	color: #4b5c73;
+	line-height: 1.55;
+	font-size: 0.95rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ngt-3d-swag__card,
+	.ngt-3d-preset--swag-card [data-ngt-swag-card] {
+		will-change: auto;
+		transform: none !important;
+		opacity: 1 !important;
+	}
+}

@@ -7,7 +7,8 @@ WP_PATH="/var/www/html"
 log() { printf '[newuinextgen-defaults] %s\n' "$1"; }
 
 log "Activating theme..."
-wp theme activate nextgentutors-beyondinfinity --path="$WP_PATH" --allow-root 2>/dev/null || true
+wp theme activate nextgentutors-tutorfabulous --path="$WP_PATH" --allow-root 2>/dev/null \
+  || wp theme activate nextgentutors-beyondinfinity --path="$WP_PATH" --allow-root 2>/dev/null || true
 
 log "Applying Customizer defaults..."
 wp theme mod set visual_preset beyond-infinity --path="$WP_PATH" --allow-root

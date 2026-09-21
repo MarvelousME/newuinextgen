@@ -58,7 +58,7 @@
 
   /* Layout */
   --maxw: 1240px;
-  --nav-h: 88px;
+  --nav-h: 159px;
 
   /* Spacing scale */
   --space-1: 0.25rem;
@@ -175,7 +175,7 @@ p { margin: 0; }
 .section--tight { padding: 64px 0; }
 
 @media (max-width: 760px) {
-  :root { --nav-h: 72px; }
+  :root { --nav-h: 159px; }
   .section { padding: 64px 0; }
   .wrap { padding: 0 20px; }
 }

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $h = NGC_Agent_Gateway_Client::health();
 if ( is_wp_error( $h ) ) {
   echo 'HEALTH_FAIL ' . $h->get_error_message() . PHP_EOL;

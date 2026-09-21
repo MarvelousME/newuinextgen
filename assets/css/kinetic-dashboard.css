@@ -1,0 +1,81 @@
+/**
+ * Kinetic dashboard — mission panels styled with homepage .ngi-* language.
+ */
+
+body.bi-kinetic-dashboard,
+body.bi-kinetic-dashboard.bi-mission-dashboard {
+  background: var(--ngi-soft, #f5f8ff);
+  color: var(--ngi-text, #10213f);
+}
+
+body.bi-kinetic-dashboard .ngi-page--dashboard .ngi-hero {
+  min-height: clamp(360px, 42vh, 560px);
+}
+
+body.bi-kinetic-dashboard .ngi-dashboard-panel {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-radius: var(--ngi-radius, 28px);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--ngi-line, #e6edf7);
+  box-shadow: var(--ngi-shadow, 0 24px 70px rgba(18, 60, 124, 0.12));
+}
+
+body.bi-kinetic-dashboard .ngi-dashboard-panel .ngt-card,
+body.bi-kinetic-dashboard .ngi-dashboard-panel .bi-dash-kpi,
+body.bi-kinetic-dashboard .bi-dashboard-rest .bi-dash-kpi {
+  border-radius: 22px;
+  border: 1px solid var(--ngi-line, #e6edf7);
+  box-shadow: 0 16px 40px rgba(18, 60, 124, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+body.bi-kinetic-dashboard .ngi-dashboard-panel .ngt-card:hover,
+body.bi-kinetic-dashboard .bi-dash-kpi:hover {
+  transform: translateY(-6px);
+  border-color: var(--ngi-cyan, #28c7f7);
+  box-shadow: 0 28px 60px rgba(18, 60, 124, 0.14);
+}
+
+body.bi-kinetic-dashboard .bi-dash-kpi__value {
+  font-family: Sora, Inter, sans-serif;
+  color: var(--ngi-blue, #123c7c);
+  letter-spacing: -0.03em;
+}
+
+body.bi-kinetic-dashboard .bi-dash-kpi__label {
+  color: var(--ngi-muted, #687386);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+body.bi-kinetic-dashboard .ngt-btn--primary,
+body.bi-kinetic-dashboard .ngi-btn-primary {
+  background: var(--ngi-cyan, #28c7f7);
+  color: #041326;
+  border: 0;
+  border-radius: 18px;
+  font-weight: 950;
+}
+
+body.bi-kinetic-dashboard .ngt-nav,
+body.bi-kinetic-dashboard .ngt-nav.ngt-nav--transparent {
+  height: var(--nav-h, 159px);
+  background: var(--ngi-navy, #07172f) !important;
+  backdrop-filter: none;
+}
+
+body.bi-kinetic-dashboard .bi-theme-content {
+  background: transparent;
+}
+
+body.bi-kinetic-dashboard .ngi-section--dashboard {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+@media (max-width: 768px) {
+  body.bi-kinetic-dashboard .ngi-page--dashboard .ngi-hero {
+    min-height: 420px;
+  }
+}

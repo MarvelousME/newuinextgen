@@ -327,6 +327,53 @@ class NGC_CLI {
 	}
 
 	/**
+	 * Provision default lesson SKUs (online / in-person).
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc provision_tutor_products
+	 */
+	public function provision_tutor_products( $args, $assoc_args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
+		if ( ! class_exists( 'NGC_Product_Provisioner' ) ) {
+			WP_CLI::error( 'Product provisioner not loaded.' );
+		}
+		do_action( 'ngc_provision_tutor_products' );
+		$result = NGC_Product_Provisioner::provision_defaults();
+		WP_CLI::line( wp_json_encode( $result, JSON_PRETTY_PRINT ) );
+		if ( empty( $result['success'] ) ) {
+			WP_CLI::halt( 1 );
+		}
+	}
+
+	/**
+	 * Idempotent session provision from order and/or booking.
+	 *
+	 * ## OPTIONS
+	 *
+	 * <order_id>
+	 * : WooCommerce order ID (0 if unknown).
+	 *
+	 * [<booking_id>]
+	 * : NGC booking ID.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp ngc provision_session 2041 779
+	 */
+	public function provision_session( $args, $assoc_args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
+		$order_id   = (int) ( $args[0] ?? 0 );
+		$booking_id = (int) ( $args[1] ?? 0 );
+		if ( ! class_exists( 'NGC_Ensure_Session_Provisioned' ) ) {
+			WP_CLI::error( 'Session provisioner not loaded.' );
+		}
+		$result = NGC_Ensure_Session_Provisioned::run( $order_id, $booking_id );
+		if ( is_wp_error( $result ) ) {
+			WP_CLI::error( $result->get_error_message() );
+		}
+		WP_CLI::line( wp_json_encode( $result, JSON_PRETTY_PRINT ) );
+	}
+
+	/**
 	 * Run monthly payout batch manually.
 	 *
 	 * ## OPTIONS

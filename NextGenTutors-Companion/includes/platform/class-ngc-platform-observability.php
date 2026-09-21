@@ -74,6 +74,47 @@ final class NGC_Platform_Observability {
 	}
 
 	/**
+	 * Lightweight OTEL hook (TD-RAD-006 Partial).
+	 *
+	 * When `OTEL_EXPORTER_OTLP_ENDPOINT` is set, fires `ngc_otel_span` for ops-side exporters.
+	 * PHP does not ship a full OTLP SDK — Tempo/collector remains outside the WP process (ADR-005).
+	 *
+	 * @param string               $name       Span name.
+	 * @param array<string, mixed> $attributes Attributes.
+	 * @return array{exported:bool,endpoint:string,trace_id:string}
+	 */
+	public static function export_span( $name, array $attributes = [] ) {
+		$endpoint = (string) ( getenv( 'OTEL_EXPORTER_OTLP_ENDPOINT' ) ?: ( $_ENV['OTEL_EXPORTER_OTLP_ENDPOINT'] ?? '' ) );
+		$payload  = [
+			'name'       => (string) $name,
+			'trace_id'   => self::current_trace_id(),
+			'attributes' => $attributes,
+			'ts'         => gmdate( 'c' ),
+		];
+		/**
+		 * Ops-side OTLP bridge may subscribe when endpoint is configured.
+		 *
+		 * @param array  $payload  Span payload.
+		 * @param string $endpoint OTLP endpoint or empty.
+		 */
+		do_action( 'ngc_otel_span', $payload, $endpoint );
+		if ( '' === $endpoint ) {
+			return [
+				'exported'  => false,
+				'endpoint'  => '',
+				'trace_id'  => $payload['trace_id'],
+				'reason'    => 'exporter_unconfigured',
+			];
+		}
+		return [
+			'exported' => true,
+			'endpoint' => $endpoint,
+			'trace_id' => $payload['trace_id'],
+			'reason'   => 'hook_dispatched',
+		];
+	}
+
+	/**
 	 * Alert via Intelligence channels when available.
 	 *
 	 * @param string $code Code.

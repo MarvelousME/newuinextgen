@@ -280,7 +280,7 @@ After Plugin Manager installs stack:
 | WF-24 | Reminders | `NGC_Session_Reminders` cron |
 | WF-25 | Dashboards | Studio + REST dashboards |
 
-Gap analysis: [FLOW-GAP-REPORT.md](FLOW-GAP-REPORT.md)  
+Gap analysis: [../STALE-DOCS/FLOW-GAP-REPORT.md](../STALE-DOCS/FLOW-GAP-REPORT.md)  
 Per-workflow specs: [../enterprise-blueprint/workflows/](../enterprise-blueprint/workflows/)
 
 ---
@@ -344,7 +344,7 @@ Map Companion event to `ngt.*` in `inc/workflows.php` event bridge if needed.
 ## Related docs
 
 - [workflow-documentation.md](workflow-documentation.md) — WF-01–WF-25 narrative
-- [FLOW-GAP-REPORT.md](FLOW-GAP-REPORT.md) — runtime gaps
+- [../STALE-DOCS/FLOW-GAP-REPORT.md](../STALE-DOCS/FLOW-GAP-REPORT.md) — runtime gaps
 - [../content-packs/COMMAND-CENTER.md](../content-packs/COMMAND-CENTER.md)
 - [../content-packs/COMPLETION-SUITE.md](../content-packs/COMPLETION-SUITE.md)
 - [../../NextGenTutors-Companion/integrate/README.md](../../NextGenTutors-Companion/integrate/README.md)

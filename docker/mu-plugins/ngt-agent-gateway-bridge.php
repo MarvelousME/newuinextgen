@@ -16,8 +16,8 @@ if ( ! defined( 'NGT_AGENT_GATEWAY_URL' ) ) {
 }
 if ( ! defined( 'NGT_GATEWAY_SHARED_SECRET' ) ) {
 	$secret = getenv( 'NGT_GATEWAY_SHARED_SECRET' );
-	if ( ! $secret ) {
-		$secret = 'staging-local-secret';
+	// Require env — no hardcoded staging fallback.
+	if ( is_string( $secret ) && $secret !== '' ) {
+		define( 'NGT_GATEWAY_SHARED_SECRET', $secret );
 	}
-	define( 'NGT_GATEWAY_SHARED_SECRET', $secret );
 }

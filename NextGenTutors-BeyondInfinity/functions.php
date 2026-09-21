@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'BI_VERSION', '1.9.28' );
+define( 'BI_VERSION', '2.1.1' );
 define( 'BI_DIR', get_stylesheet_directory() );
 define( 'BI_URI', get_stylesheet_directory_uri() );
 if ( ! defined( 'NGT_URI' ) ) {
@@ -20,6 +20,7 @@ if ( ! defined( 'NGT_DIR' ) ) {
 require_once BI_DIR . '/inc/helpers.php';
 require_once BI_DIR . '/inc/brand-content.php';
 require_once BI_DIR . '/inc/companion.php';
+require_once BI_DIR . '/inc/tutorfabulous-compat.php';
 require_once BI_DIR . '/inc/security.php';
 require_once BI_DIR . '/inc/shortcodes-fallback.php';
 require_once BI_DIR . '/inc/tutor-data.php';
@@ -55,6 +56,7 @@ require_once BI_DIR . '/inc/admin.php';
 require_once BI_DIR . '/inc/admin-beyondinfinity.php';
 require_once BI_DIR . '/inc/kinetic-home.php';
 require_once BI_DIR . '/inc/kinetic-surface.php';
+require_once BI_DIR . '/inc/ngi-page.php';
 require_once BI_DIR . '/inc/kinetic-image-hover.php';
 require_once BI_DIR . '/inc/nbi-infinity.php';
 require_once BI_DIR . '/inc/workflows.php';
@@ -101,7 +103,7 @@ function bi_enqueue_assets() {
         wp_enqueue_script( 'bi-main', BI_URI . '/assets/js/main.js', [ 'jquery' ], BI_VERSION, true );
         wp_enqueue_script( 'bi-nav-menu', BI_URI . '/assets/js/nav-menu.js', [], BI_VERSION, true );
         wp_enqueue_script( 'bi-ngt-toast', BI_URI . '/assets/js/ngt-toast.js', [], BI_VERSION, true );
-        wp_localize_script( 'bi-main', 'biData', [
+        wp_localize_script( 'bi-main', 'biData', apply_filters( 'bi_front_localize', [
             'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
             'nonce'      => wp_create_nonce( 'bi_nonce' ),
             'restRoot'   => esc_url_raw( rest_url() ),
@@ -117,7 +119,7 @@ function bi_enqueue_assets() {
                 'inperson_long'  => max( 300, (int) bi_get_theme_option( 'rate_inperson', 350 ) - 30 ),
                 'tertiary'       => (int) bi_get_theme_option( 'rate_tertiary', 500 ),
             ],
-        ] );
+        ] ) );
 
         if ( bi_page_needs_carousel_assets() ) {
             wp_enqueue_script( 'bi-tutors-carousel', BI_URI . '/assets/js/tutors-carousel.js', [], BI_VERSION, true );
@@ -126,23 +128,7 @@ function bi_enqueue_assets() {
             ] );
         }
 
-        if ( bi_is_kinetic_home() ) {
-            wp_enqueue_style( 'bi-kinetic-tokens', BI_URI . '/assets/css/kinetic-tokens.css', [ 'bi-style' ], BI_VERSION );
-            wp_enqueue_style( 'bi-kinetic-home', BI_URI . '/assets/css/kinetic-home.css', [ 'bi-kinetic-tokens' ], BI_VERSION );
-            wp_enqueue_style( 'bi-kinetic-image-hover', BI_URI . '/assets/css/kinetic-image-hover.css', [ 'bi-kinetic-home' ], BI_VERSION );
-            wp_enqueue_style( 'bi-cinematic-hero', BI_URI . '/assets/css/bi-cinematic-hero.css', [ 'bi-kinetic-image-hover' ], BI_VERSION );
-            wp_enqueue_script( 'bi-focus-trap', BI_URI . '/assets/js/bi-focus-trap.js', [], BI_VERSION, true );
-            wp_enqueue_script( 'bi-kinetic-home', BI_URI . '/assets/js/kinetic-home.js', [ 'bi-focus-trap' ], BI_VERSION, true );
-            wp_enqueue_script( 'bi-cinematic-video', BI_URI . '/assets/js/bi-cinematic-video.js', [], BI_VERSION, true );
-            $layout_max = (int) apply_filters( 'ngt_content_width', 1280 );
-            if ( $layout_max < 960 ) {
-                $layout_max = 1280;
-            }
-            wp_add_inline_style(
-                'bi-kinetic-home',
-                sprintf( ':root{--ngi-layout-max:%dpx;}', $layout_max )
-            );
-        }
+        // Kinetic home/CSS/JS for all marketing pages: bi_kinetic_surface_assets() in inc/kinetic-surface.php.
     }
 
     if ( bi_is_dashboard_page() && ! bi_is_builder_edit_mode() ) {
@@ -263,8 +249,10 @@ function bi_theme_setup() {
     add_theme_support( 'responsive-embeds' );
     add_theme_support( 'editor-styles' );
     register_nav_menus( [
-        'primary'  => __( 'Primary Navigation', 'beyondinfinity' ),
-        'footer-1' => __( 'Footer Column 1', 'beyondinfinity' ),
+        'primary'      => __( 'Primary Navigation', 'beyondinfinity' ),
+        'footer-1'     => __( 'Footer Quick Links', 'beyondinfinity' ),
+        'footer-2'     => __( 'Footer Families & Tutors', 'beyondinfinity' ),
+        'footer-legal' => __( 'Footer Legal', 'beyondinfinity' ),
     ] );
 }
 

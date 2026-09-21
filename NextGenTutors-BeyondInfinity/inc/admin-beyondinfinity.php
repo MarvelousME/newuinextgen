@@ -13,9 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Register theme admin pages.
  */
 function bi_beyondinfinity_admin_menu() {
+	$health_label = ( defined( 'BI_THEME_BRAND' ) && false !== stripos( (string) BI_THEME_BRAND, 'TutorFabulous' ) )
+		? __( 'TutorFabulous Health', 'beyondinfinity' )
+		: __( 'Theme Health', 'beyondinfinity' );
 	add_theme_page(
-		__( 'BeyondInfinity Health', 'beyondinfinity' ),
-		__( 'BeyondInfinity Health', 'beyondinfinity' ),
+		$health_label,
+		$health_label,
 		'manage_options',
 		'bi-health',
 		'bi_beyondinfinity_health_page'

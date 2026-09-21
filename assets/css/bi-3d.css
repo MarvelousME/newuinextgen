@@ -205,16 +205,22 @@
   }
 }
 
-/* Allow carousel bleed without clipping side cards on kinetic home */
-.ngi-home {
+/* Horizontal clip on the body — vertical visible so the nav-offset hero can bleed up.
+ * Mixed overflow-x:clip + overflow-y:visible on .ngi-home computes to auto and
+ * traps the sticky subject journey. Clip X on body; keep .ngi-home fully visible. */
+body.bi-kinetic-home {
   overflow-x: clip;
-  overflow-y: visible;
+}
+
+.ngi-home,
+.bi-theme-content .ngi-home {
+  overflow: visible;
 }
 
 /* ---- Carousel enhancements (kinetic home) ---- */
 .ngi-section--tutors-3d {
-  overflow: visible;
-  padding-bottom: 2.25rem;
+  overflow: hidden;
+  padding-bottom: clamp(3rem, 7vw, 5.5rem);
   position: relative;
   isolation: isolate;
 }
@@ -241,8 +247,8 @@
   width: 100%;
   max-width: min(1800px, 100vw);
   margin-inline: auto;
-  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.5rem, 6vw, 5rem) 0;
-  overflow: visible;
+  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.5rem, 6vw, 5rem) clamp(1.25rem, 3vw, 2.5rem);
+  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -276,19 +282,39 @@
 }
 
 .ngi-section--tutors-3d .carousel-3d {
-  height: 470px;
+  height: 520px;
   width: 100%;
   perspective: 2200px;
   margin-top: clamp(0.75rem, 2vw, 1.5rem);
   margin-bottom: 0;
   margin-inline: auto;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .ngi-section--tutors-3d .tutor-card3d {
   position: absolute;
   left: 50%;
+  top: 50%;
   width: min(320px, 86vw);
+}
+
+.ngi-section--tutors-3d .tutor-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(23, 50, 90, 0.16), 0 0 40px rgba(40, 199, 247, 0.08);
+}
+
+.ngi-section--tutors-3d .tutor-card__photo {
+  height: 280px;
+  background: linear-gradient(145deg, #d7e8ff, #9fc7ff);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body.bi-3d-enabled:not(.bi-weight-light) .ngi-section--tutors-3d .tutor-card:hover {
+    box-shadow: 0 28px 70px rgba(23, 50, 90, 0.22), 0 0 50px rgba(49, 240, 170, 0.12);
+  }
 }
 
 .ngi-section--tutors-3d .carousel-3d__stage {
@@ -328,9 +354,11 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.bi-3d-enabled .ngi-steps .ngi-step:hover {
-  transform: translateY(-6px) translateZ(12px);
-  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
+@media (hover: hover) and (pointer: fine) {
+  .bi-3d-enabled .ngi-steps .ngi-step:hover {
+    transform: perspective(900px) rotateX(4deg) rotateY(-4deg) translateY(-8px) translateZ(16px);
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.18);
+  }
 }
 
 .screen-reader-text {
@@ -397,6 +425,6 @@
   }
 
   .ngi-section--tutors-3d .carousel-3d {
-    height: 440px;
+    height: 520px;
   }
 }

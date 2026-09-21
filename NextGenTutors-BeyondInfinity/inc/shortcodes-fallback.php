@@ -17,12 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 function bi_required_ngc_shortcodes() {
     return [
         'ngc_find_tutor_form',
+        'ngc_tutor_marketplace',
         'ngc_become_tutor_form',
         'ngc_contact_support_form',
         'ngc_parent_register_child_form',
         'ngc_student_register_form',
         'ngc_login_form',
         'ngc_forgot_password_form',
+        'ngc_parent_checkout',
         'ngc_parent_dashboard',
         'ngc_student_dashboard',
         'ngc_tutor_dashboard',
@@ -230,15 +232,19 @@ function bi_ngc_form_find_tutor() {
         'High School (8-12)' => __( 'High School (8-12)', 'beyondinfinity' ),
         'Tertiary'  => __( 'Tertiary', 'beyondinfinity' ),
     ];
-    $subject_opts = [
-        ''                   => __( 'Select…', 'beyondinfinity' ),
-        'Mathematics'        => __( 'Mathematics', 'beyondinfinity' ),
-        'Physical Science'   => __( 'Physical Science', 'beyondinfinity' ),
-        'Accounting'         => __( 'Accounting', 'beyondinfinity' ),
-        'English'            => __( 'English', 'beyondinfinity' ),
-        'Life Sciences'      => __( 'Life Sciences', 'beyondinfinity' ),
-        'Tertiary Support'   => __( 'Tertiary Support', 'beyondinfinity' ),
-    ];
+    $subject_opts = [ '' => __( 'Select…', 'beyondinfinity' ) ];
+    if ( function_exists( 'bi_get_subject_options' ) ) {
+        foreach ( bi_get_subject_options() as $slug => $label ) {
+            $subject_opts[ (string) $slug ] = (string) $label;
+        }
+    } else {
+        $subject_opts['mathematics']      = __( 'Mathematics', 'beyondinfinity' );
+        $subject_opts['physical-science'] = __( 'Physical Science', 'beyondinfinity' );
+        $subject_opts['accounting']       = __( 'Accounting', 'beyondinfinity' );
+        $subject_opts['english']          = __( 'English', 'beyondinfinity' );
+        $subject_opts['life-sciences']    = __( 'Life Sciences', 'beyondinfinity' );
+        $subject_opts['tertiary-support'] = __( 'Tertiary Support', 'beyondinfinity' );
+    }
     $province_opts = [
         ''               => __( 'Select…', 'beyondinfinity' ),
         'Gauteng'        => __( 'Gauteng', 'beyondinfinity' ),

@@ -33,7 +33,7 @@ if ( ! function_exists( 'sanitize_text_field' ) ) {
 
 require_once $root . '/includes/class-ngc-uuid.php';
 require_once $root . '/includes/integrations/class-ngc-woocommerce-catalog.php';
-require_once $root . '/includes/integrations/class-ngc-payout-export.php';
+require_once $root . '/includes/payments/class-ngc-payout-export.php';
 
 if ( ! defined( 'NGC_ALLOW_DEMO_SEED' ) ) {
 	define( 'NGC_ALLOW_DEMO_SEED', true );
@@ -61,8 +61,8 @@ if ( ! function_exists( 'delete_option' ) ) {
 	}
 }
 if ( ! function_exists( 'apply_filters' ) ) {
-	function apply_filters( $hook, $value ) {
-		unset( $hook );
+	function apply_filters( $hook, $value, ...$args ) {
+		unset( $hook, $args );
 		return $value;
 	}
 }
@@ -226,6 +226,9 @@ if ( ! class_exists( 'WP_Error', false ) ) {
 		}
 		public function get_error_code() {
 			return $this->code;
+		}
+		public function get_error_message() {
+			return $this->message;
 		}
 		public function get_error_data() {
 			return $this->data;
@@ -445,6 +448,24 @@ if ( ! function_exists( 'wp_mkdir_p' ) ) {
 }
 if ( ! defined( 'NGC_PLUGIN_DIR' ) ) {
 	define( 'NGC_PLUGIN_DIR', $root . '/' );
+}
+if ( ! defined( 'WP_CONTENT_DIR' ) ) {
+	define( 'WP_CONTENT_DIR', $root . '/tests-stub/wp-content' );
+}
+if ( ! function_exists( 'trailingslashit' ) ) {
+	function trailingslashit( $value ) {
+		return rtrim( (string) $value, "/\\" ) . '/';
+	}
+}
+if ( ! function_exists( 'untrailingslashit' ) ) {
+	function untrailingslashit( $value ) {
+		return rtrim( (string) $value, "/\\" );
+	}
+}
+if ( ! function_exists( 'apply_filters' ) ) {
+	function apply_filters( $hook, $value ) {
+		return $value;
+	}
 }
 
 require_once $root . '/includes/demo/class-ngc-demo-env.php';
@@ -763,6 +784,106 @@ if ( ! function_exists( 'wp_rand' ) ) {
 }
 $backoff = NGC_Durable_Queue::backoff_seconds( 3 );
 ngc_test_assert( 'queue backoff positive', $backoff >= 1 );
+
+// --- TD-RAD-001 / 005 / 006: Policy Bridge, Secret Vault env refs, OTEL stub ---
+if ( ! function_exists( 'do_action' ) ) {
+	function do_action( $hook, ...$args ) {
+		global $ngc_test_actions;
+		$ngc_test_actions[] = [ 'hook' => $hook, 'args' => $args ];
+	}
+}
+if ( ! function_exists( 'wp_generate_password' ) ) {
+	function wp_generate_password( $length = 12, $special = true, $extra = false ) {
+		unset( $special, $extra );
+		return substr( bin2hex( random_bytes( (int) ceil( $length / 2 ) ) ), 0, (int) $length );
+	}
+}
+if ( ! function_exists( 'gmdate' ) ) {
+	// native
+}
+
+require_once $root . '/includes/platform/class-ngc-capability-registry.php';
+require_once $root . '/includes/platform/class-ngc-policy-bridge.php';
+require_once $root . '/includes/agentic/class-ngc-secret-vault.php';
+
+$ref_caps = new ReflectionClass( 'NGC_Capability_Registry' );
+$caps_prop = $ref_caps->getProperty( 'capabilities' );
+$caps_prop->setAccessible( true );
+$caps_prop->setValue(
+	null,
+	[
+		'matching.propose'  => [
+			'capabilityId'        => 'matching.propose',
+			'requiredPermissions' => [ 'read' ],
+		],
+		'booking.create'    => [
+			'capabilityId'        => 'booking.create',
+			'requiredPermissions' => [ 'ngc_book' ],
+		],
+		'payment.authorize' => [
+			'capabilityId'        => 'payment.authorize',
+			'requiredPermissions' => [ 'ngc_pay' ],
+		],
+	]
+);
+$loaded_prop = $ref_caps->getProperty( 'loaded' );
+$loaded_prop->setAccessible( true );
+$loaded_prop->setValue( null, true );
+
+$unknown = NGC_Policy_Bridge::decide( 'no.such.capability', [ 'actor_type' => 'human' ] );
+ngc_test_assert( 'policy bridge denies unknown capability', ( $unknown['decision'] ?? '' ) === NGC_Policy_Bridge::DENY );
+
+$uid = (int) get_current_user_id();
+global $ngc_test_caps;
+$ngc_test_caps = [ $uid => [] ];
+$denied = NGC_Policy_Bridge::authorize_invoke( 'booking.create', [ 'actor_type' => 'human' ] );
+ngc_test_assert( 'policy bridge denies booking without ngc_book', is_wp_error( $denied ) );
+
+$ngc_test_caps = [ $uid => [ 'ngc_book' => true, 'manage_options' => true ] ];
+$allowed = NGC_Policy_Bridge::authorize_invoke( 'booking.create', [ 'actor_type' => 'human' ] );
+ngc_test_assert(
+	'policy bridge allows booking with ngc_book',
+	! is_wp_error( $allowed ) && ( $allowed['decision'] ?? '' ) === NGC_Policy_Bridge::ALLOW
+);
+
+$match_ok = NGC_Policy_Bridge::authorize_domain( 'matching.propose', [ 'actor_type' => 'human' ] );
+ngc_test_assert( 'policy bridge allows matching.propose (read)', ! is_wp_error( $match_ok ) );
+
+$sys_deny = NGC_Policy_Bridge::authorize_domain( 'missing.cap', [ 'trusted_system' => true ] );
+ngc_test_assert( 'trusted system still denies unknown capability', is_wp_error( $sys_deny ) );
+
+$sys_ok = NGC_Policy_Bridge::authorize_domain( 'payment.authorize', [ 'trusted_system' => true ] );
+ngc_test_assert( 'trusted system allows known payment.authorize', ! is_wp_error( $sys_ok ) );
+
+putenv( 'NGC_TEST_VAULT_SECRET=vault-ok-value' );
+$_ENV['NGC_TEST_VAULT_SECRET'] = 'vault-ok-value';
+$env_ok = NGC_Secret_Vault::reveal( 'env:NGC_TEST_VAULT_SECRET' );
+ngc_test_assert( 'vault env: reveal returns value', $env_ok === 'vault-ok-value' );
+
+$env_bad = NGC_Secret_Vault::reveal( 'env:NGC_TEST_VAULT_MISSING_XYZ' );
+ngc_test_assert( 'vault env: empty fails closed', is_wp_error( $env_bad ) );
+
+$env_invalid = NGC_Secret_Vault::reveal( 'env:bad-name!' );
+ngc_test_assert( 'vault env: invalid name rejected', is_wp_error( $env_invalid ) );
+
+$env_meta = NGC_Secret_Vault::meta( 'env:NGC_TEST_VAULT_SECRET' );
+ngc_test_assert( 'vault env: meta backend env', is_array( $env_meta ) && ( $env_meta['backend'] ?? '' ) === 'env' );
+putenv( 'NGC_TEST_VAULT_SECRET' );
+unset( $_ENV['NGC_TEST_VAULT_SECRET'] );
+
+$ngc_test_actions = [];
+putenv( 'OTEL_EXPORTER_OTLP_ENDPOINT' );
+unset( $_ENV['OTEL_EXPORTER_OTLP_ENDPOINT'] );
+$otel_off = NGC_Platform_Observability::export_span( 'test.span', [ 'k' => 1 ] );
+ngc_test_assert( 'otel stub unconfigured', false === ( $otel_off['exported'] ?? true ) );
+
+putenv( 'OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4318' );
+$_ENV['OTEL_EXPORTER_OTLP_ENDPOINT'] = 'http://127.0.0.1:4318';
+$otel_on = NGC_Platform_Observability::export_span( 'test.span', [ 'k' => 1 ] );
+ngc_test_assert( 'otel stub dispatches when endpoint set', true === ( $otel_on['exported'] ?? false ) );
+ngc_test_assert( 'otel stub fired action', ! empty( $ngc_test_actions ) && $ngc_test_actions[0]['hook'] === 'ngc_otel_span' );
+putenv( 'OTEL_EXPORTER_OTLP_ENDPOINT' );
+unset( $_ENV['OTEL_EXPORTER_OTLP_ENDPOINT'] );
 
 if ( $errors > 0 ) {
 	echo "\n{$errors} test(s) failed\n";

@@ -1,0 +1,68 @@
+{
+  "capabilities": [
+    {
+      "capabilityId": "platform.tenant.create",
+      "name": "Create tenant",
+      "description": "Create SaaS tenant record and identity boundary",
+      "provider": "ecosystem-platform",
+      "version": "1.0.0",
+      "contract": "architecture/contracts/ecosystem-platform.v1.json",
+      "protocol": "command",
+      "requiredPermissions": ["platform.super_admin"],
+      "inputSchema": "architecture/contracts/ecosystem-platform.v1.json#/configuration",
+      "outputSchema": "architecture/contracts/ecosystem-platform.v1.json#/configuration",
+      "availability": "available",
+      "tenantScope": "global",
+      "lifecycleState": "active",
+      "tags": ["platform", "tenant"]
+    },
+    {
+      "capabilityId": "platform.tenant.provision",
+      "name": "Provision tenant",
+      "description": "Run blueprint provisioner for isolated tenant stack",
+      "provider": "ecosystem-platform",
+      "version": "1.0.0",
+      "contract": "architecture/contracts/ecosystem-platform.v1.json",
+      "protocol": "command",
+      "requiredPermissions": ["platform.super_admin"],
+      "inputSchema": "architecture/contracts/ecosystem-platform.v1.json#/configuration",
+      "outputSchema": "architecture/contracts/ecosystem-platform.v1.json#/configuration",
+      "availability": "available",
+      "tenantScope": "global",
+      "lifecycleState": "active",
+      "tags": ["platform", "tenant", "provision"]
+    },
+    {
+      "capabilityId": "customer.query",
+      "name": "Customer query",
+      "description": "List/get customers via provider contract",
+      "provider": "ecosystem-platform",
+      "version": "1.0.0",
+      "contract": "architecture/contracts/ecosystem-platform.v1.json",
+      "protocol": "query",
+      "requiredPermissions": ["tenant.member"],
+      "inputSchema": "architecture/contracts/ecosystem-platform.v1.json#/configuration",
+      "outputSchema": "architecture/contracts/ecosystem-platform.v1.json#/configuration",
+      "availability": "available",
+      "tenantScope": "tenant",
+      "lifecycleState": "active",
+      "tags": ["crm", "customer"]
+    },
+    {
+      "capabilityId": "customer.command",
+      "name": "Customer command",
+      "description": "Create/update customers via provider contract",
+      "provider": "ecosystem-platform",
+      "version": "1.0.0",
+      "contract": "architecture/contracts/ecosystem-platform.v1.json",
+      "protocol": "command",
+      "requiredPermissions": ["tenant.member"],
+      "inputSchema": "architecture/contracts/ecosystem-platform.v1.json#/configuration",
+      "outputSchema": "architecture/contracts/ecosystem-platform.v1.json#/configuration",
+      "availability": "available",
+      "tenantScope": "tenant",
+      "lifecycleState": "active",
+      "tags": ["crm", "customer"]
+    }
+  ]
+}

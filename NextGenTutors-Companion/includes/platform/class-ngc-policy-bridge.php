@@ -46,6 +46,10 @@ final class NGC_Policy_Bridge {
 
 		$actor_type = (string) ( $context['actor_type'] ?? 'human' );
 		$operation  = (string) ( $context['operation'] ?? 'invoke' );
+		$actor_id   = (int) ( $context['actor_user_id'] ?? 0 );
+		if ( $actor_id <= 0 && function_exists( 'get_current_user_id' ) ) {
+			$actor_id = (int) get_current_user_id();
+		}
 
 		// Machine/agent path: reuse agent policy engine when action maps 1:1 or via alias.
 		if ( in_array( $actor_type, [ 'agent', 'service', 'machine' ], true ) && class_exists( 'NGC_Agent_Policy_Engine' ) ) {
@@ -71,10 +75,10 @@ final class NGC_Policy_Bridge {
 				continue;
 			}
 			if ( class_exists( 'NGC_Authz_Matrix' ) && ! NGC_Authz_Matrix::can( $perm, $operation ) ) {
-				if ( ! current_user_can( $perm ) && ! current_user_can( 'manage_options' ) ) {
+				if ( ! self::actor_can( $actor_id, $perm ) && ! self::actor_can( $actor_id, 'manage_options' ) ) {
 					return self::result( self::DENY, 'Missing permission: ' . $perm, $cap );
 				}
-			} elseif ( ! current_user_can( $perm ) && ! current_user_can( 'manage_options' ) ) {
+			} elseif ( ! self::actor_can( $actor_id, $perm ) && ! self::actor_can( $actor_id, 'manage_options' ) ) {
 				return self::result( self::DENY, 'Missing capability: ' . $perm, $cap );
 			}
 		}
@@ -91,6 +95,23 @@ final class NGC_Policy_Bridge {
 	}
 
 	/**
+	 * @param int    $user_id User.
+	 * @param string $cap     Capability.
+	 * @return bool
+	 */
+	private static function actor_can( $user_id, $cap ) {
+		$user_id = (int) $user_id;
+		$cap     = (string) $cap;
+		if ( '' === $cap ) {
+			return false;
+		}
+		if ( $user_id > 0 && function_exists( 'user_can' ) ) {
+			return user_can( $user_id, $cap );
+		}
+		return function_exists( 'current_user_can' ) && current_user_can( $cap );
+	}
+
+	/**
 	 * Invoke a capability only if policy allows (does not execute domain work — returns decision + cap).
 	 *
 	 * @param string               $capability_id Capability id.
@@ -104,6 +125,36 @@ final class NGC_Policy_Bridge {
 			return new WP_Error( 'ngc_policy_deny', $decision['reason'], [ 'status' => 403, 'decision' => $decision ] );
 		}
 		return $decision;
+	}
+
+	/**
+	 * Domain entry authorization (TD-RAD-001).
+	 *
+	 * - Normal path: {@see authorize_invoke()}.
+	 * - Trusted system path (WooCommerce ITN / cron): capability must exist; no interactive user ACL.
+	 *
+	 * @param string               $capability_id Capability id.
+	 * @param array<string, mixed> $context       Context (`trusted_system` => true for webhooks).
+	 * @return array|WP_Error
+	 */
+	public static function authorize_domain( $capability_id, array $context = [] ) {
+		if ( ! empty( $context['trusted_system'] ) ) {
+			$cap = class_exists( 'NGC_Capability_Registry' ) ? NGC_Capability_Registry::get( $capability_id ) : null;
+			if ( ! $cap ) {
+				return new WP_Error(
+					'ngc_policy_deny',
+					'Unknown capability (default DENY)',
+					[ 'status' => 403 ]
+				);
+			}
+			return [
+				'decision'       => self::ALLOW,
+				'reason'         => 'Trusted system invoke',
+				'capability'     => $cap,
+				'policy_version' => 'rad-bridge-1.0',
+			];
+		}
+		return self::authorize_invoke( $capability_id, $context );
 	}
 
 	/**

@@ -32,7 +32,8 @@
   background-position: center;
   box-shadow: 0 28px 70px rgba(18, 60, 124, 0.16);
   transform-style: preserve-3d;
-  transition: transform 0.35s ease, filter 0.35s ease;
+  transition: transform 0.35s var(--ngi-ease, cubic-bezier(0.2, 0.8, 0.2, 1)), filter 0.35s ease;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 .ngi-image-hover-media::before {
   content: "";
@@ -80,8 +81,10 @@
 .ngi-hover-mode-slide .ngi-image-hover-media:hover .ngi-image-hover-overlay {
   transform: translateY(0);
 }
-.ngi-hover-mode-flip .ngi-image-hover-media:hover {
-  transform: rotateY(8deg) rotateX(4deg);
+@media (hover: hover) and (pointer: fine) {
+  .ngi-hover-mode-flip .ngi-image-hover-media:hover {
+    transform: perspective(900px) rotateY(-8deg) rotateX(6deg) translateY(-8px);
+  }
 }
 .ngi-hover-mode-blur .ngi-image-hover-media::before {
   backdrop-filter: blur(0);

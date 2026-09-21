@@ -105,6 +105,9 @@ function bi_get_header_style( $post_id = 0 ) {
 
 	if ( $post_id > 0 ) {
 		$slug = (string) get_post_field( 'post_name', $post_id );
+		if ( 'home-3d' === $slug ) {
+			return 'transparent';
+		}
 		if ( $slug && function_exists( 'bi_page_type' ) && in_array( bi_page_type( $slug ), [ 'dashboard', 'admin' ], true ) ) {
 			return 'minimal';
 		}

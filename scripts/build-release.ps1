@@ -18,6 +18,7 @@ $aiSrc        = Join-Path $root 'NextGenTutors-AI-Integration'
 $importerSrc  = Join-Path $root 'NextGenTutors-Html-Importer'
 $managerSrc   = Join-Path $root 'NextGenTutors-Plugin-Manager'
 $missionSrc   = Join-Path $root 'NextGenTutors-Mission-Control'
+$beyondMeasureSrc = Join-Path $root 'NextGenTutors-BeyondMeasure'
 $uiLibrarySrc = Join-Path $root 'ui-library'
 
 $themeZip     = Join-Path $dist 'NextGenTutors-BeyondInfinity.zip'
@@ -26,6 +27,7 @@ $aiZip        = Join-Path $dist 'NextGenTutors-AI-Integration.zip'
 $importerZip  = Join-Path $dist 'NextGenTutors-Html-Importer.zip'
 $managerZip   = Join-Path $dist 'NextGenTutors-Plugin-Manager.zip'
 $missionZip   = Join-Path $dist 'NextGenTutors-Mission-Control.zip'
+$beyondMeasureZip = Join-Path $dist 'NextGenTutors-BeyondMeasure.zip'
 $uiLibraryZip = Join-Path $dist 'ngt-ui-library.zip'
 
 foreach ($pair in @(
@@ -35,6 +37,7 @@ foreach ($pair in @(
     @{ Name = 'Html-Importer'; Path = $importerSrc },
     @{ Name = 'Plugin-Manager'; Path = $managerSrc },
     @{ Name = 'Mission-Control'; Path = $missionSrc },
+    @{ Name = 'BeyondMeasure'; Path = $beyondMeasureSrc },
     @{ Name = 'ui-library'; Path = $uiLibrarySrc }
 )) {
     if (-not (Test-Path $pair.Path)) { throw "Missing $($pair.Name) folder: $($pair.Path)" }
@@ -235,6 +238,12 @@ Copy-PluginPackage -Source $missionSrc -Destination $missionStage
 New-ReleaseZip -StageParent $missionStageParent -RootFolder 'NextGenTutors-Mission-Control' -ZipPath $missionZip
 Remove-Item -Recurse -Force $missionStageParent
 
+$bmStageParent = Join-Path $dist 'stage-beyond-measure'
+$bmStage = Join-Path $bmStageParent 'NextGenTutors-BeyondMeasure'
+Copy-PluginPackage -Source $beyondMeasureSrc -Destination $bmStage
+New-ReleaseZip -StageParent $bmStageParent -RootFolder 'NextGenTutors-BeyondMeasure' -ZipPath $beyondMeasureZip
+Remove-Item -Recurse -Force $bmStageParent
+
 $uiStageParent = Join-Path $dist 'stage-ui-library'
 $uiStage = Join-Path $uiStageParent 'ngt-ui-library'
 Copy-LibraryPackage -Source $uiLibrarySrc -Destination $uiStage
@@ -268,7 +277,7 @@ function Test-ZipExcludes {
     if ($hit) { throw "Zip should exclude $ForbiddenFragment but found: $hit" }
 }
 
-foreach ($zipToCheck in @($themeZip, $companionZip, $aiZip, $importerZip, $managerZip, $missionZip, $uiLibraryZip)) {
+foreach ($zipToCheck in @($themeZip, $companionZip, $aiZip, $importerZip, $managerZip, $missionZip, $beyondMeasureZip, $uiLibraryZip)) {
     Test-ZipForwardSlashes -ZipPath $zipToCheck
 }
 
@@ -309,6 +318,10 @@ foreach ($offlinePackage in @(
 Test-ZipRootFolder -ZipPath $missionZip -ExpectedRoot 'NextGenTutors-Mission-Control'
 Test-ZipContains -ZipPath $missionZip -RelativePath 'NextGenTutors-Mission-Control/nextgentutors-mission-control.php'
 
+Test-ZipRootFolder -ZipPath $beyondMeasureZip -ExpectedRoot 'NextGenTutors-BeyondMeasure'
+Test-ZipContains -ZipPath $beyondMeasureZip -RelativePath 'NextGenTutors-BeyondMeasure/nextgentutors-beyond-measure.php'
+Test-ZipContains -ZipPath $beyondMeasureZip -RelativePath 'NextGenTutors-BeyondMeasure/build/fallback.js'
+
 Test-ZipRootFolder -ZipPath $uiLibraryZip -ExpectedRoot 'ngt-ui-library'
 Test-ZipContains -ZipPath $uiLibraryZip -RelativePath 'ngt-ui-library/bootstrap/class-ngt-ui-bootstrap.php'
 
@@ -320,6 +333,7 @@ Write-Host "  $aiZip"
 Write-Host "  $importerZip"
 Write-Host "  $managerZip"
 Write-Host "  $missionZip"
+Write-Host "  $beyondMeasureZip"
 Write-Host "  $uiLibraryZip"
 Write-Host ''
 Write-Host 'Deploy ui-library to wp-content/ngt-ui-library (extract ngt-ui-library.zip).'
@@ -350,11 +364,18 @@ foreach ($d in @($releaseTheme, $releasePlugins, $releaseConfig, $releaseDocs, $
     if (-not (Test-Path $d)) { New-Item -ItemType Directory -Path $d -Force | Out-Null }
 }
 
+$bmVersion = '1.0.0'
+if (Test-Path (Join-Path $beyondMeasureSrc 'nextgentutors-beyond-measure.php')) {
+    $bmPhp = Get-Content (Join-Path $beyondMeasureSrc 'nextgentutors-beyond-measure.php') -Raw
+    if ($bmPhp -match 'Version:\s*([0-9.]+)') { $bmVersion = $Matches[1] }
+}
+
 $versioned = @{
     (Join-Path $releaseTheme "NextGenTutors-BeyondInfinity-v$themeVersion.zip") = $themeZip
     (Join-Path $releasePlugins "NextGenTutors-Companion-v$companionVersion.zip") = $companionZip
     (Join-Path $releasePlugins "NextGenTutors-AI-Integration-v$companionVersion.zip") = $aiZip
     (Join-Path $releasePlugins "NextGenTutors-Mission-Control-v$companionVersion.zip") = $missionZip
+    (Join-Path $releasePlugins "NextGenTutors-BeyondMeasure-v$bmVersion.zip") = $beyondMeasureZip
     (Join-Path $releasePlugins "NextGenTutors-Plugin-Manager-v$companionVersion.zip") = $managerZip
     (Join-Path $releasePlugins "NextGenTutors-Html-Importer-v$companionVersion.zip") = $importerZip
     (Join-Path $releasePlugins "ngt-ui-library-v$companionVersion.zip") = $uiLibraryZip
@@ -392,6 +413,7 @@ $manifest = [ordered]@{
         @{ name = 'NextGenTutors-Companion'; version = $companionVersion; path = "plugins/NextGenTutors-Companion-v$companionVersion.zip" }
         @{ name = 'NextGenTutors-AI-Integration'; version = $companionVersion; path = "plugins/NextGenTutors-AI-Integration-v$companionVersion.zip" }
         @{ name = 'NextGenTutors-Mission-Control'; version = $companionVersion; path = "plugins/NextGenTutors-Mission-Control-v$companionVersion.zip" }
+        @{ name = 'NextGenTutors-BeyondMeasure'; version = $bmVersion; path = "plugins/NextGenTutors-BeyondMeasure-v$bmVersion.zip" }
         @{ name = 'NextGenTutors-Plugin-Manager'; version = $companionVersion; path = "plugins/NextGenTutors-Plugin-Manager-v$companionVersion.zip" }
         @{ name = 'NextGenTutors-Html-Importer'; version = $companionVersion; path = "plugins/NextGenTutors-Html-Importer-v$companionVersion.zip" }
         @{ name = 'ngt-ui-library'; version = $companionVersion; path = "plugins/ngt-ui-library-v$companionVersion.zip" }

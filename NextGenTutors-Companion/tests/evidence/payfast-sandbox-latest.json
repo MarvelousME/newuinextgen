@@ -1,0 +1,249 @@
+{
+    "run_id": "payfast-sandbox-20260917-024540",
+    "started_at": "2026-09-17T02:45:40+00:00",
+    "sandbox": true,
+    "checks": [
+        {
+            "label": "sandbox merchant id",
+            "result": "PASS",
+            "data": "10000100"
+        },
+        {
+            "label": "sandbox flag",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "passphrase present",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "NGT-ONLINE-1HR product",
+            "result": "PASS",
+            "data": 2104
+        },
+        {
+            "label": "parent user",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "child user",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "tutor user",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "booking.create via policy",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "booking id",
+            "result": "PASS",
+            "data": 34
+        },
+        {
+            "label": "order created",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "order total 320",
+            "result": "PASS",
+            "data": "320.00"
+        },
+        {
+            "label": "process_payment success",
+            "result": "PASS",
+            "data": {
+                "result": "success",
+                "redirect": "http:\/\/localhost:8890\/checkout-2\/order-pay\/2165\/?key=wc_order_5C94KrCwfYsIt"
+            }
+        },
+        {
+            "label": "receipt url (hosted POST)",
+            "result": "PASS",
+            "data": "http:\/\/localhost:8890\/checkout-2\/order-pay\/2165\/?key=wc_order_5C94KrCwfYsIt"
+        },
+        {
+            "label": "hosted process is sandbox",
+            "result": "PASS",
+            "data": "https:\/\/sandbox.payfast.co.za\/eng\/process"
+        },
+        {
+            "label": "hosted signature present",
+            "result": "PASS",
+            "data": null
+        },
+        {
+            "label": "hosted amount 320.00",
+            "result": "PASS",
+            "data": "320.00"
+        },
+        {
+            "label": "hosted item NGT-ONLINE-1HR",
+            "result": "PASS",
+            "data": "NGT-ONLINE-1HR"
+        },
+        {
+            "label": "hosted sandbox process accepted",
+            "result": "PASS",
+            "data": {
+                "http": 302,
+                "location": "https:\/\/sandbox.payfast.co.za\/eng\/process\/payment\/72ffa3e2-c413-4ad9-aee9-03b431cf2233",
+                "error": ""
+            }
+        },
+        {
+            "label": "ITN rejects amount tamper",
+            "result": "PASS",
+            "data": {
+                "status": 400,
+                "body": "ngc_pf_amount",
+                "reason": "ngc_pf_amount",
+                "order_id": 2165
+            }
+        },
+        {
+            "label": "ITN handler HTTP 200 OK",
+            "result": "PASS",
+            "data": {
+                "status": 200,
+                "body": "OK",
+                "reason": "complete",
+                "order_id": 2165
+            }
+        },
+        {
+            "label": "order paid via ITN",
+            "result": "PASS",
+            "data": "processing"
+        },
+        {
+            "label": "PayFast payment id stored",
+            "result": "PASS",
+            "data": "pf_ngt_20260917024549_JmHM9W"
+        },
+        {
+            "label": "ITN replay idempotent",
+            "result": "PASS",
+            "data": {
+                "status": 200,
+                "body": "OK",
+                "reason": "replay",
+                "order_id": 2165
+            }
+        },
+        {
+            "label": "session provisioned from ITN",
+            "result": "PASS",
+            "data": {
+                "id": "29",
+                "uuid": "08088fed-7e9a-45a8-b85a-209424b97284",
+                "session_uuid": "08088fed-7e9a-45a8-b85a-209424b97284",
+                "correlation_id": "NGT-SES-20260917-0019E51E",
+                "idempotency_key": "session:order:2165:booking:34",
+                "booking_provider": "ngc",
+                "booking_id": "34",
+                "order_id": "2165",
+                "order_item_id": "24",
+                "product_id": "2104",
+                "student_user_id": "25",
+                "parent_user_id": "24",
+                "tutor_user_id": "26",
+                "subject_id": "mathematics",
+                "subject_name": "mathematics",
+                "masterstudy_course_id": "2122",
+                "masterstudy_lesson_id": "2166",
+                "meeting_provider": "jitsi",
+                "meeting_id": "NextGenTutors-Lesson-214a54c2-8f39-4482-8eb0-ff30a6d8904e",
+                "meeting_url_reference": "NextGenTutors-Lesson-214a54c2-8f39-4482-8eb0-ff30a6d8904e",
+                "scheduled_start": "2026-09-24 03:19:44",
+                "scheduled_end": "2026-09-24 04:19:44",
+                "timezone": "Africa\/Johannesburg",
+                "status": "ready",
+                "payment_status": "paid",
+                "booking_status": "confirmed",
+                "lesson_status": "ready",
+                "meeting_status": "ready",
+                "student_joined_at": null,
+                "tutor_joined_at": null,
+                "started_at": null,
+                "completed_at": null,
+                "cancelled_at": null,
+                "version": "7",
+                "meta": [],
+                "created_at": "2026-09-17 02:45:56",
+                "updated_at": "2026-09-17 02:46:00"
+            }
+        },
+        {
+            "label": "session product 2104\/NGT-ONLINE-1HR",
+            "result": "PASS",
+            "data": "2104"
+        },
+        {
+            "label": "session booking linked",
+            "result": "PASS",
+            "data": "34"
+        },
+        {
+            "label": "invoice 320.00 parent",
+            "result": "PASS",
+            "data": {
+                "id": "17",
+                "uuid": "3efb0631-aaca-4237-acf6-3c382c2c550b",
+                "invoice_number": "NGC-INV-2026-01017",
+                "user_id": "24",
+                "booking_id": "34",
+                "order_id": "2165",
+                "amount": "320.00",
+                "currency": "ZAR",
+                "status": "paid",
+                "line_items": "[{\"name\":\"Online Tutoring - Single 1 Hour Lesson\",\"qty\":1,\"unit_amount\":320,\"total\":\"320\",\"tax\":0,\"subject\":\"mathematics\",\"student\":\"E2E Child\",\"package\":\"NGT-ONLINE-1HR\"}]",
+                "issued_at": "2026-09-17 02:45:55",
+                "paid_at": "2026-09-17 02:45:55",
+                "meta": "{\"billing\":{\"first_name\":\"E2E\",\"last_name\":\"Parent\",\"company\":\"\",\"address_1\":\"\",\"address_2\":\"\",\"city\":\"\",\"state\":\"\",\"postcode\":\"\",\"country\":\"\",\"email\":\"ngt.e2e.parent@example.test\",\"phone\":\"\"}}"
+            }
+        },
+        {
+            "label": "public wc-api ITN acknowledged",
+            "result": "PASS",
+            "data": {
+                "code": 200,
+                "body": "OK",
+                "handler": {
+                    "status": 200,
+                    "body": "OK",
+                    "reason": "complete",
+                    "order_id": 2165
+                }
+            }
+        }
+    ],
+    "relationship": {
+        "product_key": "NGT-ONLINE-1HR",
+        "product_id": 2104,
+        "order_id": 2165,
+        "booking_id": 34,
+        "session_id": 29,
+        "correlation_id": "NGT-SES-20260917-0019E51E",
+        "invoice_id": 17,
+        "invoice_number": "NGC-INV-2026-01017",
+        "pf_payment_id": "pf_ngt_20260917024549_JmHM9W",
+        "receipt_url": "http:\/\/localhost:8890\/checkout-2\/order-pay\/2165\/?key=wc_order_5C94KrCwfYsIt",
+        "hosted_url": "https:\/\/sandbox.payfast.co.za\/eng\/process",
+        "notify_url": "http:\/\/localhost:8890\/wc-api\/ngc_payfast_itn\/",
+        "merchant_id": "10000100",
+        "settlement_path": "NGC_PayFast_Gateway::process_itn"
+    },
+    "passed": 28,
+    "failed": 0,
+    "finished_at": "2026-09-17T02:46:20+00:00"
+}

@@ -79,7 +79,7 @@ $social_stats   = [
       <h2><?php esc_html_e( 'Request a Personal Match', 'beyondinfinity' ); ?></h2>
       <p><?php esc_html_e( 'Prefer guidance? Complete the intake form and our team will recommend suitable tutors.', 'beyondinfinity' ); ?></p>
     </div>
-    <?php bi_shortcode_block( '[ngc_find_tutor_form]', __( 'Request Academic Support', 'beyondinfinity' ) ); ?>
+    <?php bi_shortcode_block( '[ngc_find_tutor_form]', __( 'Request Academic Support', 'beyondinfinity' ), '', __( 'Share subject, grade and preferred format. Our matching team will recommend vetted tutors — the form stays comfortably readable, not full-width.', 'beyondinfinity' ) ); ?>
     <?php bi_safety_notice( 'parent' ); ?>
     <div class="ngt-card ngt-animate bi-reassurance" style="margin-top:24px">
       <p style="margin:0"><strong><?php esc_html_e( 'Reassurance:', 'beyondinfinity' ); ?></strong> <?php esc_html_e( 'Parents pay NextGen Tutors directly. The platform manages tutor payments — no awkward cash handling.', 'beyondinfinity' ); ?></p>

@@ -61,6 +61,10 @@ if ( ! class_exists( 'NGC_UI_Library_Bridge' ) ) {
 				dirname( NGC_PLUGIN_DIR ) . '/ngt-ui-library',
 			);
 
+			if ( function_exists( 'get_stylesheet_directory' ) ) {
+				$candidates[] = get_stylesheet_directory() . '/ui-library';
+			}
+
 			// Monorepo sibling when plugins live beside ui-library on the host.
 			if ( defined( 'NGC_PLUGIN_DIR' ) ) {
 				$candidates[] = dirname( NGC_PLUGIN_DIR, 2 ) . '/ui-library';
@@ -87,6 +91,13 @@ if ( ! class_exists( 'NGC_UI_Library_Bridge' ) ) {
 			if ( 0 === strpos( $path, $content ) ) {
 				$rel = ltrim( substr( $path, strlen( $content ) ), '/' );
 				return trailingslashit( content_url( $rel ) );
+			}
+			if ( function_exists( 'get_stylesheet_directory' ) && function_exists( 'get_stylesheet_directory_uri' ) ) {
+				$theme = wp_normalize_path( get_stylesheet_directory() );
+				if ( 0 === strpos( $path, $theme ) ) {
+					$rel = ltrim( substr( $path, strlen( $theme ) ), '/' );
+					return trailingslashit( trailingslashit( get_stylesheet_directory_uri() ) . $rel );
+				}
 			}
 			return trailingslashit( content_url( 'ngt-ui-library' ) );
 		}

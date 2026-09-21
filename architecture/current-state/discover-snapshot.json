@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-10T21:12:40.762Z",
+  "generatedAt": "2026-09-16T18:53:23.928Z",
   "mode": "BROWNFIELD",
   "packages": [
     {
@@ -66,5 +66,161 @@
     "manifests": true,
     "capabilities": true,
     "dependencyRules": true
+  },
+  "dependencyLocks": [
+    {
+      "path": "e2e/package.json",
+      "ecosystem": "npm",
+      "name": "nextgentutors-e2e",
+      "version": "1.0.0",
+      "directDeps": [
+        "@axe-core/playwright",
+        "@playwright/test"
+      ],
+      "lockPresent": true,
+      "lockPath": "e2e/package-lock.json"
+    },
+    {
+      "path": "nextgen-tutors-google-ai-studio-1st-one/package.json",
+      "ecosystem": "npm",
+      "name": "react-example",
+      "version": "0.0.0",
+      "directDeps": [
+        "@google/genai",
+        "@tailwindcss/vite",
+        "@types/animejs",
+        "@types/express",
+        "@types/node",
+        "@types/three",
+        "@vitejs/plugin-react",
+        "animejs",
+        "autoprefixer",
+        "dotenv",
+        "esbuild",
+        "express",
+        "formik",
+        "gsap",
+        "lucide-react",
+        "motion",
+        "react",
+        "react-dom",
+        "tailwindcss",
+        "three",
+        "tsx",
+        "typescript",
+        "vite",
+        "vite",
+        "yup"
+      ],
+      "lockPresent": true,
+      "lockPath": "nextgen-tutors-google-ai-studio-1st-one/package-lock.json"
+    },
+    {
+      "path": "NextGenTutors-AI-Integration/composer.json",
+      "ecosystem": "composer",
+      "name": "nextgentutors/ai-integration",
+      "version": "",
+      "directDeps": [],
+      "lockPresent": false,
+      "lockPath": null
+    },
+    {
+      "path": "NextGenTutors-BeyondMeasure/composer.json",
+      "ecosystem": "composer",
+      "name": "nextgentutors/beyond-measure",
+      "version": "",
+      "directDeps": [
+        "phpunit/phpunit"
+      ],
+      "lockPresent": false,
+      "lockPath": null
+    },
+    {
+      "path": "NextGenTutors-BeyondMeasure/package.json",
+      "ecosystem": "npm",
+      "name": "nextgentutors-beyond-measure",
+      "version": "1.0.0",
+      "directDeps": [
+        "@tanstack/react-table",
+        "@types/react",
+        "@types/react-dom",
+        "@wordpress/api-fetch",
+        "@wordpress/components",
+        "@wordpress/element",
+        "@wordpress/i18n",
+        "@wordpress/scripts",
+        "@xyflow/react",
+        "clsx",
+        "typescript"
+      ],
+      "lockPresent": false,
+      "lockPath": null
+    },
+    {
+      "path": "NextGenTutors-Companion/build-src/package.json",
+      "ecosystem": "npm",
+      "name": "ngc-automation-studio",
+      "version": "1.0.0",
+      "directDeps": [
+        "@types/react",
+        "@types/react-dom",
+        "@vitejs/plugin-react",
+        "@xyflow/react",
+        "react",
+        "react-dom",
+        "typescript",
+        "vite"
+      ],
+      "lockPresent": true,
+      "lockPath": "NextGenTutors-Companion/build-src/package-lock.json"
+    },
+    {
+      "path": "NextGenTutors-Companion/composer.json",
+      "ecosystem": "composer",
+      "name": "nextgentutors/companion",
+      "version": "",
+      "directDeps": [
+        "phpunit/phpunit"
+      ],
+      "lockPresent": false,
+      "lockPath": null
+    },
+    {
+      "path": "rad-platform/package.json",
+      "ecosystem": "npm",
+      "name": "rad-platform",
+      "version": "1.0.0",
+      "directDeps": [],
+      "lockPresent": false,
+      "lockPath": null
+    },
+    {
+      "path": "scripts/gsapify-extract/package.json",
+      "ecosystem": "npm",
+      "name": "gsapify-extract",
+      "version": "1.0.0",
+      "directDeps": [
+        "playwright"
+      ],
+      "lockPresent": true,
+      "lockPath": "scripts/gsapify-extract/package-lock.json"
+    },
+    {
+      "path": "services/ngt-agent-gateway/package.json",
+      "ecosystem": "npm",
+      "name": "ngt-agent-gateway",
+      "version": "1.0.0",
+      "directDeps": [
+        "@a2a-js/sdk"
+      ],
+      "lockPresent": true,
+      "lockPath": "services/ngt-agent-gateway/package-lock.json"
+    }
+  ],
+  "dependencyLockSummary": {
+    "total": 10,
+    "npm": 7,
+    "composer": 3,
+    "withLockfile": 5
   }
 }

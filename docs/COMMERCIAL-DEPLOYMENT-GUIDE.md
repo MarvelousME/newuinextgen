@@ -242,4 +242,4 @@ White-label via:
 - [deployment/infrastructure-documentation.md](deployment/infrastructure-documentation.md)
 - [operations/operations-documentation.md](operations/operations-documentation.md)
 - [security/security-documentation.md](security/security-documentation.md)
-- [KNOWN-LIMITATIONS.md](../KNOWN-LIMITATIONS.md)
+- [STALE-DOCS/KNOWN-LIMITATIONS.md](STALE-DOCS/KNOWN-LIMITATIONS.md)

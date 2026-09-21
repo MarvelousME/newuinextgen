@@ -1,7 +1,7 @@
 # Platform Verification — SWOT & Gap Analysis
 
 **Generated:** 2026-07-13  
-**Stack:** Docker WordPress @ `http://localhost:8900`  
+**Stack:** Docker WordPress @ `http://localhost:8890`  
 **Repair script:** `NextGenTutors-Companion/scripts/platform-verification-repair.php`
 
 ---
@@ -133,9 +133,9 @@ After repair, local/Docker stacks should report **PASS** on all required checks 
 
 | Document | Gap | Status |
 |----------|-----|--------|
-| `ARCHITECTURE.md` | Wrong theme path | **Open** |
+| `ARCHITECTURE.md` | Theme path / dual slug | **Closed** — Tutofabulous primary + beyondinfinity alias; edit root BeyondInfinity |
 | Root `README.md` | Old react-to-wp layout | **Open** |
-| `docs/SYSTEM-OVERVIEW.md` | Port 8899 vs 8900 | **Open** |
+| `docs/SYSTEM-OVERVIEW.md` | Port 8899 vs 8890 | **Closed** — local default **8890** |
 | This SWOT | — | **Current** |
 
 ---
@@ -162,7 +162,7 @@ php NextGenTutors-Companion/scripts/validate.php
 
 ### Browser checks (recommended)
 
-1. Open `http://localhost:8900` — accept cookie banner
+1. Open `http://localhost:8890` — accept cookie banner
 2. Visit `?utm_source=test&utm_campaign=qa` — confirm attribution row
 3. Marketplace page — confirm showcase tutor appears in carousel
 4. Tutor match form — submit valid payload; confirm validation messages

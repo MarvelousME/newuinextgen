@@ -1,0 +1,13 @@
+package,wordpress_name,version,kind,required,requires_wp,requires_php,parent_theme,depends_on,file_count,notes
+NextGenTutors-BeyondInfinity,NextGenTutors-BeyondInfinity,1.9.29,theme,yes,,,hello-elementor,"Hello-Elementor (soft Companion)",356,"Materialized from monorepo theme files; not the whole repo"
+Hello-Elementor,"Hello Elementor",3.5.1,theme-parent,yes,6.0,7.4,,"Companion recommended",69,"GPL parent; Template: hello-elementor"
+NextGenTutors-Companion,NextGenTutors-Companion,1.9.19,plugin,yes,6.0,8.0,,"WordPress 6.0+",471,"Domain, CPT, ngc_* tables, ngc/v1"
+NextGenTutors-Plugin-Manager,"NextGenTutors Plugin Manager",1.3.5,plugin,yes,6.0,7.4,,"Companion recommended",53,"Slim; no offline-packages"
+NextGenTutors-Mission-Control,"NextGenTutors Mission Control",1.0.0,plugin,yes,6.0,8.0,,"Companion recommended",17,"Ops / seed / verify"
+nextgen-3d-scroll-manager,"NextGen 3D Scroll Manager",1.2.0,plugin,yes,6.2,8.0,,"Companion recommended",55,"Motion engine; ngt3d/v1"
+nextgen-3d-filmstrip,"NextGen 3D Filmstrip",1.0.0,plugin,yes,6.0,7.4,,"Companion recommended",9,"Filmstrip shortcode"
+nextgen-subjects-widget,"NextGen Subjects Widget",1.1.0,plugin,yes,6.0,7.4,,"Companion recommended",4,"Subjects grid"
+NextGenTutors-Html-Importer,NextGenTutors-Revamp-Html-Importer,1.0.0,plugin,no,6.0,7.4,,"Companion recommended",21,"One-time migration; deactivate after use"
+NextGenTutors-AI-Integration,NextGenTutors-AI-Integration,1.1.0,plugin,no,6.0,8.0,,"Companion recommended",56,"Optional agents-api bridge"
+NextGenTutors-BeyondMeasure,"NextGenTutors Beyond Measure",1.0.0,plugin,no,6.0,8.0,,"Companion recommended",31,"Optional control-plane SPA"
+nextgen-automation-hub,"NextGen Automation Hub",2.0.0,plugin,no,6.0,7.4,,"Companion recommended",47,"Overlaps Companion; leave off when Companion is domain owner"

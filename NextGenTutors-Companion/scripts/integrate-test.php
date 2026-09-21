@@ -19,8 +19,8 @@ $required_classes = [
 	'includes/workflows/class-ngc-workflow-integrate-executor.php' => 'NGC_Workflow_Integrate_Executor',
 	'includes/integrations/class-ngc-session-reminders.php'    => 'NGC_Session_Reminders',
 	'includes/integrations/class-ngc-referrals.php'            => 'NGC_Referrals',
-	'includes/integrations/class-ngc-payout-scheduler.php'       => 'NGC_Payout_Scheduler',
-	'includes/integrations/class-ngc-payout-export.php'        => 'NGC_Payout_Export',
+	'includes/payments/class-ngc-payout-scheduler.php'         => 'NGC_Payout_Scheduler',
+	'includes/payments/class-ngc-payout-export.php'            => 'NGC_Payout_Export',
 	'includes/integrations/class-ngc-woocommerce-catalog.php'  => 'NGC_WooCommerce_Catalog',
 	'includes/class-ngc-uuid.php'                              => 'NGC_Uuid',
 	'includes/class-ngc-child-learners.php'                    => 'NGC_Child_Learners',
@@ -99,7 +99,7 @@ foreach ( [ 'integrate_status', 'import_woocommerce_products', 'run_payout_batch
 }
 
 $reviews = file_get_contents( $root . '/includes/class-ngc-reviews.php' );
-if ( false === strpos( $reviews, "do_action(\n\t\t\t'ngc_review_submitted'" ) && false === strpos( $reviews, "do_action( 'ngc_review_submitted'" ) ) {
+if ( ! preg_match( "/do_action\s*\(\s*['\"]ngc_review_submitted['\"]/s", $reviews ) ) {
 	echo "FAIL: NGC_Reviews::create_review must fire ngc_review_submitted\n";
 	++$errors;
 }
@@ -194,7 +194,7 @@ if ( false === strpos( $wc_catalog, 'assign_product_categories' ) ) {
 	++$errors;
 }
 
-$payout_export = file_get_contents( $root . '/includes/integrations/class-ngc-payout-export.php' );
+$payout_export = file_get_contents( $root . '/includes/payments/class-ngc-payout-export.php' );
 if ( false === strpos( $payout_export, 'to_csv' ) || false === strpos( $payout_export, 'recipient_email' ) ) {
 	echo "FAIL: PayFast payout export CSV builder missing\n";
 	++$errors;
@@ -235,7 +235,7 @@ if ( false === strpos( $db, 'booking_reminder' ) ) {
 	++$errors;
 }
 
-$payout_sched = file_get_contents( $root . '/includes/integrations/class-ngc-payout-scheduler.php' );
+$payout_sched = file_get_contents( $root . '/includes/payments/class-ngc-payout-scheduler.php' );
 if ( false === strpos( $payout_sched, 'CRON_HOOK_BIWEEKLY' ) || false === strpos( $payout_sched, 'ngc_biweekly' ) ) {
 	echo "FAIL: bi-weekly payout cron missing\n";
 	++$errors;
@@ -281,7 +281,7 @@ if ( false === strpos( $gamipress, 'ensure_achievements' ) ) {
 	++$errors;
 }
 
-$payments = file_get_contents( $root . '/includes/class-ngc-payments.php' );
+$payments = file_get_contents( $root . '/includes/payments/class-ngc-payments.php' );
 if ( false === strpos( $payments, 'settle_order' ) || false === strpos( $payments, 'ngc_payment_settled' ) ) {
 	echo "FAIL: NGC_Payments missing idempotent settle_order\n";
 	++$errors;

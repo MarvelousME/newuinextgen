@@ -91,25 +91,7 @@ class NGC_Integrations_Bootstrap {
 			return [ 'ok' => false, 'reason' => 'woocommerce_inactive' ];
 		}
 
-		$existing = get_option( 'woocommerce_ngc_payfast_settings', [] );
-		if ( ! empty( $existing['merchant_id'] ) && 'yes' === ( $existing['enabled'] ?? '' ) ) {
-			return [ 'ok' => true, 'status' => 'already_configured' ];
-		}
-
-		$sandbox = [
-			'enabled'      => 'yes',
-			'title'        => __( 'PayFast', 'nextgencompanion' ),
-			'description'  => __( 'Pay securely with PayFast (sandbox).', 'nextgencompanion' ),
-			'merchant_id'  => '10000100',
-			'merchant_key' => '46f0cd694581a',
-			'passphrase'   => 'payfast',
-			'sandbox'      => 'yes',
-		];
-
-		update_option( 'woocommerce_ngc_payfast_settings', $sandbox, false );
-		update_option( 'woocommerce_default_gateway', 'ngc_payfast', false );
-
-		return [ 'ok' => true, 'status' => 'sandbox_configured' ];
+		return NGC_PayFast_Credentials::persist_sandbox( false );
 	}
 
 	/**

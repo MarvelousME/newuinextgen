@@ -38,7 +38,11 @@ function bi_render_page_template( $default_callback ) {
         return;
     }
 
-    if ( bi_is_elementor_canvas_template( $post_id ) ) {
+    // Front-end: force theme .ngi-* defaults over Elementor canvas / stored documents.
+    $force_theme = function_exists( 'bi_ngi_force_theme_defaults' ) && bi_ngi_force_theme_defaults()
+        && function_exists( 'bi_ngi_is_managed_page' ) && bi_ngi_is_managed_page( $post_id );
+
+    if ( ! $force_theme && bi_is_elementor_canvas_template( $post_id ) ) {
         bi_ensure_page_in_loop( $post_id );
         while ( have_posts() ) {
             the_post();
@@ -49,7 +53,7 @@ function bi_render_page_template( $default_callback ) {
 
     get_header();
 
-    if ( bi_should_show_theme_fallback( $post_id ) ) {
+    if ( $force_theme || bi_should_show_theme_fallback( $post_id ) ) {
         echo '<main id="primary" class="site-main bi-theme-main">';
         bi_render_theme_default( $default_callback );
         echo '</main>';
@@ -95,6 +99,12 @@ function bi_should_show_theme_fallback( $post_id = 0 ) {
     // Elementor / WPBakery editor & preview must receive a normal builder shell.
     if ( function_exists( 'bi_is_builder_edit_mode' ) && bi_is_builder_edit_mode() ) {
         return false;
+    }
+
+    // Site-wide kinetic: theme .ngi-* PHP is the source of truth for managed pages.
+    if ( function_exists( 'bi_ngi_force_theme_defaults' ) && bi_ngi_force_theme_defaults()
+        && function_exists( 'bi_ngi_is_managed_page' ) && bi_ngi_is_managed_page( $post_id ) ) {
+        return true;
     }
 
     if ( $post_id && bi_theme_option_is_on( 'force_theme_default', $post_id ) ) {

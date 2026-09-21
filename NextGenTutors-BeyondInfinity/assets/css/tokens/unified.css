@@ -48,15 +48,15 @@
   /* Z-index scale */
   --ngt-z-base: 0;
   --ngt-z-raised: 2;
-  --ngt-z-sticky: 40;
-  --ngt-z-nav: 40;
+  --ngt-z-sticky: 1100;
+  --ngt-z-nav: 1100;
   --bi-z-content: 0;
-  --bi-z-fab: 30;
-  --bi-z-header: 40;
-  --ngt-z-drawer: 700;
-  --ngt-z-modal: 800;
-  --ngt-z-toast: 900;
-  --ngt-z-loader: 1000;
+  --bi-z-fab: 1000;
+  --bi-z-header: 1100;
+  --ngt-z-drawer: 1200;
+  --ngt-z-modal: 1300;
+  --ngt-z-toast: 1400;
+  --ngt-z-loader: 1500;
   --ngt-z-hero-poster: 0;
   --ngt-z-hero-video: 1;
   --ngt-z-hero-scrim: 2;
@@ -180,4 +180,12 @@ html[data-bi-scheme="dark"] {
   --ngt-shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.55);
   --ngt-glass-surface: rgba(15, 26, 47, 0.72);
   color-scheme: dark;
+}
+
+/* Elementor kit globals → BeyondInfinity tokens */
+:root {
+  --e-global-color-primary: var(--ngt-primary);
+  --e-global-color-secondary: var(--ngt-secondary);
+  --e-global-color-text: var(--ngt-text);
+  --e-global-color-accent: var(--ngt-secondary);
 }

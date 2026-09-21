@@ -1,0 +1,12 @@
+/* wiper — clip-path wipe reveal */
+.ngt-3d-preset--wiper {
+	isolation: isolate;
+}
+
+.ngt-3d-preset--wiper .ngt-3d-wiper__panel,
+.ngt-3d-preset--wiper [data-ngt-wipe],
+.ngt-3d-preset--wiper img,
+.ngt-3d-preset--wiper video {
+	will-change: clip-path;
+	transform-style: preserve-3d;
+}

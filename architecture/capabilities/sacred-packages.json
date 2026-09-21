@@ -81,6 +81,22 @@
       "tags": ["presentation"]
     },
     {
+      "capabilityId": "matching.propose",
+      "name": "Propose tutor match",
+      "description": "Create a match request and score eligible tutors",
+      "provider": "companion",
+      "version": "1.0.0",
+      "contract": "architecture/contracts/ngc-rest.v1.json",
+      "protocol": "command",
+      "requiredPermissions": ["read"],
+      "inputSchema": "architecture/contracts/ngc-rest.v1.json#/matchCreate",
+      "outputSchema": "architecture/contracts/ngc-rest.v1.json#/match",
+      "availability": "available",
+      "tenantScope": "tenant",
+      "lifecycleState": "active",
+      "tags": ["matching"]
+    },
+    {
       "capabilityId": "booking.create",
       "name": "Create booking",
       "description": "Create tutoring booking through domain service",

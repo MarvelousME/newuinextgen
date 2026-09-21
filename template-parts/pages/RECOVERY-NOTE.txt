@@ -1,0 +1,5 @@
+Quarantine note (2026-09-11 recovery):
+These bodies were created by the page-flatten refactor.
+They are NOT part of the restored rendering chain.
+Canonical chain is: page-*.php -> bi_render_page_template -> inc/defaults/* -> prototypes/*-body.php or defaults-production.
+Do not wire these into functions.php until equivalence is proven.

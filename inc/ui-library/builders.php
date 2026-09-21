@@ -86,4 +86,14 @@ function ng_ui_register_elementor_widgets( $widgets_manager ) {
 	$widgets_manager->register( new NG_UI_Elementor_Hero_Widget() );
 	$widgets_manager->register( new NG_UI_Elementor_Tutor_Card_Widget() );
 	$widgets_manager->register( new NG_UI_Elementor_Pricing_Card_Widget() );
+
+	if ( defined( 'BI_EL_DS_DIR' ) ) {
+		require_once BI_EL_DS_DIR . '/class-bi-el-widget-base.php';
+		require_once BI_EL_DS_DIR . '/class-bi-el-widgets.php';
+		foreach ( bi_el_ds_widget_classes() as $class ) {
+			if ( class_exists( $class ) ) {
+				$widgets_manager->register( new $class() );
+			}
+		}
+	}
 }

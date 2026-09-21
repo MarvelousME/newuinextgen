@@ -1,0 +1,93 @@
+/**
+ * NGT 3D Scroll — engine base styles.
+ * Namespace: .ngt-3d / .ngt-3d-scene / .ngt-3d-preset--*
+ * Never permanently hide content with opacity:0.
+ */
+
+.ngt-3d {
+	--ngt-3d-perspective: 1200px;
+	--ngt-3d-mx: 0;
+	--ngt-3d-my: 0;
+	--ngt-3d-tilt-rx: 0deg;
+	--ngt-3d-tilt-ry: 0deg;
+	--ngt-3d-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ngt-3d-scene {
+	position: relative;
+	transform-style: preserve-3d;
+	perspective: var(--ngt-3d-perspective);
+}
+
+/* Ready gate: animated initial states only after .ngt-3d-ready */
+.ngt-3d-scene:not(.ngt-3d-ready) .ngt-3d-will-animate {
+	/* Intentionally empty — content stays visible until runtime marks ready */
+}
+
+.ngt-3d-ready .ngt-3d-will-animate {
+	will-change: transform, opacity, clip-path;
+}
+
+.ngt-3d-layer,
+.ngt-3d-mouse-layer {
+	transform-style: preserve-3d;
+	backface-visibility: hidden;
+}
+
+.ngt-3d-tilt-inner {
+	transform-style: preserve-3d;
+	transition: transform 0.12s var(--ngt-3d-ease);
+}
+
+/* Enhance bi-tilt hosts via variables only — do not fight inline transforms */
+[data-ngt-tilt-host="1"],
+.ngt-3d-legacy-bridge[data-bi-tilt] {
+	--ngt-3d-tilt-boost: 1;
+}
+
+.ngt-3d-htrack {
+	display: flex;
+	flex-wrap: nowrap;
+	will-change: transform;
+}
+
+.ngt-3d-scene.is-pinned,
+.ngt-3d-scene[data-ngt-pinned="1"] {
+	z-index: 2;
+}
+
+/* Preset shell hooks */
+.ngt-3d-preset--doublescroll,
+.ngt-3d-preset--4kvideo,
+.ngt-3d-preset--wiper,
+.ngt-3d-preset--dark-veles,
+.ngt-3d-preset--scroll-mask,
+.ngt-3d-preset--onscroll,
+.ngt-3d-preset--zoom,
+.ngt-3d-preset--swag-card,
+.ngt-3d-preset--transforms,
+.ngt-3d-preset--horizontal-3d-scroll {
+	isolation: isolate;
+}
+
+/* Generic overlay canvas used by the WebGL engine (webgl-distortion,
+   webgl-image-reveal) — the horizontal-3d-scroll preset uses its own
+   .ngt-3d-hscroll__canvas sizing rules instead. */
+.ngt-3d-webgl-canvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ngt-3d-scene {
+		perspective: none;
+	}
+
+	.ngt-3d-will-animate {
+		will-change: auto !important;
+		transition: none !important;
+	}
+}

@@ -1,0 +1,111 @@
+/* NextGen UI Library — base components */
+
+.ng-ui { font-family: var(--ng-font-body); color: var(--ng-color-ink); }
+.ng-ui-empty {
+  padding: var(--ng-space-8);
+  text-align: center;
+  color: var(--ng-color-muted);
+  background: var(--ng-color-surface-elevated);
+  border-radius: var(--ng-radius-md);
+  border: 1px dashed var(--ng-color-border);
+}
+
+/* Buttons */
+.ng-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ng-space-2);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--ng-radius-pill);
+  font-weight: var(--ng-weight-bold);
+  font-size: var(--ng-text-sm);
+  transition: transform var(--ng-duration-fast) var(--ng-ease-smooth),
+    box-shadow var(--ng-duration-fast) var(--ng-ease-smooth);
+  cursor: pointer;
+  border: none;
+}
+.ng-btn:focus-visible {
+  outline: 2px solid var(--ng-color-accent);
+  outline-offset: 2px;
+}
+.ng-btn--primary {
+  background: linear-gradient(135deg, var(--ng-color-accent), var(--ng-color-accent-bright));
+  color: var(--ng-color-primary);
+  box-shadow: var(--ng-shadow-sm);
+}
+.ng-btn--primary:hover { transform: translateY(-1px); box-shadow: var(--ng-shadow-card); }
+.ng-btn--secondary {
+  background: var(--ng-color-surface);
+  color: var(--ng-color-primary);
+  border: 1px solid var(--ng-color-border);
+}
+
+/* Cards */
+.ng-card {
+  background: var(--ng-color-surface);
+  border-radius: var(--ng-radius-lg);
+  box-shadow: var(--ng-shadow-card);
+  border: 1px solid var(--ng-color-border);
+  overflow: hidden;
+}
+.ng-card__body { padding: var(--ng-space-6); }
+
+/* Chips / filters */
+.ng-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--ng-radius-pill);
+  font-size: var(--ng-text-xs);
+  font-weight: var(--ng-weight-semibold);
+  background: var(--ng-color-surface-elevated);
+  color: var(--ng-color-primary);
+  border: 1px solid var(--ng-color-border);
+}
+
+/* Skeleton */
+.ng-skeleton {
+  background: linear-gradient(90deg, var(--ng-color-border) 25%, var(--ng-color-surface-elevated) 50%, var(--ng-color-border) 75%);
+  background-size: 200% 100%;
+  animation: ng-shimmer 1.2s infinite;
+  border-radius: var(--ng-radius-sm);
+}
+@keyframes ng-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ng-skeleton { animation: none; }
+}
+
+/* Accordion */
+.ng-accordion__trigger {
+  width: 100%;
+  text-align: left;
+  padding: var(--ng-space-4) var(--ng-space-5);
+  font-weight: var(--ng-weight-semibold);
+  background: var(--ng-color-surface);
+  border: 1px solid var(--ng-color-border);
+  border-radius: var(--ng-radius-md);
+}
+.ng-accordion__panel {
+  padding: var(--ng-space-4) var(--ng-space-5);
+  border: 1px solid var(--ng-color-border);
+  border-top: none;
+  border-radius: 0 0 var(--ng-radius-md) var(--ng-radius-md);
+}
+
+/* Grid */
+.ng-grid {
+  display: grid;
+  gap: var(--ng-space-6);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.ng-container {
+  width: 100%;
+  max-width: var(--ng-container);
+  margin-inline: auto;
+  padding-inline: var(--ng-space-6);
+}

@@ -15,6 +15,10 @@ final class NGT_Hub_Payouts {
 	const PLATFORM_FEE_PERCENT = 15;
 
 	public static function register_hooks(): void {
+		if ( class_exists( 'NGT_Hub_Companion_Delegate', false )
+			&& ! NGT_Hub_Companion_Delegate::should_register_finance() ) {
+			return;
+		}
 		add_action( self::CRON_HOOK, [ __CLASS__, 'run_monthly_calculation' ] );
 		add_filter( 'cron_schedules', [ __CLASS__, 'add_monthly_schedule' ] );
 	}

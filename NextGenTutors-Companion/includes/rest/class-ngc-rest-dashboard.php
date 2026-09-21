@@ -150,6 +150,28 @@ class NGC_Rest_Dashboard {
 		if ( ! is_array( $learners ) ) {
 			$learners = [];
 		}
+		if ( class_exists( 'NGC_Child_Learners' ) && method_exists( 'NGC_Child_Learners', 'for_parent' ) ) {
+			$children = NGC_Child_Learners::for_parent( $user_id );
+			foreach ( (array) $children as $child ) {
+				$name = is_object( $child ) ? ( $child->display_name ?? '' ) : ( $child['display_name'] ?? '' );
+				if ( $name ) {
+					$learners[] = $name;
+				}
+			}
+			$learners = array_values( array_unique( array_filter( $learners ) ) );
+		}
+		$invoices = [];
+		if ( class_exists( 'NGC_Invoices' ) ) {
+			foreach ( NGC_Invoices::for_user( $user_id, 10 ) as $inv ) {
+				$invoices[] = [
+					'id'     => (int) $inv->id,
+					'number' => (string) $inv->invoice_number,
+					'amount' => (float) $inv->amount,
+					'status' => (string) $inv->status,
+					'orderId'=> (int) $inv->order_id,
+				];
+			}
+		}
 
 		return new WP_REST_Response(
 			self::response(
@@ -168,6 +190,7 @@ class NGC_Rest_Dashboard {
 					'learnerCount'      => count( $learners ),
 				],
 				'learners'       => $learners,
+				'invoices'       => $invoices,
 				'recentSessions' => $recent,
 				'nextSession'    => $next,
 					],

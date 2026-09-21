@@ -5,11 +5,12 @@
 | Field | Value |
 |-------|--------|
 | **Product** | NextGen Tutors — accessible tutoring marketplace (South Africa) |
-| **Stack** | WordPress 6.7+ · PHP 8.2+ · MySQL 8.0 |
-| **Theme** | BeyondInfinity (`BI_VERSION` 1.9.9) — workspace root |
-| **Core plugin** | NextGenTutors-Companion (`NGC_VERSION` 1.9.0) |
-| **Local dev** | Docker @ http://localhost:8890 (+ Agent Gateway :8787) |
-| **Last doc refresh** | 2026-08-03 |
+| **Stack** | WordPress 6.7+ · PHP 8.2+ · MySQL 8.0 · Node ≥22 (Agent Gateway) |
+| **Theme** | TutorFabulous (active brand / edit root `NextgenTutors-TutorFabulous/`; BeyondInfinity = legacy package alias) — see `THEME-TUTORFABULOUS.md` |
+| **Core plugin** | NextGenTutors-Companion (`NGC_VERSION` **1.9.22**) |
+| **Theme version** | `BI_VERSION` **2.1.1** |
+| **Local dev** | Docker @ http://localhost:8890 (+ Agent Gateway :8787 · Ecosystem :8790) |
+| **Last doc refresh** | 2026-09-16 |
 
 ---
 
@@ -17,7 +18,9 @@
 
 | Audience | Document | Purpose |
 |----------|----------|---------|
-| **Everyone** | [SYSTEM-OVERVIEW.md](SYSTEM-OVERVIEW.md) | Whole-system map, data flow, verification status |
+| **Everyone** | [../../CODEBASE-SUMMARY.md](../../CODEBASE-SUMMARY.md) | Whole-system map (verified 2026-09-17) |
+| **Stale overviews** | [STALE-DOCS/README.md](STALE-DOCS/README.md) | Quarantined docs that lag live code |
+| **Architects (deep)** | [architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) | Long-form architecture: boundaries, security, deploy |
 | **Operators (post-plugin)** | [tutorials/BEYONDINFINITY-SEQUENTIAL-SETUP.md](tutorials/BEYONDINFINITY-SEQUENTIAL-SETUP.md) | **Step-by-step: run BeyondInfinity + all features after required plugins are installed** |
 | **Executives / clients** | [client/NEXTGEN-TUTORS-ENTERPRISE-PRODUCT-SPECIFICATION.md](client/NEXTGEN-TUTORS-ENTERPRISE-PRODUCT-SPECIFICATION.md) | Product spec, personas, competitive positioning |
 | **Commercial deploy** | [COMMERCIAL-DEPLOYMENT-GUIDE.md](COMMERCIAL-DEPLOYMENT-GUIDE.md) | Licensed deployment, environments, go-live |
@@ -25,8 +28,9 @@
 | **Developers** | [DEVELOPER-GUIDE.md](DEVELOPER-GUIDE.md) | Onboarding, contracts, extension points |
 | **Agentic / MCP** | [GUIDES/AGENTIC-HOW-TO-USE.md](GUIDES/AGENTIC-HOW-TO-USE.md) | Control plane, tools, gateway, Docker :8890 |
 | **Free MCP config** | [GUIDES/MCP-SERVERS-FREE-CONFIG.md](GUIDES/MCP-SERVERS-FREE-CONFIG.md) | Cursor vs product MCP inventory |
-| **Codemaps** | [CODEMAPS/INDEX.md](CODEMAPS/INDEX.md) | Architecture maps from code |
-| **Architects** | [../ARCHITECTURE.md](../ARCHITECTURE.md) | SOLID package boundaries (repo root) |
+| **Codemaps** | [CODEMAPS/INDEX.md](CODEMAPS/INDEX.md) | Architecture maps from code (platform, domain, agentic, theme, services, RAD) |
+| **Architects (legacy SOLID note)** | [STALE-DOCS/ARCHITECTURE.md](STALE-DOCS/ARCHITECTURE.md) | Quarantined package-boundary doc |
+| **Debt / capabilities** | [../architecture/current-state/TECHNICAL-DEBT-REGISTER.md](../architecture/current-state/TECHNICAL-DEBT-REGISTER.md) | TD-RAD + capability inventory |
 | **Operators** | [tutorials/OPERATOR-TUTORIALS.md](tutorials/OPERATOR-TUTORIALS.md) | Plugin Manager, Docker, fleet install |
 | **End users** | [tutorials/user-manuals.md](tutorials/user-manuals.md) | Parent, tutor, admin, finance, support manuals |
 
@@ -82,7 +86,7 @@ All capability statements use one of:
 |----------|----------|
 | [workflows/INTEGRATION-CATALOG.md](workflows/INTEGRATION-CATALOG.md) | **Complete** event catalog, integrate pack, v2 JSON, AutomatorWP |
 | [workflows/workflow-documentation.md](workflows/workflow-documentation.md) | WF-01–WF-25 blueprint catalog |
-| [workflows/FLOW-GAP-REPORT.md](workflows/FLOW-GAP-REPORT.md) | Blueprint SVG → runtime gaps |
+| [STALE-DOCS/FLOW-GAP-REPORT.md](STALE-DOCS/FLOW-GAP-REPORT.md) | Blueprint SVG → runtime gaps (dated July 2026) |
 | [enterprise-blueprint/workflows/README.md](enterprise-blueprint/workflows/README.md) | Per-workflow BPMN specs |
 | [enterprise-blueprint/APPENDIX-A-RBAC-MATRIX.md](enterprise-blueprint/APPENDIX-A-RBAC-MATRIX.md) | Roles & capabilities |
 | [enterprise-blueprint/APPENDIX-B-TRIGGER-MATRIX.md](enterprise-blueprint/APPENDIX-B-TRIGGER-MATRIX.md) | Event triggers |
@@ -123,7 +127,7 @@ All capability statements use one of:
 | [security/security-documentation.md](security/security-documentation.md) | Security controls |
 | [troubleshooting/troubleshooting-guide.md](troubleshooting/troubleshooting-guide.md) | Issue recovery matrix |
 | [../docker/README.md](../docker/README.md) | Local Docker stack |
-| [../KNOWN-LIMITATIONS.md](../KNOWN-LIMITATIONS.md) | Honest risk register |
+| [STALE-DOCS/KNOWN-LIMITATIONS.md](STALE-DOCS/KNOWN-LIMITATIONS.md) | Honest risk register (dated July 2026) |
 
 ---
 
@@ -184,9 +188,9 @@ cd docker; .\scripts\install-registry-zips.ps1
 
 When code changes, update in this order:
 
-1. `ARCHITECTURE.md` — package boundaries
+1. `CODEBASE-SUMMARY.md` (workspace root) — whole-system map
 2. `docs/PACKAGES.md` — versions and entry points
 3. `docs/workflows/INTEGRATION-CATALOG.md` — events and integrations
-4. `docs/SYSTEM-OVERVIEW.md` — whole-system map
+4. `docs/architecture/SYSTEM-ARCHITECTURE-REFERENCE.md` — long-form architecture
 5. Relevant tutorial or operations doc
-6. `KNOWN-LIMITATIONS.md` — if verification status changes
+6. `docs/STALE-DOCS/` — only if quarantined historical notes change

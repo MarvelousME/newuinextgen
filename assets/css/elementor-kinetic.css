@@ -1,0 +1,22 @@
+/* Elementor + kinetic surface consistency */
+.bi-elementor-kinetic,
+.bi-elementor-kinetic-section,
+.elementor-widget-html .bi-elementor-kinetic {
+  width: 100%;
+}
+
+.bi-kinetic-ui .elementor-section.bi-elementor-kinetic-section > .elementor-container,
+.bi-kinetic-ui .elementor-section.bi-elementor-kinetic-section {
+  max-width: 100%;
+}
+
+.bi-kinetic-site .bi-builder-content,
+.bi-kinetic-ui .bi-builder-article,
+.bi-kinetic-ui .elementor {
+  font-family: inherit;
+}
+
+/* Keep Elementor shortcode blocks on the kinetic rhythm */
+.bi-elementor-shortcode-section {
+  margin-block: clamp(1.5rem, 3vw, 3rem);
+}

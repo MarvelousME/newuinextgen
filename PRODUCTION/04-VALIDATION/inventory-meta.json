@@ -1,0 +1,42 @@
+{
+    "generated_at": "2026-09-12T09:14:10+00:00",
+    "versions": {
+        "NextGenTutors-BeyondInfinity": "1.9.29",
+        "Hello-Elementor": "3.5.1",
+        "NextGenTutors-Companion": "1.9.19",
+        "NextGenTutors-Plugin-Manager": "1.3.5",
+        "NextGenTutors-Mission-Control": "1.0.0",
+        "nextgen-3d-scroll-manager": "1.2.0",
+        "nextgen-3d-filmstrip": "1.0.0",
+        "nextgen-subjects-widget": "1.1.0",
+        "NextGenTutors-Html-Importer": "1.0.0",
+        "NextGenTutors-AI-Integration": "1.1.0",
+        "NextGenTutors-BeyondMeasure": "1.0.0",
+        "nextgen-automation-hub": "2.0.0"
+    },
+    "secret_hits": [
+        "inc/config/options-schema.php",
+        "inc/openwa.php",
+        "NextGenTutors-Companion/includes/adapters/class-ngc-amelia-adapter.php",
+        "NextGenTutors-Companion/includes/adapters/class-ngc-amelia-availability-adapter.php",
+        "NextGenTutors-Companion/includes/admin/class-ngc-ai-admin.php",
+        "NextGenTutors-Companion/includes/admin/class-ngc-workflow-admin.php",
+        "NextGenTutors-Companion/includes/ai/class-ngc-ai-models.php",
+        "NextGenTutors-Companion/includes/class-ngc-core-loader.php",
+        "NextGenTutors-Companion/includes/diagnostics/class-ngc-exception-log.php",
+        "NextGenTutors-Companion/includes/integrations/class-ngc-amelia-bootstrap.php",
+        "NextGenTutors-Companion/includes/memory/class-ngc-memory-identity-map.php",
+        "NextGenTutors-Companion/includes/rest/class-ngc-rest-ai.php",
+        "NextGenTutors-Companion/scripts/platform-verification-repair.php",
+        "NextGenTutors-AI-Integration/config/payload-allowlists.php",
+        "NextGenTutors-AI-Integration/includes/admin/class-ngtai-settings-page.php",
+        "NextGenTutors-AI-Integration/includes/class-ngtai-config.php",
+        "NextGenTutors-AI-Integration/uninstall.php"
+    ],
+    "counts": {
+        "files": 1189,
+        "rest": 231,
+        "shortcodes": 31,
+        "pages": 25
+    }
+}

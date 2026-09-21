@@ -1,0 +1,77 @@
+# Clean-room WordPress: PRODUCTION ZIPs only (no monorepo bind-mounts).
+# Usage: cd docker; .\clean-install.ps1
+# Site: http://localhost:8891
+
+name: ngt-clean-install
+
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password --ssl=0
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - clean_db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpass"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 20s
+
+  wordpress:
+    image: wordpress:php8.2-apache
+    restart: unless-stopped
+    ports:
+      - "8891:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG', true);
+        define('WP_DEBUG_LOG', true);
+        define('WP_DEBUG_DISPLAY', false);
+        define('FS_METHOD', 'direct');
+        define('NGC_ALLOW_DEMO_SEED', true);
+    volumes:
+      - clean_wp:/var/www/html
+      - ../PRODUCTION/01-INSTALLABLE-PACKAGES:/packages:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  wpcli:
+    profiles:
+      - setup
+    image: wordpress:cli-php8.2
+    environment:
+      WP_URL: http://localhost:8891
+      WP_TITLE: NextGen Tutors Clean Install
+      WP_ADMIN_USER: admin
+      WP_ADMIN_PASSWORD: NextGenAdmin!2026
+      WP_ADMIN_EMAIL: admin@nextgentutors.local
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - clean_wp:/var/www/html
+      - ../PRODUCTION/01-INSTALLABLE-PACKAGES:/packages:ro
+      - ./init/clean-install.sh:/setup/clean-install.sh:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    user: "0:0"
+    entrypoint: ["/bin/sh", "/setup/clean-install.sh"]
+
+volumes:
+  clean_db:
+  clean_wp:

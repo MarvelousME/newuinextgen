@@ -23,7 +23,7 @@ copy .env.example .env    # if first run
 .\scripts\install-registry-zips.ps1
 
 # 4. Open site
-# http://localhost:8900
+# http://localhost:8890
 # Admin: admin / NextGenAdmin!2026
 
 # 5. Verify
@@ -42,8 +42,9 @@ php NextGenTutors-Companion/scripts/validate.php
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  PRESENTATION — BeyondInfinity theme (workspace root)    │
-│  Templates · UI Library · design tokens · page defaults  │
+│  PRESENTATION — BeyondInfinity package (TutorFabulous brand) │
+│  Edit root: NextGenTutors-BeyondInfinity/                    │
+│  Templates · UI Library · design tokens · page defaults      │
 └───────────────────────────┬─────────────────────────────┘
                             │ shortcodes · REST · filters
 ┌───────────────────────────▼─────────────────────────────┐
@@ -74,15 +75,17 @@ OPS UI     — Command Center + Completion Suite (content packs)
 
 | Path | You work here when… |
 |------|---------------------|
-| `functions.php`, `inc/` | Theme features, page defaults, UI Library |
-| `templates/`, `template-parts/` | Layout and component markup |
-| `assets/css/`, `assets/js/` | Front-end styling and interactions |
-| `content/page-map.json` | Adding launch pages |
+| `NextGenTutors-BeyondInfinity/` | **Canonical theme edit root** — templates, `inc/`, assets, page defaults |
+| `NextGenTutors-BeyondInfinity/functions.php`, `inc/` | Theme features, page defaults, UI Library |
+| `NextGenTutors-BeyondInfinity/templates/`, `template-parts/` | Layout and component markup |
+| `NextGenTutors-BeyondInfinity/assets/css/`, `assets/js/` | Front-end styling and interactions |
+| `NextGenTutors-BeyondInfinity/content/page-map.json` | Adding launch pages |
+| Root `inc/`, `assets/`, … | Docker live overlays only (win at runtime on `:tutorfabulous`); prefer sync into BeyondInfinity — see `THEME-TUTORFABULOUS.md` |
 | `content/nextgen-workflow-pack.json` | Theme-level workflow actions (RTM, email) |
 | `NextGenTutors-Companion/includes/` | Business logic, REST, admin |
 | `NextGenTutors-Companion/integrate/` | Workflow specs and catalogs |
 | `NextGenTutors-Plugin-Manager/includes/` | Registry, installer, health |
-| `docker/` | Local environment |
+| `docker/` | Local environment (default WordPress **:8890**) |
 | `e2e/` | Playwright workflow tests |
 | `docs/` | All documentation |
 
@@ -239,7 +242,7 @@ php NextGenTutors-Companion/scripts/verify-ui-library.php
 
 | Service | URL | Notes |
 |---------|-----|-------|
-| WordPress | http://localhost:8900 | Port from `docker/.env` |
+| WordPress | http://localhost:8890 | Port from `docker/.env` (`WP_PORT` default 8890) |
 | phpMyAdmin | http://localhost:8082 | DB inspection |
 | MySQL | `db:3306` (internal) | wordpress/wordpress |
 
@@ -299,7 +302,7 @@ E2E maps to blueprint workflows WF-01–WF-25. See `docs/verification/testing-do
 3. Run Playwright on staging
 4. `powershell -File scripts/build-release.ps1`
 5. Deploy zips per [COMMERCIAL-DEPLOYMENT-GUIDE.md](COMMERCIAL-DEPLOYMENT-GUIDE.md)
-6. Update `CHANGES-REGISTRY.md` and `KNOWN-LIMITATIONS.md`
+6. Update `CHANGES-REGISTRY.md` and (if still relevant) `docs/STALE-DOCS/KNOWN-LIMITATIONS.md`
 
 ---
 
@@ -307,7 +310,7 @@ E2E maps to blueprint workflows WF-01–WF-25. See `docs/verification/testing-do
 
 | Topic | Document |
 |-------|----------|
-| Architecture | [../ARCHITECTURE.md](../ARCHITECTURE.md) |
+| Architecture | [architecture/SYSTEM-ARCHITECTURE-REFERENCE.md](architecture/SYSTEM-ARCHITECTURE-REFERENCE.md) |
 | Packages | [PACKAGES.md](PACKAGES.md) |
 | Workflow catalog | [workflows/INTEGRATION-CATALOG.md](workflows/INTEGRATION-CATALOG.md) |
 | Hands-on tutorials | [tutorials/DEVELOPER-TUTORIALS.md](tutorials/DEVELOPER-TUTORIALS.md) |

@@ -144,15 +144,37 @@
   }
 
   const divider = root.querySelector('#ngiScrollDivider');
+  const progress = root.querySelector('#ngiProgress');
+  if (progress) progress.removeAttribute('hidden');
   window.addEventListener(
     'scroll',
     () => {
-      if (!divider) return;
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      divider.style.width = Math.min(100, Math.max(0, (window.scrollY / Math.max(max, 1)) * 100)) + '%';
+      const pct = Math.min(100, Math.max(0, (window.scrollY / Math.max(max, 1)) * 100));
+      if (divider) divider.style.width = pct + '%';
+      if (progress) progress.style.width = pct + '%';
     },
     { passive: true }
   );
+
+  if (!reduced) {
+    const stage = root.querySelector('.ngi-hero--theme .ngi-visual');
+    const device = stage && stage.querySelector('.ngi-panel, .ngi-search-panel, .ngi-kinetic-box');
+    if (stage && device && !window.matchMedia('(pointer: coarse)').matches) {
+      const rest = 'rotateY(-17deg) rotateX(6deg)';
+      device.style.transform = rest;
+      stage.addEventListener('pointermove', (e) => {
+        const r = stage.getBoundingClientRect();
+        const x = (e.clientX - r.left) / Math.max(r.width, 1) - 0.5;
+        const y = (e.clientY - r.top) / Math.max(r.height, 1) - 0.5;
+        device.style.transform =
+          'rotateY(' + (-17 + x * 10) + 'deg) rotateX(' + (6 - y * 8) + 'deg) translate3d(' + x * 8 + 'px,' + y * 8 + 'px,0)';
+      });
+      stage.addEventListener('pointerleave', () => {
+        device.style.transform = rest;
+      });
+    }
+  }
 
   const baRange = root.querySelector('#ngiBaRange');
   const baAfter = root.querySelector('#ngiBaAfter');
@@ -274,5 +296,49 @@
       closeDialog(modal, bookingTrap);
       bookingTrap = null;
     }
+  });
+
+  /* Vertical scroll drives the sticky subject rail. Skip if kinetic-page already bound it. */
+  const compactJourney = window.matchMedia('(max-width: 980px)');
+  const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+  root.querySelectorAll('[data-bi-h-journey]').forEach((wrap) => {
+    if (wrap.getAttribute('data-bi-h-bound') === '1') return;
+    wrap.setAttribute('data-bi-h-bound', '1');
+    const rail = wrap.querySelector('[data-bi-h-rail], .ngi-h-journey__rail');
+    if (!rail) return;
+    const navOffset = () => {
+      const n = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'));
+      return Number.isFinite(n) && n > 0 ? n : 159;
+    };
+    const tick = () => {
+      if (compactJourney.matches || reduced) {
+        rail.style.transform = '';
+        return;
+      }
+      const r = wrap.getBoundingClientRect();
+      const navH = navOffset();
+      const total = wrap.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      if (r.top <= navH && r.bottom >= window.innerHeight) {
+        const p = Math.min(1, Math.max(0, (navH - r.top) / total));
+        const travel = Math.max(0, rail.scrollWidth - window.innerWidth + window.innerWidth * 0.12);
+        rail.style.transform = 'translate3d(' + -p * travel + 'px,0,0)';
+      }
+    };
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick);
+    tick();
+    if (reduced || coarsePointer) return;
+    wrap.querySelectorAll('.ngi-h-card, .ngi-h-journey .ngi-tab').forEach((card) => {
+      card.addEventListener('pointermove', (e) => {
+        const b = card.getBoundingClientRect();
+        const x = (e.clientX - b.left) / Math.max(b.width, 1) - 0.5;
+        const y = (e.clientY - b.top) / Math.max(b.height, 1) - 0.5;
+        card.style.transform = 'perspective(900px) rotateY(' + x * 8 + 'deg) rotateX(' + -y * 8 + 'deg)';
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.transform = '';
+      });
+    });
   });
 })();

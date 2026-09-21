@@ -1,0 +1,30 @@
+/* doublescroll — dual opposite vertical tracks, sticky scene */
+.ngt-3d-preset--doublescroll {
+	--ngt-3d-ds-gap: 2rem;
+	overflow: hidden;
+}
+
+.ngt-3d-preset--doublescroll .ngt-3d-ds__cols,
+.ngt-3d-preset--doublescroll[data-ngt-cols] {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--ngt-3d-ds-gap);
+	align-items: start;
+}
+
+.ngt-3d-preset--doublescroll .ngt-3d-ds__left,
+.ngt-3d-preset--doublescroll .ngt-3d-ds__right,
+.ngt-3d-preset--doublescroll [data-ngt-track] {
+	will-change: transform;
+	transform-style: preserve-3d;
+}
+
+.ngt-3d-preset--doublescroll .ngt-3d-ds__title {
+	margin: 0;
+}
+
+@media (max-width: 767px) {
+	.ngt-3d-preset--doublescroll .ngt-3d-ds__cols {
+		grid-template-columns: 1fr;
+	}
+}

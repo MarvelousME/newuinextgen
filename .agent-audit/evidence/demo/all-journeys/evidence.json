@@ -1,0 +1,38 @@
+{
+  "journey_id": "all-journeys",
+  "end_timestamp": "2026-08-30T20:38:50.353Z",
+  "test_result": "PASS",
+  "automation_export": "audit-automation-20260830",
+  "checks": [
+    {
+      "name": "rad_gate",
+      "command": "node rad-platform/cli/gate.mjs",
+      "ok": true,
+      "output": "gate: PASS\ngate: wrote architecture/reports/gate-report.json"
+    },
+    {
+      "name": "ecosystem_platform_tests",
+      "command": "npm test (ecosystem-platform)",
+      "ok": true,
+      "output": "OK  create tenant\nOK  provision tenant\nOK  tenant isolation on customers\n\n4 passed, 0 failed"
+    },
+    {
+      "name": "plugin_manager_tests",
+      "command": "php NextGenTutors-Plugin-Manager/tests/run.php",
+      "ok": true,
+      "output": "NGCPM unit tests\nOK - all unit tests passed"
+    },
+    {
+      "name": "publish_worker_tests",
+      "command": "php NextGenTutors-Companion/tests/publish-worker-restart.php",
+      "ok": true,
+      "output": "PASS  lease holder exclusive\nPASS  after lease expiry single publish\nPASS  no duplicate publish\n\nSummary: 5 passed, 0 failed"
+    },
+    {
+      "name": "bi_package_security_inc",
+      "command": "file exists NextGenTutors-BeyondInfinity/inc/security.php",
+      "ok": true,
+      "output": "present"
+    }
+  ]
+}

@@ -61,7 +61,7 @@ bi_hero(
         echo '<div class="ngt-section__header ngt-animate"><h2>' . esc_html__( 'Open a Support Ticket', 'beyondinfinity' ) . '</h2></div>';
         echo do_shortcode( $sc ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     } else {
-        bi_shortcode_block( '[ngc_contact_support_form]', __( 'Open a Support Ticket', 'beyondinfinity' ) );
+        bi_shortcode_block( '[ngc_contact_support_form]', __( 'Open a Support Ticket', 'beyondinfinity' ), '', __( 'Describe the issue and any booking references. Support will follow up with next steps.', 'beyondinfinity' ) );
     }
     ?>
     <div class="ngt-card ngt-animate bi-center bi-pad-sm bi-mt-md">

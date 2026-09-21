@@ -4,7 +4,7 @@
 
 .bi-hub-jump {
   position: sticky;
-  top: 72px;
+  top: var(--nav-h, 159px);
   z-index: 40;
   padding: 0.75rem 0;
   background: rgba(245, 248, 255, 0.92);

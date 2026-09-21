@@ -1,0 +1,623 @@
+/**
+ * 3D Scroll Test — light, high-contrast, futuristic lab skin.
+ * Accent: NextGen cyan. No dark-on-dark.
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@450;600;750&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+body.page-template-page-3d-scroll-test,
+body.page-slug-3d-scroll-test,
+.ngt-3d-demo-page {
+	--ngt-demo-ink: #132033;
+	--ngt-demo-muted: #4b5c73;
+	--ngt-demo-line: rgba(19, 32, 51, 0.12);
+	--ngt-demo-surface: #ffffff;
+	--ngt-demo-wash: #eef3f8;
+	--ngt-demo-accent: #0f9ec4;
+	--ngt-demo-accent-soft: rgba(15, 158, 196, 0.12);
+	--ngt-demo-shadow: 0 18px 40px -18px rgba(19, 32, 51, 0.18);
+	background:
+		radial-gradient(ellipse 60% 40% at 8% 0%, rgba(15, 158, 196, 0.14), transparent 55%),
+		radial-gradient(ellipse 50% 35% at 92% 12%, rgba(15, 158, 196, 0.08), transparent 50%),
+		linear-gradient(180deg, #f7fafc 0%, var(--ngt-demo-wash) 48%, #e8eef5 100%) !important;
+	color: var(--ngt-demo-ink) !important;
+	overflow-x: hidden;
+}
+
+.ngt-3d-demo-page::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	opacity: 0.35;
+	background-image:
+		linear-gradient(rgba(15, 158, 196, 0.06) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(15, 158, 196, 0.06) 1px, transparent 1px);
+	background-size: 48px 48px;
+	mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
+}
+
+.ngt-3d-demo {
+	position: relative;
+	z-index: 1;
+	padding-bottom: 6rem;
+	font-family: "IBM Plex Sans", system-ui, sans-serif;
+	color: var(--ngt-demo-ink);
+}
+
+.ngt-3d-demo h1,
+.ngt-3d-demo h2,
+.ngt-3d-demo h3,
+.ngt-3d-demo .ngt-3d-ds__title,
+.ngt-3d-demo .ngi-heading {
+	font-family: "Outfit", system-ui, sans-serif;
+	letter-spacing: -0.03em;
+	color: var(--ngt-demo-ink);
+	font-weight: 750;
+}
+
+.ngt-3d-demo .ngt-container {
+	width: min(1120px, 92vw);
+	margin: 0 auto;
+}
+
+.ngt-3d-demo__intro,
+.ngt-3d-demo__outro {
+	padding: clamp(3.5rem, 8vw, 5.5rem) 0 2.5rem;
+}
+
+.ngt-3d-demo__intro {
+	display: grid;
+	grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr);
+	gap: 2rem 3rem;
+	align-items: end;
+}
+
+.ngt-3d-demo__intro-main {
+	max-width: 40rem;
+}
+
+.ngt-3d-demo__usecases-panel {
+	background: var(--ngt-demo-surface);
+	border: 1px solid var(--ngt-demo-line);
+	border-radius: 1.5rem;
+	padding: 1.25rem 1.35rem;
+	box-shadow: var(--ngt-demo-shadow);
+	box-shadow:
+		var(--ngt-demo-shadow),
+		inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.ngt-3d-demo__usecases-panel h2 {
+	margin: 0 0 0.75rem;
+	font-size: 1rem;
+	letter-spacing: 0;
+	font-weight: 600;
+}
+
+.ngt-3d-demo__usecases-panel ol {
+	margin: 0;
+	padding-left: 1.1rem;
+	color: var(--ngt-demo-muted);
+	font-size: 0.92rem;
+	line-height: 1.55;
+}
+
+.ngt-3d-demo__usecases-panel li + li {
+	margin-top: 0.45rem;
+}
+
+.ngt-3d-demo__eyebrow {
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: var(--ngt-demo-accent);
+	margin: 0 0 0.75rem;
+}
+
+.ngt-3d-demo__intro h1 {
+	font-size: clamp(2.1rem, 4.8vw, 3.35rem);
+	line-height: 1.05;
+	margin: 0 0 1rem;
+	max-width: 14ch;
+}
+
+.ngt-3d-demo__lede {
+	margin: 0;
+	font-size: 1.05rem;
+	line-height: 1.65;
+	color: var(--ngt-demo-muted);
+	max-width: 52ch;
+}
+
+.ngt-3d-demo__toc {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+	list-style: none;
+	padding: 0;
+	margin: 1.5rem 0 1rem;
+	grid-column: 1 / -1;
+}
+
+.ngt-3d-demo__toc a {
+	display: inline-block;
+	padding: 0.4rem 0.75rem;
+	border: 1px solid var(--ngt-demo-line);
+	border-radius: 999px;
+	color: var(--ngt-demo-ink);
+	text-decoration: none;
+	font-size: 0.78rem;
+	font-weight: 500;
+	background: var(--ngt-demo-surface);
+	transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ngt-3d-demo__toc a:hover,
+.ngt-3d-demo__toc a:focus-visible {
+	border-color: var(--ngt-demo-accent);
+	color: var(--ngt-demo-accent);
+	outline: none;
+}
+
+.ngt-3d-demo__toc a:active {
+	transform: scale(0.98);
+}
+
+.ngt-3d-demo__note {
+	color: var(--ngt-demo-muted);
+	font-size: 0.92rem;
+	line-height: 1.55;
+	margin: 0.65rem 0 0;
+}
+
+.ngt-3d-demo__usecase {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	margin: 0 0 0.85rem;
+	padding: 0.4rem 0.75rem;
+	border-radius: 999px;
+	background: var(--ngt-demo-accent-soft);
+	color: #0a6f8a;
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	border: 1px solid rgba(15, 158, 196, 0.28);
+}
+
+.ngt-3d-demo__usecase::before {
+	content: "";
+	width: 0.45rem;
+	height: 0.45rem;
+	border-radius: 999px;
+	background: var(--ngt-demo-accent);
+	box-shadow: 0 0 0 3px rgba(15, 158, 196, 0.2);
+}
+
+.ngt-3d-demo__section {
+	position: relative;
+	padding: clamp(3.5rem, 7vw, 5.5rem) 0;
+	min-height: 68vh;
+	border-top: 1px solid var(--ngt-demo-line);
+	perspective: 1200px;
+}
+
+.ngt-3d-demo__section--tall {
+	min-height: 110vh;
+}
+
+.ngt-3d-demo__section--media,
+.ngt-3d-demo__section--pin {
+	min-height: 90vh;
+}
+
+.ngt-3d-demo__section h2 {
+	margin: 0 0 0.5rem;
+	font-size: clamp(1.55rem, 3vw, 2.15rem);
+}
+
+.ngt-3d-demo__section > .ngt-container > p,
+.ngt-3d-demo__card p {
+	color: var(--ngt-demo-muted);
+	line-height: 1.6;
+}
+
+.ngt-3d-demo__label {
+	display: inline-block;
+	margin-bottom: 0.85rem;
+	padding: 0.28rem 0.65rem;
+	border-radius: 8px;
+	background: #132033;
+	color: #f4fafc;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.ngt-3d-demo__card {
+	background: var(--ngt-demo-surface);
+	border: 1px solid var(--ngt-demo-line);
+	border-radius: 1.25rem;
+	padding: 1.35rem 1.4rem;
+	box-shadow: var(--ngt-demo-shadow);
+	color: var(--ngt-demo-ink);
+}
+
+.ngt-3d-demo__card h3 {
+	margin: 0 0 0.4rem;
+	font-size: 1.1rem;
+}
+
+.ngt-3d-demo__card--lg {
+	min-height: 220px;
+	display: grid;
+	place-items: center;
+	text-align: center;
+	gap: 0.75rem;
+}
+
+.ngt-3d-demo__grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem;
+	margin-bottom: 1.25rem;
+}
+
+.ngt-3d-demo__grid--cards {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ngt-3d-demo__grid--trust {
+	grid-template-columns: 1.2fr 1fr;
+}
+
+.ngt-3d-demo__grid img,
+.ngt-3d-demo__section img,
+.ngt-3d-4k__media img,
+.ngt-3d-zoom__target img,
+.ngt-3d-wiper__panel img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 1.1rem;
+	border: 1px solid var(--ngt-demo-line);
+	background: #dbe4ee;
+}
+
+.ngt-3d-demo__stack {
+	display: grid;
+	gap: 1rem;
+	max-width: 28rem;
+}
+
+.ngt-3d-demo__htrack {
+	display: flex;
+	gap: 1rem;
+	width: max-content;
+	padding-bottom: 1rem;
+}
+
+.ngt-3d-demo__htrack .ngt-3d-demo__card {
+	width: 260px;
+	flex: 0 0 auto;
+}
+
+.ngt-3d-ds__cols {
+	display: grid;
+	grid-template-columns: 1.05fr 0.95fr;
+	gap: 1.25rem;
+	min-height: 60vh;
+}
+
+.ngt-3d-ds__left,
+.ngt-3d-ds__right {
+	display: grid;
+	gap: 0.65rem;
+	align-content: start;
+	padding: 1.5rem;
+	border-radius: 1.5rem;
+	border: 1px solid var(--ngt-demo-line);
+	background: var(--ngt-demo-surface);
+	box-shadow: var(--ngt-demo-shadow);
+}
+
+.ngt-3d-ds__left {
+	background:
+		linear-gradient(160deg, rgba(15, 158, 196, 0.1), transparent 42%),
+		var(--ngt-demo-surface);
+}
+
+.ngt-3d-ds__right {
+	background:
+		linear-gradient(200deg, rgba(19, 32, 51, 0.05), transparent 40%),
+		var(--ngt-demo-surface);
+}
+
+.ngt-3d-ds__title {
+	font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+	margin: 0 0 0.35rem;
+}
+
+.ngt-3d-ds__left p,
+.ngt-3d-ds__right p {
+	margin: 0;
+	padding: 0.55rem 0.75rem;
+	border-radius: 0.75rem;
+	background: var(--ngt-demo-wash);
+	color: var(--ngt-demo-ink);
+	font-weight: 500;
+	border: 1px solid transparent;
+}
+
+.ngt-3d-demo__section--showcase {
+	min-height: auto;
+	padding: 3.5rem 0 4.5rem;
+	background: rgba(255, 255, 255, 0.55);
+}
+
+.ngt-3d-demo__section-head {
+	margin-bottom: 1.5rem;
+	max-width: 42rem;
+}
+
+.ngt-3d-demo__section-head h2 {
+	margin: 0 0 0.65rem;
+	font-size: clamp(1.55rem, 3.2vw, 2.2rem);
+}
+
+.ngt-3d-demo__section-head p {
+	margin: 0;
+	color: var(--ngt-demo-muted);
+	line-height: 1.6;
+}
+
+.ngt-3d-demo__plugin-stage {
+	border-radius: 1.5rem;
+	padding: 1.15rem;
+	background: var(--ngt-demo-surface);
+	color: var(--ngt-demo-ink);
+	border: 1px solid var(--ngt-demo-line);
+	box-shadow: var(--ngt-demo-shadow);
+}
+
+.ngt-3d-demo__plugin-stage--film {
+	display: grid;
+	gap: 2rem;
+	background: transparent;
+	box-shadow: none;
+	border: 0;
+	padding: 0;
+}
+
+.ngt-3d-demo__plugin-stage--film .ngtfs {
+	border-radius: 1.5rem;
+	border: 1px solid var(--ngt-demo-line);
+	background: #f8fafc;
+	overflow: hidden;
+}
+
+.ngt-3d-demo__card--media {
+	background-size: cover;
+	background-position: center;
+	color: #f8fafc;
+	text-align: center;
+	min-height: 280px;
+	border: 0;
+}
+
+.ngt-3d-demo__card--media h2,
+.ngt-3d-demo__card--media p {
+	color: #f8fafc;
+	text-shadow: 0 1px 2px rgba(19, 32, 51, 0.45);
+}
+
+.ngt-3d-demo__card--chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-content: center;
+}
+
+.ngt-3d-demo__card--chips span {
+	display: inline-block;
+	padding: 0.35rem 0.7rem;
+	border-radius: 999px;
+	border: 1px solid rgba(15, 158, 196, 0.3);
+	font-size: 0.8rem;
+	font-weight: 500;
+	background: var(--ngt-demo-accent-soft);
+	color: #0a6f8a;
+}
+
+.ngt-3d-demo__step {
+	display: inline-grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 999px;
+	margin-bottom: 0.75rem;
+	background: var(--ngt-demo-accent);
+	color: #fff;
+	font-weight: 700;
+}
+
+.ngt-3d-demo__cta {
+	display: inline-block;
+	margin-top: 0.75rem;
+	padding: 0.75rem 1.2rem;
+	border-radius: 999px;
+	background: var(--ngt-demo-accent);
+	color: #fff !important;
+	text-decoration: none;
+	font-weight: 650;
+	border: 1px solid transparent;
+	transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease;
+}
+
+.ngt-3d-demo__cta:hover,
+.ngt-3d-demo__cta:focus-visible {
+	filter: brightness(1.05);
+	outline: 2px solid var(--ngt-demo-ink);
+	outline-offset: 2px;
+}
+
+.ngt-3d-demo__cta:active {
+	transform: scale(0.98);
+}
+
+.ngt-3d-demo__section--depth {
+	background-image:
+		linear-gradient(180deg, rgba(238, 243, 248, 0.88), rgba(238, 243, 248, 0.94)),
+		var(--ngt-demo-depth-bg, none);
+	background-size: cover;
+	background-position: center;
+}
+
+.ngt-3d-demo__card img {
+	width: 100%;
+	height: 140px;
+	object-fit: cover;
+	border-radius: 12px;
+	margin-bottom: 0.75rem;
+}
+
+.ngt-3d-demo__htrack .ngt-3d-demo__card img {
+	height: 160px;
+}
+
+.ngt-3d-mask__text,
+.ngt-mask-line {
+	color: var(--ngt-demo-ink) !important;
+}
+
+.ngt-3d-dv__reveal {
+	color: var(--ngt-demo-ink) !important;
+}
+
+.ngt-3d-demo__outro a {
+	color: var(--ngt-demo-accent);
+	font-weight: 600;
+}
+
+.ngt-3d-demo__metric {
+	display: grid;
+	gap: 0.15rem;
+	padding: 0.85rem 1rem;
+	border-radius: 1rem;
+	background: var(--ngt-demo-wash);
+	border: 1px solid var(--ngt-demo-line);
+}
+
+.ngt-3d-demo__metric strong {
+	font-family: "Outfit", system-ui, sans-serif;
+	font-size: 1.35rem;
+	letter-spacing: -0.03em;
+	color: var(--ngt-demo-ink);
+}
+
+.ngt-3d-demo__metric span {
+	font-size: 0.8rem;
+	color: var(--ngt-demo-muted);
+}
+
+.ngt-3d-demo__metrics {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.75rem;
+	margin: 1.25rem 0 0;
+}
+
+@media (max-width: 900px) {
+	.ngt-3d-demo__intro {
+		grid-template-columns: 1fr;
+	}
+
+	.ngt-3d-demo__grid,
+	.ngt-3d-demo__grid--cards,
+	.ngt-3d-demo__grid--trust,
+	.ngt-3d-ds__cols,
+	.ngt-3d-demo__metrics {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 640px) {
+	.ngt-3d-demo__section {
+		min-height: 56vh;
+		padding: 3rem 0;
+	}
+
+	.ngt-3d-demo__intro h1 {
+		max-width: none;
+	}
+}
+
+/* horizontal-3d-scroll demo section — visual dressing only; layout/behavior
+   classes (.ngt-3d-hscroll / __track / __panel) live in the reusable preset
+   stylesheet so they work the same on any theme. */
+#ngt3d-horizontal-3d.ngt-3d-hscroll {
+	--ngt-3d-hscroll-gap: 2rem;
+	--ngt-3d-hscroll-panel-width: min(72vw, 560px);
+	padding: 3rem 0 4rem;
+	background: linear-gradient(180deg, var(--ngt-demo-wash), #ffffff);
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__track {
+	padding: 1rem clamp(1.25rem, 6vw, 6rem) 2.5rem;
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel {
+	background: var(--ngt-demo-surface);
+	border: 1px solid var(--ngt-demo-line);
+	border-radius: 1.5rem;
+	box-shadow: var(--ngt-demo-shadow);
+	overflow: hidden;
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel img {
+	display: block;
+	width: 100%;
+	height: 220px;
+	object-fit: cover;
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel-body {
+	padding: 1.35rem 1.4rem 1.6rem;
+	color: var(--ngt-demo-ink);
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel-body h3 {
+	margin: 0.15rem 0 0.4rem;
+	font-size: 1.15rem;
+}
+
+#ngt3d-horizontal-3d .ngt-3d-hscroll__panel-body p {
+	margin: 0;
+	color: var(--ngt-demo-muted);
+}
+
+/* The live model renders as a floating badge over the photo's corner rather
+   than filling the whole card — legible at a glance, never fights the photo
+   or the copy for attention. */
+#ngt3d-horizontal-3d .ngt-3d-hscroll__canvas {
+	inset: auto;
+	top: 12px;
+	left: 12px;
+	width: 84px;
+	height: 84px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.82);
+	box-shadow: var(--ngt-demo-shadow);
+	z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ngt-3d-demo__toc a,
+	.ngt-3d-demo__cta {
+		transition: none;
+	}
+}

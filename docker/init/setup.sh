@@ -69,8 +69,9 @@ else
     || log "WARN: Could not download hello-elementor — run docker/scripts/install-themes.ps1 on the host."
 fi
 
-log "Activating NextGenTutors-BeyondInfinity child theme..."
-wp theme activate nextgentutors-beyondinfinity --path="$WP_PATH" --allow-root
+log "Activating NextgenTutors-TutorFabulous child theme..."
+wp theme activate nextgentutors-tutorfabulous --path="$WP_PATH" --allow-root \
+  || wp theme activate nextgentutors-beyondinfinity --path="$WP_PATH" --allow-root
 
 log "Installing Elementor (optional page builder)..."
 if wp plugin is-installed elementor --path="$WP_PATH" --allow-root 2>/dev/null; then
